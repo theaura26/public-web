@@ -38,7 +38,14 @@ export default function Navbar() {
   // Close menu on route change
   useEffect(() => { setMenuOpen(false) }, [pathname])
 
-  const links = [
+  const isAgent = viewMode === 'agent'
+
+  const links = isAgent ? [
+    { href: '/', label: '/' },
+    { href: '/reason', label: '/reason' },
+    { href: '/land', label: '/land' },
+    { href: '/contact', label: '/contact' },
+  ] : [
     { href: '/', label: 'Home' },
     { href: '/reason', label: 'Reason' },
     { href: '/land', label: 'The Land' },
@@ -62,7 +69,7 @@ export default function Navbar() {
         }}
       >
         <Link href="/" className="no-underline" style={{ color: 'var(--text)', justifySelf: 'start' }}>
-          <LogoWordmark />
+          {isAgent ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14 }}>~/aura</span> : <LogoWordmark />}
         </Link>
 
         <div className="hidden md:flex items-center gap-1">

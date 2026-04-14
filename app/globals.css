@@ -14,7 +14,7 @@
 }
 
 /* ── Night (default) ── */
-:root, [data-theme="night"] {
+:root, html [data-theme="night"] {
   --bg: #0a0a0a;
   --bg-card: #111111;
   --nav-bg: rgba(10, 10, 10, 0.92);
@@ -27,7 +27,7 @@
 }
 
 /* ── Day ── */
-[data-theme="day"] {
+html [data-theme="day"] {
   --bg: #f5f5f0;
   --bg-card: #eaeae5;
   --nav-bg: rgba(245, 245, 240, 0.92);
@@ -40,7 +40,7 @@
 }
 
 /* ── Nature ── */
-[data-theme="nature"] {
+html [data-theme="nature"] {
   --bg: #27362C;
   --bg-card: #1e2b22;
   --nav-bg: rgba(39, 54, 44, 0.92);
@@ -53,7 +53,6 @@
 }
 
 /* ── Agent Mode ── */
-[data-view="agent"] { --bg: #f5f5f0; --bg-card: #eaeae5; --nav-bg: rgba(245,245,240,0.95); --text: #1a1a1a; --text-body: rgba(26,26,26,0.7); --text-muted: rgba(26,26,26,0.45); --text-dim: rgba(26,26,26,0.3); --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.14); }
 [data-view="agent"] * { font-family: var(--font-mono) !important; }
 [data-view="agent"] h1 { font-size: 16px !important; font-weight: 400 !important; letter-spacing: 0 !important; line-height: 1.6 !important; }
 [data-view="agent"] h2 { font-size: 16px !important; font-weight: 400 !important; letter-spacing: 0 !important; line-height: 1.6 !important; }
@@ -64,7 +63,6 @@
 [data-view="agent"] .grid, [data-view="agent"] .grid-2col { display: flex !important; flex-direction: column !important; gap: 24px !important; }
 [data-view="agent"] .stagger { display: flex !important; flex-direction: column !important; gap: 24px !important; }
 [data-view="agent"] section { padding: 40px 0 !important; }
-[data-view="agent"] footer { display: none !important; }
 [data-view="agent"] .human-only { display: none !important; }
 [data-view="agent"] .agent-only { display: block !important; }
 .agent-only { display: none; }

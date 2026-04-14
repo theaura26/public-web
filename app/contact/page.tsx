@@ -6,7 +6,7 @@ export default function ContactPage() {
   return (
     <div>
       {/* Hero */}
-      <section style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 80 }}>
+      <section style={{ paddingTop: 250, paddingBottom: 80 }}>
         <div className="section-w">
           <Reveal>
             <h1 style={{ maxWidth: 700 }}>Let&apos;s talk</h1>

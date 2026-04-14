@@ -26,7 +26,7 @@ export default function ReasonPage() {
     <div>
 
       {/* Hero */}
-      <section style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 80 }}>
+      <section style={{ paddingTop: 250, paddingBottom: 80 }}>
         <div className="section-w">
           <Reveal>
             <h1 style={{ maxWidth: 700 }}>Reason</h1>

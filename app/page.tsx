@@ -4,7 +4,7 @@ import Reveal from '@/components/RevealOnScroll'
 
 function AgentHome() {
   return (
-    <div className="section-w" style={{ paddingTop: 80, paddingBottom: 80 }}>
+    <div className="section-w" style={{ paddingTop: 300, paddingBottom: 80 }}>
       <p># Aura</p>
       <p>## A regenerative ecosystem for generational impact.</p>
       <br />
@@ -141,7 +141,7 @@ export default function Home() {
       <div className="human-only">
 
       {/* Hero */}
-      <section style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 80 }}>
+      <section style={{ paddingTop: 250, paddingBottom: 80 }}>
         <div className="section-w">
           <Reveal>
             <h1 style={{ maxWidth: 700 }}>Think in<br />Generations.</h1>

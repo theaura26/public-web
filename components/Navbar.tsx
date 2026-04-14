@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { LogoWordmark } from './Logo'
 import { useMode } from './ModeProvider'
+import { User, Robot } from '@phosphor-icons/react'
 
 const NAV_BTN: React.CSSProperties = {
   fontFamily: 'var(--font-sans)',
@@ -72,48 +73,23 @@ export default function Navbar() {
           {isAgent ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14 }}>~/aura</span> : <LogoWordmark />}
         </Link>
 
-        <div className="hidden md:flex items-center gap-1">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              style={{
-                ...NAV_BTN,
-                color: pathname === link.href ? 'var(--text)' : 'rgba(255,255,255,0.55)',
-                background: pathname === link.href ? 'rgba(255,255,255,0.08)' : 'transparent',
-              }}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-1.5" style={{ justifySelf: 'end' }}>
-          <div className="hidden md:flex items-center" style={{ border: '1px solid var(--border-strong)', borderRadius: 3, overflow: 'hidden' }}>
-            {[
-              { key: 'human' as const, icon: '◉' },
-              { key: 'agent' as const, icon: '⌘' },
-            ].map((v, i) => (
-              <button
-                key={v.key}
-                onClick={() => setViewMode(v.key)}
-                title={v.key}
+        {/* Center: desktop nav links / mobile hamburger */}
+        <div style={{ justifySelf: 'center' }}>
+          <div className="hidden md:flex items-center gap-1">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
                 style={{
-                  fontSize: 13,
-                  padding: '4px 8px',
-                  border: 'none',
-                  borderRight: i === 0 ? '1px solid var(--border-strong)' : 'none',
-                  background: viewMode === v.key ? 'rgba(255,255,255,0.08)' : 'transparent',
-                  color: viewMode === v.key ? 'var(--text)' : 'var(--text-dim)',
-                  cursor: 'none',
-                  lineHeight: '16px',
+                  ...NAV_BTN,
+                  color: pathname === link.href ? 'var(--text)' : 'rgba(255,255,255,0.55)',
+                  background: pathname === link.href ? 'rgba(255,255,255,0.08)' : 'transparent',
                 }}
               >
-                {v.icon}
-              </button>
+                {link.label}
+              </Link>
             ))}
           </div>
-
           <button
             className="md:hidden flex flex-col gap-[5px] p-1.5"
             style={{ background: 'none', border: 'none' }}
@@ -122,6 +98,32 @@ export default function Navbar() {
             <span className="block w-5 h-[1.5px]" style={{ background: 'var(--text)', transition: 'all 0.2s ease', transform: menuOpen ? 'translateY(3.25px) rotate(45deg)' : 'none' }} />
             <span className="block w-5 h-[1.5px]" style={{ background: 'var(--text)', transition: 'all 0.2s ease', transform: menuOpen ? 'translateY(-3.25px) rotate(-45deg)' : 'none' }} />
           </button>
+        </div>
+
+        {/* Right: toggle */}
+        <div className="flex items-center" style={{ justifySelf: 'end', border: '1px solid var(--border-strong)', borderRadius: 3, overflow: 'hidden' }}>
+          {[
+            { key: 'human' as const, icon: <User size={14} weight="regular" /> },
+            { key: 'agent' as const, icon: <Robot size={14} weight="regular" /> },
+          ].map((v, i) => (
+            <button
+              key={v.key}
+              onClick={() => setViewMode(v.key)}
+              title={v.key}
+              style={{
+                fontSize: 13,
+                padding: '4px 8px',
+                border: 'none',
+                borderRight: i === 0 ? '1px solid var(--border-strong)' : 'none',
+                background: viewMode === v.key ? 'rgba(128,128,128,0.12)' : 'transparent',
+                color: viewMode === v.key ? 'var(--text)' : 'var(--text-dim)',
+                cursor: 'none',
+                lineHeight: '16px',
+              }}
+            >
+              {v.icon}
+            </button>
+          ))}
         </div>
       </nav>
 

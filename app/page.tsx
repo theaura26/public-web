@@ -1,65 +1,91 @@
-import Image from "next/image";
+'use client'
+
+import Reveal from '@/components/RevealOnScroll'
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div>
+
+      {/* Hero */}
+      <section style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 80 }}>
+        <div className="section-w">
+          <Reveal>
+            <h1 style={{ maxWidth: 700 }}>Think in<br />Generations.</h1>
+          </Reveal>
+          <Reveal delay={100}>
+            <p className="p2" style={{ maxWidth: 440, marginTop: 32 }}>
+              Outcomes are immediate. Impact is inherited. One is measured in quarters. The other, in generations.
+            </p>
+          </Reveal>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Reason */}
+      <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
+        <div className="section-w">
+          <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)' }}>
+            <Reveal>
+              <h2>The Reason is to Restore What Sustains Us</h2>
+            </Reveal>
+            <Reveal delay={80}>
+              <div className="flex flex-col gap-5" style={{ paddingTop: 4 }}>
+                <p className="p2">In a world optimised for speed and short-term gain, Aura offers a different model — one rooted in patience, regeneration, and rhythm.</p>
+                <p className="p2">Set across a working plantation and creative sanctuary, Aura brings together ancient knowledge and modern tools to build systems that endure.</p>
+              </div>
+            </Reveal>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Operating System */}
+      <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
+        <div className="section-w">
+          <Reveal>
+            <h2 style={{ marginBottom: 'clamp(48px, 6vh, 80px)' }}>The Aura Operating System</h2>
+          </Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-3 stagger" style={{ gap: 'var(--grid-gap)' }}>
+            {[
+              { title: 'Sanctuary', desc: 'A living estate in rhythm with the land. Silence, stillness, and a 30-year Japanese garden.' },
+              { title: 'Agroculture', desc: 'Ancient practice guided by natural intelligence. 100 acres of coffee, indigenous cattle, and native canopy.' },
+              { title: 'Artistry', desc: 'Where creators come to build what endures. Studios, workshops, festivals, and residencies.' },
+            ].map((card) => (
+              <Reveal key={card.title}>
+                <div style={{ borderTop: '1px solid var(--border)', paddingTop: 20 }}>
+                  <p className="p1" style={{ marginBottom: 10 }}>{card.title}</p>
+                  <p className="p2">{card.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Location */}
+      <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
+        <div className="section-w">
+          <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)' }}>
+            <Reveal>
+              <h2>Location by Design</h2>
+            </Reveal>
+            <Reveal delay={80}>
+              <div className="flex flex-col">
+                {[
+                  { name: 'Aura Mudigere', detail: 'Western Ghats, India · 3,600 ft', active: true },
+                  { name: 'Aura Ohara', detail: 'Kyoto, Japan · 1,099 ft', active: true },
+                  { name: 'Aura Munduk', detail: 'Bali · Coming soon', active: false },
+                  { name: 'Aura Daylesford', detail: 'Australia · Coming soon', active: false },
+                ].map((loc) => (
+                  <div key={loc.name} style={{ borderBottom: '1px solid var(--border)', padding: '16px 0' }}>
+                    <p className="p1" style={{ color: loc.active ? 'var(--text)' : 'var(--text-muted)' }}>{loc.name}</p>
+                    <p className="label" style={{ marginTop: 2 }}>{loc.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
     </div>
-  );
+  )
 }

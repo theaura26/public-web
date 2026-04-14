@@ -24,13 +24,11 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { setTheme, viewMode, setViewMode } = useMode()
   const pathname = usePathname()
-
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLSelectElement) return
       if (e.key === 'd' || e.key === 'D') setTheme('night')
       if (e.key === 'l' || e.key === 'L') setTheme('day')
-      if (e.key === 'n' || e.key === 'N') setTheme('nature')
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -50,7 +48,7 @@ export default function Navbar() {
     { href: '/', label: 'Home' },
     { href: '/reason', label: 'Reason' },
     { href: '/land', label: 'The Land' },
-    { href: '/contact', label: 'Contact +' },
+    { href: '/contact', label: 'Contact' },
   ]
 
   return (

@@ -156,7 +156,16 @@ export default function ReasonPage() {
               <p>I am the first gardener.<br />I will not be the last.</p>
             </div>
             <div style={{ marginTop: 40 }}>
-              <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 18, color: 'var(--text)' }}>arvind singh</p>
+              <img src="/arvind.svg" alt="Arvind" className="arvind-sig" style={{ height: 32, display: 'block' }} />
+              <style jsx>{`
+                div :global(.arvind-sig) {
+                  filter: none;
+                  transition: filter 0.4s ease;
+                }
+                :global([data-theme="day"]) div :global(.arvind-sig) {
+                  filter: invert(1);
+                }
+              `}</style>
               <p className="label" style={{ marginTop: 4 }}>Founder, Aura · Mudigere &amp; Ohara · 2026</p>
             </div>
           </div>

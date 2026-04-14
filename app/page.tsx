@@ -23,6 +23,16 @@ function AgentHome() {
       <br />
       <p>---</p>
       <br />
+      <p>## Reason</p>
+      <br />
+      <p>The reason is to restore what sustains us.</p>
+      <br />
+      <p>In a world optimised for speed and short-term gain, Aura offers a different model — one rooted in patience, regeneration, and rhythm.</p>
+      <br />
+      <p>Set across a working plantation and creative sanctuary, Aura brings together ancient knowledge and modern tools to build systems that endure. From soil to studio, every element is designed to support a new kind of creator — one who thinks beyond outcomes, and builds for generations to come.</p>
+      <br />
+      <p>---</p>
+      <br />
       <p>## Operating System</p>
       <br />
       <p>Aura operates through three integrated pillars:</p>
@@ -164,7 +174,7 @@ export default function Home() {
             <Reveal delay={80}>
               <div className="flex flex-col gap-5" style={{ paddingTop: 4 }}>
                 <p className="p2">In a world optimised for speed and short-term gain, Aura offers a different model — one rooted in patience, regeneration, and rhythm.</p>
-                <p className="p2">Set across a working plantation and creative sanctuary, Aura brings together ancient knowledge and modern tools to build systems that endure.</p>
+                <p className="p2">Set across a working plantation and creative sanctuary, Aura brings together ancient knowledge and modern tools to build systems that endure. From soil to studio, every element is designed to support a new kind of creator — one who thinks beyond outcomes, and builds for generations to come.</p>
               </div>
             </Reveal>
           </div>

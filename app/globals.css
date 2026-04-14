@@ -39,18 +39,6 @@ html [data-theme="day"] {
   --border-strong: rgba(0, 0, 0, 0.14);
 }
 
-/* ── Nature ── */
-html [data-theme="nature"] {
-  --bg: #27362C;
-  --bg-card: #1e2b22;
-  --nav-bg: rgba(39, 54, 44, 0.92);
-  --text: #dce6de;
-  --text-body: rgba(220, 230, 222, 0.65);
-  --text-muted: rgba(220, 230, 222, 0.4);
-  --text-dim: rgba(220, 230, 222, 0.25);
-  --border: rgba(220, 230, 222, 0.08);
-  --border-strong: rgba(220, 230, 222, 0.14);
-}
 
 /* ── Agent Mode ── */
 [data-view="agent"] * { font-family: var(--font-mono) !important; }

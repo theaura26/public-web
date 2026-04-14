@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode } from 'react'
 
-export type Theme = 'night' | 'day' | 'nature'
+export type Theme = 'night' | 'day'
 export type ViewMode = 'human' | 'agent'
 
 const ModeContext = createContext<{

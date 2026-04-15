@@ -15,7 +15,6 @@ const NAV_BTN: React.CSSProperties = {
   padding: '5px 16px',
   border: '1px solid var(--border-strong)',
   borderRadius: 3,
-  textDecoration: 'none',
   lineHeight: '20px',
   whiteSpace: 'nowrap',
 }
@@ -151,7 +150,6 @@ export default function Navbar() {
                 onClick={() => setMenuOpen(false)}
                 className="p1"
                 style={{
-                  textDecoration: 'none',
                   padding: '12px 0',
                   borderBottom: link.href !== '/contact' ? '1px solid var(--border)' : 'none',
                   color: pathname === link.href ? 'var(--text)' : 'var(--text-muted)',

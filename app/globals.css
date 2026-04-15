@@ -102,9 +102,9 @@ body::-webkit-scrollbar { width: 0; }
 }
 
 .cursor.hovering .cursor-dot {
-  transform: scale(2.5);
-  opacity: 0.8;
-  background: #BE652C;
+  transform: scale(3);
+  opacity: 0.85;
+  background: #E37128;
 }
 
 @media (pointer: coarse) {
@@ -134,6 +134,19 @@ body::-webkit-scrollbar { width: 0; }
 /* ── Transitions ── */
 a, button {
   transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+
+/* ── Hover underline for .p1 links / clickable .p1 ── */
+.p1 a, a.p1, [role="button"] .p1 {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.3s var(--ease);
+}
+
+.p1 a:hover, a.p1:hover, [role="button"]:hover .p1 {
+  text-decoration-color: #E37128;
 }
 
 /* ═══ Type System ═══ */

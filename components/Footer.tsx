@@ -87,15 +87,15 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-5" style={{ gap: 'clamp(24px, 3vw, 48px)', rowGap: 40 }}>
           <div>
             <p className="label" style={{ marginBottom: 10 }}>Contact</p>
-            <a href="/contact" className="p1" style={{ textDecoration: 'none' }}>hello@theaura.life</a>
+            <a href="/contact" className="p1">hello@theaura.life</a>
           </div>
           <div>
             <p className="label" style={{ marginBottom: 10 }}>Follow us</p>
-            <a href="https://www.instagram.com/theaura.life/" target="_blank" rel="noopener noreferrer" className="p1" style={{ textDecoration: 'none', display: 'block' }}>Instagram</a>
+            <a href="https://www.instagram.com/theaura.life/" target="_blank" rel="noopener noreferrer" className="p1" style={{ display: 'block' }}>Instagram</a>
           </div>
           <div>
             <p className="label" style={{ marginBottom: 10 }}>Journal</p>
-            <Link href="/brand" className="p1" style={{ textDecoration: 'none', display: 'block', lineHeight: 1.8 }}>Our Brand</Link>
+            <Link href="/brand" className="p1" style={{ display: 'block', lineHeight: 1.8 }}>Our Brand</Link>
           </div>
           <div className="col-span-2">
             <p className="label" style={{ marginBottom: 16 }}>Locations</p>

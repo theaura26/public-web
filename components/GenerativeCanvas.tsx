@@ -9,13 +9,13 @@ import { useEffect, useRef, useCallback } from 'react'
 ═══════════════════════════════════════════ */
 
 const BRAND_COLORS = [
-  '#E8421A', // Dry Osmosis (vivid)
-  '#F07820', // Red Honey (vivid)
-  '#F5B810', // Banana Wash (vivid)
-  '#F2A08A', // Solera Maceration (vivid)
-  '#8AAEE0', // Solera Wash (vivid)
-  '#D4C020', // Grappa (vivid)
-  '#7A9040', // Volcanic (vivid)
+  '#E05A2E', // Dry Osmosis (brighter)
+  '#F09040', // Red Honey (brighter)
+  '#F5C842', // Banana Wash (brighter)
+  '#F0C4B8', // Solera Maceration (brighter)
+  '#BDD0E8', // Solera Wash (brighter)
+  '#D0CA60', // Grappa (brighter)
+  '#9AA070', // Volcanic (brighter)
   '#FFFFFF', // Appassimento
 ]
 

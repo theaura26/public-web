@@ -133,15 +133,16 @@ body::-webkit-scrollbar { width: 0; }
 
 /* ── Transitions ── */
 a, button {
-  transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease), opacity 0.2s var(--ease), text-decoration-color 0.2s var(--ease);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease), opacity 0.2s var(--ease), text-decoration-color 0.3s var(--ease);
 }
 
 /* ── Hover underline for clickable elements ── */
 a:hover, button:hover, [role="button"]:hover {
-  text-decoration: underline;
   text-decoration-color: #E37128;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1.5px;
 }
 
 /* ═══ Type System ═══ */

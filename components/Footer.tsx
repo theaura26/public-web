@@ -86,7 +86,7 @@ export default function Footer() {
           opacity={0.6}
           sparsity={0.42}
           reactivity={0.1}
-          colors={['#FFFFFF']}
+          colors={[theme === 'day' ? '#1a1a1a' : '#FFFFFF']}
           style={{ position: 'absolute', inset: 0 }}
         />
         {/* Fade to bg at top */}
@@ -166,7 +166,7 @@ export default function Footer() {
             top: 0,
             left: 0,
             right: 0,
-            color: 'rgba(255,255,255,0.55)',
+            color: theme === 'day' ? 'rgba(0,0,0,0.45)' : 'rgba(255,255,255,0.55)',
           }}
         >
           <LogoEmblem size={2000} className="footer-logo-scale" />
@@ -211,7 +211,12 @@ export default function Footer() {
           <div style={{
             position: 'absolute',
             inset: 0,
-            background: `
+            background: theme === 'day' ? `
+              radial-gradient(ellipse 70% 50% at 20% 70%, rgba(0,0,0,0.10) 0%, transparent 60%),
+              radial-gradient(ellipse 80% 60% at 60% 80%, rgba(0,0,0,0.07) 0%, transparent 50%),
+              radial-gradient(ellipse 50% 40% at 80% 60%, rgba(0,0,0,0.08) 0%, transparent 55%),
+              radial-gradient(ellipse 90% 70% at 40% 90%, rgba(0,0,0,0.06) 0%, transparent 65%)
+            ` : `
               radial-gradient(ellipse 70% 50% at 20% 70%, rgba(255,255,255,0.14) 0%, transparent 60%),
               radial-gradient(ellipse 80% 60% at 60% 80%, rgba(255,255,255,0.10) 0%, transparent 50%),
               radial-gradient(ellipse 50% 40% at 80% 60%, rgba(255,255,255,0.12) 0%, transparent 55%),
@@ -234,8 +239,8 @@ export default function Footer() {
         >
           <style jsx>{`
             div {
-              background: radial-gradient(ellipse 60% 45% at 35% 75%, rgba(255,255,255,0.12) 0%, transparent 55%),
-                          radial-gradient(ellipse 70% 55% at 75% 85%, rgba(255,255,255,0.09) 0%, transparent 50%);
+              background: radial-gradient(ellipse 60% 45% at 35% 75%, var(--fog-color, rgba(255,255,255,0.12)) 0%, transparent 55%),
+                          radial-gradient(ellipse 70% 55% at 75% 85%, var(--fog-color, rgba(255,255,255,0.09)) 0%, transparent 50%);
               animation: fog-drift-slow 25s ease-in-out infinite alternate;
             }
             @keyframes fog-drift-slow {

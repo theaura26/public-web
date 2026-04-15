@@ -253,8 +253,9 @@ function ExpandingVideo({ src, poster, alt }: { src: string; poster: string; alt
         const raw = Math.max(0, Math.min(1, -rect.top / zone))
         const p = prefersReduced ? (raw > 0.5 ? 1 : 0) : raw * raw * (3 - 2 * raw)
 
-        const navPad = 56 * (1 - p)
-        const sidePad = 48 * (1 - p)
+        const isMobile = window.innerWidth < 768
+        const navPad = (isMobile ? 32 : 56) * (1 - p)
+        const sidePad = (isMobile ? 16 : 48) * (1 - p)
         const radius = 3 * (1 - p)
 
         inner.style.padding = `${navPad}px ${sidePad}px 0`
@@ -296,7 +297,7 @@ function ExpandingVideo({ src, poster, alt }: { src: string; poster: string; alt
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '56px 48px 0',
+          padding: 'clamp(32px, 7vh, 56px) clamp(16px, 4vw, 48px) 0',
           boxSizing: 'border-box',
         }}
       >

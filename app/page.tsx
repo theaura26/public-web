@@ -88,7 +88,7 @@ function HeroVideo() {
         // Art bg fades out first (0–0.3), art shapes fade with blur lift (0.5–0.85)
         const bgFade = 0.35 * (1 - Math.min(1, p / 0.3))
         const artBg = artRef.current?.querySelector('.art-bg') as HTMLElement | null
-        if (artBg) artBg.style.background = `rgba(0,0,0,${bgFade})`
+        if (artBg) artBg.style.background = `rgba(39,54,44,${bgFade})`
 
         const artFade = 1 - Math.min(1, Math.max(0, (p - 0.5) / 0.35))
         if (art) art.style.opacity = `${artFade}`
@@ -168,15 +168,16 @@ function HeroVideo() {
 
         {/* Computational art overlay — fades out on scroll, above blur, below text */}
         <div ref={artRef} style={{ position: 'absolute', inset: 0, zIndex: 3 }}>
-          <div className="art-bg" style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.35)' }} />
+          <div className="art-bg" style={{ position: 'absolute', inset: 0, background: 'rgba(39,54,44,0.35)' }} />
           <VideoReactiveArt
             videoRef={videoRef}
             overlay
-            cellSize={10}
+            cellSize={8}
             opacity={1}
-            sparsity={0.36}
+            sparsity={0.40}
             reactivity={0.14}
             mouse
+            colors={['#8AAEE0', '#A5B6C8', '#7A9040', '#D4C020']}
             style={{ position: 'absolute', inset: 0 }}
           />
         </div>

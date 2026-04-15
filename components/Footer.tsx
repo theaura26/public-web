@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { LogoEmblem } from './Logo'
+import VideoReactiveArt from './VideoReactiveArt'
 import { useMode } from './ModeProvider'
 
 function AnalogClock({ tz, size = 64 }: { tz: string; size?: number }) {
@@ -76,8 +77,28 @@ export default function Footer() {
 
   return (
     <footer style={{ position: 'relative', overflow: 'hidden', background: 'var(--bg)', marginTop: 200 }}>
+      {/* Art2 — sits above footer, anchored to the divider line, fades upward */}
+      <div style={{ position: 'relative', height: 'clamp(250px, 40vh, 450px)', pointerEvents: 'none' }}>
+        <VideoReactiveArt
+          src="/aura-hero.mp4"
+          overlay
+          cellSize={10}
+          opacity={0.6}
+          sparsity={0.42}
+          reactivity={0.1}
+          colors={['#FFFFFF']}
+          style={{ position: 'absolute', inset: 0 }}
+        />
+        {/* Fade to bg at top */}
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, height: '50%',
+          background: 'linear-gradient(to bottom, var(--bg) 0%, transparent 100%)',
+          pointerEvents: 'none',
+        }} />
+      </div>
+
       {/* Divider */}
-      <div style={{ padding: '0 var(--gutter)' }}><div style={{ height: 1, background: 'var(--border)' }} /></div>
+      <div style={{ padding: '0 var(--gutter)', position: 'relative', zIndex: 2 }}><div style={{ height: 1, background: 'var(--border)' }} /></div>
 
       {/* Content */}
       <div style={{ padding: '64px var(--gutter) 80px', position: 'relative', zIndex: 2 }}>

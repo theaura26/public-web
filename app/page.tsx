@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import Reveal from '@/components/RevealOnScroll'
+import VideoReactiveArt from '@/components/VideoReactiveArt'
 import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun, CloudMoon } from '@phosphor-icons/react'
 
 /* ═══════════════════════════════════════════
@@ -62,6 +63,8 @@ function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const blurRef = useRef<HTMLDivElement>(null)
   const copyRef = useRef<HTMLDivElement>(null)
+  const artRef = useRef<HTMLDivElement>(null)
+  const artBgRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -74,12 +77,21 @@ function HeroVideo() {
         const wrap = wrapRef.current
         const blur = blurRef.current
         const copy = copyRef.current
+        const art = artRef.current
         if (!wrap || !blur || !copy) return
 
         const rect = wrap.getBoundingClientRect()
         const scrollRange = wrap.offsetHeight - window.innerHeight
         if (scrollRange <= 0) return
         const p = Math.max(0, Math.min(1, -rect.top / scrollRange))
+
+        // Art bg fades out first (0–0.3), art shapes fade with blur lift (0.5–0.85)
+        const bgFade = 0.2 * (1 - Math.min(1, p / 0.3))
+        const artBg = artRef.current?.querySelector('.art-bg') as HTMLElement | null
+        if (artBg) artBg.style.background = `rgba(0,0,0,${bgFade})`
+
+        const artFade = 1 - Math.min(1, Math.max(0, (p - 0.5) / 0.35))
+        if (art) art.style.opacity = `${artFade}`
 
         // Phase 1 (0–0.3): copy fades in
         const fadeIn = Math.min(1, p / 0.3)
@@ -154,12 +166,28 @@ function HeroVideo() {
           <source src="/aura-hero.mp4" type="video/mp4" />
         </video>
 
+        {/* Computational art overlay — fades out on scroll, above blur, below text */}
+        <div ref={artRef} style={{ position: 'absolute', inset: 0, zIndex: 3 }}>
+          <div className="art-bg" style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.2)' }} />
+          <VideoReactiveArt
+            videoRef={videoRef}
+            overlay
+            cellSize={10}
+            opacity={1}
+            sparsity={0.36}
+            reactivity={0.14}
+            mouse
+            style={{ position: 'absolute', inset: 0 }}
+          />
+        </div>
+
         {/* Blur + dark overlay */}
         <div
           ref={blurRef}
           style={{
             position: 'absolute',
             inset: 0,
+            zIndex: 2,
             background: 'rgba(0,0,0,0.5)',
             backdropFilter: 'blur(16px)',
             WebkitBackdropFilter: 'blur(16px)',
@@ -172,6 +200,7 @@ function HeroVideo() {
           style={{
             position: 'absolute',
             inset: 0,
+            zIndex: 4,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -181,9 +210,9 @@ function HeroVideo() {
             opacity: 0,
           }}
         >
-          <p className="p1" style={{ color: 'rgba(255,255,255,0.75)', maxWidth: 480 }}>
+          <h2 style={{ color: '#fff', maxWidth: 420, textAlign: 'center', textShadow: '0 2px 20px rgba(0,0,0,0.6)' }}>
             Aura exists for those daring to choose the regenerative path.
-          </p>
+          </h2>
         </div>
       </div>
     </section>
@@ -225,11 +254,13 @@ function ExpandingVideo({ src, poster, alt }: { src: string; poster: string; alt
 
         const navPad = 56 * (1 - p)
         const sidePad = 48 * (1 - p)
+        const radius = 3 * (1 - p)
 
         inner.style.padding = `${navPad}px ${sidePad}px 0`
-        card.style.maxWidth = p < 1 ? `calc((100vh - 56px - 96px + ${p * 96}px) * 16 / 9)` : 'none'
-        card.style.aspectRatio = p > 0.9 ? 'auto' : ''
-        card.style.height = p > 0.9 ? '100%' : 'auto'
+        card.style.maxWidth = 'none'
+        card.style.aspectRatio = 'auto'
+        card.style.height = '100%'
+        card.style.borderRadius = `${radius}px`
       })
     }
 
@@ -386,6 +417,7 @@ function PillarVideo({ src, poster, alt }: { src: string; poster: string; alt: s
 ═══════════════════════════════════════════ */
 function LocationModal({ open, onClose, label, children }: { open: boolean; onClose: () => void; label: string; children: React.ReactNode }) {
   const overlayRef = useRef<HTMLDivElement>(null)
+  const cardRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -396,15 +428,12 @@ function LocationModal({ open, onClose, label, children }: { open: boolean; onCl
       setMounted(true)
       document.body.style.overflow = 'hidden'
       dismissing.current = false
-      // Reset any leftover direct DOM styles from scroll-dismiss
       if (overlayRef.current) {
         overlayRef.current.style.transition = ''
         overlayRef.current.style.transform = ''
       }
     } else {
       setVisible(false)
-      // Drive the slide-down via DOM directly so it can't be blocked
-      // by stale transforms from wheel/touch dismiss handlers
       if (overlayRef.current) {
         overlayRef.current.style.transition = 'transform 0.5s cubic-bezier(0.32, 0.72, 0, 1)'
         overlayRef.current.style.transform = 'translateY(100%)'
@@ -432,6 +461,31 @@ function LocationModal({ open, onClose, label, children }: { open: boolean; onCl
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [open, onClose])
+
+  /* ── Scroll-driven expansion: 95% card → fullscreen ── */
+  useEffect(() => {
+    if (!open || !visible) return
+    const el = scrollRef.current
+    const card = cardRef.current
+    if (!el || !card) return
+
+    const expandRange = 120 // px of scroll to fully expand
+    const onScroll = () => {
+      const t = Math.min(1, el.scrollTop / expandRange)
+      const inset = 5 * (1 - t)    // 5% → 0%
+      const radius = 12 * (1 - t)  // 12px → 0
+      card.style.top = `${inset}%`
+      card.style.left = `${inset}%`
+      card.style.right = `${inset}%`
+      card.style.bottom = `${inset}%`
+      card.style.width = 'auto'
+      card.style.height = 'auto'
+      card.style.borderRadius = `${radius}px`
+    }
+    el.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => el.removeEventListener('scroll', onScroll)
+  }, [open, visible])
 
   /* ── Scroll-to-dismiss with elasticity + friction ── */
   useEffect(() => {
@@ -542,23 +596,38 @@ function LocationModal({ open, onClose, label, children }: { open: boolean; onCl
   return (
     <div
       ref={overlayRef}
-      className="loc-modal"
       style={{
         position: 'fixed',
         inset: 0,
         zIndex: 9990,
         transform: visible ? 'translateY(0)' : 'translateY(100%)',
         transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        background: 'rgba(0,0,0,0.3)',
       }}
     >
-      <div ref={scrollRef} style={{ width: '100%', height: '100%', overflow: 'auto', WebkitOverflowScrolling: 'touch' }}>
-        {/* ── Header ── */}
-        <div style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56, padding: '0 var(--gutter)', maxWidth: 'var(--max-w)', margin: '0 auto', width: '100%' }}>
-          <p className="label loc-label" style={{ margin: 0 }}>{label}</p>
-          <button onClick={onClose} aria-label="Close" className="loc-close" style={{ background: 'none', border: 'none', fontSize: 24, padding: '8px 4px', lineHeight: 1, opacity: visible ? 1 : 0, transition: 'opacity 0.3s ease 0.2s' }}>&times;</button>
-        </div>
-        <div className="section-w" style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.4s ease 0.15s', paddingTop: 'clamp(24px, 4vh, 56px)', paddingBottom: 'clamp(60px, 8vh, 100px)' }}>
-          {children}
+      {/* Card — starts at 95% with padding + border-radius, expands on scroll */}
+      <div
+        ref={cardRef}
+        className="loc-modal"
+        style={{
+          position: 'absolute',
+          top: '5%',
+          left: '5%',
+          right: '5%',
+          bottom: '5%',
+          borderRadius: 12,
+          overflow: 'hidden',
+        }}
+      >
+        <div ref={scrollRef} style={{ width: '100%', height: '100%', overflow: 'auto', WebkitOverflowScrolling: 'touch', borderRadius: 'inherit' }}>
+          {/* ── Header ── */}
+          <div style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56, padding: '0 var(--gutter)', maxWidth: 'var(--max-w)', margin: '0 auto', width: '100%' }}>
+            <p className="label loc-label" style={{ margin: 0 }}>{label}</p>
+            <button onClick={onClose} aria-label="Close" className="loc-close" style={{ background: 'none', border: 'none', fontSize: 24, padding: '8px 4px', lineHeight: 1, opacity: visible ? 1 : 0, transition: 'opacity 0.3s ease 0.2s' }}>&times;</button>
+          </div>
+          <div className="section-w" style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.4s ease 0.15s', paddingTop: 'clamp(24px, 4vh, 56px)', paddingBottom: 'clamp(60px, 8vh, 100px)' }}>
+            {children}
+          </div>
         </div>
       </div>
       <style jsx global>{`

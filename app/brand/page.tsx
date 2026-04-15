@@ -2,161 +2,13 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react'
 import Reveal from '@/components/RevealOnScroll'
+import GenerativeCanvas from '@/components/GenerativeCanvas'
 import { useMode } from '@/components/ModeProvider'
 
-/* ═══════════════════════════════════════════
-   GENERATIVE ART — Organic noise field
-   Brand colours. Reacts to mouse cursor.
-═══════════════════════════════════════════ */
-
 const BRAND_COLORS = [
-  '#CA4926', // Dry Osmosis
-  '#DD7C37', // Red Honey
-  '#E4B239', // Banana Wash
-  '#E1ADA2', // Solera Maceration
-  '#A5B6C8', // Solera Wash
-  '#B6B050', // Grappa
-  '#7A7C5C', // Volcanic
-  '#FFFFFF', // Appassimento
+  '#CA4926', '#DD7C37', '#E4B239', '#E1ADA2',
+  '#A5B6C8', '#B6B050', '#7A7C5C', '#FFFFFF',
 ]
-
-function hash(x: number, y: number) {
-  let h = x * 374761393 + y * 668265263
-  h = (h ^ (h >> 13)) * 1274126177
-  return ((h ^ (h >> 16)) & 0x7fffffff) / 0x7fffffff
-}
-
-function smoothstep(t: number) {
-  return t * t * (3 - 2 * t)
-}
-
-function noise2D(x: number, y: number) {
-  const ix = Math.floor(x)
-  const iy = Math.floor(y)
-  const fx = smoothstep(x - ix)
-  const fy = smoothstep(y - iy)
-  const a = hash(ix, iy)
-  const b = hash(ix + 1, iy)
-  const c = hash(ix, iy + 1)
-  const d = hash(ix + 1, iy + 1)
-  return a + (b - a) * fx + (c - a) * fy + (a - b - c + d) * fx * fy
-}
-
-function fbm(x: number, y: number, octaves: number) {
-  let val = 0
-  let amp = 0.5
-  let freq = 1
-  for (let i = 0; i < octaves; i++) {
-    val += amp * noise2D(x * freq, y * freq)
-    amp *= 0.5
-    freq *= 2
-  }
-  return val
-}
-
-// Parse hex to RGB
-function hexToRgb(hex: string) {
-  const r = parseInt(hex.slice(1, 3), 16)
-  const g = parseInt(hex.slice(3, 5), 16)
-  const b = parseInt(hex.slice(5, 7), 16)
-  return { r, g, b }
-}
-
-const BRAND_RGB = BRAND_COLORS.map(hexToRgb)
-
-function GenerativeCanvas({ style }: { style?: React.CSSProperties }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const mouseRef = useRef({ x: 0.5, y: 0.5 })
-  const timeRef = useRef(0)
-  const rafRef = useRef(0)
-
-  const draw = useCallback(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
-    const rect = canvas.getBoundingClientRect()
-    const w = rect.width
-    const h = rect.height
-
-    if (canvas.width !== w * dpr || canvas.height !== h * dpr) {
-      canvas.width = w * dpr
-      canvas.height = h * dpr
-      ctx.scale(dpr, dpr)
-    }
-
-    timeRef.current += 0.003
-    const t = timeRef.current
-    const mx = mouseRef.current.x
-    const my = mouseRef.current.y
-
-    const cellSize = Math.max(8, Math.floor(w / 80))
-    const cols = Math.ceil(w / cellSize) + 1
-    const rows = Math.ceil(h / cellSize) + 1
-
-    ctx.clearRect(0, 0, w, h)
-    ctx.fillStyle = '#131719'
-    ctx.fillRect(0, 0, w, h)
-
-    const noiseScale = 0.04
-    const threshold = 0.42
-
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        const px = col * cellSize
-        const py = row * cellSize
-        const nx = px / w
-        const ny = py / h
-        const ddx = nx - mx
-        const ddy = ny - my
-        const dist = Math.sqrt(ddx * ddx + ddy * ddy)
-        const mouseInfluence = Math.max(0, 1 - dist / 0.3) * 0.2
-        const noiseX = col * noiseScale + t * 0.25 + Math.sin(t * 0.4) * 0.6
-        const noiseY = row * noiseScale + t * 0.12 + Math.cos(t * 0.35) * 0.4
-        const val = fbm(noiseX, noiseY, 5) + mouseInfluence
-
-        if (val > threshold) {
-          // Pick colour from brand palette based on a second noise layer
-          const colorNoise = fbm(col * 0.06 + t * 0.1, row * 0.06 + t * 0.08, 3)
-          const colorIdx = Math.floor(colorNoise * BRAND_RGB.length) % BRAND_RGB.length
-          const c = BRAND_RGB[Math.abs(colorIdx)]
-          ctx.fillStyle = `rgb(${c.r},${c.g},${c.b})`
-          ctx.fillRect(px, py, cellSize - 1, cellSize - 1)
-        }
-      }
-    }
-
-    rafRef.current = requestAnimationFrame(draw)
-  }, [])
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      const canvas = canvasRef.current
-      if (!canvas) return
-      const rect = canvas.getBoundingClientRect()
-      mouseRef.current = {
-        x: (e.clientX - rect.left) / rect.width,
-        y: (e.clientY - rect.top) / rect.height,
-      }
-    }
-    window.addEventListener('mousemove', onMove)
-    rafRef.current = requestAnimationFrame(draw)
-    return () => {
-      window.removeEventListener('mousemove', onMove)
-      cancelAnimationFrame(rafRef.current)
-    }
-  }, [draw])
-
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{ display: 'block', width: '100%', height: '100%', ...style }}
-    />
-  )
-}
-
 
 /* ═══════════════════════════════════════════
    HERO BANNER — Scroll-expanding
@@ -206,14 +58,14 @@ function HeroBanner() {
         // Smoothstep easing
         const p = raw * raw * (3 - 2 * raw)
 
-        // Padding shrinks → card expands to fill viewport
+        // Padding shrinks → card expands smoothly to fill viewport
         const navPad = 56 * (1 - p)
         const sidePad = 48 * (1 - p)
 
         inner.style.padding = `${navPad}px ${sidePad}px 0`
-        card.style.maxWidth = p < 1 ? `calc((100vh - 56px - 96px + ${p * 96}px) * 16 / 9)` : 'none'
-        card.style.aspectRatio = p > 0.9 ? 'auto' : ''
-        card.style.height = p > 0.9 ? '100%' : 'auto'
+        card.style.maxWidth = 'none'
+        card.style.aspectRatio = 'auto'
+        card.style.height = '100%'
       })
     }
 
@@ -247,7 +99,7 @@ function HeroBanner() {
             overflow: 'hidden',
           }}
         >
-          {/* Generative art background */}
+          {/* Generative art background — shared component */}
           <GenerativeCanvas style={{ position: 'absolute', inset: 0 }} />
 
           {/* Text overlay */}

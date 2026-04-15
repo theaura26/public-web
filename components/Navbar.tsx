@@ -13,7 +13,7 @@ const NAV_BTN: React.CSSProperties = {
   fontWeight: 400,
   letterSpacing: 0.2,
   padding: '5px 16px',
-  border: '1px solid rgba(255,255,255,0.2)',
+  border: '1px solid var(--border-strong)',
   borderRadius: 3,
   textDecoration: 'none',
   lineHeight: '20px',
@@ -80,8 +80,8 @@ export default function Navbar() {
                 href={link.href}
                 style={{
                   ...NAV_BTN,
-                  color: pathname === link.href ? 'var(--text)' : 'rgba(255,255,255,0.55)',
-                  background: pathname === link.href ? 'rgba(255,255,255,0.08)' : 'transparent',
+                  color: pathname === link.href ? 'var(--text)' : 'var(--text-muted)',
+                  background: pathname === link.href ? 'var(--text-dim)' : 'transparent',
                 }}
               >
                 {link.label}
@@ -154,7 +154,7 @@ export default function Navbar() {
                   textDecoration: 'none',
                   padding: '12px 0',
                   borderBottom: link.href !== '/contact' ? '1px solid var(--border)' : 'none',
-                  color: pathname === link.href ? 'var(--text)' : 'rgba(255,255,255,0.55)',
+                  color: pathname === link.href ? 'var(--text)' : 'var(--text-muted)',
                 }}
               >
                 {link.label}

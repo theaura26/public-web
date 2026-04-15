@@ -155,7 +155,7 @@ export default function ReasonPage() {
               <p><W>Aura is not built, it is grown.</W></p>
               <p>I am the first gardener.<br />I will not be the last.</p>
             </div>
-            <div style={{ marginTop: 40 }}>
+            <div style={{ marginTop: 24 }}>
               <img src="/arvind.svg" alt="Arvind" className="arvind-sig" style={{ height: 32, display: 'block' }} />
               <style jsx>{`
                 div :global(.arvind-sig) {

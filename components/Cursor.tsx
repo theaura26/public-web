@@ -33,8 +33,8 @@ export default function Cursor() {
     let raf: number
     const animate = () => {
       const p = pos.current
-      p.cx += (p.tx - p.cx) * 0.15
-      p.cy += (p.ty - p.cy) * 0.15
+      p.cx += (p.tx - p.cx) * 0.45
+      p.cy += (p.ty - p.cy) * 0.45
       if (ref.current) {
         ref.current.style.transform = `translate3d(${p.cx - 5}px, ${p.cy - 5}px, 0)`
       }

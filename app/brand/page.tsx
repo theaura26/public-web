@@ -97,7 +97,7 @@ function GenerativeCanvas({ style }: { style?: React.CSSProperties }) {
     const rows = Math.ceil(h / cellSize) + 1
 
     ctx.clearRect(0, 0, w, h)
-    ctx.fillStyle = '#0a0a0a'
+    ctx.fillStyle = '#131719'
     ctx.fillRect(0, 0, w, h)
 
     const noiseScale = 0.04
@@ -377,7 +377,7 @@ function TiltCard({ children, index: i }: { children: React.ReactNode; index: nu
           position: 'relative',
           width: '100%',
           aspectRatio: '1920 / 1080',
-          background: '#111',
+          background: 'var(--bg)',
           borderRadius: 3,
           overflow: 'hidden',
           transformStyle: 'preserve-3d',
@@ -411,10 +411,10 @@ function SlideGrid({ from, to, skip }: { from: number; to: number; skip?: number
                 draggable={false}
                 style={{
                   position: 'absolute',
-                  top: -1,
-                  left: -1,
-                  width: 'calc(100% + 2px)',
-                  height: 'calc(100% + 2px)',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
                   objectFit: 'cover',
                   display: 'block',
                   pointerEvents: 'none',

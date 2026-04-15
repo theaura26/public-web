@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>aura — The Land Remembers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ──────────────────────────────────────────────────────────────── */
+:root {
+  --forest:    #0D1A0B;
+  --forest-2:  #172514;
+  --forest-3:  #1E3019;
+  --forest-4:  #253C1E;
+  --cream:     #F2EDE3;
+  --warm:      #E8E1D4;
+  --stone:     #8A7860;
+  --stone-2:   #6B5E4A;
+  --gold:      #C49020;
+  --gold-lt:   #F7EFD8;
+  --gold-dk:   #7A5A0E;
+  --ink:       #18130E;
+  --body-clr:  #3D3020;
+  --rule:      rgba(194,178,152,0.18);
+  --rule-2:    rgba(194,178,152,0.09);
+  --serif:     'Cormorant Garamond', Georgia, serif;
+  --mono:      'DM Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { background: var(--forest); color: var(--cream); font-family: var(--serif); font-weight: 300; overflow-x: hidden; }
+
+/* ── PAGES ───────────────────────────────────────────────────────────────── */
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; }
+
+/* ── NAV ─────────────────────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem; height: 58px;
+  border-bottom: 1px solid var(--rule);
+  background: rgba(13,26,11,0.94);
+  backdrop-filter: blur(20px) saturate(1.4);
+  transition: background .3s;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: .7rem;
+  cursor: pointer; text-decoration: none;
+}
+.nav-wordmark {
+  font-family: var(--serif); font-size: 1.15rem; font-weight: 400;
+  letter-spacing: .2em; color: var(--cream);
+}
+.nav-sub {
+  font-family: var(--mono); font-size: .52rem; letter-spacing: .18em;
+  color: var(--stone); border-left: 1px solid var(--rule);
+  padding-left: .7rem; line-height: 1.5;
+}
+.nav-right { display: flex; align-items: center; gap: 0; }
+.nav-link {
+  font-family: var(--mono); font-size: .58rem; letter-spacing: .1em;
+  color: var(--stone); text-decoration: none; padding: 0 1rem; height: 58px;
+  display: flex; align-items: center; border-left: 1px solid var(--rule-2);
+  transition: color .2s, background .2s; cursor: pointer;
+}
+.nav-link:hover { color: var(--cream); background: rgba(196,144,32,.06); }
+.nav-link.active { color: var(--gold); }
+.nav-cta {
+  font-family: var(--mono); font-size: .58rem; letter-spacing: .1em;
+  color: var(--forest); background: var(--gold); padding: .5rem 1.1rem;
+  text-decoration: none; margin-left: 1rem; transition: opacity .2s;
+  white-space: nowrap;
+}
+.nav-cta:hover { opacity: .85; }
+
+/* ── SHARED ──────────────────────────────────────────────────────────────── */
+.wrap     { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; }
+.wrap-wide{ max-width: 100%; padding: 0 2.5rem; }
+.tag-label{
+  font-family: var(--mono); font-size: .56rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .7rem;
+}
+h1 { font-family: var(--serif); font-weight: 300; line-height: 1.05; letter-spacing: -.01em; }
+h2 { font-family: var(--serif); font-weight: 300; line-height: 1.12; }
+p  { line-height: 1.85; color: rgba(242,237,227,.68); font-weight: 300; font-size: .97rem; }
+.rule-line { border: none; border-top: 1px solid var(--rule); }
+
+/* ── SCROLL REVEAL ───────────────────────────────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .75s ease, transform .75s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal-l { opacity: 0; transform: translateX(-20px); transition: opacity .7s ease, transform .7s ease; }
+.reveal-l.in { opacity: 1; transform: translateX(0); }
+
+/* ── HOME: HERO ──────────────────────────────────────────────────────────── */
+.home-hero {
+  height: 100vh; min-height: 680px;
+  position: relative; display: flex; align-items: flex-end;
+  padding-bottom: 7rem; overflow: hidden;
+}
+.home-hero-bg {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(13,26,11,.15) 0%, rgba(13,26,11,.55) 50%, rgba(13,26,11,.97) 100%),
+    linear-gradient(to right, rgba(13,26,11,.5) 0%, transparent 60%),
+    url('https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=1800&q=85&fit=crop&crop=center') center/cover no-repeat;
+}
+.home-hero-coord {
+  position: absolute; top: 5.5rem; right: 2.5rem;
+  font-family: var(--mono); font-size: .54rem; letter-spacing: .12em;
+  color: var(--stone); text-align: right; line-height: 2.1; opacity: .55;
+}
+.home-hero-content { position: relative; z-index: 2; }
+.home-hero-eyebrow {
+  font-family: var(--mono); font-size: .58rem; letter-spacing: .2em;
+  color: var(--gold); opacity: .75; margin-bottom: 1.2rem; display: block;
+}
+.home-hero h1 {
+  font-size: clamp(3.4rem, 6.5vw, 6.2rem);
+  color: var(--cream); max-width: 12ch;
+}
+.home-hero h1 em { color: var(--stone); font-style: italic; }
+.home-hero-sub {
+  margin-top: 2.2rem; display: flex; gap: 3rem; align-items: flex-start;
+}
+.home-hero-desc { max-width: 36ch; font-size: .92rem; }
+.home-hero-stats {
+  border-left: 1px solid var(--rule); padding-left: 3rem;
+  display: flex; gap: 2.5rem; flex-shrink: 0;
+}
+.stat .n {
+  display: block; font-family: var(--serif); font-size: 2.4rem; font-weight: 300;
+  color: var(--gold); line-height: 1;
+}
+.stat .l {
+  display: block; font-family: var(--mono); font-size: .52rem;
+  letter-spacing: .1em; color: var(--stone); margin-top: .3rem;
+}
+.scroll-hint {
+  position: absolute; bottom: 2.2rem; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono); font-size: .52rem; letter-spacing: .16em;
+  color: var(--stone); opacity: .35; display: flex; flex-direction: column;
+  align-items: center; gap: .5rem;
+}
+.scroll-hint::after {
+  content: ''; display: block; width: 1px; height: 36px;
+  background: var(--stone); opacity: .5;
+}
+
+/* ── HOME: WHAT AURA IS ──────────────────────────────────────────────────── */
+.what-section { padding: 9rem 0 8rem; }
+.what-inner {
+  display: grid; grid-template-columns: 5fr 7fr; gap: 7rem; align-items: start;
+}
+.what-left h2 {
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+  font-style: italic; color: var(--cream); margin-bottom: 2rem;
+}
+.what-left p { margin-bottom: 1.4rem; }
+.anchor-lines { margin-top: 2.5rem; }
+.anchor-line {
+  font-family: var(--serif); font-size: .95rem; font-style: italic;
+  color: rgba(242,237,227,.45); padding: .8rem 0;
+  border-top: 1px solid var(--rule-2);
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.anchor-line::before {
+  content: '—'; color: var(--gold); opacity: .5; flex-shrink: 0; margin-top: .05rem;
+}
+.what-right { padding-top: .5rem; }
+.mark-block { margin-bottom: 3rem; }
+.mark-symbol {
+  width: 52px; height: 52px; margin-bottom: 1.5rem;
+  opacity: .7;
+}
+.pillars { display: flex; flex-direction: column; gap: 0; }
+.pillar {
+  display: flex; gap: 1.4rem; padding: 1.2rem 0;
+  border-top: 1px solid var(--rule);
+}
+.pillar:last-child { border-bottom: 1px solid var(--rule); }
+.pillar-roman {
+  font-family: var(--serif); font-size: .85rem; font-style: italic;
+  color: var(--gold); opacity: .6; min-width: 1.5rem; margin-top: .15rem;
+}
+.pillar-name { font-family: var(--serif); font-size: 1rem; color: var(--cream); margin-bottom: .25rem; }
+.pillar-desc { font-family: var(--mono); font-size: .58rem; letter-spacing: .04em; color: var(--stone); line-height: 1.75; }
+
+/* ── HOME: LAND ──────────────────────────────────────────────────────────── */
+.land-section { padding: 0 0 8rem; }
+.land-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--rule);
+}
+.land-img {
+  position: relative; overflow: hidden; min-height: 520px;
+}
+.land-img-bg {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1545830838-753dc7e8f1c6?w=1200&q=85&fit=crop&crop=center') center/cover no-repeat;
+  filter: brightness(.65) saturate(.8);
+  transition: transform 8s ease; transform: scale(1.03);
+}
+.land-section:hover .land-img-bg { transform: scale(1.0); }
+.land-img-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(13,26,11,.85) 0%, transparent 60%);
+  padding: 2.5rem;
+}
+.land-img-caption {
+  font-family: var(--mono); font-size: .54rem; letter-spacing: .14em; color: var(--stone); opacity: .6;
+}
+.land-text {
+  background: var(--forest-2); padding: 5rem 4rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.land-data-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin: 2.5rem 0;
+}
+.land-datum {
+  padding: .9rem 1rem; border: 1px solid var(--rule);
+}
+.land-datum .dk { font-family: var(--mono); font-size: .5rem; letter-spacing: .1em; color: var(--stone); display: block; margin-bottom: .3rem; }
+.land-datum .dv { font-family: var(--serif); font-size: .95rem; color: var(--cream); }
+.land-quote {
+  font-family: var(--serif); font-size: 1.1rem; font-style: italic;
+  color: rgba(242,237,227,.55); line-height: 1.7;
+  border-left: 1px solid var(--gold); padding-left: 1.2rem;
+  margin-top: auto; padding-top: .5rem;
+}
+
+/* ── HOME: PHILOSOPHY ────────────────────────────────────────────────────── */
+.phil-section { padding: 8rem 0; background: var(--forest-2); }
+.phil-inner { display: grid; grid-template-columns: 5fr 7fr; gap: 6rem; align-items: start; }
+.rta-tag {
+  font-family: var(--mono); font-size: .58rem; letter-spacing: .18em;
+  color: var(--gold); margin-bottom: 1rem; display: block;
+}
+.phil-headline {
+  font-family: var(--serif); font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-style: italic; color: var(--cream); margin-bottom: 2rem; line-height: 1.25;
+}
+.phil-body { margin-bottom: 1.2rem; }
+.rta-examples { margin-top: 2rem; }
+.rta-example {
+  display: flex; gap: 1rem; padding: .75rem 0; border-bottom: 1px solid var(--rule-2);
+  font-family: var(--mono); font-size: .6rem; letter-spacing: .04em; color: var(--stone); line-height: 1.6;
+}
+.rta-example::before { content: '→'; color: var(--gold); opacity: .5; flex-shrink: 0; margin-top: .05rem; }
+.hier-stack { display: flex; flex-direction: column; gap: 2px; }
+.hier-row {
+  display: grid; grid-template-columns: 12px 180px 1fr;
+  gap: 0; overflow: hidden;
+}
+.hier-bar { flex-shrink: 0; }
+.hier-label {
+  padding: 1rem 1.2rem;
+  font-family: var(--serif); font-size: .95rem; font-weight: 400;
+  color: rgba(242,237,227,.9);
+}
+.hier-desc {
+  padding: 1rem 1.2rem;
+  font-family: var(--mono); font-size: .58rem; letter-spacing: .03em;
+  color: rgba(242,237,227,.45); line-height: 1.65;
+}
+.hier-row:nth-child(1) .hier-bar { background: #1C2B1A; }
+.hier-row:nth-child(1) .hier-label, .hier-row:nth-child(1) .hier-desc { background: #1C2B1A; }
+.hier-row:nth-child(2) .hier-bar { background: #231C0D; }
+.hier-row:nth-child(2) .hier-label, .hier-row:nth-child(2) .hier-desc { background: #231C0D; }
+.hier-row:nth-child(3) .hier-bar { background: #151C28; }
+.hier-row:nth-child(3) .hier-label, .hier-row:nth-child(3) .hier-desc { background: #151C28; }
+.hier-row:nth-child(4) .hier-bar { background: #1E1E1E; }
+.hier-row:nth-child(4) .hier-label, .hier-row:nth-child(4) .hier-desc { background: #1E1E1E; }
+
+/* ── HOME: PLANTATION PORTAL ─────────────────────────────────────────────── */
+.portal-section { padding: 0; }
+.portal-card {
+  position: relative; min-height: 480px;
+  display: flex; align-items: flex-end; overflow: hidden; cursor: pointer;
+}
+.portal-card-bg {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to right, rgba(13,26,11,.9) 40%, rgba(13,26,11,.3) 100%),
+    url('https://images.unsplash.com/photo-1447078806655-40579c2520d6?w=1800&q=80&fit=crop&crop=center') center/cover no-repeat;
+  transition: transform 6s ease;
+}
+.portal-card:hover .portal-card-bg { transform: scale(1.04); }
+.portal-card-content {
+  position: relative; z-index: 2; padding: 5rem 2.5rem; max-width: 560px;
+}
+.portal-card-content h2 { font-size: clamp(2rem, 3.5vw, 3.2rem); color: var(--cream); margin-bottom: 1rem; }
+.portal-card-content p { font-size: .92rem; max-width: 38ch; margin-bottom: 2rem; }
+.portal-btn {
+  display: inline-flex; align-items: center; gap: .7rem;
+  font-family: var(--mono); font-size: .6rem; letter-spacing: .12em;
+  color: var(--gold); border: 1px solid rgba(196,144,32,.4); padding: .7rem 1.4rem;
+  transition: all .25s; text-decoration: none; cursor: pointer;
+}
+.portal-btn:hover { background: rgba(196,144,32,.1); border-color: var(--gold); gap: 1rem; }
+.portal-btn .arr { transition: transform .25s; }
+.portal-btn:hover .arr { transform: translateX(4px); }
+.portal-badge {
+  position: absolute; top: 2.5rem; right: 2.5rem;
+  font-family: var(--mono); font-size: .52rem; letter-spacing: .12em;
+  color: var(--stone); opacity: .5; text-align: right; line-height: 2;
+}
+
+/* ── HOME: MANIFESTO ─────────────────────────────────────────────────────── */
+.manifesto-section { padding: 11rem 0 9rem; text-align: center; position: relative; overflow: hidden; }
+.manifesto-glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(30,48,25,.8) 0%, transparent 70%);
+}
+.manifesto-eyebrow {
+  font-family: var(--mono); font-size: .54rem; letter-spacing: .2em;
+  color: var(--stone); opacity: .45; margin-bottom: 3.5rem; display: block;
+}
+.manifesto-text {
+  font-family: var(--serif); font-size: clamp(1.2rem, 2.2vw, 1.9rem);
+  line-height: 2.1; color: rgba(242,237,227,.38); max-width: 48ch; margin: 0 auto;
+}
+.manifesto-text strong { color: rgba(242,237,227,.85); font-weight: 400; }
+.manifesto-coda {
+  margin-top: 4.5rem; font-family: var(--serif); font-size: .95rem;
+  font-style: italic; color: var(--stone); opacity: .5;
+  display: flex; flex-direction: column; gap: .5rem; align-items: center;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────────────────────── */
+.site-footer {
+  border-top: 1px solid var(--rule); padding: 3.5rem 2.5rem;
+  background: var(--forest);
+}
+.footer-inner {
+  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem;
+  max-width: 1200px; margin: 0 auto; margin-bottom: 2.5rem;
+}
+.footer-logo { font-family: var(--serif); font-size: 1.2rem; letter-spacing: .15em; color: var(--cream); margin-bottom: .6rem; }
+.footer-tagline { font-family: var(--serif); font-size: .85rem; font-style: italic; color: var(--stone); margin-bottom: 1.2rem; }
+.footer-locs { font-family: var(--mono); font-size: .55rem; letter-spacing: .08em; color: var(--stone); opacity: .4; line-height: 2.2; }
+.footer-col-title { font-family: var(--mono); font-size: .54rem; letter-spacing: .14em; color: var(--gold); opacity: .6; display: block; margin-bottom: .9rem; }
+.footer-links { list-style: none; }
+.footer-links li { padding: .28rem 0; }
+.footer-links a { font-family: var(--mono); font-size: .58rem; color: var(--stone); text-decoration: none; cursor: pointer; transition: color .2s; }
+.footer-links a:hover { color: var(--cream); }
+.footer-bottom {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 2rem; border-top: 1px solid var(--rule-2);
+  font-family: var(--mono); font-size: .52rem; letter-spacing: .08em; color: rgba(138,120,96,.3);
+}
+
+/* ── PLANTATION: HERO ────────────────────────────────────────────────────── */
+.plant-hero {
+  height: 72vh; min-height: 560px; position: relative;
+  display: flex; align-items: flex-end; padding-bottom: 5rem; overflow: hidden;
+}
+.plant-hero-bg {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to right, rgba(13,26,11,.95) 38%, rgba(13,26,11,.35) 100%),
+    url('https://images.unsplash.com/photo-1471079731253-f7c91e65a01e?w=1800&q=80&fit=crop&crop=center') center/cover no-repeat;
+}
+.plant-hero-content { position: relative; z-index: 2; max-width: 560px; }
+.plant-hero h1 { font-size: clamp(2.4rem, 4.5vw, 4rem); color: var(--cream); margin-bottom: 1.2rem; }
+
+/* ── PLANTATION: SUBNAV ──────────────────────────────────────────────────── */
+.plant-subnav {
+  border-bottom: 1px solid var(--rule); background: rgba(13,26,11,.97);
+  position: sticky; top: 58px; z-index: 100;
+}
+.plant-subnav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 2.5rem;
+  display: flex; overflow-x: auto;
+}
+.snav-item {
+  font-family: var(--mono); font-size: .58rem; letter-spacing: .1em;
+  color: var(--stone); padding: 1rem 1.3rem; white-space: nowrap;
+  border-right: 1px solid var(--rule-2); cursor: pointer; transition: color .2s;
+  text-decoration: none;
+}
+.snav-item:first-child { padding-left: 0; }
+.snav-item.active { color: var(--gold); }
+.snav-item.locked { opacity: .3; pointer-events: none; }
+
+/* ── PLANTATION: CONVICTION ──────────────────────────────────────────────── */
+.conviction-section { padding: 7rem 0 6rem; }
+.conviction-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.conviction-text h2 { font-size: clamp(1.8rem, 2.8vw, 2.4rem); color: var(--cream); margin-bottom: 1.8rem; font-style: italic; }
+.conviction-text p { margin-bottom: 1.2rem; }
+.staging { margin-top: 2.5rem; }
+.staging-item {
+  display: flex; gap: 1.2rem; padding: .85rem 0; border-bottom: 1px solid var(--rule-2);
+}
+.staging-item:first-child { border-top: 1px solid var(--rule-2); }
+.st-num { font-family: var(--mono); font-size: .58rem; color: var(--gold); opacity: .55; min-width: 1.5rem; margin-top: .18rem; }
+.st-text { font-family: var(--mono); font-size: .62rem; letter-spacing: .04em; color: var(--stone); line-height: 1.6; }
+.st-text strong { color: rgba(242,237,227,.8); font-weight: 400; }
+.conviction-visual {
+  background: var(--forest-2); padding: 2.5rem;
+}
+.cv-title { font-family: var(--mono); font-size: .56rem; letter-spacing: .14em; color: var(--gold); margin-bottom: 1.5rem; display: block; opacity: .7; }
+.cv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--rule); }
+.cv-item { background: var(--forest-2); padding: 1.2rem 1rem; }
+.cv-n { font-family: var(--mono); font-size: .5rem; letter-spacing: .1em; color: var(--stone); display: block; margin-bottom: .3rem; }
+.cv-v { font-family: var(--serif); font-size: .95rem; color: var(--cream); }
+.cv-two { display: flex; flex-direction: column; gap: 2px; margin-top: 2px; }
+.cv-two-item {
+  background: var(--forest-3); padding: 1.2rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.cv-two-item .cti-name { font-family: var(--serif); font-size: 1rem; color: var(--cream); }
+.cv-two-item .cti-desc { font-family: var(--mono); font-size: .56rem; color: var(--stone); line-height: 1.6; letter-spacing: .03em; }
+
+/* ── SIX RULES ───────────────────────────────────────────────────────────── */
+.rules-section { background: var(--forest-2); padding: 6rem 0; }
+.rules-grid {
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  gap: 1px; background: var(--rule); margin-top: 2.5rem;
+}
+.rule-item {
+  background: var(--forest-2); padding: 1.8rem 1.4rem;
+  transition: background .2s;
+}
+.rule-item:hover { background: var(--forest-3); }
+.rn { font-family: var(--mono); font-size: .54rem; color: var(--gold); opacity: .5; display: block; margin-bottom: .8rem; letter-spacing: .1em; }
+.rt { font-family: var(--serif); font-size: .95rem; color: var(--cream); margin-bottom: .5rem; line-height: 1.3; }
+.rb { font-family: var(--mono); font-size: .56rem; color: var(--stone); line-height: 1.75; letter-spacing: .03em; }
+.rules-coda {
+  margin-top: 2.5rem; padding-top: 1.8rem; border-top: 1px solid var(--rule);
+  text-align: center; font-family: var(--serif); font-size: 1rem;
+  font-style: italic; color: rgba(138,120,96,.6);
+}
+
+/* ── PLANTATION: COFFEE PORTAL ───────────────────────────────────────────── */
+.coffee-portal { padding: 0; }
+.coffee-portal-card {
+  position: relative; min-height: 520px;
+  display: flex; align-items: center; overflow: hidden; cursor: pointer;
+}
+.coffee-portal-bg {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(105deg, rgba(13,26,11,.96) 35%, rgba(13,26,11,.45) 100%),
+    url('https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=1800&q=80&fit=crop&crop=center') center/cover no-repeat;
+  transition: transform 6s ease;
+}
+.coffee-portal-card:hover .coffee-portal-bg { transform: scale(1.04); }
+.coffee-portal-content { position: relative; z-index: 2; padding: 5rem 2.5rem; max-width: 600px; }
+.coffee-portal-content h2 { font-size: clamp(2rem, 3.5vw, 3rem); color: var(--cream); margin-bottom: .8rem; }
+.coffee-portal-content h2 em { font-style: italic; color: var(--stone); }
+.coffee-portal-content p { font-size: .92rem; max-width: 38ch; margin-bottom: 2rem; }
+.coffee-portal-meta {
+  position: absolute; bottom: 2.5rem; right: 2.5rem;
+  font-family: var(--mono); font-size: .54rem; letter-spacing: .1em;
+  color: var(--stone); opacity: .4; text-align: right; line-height: 2.2;
+}
+
+/* ── COMING SOON CARDS ───────────────────────────────────────────────────── */
+.coming-section { padding: 6rem 0; border-top: 1px solid var(--rule); }
+.coming-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--rule); margin-top: 2.5rem; }
+.coming-item {
+  background: var(--forest); padding: 1.8rem 1.4rem;
+  position: relative; overflow: hidden; opacity: .45;
+}
+.coming-num { font-family: var(--mono); font-size: .54rem; color: var(--stone); opacity: .4; margin-bottom: .7rem; display: block; }
+.coming-title { font-family: var(--serif); font-size: 1rem; color: var(--cream); margin-bottom: .3rem; }
+.coming-desc { font-family: var(--mono); font-size: .56rem; color: var(--stone); line-height: 1.7; letter-spacing: .03em; }
+.coming-badge {
+  position: absolute; top: 1rem; right: 1rem;
+  font-family: var(--mono); font-size: .5rem; letter-spacing: .1em;
+  border: 1px solid var(--rule); padding: .2rem .5rem; color: var(--stone); opacity: .5;
+}
+.coming-coda { margin-top: 1.8rem; text-align: center; font-family: var(--serif); font-style: italic; font-size: .85rem; color: rgba(138,120,96,.4); }
+
+/* ── COFFEE PAGE ─────────────────────────────────────────────────────────── */
+.cof-hero {
+  padding: 10rem 0 6rem; position: relative; overflow: hidden;
+}
+.cof-hero-grain {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1447078806655-40579c2520d6?w=1800&q=70&fit=crop&crop=center') center/cover;
+  opacity: .07;
+}
+.cof-hero-content { position: relative; z-index: 2; }
+.cof-eyebrow { font-family: var(--mono); font-size: .58rem; letter-spacing: .18em; color: var(--gold); opacity: .6; display: block; margin-bottom: 1.5rem; }
+.cof-hero h1 { font-size: clamp(3rem, 6vw, 5.8rem); color: var(--cream); line-height: 1.05; }
+.cof-hero h1 span { display: block; }
+.cof-hero h1 .big { font-size: clamp(3.5rem, 7vw, 6.8rem); font-style: italic; }
+.cof-hero-body { margin-top: 2rem; max-width: 44ch; font-size: .92rem; }
+
+/* ── TERROIR STRIP ───────────────────────────────────────────────────────── */
+.terroir-strip {
+  display: grid; grid-template-columns: repeat(8, 1fr);
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  margin: 4rem 0;
+}
+.t-item {
+  padding: 1.3rem 1.1rem; border-right: 1px solid var(--rule-2);
+}
+.t-item:last-child { border-right: none; }
+.t-lbl { font-family: var(--mono); font-size: .5rem; letter-spacing: .1em; color: var(--stone); display: block; margin-bottom: .4rem; }
+.t-val { font-family: var(--serif); font-size: .9rem; color: var(--cream); }
+
+/* ── TERROIR STORY ───────────────────────────────────────────────────────── */
+.terroir-story { padding: 6rem 0; }
+.terroir-inner { display: grid; grid-template-columns: 7fr 5fr; gap: 6rem; align-items: start; }
+.terroir-text h2 { font-size: clamp(1.8rem, 2.6vw, 2.4rem); color: var(--cream); margin-bottom: 2rem; }
+.terroir-text p { margin-bottom: 1.4rem; }
+.variety-cards { display: flex; flex-direction: column; gap: 2px; }
+.variety-card {
+  background: var(--forest-2); padding: 1.8rem 1.6rem;
+}
+.var-tag { font-family: var(--mono); font-size: .54rem; letter-spacing: .12em; color: var(--gold); opacity: .6; display: block; margin-bottom: .6rem; }
+.var-name { font-family: var(--serif); font-size: 1.4rem; font-style: italic; color: var(--cream); margin-bottom: 1.2rem; }
+.var-rows { display: flex; flex-direction: column; gap: 0; }
+.var-row { display: flex; gap: .8rem; padding: .5rem 0; border-bottom: 1px solid var(--rule-2); font-family: var(--mono); font-size: .58rem; }
+.var-row:last-child { border: none; }
+.var-k { color: var(--stone); min-width: 5rem; }
+.var-v { color: rgba(242,237,227,.75); line-height: 1.5; }
+
+/* ── LOT SECTION ─────────────────────────────────────────────────────────── */
+.lots-section { padding: 6rem 0; border-top: 1px solid var(--rule); }
+.lots-header { margin-bottom: 3rem; }
+.lots-header h2 { font-size: clamp(2rem, 3vw, 2.8rem); color: var(--cream); }
+.lots-meta { font-family: var(--mono); font-size: .56rem; letter-spacing: .08em; color: var(--stone); margin-top: .6rem; opacity: .55; }
+.lots-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); }
+
+.lot-card {
+  background: var(--forest); padding: 2rem 1.8rem 1.8rem;
+  position: relative; overflow: hidden; cursor: default;
+  transition: background .25s;
+}
+.lot-card:hover { background: var(--forest-2); }
+.lot-card.flagship { background: #110805; }
+.lot-card.flagship:hover { background: #1A0C07; }
+
+.flagship-tag {
+  position: absolute; top: 0; left: 0; right: 0;
+  background: var(--gold); padding: .32rem 1.8rem;
+  font-family: var(--mono); font-size: .52rem; letter-spacing: .14em;
+  color: var(--ink); text-align: center;
+}
+.lot-inner { margin-top: 0; }
+.lot-card.flagship .lot-inner { margin-top: 2rem; }
+
+.lot-num { font-family: var(--mono); font-size: .58rem; letter-spacing: .1em; color: var(--gold); opacity: .55; display: block; margin-bottom: .5rem; }
+.lot-method { font-family: var(--serif); font-size: 1.35rem; color: var(--cream); line-height: 1.2; margin-bottom: .2rem; }
+.lot-card.flagship .lot-method { color: #F4DDD0; }
+.lot-given { font-family: var(--serif); font-size: .82rem; font-style: italic; color: var(--stone); margin-bottom: 1.5rem; }
+
+.lot-pills { display: flex; gap: .35rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.pill {
+  font-family: var(--mono); font-size: .52rem; letter-spacing: .06em;
+  border: 1px solid var(--rule); padding: .22rem .6rem; color: var(--stone);
+}
+.lot-card.flagship .pill { border-color: rgba(196,144,32,.25); color: rgba(196,144,32,.7); }
+
+.lot-story {
+  font-family: var(--serif); font-size: .88rem; font-style: italic;
+  color: rgba(242,237,227,.5); line-height: 1.7; margin-bottom: 1.4rem;
+  border-left: 1px solid var(--gold); padding-left: .9rem;
+}
+.lot-card.flagship .lot-story { color: rgba(244,221,208,.65); }
+
+.lot-data {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .5rem;
+  padding-top: 1.1rem; border-top: 1px solid var(--rule);
+}
+.ld-item .ldk { font-family: var(--mono); font-size: .48rem; letter-spacing: .1em; color: var(--stone); opacity: .5; display: block; margin-bottom: .18rem; }
+.ld-item .ldv { font-family: var(--mono); font-size: .64rem; color: rgba(242,237,227,.8); }
+.lot-card.flagship .ldv { color: rgba(244,221,208,.85); }
+
+.flagship-box {
+  background: rgba(196,144,32,.07); border: 1px solid rgba(196,144,32,.18);
+  padding: .9rem 1.1rem; margin-top: 1.3rem;
+  font-family: var(--serif); font-size: .85rem; font-style: italic;
+  color: rgba(244,221,208,.72); line-height: 1.65;
+}
+
+/* ── LIQUID GOLD PROOF ───────────────────────────────────────────────────── */
+.proof-section { background: var(--forest-2); padding: 6rem 0; border-top: 1px solid var(--rule); }
+.proof-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.proof-label { font-family: var(--mono); font-size: .56rem; letter-spacing: .18em; color: var(--gold); opacity: .7; display: block; margin-bottom: 1rem; }
+.proof-headline { font-family: var(--serif); font-size: clamp(1.8rem, 2.5vw, 2.4rem); font-style: italic; color: var(--cream); margin-bottom: 1.5rem; }
+.proof-body { font-size: .92rem; margin-bottom: 2rem; }
+.proof-badge {
+  display: inline-flex; align-items: center; gap: .8rem;
+  background: rgba(196,144,32,.08); border: 1px solid rgba(196,144,32,.22);
+  padding: .9rem 1.3rem;
+}
+.proof-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: blink 2.5s ease infinite; }
+.proof-badge .bt { font-family: var(--mono); font-size: .58rem; letter-spacing: .08em; color: rgba(196,144,32,.85); }
+@keyframes blink { 0%,100%{opacity:.35} 50%{opacity:1} }
+.proof-visual {
+  background: var(--forest-3); padding: 3rem;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.proof-visual .pv-lot { font-family: var(--mono); font-size: .58rem; letter-spacing: .14em; color: var(--gold); opacity: .6; margin-bottom: .5rem; display: block; }
+.proof-visual .pv-name { font-family: var(--serif); font-size: 1.8rem; font-style: italic; color: var(--cream); margin-bottom: 1rem; }
+.pv-data { display: flex; gap: 1.5rem; }
+.pv-d .pdk { font-family: var(--mono); font-size: .5rem; letter-spacing: .1em; color: var(--stone); display: block; margin-bottom: .3rem; }
+.pv-d .pdv { font-family: var(--serif); font-size: 1.2rem; color: var(--cream); }
+.pv-story { font-family: var(--serif); font-size: .9rem; font-style: italic; color: rgba(242,237,227,.45); line-height: 1.7; border-left: 1px solid var(--gold); padding-left: 1rem; }
+
+/* ── PROCESSING PHILOSOPHY ───────────────────────────────────────────────── */
+.process-section { padding: 7rem 0; border-top: 1px solid var(--rule); }
+.process-inner { display: grid; grid-template-columns: 5fr 7fr; gap: 6rem; align-items: center; }
+.process-text h2 { font-size: clamp(1.6rem, 2.4vw, 2.2rem); color: var(--cream); margin-bottom: 1.5rem; }
+.process-text h2 em { color: var(--stone); }
+.process-text p { margin-bottom: 1.2rem; }
+.process-chips { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem; }
+.chip { font-family: var(--mono); font-size: .54rem; letter-spacing: .08em; color: var(--stone); border: 1px solid var(--rule); padding: .35rem .8rem; }
+.process-visual { display: flex; flex-direction: column; gap: 2px; }
+.pv-row {
+  display: flex; align-items: stretch;
+  background: var(--forest-2); overflow: hidden;
+  transition: background .2s;
+}
+.pv-row:hover { background: var(--forest-3); }
+.pv-bar { width: 4px; flex-shrink: 0; }
+.pv-row:nth-child(1) .pv-bar { background: #3A5430; }
+.pv-row:nth-child(2) .pv-bar { background: #5A3A20; }
+.pv-row:nth-child(3) .pv-bar { background: #C49020; }
+.pv-row:nth-child(4) .pv-bar { background: #3A5430; }
+.pv-row:nth-child(5) .pv-bar { background: #3A1408; }
+.pv-row:nth-child(6) .pv-bar { background: #1A2030; }
+.pv-content { padding: .9rem 1.2rem; flex: 1; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.pvc-left .pvc-num { font-family: var(--mono); font-size: .52rem; color: var(--gold); opacity: .5; display: block; margin-bottom: .2rem; }
+.pvc-left .pvc-name { font-family: var(--serif); font-size: .95rem; color: var(--cream); }
+.pvc-right { font-family: var(--mono); font-size: .54rem; color: var(--stone); text-align: right; line-height: 1.5; }
+
+/* ── REASON PAGE ─────────────────────────────────────────────────────────── */
+.reason-hero {
+  height: 92vh; min-height: 620px; position: relative;
+  display: flex; align-items: flex-end; padding-bottom: 7rem; overflow: hidden;
+}
+.reason-hero-bg {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(13,26,11,.2) 0%, rgba(13,26,11,.6) 55%, rgba(13,26,11,1) 100%),
+    linear-gradient(to right, rgba(13,26,11,.65) 0%, transparent 70%),
+    url('https://images.unsplash.com/photo-1542601098-3adb3baeb1ec?w=1800&q=85&fit=crop&crop=center') center/cover no-repeat;
+}
+.reason-hero-content { position: relative; z-index: 2; }
+.reason-hero h1 {
+  font-size: clamp(3.8rem, 7vw, 7rem);
+  color: var(--cream); max-width: 10ch; line-height: 1.0;
+}
+.reason-hero h1 em { color: var(--stone); font-style: italic; }
+.reason-hero-pull {
+  margin-top: 2.5rem; max-width: 48ch;
+  font-family: var(--serif); font-size: clamp(1rem, 1.6vw, 1.25rem);
+  font-style: italic; color: rgba(242,237,227,.55); line-height: 1.8;
+}
+.origin-section { padding: 9rem 0 7rem; }
+.origin-inner { display: grid; grid-template-columns: 5fr 7fr; gap: 7rem; align-items: start; }
+.origin-left h2 { font-size: clamp(1.8rem, 2.8vw, 2.6rem); font-style: italic; color: var(--cream); margin-bottom: 2rem; line-height: 1.2; }
+.origin-left p { margin-bottom: 1.4rem; }
+.origin-pull { margin-top: 2.5rem; border-left: 1px solid var(--gold); padding-left: 1.4rem; font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: rgba(242,237,227,.55); line-height: 1.8; }
+.origin-right { display: flex; flex-direction: column; gap: 2px; padding-top: .5rem; }
+.origin-card { background: var(--forest-2); padding: 1.8rem 1.6rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: background .2s; }
+.origin-card:hover { background: var(--forest-3); }
+.oc-num { font-family: var(--mono); font-size: .56rem; color: var(--gold); opacity: .5; min-width: 1.5rem; margin-top: .2rem; letter-spacing: .08em; }
+.oc-title { font-family: var(--serif); font-size: 1rem; color: var(--cream); margin-bottom: .35rem; }
+.oc-body { font-family: var(--mono); font-size: .58rem; color: var(--stone); line-height: 1.75; letter-spacing: .03em; }
+.thousand-section { padding: 0; background: var(--forest-2); }
+.thousand-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.thousand-text { padding: 7rem 5rem 7rem 2.5rem; max-width: 620px; margin-left: auto; }
+.thousand-text h2 { font-size: clamp(2rem, 3vw, 2.8rem); color: var(--cream); margin-bottom: 2rem; line-height: 1.1; }
+.thousand-text p { margin-bottom: 1.4rem; }
+.thousand-quote { margin-top: 3rem; padding: 2rem; background: var(--forest-3); border-top: 1px solid rgba(196,144,32,.4); }
+.thousand-quote p { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: rgba(242,237,227,.75); line-height: 1.75; }
+.thousand-quote cite { display: block; margin-top: .8rem; font-family: var(--mono); font-size: .54rem; letter-spacing: .1em; color: var(--stone); font-style: normal; }
+.thousand-visual { background: var(--forest-3); position: relative; overflow: hidden; min-height: 520px; display: flex; align-items: flex-end; }
+.thousand-visual-bg { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,26,11,.8) 0%, transparent 50%), url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&q=80&fit=crop&crop=center') center/cover no-repeat; filter: saturate(.6); }
+.thousand-visual-label { position: relative; z-index: 2; padding: 2.5rem; font-family: var(--mono); font-size: .54rem; letter-spacing: .14em; color: var(--stone); opacity: .5; }
+.refusal-section { padding: 8rem 0; border-top: 1px solid var(--rule); }
+.refusal-header { margin-bottom: 4rem; }
+.refusal-header h2 { font-size: clamp(1.8rem, 2.8vw, 2.6rem); color: var(--cream); }
+.refusal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); }
+.refusal-item { background: var(--forest); padding: 2rem 1.8rem; transition: background .2s; }
+.refusal-item:hover { background: var(--forest-2); }
+.ref-not { font-family: var(--mono); font-size: .52rem; letter-spacing: .12em; color: var(--stone); opacity: .4; display: block; margin-bottom: .5rem; text-decoration: line-through; }
+.ref-title { font-family: var(--serif); font-size: 1.1rem; color: var(--cream); margin-bottom: .6rem; line-height: 1.3; }
+.ref-body { font-family: var(--mono); font-size: .56rem; color: var(--stone); line-height: 1.75; letter-spacing: .03em; }
+.standards-section { background: var(--forest-2); padding: 8rem 0; border-top: 1px solid var(--rule); }
+.standards-inner { display: grid; grid-template-columns: 5fr 7fr; gap: 6rem; align-items: start; }
+.standards-left h2 { font-size: clamp(1.6rem, 2.4vw, 2.2rem); color: var(--cream); margin-bottom: 1.5rem; font-style: italic; }
+.standards-left p { margin-bottom: 1.2rem; }
+.standards-right { display: flex; flex-direction: column; gap: 2px; }
+.standard-row { display: grid; grid-template-columns: 2.5rem 1fr; gap: 0; background: var(--forest-3); overflow: hidden; transition: background .2s; }
+.standard-row:hover { background: var(--forest-4); }
+.std-num { padding: 1rem; background: rgba(196,144,32,.08); display: flex; align-items: center; justify-content: center; }
+.std-num span { font-family: var(--mono); font-size: .52rem; color: var(--gold); opacity: .6; }
+.std-body { padding: 1rem 1.2rem; }
+.std-name { font-family: var(--serif); font-size: .95rem; color: var(--cream); margin-bottom: .25rem; }
+.std-desc { font-family: var(--mono); font-size: .54rem; color: var(--stone); line-height: 1.6; letter-spacing: .03em; }
+.founder-section { padding: 10rem 0; position: relative; overflow: hidden; }
+.founder-glow { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(20,35,16,.9) 0%, transparent 70%); }
+.founder-inner { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; text-align: center; }
+.founder-byline { font-family: var(--mono); font-size: .54rem; letter-spacing: .2em; color: var(--stone); opacity: .45; margin-bottom: 3rem; display: block; }
+.founder-statement { font-family: var(--serif); font-size: clamp(1.3rem, 2.4vw, 2rem); font-weight: 300; color: rgba(242,237,227,.75); line-height: 1.9; margin-bottom: 3rem; }
+.founder-statement strong { color: rgba(242,237,227,.95); font-weight: 400; }
+.founder-name { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--stone); opacity: .55; }
+/* ── BUYER CTA ───────────────────────────────────────────────────────────── */
+.buyer-section { padding: 8rem 0; text-align: center; background: var(--forest-2); border-top: 1px solid var(--rule); }
+.buyer-section h2 { font-size: clamp(1.5rem, 2.8vw, 2.5rem); color: var(--cream); margin: 1.5rem auto; max-width: 28ch; }
+.buyer-email {
+  display: inline-block; font-family: var(--serif); font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  font-style: italic; color: var(--cream); text-decoration: none;
+  border-bottom: 1px solid var(--gold); padding-bottom: .25rem; margin: 1.5rem 0;
+  transition: color .2s;
+}
+.buyer-email:hover { color: var(--gold); }
+.buyer-note { font-family: var(--mono); font-size: .6rem; letter-spacing: .06em; color: var(--stone); max-width: 44ch; margin: 0 auto; line-height: 1.9; }
+.buyer-lot5 { margin-top: 1.5rem; font-family: var(--serif); font-size: .9rem; font-style: italic; color: rgba(196,144,32,.5); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a class="nav-logo" onclick="go('home')">
+    <span class="nav-wordmark">aura</span>
+    <span class="nav-sub">LIFE · आभा · オーラ<br>theaura.life</span>
+  </a>
+  <div class="nav-right">
+    <span class="nav-link" id="nl-home" onclick="go('home')">Home</span>
+    <span class="nav-link" id="nl-reason" onclick="go('reason')">The Reason</span>
+    <span class="nav-link" id="nl-plantation" onclick="go('plantation')">02 Plantation</span>
+    <span class="nav-link" id="nl-coffee" onclick="go('coffee')">02a Coffee</span>
+    <a class="nav-cta" href="mailto:coffee@theaura.life">coffee@theaura.life</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     HOME
+══════════════════════════════════════════════════════════════════ -->
+<div id="pg-home" class="page active">
+
+  <!-- §1 HERO -->
+  <section class="home-hero">
+    <div class="home-hero-bg"></div>
+    <div class="home-hero-coord">
+      13.1365° N, 75.6403° E<br>
+      Mudigere · Western Ghats<br>
+      3,600 ft · 150 acres<br>
+      <br>
+      35.2375° N, 140.3947° E<br>
+      Ohara · Kyoto, Japan
+    </div>
+    <div class="home-hero-content wrap reveal in">
+      <span class="home-hero-eyebrow">Aura · The 1000-Year Idea</span>
+      <h1>The Land<br><em>Remembers</em></h1>
+      <div class="home-hero-sub">
+        <p class="home-hero-desc">A regenerative ecosystem for monastic polymaths. Two ancient farming intelligences. Six coffee micro lots. One regenerative conviction.</p>
+        <div class="home-hero-stats">
+          <div class="stat"><span class="n">100</span><span class="l">Acres coffee</span></div>
+          <div class="stat"><span class="n">6</span><span class="l">Micro lots</span></div>
+          <div class="stat"><span class="n">52</span><span class="l">Malnad Gidda</span></div>
+          <div class="stat"><span class="n">1000</span><span class="l">Year idea</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">Scroll</div>
+  </section>
+
+  <!-- §2 WHAT AURA IS -->
+  <section class="what-section">
+    <div class="wrap">
+      <div class="what-inner">
+        <div class="what-left reveal">
+          <span class="tag-label">What Aura is</span>
+          <h2>"A regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 1000 years."</h2>
+          <p>Aura is not a farm. Not a brand. Not a product. It is a living system — 150 acres in the Western Ghats of India where land, culture, and intelligence return to rhythm. Two ancient farming intelligences. Three fermentation disciplines. The 1000-Year Idea.</p>
+          <p>Everyone else starts from the model and works down. We start from the earth and work up.</p>
+          <div class="anchor-lines">
+            <div class="anchor-line">The choices made by one generation shape a thousand that follow.</div>
+            <div class="anchor-line">Aura is not built, it is grown.</div>
+            <div class="anchor-line">We restore the land's rhythm — through soil, seed, and silence.</div>
+          </div>
+        </div>
+        <div class="what-right reveal">
+          <svg class="mark-symbol" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M26 4 L46 42 L6 42 Z" stroke="#C49020" stroke-width=".8" fill="none" opacity=".5"/>
+            <path d="M26 4 C34 18 42 30 46 42" stroke="#C49020" stroke-width=".5" fill="none" opacity=".3"/>
+            <path d="M26 4 C18 18 10 30 6 42" stroke="#C49020" stroke-width=".5" fill="none" opacity=".3"/>
+            <circle cx="26" cy="4" r="2" fill="#C49020" opacity=".6"/>
+            <circle cx="46" cy="42" r="2" fill="#C49020" opacity=".4"/>
+            <circle cx="6" cy="42" r="2" fill="#C49020" opacity=".4"/>
+            <circle cx="26" cy="28" r="4" stroke="#C49020" stroke-width=".5" fill="none" opacity=".2"/>
+          </svg>
+          <span class="tag-label">Three pillars</span>
+          <div class="pillars">
+            <div class="pillar">
+              <div class="pillar-roman">I</div>
+              <div>
+                <div class="pillar-name">Sanctuary — The Method</div>
+                <div class="pillar-desc">Silence, stillness, presence, deep work. The monastic method. Ohara, Kyoto. Humans are not owners — only guests of the mountain.</div>
+              </div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-roman">II</div>
+              <div>
+                <div class="pillar-name">Agroculture — The Ground</div>
+                <div class="pillar-desc">The land, soil, crops, animals, farming systems, biodiversity. Mudigere, India. Where forest and energy merge — cultivation becomes culture.</div>
+              </div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-roman">III</div>
+              <div>
+                <div class="pillar-name">Artistry — The Mind</div>
+                <div class="pillar-desc">Design, craft, technology, knowledge, creative residency. Labs. Residency. Gurukul. Material research rooted in the land.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §3 THE LAND -->
+  <section class="land-section">
+    <div class="land-inner">
+      <div class="land-img">
+        <div class="land-img-bg"></div>
+        <div class="land-img-overlay">
+          <div class="land-img-caption">Mudigere · Western Ghats, Karnataka, India · 3,600 ft</div>
+        </div>
+      </div>
+      <div class="land-text reveal-l">
+        <span class="tag-label">The land — Mudigere</span>
+        <h2 style="font-size:clamp(1.6rem,2.4vw,2.2rem);color:var(--cream);margin-bottom:1.5rem">Volcanic soil. Monsoon rhythm. Sacred ground.</h2>
+        <p style="margin-bottom:1.5rem">The Western Ghats are a UNESCO World Heritage biodiversity hotspot. Red laterite soil, pH 6.0–6.5, alive with mycorrhizal networks. 100 acres of coffee beneath native shade canopy. 52 Malnad Gidda cattle anchor the soil cycle. This is not a farm that produces commodities. It is a living system that produces intelligence.</p>
+        <div class="land-data-grid">
+          <div class="land-datum"><span class="dk">Altitude</span><span class="dv">3,600 ft</span></div>
+          <div class="land-datum"><span class="dk">Soil pH</span><span class="dv">6.0 – 6.5</span></div>
+          <div class="land-datum"><span class="dk">Rainfall</span><span class="dv">40–100 in/yr</span></div>
+          <div class="land-datum"><span class="dk">Temperature</span><span class="dv">14°C – 30°C</span></div>
+          <div class="land-datum"><span class="dk">Coffee area</span><span class="dv">100 acres</span></div>
+          <div class="land-datum"><span class="dk">Herd</span><span class="dv">52 Malnad Gidda</span></div>
+        </div>
+        <div class="land-quote">"Humans are not owners — only guests of the mountain."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §4 PHILOSOPHY -->
+  <section class="phil-section">
+    <div class="wrap">
+      <div class="phil-inner">
+        <div class="reveal">
+          <span class="rta-tag">ṚTA · Right Time · Right Action</span>
+          <div class="phil-headline">"Ṛta is the invisible architecture that governs how farming is done, how teams behave, how everything at Aura is timed."</div>
+          <p class="phil-body">RTA is not just a lab name. It is the operating principle. The timing of BD 500 — applied in the evening, when the earth is inhaling. The rhythm of fermentation — 36 hours, 48 hours, multi-cycle. The patience of drying — 22 days, 25 days, 30 days. Not faster. Right.</p>
+          <p class="phil-body">In this tradition, intelligence is not control. It is alignment.</p>
+          <div class="rta-examples">
+            <div class="rta-example">BD 500 applied at dusk — when the earth is inhaling</div>
+            <div class="rta-example">Fermentation rhythm — 36 hours, 48 hours, multi-cycle Solera</div>
+            <div class="rta-example">Drying patience — 22 days, 25 days, 30 days. Not faster. Right.</div>
+            <div class="rta-example">Lunar calendar — root days, leaf days, flower days, fruit days</div>
+          </div>
+        </div>
+        <div class="reveal">
+          <span class="tag-label">Intelligence hierarchy</span>
+          <div class="hier-stack">
+            <div class="hier-row">
+              <div class="hier-bar"></div>
+              <div class="hier-label">Natural Intelligence</div>
+              <div class="hier-desc">Primary. Self-regulation of living systems. Balance without central control.</div>
+            </div>
+            <div class="hier-row">
+              <div class="hier-bar"></div>
+              <div class="hier-label">Ancestral Knowledge</div>
+              <div class="hier-desc">Long memory. Vedic: Ṛta, rhythm. Greek: physis, balance. Roman: stewardship.</div>
+            </div>
+            <div class="hier-row">
+              <div class="hier-bar"></div>
+              <div class="hier-label">Human Judgement</div>
+              <div class="hier-desc">Responsibility. Land intuition, cultural sense, ethical design, story.</div>
+            </div>
+            <div class="hier-row">
+              <div class="hier-bar"></div>
+              <div class="hier-label">Technology</div>
+              <div class="hier-desc">Execution only. Technology executes. Technology never decides.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §5 PLANTATION PORTAL -->
+  <section class="portal-section reveal">
+    <div class="portal-card" onclick="go('plantation')">
+      <div class="portal-card-bg"></div>
+      <div class="portal-card-content">
+        <span class="tag-label">02 · Regenerative Plantation</span>
+        <h2>Where forest and energy merge — cultivation becomes culture.</h2>
+        <p>Two ancient farming intelligences. Three fermentation disciplines. Six coffee micro lots. One regenerative conviction. The living system behind every cup.</p>
+        <div class="portal-btn">
+          <span>Explore the Plantation</span>
+          <span class="arr">→</span>
+        </div>
+      </div>
+      <div class="portal-badge">
+        Mudigere, Western Ghats<br>
+        Karnataka, India<br>
+        13.1365° N, 75.6403° E
+      </div>
+    </div>
+  </section>
+
+  <!-- §6 MANIFESTO -->
+  <section class="manifesto-section">
+    <div class="manifesto-glow"></div>
+    <div class="wrap" style="position:relative;z-index:2">
+      <span class="manifesto-eyebrow">The Aura standard</span>
+      <div class="manifesto-text reveal">
+        <strong>Depth over speed.</strong> Care over convenience.
+        <strong>Wisdom over noise.</strong> Regeneration over extraction.
+        <strong>Coherence over fragmentation.</strong> Stillness over performance.
+        <strong>Stewardship over ego.</strong>
+      </div>
+      <div class="manifesto-coda">
+        <span>Aura is not built, it is grown.</span>
+        <span style="opacity:.6">I am the first gardener. I will not be the last.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">aura</div>
+        <div class="footer-tagline">"Aura is not built, it is grown."</div>
+        <div class="footer-locs">
+          Mudigere, Western Ghats, India · Active 2026<br>
+          Ohara, Kyoto, Japan · In planning<br>
+          Munduk, Bali, Indonesia · Aspirational<br>
+          Daylesford, Australia · Aspirational
+        </div>
+      </div>
+      <div>
+        <span class="footer-col-title">Pages</span>
+        <ul class="footer-links">
+          <li><a onclick="go('home')">Home</a></li>
+          <li><a onclick="go('reason')">The Reason</a></li>
+          <li><a onclick="go('plantation')">02 Regenerative Plantation</a></li>
+          <li><a onclick="go('coffee')">02a Coffee — The Flagship</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer-col-title">Contact</span>
+        <ul class="footer-links">
+          <li><a href="mailto:coffee@theaura.life">coffee@theaura.life</a></li>
+          <li><a href="https://theaura.life" target="_blank">theaura.life</a></li>
+          <li><a>@theaura.life</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Aura Life · Aura.Plantation India Pvt Ltd · RTA Labs</span>
+      <span>Right Time · Right Action</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     REASON
+══════════════════════════════════════════════════════════════════ -->
+<div id="pg-reason" class="page">
+
+  <!-- §1 HERO -->
+  <section class="reason-hero">
+    <div class="reason-hero-bg"></div>
+    <div class="reason-hero-content wrap reveal in">
+      <span class="home-hero-eyebrow">Why Aura Exists</span>
+      <h1>The<br><em>Reason</em></h1>
+      <p class="reason-hero-pull">Every farm has a crop. Every brand has a story. Aura has a conviction — and the conviction came before the crop, before the brand, before any of it.</p>
+    </div>
+  </section>
+
+  <!-- §2 ORIGIN -->
+  <section class="origin-section">
+    <div class="wrap">
+      <div class="origin-inner">
+        <div class="origin-left reveal">
+          <span class="tag-label">The origin</span>
+          <h2>"Everyone else starts from the model and works down. We start from the earth and work up."</h2>
+          <p>Aura did not begin with a business plan. It began with a question: what does it look like to farm as if your great-great-grandchildren will be watching?</p>
+          <p>The Western Ghats — 150 acres of red laterite soil at 3,600 feet, inside a UNESCO biodiversity hotspot — gave the answer a place. Two ancient farming intelligences, Biodynamic and Vedic, gave it a method. The 1000-Year Idea gave it a horizon.</p>
+          <p>The result is not a farm that produces commodities. It is a living system that produces intelligence.</p>
+          <div class="origin-pull">The choices made by one generation shape a thousand that follow.</div>
+        </div>
+        <div class="origin-right reveal">
+          <div class="origin-card">
+            <div class="oc-num">I</div>
+            <div>
+              <div class="oc-title">Land as primary intelligence</div>
+              <div class="oc-body">Before any crop decision, any processing method, any sale — the soil speaks. Red laterite, pH 6.0–6.5, alive with mycorrhizal networks. We learned to listen to it first.</div>
+            </div>
+          </div>
+          <div class="origin-card">
+            <div class="oc-num">II</div>
+            <div>
+              <div class="oc-title">Two ancient farming intelligences</div>
+              <div class="oc-body">Biodynamic (BD 500–508, lunar cycles, CPP) and Vedic (Jeevamrit, Panchgavya, Beejamrit, Vrikshayurveda). Not as marketing language — as operating system.</div>
+            </div>
+          </div>
+          <div class="origin-card">
+            <div class="oc-num">III</div>
+            <div>
+              <div class="oc-title">Monastic discipline as method</div>
+              <div class="oc-body">Ohara, Kyoto. Silence, stillness, presence, deep work. The best farming is not faster. It is righter. Ṛta — the invisible rhythm that governs when to act and when to wait.</div>
+            </div>
+          </div>
+          <div class="origin-card">
+            <div class="oc-num">IV</div>
+            <div>
+              <div class="oc-title">Culture as output, not coffee</div>
+              <div class="oc-body">Every micro lot, every processed batch, every blockchain record is a cultural artifact. The cup is where the land meets the person drinking it. That connection is the product.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §3 THE 1000-YEAR IDEA -->
+  <section class="thousand-section">
+    <div class="thousand-inner">
+      <div class="thousand-text reveal-l">
+        <span class="tag-label">The 1000-Year Idea</span>
+        <h2>What changes when you think across a millennium</h2>
+        <p>When the horizon is a thousand years, every decision transforms. You stop asking "will this sell this season?" and start asking "will this make the soil stronger in fifty years?" You stop optimising for yield and start optimising for depth.</p>
+        <p>The Solera fermentation method is the most literal expression of this idea. A portion of every fermentation batch is carried forward to the next — ancestral microbial energy passed from harvest to harvest, generation to generation. The choices made in one cycle permanently shape all the cycles that follow.</p>
+        <p>The 1000-Year Idea is not poetry. It is the actual engineering logic behind every decision at Aura — from how BD 500 is applied (evening, when the earth is inhaling) to why the Malnad Gidda herd is indigenous (their biology is native to this soil cycle).</p>
+        <div class="thousand-quote">
+          <p>The choices made by one generation shape a thousand that follow. This is literally happening in our fermentation tanks.</p>
+          <cite>— Aura Solera Method · Est. 2026</cite>
+        </div>
+      </div>
+      <div class="thousand-visual">
+        <div class="thousand-visual-bg"></div>
+        <div class="thousand-visual-label">Western Ghats · Mudigere · UNESCO Biodiversity Hotspot</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §4 THE REFUSALS -->
+  <section class="refusal-section">
+    <div class="wrap">
+      <div class="refusal-header reveal">
+        <span class="tag-label">What we deliberately are not</span>
+        <h2>The six refusals</h2>
+      </div>
+      <div class="refusal-grid reveal">
+        <div class="refusal-item">
+          <span class="ref-not">NOT THIS</span>
+          <div class="ref-title">A farm that produces commodities</div>
+          <div class="ref-body">A living system that produces intelligence. The crop is evidence of the system — not the point of it.</div>
+        </div>
+        <div class="refusal-item">
+          <span class="ref-not">NOT THIS</span>
+          <div class="ref-title">Organic as a marketing badge</div>
+          <div class="ref-body">Regenerative as a conviction. We work with biodynamic and Vedic methods because they work — not because the label commands a price premium.</div>
+        </div>
+        <div class="refusal-item">
+          <span class="ref-not">NOT THIS</span>
+          <div class="ref-title">Fast luxury built for today</div>
+          <div class="ref-body">Quiet depth built for a thousand years. No pop-ups. No aggressive CTAs. No hollow sustainability language. The site should breathe. Slow. Unhurried.</div>
+        </div>
+        <div class="refusal-item">
+          <span class="ref-not">NOT THIS</span>
+          <div class="ref-title">Technology as decision-maker</div>
+          <div class="ref-body">Technology as executor only. Natural intelligence first. Ancestral knowledge second. Human judgement third. Technology executes — it never decides.</div>
+        </div>
+        <div class="refusal-item">
+          <span class="ref-not">NOT THIS</span>
+          <div class="ref-title">Owners of the land</div>
+          <div class="ref-body">Guests of the mountain. Stewardship, not ownership. The land was here before us and will be here long after. Our role is to leave it more alive than we found it.</div>
+        </div>
+        <div class="refusal-item">
+          <span class="ref-not">NOT THIS</span>
+          <div class="ref-title">A brand with a story</div>
+          <div class="ref-body">A conviction with evidence. The story is the land. The soil record. The fermentation log. The blockchain trace. Every cup is a verifiable chapter.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §5 THE STANDARDS -->
+  <section class="standards-section">
+    <div class="wrap">
+      <div class="standards-inner">
+        <div class="standards-left reveal">
+          <span class="tag-label">How every decision is made</span>
+          <h2>"Before any decision,<br>seven questions."</h2>
+          <p>These are not guidelines. They are the operating filter for every choice at Aura — from which fermentation method to use, to which team member to hire, to which buyer to work with.</p>
+          <p>A decision that fails any of the seven is reconsidered. A decision that passes all seven is made with confidence and without apology.</p>
+        </div>
+        <div class="standards-right reveal">
+          <div class="standard-row">
+            <div class="std-num"><span>01</span></div>
+            <div class="std-body"><div class="std-name">Ecological</div><div class="std-desc">Does this improve living systems? Does the soil, the forest, the water cycle benefit?</div></div>
+          </div>
+          <div class="standard-row">
+            <div class="std-num"><span>02</span></div>
+            <div class="std-body"><div class="std-name">Cultural</div><div class="std-desc">Does this deepen craft, memory, and meaning? Does it add to the archive or dilute it?</div></div>
+          </div>
+          <div class="standard-row">
+            <div class="std-num"><span>03</span></div>
+            <div class="std-body"><div class="std-name">Design</div><div class="std-desc">Is it beautiful in a quiet, durable, honest way? Material honesty over visual noise.</div></div>
+          </div>
+          <div class="standard-row">
+            <div class="std-num"><span>04</span></div>
+            <div class="std-body"><div class="std-name">Operational</div><div class="std-desc">Can the team actually execute this simply and well? Complexity for its own sake is not depth.</div></div>
+          </div>
+          <div class="standard-row">
+            <div class="std-num"><span>05</span></div>
+            <div class="std-body"><div class="std-name">Time</div><div class="std-desc">Will this age well? Will it make sense in 10 years? In 100? In 1000?</div></div>
+          </div>
+          <div class="standard-row">
+            <div class="std-num"><span>06</span></div>
+            <div class="std-body"><div class="std-name">Integrity</div><div class="std-desc">Does this preserve founder intent and brand coherence? Are we still ourselves in this decision?</div></div>
+          </div>
+          <div class="standard-row">
+            <div class="std-num"><span>07</span></div>
+            <div class="std-body"><div class="std-name">Presence</div><div class="std-desc">Does this create more calm, clarity, and depth? Or does it add noise?</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §6 FOUNDER WORD -->
+  <section class="founder-section">
+    <div class="founder-glow"></div>
+    <div class="founder-inner">
+      <span class="founder-byline">A word from the founder</span>
+      <div class="founder-statement reveal">
+        I did not come to Mudigere to build a coffee brand.
+        I came because the land asked a question I could not answer quickly —
+        and <strong>any question worth having</strong> deserves a slow, honest answer.
+        <br><br>
+        The 1000-Year Idea is not ambition. It is <strong>responsibility</strong>.
+        If we are going to work this soil, to take from it and give back to it,
+        to ask 52 Malnad Gidda cows to live here and contribute their biology to this cycle —
+        then we are obligated to think past this harvest, past this generation,
+        past anything a spreadsheet can model.
+        <br><br>
+        <strong>Depth over speed. Care over convenience. Stewardship over ego.</strong>
+        That is the reason. That is all of it.
+      </div>
+      <div class="founder-name">— Arvind Singh, Founder · Mudigere, 2026</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-bottom" style="max-width:1200px;margin:0 auto">
+      <span>theaura.life · The Reason · Why Aura Exists</span>
+      <span><a href="mailto:coffee@theaura.life" style="color:inherit;text-decoration:none">coffee@theaura.life</a></span>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     PLANTATION
+══════════════════════════════════════════════════════════════════ -->
+<div id="pg-plantation" class="page">
+
+  <!-- §1 HERO -->
+  <section class="plant-hero">
+    <div class="plant-hero-bg"></div>
+    <div class="plant-hero-content wrap">
+      <span class="tag-label">02 · Regenerative Plantation · Mudigere</span>
+      <h1>Where forest and<br>energy merge —<br><em style="color:var(--stone)">cultivation becomes<br>culture.</em></h1>
+      <p style="margin-top:1.5rem;max-width:38ch;font-size:.9rem">Two ancient farming intelligences. Three fermentation disciplines. Six coffee micro lots. One regenerative vision.</p>
+    </div>
+  </section>
+
+  <!-- SUBNAV -->
+  <div class="plant-subnav">
+    <div class="plant-subnav-inner">
+      <span class="snav-item active">Overview</span>
+      <span class="snav-item" onclick="go('coffee')">Coffee ↗</span>
+      <span class="snav-item locked">Pepper</span>
+      <span class="snav-item locked">Areca</span>
+      <span class="snav-item locked">Biodynamic</span>
+      <span class="snav-item locked">Vedic Farming</span>
+      <span class="snav-item locked">Fermentation</span>
+    </div>
+  </div>
+
+  <!-- §2 CONVICTION -->
+  <section class="conviction-section">
+    <div class="wrap">
+      <div class="conviction-inner">
+        <div class="conviction-text reveal">
+          <span class="tag-label">The conviction</span>
+          <h2>Aura is not organic as a marketing badge. It is regenerative as a conviction.</h2>
+          <p>We work with two ancient farming intelligences — Biodynamic and Vedic — and three fermentation disciplines. Every spray, every compost, every fermentation cycle follows a logic older than the institutions that study it.</p>
+          <p>Aura does not use biodynamics because it is fashionable. Aura uses it because it works.</p>
+          <div class="staging">
+            <span class="tag-label" style="margin-top:2rem">Five-stage farming journey</span>
+            <div class="staging-item"><div class="st-num">01</div><div class="st-text"><strong>Stabilize and maintain</strong></div></div>
+            <div class="staging-item"><div class="st-num">02</div><div class="st-text"><strong>Improve</strong> farm discipline and observation</div></div>
+            <div class="staging-item"><div class="st-num">03</div><div class="st-text"><strong>Organic transition</strong> by correct sections and timing</div></div>
+            <div class="staging-item"><div class="st-num">04</div><div class="st-text"><strong>Biodynamic maturation</strong></div></div>
+            <div class="staging-item"><div class="st-num">05</div><div class="st-text"><strong>Higher-value</strong> ecological products and hospitality</div></div>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="conviction-visual">
+            <span class="cv-title">Estate data · 2026</span>
+            <div class="cv-grid">
+              <div class="cv-item"><span class="cv-n">Location</span><span class="cv-v">Mudigere, W. Ghats</span></div>
+              <div class="cv-item"><span class="cv-n">Altitude</span><span class="cv-v">3,600 ft</span></div>
+              <div class="cv-item"><span class="cv-n">Coffee area</span><span class="cv-v">100 acres</span></div>
+              <div class="cv-item"><span class="cv-n">Total estate</span><span class="cv-v">150 acres</span></div>
+              <div class="cv-item"><span class="cv-n">Soil</span><span class="cv-v">Red laterite</span></div>
+              <div class="cv-item"><span class="cv-n">Soil pH</span><span class="cv-v">6.0 – 6.5</span></div>
+              <div class="cv-item"><span class="cv-n">Herd</span><span class="cv-v">52 Malnad Gidda</span></div>
+              <div class="cv-item"><span class="cv-n">Zone</span><span class="cv-v">UNESCO biosphere</span></div>
+            </div>
+            <div style="margin-top:2px">
+              <div class="cv-two">
+                <div class="cv-two-item">
+                  <div>
+                    <div class="cti-name">Biodynamic</div>
+                    <div class="cti-desc">BD 500–508 · CPP · Lunar cycles · Malnad Gidda herd</div>
+                  </div>
+                </div>
+                <div class="cv-two-item">
+                  <div>
+                    <div class="cti-name">Vedic</div>
+                    <div class="cti-desc">Jeevamrit · Panchgavya · Beejamrit · Vrikshayurveda</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §3 SIX RULES -->
+  <section class="rules-section">
+    <div class="wrap">
+      <span class="tag-label">Field culture code</span>
+      <h2 style="font-size:clamp(1.8rem,2.6vw,2.4rem);color:var(--cream)">The six rules</h2>
+      <div class="rules-grid reveal">
+        <div class="rule-item"><span class="rn">01</span><div class="rt">Soil Comes First</div><div class="rb">No chemicals for quick yield. If soil becomes weak, the farm becomes weak.</div></div>
+        <div class="rule-item"><span class="rn">02</span><div class="rt">Do Small Work Properly</div><div class="rb">Better to spray 2 blocks correctly than 6 blocks badly.</div></div>
+        <div class="rule-item"><span class="rn">03</span><div class="rt">No Shortcuts</div><div class="rb">If something is wrong, we speak. No hiding mistakes. Clean work. Honest work.</div></div>
+        <div class="rule-item"><span class="rn">04</span><div class="rt">Quality Before Quantity</div><div class="rb">Only fully ripe cherries plucked. We are a quality farm, not a bulk farm.</div></div>
+        <div class="rule-item"><span class="rn">05</span><div class="rt">Think 10 Years Ahead</div><div class="rb">We build slowly. We build safely. We build for the future.</div></div>
+        <div class="rule-item"><span class="rn">06</span><div class="rt">Leaders on the Field</div><div class="rb">90% work is on the land. Leadership means being visible. Be firm, not rude.</div></div>
+      </div>
+      <div class="rules-coda">"Be on the land. Be fair. Do the work properly."</div>
+    </div>
+  </section>
+
+  <!-- §4 COFFEE PORTAL -->
+  <section class="coffee-portal">
+    <div class="coffee-portal-card" onclick="go('coffee')">
+      <div class="coffee-portal-bg"></div>
+      <div class="coffee-portal-content reveal">
+        <span class="tag-label">02a · The flagship crop</span>
+        <h2>From cherry to cup.<br><em>Every lot has a name.</em></h2>
+        <p>100 acres of coffee at 3,600 feet. Arabica Sln.9 & Sln.795. Six micro lots. Two ancient farming intelligences. Lot 003 already on bar in Mumbai as Liquid Gold.</p>
+        <div class="portal-btn">
+          <span>Explore the coffee story</span>
+          <span class="arr">→</span>
+        </div>
+      </div>
+      <div class="coffee-portal-meta">
+        Arabica Sln.9 & Sln.795<br>
+        2026 Harvest<br>
+        6 Micro lots
+      </div>
+    </div>
+  </section>
+
+  <!-- §5 COMING SOON -->
+  <section class="coming-section">
+    <div class="wrap">
+      <span class="tag-label">The plantation world — opening in stages</span>
+      <h2 style="font-size:clamp(1.4rem,2vw,1.8rem);color:var(--cream);margin-bottom:.5rem">Each world opens in its season.</h2>
+      <p style="max-width:44ch;font-size:.88rem">The plantation is a living system with many expressions. The coffee story opens first — it is active now, the harvest is in, the lots are ready. The other disciplines follow as the estate documents and shares its practice.</p>
+      <div class="coming-grid">
+        <div class="coming-item"><span class="coming-badge">Coming</span><span class="coming-num">02b</span><div class="coming-title">Pepper</div><div class="coming-desc">Malabar pepper climbing the shade trees. Traditional and experimental fermentation. Direct trade.</div></div>
+        <div class="coming-item"><span class="coming-badge">Coming</span><span class="coming-num">02c</span><div class="coming-title">Areca</div><div class="coming-desc">The sentinel palm. Vertical architecture. Cultural significance in Karnataka.</div></div>
+        <div class="coming-item"><span class="coming-badge">Coming</span><span class="coming-num">02d</span><div class="coming-title">Biodynamic</div><div class="coming-desc">BD 500–508. Horn methods. CPP. Lunar cycles. The farm as a closed-loop organism.</div></div>
+        <div class="coming-item"><span class="coming-badge">Coming</span><span class="coming-num">02e</span><div class="coming-title">Vedic Farming</div><div class="coming-desc">Jeevamrit, Panchgavya, Beejamrit. Knowledge systems older than the institutions that study them.</div></div>
+        <div class="coming-item"><span class="coming-badge">Coming</span><span class="coming-num">02f</span><div class="coming-title">Fermentation</div><div class="coming-desc">Three disciplines: coffee, pepper, cow dung. Where precision meets patience.</div></div>
+      </div>
+      <div class="coming-coda">Each world documented in its own time. Right Time · Right Action.</div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-bottom" style="max-width:1200px;margin:0 auto">
+      <span>theaura.life · 02 Regenerative Plantation · Mudigere, Western Ghats</span>
+      <span><a href="mailto:coffee@theaura.life" style="color:inherit;text-decoration:none">coffee@theaura.life</a></span>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     COFFEE
+══════════════════════════════════════════════════════════════════ -->
+<div id="pg-coffee" class="page">
+
+  <!-- §1 HERO -->
+  <section class="cof-hero">
+    <div class="cof-hero-grain"></div>
+    <div class="wrap cof-hero-content">
+      <span class="cof-eyebrow">02a · The flagship crop · Mudigere, Western Ghats</span>
+      <h1>
+        <span class="big">Every lot</span>
+        <span>has a name.</span>
+      </h1>
+      <p class="cof-hero-body">100 acres of coffee at 3,600 feet in the Western Ghats. Arabica Sln.9 & Sln.795. Two ancient farming intelligences. Six micro lots. One regenerative conviction.</p>
+    </div>
+  </section>
+
+  <!-- TERROIR STRIP -->
+  <div class="terroir-strip wrap-wide reveal">
+    <div class="t-item"><span class="t-lbl">Altitude</span><span class="t-val">3,600 ft</span></div>
+    <div class="t-item"><span class="t-lbl">Region</span><span class="t-val">Mudigere, W. Ghats</span></div>
+    <div class="t-item"><span class="t-lbl">Soil</span><span class="t-val">Red laterite</span></div>
+    <div class="t-item"><span class="t-lbl">Soil pH</span><span class="t-val">6.0 – 6.5</span></div>
+    <div class="t-item"><span class="t-lbl">Rainfall</span><span class="t-val">40–100 in/yr</span></div>
+    <div class="t-item"><span class="t-lbl">Temperature</span><span class="t-val">14°C – 30°C</span></div>
+    <div class="t-item"><span class="t-lbl">Coffee area</span><span class="t-val">100 acres</span></div>
+    <div class="t-item"><span class="t-lbl">Zone</span><span class="t-val">UNESCO biosphere</span></div>
+  </div>
+
+  <!-- §2 TERROIR STORY -->
+  <section class="terroir-story">
+    <div class="wrap">
+      <div class="terroir-inner">
+        <div class="terroir-text reveal">
+          <span class="tag-label">The terroir</span>
+          <h2>3,600 feet in the Western Ghats. The soil remembers everything.</h2>
+          <p>Multi-layered shade-grown coffee beneath fig, jackfruit, silver oak, and native hardwoods. Red laterite soil, pH 6.0–6.5, alive with mycorrhizal networks. 150 acres inside a UNESCO biodiversity zone. Every cup carries the signature of this altitude, this rainfall, and this forest.</p>
+          <p style="margin-bottom:0">52 Malnad Gidda cattle — an indigenous Karnataka breed adapted to this soil over centuries — provide the dung, urine, and horns that drive the entire biodynamic system. Their microbial signature is specific to this altitude, this soil, this climate. You cannot replicate Aura's BD preparations with imported breeds. The herd is the biodynamic engine.</p>
+        </div>
+        <div class="variety-cards reveal">
+          <div class="variety-card">
+            <span class="var-tag">Arabica Sln.9 · The workhorse</span>
+            <div class="var-name">Selection 9</div>
+            <div class="var-rows">
+              <div class="var-row"><span class="var-k">Origin</span><span class="var-v">CCRI India · Ethiopian Typica lineage. Leaf rust resistant.</span></div>
+              <div class="var-row"><span class="var-k">Character</span><span class="var-v">Clean, balanced, medium body. Good acidity. Subtle sweetness.</span></div>
+              <div class="var-row"><span class="var-k">At Aura</span><span class="var-v">Present in all six lots. Proves processing is as important as genetics.</span></div>
+            </div>
+          </div>
+          <div class="variety-card" style="margin-top:2px">
+            <span class="var-tag">Arabica Sln.795 · The depth-giver</span>
+            <div class="var-name">Selection 795</div>
+            <div class="var-rows">
+              <div class="var-row"><span class="var-k">Origin</span><span class="var-v">Hybrid S.288 × Kent. Rust-resistant, yield-adapted.</span></div>
+              <div class="var-row"><span class="var-k">Character</span><span class="var-v">Fuller body. Chocolatey, nutty base. Lower acidity.</span></div>
+              <div class="var-row"><span class="var-k">At Aura</span><span class="var-v">Expressive in Red Honey (003) and Banana Wash (004).</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §3 SIX LOTS -->
+  <section class="lots-section">
+    <div class="wrap">
+      <div class="lots-header reveal">
+        <span class="tag-label">2026 harvest · Six micro lots</span>
+        <h2>Six documents from<br>one living system.</h2>
+        <div class="lots-meta">All lots: Arabica Sln.9 + Sln.795 · 95%+ ripeness · Floats removed · pH 4.2 end · Temp 21°C / 32°C / 18°C</div>
+      </div>
+      <div class="lots-grid reveal">
+
+        <!-- 001 -->
+        <div class="lot-card">
+          <div class="lot-inner">
+            <span class="lot-num">Lot 001</span>
+            <div class="lot-method">Anaerobic Natural</div>
+            <div class="lot-given">The Sealed Lot</div>
+            <div class="lot-pills"><span class="pill">Raspberry</span><span class="pill">Strawberry</span><span class="pill">Red Berries</span></div>
+            <div class="lot-story">The foundation. Clean, controlled, disciplined. Transparent to terroir. The baseline.</div>
+            <div class="lot-data">
+              <div class="ld-item"><span class="ldk">Harvest</span><span class="ldv">11,984 kg</span></div>
+              <div class="ld-item"><span class="ldk">Fermentation</span><span class="ldv">36 hr sealed</span></div>
+              <div class="ld-item"><span class="ldk">Water TDS</span><span class="ldv">29.28 ppm</span></div>
+              <div class="ld-item"><span class="ldk">Drying</span><span class="ldv">22 days raised bed</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 002 -->
+        <div class="lot-card">
+          <div class="lot-inner">
+            <span class="lot-num">Lot 002</span>
+            <div class="lot-method">Dry Osmosis</div>
+            <div class="lot-given">The Patient Lot</div>
+            <div class="lot-pills"><span class="pill">Blueberry</span><span class="pill">Fig</span><span class="pill">Dates · Raisins</span></div>
+            <div class="lot-story">Patience before process. The drying comes first.</div>
+            <div class="lot-data">
+              <div class="ld-item"><span class="ldk">Harvest</span><span class="ldv">8,726 kg</span></div>
+              <div class="ld-item"><span class="ldk">Brix</span><span class="ldv">19.55%</span></div>
+              <div class="ld-item"><span class="ldk">Fermentation</span><span class="ldv">48 hr anaerobic</span></div>
+              <div class="ld-item"><span class="ldk">Innovation</span><span class="ldv">Dried to 45% first</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 003 -->
+        <div class="lot-card">
+          <div class="lot-inner">
+            <span class="lot-num">Lot 003</span>
+            <div class="lot-method">Red Honey</div>
+            <div class="lot-given">Liquid Gold</div>
+            <div class="lot-pills"><span class="pill">Honey</span><span class="pill">Caramel</span><span class="pill">Nutty</span></div>
+            <div class="lot-story">What you leave on matters more than what you strip away.</div>
+            <div class="lot-data">
+              <div class="ld-item"><span class="ldk">Harvest</span><span class="ldv">6,715 kg</span></div>
+              <div class="ld-item"><span class="ldk">Brix</span><span class="ldv">19.25%</span></div>
+              <div class="ld-item"><span class="ldk">TDS</span><span class="ldv">30.37 ppm</span></div>
+              <div class="ld-item"><span class="ldk">Drying</span><span class="ldv">25 days raised bed</span></div>
+            </div>
+            <div style="margin-top:1rem;display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;background:rgba(196,144,32,.07);border:1px solid rgba(196,144,32,.18)">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 2.5s ease infinite;flex-shrink:0"></div>
+              <span style="font-family:var(--mono);font-size:.54rem;letter-spacing:.06em;color:rgba(196,144,32,.8)">On bar at Boojee, Mumbai</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 004 -->
+        <div class="lot-card">
+          <div class="lot-inner">
+            <span class="lot-num">Lot 004</span>
+            <div class="lot-method">Banana Wash</div>
+            <div class="lot-given">The Layered Lot</div>
+            <div class="lot-pills"><span class="pill">Tropical</span><span class="pill">Floral</span><span class="pill">Complex</span></div>
+            <div class="lot-story">The most distinctly Indian lot. Banana leaves contribute natural yeasts and tropical notes.</div>
+            <div class="lot-data">
+              <div class="ld-item"><span class="ldk">Harvest</span><span class="ldv">8,086 kg</span></div>
+              <div class="ld-item"><span class="ldk">Brix</span><span class="ldv">19.25%</span></div>
+              <div class="ld-item"><span class="ldk">Fermentation</span><span class="ldv">24 hr + 48 hr banana leaf</span></div>
+              <div class="ld-item"><span class="ldk">TDS</span><span class="ldv">30.37 ppm</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 005 FLAGSHIP -->
+        <div class="lot-card flagship">
+          <div class="flagship-tag">★ The Flagship · 770 kg · Not sold in volume</div>
+          <div class="lot-inner">
+            <span class="lot-num">Lot 005</span>
+            <div class="lot-method">Solera Maceration</div>
+            <div class="lot-given">The Living Lot</div>
+            <div class="lot-pills">
+              <span class="pill">Complex</span><span class="pill">Evolving</span><span class="pill">Ferment-forward</span>
+            </div>
+            <div class="lot-story">Transferring fermentation energy across generations. Ancestral intelligence mixed with fresh energy.</div>
+            <div class="lot-data">
+              <div class="ld-item"><span class="ldk">Harvest</span><span class="ldv">770 kg only</span></div>
+              <div class="ld-item"><span class="ldk">Brix</span><span class="ldv">18%</span></div>
+              <div class="ld-item"><span class="ldk">TDS</span><span class="ldv">42 ppm (highest)</span></div>
+              <div class="ld-item"><span class="ldk">Method</span><span class="ldv">Multi-cycle Solera</span></div>
+            </div>
+            <div class="flagship-box">"The choices made by one generation shape a thousand that follow." — literally happening in this fermentation tank.</div>
+          </div>
+        </div>
+
+        <!-- 006 -->
+        <div class="lot-card">
+          <div class="lot-inner">
+            <span class="lot-num">Lot 006</span>
+            <div class="lot-method">Solera Wash</div>
+            <div class="lot-given">The Clean Lot</div>
+            <div class="lot-pills"><span class="pill">Clean</span><span class="pill">Bright</span><span class="pill">Structured</span></div>
+            <div class="lot-story">Ascetic focus applied to coffee. The rarest lot. The cleanest process.</div>
+            <div class="lot-data">
+              <div class="ld-item"><span class="ldk">Harvest</span><span class="ldv">620 kg</span></div>
+              <div class="ld-item"><span class="ldk">Brix</span><span class="ldv">23% (highest)</span></div>
+              <div class="ld-item"><span class="ldk">Fermentation</span><span class="ldv">24 hr + 3-day soak</span></div>
+              <div class="ld-item"><span class="ldk">Process</span><span class="ldv">Hand-washed</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- §4 LIQUID GOLD PROOF -->
+  <section class="proof-section">
+    <div class="wrap">
+      <div class="proof-inner">
+        <div class="reveal">
+          <span class="proof-label">The proof · Lot 003</span>
+          <div class="proof-headline">Liquid Gold is already on bar.</div>
+          <p class="proof-body">Lot 003 · Red Honey is on bar at Boojee, Mumbai — named Liquid Gold by the house. It is Aura's first named lot: a buyer relationship that began with the cup. This is the proof point that opens every conversation.</p>
+          <div class="proof-badge">
+            <div class="dot"></div>
+            <span class="bt">Live · Boojee, Mumbai · Named by the house: Liquid Gold</span>
+          </div>
+        </div>
+        <div class="proof-visual reveal">
+          <span class="pv-lot">Lot 003 · Red Honey</span>
+          <div class="pv-name">Liquid Gold</div>
+          <div class="pv-data">
+            <div class="pv-d"><span class="pdk">Brix</span><span class="pdv">19.25%</span></div>
+            <div class="pv-d"><span class="pdk">Harvest</span><span class="pdv">6,715 kg</span></div>
+            <div class="pv-d"><span class="pdk">TDS</span><span class="pdv">30.37 ppm</span></div>
+          </div>
+          <div class="pv-story">What you leave on matters more than what you strip away. Mucilage kept on. Red from oxidation, not dye. 48hr anaerobic, 25 days raised bed.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §5 PROCESSING -->
+  <section class="process-section">
+    <div class="wrap">
+      <div class="process-inner">
+        <div class="process-text reveal">
+          <span class="tag-label">Processing philosophy</span>
+          <h2>Genetics are the instrument.<br><em>Processing is the music.</em></h2>
+          <p>Every lot starts the same: 95%+ ripeness, all floats removed, pH 4.2, temperature tracked. What changes is the method. Each method is a different relationship with time, with microbial energy, with the cherry itself.</p>
+          <p>The Solera carry-forward in Lot 005 is the most literal expression of the 1000-Year Idea: ancestral fermentation energy transferred to new fruit. Literally, the choices made in one cycle shape the next.</p>
+          <div class="process-chips">
+            <span class="chip">Biodynamic & Vedic</span>
+            <span class="chip">Blockchain traceability</span>
+            <span class="chip">Full cupping records</span>
+            <span class="chip">Sample kits on request</span>
+          </div>
+        </div>
+        <div class="process-visual reveal">
+          <div class="pv-row"><div class="pv-bar"></div><div class="pv-content"><div class="pvc-left"><span class="pvc-num">001</span><span class="pvc-name">Anaerobic Natural</span></div><div class="pvc-right">36 hr · 22-day dry</div></div></div>
+          <div class="pv-row"><div class="pv-bar"></div><div class="pv-content"><div class="pvc-left"><span class="pvc-num">002</span><span class="pvc-name">Dry Osmosis</span></div><div class="pvc-right">Dried first · 48 hr · Brix 19.55%</div></div></div>
+          <div class="pv-row"><div class="pv-bar"></div><div class="pv-content"><div class="pvc-left"><span class="pvc-num">003</span><span class="pvc-name">Red Honey</span></div><div class="pvc-right">48 hr · Mucilage on · Brix 19.25%</div></div></div>
+          <div class="pv-row"><div class="pv-bar"></div><div class="pv-content"><div class="pvc-left"><span class="pvc-num">004</span><span class="pvc-name">Banana Wash</span></div><div class="pvc-right">24 hr + 48 hr banana leaf</div></div></div>
+          <div class="pv-row"><div class="pv-bar"></div><div class="pv-content"><div class="pvc-left"><span class="pvc-num">005 ★</span><span class="pvc-name">Solera Maceration</span></div><div class="pvc-right">Multi-cycle · TDS 42 ppm · 770 kg</div></div></div>
+          <div class="pv-row"><div class="pv-bar"></div><div class="pv-content"><div class="pvc-left"><span class="pvc-num">006</span><span class="pvc-name">Solera Wash</span></div><div class="pvc-right">24 hr + 3-day soak · Brix 23%</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §6 BUYER CTA -->
+  <section class="buyer-section">
+    <span class="tag-label">Work with us</span>
+    <h2>Available to specialty roasters,<br>importers, and select retail.</h2>
+    <div><a class="buyer-email" href="mailto:coffee@theaura.life">coffee@theaura.life</a></div>
+    <div class="buyer-note">Full traceability. Blockchain verification. Cupping samples by request. Lot 005 offered to those who understand.</div>
+    <div class="buyer-lot5">theaura.life · @theaura.life</div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-bottom" style="max-width:1200px;margin:0 auto">
+      <span>theaura.life · 02a Coffee — The Flagship Crop · Mudigere, Western Ghats</span>
+      <span><a href="mailto:coffee@theaura.life" style="color:inherit;text-decoration:none">coffee@theaura.life</a></span>
+    </div>
+  </footer>
+</div>
+
+<!-- ── JS ─────────────────────────────────────────────────────────────────── -->
+<script>
+var pages = { home:'pg-home', reason:'pg-reason', plantation:'pg-plantation', coffee:'pg-coffee' };
+var navLinks = { home:'nl-home', reason:'nl-reason', plantation:'nl-plantation', coffee:'nl-coffee' };
+
+function go(id) {
+  Object.values(pages).forEach(function(p){ document.getElementById(p).classList.remove('active'); });
+  Object.values(navLinks).forEach(function(n){ var el=document.getElementById(n); if(el) el.classList.remove('active'); });
+  document.getElementById(pages[id]).classList.add('active');
+  var nl = document.getElementById(navLinks[id]);
+  if(nl) nl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  setTimeout(initReveal, 80);
+}
+
+function initReveal() {
+  var els = document.querySelectorAll('.reveal, .reveal-l');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  els.forEach(function(el){ io.observe(el); });
+}
+
+// Stagger lot cards
+document.querySelectorAll('.lot-card').forEach(function(el,i){
+  el.style.transitionDelay = (i * 0.06) + 's';
+});
+
+// Nav scroll tint
+window.addEventListener('scroll', function(){
+  var nav = document.getElementById('main-nav');
+  nav.style.background = window.scrollY > 40
+    ? 'rgba(13,26,11,0.98)'
+    : 'rgba(13,26,11,0.94)';
+}, { passive: true });
+
+initReveal();
+</script>
+</body>
+</html>

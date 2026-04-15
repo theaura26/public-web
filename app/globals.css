@@ -52,6 +52,7 @@ html [data-theme="day"] {
 [data-view="agent"] .stagger { display: flex !important; flex-direction: column !important; gap: 24px !important; }
 [data-view="agent"] section { padding: 40px 0 !important; }
 [data-view="agent"] .human-only { display: none !important; }
+[data-view="agent"] .field-input { font-family: var(--font-mono) !important; font-size: 14px !important; }
 [data-view="agent"] .agent-only { display: block !important; }
 .agent-only { display: none; }
 

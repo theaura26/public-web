@@ -37,7 +37,7 @@ export default function ContactPage() {
               transition: border-color 0.3s ease;
             }
             .field-input::placeholder {
-              color: rgba(255,255,255,0.6);
+              color: var(--text-muted);
             }
             .field-input:hover {
               border-bottom-color: var(--text-muted);

@@ -1,8 +1,41 @@
 'use client'
 
+import { useRef } from 'react'
 import Reveal from '@/components/RevealOnScroll'
 
+const TOPICS: Record<string, string> = {
+  coffee: 'Coffee & Sourcing',
+  residency: 'Residency & Studios',
+  partnerships: 'Partnerships',
+  events: 'Festivals & Events',
+  press: 'Press & Media',
+  general: 'General Inquiry',
+}
+
 export default function ContactPage() {
+  const nameRef = useRef<HTMLInputElement>(null)
+  const emailRef = useRef<HTMLInputElement>(null)
+  const topicRef = useRef<HTMLSelectElement>(null)
+  const messageRef = useRef<HTMLTextAreaElement>(null)
+
+  const handleSend = () => {
+    const name = nameRef.current?.value.trim() || ''
+    const email = emailRef.current?.value.trim() || ''
+    const topic = topicRef.current?.value || ''
+    const message = messageRef.current?.value.trim() || ''
+
+    const subject = topic ? `${TOPICS[topic] || topic}` : 'Hello from the website'
+    const bodyParts: string[] = []
+    if (message) bodyParts.push(message)
+    bodyParts.push('')
+    if (name) bodyParts.push(name)
+    if (email) bodyParts.push(email)
+
+    const body = bodyParts.join('\n')
+    const mailto = `mailto:hello@theaura.life?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    window.location.href = mailto
+  }
+
   return (
     <div>
       {/* Hero */}
@@ -56,25 +89,22 @@ export default function ContactPage() {
               <div className="flex flex-col gap-8">
                 <div className="flex flex-col gap-2">
                   <label htmlFor="name" className="label">Your name</label>
-                  <input id="name" type="text" className="field-input" placeholder="Full name" />
+                  <input ref={nameRef} id="name" type="text" className="field-input" placeholder="Full name" />
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="email" className="label">Email</label>
-                  <input id="email" type="email" className="field-input" placeholder="you@example.com" />
+                  <input ref={emailRef} id="email" type="email" className="field-input" placeholder="you@example.com" />
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="topic" className="label">What brings you here?</label>
                   <div style={{ position: 'relative' }}>
-                    <select id="topic" className="field-input" defaultValue="" style={{ WebkitAppearance: 'none', cursor: 'none', paddingRight: 28 }}>
+                    <select ref={topicRef} id="topic" className="field-input" defaultValue="" style={{ WebkitAppearance: 'none', cursor: 'none', paddingRight: 28 }}>
                       <option value="" disabled>Choose a topic</option>
-                      <option value="coffee">Coffee &amp; Sourcing</option>
-                      <option value="residency">Residency &amp; Studios</option>
-                      <option value="partnerships">Partnerships</option>
-                      <option value="events">Festivals &amp; Events</option>
-                      <option value="press">Press &amp; Media</option>
-                      <option value="general">General Inquiry</option>
+                      {Object.entries(TOPICS).map(([value, label]) => (
+                        <option key={value} value={value}>{label}</option>
+                      ))}
                     </select>
                     <span style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', color: 'var(--text)', fontSize: 18, pointerEvents: 'none' }}>+</span>
                   </div>
@@ -82,10 +112,11 @@ export default function ContactPage() {
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="message" className="label">Message</label>
-                  <textarea id="message" className="field-input" rows={4} placeholder="Tell us what you're thinking..." />
+                  <textarea ref={messageRef} id="message" className="field-input" rows={4} placeholder="Tell us what you're thinking..." />
                 </div>
 
                 <button
+                  onClick={handleSend}
                   style={{
                     marginTop: 8,
                     fontFamily: 'var(--font-sans)',

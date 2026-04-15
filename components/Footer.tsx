@@ -103,7 +103,7 @@ export default function Footer() {
       {/* Content */}
       <div style={{ padding: '64px var(--gutter) 80px', position: 'relative', zIndex: 2 }}>
         <div style={{ marginBottom: 32 }}>
-          <img src={logoSrc} alt="" width={48} height={48} style={{ display: 'block', background: 'transparent' }} />
+          <img src={logoSrc} alt="Aura" width={48} height={48} style={{ display: 'block', background: 'transparent' }} />
         </div>
         <div className="grid grid-cols-2 md:grid-cols-5" style={{ gap: 'clamp(24px, 3vw, 48px)', rowGap: 40 }}>
           <div>
@@ -239,8 +239,8 @@ export default function Footer() {
         >
           <style jsx>{`
             div {
-              background: radial-gradient(ellipse 60% 45% at 35% 75%, var(--fog-color, rgba(255,255,255,0.12)) 0%, transparent 55%),
-                          radial-gradient(ellipse 70% 55% at 75% 85%, var(--fog-color, rgba(255,255,255,0.09)) 0%, transparent 50%);
+              background: radial-gradient(ellipse 60% 45% at 35% 75%, ${theme === 'day' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.12)'} 0%, transparent 55%),
+                          radial-gradient(ellipse 70% 55% at 75% 85%, ${theme === 'day' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.09)'} 0%, transparent 50%);
               animation: fog-drift-slow 25s ease-in-out infinite alternate;
             }
             @keyframes fog-drift-slow {

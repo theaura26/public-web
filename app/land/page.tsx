@@ -46,7 +46,7 @@ export default function LandPage() {
       <section style={{ paddingTop: 250, paddingBottom: 80 }}>
         <div className="section-w">
           <Reveal>
-            <h1 style={{ maxWidth: 800 }}>Where Forest and Energy Merge</h1>
+            <h1 style={{ maxWidth: 'min(800px, 90vw)' }}>Where Forest and Energy Merge</h1>
           </Reveal>
           <Reveal delay={100}>
             <p className="p2" style={{ maxWidth: 440, marginTop: 32 }}>

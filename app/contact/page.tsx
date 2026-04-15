@@ -55,19 +55,19 @@ export default function ContactPage() {
             <Reveal>
               <div className="flex flex-col gap-8">
                 <div className="flex flex-col gap-2">
-                  <label className="label">Your name</label>
-                  <input type="text" className="field-input" placeholder="Full name" />
+                  <label htmlFor="name" className="label">Your name</label>
+                  <input id="name" type="text" className="field-input" placeholder="Full name" />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="label">Email</label>
-                  <input type="email" className="field-input" placeholder="you@example.com" />
+                  <label htmlFor="email" className="label">Email</label>
+                  <input id="email" type="email" className="field-input" placeholder="you@example.com" />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="label">What brings you here?</label>
+                  <label htmlFor="topic" className="label">What brings you here?</label>
                   <div style={{ position: 'relative' }}>
-                    <select className="field-input" defaultValue="" style={{ WebkitAppearance: 'none', cursor: 'none', paddingRight: 28 }}>
+                    <select id="topic" className="field-input" defaultValue="" style={{ WebkitAppearance: 'none', cursor: 'none', paddingRight: 28 }}>
                       <option value="" disabled>Choose a topic</option>
                       <option value="coffee">Coffee &amp; Sourcing</option>
                       <option value="residency">Residency &amp; Studios</option>
@@ -81,8 +81,8 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="label">Message</label>
-                  <textarea className="field-input" rows={4} placeholder="Tell us what you're thinking..." />
+                  <label htmlFor="message" className="label">Message</label>
+                  <textarea id="message" className="field-input" rows={4} placeholder="Tell us what you're thinking..." />
                 </div>
 
                 <button

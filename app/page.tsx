@@ -211,7 +211,7 @@ function HeroVideo() {
             opacity: 0,
           }}
         >
-          <h2 style={{ color: '#fff', maxWidth: 420, textAlign: 'center', textShadow: '0 2px 20px rgba(0,0,0,0.6)' }}>
+          <h2 style={{ color: '#fff', maxWidth: 'min(420px, 90vw)', textAlign: 'center', textShadow: '0 2px 20px rgba(0,0,0,0.6)' }}>
             Aura exists for those daring to choose the regenerative path.
           </h2>
         </div>
@@ -1063,7 +1063,7 @@ export default function Home() {
                     onClick={loc.onClick}
                     role={loc.onClick ? 'button' : undefined}
                     tabIndex={loc.onClick ? 0 : undefined}
-                    onKeyDown={loc.onClick ? (e) => { if (e.key === 'Enter') loc.onClick!() } : undefined}
+                    onKeyDown={loc.onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); loc.onClick!() } } : undefined}
                     style={{
                       borderBottom: '1px solid var(--border)',
                       padding: '16px 0',

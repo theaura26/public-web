@@ -24,8 +24,36 @@ const dmMono = DM_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Aura — The 1000-Year Idea',
+  metadataBase: new URL('https://theaura.life'),
+  title: {
+    template: '%s | Aura',
+    default: 'Aura — The 1000-Year Idea',
+  },
   description: 'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
+  openGraph: {
+    title: 'Aura — The 1000-Year Idea',
+    description: 'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
+    siteName: 'Aura',
+    type: 'website',
+    url: 'https://theaura.life',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Aura — The 1000-Year Idea',
+    description: 'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  keywords: ['regenerative agriculture', 'specialty coffee', 'monastic polymath', 'Aura', 'ancestral intelligence', 'Mudigere', 'India'],
+  other: {
+    'geo.region': 'IN-KA',
+    'geo.placename': 'Mudigere',
+    'geo.position': '13.1167;75.6333',
+    'ICBM': '13.1167, 75.6333',
+  },
 }
 
 export default function RootLayout({

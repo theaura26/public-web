@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import Reveal from '@/components/RevealOnScroll'
 import VideoReactiveArt from '@/components/VideoReactiveArt'
 import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun, CloudMoon } from '@phosphor-icons/react'
@@ -62,9 +62,8 @@ function HeroVideo() {
   const wrapRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const blurRef = useRef<HTMLDivElement>(null)
-  const copyRef = useRef<HTMLDivElement>(null)
   const artRef = useRef<HTMLDivElement>(null)
-  const artBgRef = useRef<HTMLDivElement>(null)
+  const logoRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -76,9 +75,8 @@ function HeroVideo() {
       raf = requestAnimationFrame(() => {
         const wrap = wrapRef.current
         const blur = blurRef.current
-        const copy = copyRef.current
         const art = artRef.current
-        if (!wrap || !blur || !copy) return
+        if (!wrap || !blur) return
 
         const rect = wrap.getBoundingClientRect()
         const scrollRange = wrap.offsetHeight - window.innerHeight
@@ -93,23 +91,21 @@ function HeroVideo() {
         const artFade = 1 - Math.min(1, Math.max(0, (p - 0.5) / 0.35))
         if (art) art.style.opacity = `${artFade}`
 
-        // Phase 1 (0–0.3): copy fades in
-        const fadeIn = Math.min(1, p / 0.3)
-        // Phase 2 (0.35–0.55): copy fades out
-        const fadeOut = Math.max(0, Math.min(1, (p - 0.35) / 0.2))
-        // Phase 3 (0.5–0.85): blur lifts
+        // Blur lifts as user scrolls (0.5–0.85)
         const blurLift = Math.max(0, Math.min(1, (p - 0.5) / 0.35))
-
-        const copyOpacity = fadeIn * (1 - fadeOut)
-        const copyY = (1 - fadeIn) * 24 + fadeOut * -16
-        copy.style.opacity = `${copyOpacity}`
-        copy.style.transform = `translateY(${copyY}px)`
 
         const blurVal = (1 - blurLift) * 16
         const overlayAlpha = (1 - blurLift) * 0.5
         blur.style.backdropFilter = `blur(${blurVal}px)`
         ;(blur.style as any).WebkitBackdropFilter = `blur(${blurVal}px)`
         blur.style.background = `rgba(0,0,0,${overlayAlpha})`
+
+        // Logo fades in (0.15–0.45)
+        const logo = logoRef.current
+        if (logo) {
+          const logoFade = Math.min(1, Math.max(0, (p - 0.15) / 0.3))
+          logo.style.opacity = `${logoFade}`
+        }
       })
     }
 
@@ -195,25 +191,31 @@ function HeroVideo() {
           }}
         />
 
-        {/* Centered copy */}
+        {/* Knockout symbol — fades in on scroll, inverted against video */}
         <div
-          ref={copyRef}
+          ref={logoRef}
           style={{
             position: 'absolute',
             inset: 0,
-            zIndex: 4,
+            zIndex: 10,
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            textAlign: 'center',
-            padding: '0 var(--gutter)',
+            mixBlendMode: 'difference',
+            pointerEvents: 'none',
             opacity: 0,
+            transition: 'opacity 0.1s ease-out',
           }}
         >
-          <h2 style={{ color: '#fff', maxWidth: 'min(420px, 90vw)', textAlign: 'center', textShadow: '0 2px 20px rgba(0,0,0,0.6)' }}>
-            Aura exists for those daring to choose the regenerative path.
-          </h2>
+          <img
+            src="/aura-symbol-slow.svg"
+            alt=""
+            aria-hidden="true"
+            style={{
+              width: 'min(35vh, 35vw)',
+              height: 'auto',
+            }}
+          />
         </div>
       </div>
     </section>
@@ -976,9 +978,10 @@ export default function Home() {
               <h1>Think in Generations.</h1>
             </Reveal>
             <Reveal delay={100}>
-              <p className="p2 hero-p">
-                Outcomes are immediate. Impact is inherited. One is measured in quarters. The other, in generations.
-              </p>
+              <div className="p2 hero-p">
+                <p>Outcomes are immediate. Impact is inherited. One is measured in quarters. The other, in generations.</p>
+                <p style={{ marginTop: 16 }}>Aura exists for those daring to choose the regenerative path.</p>
+              </div>
             </Reveal>
           </div>
           <style jsx>{`

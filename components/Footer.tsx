@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { LogoEmblem } from './Logo'
 import VideoReactiveArt from './VideoReactiveArt'
@@ -105,7 +104,7 @@ export default function Footer() {
         <div style={{ marginBottom: 32 }}>
           <img src={logoSrc} alt="Aura" width={48} height={48} style={{ display: 'block', background: 'transparent' }} />
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-5" style={{ gap: 'clamp(24px, 3vw, 48px)', rowGap: 40 }}>
+        <div className="grid grid-cols-2 md:grid-cols-4" style={{ gap: 'clamp(24px, 3vw, 48px)', rowGap: 40 }}>
           <div>
             <p className="label" style={{ marginBottom: 10 }}>Contact</p>
             <a href="/contact" className="p1">hello@theaura.life</a>
@@ -113,10 +112,6 @@ export default function Footer() {
           <div>
             <p className="label" style={{ marginBottom: 10 }}>Follow us</p>
             <a href="https://www.instagram.com/theaura.life/" target="_blank" rel="noopener noreferrer" className="p1" style={{ display: 'block' }}>Instagram</a>
-          </div>
-          <div>
-            <p className="label" style={{ marginBottom: 10 }}>Journal</p>
-            <Link href="/brand" className="p1" style={{ display: 'block', lineHeight: 1.8 }}>Our Brand</Link>
           </div>
           <div className="col-span-2">
             <p className="label" style={{ marginBottom: 16 }}>Locations</p>

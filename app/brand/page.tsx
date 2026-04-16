@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react'
 import Reveal from '@/components/RevealOnScroll'
-import GenerativeCanvas from '@/components/GenerativeCanvas'
+import VideoReactiveArt from '@/components/VideoReactiveArt'
 import { useMode } from '@/components/ModeProvider'
 
 const BRAND_COLORS = [
@@ -21,9 +21,6 @@ const INTELLIGENCES = ['Natural', 'Ancient', 'Human', 'Machine']
 function HeroBanner() {
   const [index, setIndex] = useState(0)
   const [visible, setVisible] = useState(true)
-  const wrapRef = useRef<HTMLDivElement>(null)
-  const innerRef = useRef<HTMLDivElement>(null)
-  const cardRef = useRef<HTMLDivElement>(null)
 
   // Word cycling
   useEffect(() => {
@@ -38,70 +35,20 @@ function HeroBanner() {
     return () => clearInterval(interval)
   }, [])
 
-  // Scroll-driven expansion
-  useEffect(() => {
-    let ticking = false
-    const onScroll = () => {
-      if (ticking) return
-      ticking = true
-      requestAnimationFrame(() => {
-        ticking = false
-        const wrap = wrapRef.current
-        const inner = innerRef.current
-        const card = cardRef.current
-        if (!wrap || !inner || !card) return
-
-        const rect = wrap.getBoundingClientRect()
-        const zone = wrap.offsetHeight - window.innerHeight
-        if (zone <= 0) return
-        const raw = Math.max(0, Math.min(1, -rect.top / zone))
-        // Smoothstep easing
-        const p = raw * raw * (3 - 2 * raw)
-
-        // Padding shrinks → card expands smoothly to fill viewport
-        const isMobile = window.innerWidth < 768
-        const navPad = (isMobile ? 32 : 56) * (1 - p)
-        const sidePad = (isMobile ? 16 : 48) * (1 - p)
-
-        inner.style.padding = `${navPad}px ${sidePad}px 0`
-        card.style.maxWidth = 'none'
-        card.style.aspectRatio = 'auto'
-        card.style.height = '100%'
-      })
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
   return (
-    <div ref={wrapRef} className="human-only" style={{ height: '160vh', position: 'relative' }}>
-      <div
-        ref={innerRef}
-        style={{
-          position: 'sticky',
-          top: 0,
-          height: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: 'clamp(32px, 7vh, 56px) clamp(16px, 4vw, 48px) 0',
-          boxSizing: 'border-box',
-        }}
-      >
-        <div
-          ref={cardRef}
-          className="brand-hero-card"
-          style={{
-            width: '100%',
-            maxWidth: 'calc((100vh - 56px - 96px) * 16 / 9)',
-            position: 'relative',
-            overflow: 'hidden',
-          }}
-        >
-          {/* Generative art background — shared component */}
-          <GenerativeCanvas style={{ position: 'absolute', inset: 0 }} />
+    <div className="human-only" style={{ height: '100vh', position: 'relative', overflow: 'hidden' }}>
+          {/* Video-reactive art background */}
+          <VideoReactiveArt
+            src="/aura-hero.mp4"
+            overlay
+            cellSize={8}
+            opacity={1}
+            sparsity={0.38}
+            reactivity={0.14}
+            mouse
+            colors={['#E8421A', '#F07820', '#F5B810', '#8AAEE0', '#D4C020', '#7A9040']}
+            style={{ position: 'absolute', inset: 0 }}
+          />
 
           {/* Text overlay */}
           <div style={{
@@ -138,20 +85,6 @@ function HeroBanner() {
               Intelligence
             </h1>
           </div>
-        </div>
-      </div>
-
-      <style jsx>{`
-        .brand-hero-card {
-          aspect-ratio: 16 / 9;
-        }
-        @media (max-width: 767px) {
-          .brand-hero-card {
-            aspect-ratio: 3 / 4;
-            max-width: none !important;
-          }
-        }
-      `}</style>
     </div>
   )
 }
@@ -259,8 +192,12 @@ function SlideGrid({ from, to, skip }: { from: number; to: number; skip?: number
             <TiltCard key={pg} index={idx}>
               <img
                 src={`/brand-slides/slide-${n}.jpg`}
-                alt=""
-                loading={idx < 4 ? 'eager' : 'lazy'}
+                alt={`Aura brand guideline, slide ${n}`}
+                width={1920}
+                height={1080}
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
                 draggable={false}
                 style={{
                   position: 'absolute',
@@ -412,7 +349,8 @@ export default function BrandPage() {
             <div style={{ marginBottom: 48, display: 'flex', justifyContent: 'center' }}>
               <img
                 src={logoSrc}
-                alt=""
+                alt="Aura logo"
+                decoding="async"
                 style={{
                   width: 96,
                   height: 96,

@@ -62,7 +62,6 @@ function HeroVideo() {
   const wrapRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const blurRef = useRef<HTMLDivElement>(null)
-  const copyRef = useRef<HTMLDivElement>(null)
   const artRef = useRef<HTMLDivElement>(null)
   const artBgRef = useRef<HTMLDivElement>(null)
 
@@ -76,9 +75,8 @@ function HeroVideo() {
       raf = requestAnimationFrame(() => {
         const wrap = wrapRef.current
         const blur = blurRef.current
-        const copy = copyRef.current
         const art = artRef.current
-        if (!wrap || !blur || !copy) return
+        if (!wrap || !blur) return
 
         const rect = wrap.getBoundingClientRect()
         const scrollRange = wrap.offsetHeight - window.innerHeight
@@ -93,17 +91,8 @@ function HeroVideo() {
         const artFade = 1 - Math.min(1, Math.max(0, (p - 0.5) / 0.35))
         if (art) art.style.opacity = `${artFade}`
 
-        // Phase 1 (0–0.3): copy fades in
-        const fadeIn = Math.min(1, p / 0.3)
-        // Phase 2 (0.35–0.55): copy fades out
-        const fadeOut = Math.max(0, Math.min(1, (p - 0.35) / 0.2))
-        // Phase 3 (0.5–0.85): blur lifts
+        // Blur lifts as user scrolls (0.5–0.85)
         const blurLift = Math.max(0, Math.min(1, (p - 0.5) / 0.35))
-
-        const copyOpacity = fadeIn * (1 - fadeOut)
-        const copyY = (1 - fadeIn) * 24 + fadeOut * -16
-        copy.style.opacity = `${copyOpacity}`
-        copy.style.transform = `translateY(${copyY}px)`
 
         const blurVal = (1 - blurLift) * 16
         const overlayAlpha = (1 - blurLift) * 0.5
@@ -195,26 +184,7 @@ function HeroVideo() {
           }}
         />
 
-        {/* Centered copy */}
-        <div
-          ref={copyRef}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            padding: '0 var(--gutter)',
-            opacity: 0,
-          }}
-        >
-          <h2 style={{ color: '#fff', maxWidth: 'min(420px, 90vw)', textAlign: 'center', textShadow: '0 2px 20px rgba(0,0,0,0.6)' }}>
-            Aura exists for those daring to choose the regenerative path.
-          </h2>
-        </div>
+        {/* Centered copy — removed, merged into hero paragraph */}
       </div>
     </section>
   )
@@ -977,7 +947,7 @@ export default function Home() {
             </Reveal>
             <Reveal delay={100}>
               <p className="p2 hero-p">
-                Outcomes are immediate. Impact is inherited. One is measured in quarters. The other, in generations.
+                Outcomes are immediate. Impact is inherited. One is measured in quarters. The other, in generations. Aura exists for those daring to choose the regenerative path.
               </p>
             </Reveal>
           </div>

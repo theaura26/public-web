@@ -947,7 +947,7 @@ export default function Home() {
             </Reveal>
             <Reveal delay={100}>
               <p className="p2 hero-p">
-                Outcomes are immediate. Impact is inherited. One is measured in quarters. The other, in generations. Aura exists for those daring to choose the regenerative path.
+                Outcomes are immediate. Impact is inherited. One is measured in quarters. The other, in generations.<br />Aura exists for those daring to choose the regenerative path.
               </p>
             </Reveal>
           </div>

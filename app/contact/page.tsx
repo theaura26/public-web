@@ -58,7 +58,7 @@ export default function ContactPage() {
 
     const subject = TOPICS[fields.topic] || 'Hello from the website'
     const body = [fields.message, '', fields.name, fields.email].join('\n')
-    const mailto = `mailto:hello@theaura.life?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    const mailto = `mailto:hello@theaura.life,poon.wen.ang@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
     window.location.href = mailto
     setSent(true)
   }

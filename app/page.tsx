@@ -946,9 +946,10 @@ export default function Home() {
               <h1>Think in Generations.</h1>
             </Reveal>
             <Reveal delay={100}>
-              <p className="p2 hero-p">
-                Outcomes are immediate. Impact is inherited. One is measured in quarters. The other, in generations.<br />Aura exists for those daring to choose the regenerative path.
-              </p>
+              <div className="p2 hero-p">
+                <p>Outcomes are immediate. Impact is inherited. One is measured in quarters. The other, in generations.</p>
+                <p style={{ marginTop: 16 }}>Aura exists for those daring to choose the regenerative path.</p>
+              </div>
             </Reveal>
           </div>
           <style jsx>{`

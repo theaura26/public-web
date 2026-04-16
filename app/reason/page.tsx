@@ -48,7 +48,7 @@ function Chapter({ title, children, sectionRef, idx, isMobile, isAgent }: {
           </div>
           {isMobile && !isAgent && ![0, 10, 11].includes(idx) && (
             <img src={CHAPTER_IMAGES[idx].src} alt={CHAPTER_IMAGES[idx].alt}
-              style={{ width: '100%', maxHeight: 360, objectFit: 'cover', marginTop: 32, display: 'block', borderRadius: 3 }} />
+              style={{ width: '100%', height: 'auto', marginTop: 32, display: 'block', borderRadius: 3 }} />
           )}
         </div>
       </Reveal>
@@ -116,7 +116,7 @@ export default function ReasonPage() {
       <section style={{ paddingTop: 250, paddingBottom: 80 }}>
         <div className="section-w">
           <Reveal>
-            <h1 style={{ maxWidth: 700 }}>Reason</h1>
+            <h1 style={{ maxWidth: 700 }}>The Reason</h1>
           </Reveal>
         </div>
       </section>
@@ -294,7 +294,7 @@ export default function ReasonPage() {
                   <p>I am the first gardener.<br />I will not be the last.</p>
                 </div>
                 <div style={{ marginTop: 16 }}>
-                  <img src="/arvind.svg" alt="Arvind" className="arvind-sig" style={{ height: 32, display: 'block' }} />
+                  <img src="/arvind.svg" alt="Arvind Singh signature" className="arvind-sig" style={{ height: 32, display: 'block' }} />
                   <style jsx>{`
                     div :global(.arvind-sig) {
                       filter: none;

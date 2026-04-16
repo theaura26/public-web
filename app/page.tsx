@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import Reveal from '@/components/RevealOnScroll'
 import VideoReactiveArt from '@/components/VideoReactiveArt'
 import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun, CloudMoon } from '@phosphor-icons/react'
@@ -63,7 +63,7 @@ function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const blurRef = useRef<HTMLDivElement>(null)
   const artRef = useRef<HTMLDivElement>(null)
-  const artBgRef = useRef<HTMLDivElement>(null)
+  const logoRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -99,6 +99,13 @@ function HeroVideo() {
         blur.style.backdropFilter = `blur(${blurVal}px)`
         ;(blur.style as any).WebkitBackdropFilter = `blur(${blurVal}px)`
         blur.style.background = `rgba(0,0,0,${overlayAlpha})`
+
+        // Logo fades in (0.15–0.45)
+        const logo = logoRef.current
+        if (logo) {
+          const logoFade = Math.min(1, Math.max(0, (p - 0.15) / 0.3))
+          logo.style.opacity = `${logoFade}`
+        }
       })
     }
 
@@ -184,7 +191,32 @@ function HeroVideo() {
           }}
         />
 
-        {/* Centered copy — removed, merged into hero paragraph */}
+        {/* Knockout symbol — fades in on scroll, inverted against video */}
+        <div
+          ref={logoRef}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 10,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            mixBlendMode: 'difference',
+            pointerEvents: 'none',
+            opacity: 0,
+            transition: 'opacity 0.1s ease-out',
+          }}
+        >
+          <img
+            src="/aura-symbol-slow.svg"
+            alt=""
+            aria-hidden="true"
+            style={{
+              width: 'min(35vh, 35vw)',
+              height: 'auto',
+            }}
+          />
+        </div>
       </div>
     </section>
   )

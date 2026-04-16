@@ -41,12 +41,12 @@ export default function Navbar() {
   const links = isAgent ? [
     { href: '/', label: '/' },
     { href: '/reason', label: '/reason' },
-    { href: '/land', label: '/land' },
+    { href: '/brand', label: '/brand' },
     { href: '/contact', label: '/contact' },
   ] : [
     { href: '/', label: 'Home' },
-    { href: '/reason', label: 'Reason' },
-    { href: '/land', label: 'The Land' },
+    { href: '/reason', label: 'The Reason' },
+    { href: '/brand', label: 'Our Brand' },
     { href: '/contact', label: 'Contact' },
   ]
 
@@ -77,6 +77,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                className="nav-btn"
                 style={{
                   ...NAV_BTN,
                   color: pathname === link.href ? 'var(--text)' : 'var(--text-muted)',

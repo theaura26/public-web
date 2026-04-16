@@ -170,20 +170,27 @@ export default function VideoReactiveArt({
     const ctx = canvas.getContext('2d', { alpha: overlay })!
     const sCtx = sampler.getContext('2d', { willReadFrequently: true })!
 
+    let resizeTimer = 0
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
       const w = wrapper.clientWidth
       const h = wrapper.clientHeight
-      canvas.width = w * dpr
-      canvas.height = h * dpr
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      const targetW = w * dpr
+      const targetH = h * dpr
+
+      // Only update canvas dimensions when they actually change (avoids clearing/flicker)
+      if (canvas.width !== targetW || canvas.height !== targetH) {
+        canvas.width = targetW
+        canvas.height = targetH
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      }
 
       const cols = Math.ceil(w / cellSize)
       const rows = Math.ceil(h / cellSize)
-      sampler.width = cols
-      sampler.height = rows
 
       if (cols !== gridRef.current.cols || rows !== gridRef.current.rows) {
+        sampler.width = cols
+        sampler.height = rows
         gridRef.current = { cols, rows }
         cellsRef.current = initCells(cols, rows)
         prevFrameRef.current = null
@@ -191,7 +198,10 @@ export default function VideoReactiveArt({
     }
 
     resize()
-    const ro = new ResizeObserver(resize)
+    const ro = new ResizeObserver(() => {
+      cancelAnimationFrame(resizeTimer)
+      resizeTimer = requestAnimationFrame(resize)
+    })
     ro.observe(wrapper)
 
     const drawShape = (

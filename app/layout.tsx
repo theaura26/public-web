@@ -27,12 +27,12 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://theaura.life'),
   title: {
     template: '%s | Aura',
-    default: 'Aura — The 1000-Year Idea',
+    default: 'Aura.Life — The 1000-Year Idea',
   },
-  description: 'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
+  description: 'A regenerative platform for generational impact.',
   openGraph: {
-    title: 'Aura — The 1000-Year Idea',
-    description: 'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
+    title: 'Aura.Life — The 1000-Year Idea',
+    description: 'A regenerative platform for generational impact.',
     siteName: 'Aura',
     type: 'website',
     url: 'https://theaura.life',
@@ -40,8 +40,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Aura — The 1000-Year Idea',
-    description: 'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
+    title: 'Aura.Life — The 1000-Year Idea',
+    description: 'A regenerative platform for generational impact.',
   },
   robots: {
     index: true,

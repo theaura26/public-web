@@ -59,8 +59,9 @@ function HeroBanner() {
         const p = raw * raw * (3 - 2 * raw)
 
         // Padding shrinks → card expands smoothly to fill viewport
-        const navPad = 56 * (1 - p)
-        const sidePad = 48 * (1 - p)
+        const isMobile = window.innerWidth < 768
+        const navPad = (isMobile ? 32 : 56) * (1 - p)
+        const sidePad = (isMobile ? 16 : 48) * (1 - p)
 
         inner.style.padding = `${navPad}px ${sidePad}px 0`
         card.style.maxWidth = 'none'
@@ -85,7 +86,7 @@ function HeroBanner() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '56px 48px 0',
+          padding: 'clamp(32px, 7vh, 56px) clamp(16px, 4vw, 48px) 0',
           boxSizing: 'border-box',
         }}
       >

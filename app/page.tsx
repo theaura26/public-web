@@ -975,7 +975,7 @@ export default function Home() {
         <div className="section-w">
           <div className="hero-row">
             <Reveal>
-              <h1>Think in Generations.</h1>
+              <h1 className="hero-h1">Think in Generations.</h1>
             </Reveal>
             <Reveal delay={100}>
               <div className="p2 hero-p">
@@ -986,9 +986,11 @@ export default function Home() {
           </div>
           <style jsx>{`
             .hero-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--grid-gap); }
-            :global(.hero-p) { max-width: 280px; margin-left: auto; flex-shrink: 0; }
+            :global(.hero-h1) { text-align: left; margin-left: calc(var(--gutter) * -1); white-space: nowrap; font-size: clamp(48px, 7vw, 80px); }
+            :global(.hero-p) { max-width: 480px; margin-left: auto; flex-shrink: 0; }
             @media (max-width: 767px) {
               .hero-row { flex-direction: column; align-items: flex-start; }
+              :global(.hero-h1) { margin-left: 0; white-space: normal; font-size: clamp(56px, 9vw, 88px); }
               :global(.hero-p) { max-width: 100%; margin-left: 0; margin-top: 32px; }
             }
           `}</style>
@@ -1001,12 +1003,27 @@ export default function Home() {
       {/* Reason */}
       <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         <div className="section-w">
-          <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)', alignItems: 'start' }}>
             <Reveal>
-              <h2>The Reason is to Restore What Sustains Us</h2>
+              <div style={{ aspectRatio: '16 / 9', borderRadius: 3, overflow: 'hidden', maxWidth: '80%' }}>
+                <video
+                  src="/aura-reason.mp4"
+                  poster="/aura-reason.jpg"
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                  preload="metadata"
+                  aria-label="Aura regenerative plantation in the Western Ghats"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                >
+                  <img src="/aura-reason.jpg" alt="Aura regenerative plantation in the Western Ghats" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                </video>
+              </div>
             </Reveal>
             <Reveal delay={80}>
-              <div className="flex flex-col gap-5" style={{ paddingTop: 4 }}>
+              <div className="flex flex-col gap-5" style={{ marginTop: '-0.2em' }}>
+                <h2 style={{ marginTop: 0 }}>The Reason is to Restore What Sustains Us</h2>
                 <p className="p2">In a world optimised for speed and short-term gain, Aura offers a different model — one rooted in patience, regeneration, and rhythm.</p>
                 <p className="p2">Set across a working plantation and creative sanctuary, Aura brings together ancient knowledge and modern tools to build systems that endure. From soil to studio, every element is designed to support a new kind of creator — one who thinks beyond outcomes, and builds for generations to come.</p>
               </div>
@@ -1014,13 +1031,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Reason Video — expanding 16:9 → fullscreen */}
-      <ExpandingVideo
-        src="/aura-reason.mp4"
-        poster="/aura-reason.jpg"
-        alt="Aura regenerative plantation in the Western Ghats"
-      />
 
       {/* Operating System */}
       <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
@@ -1047,14 +1057,29 @@ export default function Home() {
       </section>
 
       {/* Location */}
-      <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
+      <section style={{ padding: 'var(--section-gap) 0 calc(var(--section-gap) - 100px)', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         <div className="section-w">
-          <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)', alignItems: 'start' }}>
             <Reveal>
-              <h2>Location by Design</h2>
+              <div style={{ aspectRatio: '16 / 10', borderRadius: 3, overflow: 'hidden', maxWidth: '80%' }}>
+                <video
+                  src="/aura-land.mp4"
+                  poster="/aura-land.jpg"
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                  preload="metadata"
+                  aria-label="Aerial view of Aura Mudigere estate in the Western Ghats, India"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                >
+                  <img src="/aura-land.jpg" alt="Aerial view of Aura Mudigere estate in the Western Ghats, India" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                </video>
+              </div>
             </Reveal>
             <Reveal delay={80}>
-              <div className="flex flex-col">
+              <div className="flex flex-col" style={{ marginTop: '-0.2em' }}>
+                <h2 style={{ marginTop: 0, marginBottom: 24 }}>Location by Design</h2>
                 {[
                   { name: 'Aura Mudigere', detail: 'Western Ghats, India · 3,600 ft', active: true, onClick: () => setMudigereOpen(true) },
                   { name: 'Aura Ohara', detail: 'Kyoto, Japan · 1,099 ft', active: true, onClick: () => setOharaOpen(true) },

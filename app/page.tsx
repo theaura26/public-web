@@ -1036,7 +1036,13 @@ export default function Home() {
       <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         <div className="section-w">
           <Reveal>
-            <h2 style={{ marginBottom: 'clamp(48px, 6vh, 80px)' }}>The Aura Operating System</h2>
+            <h2 style={{ marginBottom: 'clamp(48px, 6vh, 80px)', lineHeight: 0, display: 'flex', alignItems: 'center' }}>
+              <img
+                src="/aura-os.svg"
+                alt="The Aura Operating System"
+                style={{ height: 'clamp(46px, 7.5vw, 72px)', width: 'auto', display: 'block' }}
+              />
+            </h2>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-3 stagger" style={{ gap: 'var(--grid-gap)' }}>
             {[

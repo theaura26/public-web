@@ -1004,8 +1004,8 @@ export default function Home() {
       <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         <div className="section-w">
           <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)', alignItems: 'start' }}>
-            <Reveal>
-              <div style={{ aspectRatio: '16 / 9', borderRadius: 3, overflow: 'hidden', maxWidth: '80%' }}>
+            <Reveal className="video-col">
+              <div className="video-media" style={{ aspectRatio: '16 / 9', borderRadius: 3, overflow: 'hidden' }}>
                 <video
                   src="/aura-reason.mp4"
                   poster="/aura-reason.jpg"
@@ -1021,7 +1021,7 @@ export default function Home() {
                 </video>
               </div>
             </Reveal>
-            <Reveal delay={80}>
+            <Reveal delay={80} className="content-col">
               <div className="flex flex-col gap-5" style={{ marginTop: '-0.2em' }}>
                 <h2 style={{ marginTop: 0 }}>The Reason is to Restore What Sustains Us</h2>
                 <p className="p2">In a world optimised for speed and short-term gain, Aura offers a different model — one rooted in patience, regeneration, and rhythm.</p>
@@ -1066,8 +1066,8 @@ export default function Home() {
       <section style={{ padding: 'var(--section-gap) 0 calc(var(--section-gap) - 100px)', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         <div className="section-w">
           <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)', alignItems: 'start' }}>
-            <Reveal>
-              <div style={{ aspectRatio: '16 / 10', borderRadius: 3, overflow: 'hidden', maxWidth: '80%' }}>
+            <Reveal className="video-col">
+              <div className="video-media" style={{ aspectRatio: '16 / 10', borderRadius: 3, overflow: 'hidden' }}>
                 <video
                   src="/aura-land.mp4"
                   poster="/aura-land.jpg"
@@ -1083,7 +1083,7 @@ export default function Home() {
                 </video>
               </div>
             </Reveal>
-            <Reveal delay={80}>
+            <Reveal delay={80} className="content-col">
               <div className="flex flex-col" style={{ marginTop: '-0.2em' }}>
                 <h2 style={{ marginTop: 0, marginBottom: 24 }}>Location by Design</h2>
                 {[

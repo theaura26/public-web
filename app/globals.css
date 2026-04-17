@@ -40,6 +40,18 @@ html [data-theme="day"] {
 }
 
 
+/* ── Video-beside-text block: reorder video below content on mobile, full column width ── */
+.video-col { order: 0; }
+.content-col { order: 0; }
+.video-media { max-width: 100%; }
+@media (max-width: 767px) {
+  .video-col { order: 2; }
+  .content-col { order: 1; }
+}
+@media (min-width: 768px) {
+  .video-media { max-width: 80%; }
+}
+
 /* ── Nav buttons ── */
 .nav-btn { transition: color 0.2s ease; }
 .nav-btn:hover { color: var(--text) !important; }

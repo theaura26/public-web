@@ -21,6 +21,7 @@ const INTELLIGENCES = ['Natural', 'Ancient', 'Human', 'Machine']
 function HeroBanner() {
   const [index, setIndex] = useState(0)
   const [visible, setVisible] = useState(true)
+  const [useFallback, setUseFallback] = useState(false)
 
   // Word cycling
   useEffect(() => {
@@ -35,20 +36,50 @@ function HeroBanner() {
     return () => clearInterval(interval)
   }, [])
 
+  // Detect low-power / reduced-motion / autoplay-blocked → use static image fallback
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+      setUseFallback(true)
+      return
+    }
+    // Probe autoplay capability with a tiny silent video
+    const probe = document.createElement('video')
+    probe.muted = true
+    probe.playsInline = true
+    probe.src = '/aura-hero.mp4'
+    probe.style.position = 'fixed'
+    probe.style.opacity = '0'
+    probe.style.pointerEvents = 'none'
+    probe.style.width = '1px'
+    probe.style.height = '1px'
+    document.body.appendChild(probe)
+    probe.play()
+      .then(() => { probe.pause(); probe.remove() })
+      .catch(() => { setUseFallback(true); probe.remove() })
+  }, [])
+
   return (
     <div className="human-only" style={{ height: '100vh', position: 'relative', overflow: 'hidden' }}>
-          {/* Video-reactive art background */}
-          <VideoReactiveArt
-            src="/aura-hero.mp4"
-            overlay
-            cellSize={8}
-            opacity={1}
-            sparsity={0.38}
-            reactivity={0.14}
-            mouse
-            colors={['#E8421A', '#F07820', '#F5B810', '#8AAEE0', '#D4C020', '#7A9040']}
-            style={{ position: 'absolute', inset: 0 }}
-          />
+          {useFallback ? (
+            <img
+              src="/aura-hero.jpg"
+              alt="Aura — natural intelligence in motion"
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          ) : (
+            <VideoReactiveArt
+              src="/aura-hero.mp4"
+              overlay
+              cellSize={8}
+              opacity={1}
+              sparsity={0.38}
+              reactivity={0.14}
+              mouse
+              colors={['#E8421A', '#F07820', '#F5B810', '#8AAEE0', '#D4C020', '#7A9040']}
+              style={{ position: 'absolute', inset: 0 }}
+            />
+          )}
 
           {/* Text overlay */}
           <div style={{
@@ -65,11 +96,10 @@ function HeroBanner() {
               fontFamily: 'var(--font-serif)',
               fontSize: 'clamp(52px, 11vw, 140px)',
               fontWeight: 400,
-              color: '#fff',
+              color: 'var(--text)',
               letterSpacing: '-2px',
               lineHeight: 1.0,
               textAlign: 'center',
-              mixBlendMode: 'difference',
             }}>
               <span
                 style={{

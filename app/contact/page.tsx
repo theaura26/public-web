@@ -119,7 +119,7 @@ export default function ContactPage() {
               color: var(--text);
               padding: 14px 0;
               border: none;
-              border-bottom: 1px solid var(--border-strong);
+              border-bottom: 1px solid var(--text-body);
               background: transparent;
               outline: none;
               width: 100%;
@@ -127,10 +127,10 @@ export default function ContactPage() {
               transition: border-color 0.3s ease;
             }
             .field-input::placeholder {
-              color: var(--text-muted);
+              color: var(--text-body);
             }
             .field-input:hover {
-              border-bottom-color: var(--text-muted);
+              border-bottom-color: var(--text);
             }
             .field-input:focus {
               border-bottom-color: var(--text);
@@ -147,10 +147,17 @@ export default function ContactPage() {
               appearance: none;
               cursor: none;
               padding-right: 28px;
-              background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23808080' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+              background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
               background-repeat: no-repeat;
               background-position: right 0 center;
               background-size: 12px;
+              color: var(--text);
+            }
+            select.field-input.is-empty {
+              color: var(--text-body);
+            }
+            :global([data-theme="night"]) select.field-input {
+              background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23ededed' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
             }
             option {
               background: var(--bg-card);
@@ -190,7 +197,7 @@ export default function ContactPage() {
                 <Field id="topic" label="What brings you here?" error={touched.topic ? errors.topic : undefined}>
                   <select
                     id="topic"
-                    className={`field-input${touched.topic && errors.topic ? ' has-error' : ''}`}
+                    className={`field-input${touched.topic && errors.topic ? ' has-error' : ''}${!fields.topic ? ' is-empty' : ''}`}
                     value={fields.topic}
                     onChange={e => set('topic', e.target.value)}
                     onBlur={() => blur('topic')}

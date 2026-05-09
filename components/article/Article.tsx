@@ -1,10 +1,20 @@
 'use client'
 
-/* ═══════════════════════════════════════════
-   ARTICLE COMPONENTS — shared building blocks
-   for long-form pages across the site.
-   Monastic, declarative, Colossal-style.
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════
+   ARTICLE COMPONENTS — three canonical content blocks
+
+   1. SPLIT  → <Section heading="…">…</Section>
+              two-column: heading left, body right (default)
+
+   2. CENTER → <Section heading="…" align="center">…</Section>
+              heading centered, paragraphs left-aligned inside a 640px block
+
+   3. QUOTE  → <PullQuote attribution="…">…</PullQuote>
+              centered grotesque pull-quote, optional attribution
+
+   Anything else (DataGrid, Placeholder, PullStat, Continue, Figure)
+   is a child rendered inside one of these three blocks.
+═══════════════════════════════════════════════════════════════════ */
 
 import Link from 'next/link'
 import { Children, ReactNode, isValidElement, cloneElement } from 'react'
@@ -164,12 +174,29 @@ export function Section({
   /** '2col' = heading left, body right (default). 'center' = stacked centered. 'full' = full-width body with heading on top. */
   align?: '2col' | 'center' | 'full'
 }) {
-  if (align === 'center' || align === 'full' || !heading) {
+  if (align === 'center') {
+    /* 1-col center — heading centered, paragraphs left-aligned inside a centered block */
     return (
       <section id={id} style={{ padding: 'var(--section-gap) 0' }}>
         <div className="section-w">
           <Reveal>
-            {/* eyebrow intentionally not rendered — fold into heading copy */}
+            <div style={{ maxWidth: 760, margin: '0 auto', textAlign: 'center' }}>
+              {heading && <h2 style={{ marginBottom: 32 }}>{heading}</h2>}
+            </div>
+            <div className="article-body" style={{ maxWidth: 640, margin: '0 auto', textAlign: 'left' }}>
+              {withLeadParagraph(children)}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    )
+  }
+
+  if (align === 'full' || !heading) {
+    return (
+      <section id={id} style={{ padding: 'var(--section-gap) 0' }}>
+        <div className="section-w">
+          <Reveal>
             {heading && <h2 style={{ marginBottom: 32, maxWidth: 900 }}>{heading}</h2>}
             <div className="article-body" style={{ maxWidth: 760 }}>{withLeadParagraph(children)}</div>
           </Reveal>
@@ -347,24 +374,22 @@ export function Placeholder({
   )
 }
 
-/* ── Data grid (cards) — always self-wraps in a section-w so it gets page gutter ── */
+/* ── Data grid (cards) ──
+   Renders inline within whatever wrapper provides gutters (Section / TwoCol body).
+   When used standalone at top level, wrap in <Section> first. */
 export function DataGrid({ cols: _cols = 2, children }: { cols?: 2 | 3 | 4; children: ReactNode }) {
   return (
-    <section style={{ padding: '0' }}>
-      <div className="section-w">
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr',
-            gap: 'clamp(24px, 3vw, 40px)',
-            maxWidth: 760,
-          }}
-          className="data-grid"
-        >
-          {children}
-        </div>
-      </div>
-    </section>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr',
+        gap: 'clamp(24px, 3vw, 40px)',
+        marginTop: 'clamp(24px, 4vh, 40px)',
+      }}
+      className="data-grid"
+    >
+      {children}
+    </div>
   )
 }
 

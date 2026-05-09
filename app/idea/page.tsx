@@ -158,10 +158,8 @@ export default function IdeaPage() {
         note="Suggested: Malnad Gidda cow at rest in dappled light beneath a mature coffee plant. Intimate, low angle, early morning."
       />
 
-      {/* number was: "02" */}
-      <Chapter number="" title="The Moral Spine" id="spine" />
-
-      <Section>
+      {/* 2-col split */}
+      <Section id="spine" heading="The Moral Spine">
         <P>
           A filter is only as good as the spine it rests on. Without a spine, any filter can be
           bent. The spine is the sentence we keep coming back to when the spreadsheet disagrees
@@ -184,10 +182,8 @@ export default function IdeaPage() {
         If we don&apos;t have a good moral spine, we will sell shit.
       </PullQuote>
 
-      {/* number was: "03" */}
-      <Chapter number="" title="The Standard, Measured" id="measure" />
-
-      <Section>
+      {/* 2-col split */}
+      <Section id="measure" heading="The Standard, Measured">
         <P>
           The 1000 Year Idea is not a mission statement. It is a method. It is what we consult
           when the decision is hard, and what we consult when the decision is easy — because
@@ -224,7 +220,8 @@ export default function IdeaPage() {
         Aura is not built, it is grown.
       </PullQuote>
 
-      <Section>
+      {/* 1-col center */}
+      <Section heading="The Practice" align="center">
         <P>
           A child drew a dodecahedron with our help and labelled one of its twelve faces
           &ldquo;our home.&rdquo; She is six. She will be sixteen when the first residency cohorts leave

@@ -1,42 +1,118 @@
 @import "tailwindcss";
 
-/* ═══════════════════════════════════════════
-   AURA LIFE — Design System
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════
+   AURA — Design System
+   ─────────────────────────────────────────────────────────────────────
+   Token reference. Edit values here, never hard-code in components.
+   Section order:
+     1.  Brand colour palette          --brand-*
+     2.  Theme — Night (default)       --bg / --text / --border
+     3.  Theme — Day
+     4.  Spacing scale                 --space-1 → --space-12
+     5.  Layout                        --gutter / --max-w / --section-gap / --grid-gap
+     6.  Radius                        --radius-1 / --radius-2 / --radius-pill
+     7.  Z-index                       --z-content → --z-cursor
+     8.  Motion — easings + durations  --ease-* / --dur-*
+     9.  Type roles                    h1 / h2 / h3 / .p1 / .p2 / .label
+   ═══════════════════════════════════════════════════════════════════════ */
+
 :root {
-  --ease: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-out: cubic-bezier(0.0, 0, 0.2, 1);
-  --gutter: clamp(20px, 4vw, 48px);
-  --max-w: 1200px;
-  --section-gap: clamp(80px, 12vh, 140px);
-  --grid-gap: clamp(32px, 5vw, 80px);
-  --col2-gap: clamp(40px, 6vw, 100px);
+  /* ── 1. Brand palette (immutable across themes) ── */
+  --brand-accent: #E37128;          /* primary action / hover */
+  --brand-dry-osmosis: #CA4926;
+  --brand-red-honey: #DD7C37;
+  --brand-banana-wash: #E4B239;
+  --brand-solera-maceration: #E1ADA2;
+  --brand-solera-wash: #A5B6C8;
+  --brand-grappa: #B6B050;
+  --brand-volcanic: #7A7C5C;
+  --brand-appassimento: #FFFFFF;
+
+  --error: #E8421A;
+
+  /* ── 4. Spacing scale (8px base, with 4px micro step) ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 80px;
+  --space-10: 96px;
+  --space-11: 120px;
+  --space-12: 160px;
+
+  /* ── 5. Layout ── */
+  --gutter: clamp(20px, 4vw, 48px);          /* horizontal page padding */
+  --max-w: 1200px;                            /* primary content width */
+  --max-w-narrow: 720px;                      /* long-form reading width */
+  --nav-h: 56px;                              /* fixed navbar height */
+  --section-gap: clamp(80px, 12vh, 140px);    /* between major sections */
+  --grid-gap: clamp(32px, 5vw, 80px);         /* between grid items */
+  --col2-gap: clamp(40px, 6vw, 100px);        /* tighter 2-col asymmetry */
+
+  /* ── 6. Radius ── */
+  --radius-1: 2px;       /* tiles, video frames, cards */
+  --radius-2: 4px;       /* buttons, inputs */
+  --radius-pill: 9999px; /* pills, chips, avatar */
+
+  /* ── 7. Z-index scale ── */
+  --z-content: 1;
+  --z-overlay: 30;       /* backdrops behind nav */
+  --z-nav: 50;           /* navbar / hamburger panel */
+  --z-modal: 9990;       /* LocationModal */
+  --z-cursor: 9999;      /* custom cursor stays on top */
+
+  /* ── 8. Motion ── */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);            /* default — both directions */
+  --ease-out: cubic-bezier(0.0, 0, 0.2, 1);        /* enter / reveal */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);           /* exit */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);    /* slide-in / panel reveal */
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1); /* snap-back / elastic */
+
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 450ms;
+  --dur-slower: 700ms;
+  --dur-theme: 400ms;     /* day/night theme cross-fade */
 }
 
-/* ── Night (default) ── */
+/* ── 2. Theme — Night (default) ── */
 :root, html [data-theme="night"] {
   --bg: #131719;
+  --bg-elevated: #1a1d20;
   --bg-card: #1a1d20;
   --nav-bg: rgba(19, 23, 25, 0.92);
-  --text: #ededed;
-  --text-body: rgba(237, 237, 237, 0.65);
-  --text-muted: rgba(237, 237, 237, 0.4);
-  --text-dim: rgba(237, 237, 237, 0.25);
+
+  --text: #ededed;                            /* primary */
+  --text-body: rgba(237, 237, 237, 0.65);     /* secondary */
+  --text-muted: rgba(237, 237, 237, 0.4);     /* meta / labels */
+  --text-dim: rgba(237, 237, 237, 0.25);      /* captions / fine print */
+
   --border: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.14);
+
+  --selection: rgba(227, 113, 40, 0.32);      /* brand-accent at 32% */
 }
 
-/* ── Day ── */
+/* ── 3. Theme — Day ── */
 html [data-theme="day"] {
   --bg: #ffffff;
+  --bg-elevated: #ffffff;
   --bg-card: #ffffff;
   --nav-bg: rgba(255, 255, 255, 0.7);
+
   --text: #1a1a1a;
   --text-body: rgba(26, 26, 26, 0.65);
   --text-muted: rgba(26, 26, 26, 0.4);
   --text-dim: rgba(26, 26, 26, 0.25);
+
   --border: rgba(0, 0, 0, 0.08);
   --border-strong: rgba(0, 0, 0, 0.14);
+
+  --selection: rgba(227, 113, 40, 0.24);
 }
 
 /* Invert white SVGs on light theme so they read as dark */
@@ -44,21 +120,25 @@ html [data-theme="day"] {
 html [data-theme="night"] .invert-on-light { filter: none; }
 
 
-/* ── Agent Mode ── */
+/* ═══ Agent Mode (machine-readable view) ═══ */
 [data-view="agent"] * { font-family: var(--font-mono) !important; }
-[data-view="agent"] h1 { font-size: 16px !important; font-weight: 400 !important; letter-spacing: 0 !important; line-height: 1.6 !important; }
-[data-view="agent"] h2 { font-size: 16px !important; font-weight: 400 !important; letter-spacing: 0 !important; line-height: 1.6 !important; }
-[data-view="agent"] h3 { font-size: 16px !important; font-weight: 400 !important; line-height: 1.6 !important; }
+[data-view="agent"] h1,
+[data-view="agent"] h2,
+[data-view="agent"] h3 { font-size: 16px !important; font-weight: 400 !important; letter-spacing: 0 !important; line-height: 1.6 !important; }
 [data-view="agent"] .p1, [data-view="agent"] .p2 { font-size: 14px !important; line-height: 1.7 !important; }
 [data-view="agent"] .label { font-size: 11px !important; }
-[data-view="agent"] .section-w { max-width: 720px !important; }
-[data-view="agent"] .grid, [data-view="agent"] .grid-2col { display: flex !important; flex-direction: column !important; gap: 24px !important; }
-[data-view="agent"] .stagger { display: flex !important; flex-direction: column !important; gap: 24px !important; }
-[data-view="agent"] section { padding: 40px 0 !important; }
+[data-view="agent"] .field-input { font-family: var(--font-mono) !important; font-size: 14px !important; }
+[data-view="agent"] .section-w { max-width: var(--max-w-narrow) !important; }
+[data-view="agent"] .grid,
+[data-view="agent"] .grid-2col,
+[data-view="agent"] .stagger { display: flex !important; flex-direction: column !important; gap: var(--space-5) !important; }
+[data-view="agent"] section { padding: var(--space-7) 0 !important; }
 [data-view="agent"] .human-only { display: none !important; }
 [data-view="agent"] .agent-only { display: block !important; }
 .agent-only { display: none; }
 
+
+/* ═══ Reset + base ═══ */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
@@ -81,14 +161,15 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  transition: background 0.4s var(--ease), color 0.4s var(--ease);
+  transition: background var(--dur-theme) var(--ease), color var(--dur-theme) var(--ease);
 }
 
 body::-webkit-scrollbar { width: 0; }
 
-::selection { background: rgba(128,128,128,0.3); }
+::selection { background: var(--selection); }
 
-/* ── Custom Cursor ── */
+
+/* ═══ Custom cursor ═══ */
 @media (pointer: fine) {
   * { cursor: none !important; }
 }
@@ -97,7 +178,7 @@ body::-webkit-scrollbar { width: 0; }
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9999;
+  z-index: var(--z-cursor);
   pointer-events: none;
   mix-blend-mode: difference;
   will-change: transform;
@@ -106,26 +187,27 @@ body::-webkit-scrollbar { width: 0; }
 .cursor-dot {
   width: 8px;
   height: 8px;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   background: #fff;
-  transition: transform 0.2s var(--ease), opacity 0.2s;
+  transition: transform var(--dur-base) var(--ease), opacity var(--dur-base);
 }
 
 .cursor.hovering .cursor-dot {
   transform: scale(3);
   opacity: 0.85;
-  background: #E37128;
+  background: var(--brand-accent);
 }
 
 @media (pointer: coarse) {
   .cursor { display: none; }
 }
 
-/* ── Reveal ── */
+
+/* ═══ Reveal-on-scroll ═══ */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
 }
 
 .reveal.visible {
@@ -133,30 +215,39 @@ body::-webkit-scrollbar { width: 0; }
   transform: translateY(0);
 }
 
-/* ── Stagger ── */
+/* Stagger child reveals */
 .stagger > :nth-child(1) { transition-delay: 0s; }
 .stagger > :nth-child(2) { transition-delay: 0.06s; }
 .stagger > :nth-child(3) { transition-delay: 0.12s; }
 .stagger > :nth-child(4) { transition-delay: 0.18s; }
 .stagger > :nth-child(5) { transition-delay: 0.24s; }
-.stagger > :nth-child(6) { transition-delay: 0.3s; }
+.stagger > :nth-child(6) { transition-delay: 0.30s; }
 
-/* ── Transitions ── */
+
+/* ═══ Default transitions on interactive elements ═══ */
 a, button {
-  transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease), opacity 0.2s var(--ease), text-decoration-color 0.2s var(--ease);
+  transition:
+    color var(--dur-base) var(--ease),
+    background var(--dur-base) var(--ease),
+    border-color var(--dur-base) var(--ease),
+    opacity var(--dur-base) var(--ease),
+    text-decoration-color var(--dur-base) var(--ease);
 }
 
-/* ── Hover underline for clickable elements ── */
+/* Brand-accent underline on hover for clickable elements */
 a:hover, button:hover, [role="button"]:hover {
   text-decoration: underline;
-  text-decoration-color: #E37128;
+  text-decoration-color: var(--brand-accent);
   text-underline-offset: 4px;
   text-decoration-thickness: 1.5px;
 }
 
-/* ═══ Type System ═══ */
 
-/* H1 — display */
+/* ═══════════════════════════════════════════
+   9. TYPE ROLES
+═══════════════════════════════════════════ */
+
+/* H1 — page display */
 h1 {
   font-family: var(--font-grotesque);
   font-weight: 400;
@@ -180,7 +271,7 @@ h2 {
   font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
 }
 
-/* H3 — sub-heading */
+/* H3 — sub-heading / card title */
 h3 {
   font-family: var(--font-grotesque);
   font-weight: 400;
@@ -192,20 +283,43 @@ h3 {
   font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
 }
 
+/* P1 — primary body, full-strength text */
+.p1 {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--text);
+  font-weight: 400;
+}
 
-/* P1: DM Sans, white — primary body */
-.p1 { font-family: var(--font-sans); font-size: 17px; line-height: 1.65; color: var(--text); font-weight: 400; }
+/* P2 — secondary body, slightly muted */
+.p2 {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-body);
+  font-weight: 400;
+}
 
-/* P2: DM Sans, grey — secondary body */
-.p2 { font-family: var(--font-sans); font-size: 16px; line-height: 1.65; color: var(--text-body); font-weight: 400; }
+/* Label — uppercase mono caption / eyebrow */
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
 
-/* Label: DM Mono, grey, uppercase */
-.label { font-family: var(--font-mono); font-size: 11px; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; color: #808080; }
-
-/* No bold for emphasis anywhere */
+/* No bold for emphasis — promote to text-primary instead */
 strong, b { font-weight: 400; color: var(--text); }
 
-/* ── Layout ── */
+
+/* ═══════════════════════════════════════════
+   LAYOUT HELPERS
+═══════════════════════════════════════════ */
+
+/* Centered content well */
 .section-w {
   max-width: var(--max-w);
   margin: 0 auto;
@@ -213,7 +327,7 @@ strong, b { font-weight: 400; color: var(--text); }
   width: 100%;
 }
 
-/* Standard 2-col: fixed 50/50 split so right column always aligns */
+/* Fixed 50/50 two-column at desktop */
 @media (min-width: 768px) {
   .grid-2col {
     display: grid !important;
@@ -222,16 +336,33 @@ strong, b { font-weight: 400; color: var(--text); }
   }
 }
 
-/* ── Modal ── */
+
+/* ═══════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════ */
 .modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  z-index: 200;
+  z-index: var(--z-modal);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--gutter);
+}
+
+
+/* ═══════════════════════════════════════════
+   ACCESSIBILITY — reduced motion
+═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
 }

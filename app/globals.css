@@ -28,9 +28,9 @@
 
 /* ── Day ── */
 html [data-theme="day"] {
-  --bg: #f5f5f0;
-  --bg-card: #eaeae5;
-  --nav-bg: rgba(245, 245, 240, 0.92);
+  --bg: #ffffff;
+  --bg-card: #ffffff;
+  --nav-bg: rgba(255, 255, 255, 0.7);
   --text: #1a1a1a;
   --text-body: rgba(26, 26, 26, 0.65);
   --text-muted: rgba(26, 26, 26, 0.4);
@@ -38,6 +38,10 @@ html [data-theme="day"] {
   --border: rgba(0, 0, 0, 0.08);
   --border-strong: rgba(0, 0, 0, 0.14);
 }
+
+/* Invert white SVGs on light theme so they read as dark */
+:root .invert-on-light, html [data-theme="day"] .invert-on-light { filter: invert(1); }
+html [data-theme="night"] .invert-on-light { filter: none; }
 
 
 /* ── Agent Mode ── */
@@ -57,7 +61,13 @@ html [data-theme="day"] {
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  font-kerning: normal;
+}
 
 body {
   font-family: var(--font-sans);
@@ -146,14 +156,42 @@ a:hover, button:hover, [role="button"]:hover {
 
 /* ═══ Type System ═══ */
 
-/* H1: Instrument Serif, white */
-h1 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(56px, 9vw, 88px); line-height: 1.02; letter-spacing: -2px; color: var(--text); }
+/* H1 — display */
+h1 {
+  font-family: var(--font-grotesque);
+  font-weight: 400;
+  font-size: clamp(56px, 9vw, 88px);
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+  color: var(--text);
+  text-wrap: balance;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+}
 
-/* H2: Instrument Serif, white, bigger */
-h2 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(36px, 5.5vw, 60px); line-height: 1.06; letter-spacing: -1px; color: var(--text); }
+/* H2 — section heading */
+h2 {
+  font-family: var(--font-grotesque);
+  font-weight: 400;
+  font-size: clamp(36px, 5.5vw, 60px);
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  text-wrap: balance;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+}
 
-/* H3: Instrument Serif, white */
-h3 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(24px, 3vw, 32px); line-height: 1.15; color: var(--text); }
+/* H3 — sub-heading */
+h3 {
+  font-family: var(--font-grotesque);
+  font-weight: 400;
+  font-size: clamp(24px, 3vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  text-wrap: balance;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+}
+
 
 /* P1: DM Sans, white — primary body */
 .p1 { font-family: var(--font-sans); font-size: 17px; line-height: 1.65; color: var(--text); font-weight: 400; }

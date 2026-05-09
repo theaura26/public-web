@@ -17,7 +17,7 @@ export function useMode() {
 }
 
 export function ModeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('night')
+  const [theme, setTheme] = useState<Theme>('day')
   const [viewMode, setViewMode] = useState<ViewMode>('human')
 
   const toggleTheme = useCallback(() => {

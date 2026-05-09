@@ -1,7 +1,13 @@
 import type { Metadata } from 'next'
-import { Instrument_Serif, DM_Sans, DM_Mono } from 'next/font/google'
+import { Bricolage_Grotesque, Instrument_Serif, DM_Sans, DM_Mono } from 'next/font/google'
 import './globals.css'
 import ClientLayout from './client-layout'
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-grotesque',
+  display: 'swap',
+})
 
 const instrumentSerif = Instrument_Serif({
   weight: '400',
@@ -34,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${instrumentSerif.variable} ${dmSans.variable} ${dmMono.variable}`}>
+    <html lang="en" className={`${bricolage.variable} ${instrumentSerif.variable} ${dmSans.variable} ${dmMono.variable}`}>
       <body>
         <ClientLayout>{children}</ClientLayout>
       </body>

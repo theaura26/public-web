@@ -1,7 +1,10 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
+import Link from 'next/link'
 import Reveal from '@/components/RevealOnScroll'
+import { LogoEmblem } from '@/components/Logo'
+import VideoReactiveArt from '@/components/VideoReactiveArt'
 import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun, CloudMoon } from '@phosphor-icons/react'
 
 /* ═══════════════════════════════════════════
@@ -81,10 +84,10 @@ function HeroVideo() {
         if (scrollRange <= 0) return
         const p = Math.max(0, Math.min(1, -rect.top / scrollRange))
 
-        // Phase 1 (0–0.3): copy fades in
-        const fadeIn = Math.min(1, p / 0.3)
-        // Phase 2 (0.35–0.55): copy fades out
-        const fadeOut = Math.max(0, Math.min(1, (p - 0.35) / 0.2))
+        // Phase 1 (0–0.15): logo fades in
+        const fadeIn = Math.min(1, p / 0.15)
+        // Phase 2 (0.85–1.0): logo fades out at the very end (long hold through blur lift)
+        const fadeOut = Math.max(0, Math.min(1, (p - 0.85) / 0.15))
         // Phase 3 (0.5–0.85): blur lifts
         const blurLift = Math.max(0, Math.min(1, (p - 0.5) / 0.35))
 
@@ -166,24 +169,30 @@ function HeroVideo() {
           }}
         />
 
-        {/* Centered copy */}
+        {/* Centered rotating logo — difference blend pops against the video */}
         <div
           ref={copyRef}
           style={{
             position: 'absolute',
             inset: 0,
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            textAlign: 'center',
             padding: '0 var(--gutter)',
             opacity: 0,
+            mixBlendMode: 'difference',
           }}
         >
-          <p className="p1" style={{ color: 'rgba(255,255,255,0.75)', maxWidth: 480 }}>
-            Aura exists for those daring to choose the regenerative path.
-          </p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/aura-animated.svg"
+            alt="Aura"
+            style={{
+              width: 'clamp(180px, 28vw, 360px)',
+              height: 'auto',
+              display: 'block',
+            }}
+          />
         </div>
       </div>
     </section>
@@ -347,7 +356,6 @@ function PillarVideo({ src, poster, alt }: { src: string; poster: string; alt: s
       overflow: 'hidden',
       borderRadius: 3,
       background: 'var(--bg)',
-      marginTop: 20,
     }}>
       <video
         ref={videoRef}
@@ -555,7 +563,10 @@ function LocationModal({ open, onClose, label, children }: { open: boolean; onCl
         {/* ── Header ── */}
         <div style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56, padding: '0 var(--gutter)', maxWidth: 'var(--max-w)', margin: '0 auto', width: '100%' }}>
           <p className="label loc-label" style={{ margin: 0 }}>{label}</p>
-          <button onClick={onClose} aria-label="Close" className="loc-close" style={{ background: 'none', border: 'none', fontSize: 24, padding: '8px 4px', lineHeight: 1, opacity: visible ? 1 : 0, transition: 'opacity 0.3s ease 0.2s' }}>&times;</button>
+          <button onClick={onClose} aria-label="Close" className="loc-close" style={{ background: 'none', border: 'none', padding: '10px 4px', display: 'flex', flexDirection: 'column', gap: 6, opacity: visible ? 1 : 0, transition: 'opacity 0.3s ease 0.2s', cursor: 'none' }}>
+            <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor', transform: 'translateY(3.75px) rotate(45deg)' }} />
+            <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor', transform: 'translateY(-3.75px) rotate(-45deg)' }} />
+          </button>
         </div>
         <div className="section-w" style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.4s ease 0.15s', paddingTop: 'clamp(24px, 4vh, 56px)', paddingBottom: 'clamp(60px, 8vh, 100px)' }}>
           {children}
@@ -878,6 +889,236 @@ function AgentHome() {
   )
 }
 
+/* ═══════════════════════════════════════════
+   SANCTUARY BANNER — full-screen, scroll-driven blur reveal
+   Same pattern as HeroVideo: 300vh wrapper, sticky 100vh stage,
+   blur lifts as you scroll, content fades in then out.
+═══════════════════════════════════════════ */
+
+type Sanctuary = {
+  name: string
+  tagline: string
+  region: string
+  facts: string[]
+  coords: string
+  bgSrc?: string
+  bgColor?: string
+  comingSoon?: boolean
+}
+
+const MUDIGERE: Sanctuary = {
+  name: 'Mudigere',
+  tagline: 'Regenerative plantation sanctuary',
+  region: 'KARNATAKA, INDIA',
+  facts: ['150 ACRES', 'WESTERN GHATS BIOSPHERE', '900–1100M ALTITUDE', 'TROPICAL MONSOON'],
+  coords: '13.13°N · 75.63°E',
+  bgSrc: '/aura-mudigere-landscape.jpg',
+}
+const OHARA_S: Sanctuary = {
+  name: 'Ohara',
+  tagline: 'Retreats and slow living in nature',
+  region: 'KYOTO PREFECTURE, JAPAN',
+  facts: ['GARDEN, TEAHOUSE, CAFÉ AND STUDIOS', '270M ALTITUDE', 'FOUR-SEASON TEMPERATE'],
+  coords: '35.13°N · 135.83°E',
+  bgSrc: '/aura-ohara-landscape.jpg',
+}
+const DAYLESFORD: Sanctuary = {
+  name: 'Daylesford',
+  tagline: 'A space for craft and wellbeing',
+  region: 'VICTORIA, AUSTRALIA',
+  facts: ['MINERAL SPRING COUNTRY', '450M ALTITUDE', 'COOL-TEMPERATE', 'FOUR SEASONS'],
+  coords: '37.34°S · 144.14°E',
+  bgSrc: '/aura-ohara-landscape.jpg',
+  comingSoon: true,
+}
+const MUNDUK: Sanctuary = {
+  name: 'Munduk',
+  tagline: 'Mountain sanctuary for restoration',
+  region: 'BALI, INDONESIA',
+  facts: ['HIGHLAND CLOUD FOREST', 'VOLCANIC GROUND', '800–1200M ALTITUDE', 'EQUATORIAL HUMID'],
+  coords: '8.27°S · 115.06°E',
+  bgSrc: '/aura-mudigere-landscape.jpg',
+  comingSoon: true,
+}
+
+function useBlurReveal() {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const blurRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const wrap = wrapRef.current
+        const blur = blurRef.current
+        const content = contentRef.current
+        if (!wrap || !blur) return
+        const rect = wrap.getBoundingClientRect()
+        const range = wrap.offsetHeight - window.innerHeight
+        if (range <= 0) return
+        const p = Math.max(0, Math.min(1, -rect.top / range))
+        const fadeIn = Math.min(1, p / 0.15)
+        const blurLift = Math.max(0, Math.min(1, (p - 0.5) / 0.35))
+        if (content) content.style.opacity = `${fadeIn}`
+        const blurVal = (1 - blurLift) * 16
+        const overlayAlpha = (1 - blurLift) * 0.5
+        blur.style.backdropFilter = `blur(${blurVal}px)`
+        ;(blur.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = `blur(${blurVal}px)`
+        blur.style.background = `rgba(0,0,0,${overlayAlpha})`
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  return { wrapRef, blurRef, contentRef }
+}
+
+/* 2-col variant: independent blur layer per image (driven by a single scroll) */
+function useBlurReveal2() {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const blurLeftRef = useRef<HTMLDivElement>(null)
+  const blurRightRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const wrap = wrapRef.current
+        const bL = blurLeftRef.current
+        const bR = blurRightRef.current
+        const content = contentRef.current
+        if (!wrap || !bL || !bR) return
+        const rect = wrap.getBoundingClientRect()
+        const range = wrap.offsetHeight - window.innerHeight
+        if (range <= 0) return
+        const p = Math.max(0, Math.min(1, -rect.top / range))
+        const fadeIn = Math.min(1, p / 0.15)
+        const blurLift = Math.max(0, Math.min(1, (p - 0.5) / 0.35))
+        if (content) content.style.opacity = `${fadeIn}`
+        const blurVal = (1 - blurLift) * 16
+        const overlayAlpha = (1 - blurLift) * 0.5
+        for (const el of [bL, bR]) {
+          el.style.backdropFilter = `blur(${blurVal}px)`
+          ;(el.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = `blur(${blurVal}px)`
+          el.style.background = `rgba(0,0,0,${overlayAlpha})`
+        }
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  return { wrapRef, blurLeftRef, blurRightRef, contentRef }
+}
+
+function SanctuaryBg({ s }: { s: Sanctuary }) {
+  if (s.bgSrc) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={s.bgSrc} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+    )
+  }
+  return <div style={{ position: 'absolute', inset: 0, background: s.bgColor || '#7e807c' }} />
+}
+
+function SanctuaryContent({ s, large = false }: { s: Sanctuary; large?: boolean }) {
+  const Heading = large ? 'h1' : 'h2'
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 var(--gutter)', height: '100%', color: '#ffffff' }}>
+      {s.comingSoon && (
+        <p className="label" style={{ marginBottom: 16, color: 'rgba(255,255,255,0.7)', fontSize: 10, letterSpacing: 2 }}>COMING SOON</p>
+      )}
+      <Heading style={{
+        fontFamily: 'var(--font-grotesque)',
+        fontSize: large ? 'clamp(96px, 16vw, 280px)' : 'clamp(36px, 5.5vw, 60px)',
+        lineHeight: large ? 1 : 1.06,
+        letterSpacing: large ? '-0.05em' : '-0.04em',
+        margin: 0,
+        marginBottom: 24,
+        color: '#ffffff',
+        fontWeight: 400,
+      }}>
+        {s.name}
+      </Heading>
+      <p className="p1" style={{ color: '#ffffff', margin: 0, maxWidth: 'min(280px, 84vw)' }}>{s.tagline}</p>
+      <p className="label" style={{ marginTop: 16, color: '#ffffff', fontSize: 10, letterSpacing: 1.5 }}>{s.region}</p>
+      <p className="label" style={{ marginTop: 8, color: '#ffffff', fontSize: 9, letterSpacing: 1.2, maxWidth: 'min(320px, 84vw)' }}>{s.facts.join('  ·  ')}</p>
+      <p className="label" style={{ marginTop: 20, color: '#ffffff', fontSize: 9, letterSpacing: 1.2 }}>{s.coords}</p>
+    </div>
+  )
+}
+
+function SanctuaryBanner({ s, onClick }: { s: Sanctuary; onClick?: () => void }) {
+  const { wrapRef, blurRef, contentRef } = useBlurReveal()
+  const clickable = !!onClick
+  return (
+    <section ref={wrapRef} style={{ height: '300vh', position: 'relative', zIndex: 0, display: 'block' }}>
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
+        <SanctuaryBg s={s} />
+        <div ref={blurRef} style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
+        <div
+          ref={contentRef}
+          onClick={onClick}
+          role={clickable ? 'button' : undefined}
+          tabIndex={clickable ? 0 : undefined}
+          onKeyDown={clickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') onClick?.() } : undefined}
+          aria-label={clickable ? `Open ${s.name} details` : undefined}
+          style={{ position: 'absolute', inset: 0, opacity: 0, cursor: clickable ? 'pointer' : 'default' }}
+        >
+          <SanctuaryContent s={s} large />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function SanctuaryBanner2Col({ left, right }: { left: Sanctuary; right: Sanctuary }) {
+  const { wrapRef, blurLeftRef, blurRightRef, contentRef } = useBlurReveal2()
+  return (
+    <section ref={wrapRef} style={{ height: '300vh', position: 'relative', zIndex: 0, display: 'block' }}>
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
+        <div className="sanctuary-2col-bg" style={{ position: 'absolute', inset: 0, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
+          <div style={{ position: 'relative', overflow: 'hidden', marginRight: -1 }}>
+            <SanctuaryBg s={left} />
+            <div ref={blurLeftRef} style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
+          </div>
+          <div style={{ position: 'relative', overflow: 'hidden' }}>
+            <SanctuaryBg s={right} />
+            <div ref={blurRightRef} style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
+          </div>
+        </div>
+        <div ref={contentRef} className="sanctuary-2col-content" style={{ position: 'absolute', inset: 0, display: 'grid', gridTemplateColumns: '1fr 1fr', opacity: 0 }}>
+          <SanctuaryContent s={left} />
+          <SanctuaryContent s={right} />
+        </div>
+      </div>
+      <style jsx>{`
+        @media (max-width: 767px) {
+          :global(.sanctuary-2col-bg),
+          :global(.sanctuary-2col-content) {
+            grid-template-columns: 1fr 1fr !important;
+          }
+        }
+      `}</style>
+    </section>
+  )
+}
+
 export default function Home() {
   const [mudigereOpen, setMudigereOpen] = useState(false)
   const [oharaOpen, setOharaOpen] = useState(false)
@@ -897,28 +1138,37 @@ export default function Home() {
       {/* Human mode */}
       <div className="human-only">
 
-      {/* Hero */}
-      <section style={{ paddingTop: 250, paddingBottom: 80 }}>
-        <div className="section-w">
-          <div className="hero-row">
-            <Reveal>
-              <h1>Think in Generations.</h1>
-            </Reveal>
-            <Reveal delay={100}>
-              <p className="p2 hero-p">
-                Outcomes are immediate. Impact is inherited. One is measured in quarters. The other, in generations.
-              </p>
-            </Reveal>
-          </div>
-          <style jsx>{`
-            .hero-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--grid-gap); }
-            :global(.hero-p) { max-width: 280px; margin-left: auto; flex-shrink: 0; }
-            @media (max-width: 767px) {
-              .hero-row { flex-direction: column; align-items: flex-start; }
-              :global(.hero-p) { max-width: 100%; margin-left: 0; margin-top: 32px; }
-            }
-          `}</style>
+      {/* Hero — full viewport, copy centered, whitespace for future design */}
+      <section
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 'calc(var(--section-gap) + 56px) var(--gutter) var(--section-gap)',
+        }}
+      >
+        <div className="hero-stack">
+          <Reveal>
+            <div className="hero-logo" style={{ color: 'var(--text)', marginBottom: 32, display: 'flex', justifyContent: 'center', width: 'clamp(110px, 16vw, 210px)' }}>
+              <LogoEmblem size={210} />
+            </div>
+          </Reveal>
+          <Reveal delay={80}>
+            <h3>A regenerative company<br />for generational impact</h3>
+          </Reveal>
+          <Reveal delay={160}>
+            <p className="p2 hero-p">
+              We combine ancestral intelligence with creative capital to make what the future cannot automate
+            </p>
+          </Reveal>
         </div>
+        <style jsx>{`
+          .hero-stack { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; }
+          :global(.hero-stack h3) { max-width: 32ch; }
+          :global(.hero-p) { max-width: 420px; }
+          :global(.hero-logo svg) { width: 100% !important; height: auto !important; }
+        `}</style>
       </section>
 
       {/* Hero Video — scroll-driven blur reveal */}
@@ -927,17 +1177,15 @@ export default function Home() {
       {/* Reason */}
       <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         <div className="section-w">
-          <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)' }}>
-            <Reveal>
-              <h2>The Reason is to Restore What Sustains Us</h2>
-            </Reveal>
-            <Reveal delay={80}>
-              <div className="flex flex-col gap-5" style={{ paddingTop: 4 }}>
-                <p className="p2">In a world optimised for speed and short-term gain, Aura offers a different model — one rooted in patience, regeneration, and rhythm.</p>
-                <p className="p2">Set across a working plantation and creative sanctuary, Aura brings together ancient knowledge and modern tools to build systems that endure. From soil to studio, every element is designed to support a new kind of creator — one who thinks beyond outcomes, and builds for generations to come.</p>
-              </div>
-            </Reveal>
-          </div>
+          <Reveal>
+            <h2 style={{ marginBottom: 'clamp(48px, 8vh, 96px)', maxWidth: 520 }}>We exist to restore what sustains us</h2>
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)' }}>
+              <p className="p2">In a world optimised for speed and short-term gain, Aura offers a different model — one rooted in patience, regeneration, and rhythm. Set across a working plantation and creative sanctuary, Aura brings together ancient knowledge and modern tools to build systems that endure. From soil to studio, every element is designed to support a new kind of creation — one who thinks beyond outcomes, and builds for generations to come.</p>
+              <p className="p2">Aura exists because modern life has optimised for speed, scale, and extraction — often at the cost of land, attention, health, and human depth. We believe the future will belong to places and systems that restore balance between nature and technology, intelligence and craft, ambition and stillness, people and the planet. Our work is to build those systems — slowly, intentionally, and across generations.</p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -949,63 +1197,117 @@ export default function Home() {
       />
 
       {/* Operating System */}
-      <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
+      <section style={{ paddingTop: 'calc(var(--section-gap) + clamp(40px, 6vh, 80px))', paddingBottom: 'var(--section-gap)', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         <div className="section-w">
           <Reveal>
-            <h2 style={{ marginBottom: 'clamp(48px, 6vh, 80px)' }}>The Aura Operating System</h2>
+            <div style={{ textAlign: 'center', marginBottom: 'clamp(80px, 12vh, 140px)' }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/aura-os.svg"
+                alt="Aura OS"
+                className="invert-on-light"
+                style={{
+                  display: 'block',
+                  margin: '0 auto',
+                  width: 'clamp(144px, 19.2vw, 256px)',
+                  height: 'auto',
+                }}
+              />
+              <p className="p1" style={{ marginTop: 28 }}>Ancestral. Natural. Human. Machine Intelligence</p>
+              <p className="p2" style={{ marginTop: 12, maxWidth: 480, marginLeft: 'auto', marginRight: 'auto' }}>
+                Aura-OS is our operating philosophy — combining ancestral wisdom, natural systems, human creativity and modern technology into one integrated way of living and building.
+              </p>
+            </div>
           </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 stagger" style={{ gap: 'var(--grid-gap)' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 stagger" style={{ gap: 'var(--grid-gap)', marginBottom: 'clamp(80px, 12vh, 140px)' }}>
             {[
-              { title: 'Sanctuary', desc: 'A living estate in rhythm with the land of Japan. Silence, stillness, and a 30-year Japanese garden.', video: '/aura-sanctuary.mp4', poster: '/aura-sanctuary.jpg', alt: 'Aura sanctuary — stillness among forest and river' },
-              { title: 'Agroculture', desc: 'Ancient practice guided by natural intelligence. 100 acres of coffee, indigenous cattle, and native canopy.', video: '/aura-agroculture.mp4', poster: '/aura-agroculture.jpg', alt: 'Aura agroculture — coffee plantation and indigenous farming' },
-              { title: 'Artistry', desc: 'Where creators come to build what endures. Studios, workshops, festivals, and residencies.', video: '/aura-artistry.mp4', poster: '/aura-artistry.jpg', alt: 'Aura artistry — studios, craft, and creative residencies' },
+              {
+                title: 'Plantation',
+                href: '/plantation',
+                lead: 'We cultivate regenerative land systems',
+                desc: 'Coffee, pepper, areca, tea, soil, biodiversity, and long-term stewardship — managed through biodynamic and Vedic agricultural practices.',
+                video: '/aura-agroculture.mp4',
+                poster: '/aura-agroculture.jpg',
+                alt: 'Aura plantation — coffee, pepper, areca, tea, soil biodiversity',
+              },
+              {
+                title: 'Hospitality',
+                href: '/hospitality',
+                lead: 'Luxury spaces for retreat and reconnection',
+                desc: 'Architect-led sanctuaries, slow living experiences, workshops, residencies, and time designed around nature and clarity.',
+                video: '/aura-sanctuary.mp4',
+                poster: '/aura-sanctuary.jpg',
+                alt: 'Aura hospitality — sanctuary, retreats, slow living',
+              },
+              {
+                title: 'Labs',
+                href: '/labs',
+                lead: 'Design, technology and innovation consulting',
+                desc: 'Small-group residencies, experiments, and learning experiences spanning AI, systems thinking, creativity, wellbeing, and craft.',
+                video: '/aura-artistry.mp4',
+                poster: '/aura-artistry.jpg',
+                alt: 'Aura labs — residencies, experiments, learning',
+              },
             ].map((card) => (
               <Reveal key={card.title}>
-                <div style={{ borderTop: '1px solid var(--border)', paddingTop: 20 }}>
-                  <p className="p1" style={{ marginBottom: 10 }}>{card.title}</p>
-                  <p className="p2">{card.desc}</p>
+                <Link href={card.href} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
                   <PillarVideo src={card.video} poster={card.poster} alt={card.alt} />
-                </div>
+                  <h3 style={{ marginTop: 24, marginBottom: 8 }}>{card.title}</h3>
+                  <p className="p1" style={{ marginBottom: 10 }}>{card.lead}</p>
+                  <p className="p2">{card.desc}</p>
+                </Link>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Location */}
-      <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
-        <div className="section-w">
-          <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)' }}>
-            <Reveal>
-              <h2>Location by Design</h2>
-            </Reveal>
-            <Reveal delay={80}>
-              <div className="flex flex-col">
-                {[
-                  { name: 'Aura Mudigere', detail: 'Western Ghats, India · 3,600 ft', active: true, onClick: () => setMudigereOpen(true) },
-                  { name: 'Aura Ohara', detail: 'Kyoto, Japan · 1,099 ft', active: true, onClick: () => setOharaOpen(true) },
-                  { name: 'Aura Munduk', detail: 'Bali · Coming soon', active: false },
-                  { name: 'Aura Daylesford', detail: 'Australia · Coming soon', active: false },
-                ].map((loc) => (
-                  <div
-                    key={loc.name}
-                    onClick={loc.onClick}
-                    role={loc.onClick ? 'button' : undefined}
-                    tabIndex={loc.onClick ? 0 : undefined}
-                    onKeyDown={loc.onClick ? (e) => { if (e.key === 'Enter') loc.onClick!() } : undefined}
-                    style={{
-                      borderBottom: '1px solid var(--border)',
-                      padding: '16px 0',
-                      cursor: loc.onClick ? 'pointer' : 'default',
-                      transition: 'opacity 0.2s ease',
-                    }}
-                  >
-                    <p className="p1" style={{ color: loc.active ? 'var(--text)' : 'var(--text-muted)' }}>{loc.name}</p>
-                    <p className="label" style={{ marginTop: 2 }}>{loc.detail}</p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
+      {/* Our Sanctuaries — full-screen blur-reveal banners (wrapped to keep bg continuous) */}
+      <div style={{ background: '#0a0a0a', position: 'relative' }}>
+        <div style={{ marginBottom: -2 }}><SanctuaryBanner s={MUDIGERE} onClick={() => setMudigereOpen(true)} /></div>
+        <div style={{ marginBottom: -2 }}><SanctuaryBanner s={OHARA_S} onClick={() => setOharaOpen(true)} /></div>
+        <SanctuaryBanner2Col left={MUNDUK} right={DAYLESFORD} />
+      </div>
+
+      {/* Closing — manifesto centered on top of computational art */}
+      <section style={{ position: 'relative', background: 'var(--bg)', zIndex: 1, overflow: 'hidden', minHeight: 'clamp(420px, 60vh, 640px)' }}>
+        {/* Computational art — fills the section as backdrop */}
+        <VideoReactiveArt
+          src="/aura-hero.mp4"
+          overlay
+          cellSize={10}
+          opacity={0.85}
+          sparsity={0.42}
+          reactivity={0.1}
+          colors={['#CA4926', '#DD7C37', '#E4B239', '#E1ADA2', '#A5B6C8', '#B6B050', '#7A7C5C']}
+          style={{ position: 'absolute', inset: 0, background: 'transparent', pointerEvents: 'none' }}
+        />
+        {/* Top fade so the art emerges into the section */}
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, height: '40%',
+          background: 'linear-gradient(to bottom, var(--bg) 0%, transparent 100%)',
+          pointerEvents: 'none',
+          zIndex: 1,
+        }} />
+
+        {/* Manifesto on top of the art — left aligned within section-w */}
+        <div style={{
+          position: 'relative',
+          zIndex: 2,
+          minHeight: 'inherit',
+          display: 'flex',
+          alignItems: 'center',
+          padding: 'var(--section-gap) 0',
+        }}>
+          <div className="section-w" style={{ textAlign: 'left' }}>
+            <div style={{ maxWidth: 720 }}>
+              <Reveal>
+                <h2>A 1,000 Year Idea</h2>
+              </Reveal>
+              <Reveal delay={80}>
+                <p className="p2" style={{ marginTop: 16 }}>We think in generations</p>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>

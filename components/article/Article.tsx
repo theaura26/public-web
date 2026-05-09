@@ -92,7 +92,7 @@ export function ArticleHero({
                       font-weight: 400;
                       letter-spacing: 1px;
                       text-transform: uppercase;
-                      color: #F07820;
+                      color: var(--brand-accent);
                       text-decoration: none;
                       line-height: 1.5;
                       transition: opacity 0.2s ease;
@@ -123,7 +123,7 @@ export function ArticleHero({
         {media && (
           <Reveal delay={120}>
             <figure style={{ marginTop: 'clamp(48px, 8vh, 96px)' }}>
-              <div style={{ borderRadius: 3, overflow: 'hidden', aspectRatio: '16 / 9' }}>
+              <div style={{ borderRadius: 'var(--radius-1)', overflow: 'hidden', aspectRatio: '16 / 9' }}>
                 {media.type === 'video' ? (
                   <video
                     src={media.src}
@@ -284,7 +284,7 @@ export function Figure({
 }) {
   return (
     <figure style={{ margin: 'clamp(24px, 4vh, 48px) 0' }}>
-      <div style={{ borderRadius: 3, overflow: 'hidden', aspectRatio: aspect }}>
+      <div style={{ borderRadius: 'var(--radius-1)', overflow: 'hidden', aspectRatio: aspect }}>
         {type === 'video' ? (
           <video
             src={src}
@@ -308,7 +308,7 @@ export function Figure({
   )
 }
 
-/* ── Placeholder (dimmed "image goes here" block) ── */
+/* ── Placeholder ── solid grey box, 16:9, sits inside section-w gutters ── */
 export function Placeholder({
   label,
   aspect = '16 / 9',
@@ -319,31 +319,31 @@ export function Placeholder({
   note?: string
 }) {
   return (
-    <figure
-      style={{
-        margin: 'var(--section-gap) 0',
-        width: '100%',
-      }}
-    >
-      <div
-        style={{
-          overflow: 'hidden',
-          width: '100%',
-          height: 'clamp(420px, 72vh, 820px)',
-          background: 'var(--bg-card)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
-          padding: 24,
-          textAlign: 'center',
-          color: 'var(--text-muted)',
-        }}
-      >
-        <div className="label" style={{ marginBottom: 10, opacity: 0.7 }}>{label}</div>
-        {note && <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, maxWidth: 380, lineHeight: 1.6, opacity: 0.55, letterSpacing: 0.2 }}>{note}</div>}
+    <section style={{ padding: 'clamp(48px, 7vh, 96px) 0' }}>
+      <div className="section-w">
+        <figure style={{ margin: 0, width: '100%' }}>
+          <div
+            style={{
+              overflow: 'hidden',
+              width: '100%',
+              aspectRatio: aspect,
+              background: '#d6d6d6',
+              borderRadius: 'var(--radius-1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              padding: 24,
+              textAlign: 'center',
+              color: 'rgba(26, 26, 26, 0.55)',
+            }}
+          >
+            <div className="label" style={{ marginBottom: 10, opacity: 0.85, color: 'inherit' }}>{label}</div>
+            {note && <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, maxWidth: 380, lineHeight: 1.5, opacity: 0.7, letterSpacing: 0.2, color: 'inherit' }}>{note}</div>}
+          </div>
+        </figure>
       </div>
-    </figure>
+    </section>
   )
 }
 
@@ -377,7 +377,7 @@ export function DataCard({ label: _label, value, children }: { label: string; va
   )
 }
 
-/* ── Pull quote (centered block, left-justified, Pixelify Sans display) ── */
+/* ── Pull quote (centered block, grotesque display) ── */
 export function PullQuote({ children, attribution }: { children: ReactNode; attribution?: string }) {
   return (
     <section style={{ padding: 'var(--section-gap) 0' }}>
@@ -386,12 +386,13 @@ export function PullQuote({ children, attribution }: { children: ReactNode; attr
           <blockquote style={{ margin: '0 auto', maxWidth: 880, textAlign: 'center' }}>
             <p
               style={{
-                fontFamily: 'var(--font-pixel)',
+                fontFamily: 'var(--font-grotesque)',
                 fontSize: 'clamp(24px, 3.2vw, 40px)',
-                lineHeight: 1.25,
-                letterSpacing: '0',
+                lineHeight: 1.2,
+                letterSpacing: '-0.03em',
                 color: 'var(--text)',
                 margin: 0,
+                textWrap: 'balance',
               }}
             >
               {children}
@@ -498,7 +499,7 @@ export function Continue({ items }: { items: { href: string; label: string; desc
                 }}
                 className="continue-card"
               >
-                <h2 style={{ fontSize: 'clamp(22px, 2.6vw, 28px)', lineHeight: 1.15, letterSpacing: '-0.4px', margin: 0, marginBottom: 12 }}>{item.label}</h2>
+                <h3 style={{ margin: 0, marginBottom: 12 }}>{item.label}</h3>
                 <div className="p2" style={{ color: 'var(--text-body)' }}>{item.description}</div>
               </Link>
             ))}

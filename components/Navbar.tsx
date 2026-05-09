@@ -156,7 +156,7 @@ export default function Navbar() {
         <Link
           href="/"
           aria-label="Aura — home"
-          className="no-underline"
+          className="no-underline nav-wordmark"
           style={{
             justifySelf: 'center',
             color: 'var(--text)',
@@ -226,24 +226,26 @@ export default function Navbar() {
           overflow: 'hidden',
         }}
       >
-        {/* Close X — fixed top-right of panel, never scrolls */}
+        {/* Mobile-only: rotating symbol top-left of panel */}
+        <Link
+          href="/"
+          onClick={() => setMenuOpen(false)}
+          aria-label="Aura — home"
+          className="menu-logo no-underline"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/aura-animated.svg"
+            alt="Aura"
+            style={{ display: 'block', height: 28, width: 'auto', filter: 'invert(1)' }}
+          />
+        </Link>
+
+        {/* Close X — top-right of panel, never scrolls */}
         <button
           aria-label="Close menu"
           onClick={() => setMenuOpen(false)}
-          style={{
-            position: 'absolute',
-            top: 60,
-            right: 'clamp(32px, 4vw, 56px)',
-            zIndex: 3,
-            background: 'none',
-            border: 'none',
-            padding: '8px 4px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 6,
-            cursor: 'none',
-            color: '#ffffff',
-          }}
+          className="menu-close"
         >
           <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor', transform: 'translateY(3.75px) rotate(45deg)' }} />
           <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor', transform: 'translateY(-3.75px) rotate(-45deg)' }} />
@@ -381,6 +383,27 @@ export default function Navbar() {
             from { transform: rotate(-90deg) translateX(0); }
             to   { transform: rotate(-90deg) translateX(-50%); }
           }
+          /* Close X — desktop default */
+          :global(.menu-close) {
+            position: absolute;
+            top: 60px;
+            right: clamp(32px, 4vw, 56px);
+            z-index: 3;
+            background: none;
+            border: none;
+            padding: 8px 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            cursor: none;
+            color: #ffffff;
+          }
+
+          /* Mobile-only logo top-left of panel */
+          :global(.menu-logo) {
+            display: none;
+          }
+
           .menu-left {
             position: absolute;
             top: 60px;
@@ -409,33 +432,93 @@ export default function Navbar() {
             align-items: flex-start;
           }
 
+          /* Tablet / narrow desktop — keep 2-col, tighten widths */
           @media (max-width: 900px) {
             .menu-left {
-              position: static;
-              top: auto;
-              left: auto;
-              width: auto;
-              height: auto;
-              padding: 64px clamp(24px, 5vw, 56px) 0;
+              top: 40px;
+              left: clamp(20px, 4vw, 40px);
+              width: 140px;
             }
             .menu-right {
-              position: static;
-              top: auto;
-              left: auto;
-              right: auto;
-              bottom: auto;
-              padding: 48px clamp(24px, 5vw, 56px) clamp(80px, 12vh, 140px);
-              overflow-y: visible;
-            }
-            :global(.menu-overlay) {
-              overflow-y: auto !important;
+              left: calc(clamp(20px, 4vw, 40px) + 140px + clamp(24px, 4vw, 56px));
+              padding: 40px clamp(20px, 4vw, 40px) 80px 0;
             }
           }
 
-          /* Mobile — full-screen overlay, hide marquee strip */
+          /* Mobile — full-screen overlay, single column, tiles scroll under fixed top + nav */
           @media (max-width: 768px) {
             :global(.menu-overlay) { width: 100vw; }
             :global(.menu-marquee) { display: none; }
+
+            /* Top bar: logo on left, X on right — both fixed in panel */
+            :global(.menu-logo) {
+              display: inline-flex;
+              position: absolute;
+              top: 16px;
+              left: 16px;
+              z-index: 4;
+              align-items: center;
+              color: #ffffff;
+            }
+            :global(.menu-close) {
+              top: 16px;
+              right: 16px;
+              z-index: 4;
+            }
+
+            /* Nav block — fixed below the top bar */
+            .menu-left {
+              top: 64px;
+              left: 16px;
+              right: 16px;
+              width: auto;
+              z-index: 3;
+            }
+
+            /* Tile feed scrolls — extends from below nav, scrolls under everything */
+            .menu-right {
+              top: 200px;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              padding: 0 16px 80px;
+              -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 24px);
+                      mask-image: linear-gradient(to bottom, transparent 0, black 24px);
+            }
+            .tile-feed {
+              gap: 40px;
+              padding-top: 24px;
+            }
+
+            :global(.menu-link) {
+              font-size: 11px !important;
+              letter-spacing: 1.2px !important;
+              line-height: 1.4;
+            }
+            :global(.menu-ig) {
+              bottom: 24px;
+              left: 16px;
+            }
+            :global(.menu-ig svg) {
+              width: 20px;
+              height: 20px;
+            }
+            :global(.tile-title) {
+              font-size: 10px;
+              letter-spacing: 1px;
+              margin-top: 10px;
+            }
+          }
+
+          /* Smaller navbar wordmark on mobile */
+          :global(.nav-wordmark svg) {
+            width: 92px;
+            height: auto;
+          }
+          @media (max-width: 768px) {
+            :global(.nav-wordmark svg) {
+              width: 64px;
+            }
           }
         `}</style>
       </div>

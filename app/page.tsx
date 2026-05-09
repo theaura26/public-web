@@ -1041,13 +1041,13 @@ function SanctuaryContent({ s, large = false }: { s: Sanctuary; large?: boolean 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 var(--gutter)', height: '100%', color: '#ffffff' }}>
       {s.comingSoon && (
-        <p className="label" style={{ marginBottom: 16, color: 'rgba(255,255,255,0.7)', fontSize: 10, letterSpacing: 2 }}>COMING SOON</p>
+        <p className="label" style={{ marginBottom: 16, color: '#ffffff', fontSize: 10, letterSpacing: 2 }}>COMING SOON</p>
       )}
       <Heading style={{
         fontFamily: 'var(--font-grotesque)',
-        fontSize: large ? 'clamp(96px, 16vw, 280px)' : 'clamp(36px, 5.5vw, 60px)',
+        fontSize: large ? 'clamp(64px, 16vw, 280px)' : 'clamp(32px, 5.5vw, 60px)',
         lineHeight: large ? 1 : 1.06,
-        letterSpacing: large ? '-0.05em' : '-0.04em',
+        letterSpacing: large ? '-0.06em' : '-0.05em',
         margin: 0,
         marginBottom: 24,
         color: '#ffffff',

@@ -917,8 +917,10 @@ export default function Navbar() {
 
             .menu-right {
               top: 0;
-              /* More breathing room between the nav rail and the tile feed. */
-              left: calc(var(--gutter) + 96px + 32px);
+              /* Tile column pushed 60 px further right on phone for a
+                 deliberate negative-space gap between the nav rail and
+                 the journal feed. */
+              left: calc(var(--gutter) + 96px + 32px + 60px);
               right: var(--gutter);
               bottom: 0;
               /* Match HOME's top edge in the left rail (menu-left top: 76px)

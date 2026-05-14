@@ -660,33 +660,33 @@ export default function Navbar() {
             display: block;
             transition: filter var(--dur-base) var(--ease);
           }
-          /* Symbol overlay — vector glyph centred over every photo,
-             ALWAYS visible above the thumbnail. Uses a difference blend
-             so the mark reads against any underlying tone (light or
-             dark imagery). Hover bumps the underlying image into blur
-             and gives the symbol a small scale assertion. */
+          /* Hover symbol — vector glyph centred over the photo, hidden
+             at rest and revealed on hover. Difference blend so it reads
+             on any underlying tone; z-index kept high so the mark sits
+             above the thumbnail unambiguously. */
           :global(.tile-img .tile-symbol) {
             position: absolute;
             top: 50%;
             left: 50%;
             width: clamp(56px, 28%, 96px);
             height: auto;
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
+            transform: translate(-50%, -50%) scale(0.85);
+            opacity: 0;
             pointer-events: none;
             z-index: 10;
             mix-blend-mode: difference;
-            transition: transform 0.4s var(--ease-spring);
+            transition: opacity 0.32s var(--ease-out), transform 0.4s var(--ease-spring);
           }
-          /* On hover: image blurs to 14px so the symbol pops harder.
-             Link wrapper doesn't get the styled-jsx scope class, so the
-             hover selector chain is global. */
+          /* On hover: image blurs to 14px, symbol fades + scales up to
+             its resting state. Link wrapper doesn't get the styled-jsx
+             scope class, so the hover selector chain is global. */
           :global(.tile:hover .tile-img img:not(.tile-symbol)),
           :global(.tile:hover .tile-img video) {
             filter: blur(14px);
           }
           :global(.tile:hover .tile-img .tile-symbol) {
-            transform: translate(-50%, -50%) scale(1.08);
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
           }
           /* Matches the global .label style exactly: DM Mono 11px, 1px
              letter-spacing, uppercase. Title and meta labels site-wide now

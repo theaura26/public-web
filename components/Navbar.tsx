@@ -776,6 +776,35 @@ export default function Navbar() {
             height: 0;
           }
 
+          /* Bottom blur band — fixed-positioned thin strip at the
+             bottom of the viewport (NOT inside .menu-overlay so
+             position: fixed isn't trapped by its transform). Spans
+             the full viewport width, ~8 vh tall, with a soft top
+             edge via a linear mask. Backdrop-filter blurs whatever
+             scrolls behind it; on a dark menu panel the visual
+             effect is a gentle softening of the bottommost tile. */
+          :global(.tile-feed-vignette) {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 8vh;
+            z-index: 51;
+            isolation: isolate;
+            backdrop-filter: blur(24px) saturate(1.05);
+            -webkit-backdrop-filter: blur(24px) saturate(1.05);
+            -webkit-mask-image: linear-gradient(to top,
+              rgba(0, 0, 0, 1) 0%,
+              rgba(0, 0, 0, 1) 60%,
+              rgba(0, 0, 0, 0) 100%
+            );
+            mask-image: linear-gradient(to top,
+              rgba(0, 0, 0, 1) 0%,
+              rgba(0, 0, 0, 1) 60%,
+              rgba(0, 0, 0, 0) 100%
+            );
+          }
+
           .tile-feed {
             display: flex;
             flex-direction: column;
@@ -943,6 +972,22 @@ export default function Navbar() {
         `}</style>
       </div>
 
+      {/* Bottom blur band — a thin strip at the very bottom of the
+          viewport that softens the cards just before they scroll off-
+          screen. Rendered as a SIBLING of .menu-overlay so position:
+          fixed isn't trapped by .menu-overlay's transform, and so it
+          spans the full viewport width (no hard left seam where the
+          menu panel meets the page background). Visibility tracks
+          menuOpen via inline opacity. */}
+      <div
+        className="tile-feed-vignette"
+        aria-hidden
+        style={{
+          opacity: menuOpen ? 1 : 0,
+          pointerEvents: 'none',
+          transition: 'opacity var(--dur-base) var(--ease)',
+        }}
+      />
     </>
   )
 }

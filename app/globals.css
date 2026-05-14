@@ -162,18 +162,66 @@ html [data-theme="night"] .loc-modal:not([data-bleed="true"]) .invert-on-light {
    Implementation philosophy: NEVER hide content nodes — only strip
    their visual chrome. Headings, paragraphs, lists, links must all
    stay readable in the DOM. */
+/* Single mono family for every text node in agent mode. */
 [data-view="agent"] * { font-family: var(--font-mono) !important; }
+
+/* All readable text rendered at the same body size (14 px / 1.5) so
+   the document reads like a terminal log — hierarchy comes from
+   case, opacity, and spacing rather than font-size jumps. Inspired
+   by sycamore.so's plain-text view. */
 [data-view="agent"] h1,
 [data-view="agent"] h2,
 [data-view="agent"] h3,
-[data-view="agent"] h4 { font-size: 16px !important; font-weight: 400 !important; letter-spacing: 0 !important; line-height: 1.6 !important; text-transform: none !important; }
-[data-view="agent"] h2 { text-transform: uppercase !important; letter-spacing: 1px !important; opacity: 0.7; margin-top: 32px; }
-[data-view="agent"] h3 { margin-top: 20px; }
+[data-view="agent"] h4,
+[data-view="agent"] h5,
+[data-view="agent"] h6,
 [data-view="agent"] p,
 [data-view="agent"] .p1,
-[data-view="agent"] .p2 { font-size: 14px !important; line-height: 1.7 !important; margin: 0 0 12px !important; color: var(--text) !important; }
-[data-view="agent"] .label { font-size: 11px !important; }
-[data-view="agent"] .field-input { font-family: var(--font-mono) !important; font-size: 14px !important; }
+[data-view="agent"] .p2,
+[data-view="agent"] .label,
+[data-view="agent"] li,
+[data-view="agent"] dt,
+[data-view="agent"] dd,
+[data-view="agent"] button,
+[data-view="agent"] input,
+[data-view="agent"] textarea,
+[data-view="agent"] select,
+[data-view="agent"] a,
+[data-view="agent"] span,
+[data-view="agent"] strong,
+[data-view="agent"] em,
+[data-view="agent"] .field-input {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: var(--text) !important;
+}
+
+/* h1 + h2 — section break: uppercase, slight letter-spacing, muted */
+[data-view="agent"] h1,
+[data-view="agent"] h2 {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  opacity: 0.6;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+/* h3 — subhead, no transform, slightly muted */
+[data-view="agent"] h3 {
+  margin-top: 20px;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+[data-view="agent"] p,
+[data-view="agent"] .p1,
+[data-view="agent"] .p2 { margin: 0 0 12px !important; }
+[data-view="agent"] .label {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  opacity: 0.55;
+}
 [data-view="agent"] section { padding: var(--space-6) 0 !important; }
 [data-view="agent"] section,
 [data-view="agent"] .section-w { max-width: var(--max-w-narrow) !important; margin-left: auto !important; margin-right: auto !important; padding-left: var(--gutter) !important; padding-right: var(--gutter) !important; }
@@ -392,27 +440,47 @@ html [data-theme="night"] .loc-modal:not([data-bleed="true"]) .invert-on-light {
   width: auto !important;
 }
 
-/* Agent mode: <img> elements have their `src` stripped by ModeProvider so the
-   browser renders the alt text in place. Style that fallback as monospace
-   body text so it reads like the rest of the agent view. */
-[data-view="agent"] img {
-  font-family: var(--font-mono) !important;
-  font-size: 13px !important;
-  line-height: 1.6 !important;
-  color: var(--text-body) !important;
-  background: transparent !important;
-  border: 1px dashed var(--border) !important;
-  padding: 12px !important;
-  min-height: 0 !important;
-  height: auto !important;
-  /* Strip image-only styling so the alt block flows like a paragraph */
-  object-fit: unset !important;
-  display: block;
+/* Agent mode: hide every <img> entirely — the previous dashed alt-text
+   placeholder was visual noise. The wordmark, hero film, brand slide
+   stills, journal thumbnails, etc. all disappear; the alt text is
+   still in the DOM for any accessibility tools that want it, just not
+   rendered as a styled box. Also hide decorative inline SVG logos
+   (hero mid wordmark, footer emblem). The navbar wordmark is kept
+   intentionally — it's the only brand mark for the agent reader. */
+[data-view="agent"] img,
+[data-view="agent"] picture,
+[data-view="agent"] .hero-mid__logo,
+[data-view="agent"] .footer-manifesto-logo {
+  display: none !important;
 }
-[data-view="agent"] img::before {
-  /* Some browsers (Firefox) show alt text via a generated content node */
-  content: attr(alt);
-  font-family: var(--font-mono);
+
+/* Hero display headings ("A REGENERATIVE COMPANY", "FOR GENERATIONAL
+   IMPACT") are justified edge-to-edge on the live site with each
+   span at a different size — collapses to a weirdly-spaced row in
+   agent. Flatten to inline normal flow. */
+[data-view="agent"] .hero-display {
+  display: block !important;
+  text-align: left !important;
+  font-size: 14px !important;
+  letter-spacing: 0 !important;
+  font-weight: 400 !important;
+  margin: 0 0 12px !important;
+  opacity: 0.6;
+  text-transform: uppercase !important;
+}
+[data-view="agent"] .hero-display span {
+  display: inline !important;
+  font-size: inherit !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+[data-view="agent"] .hero-mid,
+[data-view="agent"] .hero-mid__think,
+[data-view="agent"] .hero-mid__copy {
+  display: block !important;
+  text-align: left !important;
+  width: auto !important;
+  max-width: 60ch !important;
 }
 
 

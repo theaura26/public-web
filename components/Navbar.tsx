@@ -778,22 +778,28 @@ export default function Navbar() {
 
           /* Bottom blur band — fixed-positioned strip at the bottom of
              the viewport (NOT inside .menu-overlay so position: fixed
-             isn't trapped by its transform). Spans the full viewport
-             width, 18 vh tall so it actually overlaps the lower edge
-             of the bottommost card by enough pixels to read. The mask
-             keeps the bottom 75 % at full blur and fades the top 25 %
-             so the upper edge feathers softly into the cards above
-             rather than landing as a hard cut. Note: isolation has
-             been removed — it creates a new stacking context that on
-             some browsers causes backdrop-filter to miss the menu
-             content underneath. */
+             isn't trapped by its transform). The .menu-overlay above
+             carries its own transform, which forces it onto a GPU
+             composited layer; backdrop-filter on a vanilla sibling
+             can fail to see through that layer, so we force the
+             vignette onto its own GPU layer with translateZ(0).
+             Also adds a very subtle dark tint as a fallback so the
+             band is visible even when backdrop-filter is unsupported
+             or fails (Firefox without webrender, Safari < 15.4). */
           :global(.tile-feed-vignette) {
             position: fixed;
             left: 0;
             right: 0;
             bottom: 0;
             height: 18vh;
-            z-index: 51;
+            z-index: 101;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            will-change: transform;
+            background: linear-gradient(to top,
+              rgba(0, 0, 0, 0.45) 0%,
+              rgba(0, 0, 0, 0)    100%
+            );
             backdrop-filter: blur(32px) saturate(1.05);
             -webkit-backdrop-filter: blur(32px) saturate(1.05);
             -webkit-mask-image: linear-gradient(to top,

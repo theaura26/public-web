@@ -154,93 +154,29 @@ html [data-theme="night"] .loc-modal:not([data-bleed="true"]) .invert-on-light {
 
 /* ═══ Agent Mode (machine-readable view) ═══
    A view-toggle, the same way day/night theme is a toggle. The same
-   pages, same content, same routes — just rendered as plain text.
-   No animations, no decorative video, no overlays. Navigation still
-   works (links remain), prose stays in semantic order, headings stay
-   as headings. Think "reader mode" for the marketing site.
+   pages, same content, same routes — rendered in document order with
+   visual chrome stripped and the colour palette INVERTED relative to
+   the current theme. Day pages render as dark; night pages render as
+   light. No font swaps, no text-transform tricks, no opacity dimming
+   — text shows in the page's native typography. Just animations off,
+   decorative media hidden, fullscreen wrappers collapsed to natural
+   flow so the content reads top-to-bottom. */
 
-   Implementation philosophy: NEVER hide content nodes — only strip
-   their visual chrome. Headings, paragraphs, lists, links must all
-   stay readable in the DOM. */
-/* Single mono family for every text node in agent mode. */
-[data-view="agent"] * { font-family: var(--font-mono) !important; }
-
-/* All readable text rendered at the same body size (14 px / 1.5) so
-   the document reads like a terminal log — hierarchy comes from
-   case, opacity, and spacing rather than font-size jumps. Inspired
-   by sycamore.so's plain-text view. */
-[data-view="agent"] h1,
-[data-view="agent"] h2,
-[data-view="agent"] h3,
-[data-view="agent"] h4,
-[data-view="agent"] h5,
-[data-view="agent"] h6,
-[data-view="agent"] p,
-[data-view="agent"] .p1,
-[data-view="agent"] .p2,
-[data-view="agent"] .label,
-[data-view="agent"] li,
-[data-view="agent"] dt,
-[data-view="agent"] dd,
-[data-view="agent"] button,
-[data-view="agent"] input,
-[data-view="agent"] textarea,
-[data-view="agent"] select,
-[data-view="agent"] a,
-[data-view="agent"] span,
-[data-view="agent"] strong,
-[data-view="agent"] em,
-[data-view="agent"] .field-input {
-  font-size: 14px !important;
-  line-height: 1.5 !important;
-  font-weight: 400 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-  color: var(--text) !important;
+/* Invert the colour palette by re-binding the theme tokens to their
+   contrast counterparts. `html [data-view="agent"]` keeps the rule at
+   the same specificity (0,1,1) as the theme blocks above and sits
+   after them in cascade, so it wins. */
+html [data-view="agent"] {
+  --bg: var(--contrast-bg);
+  --bg-elevated: var(--contrast-bg-card);
+  --bg-card: var(--contrast-bg-card);
+  --nav-bg: var(--contrast-bg);
+  --text: var(--contrast-text);
+  --text-body: var(--contrast-text-body);
+  --text-muted: var(--contrast-text-muted);
+  --text-dim: var(--contrast-text-muted);
+  --border: var(--contrast-border);
 }
-
-/* h1 + h2 — section break: uppercase, slight letter-spacing, muted */
-[data-view="agent"] h1,
-[data-view="agent"] h2 {
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
-  opacity: 0.6;
-  margin-top: 32px;
-  margin-bottom: 12px;
-}
-/* h3 — subhead, no transform, slightly muted */
-[data-view="agent"] h3 {
-  margin-top: 20px;
-  margin-bottom: 8px;
-  opacity: 0.85;
-}
-[data-view="agent"] p,
-[data-view="agent"] .p1,
-[data-view="agent"] .p2 { margin: 0 0 12px !important; }
-[data-view="agent"] .label {
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
-  opacity: 0.55;
-}
-[data-view="agent"] section { padding: var(--space-6) 0 !important; }
-[data-view="agent"] section,
-[data-view="agent"] .section-w { max-width: var(--max-w-narrow) !important; margin-left: auto !important; margin-right: auto !important; padding-left: var(--gutter) !important; padding-right: var(--gutter) !important; }
-[data-view="agent"] .grid,
-[data-view="agent"] .grid-2col,
-[data-view="agent"] .stagger { display: flex !important; flex-direction: column !important; gap: var(--space-5) !important; }
-
-/* Lists, definition lists, links — plain readable typography. */
-[data-view="agent"] ul,
-[data-view="agent"] ol { font-size: 14px; line-height: 1.7; margin: 0 0 16px; padding-left: 20px; }
-[data-view="agent"] ul { list-style: none; padding-left: 0; }
-[data-view="agent"] ul > li::before { content: '— '; opacity: 0.6; }
-[data-view="agent"] li { margin-bottom: 4px; }
-[data-view="agent"] dl { font-size: 14px; line-height: 1.7; margin: 0 0 16px; display: grid; grid-template-columns: 180px 1fr; gap: 4px 16px; }
-[data-view="agent"] dt { opacity: 0.55; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; align-self: center; }
-[data-view="agent"] dd { margin: 0; }
-[data-view="agent"] a { color: var(--text); text-decoration: underline; text-decoration-color: var(--brand-accent); text-underline-offset: 3px; }
-[data-view="agent"] a:hover { color: var(--brand-accent); }
-[data-view="agent"] hr { border: 0; border-top: 1px solid var(--border); margin: 24px 0; }
 
 /* ── Visual chrome stripped, page structure intact. ──
    Hide ONLY decorative media: videos, canvases, vignettes, blur
@@ -454,33 +390,17 @@ html [data-theme="night"] .loc-modal:not([data-bleed="true"]) .invert-on-light {
   display: none !important;
 }
 
-/* Hero display headings ("A REGENERATIVE COMPANY", "FOR GENERATIONAL
-   IMPACT") are justified edge-to-edge on the live site with each
-   span at a different size — collapses to a weirdly-spaced row in
-   agent. Flatten to inline normal flow. */
-[data-view="agent"] .hero-display {
-  display: block !important;
-  text-align: left !important;
-  font-size: 14px !important;
-  letter-spacing: 0 !important;
-  font-weight: 400 !important;
-  margin: 0 0 12px !important;
-  opacity: 0.6;
-  text-transform: uppercase !important;
-}
-[data-view="agent"] .hero-display span {
-  display: inline !important;
-  font-size: inherit !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
+/* Hero display + mid row use justified flexbox/grid layouts that
+   only make sense on a wide canvas — flatten to plain block flow so
+   each line reads as a normal heading/paragraph in document order. */
+[data-view="agent"] .hero-display,
+[data-view="agent"] .hero-display span,
 [data-view="agent"] .hero-mid,
 [data-view="agent"] .hero-mid__think,
 [data-view="agent"] .hero-mid__copy {
   display: block !important;
   text-align: left !important;
   width: auto !important;
-  max-width: 60ch !important;
 }
 
 

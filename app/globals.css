@@ -276,15 +276,16 @@ html [data-view="agent"] {
   margin-bottom: var(--space-5) !important;
 }
 
-/* Cap section width so long lines stay readable; the article-body
-   max-widths (640 / 760 px) become moot once columns collapse, so
-   reapply a sensible max on sections. */
+/* Cap section width so long lines stay readable. Everything anchors
+   to the left gutter — flush-left straight text. */
 [data-view="agent"] section,
 [data-view="agent"] .section-w,
 [data-view="agent"] .article-body {
   max-width: 720px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: var(--gutter) !important;
+  padding-right: var(--gutter) !important;
 }
 
 /* ── Visual chrome stripped, page structure intact. ──
@@ -383,19 +384,34 @@ html [data-view="agent"] {
   color: var(--text) !important;
 }
 
-/* Hero tiles + hero mid row — flatten to natural flow. */
-[data-view="agent"] .hero-tiles,
+/* Hero on the home page is a precisely-typeset grid in human mode —
+   words at different sizes, padded copy on the right, justified
+   display rows. In agent mode every descendant of `.hero-section`
+   should drop into a plain left-aligned block flow with no width
+   caps, no grid placement, no margin-auto centring. */
+[data-view="agent"] .hero-section,
+[data-view="agent"] .hero-section *,
+[data-view="agent"] .hero-section-w,
 [data-view="agent"] .hero-mid,
-[data-view="agent"] .hero-section-w {
-  display: block !important;
-  width: 100% !important;
-  margin: 0 !important;
-}
+[data-view="agent"] .hero-mid > *,
+[data-view="agent"] .hero-tiles,
 [data-view="agent"] .hero-tile {
   display: block !important;
-  margin: 0 0 var(--space-4) !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  justify-self: stretch !important;
+  align-self: stretch !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  text-align: left !important;
+  float: none !important;
+  position: static !important;
 }
-[data-view="agent"] .hero-tile__media {
+[data-view="agent"] .hero-tile__media,
+[data-view="agent"] .hero-mid__logo {
   display: none !important;
 }
 

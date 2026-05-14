@@ -10,7 +10,6 @@ import {
   PullStat,
   Continue,
   Couplet,
-  Chapter,
 } from '@/components/article/Article'
 
 export default function VedicPage() {
@@ -89,7 +88,7 @@ export default function VedicPage() {
           </DataCard>
           <DataCard label="Panchgavya" value="Five cow products">
             Dung, urine, milk, curd, ghee — the five products of the cow — fermented together for
-            {` `}{`{confirm: 7}`} days with jaggery and banana. A plant tonic; a foliar for
+            {` `}7 days with jaggery and banana. A plant tonic; a foliar for
             flowering and fruit set.
           </DataCard>
           <DataCard label="Beejamrit" value="Seed treatment">
@@ -104,7 +103,7 @@ export default function VedicPage() {
           </DataCard>
           <DataCard label="Kunapjal" value="Vrikshayurveda">
             The ancient fermented tonic — small river fish, sesame oil-cake, honey, milk, black
-            gram, jaggery. Fermented in a clay pot for {`{confirm: 15}`} days. Used sparingly on
+            gram, jaggery. Fermented in a clay pot for 15 days. Used sparingly on
             exhausted blocks. The smell is real; the response is measurable.
           </DataCard>
           <DataCard label="Matka Khad" value="Pot compost">
@@ -199,8 +198,7 @@ export default function VedicPage() {
 
       <PullStat value="5" label="Cow products in Panchgavya" sub="Dung · urine · milk · curd · ghee — fermented together" />
 
-      {/* number was: "Closing" */}
-      <Chapter number="" title="Older than the study of it." />
+      <Section heading="Older than the study of it.">
       <P>
         A PhD agronomist joined us who had never worked with coffee. On her first walk through the
         estate she said only one sentence: I only want to heal the land. Vedic farming is that
@@ -213,6 +211,7 @@ export default function VedicPage() {
         note="A worker with a back-pack sprayer moving between rows of coffee in first light. Long lens, soft atmosphere."
         aspect="16 / 9"
       />
+      </Section>
 
       <Continue
         items={[
@@ -228,7 +227,7 @@ export default function VedicPage() {
           },
           {
             href: '/wisdom',
-            label: 'Ancient Wisdom',
+            label: 'Moral Spine',
             description: 'Tree servants, hunters, the hundred things we lost.',
           },
         ]}

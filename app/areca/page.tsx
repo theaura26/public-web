@@ -127,7 +127,7 @@ export default function ArecaPage() {
         </DataCard>
         <DataCard label="Dried" value="Kempadike · ripe">
           Fully ripened nuts, sun-dried for{' '}
-          {`{confirm: 30 – 45}`} days on raised platforms. Red-brown in colour; softer and
+          30 – 45 days on raised platforms. Red-brown in colour; softer and
           sweeter in character. Higher market value.
         </DataCard>
         <DataCard label="Value-added" value="Supari, fibre, compost">

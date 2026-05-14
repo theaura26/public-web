@@ -145,7 +145,7 @@ export default function ContactPage() {
               -webkit-appearance: none;
               -moz-appearance: none;
               appearance: none;
-              cursor: none;
+
               padding-right: 28px;
               background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
               background-repeat: no-repeat;
@@ -241,7 +241,6 @@ export default function ContactPage() {
                     border: status === 'sent' ? '1px solid var(--border-strong)' : 'none',
                     padding: '14px',
                     borderRadius: 4,
-                    cursor: 'none',
                     transition: 'all 0.3s ease',
                     opacity: status === 'sending' ? 0.6 : 1,
                   }}

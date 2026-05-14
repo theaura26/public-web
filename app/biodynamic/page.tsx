@@ -10,7 +10,6 @@ import {
   PullStat,
   Continue,
   Couplet,
-  Chapter,
   Rta,
 } from '@/components/article/Article'
 
@@ -111,7 +110,7 @@ export default function BiodynamicPage() {
           </DataCard>
           <DataCard label="CPP — Cow Pat Pit" value="Activator">
             Fresh cow dung mixed with eggshell and basalt, fermented in a shallow pit with all six
-            compost preparations inside. Ferment: {`{confirm: 90}`} days. The bridging
+            compost preparations inside. Ferment: 90 days. The bridging
             preparation — carries the whole set into a single spray.
           </DataCard>
         </DataGrid>
@@ -170,7 +169,7 @@ export default function BiodynamicPage() {
       {/* eyebrow was: "Living Systems" */}
       <TwoCol id="cow" heading="The cow is its heart.">
         <P>
-          Biodynamics without an indigenous herd is a paper exercise. We keep 43 Malnad Gidda — a
+          Biodynamics without an indigenous herd is a paper exercise. We keep 52 Malnad Gidda — a
           small, hardy cattle native to the Western Ghats, adapted to the laterite soils and the
           monsoon. Their dung is denser, their urine sharper, their milk lower-yield and
           higher-value. Every horn we use was theirs. Every preparation carries their memory.
@@ -182,7 +181,7 @@ export default function BiodynamicPage() {
         </P>
       </TwoCol>
 
-      <PullStat value="43" label="Malnad Gidda cattle" sub="Indigenous Karnataka breed — the dung, the urine, the horns, the calendar" />
+      <PullStat value="52" label="Malnad Gidda cattle" sub="Indigenous Karnataka breed — the dung, the urine, the horns, the calendar" />
 
       <Placeholder
         label="Malnad Gidda portrait"
@@ -215,8 +214,7 @@ export default function BiodynamicPage() {
         The farm is an organism. The cow is its heart.
       </PullQuote>
 
-      {/* number was: "Closing" */}
-      <Chapter number="" title="Build the land, not the brand." />
+      <Section heading="Build the land, not the brand.">
       <P>
         Biodynamic certification exists. We will take it when it comes. But the point was never the
         badge. The point is that the land, which was ill, is becoming well. The canopy is thicker.
@@ -230,6 +228,7 @@ export default function BiodynamicPage() {
         note="Nine labelled jars on a rough wooden shelf, soft tungsten light, faint steam from a copper bowl. Wide still-life."
         aspect="16 / 9"
       />
+      </Section>
 
       <Continue
         items={[
@@ -241,7 +240,7 @@ export default function BiodynamicPage() {
           {
             href: '/living-systems',
             label: 'Living Systems',
-            description: '43 Malnad Gidda. The heart of the closed loop.',
+            description: '52 Malnad Gidda. The heart of the closed loop.',
           },
           {
             href: '/rta',

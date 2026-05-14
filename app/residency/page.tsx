@@ -183,9 +183,9 @@ export default function ResidencyPage() {
         </P>
 
         <DataGrid cols={3}>
-          <DataCard label="Minimum Stay" value="2 weeks" />
-          <DataCard label="Cohort Size" value="{confirm: 4–8}">Per location, per window.</DataCard>
-          <DataCard label="Founder Time" value="First 3–4 days">Arvind on-property.</DataCard>
+          <DataCard label="Minimum Stay" value="2 weeks">Anything shorter is tourism.</DataCard>
+          <DataCard label="Cohort Size" value="4 – 8">Per location, per window. Small enough to share a table.</DataCard>
+          <DataCard label="Founder Time" value="First 3 – 4 days">Arvind on-property.</DataCard>
         </DataGrid>
       </Section>
 
@@ -238,19 +238,19 @@ export default function ResidencyPage() {
       <Continue
         items={[
           {
-            href: '/spaces',
-            label: 'Spaces & Studios',
-            description: 'The Twelve Worlds, Asa, Niwa, Ki no Ie &mdash; where the residency lives.',
+            href: '/artistry',
+            label: 'Artistry',
+            description: 'Studios, kitchens, code — the work the residency does.',
           },
           {
-            href: '/mudigere',
-            label: 'Mudigere',
-            description: 'Bhoomi and Aaranya &mdash; the India expression.',
+            href: '/idea',
+            label: 'The 1000 Year Idea',
+            description: 'The frame by which every choice is measured.',
           },
           {
-            href: '/ohara',
-            label: 'Ohara',
-            description: 'Asa and Niwa &mdash; the Japan expression.',
+            href: '/sanctuary',
+            label: 'Sanctuary',
+            description: 'Mudigere, Ohara — the two valleys the residency moves between.',
           },
         ]}
       />

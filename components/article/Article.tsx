@@ -17,7 +17,7 @@
 ═══════════════════════════════════════════════════════════════════ */
 
 import Link from 'next/link'
-import { Children, ReactNode, isValidElement, cloneElement } from 'react'
+import { Children, ReactNode, isValidElement, cloneElement, useEffect, useRef } from 'react'
 import Reveal from '@/components/RevealOnScroll'
 
 /** Strip a single trailing "." from any string leaf in a ReactNode tree. */
@@ -60,7 +60,7 @@ export function ArticleHero({
 }) {
   const hasRight = toc?.length || subline
   return (
-    <section style={{ paddingTop: 250, paddingBottom: 80 }}>
+    <section style={{ paddingTop: 'clamp(160px, 22vh, 260px)', paddingBottom: 'var(--space-9)' }}>
       <div className="section-w">
         {hasRight ? (
           <div>
@@ -105,7 +105,7 @@ export function ArticleHero({
                       color: var(--brand-accent);
                       text-decoration: none;
                       line-height: 1.5;
-                      transition: opacity 0.2s ease;
+                      transition: opacity var(--dur-fast) var(--ease);
                     }
                     .article-toc__item:last-child {
                       border-bottom: 1px solid var(--border);
@@ -181,7 +181,7 @@ export function Section({
         <div className="section-w">
           <Reveal>
             <div style={{ maxWidth: 760, margin: '0 auto', textAlign: 'center' }}>
-              {heading && <h2 style={{ marginBottom: 32 }}>{heading}</h2>}
+              {heading && <h2 style={{ marginBottom: 'var(--space-6)' }}>{heading}</h2>}
             </div>
             <div className="article-body" style={{ maxWidth: 640, margin: '0 auto', textAlign: 'left' }}>
               {withLeadParagraph(children)}
@@ -197,7 +197,7 @@ export function Section({
       <section id={id} style={{ padding: 'var(--section-gap) 0' }}>
         <div className="section-w">
           <Reveal>
-            {heading && <h2 style={{ marginBottom: 32, maxWidth: 900 }}>{heading}</h2>}
+            {heading && <h2 style={{ marginBottom: 'var(--space-6)', maxWidth: 900 }}>{heading}</h2>}
             <div className="article-body" style={{ maxWidth: 760 }}>{withLeadParagraph(children)}</div>
           </Reveal>
         </div>
@@ -335,43 +335,137 @@ export function Figure({
   )
 }
 
-/* ── Placeholder ── solid grey box, 16:9, sits inside section-w gutters ── */
+/* ── FocalImage ──
+   Full-bleed (100vw × 100vh) media block with scroll-driven blur reveal —
+   same gesture as the homepage sanctuary banners but inline in article flow.
+
+   Heavy 16 px blur when the block is entering the viewport from below.
+   Blur lifts smoothly to 0 over the first ~50% of the block's pass through
+   the viewport, so by the time the block is fully on screen it's clear.
+
+   `src` swaps the grey placeholder for an actual image. `label` + `note`
+   sit on top as a caption / annotation. Reusable block — drop anywhere in
+   an article. */
+export function FocalImage({
+  src,
+  alt,
+  label,
+  note,
+}: {
+  src?: string
+  alt?: string
+  label?: string
+  note?: string
+}) {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const blurRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (blurRef.current) {
+        blurRef.current.style.backdropFilter = 'blur(0)'
+        ;(blurRef.current.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = 'blur(0)'
+      }
+      return
+    }
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const wrap = wrapRef.current
+        const blur = blurRef.current
+        if (!wrap || !blur) return
+        const rect = wrap.getBoundingClientRect()
+        const vh = window.innerHeight
+        // Progress: 0 when block's top is at viewport bottom (just entering)
+        //           1 when block's top is at viewport top (fully on screen)
+        const progress = Math.max(0, Math.min(1, 1 - rect.top / vh))
+        // Blur lifts during the first 50% of the pass.
+        const blurLift = Math.min(1, progress / 0.5)
+        const blurVal = (1 - blurLift) * 16
+        blur.style.backdropFilter = `blur(${blurVal}px)`
+        ;(blur.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = `blur(${blurVal}px)`
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  return (
+    <section
+      ref={wrapRef}
+      style={{
+        position: 'relative',
+        width: '100vw',
+        marginLeft: 'calc(50% - 50vw)',
+        height: '100vh',
+        overflow: 'hidden',
+        /* Empty state surface flows with theme — light card in day mode,
+           dark card in night mode. The image (when present) covers this
+           entirely, so this colour is only visible on placeholder frames. */
+        background: 'var(--bg-card)',
+      }}
+    >
+      {src ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={src}
+          alt={alt ?? label ?? ''}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      ) : null}
+      {/* Blur layer — gets lifted by the scroll listener. */}
+      <div
+        ref={blurRef}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+        }}
+      />
+      {/* Caption overlay — sits centred, only renders when label/note provided.
+          With an image the text sits on a photo and stays white; without one
+          it sits on the themed card surface and uses muted body text. */}
+      {(label || note) && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 24,
+            textAlign: 'center',
+            color: src ? '#ffffff' : 'var(--text-muted)',
+            pointerEvents: 'none',
+          }}
+        >
+          {label && <div className="label" style={{ marginBottom: 10, opacity: 0.85, color: 'inherit' }}>{label}</div>}
+          {note && <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, maxWidth: 380, lineHeight: 1.5, opacity: 0.7, letterSpacing: 0.2, color: 'inherit' }}>{note}</div>}
+        </div>
+      )}
+    </section>
+  )
+}
+
+/* ── Placeholder ── thin wrapper around FocalImage for backwards compat.
+   The `aspect` prop is ignored; every placeholder is now full-bleed. */
 export function Placeholder({
   label,
-  aspect = '16 / 9',
   note,
 }: {
   label: string
-  aspect?: string
+  aspect?: string  // accepted for back-compat, no longer used
   note?: string
 }) {
-  return (
-    <section style={{ padding: 'clamp(48px, 7vh, 96px) 0' }}>
-      <div className="section-w">
-        <figure style={{ margin: 0, width: '100%' }}>
-          <div
-            style={{
-              overflow: 'hidden',
-              width: '100%',
-              aspectRatio: aspect,
-              background: '#d6d6d6',
-              borderRadius: 'var(--radius-1)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexDirection: 'column',
-              padding: 24,
-              textAlign: 'center',
-              color: 'rgba(26, 26, 26, 0.55)',
-            }}
-          >
-            <div className="label" style={{ marginBottom: 10, opacity: 0.85, color: 'inherit' }}>{label}</div>
-            {note && <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, maxWidth: 380, lineHeight: 1.5, opacity: 0.7, letterSpacing: 0.2, color: 'inherit' }}>{note}</div>}
-          </div>
-        </figure>
-      </div>
-    </section>
-  )
+  return <FocalImage label={label} note={note} />
 }
 
 /* ── Data grid (cards) ──
@@ -485,7 +579,7 @@ export function SideBySide({
             <div className="p2" style={{ color: 'var(--text-body)' }}>{rightChildren}</div>
           </div>
           <style jsx>{`
-            @media (max-width: 767px) {
+            @media (max-width: 768px) {
               .sidebyside { grid-template-columns: 1fr !important; }
             }
           `}</style>
@@ -501,7 +595,7 @@ export function Continue({ items }: { items: { href: string; label: string; desc
     <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
       <div className="section-w">
         <Reveal>
-          <div className="label" style={{ marginBottom: 40 }}>Continue</div>
+          <div className="label" style={{ marginBottom: 40 }}>Explore regenerative systems</div>
           <div
             className="continue-grid"
             style={{
@@ -516,55 +610,36 @@ export function Continue({ items }: { items: { href: string; label: string; desc
                 href={item.href}
                 style={{
                   display: 'block',
-                  padding: '28px 0 0',
-                  borderTop: '1px solid var(--border-strong)',
                   textDecoration: 'none',
                   color: 'var(--text)',
-                  transition: 'transform 0.25s ease',
+                  transition: 'transform var(--dur-base) var(--ease)',
                 }}
                 className="continue-card"
               >
+                {/* Placeholder image card — 16:9 grey block above the meta.
+                    Swap for an <img> once each destination has its hero. */}
+                <div className="continue-card__media" aria-hidden />
                 <h3 style={{ margin: 0, marginBottom: 12 }}>{item.label}</h3>
                 <div className="p2" style={{ color: 'var(--text-body)' }}>{item.description}</div>
               </Link>
             ))}
           </div>
           <style jsx>{`
-            @media (max-width: 767px) {
+            @media (max-width: 768px) {
               .continue-grid { grid-template-columns: 1fr !important; }
             }
             .continue-card:hover { transform: translateY(-2px); }
+            .continue-card:hover :global(.continue-card__media) { opacity: 0.85; }
+            :global(.continue-card__media) {
+              width: 100%;
+              aspect-ratio: 16 / 9;
+              background: #d6d6d6;
+              border-radius: var(--radius-1);
+              margin-bottom: 24px;
+              transition: opacity var(--dur-base) var(--ease);
+            }
           `}</style>
         </Reveal>
-      </div>
-    </section>
-  )
-}
-
-/* ── Numbered/titled chapter heading (2-col, body optional on right) ── */
-export function Chapter({ number, title, id, children }: { number: string; title: string; id?: string; children?: ReactNode }) {
-  return (
-    <section
-      id={id}
-      style={{
-        padding: 'var(--section-gap) 0 0',
-        scrollMarginTop: 80,
-      }}
-    >
-      <div className="section-w">
-        <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)', alignItems: 'start' }}>
-          <Reveal>
-            <div>
-              {/* number intentionally not rendered — fold into title copy */}
-              <h2 style={{ maxWidth: 560, marginTop: 0 }}>{title}</h2>
-            </div>
-          </Reveal>
-          {children && (
-            <Reveal delay={80}>
-              <div className="article-body" style={{ marginTop: '-0.2em' }}>{withLeadParagraph(children)}</div>
-            </Reveal>
-          )}
-        </div>
       </div>
     </section>
   )

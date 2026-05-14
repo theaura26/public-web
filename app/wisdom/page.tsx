@@ -12,7 +12,6 @@ import {
   PullStat,
   SideBySide,
   Continue,
-  Chapter,
   Rta,
 } from '@/components/article/Article'
 
@@ -43,36 +42,72 @@ export default function WisdomPage() {
   return (
     <>
       <ArticleHero
-        title="Ancient Wisdom"
-        subline="The oldest dataset. Not folklore. A working intelligence, written into soil, season, and body."
+        title="Moral Spine"
+        subline="The sentence we return to when the spreadsheet disagrees with the soil. The line below which a project is redrawn — no matter how clever the case for crossing it."
         toc={[
-          { q: 'What is the oldest dataset?', href: '#dataset' },
+          { q: 'What is the moral spine?', href: '#spine' },
+          { q: 'What does the spine refuse?', href: '#refuse' },
           { q: 'Who is the tree servant?', href: '#tree-servant' },
           { q: 'What are the three intelligences?', href: '#intelligences' },
           { q: 'What are the six dimensions?', href: '#dimensions' },
-          { q: 'What are the hundred things we lost?', href: '#lost' },
+          { q: 'What did we lose?', href: '#lost' },
           { q: 'How is wisdom held here?', href: '#practice' },
         ]}
       />
 
-      <Section id="dataset" heading="The Oldest Dataset">
+      <Section id="spine" heading="The Moral Spine">
         <P>
-          Before the word data there was observation, and the observers were the ones who
-          stayed. The farmer who planted beside the same stream for forty years. The potter
-          whose hands knew the clay before the clay was named. The grandmother who could tell
-          the monsoon by the scent of the soil at dusk.
+          A filter is only as good as the spine it rests on. Without a spine, any filter bends —
+          to revenue, to deadline, to the most articulate person in the room. The spine is the
+          sentence we keep returning to when the spreadsheet disagrees with the soil. Ecology
+          before economics. Time before trend. Presence before performance.
         </P>
         <P>
-          Ancient wisdom is not nostalgia. It is a record of what worked, across thousands of
-          seasons, kept by those who could not afford to be wrong. It is the substrate on which
-          every modern tool is laid. Aura begins there — earth up, not algorithm down.
+          The spine is not a manifesto. It is a posture. It is what tells you to refuse a project
+          whose numbers are excellent and whose ground is exhausted. It is what tells you to
+          accept a project whose numbers are slow and whose ground is alive. The spine does not
+          argue with the case. The case is real. The spine simply refuses to trade what cannot
+          be put back.
         </P>
         <P>
-          A hundred years ago, you did not need a certification to prove food was organic. All
-          food was organic. You did not need a fair-trade stamp. Trade was face-to-face. People
-          planted by the moon. Composted by instinct. Understood soil was alive. Not because
-          they had data. Because they had attention.
+          We do not invent the spine. We inherit it. From soil that took ten thousand years to
+          build. From a herd whose lineage outlasts the state. From a method of observation
+          older than the word data. Aura begins there — earth up, not algorithm down.
         </P>
+      </Section>
+
+      <Section id="refuse" heading="What the spine refuses">
+        <P>
+          The spine is easiest to describe by what it will not do. Each of these has been
+          proposed at Aura, by someone serious, with a credible case. Each was declined because
+          the spine would not bend.
+        </P>
+        <DataGrid cols={2}>
+          <DataCard label="01" value="Yields the soil cannot regenerate.">
+            Even at premium price. The soil is not a balance sheet. What is taken without return
+            is taken from someone not yet born.
+          </DataCard>
+          <DataCard label="02" value="Growth the community cannot absorb.">
+            More guests, more crops, more programmes. Capacity is not a number we set; it is a
+            rhythm the place sets for us.
+          </DataCard>
+          <DataCard label="03" value="Optimisation of the lived.">
+            A meal that becomes a menu item. A morning that becomes a programme. Some things
+            are degraded the moment they are scaled.
+          </DataCard>
+          <DataCard label="04" value="Provenance that cannot be named.">
+            Every input — supplier, substrate, line of code — answers a question by name. If it
+            cannot be traced, it is not used.
+          </DataCard>
+          <DataCard label="05" value="Speed for its own sake.">
+            A right decision at the wrong hour is still wrong. The spine is patient because the
+            ground is patient, and the ground is right more often than we are.
+          </DataCard>
+          <DataCard label="06" value="Technology that erases the elder.">
+            A tool that replaces the farmer&apos;s eye, the cook&apos;s hand, the gardener&apos;s
+            judgement is not a tool here. We use machines to amplify lineage, not to displace it.
+          </DataCard>
+        </DataGrid>
       </Section>
 
       <Placeholder
@@ -80,10 +115,7 @@ export default function WisdomPage() {
         note="Suggested: close, warm tungsten light on hands packing dung into a cow horn. Shallow depth of field, earthy palette."
       />
 
-      {/* number was: "00" */}
-      <Chapter number="" title="The Tree Servant" id="tree-servant" />
-
-      <Section>
+      <Section id="tree-servant" heading="The Tree Servant">
         <P>
           In Thailand there is a man everyone calls Uncle Shung. He keeps a garden the way other
           people keep a decades-long correspondence. When asked what he does, he does not say
@@ -107,10 +139,7 @@ export default function WisdomPage() {
         </P>
       </Section>
 
-      {/* number was: "01" */}
-      <Chapter number="" title="Three Intelligences" id="intelligences" />
-
-      <Section>
+      <Section id="intelligences" heading="Three Intelligences">
         <P>
           We work with three kinds of intelligence. None is sufficient alone. None is senior to
           the others. They are arranged in the order they arrived, and in the order we consult
@@ -139,17 +168,17 @@ export default function WisdomPage() {
       </Section>
 
       {/* eyebrow was: "The third layer" */}
-      <Section heading="Artificial Intelligence">
+      <Section heading="Machine Intelligence">
         <P>
-          Artificial intelligence is the most recent arrival. At Aura it sits last, not first.
-          It is given the smallest, sharpest jobs — transcribing soil, translating sensor
-          readings, remembering what the grandmother said so her grandchildren can hear it in
-          their own tongue.
+          Machine intelligence is the most recent arrival. At Aura it sits last, not first. It
+          is given the smallest, sharpest jobs — transcribing soil, translating sensor readings,
+          remembering what the grandmother said so her grandchildren can hear it in their own
+          tongue.
         </P>
         <P>
-          Used this way, AI is a scribe for ancient wisdom, not a replacement for it. It does
-          not decide when to irrigate. It surfaces the pattern so the farmer can decide. The
-          technology stays invisible. The intelligence it amplifies is the one that has been
+          Used this way, computation is a scribe for ancient wisdom, not a replacement for it.
+          It does not decide when to irrigate. It surfaces the pattern so the farmer can decide.
+          The technology stays invisible. The intelligence it amplifies is the one that has been
           here all along.
         </P>
       </Section>
@@ -177,10 +206,7 @@ export default function WisdomPage() {
         One has read, the other knows.
       </PullQuote>
 
-      {/* number was: "02" */}
-      <Chapter number="" title="Six Dimensions" id="dimensions" />
-
-      <Section>
+      <Section id="dimensions" heading="Six Dimensions">
         <P>
           When we say wisdom we mean something we can practice, not something we merely admire.
           Six dimensions make it operable. They are the capacities Aura cultivates — in the
@@ -235,10 +261,7 @@ export default function WisdomPage() {
         note="Suggested: a large old tree with long shadow at golden hour; sense of scale and time. Vertical or 3:2."
       />
 
-      {/* number was: "03" */}
-      <Chapter number="" title="The 100 Things We Lost" id="lost" />
-
-      <Section>
+      <Section id="lost" heading="The 100 Things We Lost">
         <P>
           Progress has a shadow ledger. For every capability we have gained there are smaller,
           older ones that quietly left. We do not romanticise them; we list them. Some we are

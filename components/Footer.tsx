@@ -37,40 +37,61 @@ export default function Footer() {
       {/* Divider */}
       <div style={{ padding: '0 var(--gutter)', position: 'relative', zIndex: 2 }}><div style={{ height: 1, background: 'var(--border)' }} /></div>
 
-      {/* Content */}
-      <div style={{ padding: '64px var(--gutter) 80px', position: 'relative', zIndex: 2 }}>
-        <div className="grid grid-cols-2 md:grid-cols-4" style={{ gap: 'clamp(24px, 3vw, 48px)', rowGap: 40 }}>
+      {/* Content — 4-col on desktop, 1-col on mobile.
+          Manifesto sits FAR LEFT on desktop (col-span-1) and lands TOP LEFT
+          on mobile (first stacked row). Then Contact, Follow Us, Locations. */}
+      <div style={{ padding: 'var(--space-8) var(--gutter) var(--space-9)', position: 'relative', zIndex: 2 }}>
+        <div className="grid grid-cols-1 md:grid-cols-4" style={{ gap: 'clamp(24px, 3vw, 48px)', rowGap: 'var(--space-7)' }}>
+          <div className="footer-manifesto-col">
+            <h2 className="footer-manifesto-title">A 1,000 Year Idea</h2>
+            <p className="label" style={{ marginTop: 'var(--space-3)' }}>Think in generations</p>
+          </div>
           <div>
-            <p className="label" style={{ marginBottom: 10 }}>Contact</p>
+            <p className="label" style={{ marginBottom: 'var(--space-3)' }}>Contact</p>
             <a href="/contact" className="p1">hello@theaura.life</a>
           </div>
           <div>
-            <p className="label" style={{ marginBottom: 10 }}>Follow us</p>
+            <p className="label" style={{ marginBottom: 'var(--space-3)' }}>Follow us</p>
             <a href="https://www.instagram.com/theaura.life/" target="_blank" rel="noopener noreferrer" className="p1" style={{ display: 'block' }}>Instagram</a>
           </div>
-          <div className="col-span-2">
-            <p className="label" style={{ marginBottom: 16 }}>Locations</p>
-            <div className="flex flex-wrap gap-8">
+          <div>
+            <p className="label" style={{ marginBottom: 'var(--space-4)' }}>Locations</p>
+            <div className="flex flex-wrap gap-6">
               {[
                 { city: 'SGP', tz: 'Asia/Singapore' },
                 { city: 'IND', tz: 'Asia/Kolkata' },
                 { city: 'JPN', tz: 'Asia/Tokyo' },
-                { city: 'IDN', tz: 'Asia/Jakarta' },
-                { city: 'AUS', tz: 'Australia/Melbourne' },
               ].map((loc) => (
-                <div key={loc.city} className="flex flex-col items-center" style={{ gap: 8 }}>
-                  <AnalogClock tz={loc.tz} />
+                <div key={loc.city} className="flex flex-col items-center" style={{ gap: 'var(--space-2)' }}>
+                  <AnalogClock tz={loc.tz} size={48} />
                   <span className="p1">{loc.city}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
+        <style jsx>{`
+          /* Manifesto reads as a quiet continuation of the body copy rather
+             than a section title — same sans family as p1, lighter weight,
+             same baseline color. The "label" sub below picks up the existing
+             mono-uppercase treatment so they read as a paired signature. */
+          .footer-manifesto-title {
+            font-family: var(--font-sans);
+            font-size: clamp(20px, 2.2vw, 28px);
+            line-height: 1.35;
+            letter-spacing: -0.035em;
+            font-weight: 400;
+            color: var(--text);
+            margin: 0;
+          }
+        `}</style>
       </div>
 
-      {/* Mega wordmark — clean, no fog or blur */}
+      {/* Mega wordmark + manifesto signature. The watermark fills the
+          bottom band and the closing manifesto sits absolutely positioned
+          in its bottom-left corner — small display heading + mono lead,
+          so it reads as a quiet signature rather than a section. */}
       <div
-        aria-hidden
         style={{
           overflow: 'hidden',
           paddingBottom: '20%',
@@ -79,22 +100,24 @@ export default function Footer() {
         }}
       >
         <div
+          aria-hidden
           style={{
             position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
+            zIndex: 1,
             color: theme === 'day' ? '#F2F2F2' : 'rgba(255,255,255,0.55)',
           }}
         >
           <LogoEmblem size={2000} className="footer-logo-scale" />
-          <style jsx>{`
-            div :global(.footer-logo-scale) {
-              width: 100% !important;
-              height: auto !important;
-            }
-          `}</style>
         </div>
+        <style jsx>{`
+          div :global(.footer-logo-scale) {
+            width: 100% !important;
+            height: auto !important;
+          }
+        `}</style>
       </div>
     </footer>
   )

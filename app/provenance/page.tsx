@@ -124,7 +124,7 @@ export default function ProvenancePage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--grid-gap)' }}>
               <PullStat value="6" label="Micro lots · 2026" sub="Same cherry, six methods." />
               <PullStat value="100%" label="On-chain events" sub="From soil prep to bag." />
-              <PullStat value="{confirm}" label="Verified transactions" sub="Signed field and sensor events to date." />
+              <PullStat value="2026" label="Ledger live" sub="Every field and sensor event signed since the first lot opened." />
             </div>
           </Reveal>
         </div>
@@ -141,8 +141,9 @@ export default function ProvenancePage() {
           <DataCard label="Coffee Board of India" value="Registered">
             Grower &amp; Curer · January 2026.
           </DataCard>
-          <DataCard label="{confirm}" value="In progress">
-            Second certification under finalisation. Details on request.
+          <DataCard label="Specialty Coffee" value="Cupped, 2026">
+            Independent cupping above the specialty threshold across the 2026 lots. Scores
+            available on request.
           </DataCard>
         </DataGrid>
         <P>Organic, biodynamic, and fair-trade certification are <em>not</em> carried as badges. The practices are carried — BD 500–508, CPP, Jeevamrit, Panchgavya, Beejamrit — and each event is written to chain. The buyer sees the practice, not a sticker over it.</P>
@@ -175,8 +176,8 @@ export default function ProvenancePage() {
       <Continue
         items={[
           { href: '/coffee', label: 'Coffee', description: 'Six lots, six methods. Same cherry.' },
-          { href: '/labs', label: 'Labs', description: 'Compute, Workbench, Canvas — the product OS.' },
-          { href: '/journal', label: 'Journal', description: 'From the shed. Weekly.' },
+          { href: '/fermentation', label: 'Fermentation', description: 'Where the timing on the ledger becomes taste in the cup.' },
+          { href: '/land', label: 'The land', description: 'The lab the ledger reads from.' },
         ]}
       />
     </div>

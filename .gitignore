@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Large source videos — exceed GitHub/Vercel 100 MB per-file caps.
+# The "Enter the ecosystem" film modal references these; ship a smaller
+# encode or host them externally before re-enabling.
+/public/aura-25.mp4
+/public/aura-25.webm

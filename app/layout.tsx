@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Bricolage_Grotesque, Instrument_Serif, DM_Sans, DM_Mono } from 'next/font/google'
+import { Bricolage_Grotesque, Instrument_Serif, DM_Sans, DM_Mono, Pixelify_Sans } from 'next/font/google'
 import './globals.css'
 import ClientLayout from './client-layout'
 
@@ -29,6 +29,13 @@ const dmMono = DM_Mono({
   display: 'swap',
 })
 
+/* Reserved for the "Machine" word in the Brand page intelligence cycle. */
+const pixelifySans = Pixelify_Sans({
+  subsets: ['latin'],
+  variable: '--font-pixel',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   title: 'Aura — The 1000-Year Idea',
   description: 'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
@@ -40,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${instrumentSerif.variable} ${dmSans.variable} ${dmMono.variable}`}>
+    <html lang="en" className={`${bricolage.variable} ${instrumentSerif.variable} ${dmSans.variable} ${dmMono.variable} ${pixelifySans.variable}`}>
       <body>
         <ClientLayout>{children}</ClientLayout>
       </body>

@@ -10,7 +10,6 @@ import {
   PullStat,
   Continue,
   Couplet,
-  Chapter,
   SideBySide,
   Rta,
 } from '@/components/article/Article'
@@ -66,26 +65,26 @@ export default function FermentationPage() {
         </P>
 
         <DataGrid cols={3}>
-          <DataCard label="Lot 001 — Anaerobic Natural" value="{confirm: 72} hrs · 18 – 22°C">
+          <DataCard label="Lot 001 — Anaerobic Natural" value="72 hrs · 18 – 22°C">
             Whole cherry, sealed tank, CO₂ blanket. Long, slow, fruit-forward. The baseline lot
             against which all others are cupped.
           </DataCard>
-          <DataCard label="Lot 002 — Appassimento" value="{confirm: 21} days dry · 36 hrs ferment">
+          <DataCard label="Lot 002 — Appassimento" value="21 days dry · 36 hrs ferment">
             Wine-technique drying of the whole cherry on raised beds before ferment. Concentrates
             sugars and floral notes. Flagship: cupped at 83.5.
           </DataCard>
-          <DataCard label="Lot 003 — Red Honey" value="{confirm: 60} hrs · 20 – 24°C">
+          <DataCard label="Lot 003 — Red Honey" value="60 hrs · 20 – 24°C">
             Pulped cherry retaining full mucilage, slow-dried on beds. Honeyed, stone-fruit. The
             middle path between natural and washed.
           </DataCard>
-          <DataCard label="Lot 004 — Banana Wash" value="{confirm: 48} hrs · 22°C">
+          <DataCard label="Lot 004 — Banana Wash" value="48 hrs · 22°C">
             Banana leaves layered into the ferment tank; plant-native yeasts seed the culture.
             Soft, round, unmistakably Mudigere.
           </DataCard>
           <DataCard label="Lot 005 — Solera Maceration" value="Carry-forward · mother + fresh">
             A Solera fractional system adapted from sherry. The mother ferment is never fully
             emptied. Each new lot carries forward 30 % of the previous cycle, compounding
-            microbial complexity across seasons. Cycle: {`{confirm: 5}`} passes per season.
+            microbial complexity across seasons. Five passes per season.
           </DataCard>
           <DataCard label="Lot 006 — Solera Wash" value="Carry-forward · washed finish">
             The same Solera logic with a washed-process finish. Cleaner acidity, deeper backbone.
@@ -131,8 +130,8 @@ export default function FermentationPage() {
           }
           rightChildren={
             <>
-              {`{confirm: 48}`} hours in a sealed tank under CO₂ at 22 – 24 °C. Yeast-driven rather
-              than bacterial. Notes of cured fruit and cedar. In trial across two seasons.
+              48 hours in a sealed tank under CO₂ at 22 – 24 °C. Yeast-driven rather than bacterial.
+              Notes of cured fruit and cedar. In trial across two seasons.
             </>
           }
         />
@@ -219,14 +218,14 @@ export default function FermentationPage() {
 
       <PullStat value="6" label="Coffee lots" sub="Each a separate ferment, each read on its own clock" />
 
-      {/* number was: "Closing" */}
-      <Chapter number="" title="One posture, three outputs." />
+      <Section heading="One posture, three outputs.">
       <P>
         Coffee, pepper, dung. Three vessels, three timers, one attention. Fermentation at Aura is
         not a production step. It is how the estate thinks — slowly, microbially, in the dark — and
         it is how the estate will eventually train a model that remembers what a good ferment
         smells like, hour by hour, season by season. Patience, made visible.
       </P>
+      </Section>
 
       <Continue
         items={[
@@ -241,7 +240,7 @@ export default function FermentationPage() {
             description: 'BD 500 and the Cow Pat Pit — the oldest ferments on the estate.',
           },
           {
-            href: '/ohara',
+            href: '/sanctuary',
             label: 'Ohara',
             description: 'Asa · Niwa. The 800-year fermentation valley outside Kyoto.',
           },

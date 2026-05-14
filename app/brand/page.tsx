@@ -4,6 +4,12 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import Reveal from '@/components/RevealOnScroll'
 import VideoReactiveArt from '@/components/VideoReactiveArt'
 import { useMode } from '@/components/ModeProvider'
+import gsap from 'gsap'
+import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrambleTextPlugin)
+}
 
 const BRAND_COLORS = [
   '#CA4926', '#DD7C37', '#E4B239', '#E1ADA2',
@@ -19,21 +25,58 @@ const BRAND_COLORS = [
 const INTELLIGENCES = ['Natural', 'Ancient', 'Human', 'Machine']
 
 function HeroBanner() {
-  const [index, setIndex] = useState(0)
-  const [visible, setVisible] = useState(true)
+  const wordRef = useRef<HTMLSpanElement>(null)
   const [useFallback, setUseFallback] = useState(false)
 
-  // Word cycling
+  /* Scramble cycle — ScrambleTextPlugin tweens between the four
+     intelligences, glyph by glyph. We bypass React state for the word so the
+     plugin owns the DOM text during the scramble; only the font swap (Pixelify
+     for "Machine") is applied directly to the element style at tween start. */
   useEffect(() => {
-    const cycle = () => {
-      setVisible(false)
-      setTimeout(() => {
-        setIndex((prev) => (prev + 1) % INTELLIGENCES.length)
-        setVisible(true)
-      }, 400)
+    let timer: ReturnType<typeof setTimeout> | null = null
+    let i = 0
+
+    const applyFont = (word: string) => {
+      const el = wordRef.current
+      if (!el) return
+      el.style.fontFamily =
+        word === 'Machine' ? 'var(--font-pixel), var(--font-grotesque)' : 'inherit'
     }
-    const interval = setInterval(cycle, 2800)
-    return () => clearInterval(interval)
+
+    if (wordRef.current) {
+      wordRef.current.textContent = INTELLIGENCES[0]
+      applyFont(INTELLIGENCES[0])
+    }
+
+    const cycle = () => {
+      if (!wordRef.current) return
+      i = (i + 1) % INTELLIGENCES.length
+      const next = INTELLIGENCES[i]
+      applyFont(next)
+      gsap.to(wordRef.current, {
+        duration: 1.1,
+        scrambleText: {
+          text: next,
+          /* Scramble through organic / botanical unicode glyphs instead of
+             random alphanumerics — visually echoes the vector-shape
+             vocabulary used by the reactive-art canvas behind the text:
+             florals, asterisks, dots, rings. The intermediate frames now
+             read as the same family of marks as the background scatter,
+             not random Latin letters. */
+          chars: '✦✺❋❀✿✻✼❁●◯◉◍✧✷✸',
+          speed: 0.5,
+          revealDelay: 0.2,
+        },
+        ease: 'none',
+      })
+      timer = setTimeout(cycle, 2800)
+    }
+    timer = setTimeout(cycle, 2800)
+
+    return () => {
+      if (timer) clearTimeout(timer)
+      if (wordRef.current) gsap.killTweensOf(wordRef.current)
+    }
   }, [])
 
   // Detect low-power / reduced-motion / autoplay-blocked → use static image fallback
@@ -102,14 +145,10 @@ function HeroBanner() {
               textAlign: 'center',
             }}>
               <span
-                style={{
-                  display: 'inline-block',
-                  transition: 'opacity 0.4s ease, transform 0.4s ease',
-                  opacity: visible ? 1 : 0,
-                  transform: visible ? 'translateY(0)' : 'translateY(12px)',
-                }}
+                ref={wordRef}
+                style={{ display: 'inline-block' }}
               >
-                {INTELLIGENCES[index]}
+                {INTELLIGENCES[0]}
               </span>
               <br />
               Intelligence
@@ -134,7 +173,7 @@ function CopySection({ headline, children }: {
         padding: 'clamp(100px, 14vh, 180px) var(--gutter)',
         textAlign: 'center',
       }}>
-        <div style={{ maxWidth: 680, margin: '0 auto' }}>
+        <div style={{ maxWidth: 880, margin: '0 auto' }}>
           <h2 style={{
             lineHeight: 1.15,
             marginBottom: children ? 28 : 0,
@@ -198,7 +237,7 @@ function TiltCard({ children, index: i }: { children: React.ReactNode; index: nu
           overflow: 'hidden',
           transformStyle: 'preserve-3d',
           transform: 'translateZ(var(--tz, 0px)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))',
-          transition: 'transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.55s ease',
+          transition: 'transform 0.55s var(--ease-out), box-shadow 0.55s var(--ease)',
           willChange: 'transform',
           boxShadow: '0 1px 2px rgba(0,0,0,0.06), 0 12px 32px rgba(0,0,0,0.10), 0 32px 80px rgba(0,0,0,0.06)',
         }}
@@ -260,7 +299,7 @@ function SlideGrid({ from, to, skip }: { from: number; to: number; skip?: number
           gap: 32px 24px;
           transform-style: preserve-3d;
         }
-        @media (max-width: 767px) {
+        @media (max-width: 768px) {
           .brand-slide-grid-wrap {
             padding: 12px 6px 40px;
           }
@@ -375,7 +414,7 @@ export default function BrandPage() {
           padding: 'clamp(100px, 14vh, 180px) var(--gutter)',
           textAlign: 'center',
         }}>
-          <div style={{ maxWidth: 680, margin: '0 auto' }}>
+          <div style={{ maxWidth: 880, margin: '0 auto' }}>
             <div style={{ marginBottom: 48, display: 'flex', justifyContent: 'center' }}>
               <img
                 src={logoSrc}

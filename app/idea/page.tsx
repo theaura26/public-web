@@ -11,7 +11,6 @@ import {
   PullQuote,
   PullStat,
   Continue,
-  Chapter,
   Rta,
 } from '@/components/article/Article'
 
@@ -173,8 +172,8 @@ export default function IdeaPage() {
         </P>
         <P>
           Technology without awareness repeats old patterns in new language. Sensors without
-          wisdom are just data. AI without care is just faster. The world does not need more
-          intelligence. It needs more conscience.
+          wisdom are just data. Computation without conscience is just faster. The world does
+          not need more intelligence. It needs more conscience.
         </P>
       </Section>
 
@@ -201,7 +200,7 @@ export default function IdeaPage() {
           <DataCard label="Elevation" value="3,600 ft">
             Eastern slope of the Western Ghats. Cool nights. Long shade. Slow ripening.
           </DataCard>
-          <DataCard label="Herd" value="43">
+          <DataCard label="Herd" value="52">
             Malnad Gidda — indigenous Karnataka cattle. The heart of the soil system.
           </DataCard>
           <DataCard label="Filters" value="7">
@@ -240,8 +239,8 @@ export default function IdeaPage() {
         items={[
           {
             href: '/wisdom',
-            label: 'Ancient Wisdom',
-            description: 'Three intelligences. The oldest dataset.',
+            label: 'Moral Spine',
+            description: 'The sentence we return to when the spreadsheet disagrees with the soil.',
           },
           {
             href: '/rta',

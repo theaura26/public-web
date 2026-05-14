@@ -12,7 +12,6 @@ import {
   PullStat,
   SideBySide,
   Continue,
-  Chapter,
   Couplet,
 } from '@/components/article/Article'
 
@@ -61,11 +60,7 @@ export default function ArtistryPage() {
       <PullQuote>
         Coffee roots and design systems. Code meets clay.
       </PullQuote>
-
-      {/* number was: "01" */}
-      <Chapter number="" title="The Audience" id="audience" />
-
-      <Section>
+      <Section id="audience" heading="The Audience">
         <P>
           Aura is not built for everyone. It is built for the monastic polymath — the person who
           works across disciplines but within a single practice, who is attached to the work and
@@ -93,16 +88,11 @@ export default function ArtistryPage() {
         />
         <P>
           Who the work is not for: the audience of scale. Not for P&amp;G. Not for Coke. Not for
-          enterprise marketing teams. Aura is made for people who are reimagining their own
-          practice for the new age — and for the crazy misfits who are ready to try something
-          honest.
+          enterprise marketing teams. Aura is made for people remaking their own practice in
+          public — and for the crazy misfits who are ready to try something honest.
         </P>
       </Section>
-
-      {/* number was: "02" */}
-      <Chapter number="" title="Studios" id="studios" />
-
-      <Section>
+      <Section id="studios" heading="Studios">
         <P>
           Every valley has a studio. Every studio has the same rule: the tools in it must be
           serviceable by the hands that live here. No dependency on a supply chain the land cannot
@@ -135,11 +125,7 @@ export default function ArtistryPage() {
           </DataCard>
         </DataGrid>
       </Section>
-
-      {/* number was: "03" */}
-      <Chapter number="" title="Residency" id="residency" />
-
-      <Section>
+      <Section id="residency" heading="Residency">
         <P>
           The Aura Residency is the artery of the artistry pillar. Makers — artists, scientists,
           engineers, farmers, chefs — arrive for one to three weeks, live on the land, and work
@@ -177,11 +163,7 @@ export default function ArtistryPage() {
       <PullQuote attribution="Arvind">
         Twenty-year-old odd kids can change the destiny.
       </PullQuote>
-
-      {/* number was: "04" */}
-      <Chapter number="" title="Labs" id="labs" />
-
-      <Section>
+      <Section id="labs" heading="Labs">
         <P>
           Labs &amp; Hardware is the quiet instrumentation layer of Aura — the sensors that make
           soil legible, the ferment monitors that read the tank, the world model that listens to
@@ -201,20 +183,17 @@ export default function ArtistryPage() {
           </DataCard>
         </DataGrid>
         <P>
-          Three layers underneath: blockchain provenance, live sensors, and a persistent AI memory.
-          Together they replace the forty-thousand-dollar certification stack with something the
-          land itself can verify, cherry to cup, root to roast.
+          Three layers underneath: blockchain provenance, live sensors, and a persistent machine
+          memory grown from the farm&apos;s own readings. Together they replace the
+          forty-thousand-dollar certification stack with something the land itself can verify,
+          cherry to cup, root to roast.
         </P>
       </Section>
 
       <PullQuote attribution="Arvind">
         One has read, the other knows.
       </PullQuote>
-
-      {/* number was: "05" */}
-      <Chapter number="" title="The Gathering" id="gathering" />
-
-      <Section>
+      <Section id="gathering" heading="The Gathering">
         <P>
           Every year the residency culminates in <strong>The Gathering</strong> — the Bhoomi
           Festival at Mudigere, a three-day convening of soil, sound, and light. The work made on
@@ -239,9 +218,9 @@ export default function ArtistryPage() {
 
       <Continue
         items={[
-          { href: '/residency', label: 'Artist Residency', description: 'The Twelve Worlds and Ki no Ie.' },
-          { href: '/spaces', label: 'Spaces & Studios', description: 'The workbenches of the valley.' },
-          { href: '/labs', label: 'Labs & Hardware', description: 'Compute · Workbench · Canvas.' },
+          { href: '/residency', label: 'Residency', description: 'Monastic polymaths. Crazy misfits. Two to three weeks on the land.' },
+          { href: '/sanctuary', label: 'Sanctuary', description: 'The four valleys the residency moves between.' },
+          { href: '/provenance', label: 'Provenance', description: 'Cherry to cup. On chain. The lab\'s notebook, public.' },
         ]}
       />
     </>

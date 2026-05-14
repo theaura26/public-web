@@ -9,7 +9,6 @@ import {
   PullQuote,
   PullStat,
   SideBySide,
-  Chapter,
   Continue,
 } from '@/components/article/Article'
 
@@ -48,7 +47,7 @@ export default function CoffeePage() {
           Rainfall on the estate ranges between <strong>40" and 100"</strong> a year, delivered
           almost entirely between June and September. The monsoon arrives as a wall, not a
           drizzle. Coffee cherries ripen in the cool, misted second half of the year, and are
-          harvested in <strong>{`{confirm: Nov – Feb}`}</strong>.
+          harvested in <strong>Nov – Feb</strong>.
         </P>
         <P>
           Nothing on this estate grows in direct sun. Every coffee plant is shaded by an areca, a
@@ -74,7 +73,7 @@ export default function CoffeePage() {
           Balehonnur, forty kilometres from our gate.
         </P>
         <P>
-          <strong>Selection 795 (Sln.795)</strong> was released in {`{confirm: 1946}`} — a cross
+          <strong>Selection 795 (Sln.795)</strong> was released in 1946 — a cross
           of Kents and S.288, widely planted across South India for its vigour and classic mild
           cup. It is the grandfather variety of the estate. Under shade, it develops a cocoa-malt
           body and a round acidity.
@@ -114,16 +113,14 @@ export default function CoffeePage() {
       <PullQuote>Where precision meets patience.</PullQuote>
 
       {/* LOT 001 */}
-      {/* number was: "001" */}
-      <Chapter number="" title="Anaerobic Natural" id="lot-001" />
       <Placeholder
         label="Lot 001 — sealed anaerobic tanks"
         note="Stainless tanks in the wet mill with airlock bungs bubbling. Dimly lit, slightly clinical. Monitor in foreground showing Brix / pH."
       />
-      <Section>
+      <Section id="lot-001" heading="Anaerobic Natural">
         <P>
           Whole cherries sealed in stainless tanks under positive CO₂ pressure for{' '}
-          <strong>{`{confirm: 72}`} hours</strong>, then dried slowly on the cherry for three
+          <strong>72 hours</strong>, then dried slowly on the cherry for three
           weeks on raised African beds. The process suppresses oxygen-loving yeasts and lets
           wild-fermentation strains push the flavour into tropical-fruit territory.
         </P>
@@ -135,29 +132,27 @@ export default function CoffeePage() {
         <DataGrid cols={3}>
           <DataCard label="Variety" value="Sln.9" />
           <DataCard label="Process" value="Anaerobic Natural">Sealed, whole cherry, CO₂ positive.</DataCard>
-          <DataCard label="Ferment" value={`{confirm: 72} hr`}>22 – 24 °C, starting Brix {`{confirm: 22}`}°.</DataCard>
-          <DataCard label="Drying" value={`{confirm: 21} days`}>Raised beds, canopy-covered.</DataCard>
-          <DataCard label="Final pH" value={`{confirm: 4.2}`} />
-          <DataCard label="Score" value={`{confirm: 86.0}`}>Cupped at Boojee Bengaluru, Jan 2026.</DataCard>
+          <DataCard label="Ferment" value="72 hr">22 – 24 °C, starting Brix 22°.</DataCard>
+          <DataCard label="Drying" value="21 days">Raised beds, canopy-covered.</DataCard>
+          <DataCard label="Final pH" value="4.2" />
+          <DataCard label="Score" value="86.0">Cupped at Boojee Bengaluru, Jan 2026.</DataCard>
         </DataGrid>
       </Section>
 
       {/* LOT 002 — FLAGSHIP */}
-      {/* number was: "002" */}
-      <Chapter number="" title="Appassimento — Dry Osmosis" id="lot-002" />
       <Placeholder
         label="Lot 002 — Appassimento drying"
         note="Cherries laid out on bamboo mats in a ventilated shade-house, slightly raisined. Single raking rake in frame. The flagship shot."
         aspect="3 / 2"
       />
-      <Section>
+      <Section id="lot-002" heading="Appassimento — Dry Osmosis">
         <P>
           Our flagship. Named for the Veneto winemaking tradition in which grapes destined for
           Amarone are dried to concentrate sugars before fermentation, Appassimento at Aura applies
           the same principle to the coffee cherry. After harvest, cherries are laid in a single
-          layer in a dedicated shade-house for <strong>{`{confirm: 14 – 18}`} days</strong> of slow
+          layer in a dedicated shade-house for <strong>14 – 18 days</strong> of slow
           dehydration — losing water but not pulp, concentrating sugars from{' '}
-          <strong>{`{confirm: 22}`}° Brix to {`{confirm: 32}`}° Brix</strong> — before a short,
+          <strong>22° Brix to 32° Brix</strong> — before a short,
           cool anaerobic ferment and a long cherry dry.
         </P>
         <P>
@@ -169,25 +164,23 @@ export default function CoffeePage() {
         <DataGrid cols={3}>
           <DataCard label="Variety" value="Sln.9" />
           <DataCard label="Process" value="Appassimento">Raisining before ferment. Adapted from Amarone.</DataCard>
-          <DataCard label="Raisining" value={`{confirm: 14 – 18} days`}>Shade-house, forced airflow, 18 – 22 °C.</DataCard>
-          <DataCard label="Brix shift" value={`22° → 32°`}>Sugars concentrated by {`{confirm: 45}`} %.</DataCard>
-          <DataCard label="Ferment" value={`{confirm: 36} hr`}>Cool anaerobic, 18 °C.</DataCard>
+          <DataCard label="Raisining" value="14 – 18 days">Shade-house, forced airflow, 18 – 22 °C.</DataCard>
+          <DataCard label="Brix shift" value={`22° → 32°`}>Sugars concentrated by 45 %.</DataCard>
+          <DataCard label="Ferment" value="36 hr">Cool anaerobic, 18 °C.</DataCard>
           <DataCard label="Score" value="83.5">SCA protocol, rising cupping batch-over-batch.</DataCard>
         </DataGrid>
       </Section>
 
       {/* LOT 003 */}
-      {/* number was: "003" */}
-      <Chapter number="" title="Red Honey" id="lot-003" />
       <Placeholder
         label="Lot 003 — Red Honey parchment"
         note="Close-up of sticky, rust-coloured parchment drying on raised beds, hand turning it. Warm afternoon light."
       />
-      <Section>
+      <Section id="lot-003" heading="Red Honey">
         <P>
           A honey process in the Costa Rican tradition, adapted to Ghats humidity. Cherries are
           pulped and the parchment is dried with{' '}
-          <strong>{`{confirm: 80 – 90}`} % of mucilage retained</strong>. Called "red honey" for
+          <strong>80 – 90 % of mucilage retained</strong>. Called "red honey" for
           the colour the mucilage takes on over a fourteen-day dry. The sugars caramelise on the
           bean itself.
         </P>
@@ -199,23 +192,21 @@ export default function CoffeePage() {
         <DataGrid cols={3}>
           <DataCard label="Variety" value="Sln.9 / Sln.795 blend" />
           <DataCard label="Process" value="Red Honey">80 – 90 % mucilage retained.</DataCard>
-          <DataCard label="Drying" value={`{confirm: 14} days`}>Raised beds, hand-turned every 2 hr.</DataCard>
-          <DataCard label="Score" value={`{confirm: 85.0}`} />
+          <DataCard label="Drying" value="14 days">Raised beds, hand-turned every 2 hr.</DataCard>
+          <DataCard label="Score" value="85.0" />
         </DataGrid>
       </Section>
 
       {/* LOT 004 */}
-      {/* number was: "004" */}
-      <Chapter number="" title="Banana Wash" id="lot-004" />
       <Placeholder
         label="Lot 004 — Banana Wash fermentation"
         note="Open fermentation tank layered with banana leaves and whole green bananas among the coffee cherries. Playful, intuitive, experimental."
       />
-      <Section>
+      <Section id="lot-004" heading="Banana Wash">
         <P>
           Our most experimental lot, and the most distinctly Indian. Whole cherries are
           co-fermented for{' '}
-          <strong>{`{confirm: 48}`} hours</strong> with green bananas and banana leaves,
+          <strong>48 hours</strong> with green bananas and banana leaves,
           introducing wild yeasts and pectinases from a crop that grows forty feet from the wet
           mill. Then washed clean on parchment and dried slow.
         </P>
@@ -227,19 +218,17 @@ export default function CoffeePage() {
         <DataGrid cols={3}>
           <DataCard label="Variety" value="Sln.9" />
           <DataCard label="Process" value="Banana Wash">Co-ferment with banana leaf and fruit.</DataCard>
-          <DataCard label="Ferment" value={`{confirm: 48} hr`} />
-          <DataCard label="Score" value={`{confirm: 84.5}`} />
+          <DataCard label="Ferment" value="48 hr" />
+          <DataCard label="Score" value="84.5" />
         </DataGrid>
       </Section>
 
       {/* LOT 005 */}
-      {/* number was: "005" */}
-      <Chapter number="" title="Solera Maceration" id="lot-005" />
       <Placeholder
         label="Lot 005 — Solera carry-forward tanks"
         note="Row of numbered ferment tanks, each older than the last, a portion transferred forward season over season. A library rather than a line."
       />
-      <Section>
+      <Section id="lot-005" heading="Solera Maceration">
         <P>
           Borrowed from Jerez, the Solera system is a carry-forward fermentation: a portion of the
           previous year's ferment is retained and inoculates the next. What you taste in the 2026
@@ -248,7 +237,7 @@ export default function CoffeePage() {
         </P>
         <P>
           Maceration is extended, slow, and cool — whole cherries steeped in the mother-culture
-          liquor for <strong>{`{confirm: 60}`} hours</strong> before a gentle pulping and dry.
+          liquor for <strong>60 hours</strong> before a gentle pulping and dry.
         </P>
         <P>
           Cup: dark cherry, tamarind, sherry cask, a long savoury finish. Crown of the six lots.
@@ -257,19 +246,17 @@ export default function CoffeePage() {
         <DataGrid cols={3}>
           <DataCard label="Variety" value="Sln.9" />
           <DataCard label="Process" value="Solera Maceration">Carry-forward culture from prior vintages.</DataCard>
-          <DataCard label="Maceration" value={`{confirm: 60} hr`} />
-          <DataCard label="Score" value={`{confirm: 87.0}`}>Highest of the six, cupped Jan 2026.</DataCard>
+          <DataCard label="Maceration" value="60 hr" />
+          <DataCard label="Score" value="87.0">Highest of the six, cupped Jan 2026.</DataCard>
         </DataGrid>
       </Section>
 
       {/* LOT 006 */}
-      {/* number was: "006" */}
-      <Chapter number="" title="Solera Wash" id="lot-006" />
       <Placeholder
         label="Lot 006 — washed parchment on raised beds"
         note="Clean white-grey parchment drying evenly on African beds. The quiet lot. Simple composition."
       />
-      <Section>
+      <Section id="lot-006" heading="Solera Wash">
         <P>
           The cleanest expression of the Solera culture. Same mother-culture inoculation as Lot
           005, but pulped first and fully washed — no mucilage, no cherry dry, no theatre. What
@@ -284,8 +271,8 @@ export default function CoffeePage() {
         <DataGrid cols={3}>
           <DataCard label="Variety" value="Sln.9" />
           <DataCard label="Process" value="Solera Wash">Fully washed, Solera-inoculated.</DataCard>
-          <DataCard label="Ferment" value={`{confirm: 36} hr`} />
-          <DataCard label="Score" value={`{confirm: 85.5}`} />
+          <DataCard label="Ferment" value="36 hr" />
+          <DataCard label="Score" value="85.5" />
         </DataGrid>
       </Section>
 
@@ -298,8 +285,8 @@ export default function CoffeePage() {
           arabica — with intention. Two experimental lots: <strong>Volcanic Wash</strong>{' '}
           (traditional wet-process pushed to its limit) and an{' '}
           <strong>Extended Anaerobic</strong> that runs the cherry at{' '}
-          <strong>{`{confirm: 96}`} hours</strong> sealed. Both are at{' '}
-          <strong>{`{confirm: 81.5+}`}</strong> on the Robusta scale.
+          <strong>96 hours</strong> sealed. Both are at{' '}
+          <strong>81.5+</strong> on the Robusta scale.
         </P>
         <P>
           Robusta is not an afterthought here. It is the second half of the estate, and it is
@@ -386,8 +373,8 @@ export default function CoffeePage() {
             description: 'BD 500 – 508 on the coffee calendar.',
           },
           {
-            href: '/mudigere',
-            label: 'Mudigere',
+            href: '/sanctuary',
+            label: 'Sanctuary',
             description: 'The land the coffee grows on.',
           },
         ]}

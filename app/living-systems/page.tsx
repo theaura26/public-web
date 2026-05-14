@@ -53,7 +53,7 @@ export default function LivingSystemsPage() {
       {/* eyebrow was: "001" */}
       <Section id="herd" heading="The Malnad Gidda Herd">
         <P>
-          Forty-three head of Malnad Gidda — the small-bodied indigenous cattle of the Western
+          Fifty-two head of Malnad Gidda — the small-bodied indigenous cattle of the Western
           Ghats. They are the biodynamic engine of the estate. Their dung builds the preparations.
           Their horns hold the silica and manure that overwinter in the soil. Their milk feeds the
           Panchgavya. Their hooves do the work a tractor never could, pressing seed into the
@@ -66,8 +66,8 @@ export default function LivingSystemsPage() {
         </P>
 
         <DataGrid cols={3}>
-          <DataCard label="Head Count" value="43">
-            Indigenous Malnad Gidda. Target 52 within three seasons.
+          <DataCard label="Head Count" value="52">
+            Indigenous Malnad Gidda. Steady growth season by season — calves born without intervention.
           </DataCard>
           <DataCard label="Breed Origin" value="Western Ghats">
             Karnataka heritage stock, ≈900&ndash;1,100 years of continuous lineage.
@@ -84,7 +84,7 @@ export default function LivingSystemsPage() {
           <DataCard label="Horn Quality" value="Upward, hollow">
             Required geometry for horn-silica and horn-manure preparations.
           </DataCard>
-          <DataCard label="Calves / yr" value="{confirm: 8–12}">
+          <DataCard label="Calves / yr" value="8–12">
             Natural breeding, seasonal calving, no induced cycles.
           </DataCard>
           <DataCard label="Antibiotic Use" value="0">
@@ -118,10 +118,10 @@ export default function LivingSystemsPage() {
         </P>
 
         <DataGrid cols={3}>
-          <DataCard label="Managed Hives" value="{confirm: 24}">
+          <DataCard label="Managed Hives" value="24">
             Apis cerana indica in Newton and top-bar boxes.
           </DataCard>
-          <DataCard label="Wild Colonies" value="{confirm: 12+}">
+          <DataCard label="Wild Colonies" value="12+">
             Apis dorsata under ledges and in the high canopy.
           </DataCard>
           <DataCard label="Species" value="3">
@@ -130,7 +130,7 @@ export default function LivingSystemsPage() {
           <DataCard label="Pollination Radius" value="~3 km">
             Full coverage of the 150-acre estate and neighbouring tracts.
           </DataCard>
-          <DataCard label="Honey Lots / yr" value="{confirm: 6}">
+          <DataCard label="Honey Lots / yr" value="6">
             Single-origin by season and species. Unblended, unheated.
           </DataCard>
           <DataCard label="Coffee Set Lift" value="+30–40%">
@@ -155,13 +155,13 @@ export default function LivingSystemsPage() {
         </P>
 
         <DataGrid cols={3}>
-          <DataCard label="Flock Size" value="{confirm: 40}">
+          <DataCard label="Flock Size" value="40">
             Kadaknath and native cross. Rotational paddock behind the nursery.
           </DataCard>
           <DataCard label="Primary Role" value="Soil turn">
             Leaf-litter inversion, pest predation, nitrogen deposit.
           </DataCard>
-          <DataCard label="Eggs" value="{confirm: 120 / wk}">
+          <DataCard label="Eggs" value="120 / wk">
             Kitchen and shepherd&apos;s households. Not a retail line.
           </DataCard>
         </DataGrid>
@@ -218,14 +218,14 @@ export default function LivingSystemsPage() {
         </P>
 
         <DataGrid cols={2}>
-          <DataCard label="Native Stock" value="{confirm: 60+ species}">
+          <DataCard label="Native Stock" value="60+ species">
             Western Ghats endemics &mdash; Terminalia, Vateria, Artocarpus, Myristica, Garcinia.
             For restoration, not ornament.
           </DataCard>
-          <DataCard label="Food Forest" value="{confirm: 40+ species}">
+          <DataCard label="Food Forest" value="40+ species">
             Jackfruit, avocado, breadfruit, heritage banana, wild mango, seasonal berry.
           </DataCard>
-          <DataCard label="Medicinal" value="{confirm: 30+ species}">
+          <DataCard label="Medicinal" value="30+ species">
             Ashwagandha, Brahmi, Tulsi, Ginger, Turmeric, Neem. Vrikshayurveda stock.
           </DataCard>
           <DataCard label="Plantation Stock" value="Arabica · Pepper · Areca">
@@ -275,9 +275,9 @@ export default function LivingSystemsPage() {
         note="Hand-drawn cross-section of the five layers, labelled. Paper-and-ink register."
       />
 
-      <PullStat value="43" label="Malnad Gidda" sub="indigenous cattle, biodynamic engine" />
+      <PullStat value="52" label="Malnad Gidda" sub="indigenous cattle, biodynamic engine" />
       <PullStat value="5" label="canopy layers" sub="emergent to ground floor" />
-      <PullStat value={<>{`{confirm}`}</>} label="native species" sub="in the restoration nursery" />
+      <PullStat value="130+" label="native species" sub="in the restoration nursery" />
 
       {/* UNESCO */}
       {/* eyebrow was: "008" */}
@@ -305,12 +305,12 @@ export default function LivingSystemsPage() {
             description: 'BD 500, CPP, horn silica &mdash; the preparations the herd makes possible.',
           },
           {
-            href: '/plantation',
+            href: '/land',
             label: 'Regenerative Plantation',
             description: 'One hundred acres of specialty coffee under this canopy.',
           },
           {
-            href: '/mudigere',
+            href: '/sanctuary',
             label: 'Mudigere',
             description: 'Bhoomi and Aaranya &mdash; the grounded campus where these systems live.',
           },

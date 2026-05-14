@@ -11,7 +11,6 @@ import {
   PullQuote,
   PullStat,
   Continue,
-  Chapter,
   Rta,
 } from '@/components/article/Article'
 
@@ -56,10 +55,7 @@ export default function RtaPage() {
 
       <PullQuote>When timing is right, the action is effortless.</PullQuote>
 
-      {/* number was: "01" */}
-      <Chapter number="" title="Fifteen Minutes of Silence" id="raya" />
-
-      <Section>
+      <Section id="raya" heading="Fifteen Minutes of Silence">
         <P>
           At Raya, a small restaurant in Phuket, the meal begins with fifteen minutes of
           silence. No menu. No order. No speaking. Guests sit at a long table and the senses
@@ -84,10 +80,7 @@ export default function RtaPage() {
         Timing is a material.
       </PullQuote>
 
-      {/* number was: "02" */}
-      <Chapter number="" title="Five Moments of RTA" />
-
-      <Section>
+      <Section heading="Five Moments of RTA">
         <P>
           <Rta /> is not abstract. It is the difference between coffee that tastes of its hill and
           coffee that tastes of nothing in particular. Five concrete cases from the working
@@ -100,8 +93,9 @@ export default function RtaPage() {
             microbiology agrees with the clock.
           </DataCard>
           <DataCard label="Fermentation" value="Coffee · 36 hours">
-            The anaerobic window closes at {`{confirm figure}`}°C after roughly 36 hours. An
-            hour early, flat. An hour late, vinegar. The cherry decides; the processor listens.
+            The anaerobic window closes around 36 hours, sealed at the cool side of the
+            ambient. An hour early, flat. An hour late, vinegar. The cherry decides; the
+            processor listens.
           </DataCard>
           <DataCard label="Drying" value="Clear days only">
             Beans are moved to the patio on clear mornings and withdrawn before the evening
@@ -174,10 +168,7 @@ export default function RtaPage() {
         </DataGrid>
       </Section>
 
-      {/* number was: "03" */}
-      <Chapter number="" title="RTA Labs" id="labs" />
-
-      <Section>
+      <Section id="labs" heading="RTA Labs">
         <P>
           <Rta /> Labs is the quiet hardware layer that makes natural systems legible. Soil
           moisture, leaf temperature, tank CO₂, fermentation pH, barn humidity, sky clarity —
@@ -250,7 +241,7 @@ export default function RtaPage() {
             description: 'Lots 001–006. Where timing becomes taste.',
           },
           {
-            href: '/labs',
+            href: '/artistry',
             label: 'Labs & Hardware',
             description: 'The quiet sensors behind the decisions.',
           },

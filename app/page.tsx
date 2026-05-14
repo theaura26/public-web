@@ -4,8 +4,8 @@ import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import Reveal from '@/components/RevealOnScroll'
 import { LogoEmblem } from '@/components/Logo'
-import VideoReactiveArt from '@/components/VideoReactiveArt'
 import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun, CloudMoon } from '@phosphor-icons/react'
+import 'plyr/dist/plyr.css'
 
 /* ═══════════════════════════════════════════
    LIVE WEATHER — Open-Meteo (free, no key)
@@ -60,59 +60,12 @@ function useWeather(lat: number, lon: number): WeatherData | null {
    300vh wrapper → sticky 100vh stage → scroll controls blur + copy
 ═══════════════════════════════════════════ */
 
-function HeroVideo() {
+function HeroVideo({ onWatch }: { onWatch: () => void }) {
   const wrapRef = useRef<HTMLDivElement>(null)
+  const stickyRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const blurRef = useRef<HTMLDivElement>(null)
-  const copyRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
-
-    let raf = 0
-    const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        const wrap = wrapRef.current
-        const blur = blurRef.current
-        const copy = copyRef.current
-        if (!wrap || !blur || !copy) return
-
-        const rect = wrap.getBoundingClientRect()
-        const scrollRange = wrap.offsetHeight - window.innerHeight
-        if (scrollRange <= 0) return
-        const p = Math.max(0, Math.min(1, -rect.top / scrollRange))
-
-        // Phase 1 (0–0.15): logo fades in
-        const fadeIn = Math.min(1, p / 0.15)
-        // Phase 2 (0.85–1.0): logo fades out at the very end (long hold through blur lift)
-        const fadeOut = Math.max(0, Math.min(1, (p - 0.85) / 0.15))
-        // Phase 3 (0.5–0.85): blur lifts
-        const blurLift = Math.max(0, Math.min(1, (p - 0.5) / 0.35))
-
-        const copyOpacity = fadeIn * (1 - fadeOut)
-        const copyY = (1 - fadeIn) * 24 + fadeOut * -16
-        copy.style.opacity = `${copyOpacity}`
-        copy.style.transform = `translateY(${copyY}px)`
-
-        const blurVal = (1 - blurLift) * 16
-        const overlayAlpha = (1 - blurLift) * 0.5
-        blur.style.backdropFilter = `blur(${blurVal}px)`
-        ;(blur.style as any).WebkitBackdropFilter = `blur(${blurVal}px)`
-        blur.style.background = `rgba(0,0,0,${overlayAlpha})`
-      })
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(raf)
-    }
-  }, [])
-
-  // Autoplay when visible, pause when not
+  // Autoplay when visible, pause when not.
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
@@ -127,10 +80,58 @@ function HeroVideo() {
     return () => observer.disconnect()
   }, [])
 
+  /* Sticky stack-style reveal (matches sanctuary panels):
+       · Wrapper is 200vh tall, inner sticky stage 100vh pinned at top:0
+       · Slide-up phase (parentScroll 0 → 100vh): heavy 32px blur
+       · Stuck + lift phase (100 → 130vh): blur clears to 0
+       · Clarity hold (130 → 200vh): clear, sticky panel stays at top
+     Uses `filter: blur()` directly on the <video> for compositing reliability. */
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    // Mobile + reduced-motion: skip the scroll-driven filter blur entirely.
+    // CSS filter on a playing video is the heaviest GPU op on the page and
+    // is the primary source of scroll jank on small devices.
+    const isMobile = window.matchMedia('(max-width: 768px)').matches
+    if (isMobile || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (videoRef.current) videoRef.current.style.filter = 'blur(0)'
+      return
+    }
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const wrap = wrapRef.current
+        const video = videoRef.current
+        if (!wrap || !video) return
+        const rect = wrap.getBoundingClientRect()
+        const vh = window.innerHeight
+        // How far the user has scrolled into the wrapper.
+        const scrollIntoWrap = -rect.top
+        // The sticky stage sticks at scrollIntoWrap >= 0. Before that, it's
+        // sliding up from below. We hold the blur heavy through the slide-up
+        // then lift it over the next 30vh once stuck.
+        const scrollPastStick = scrollIntoWrap
+        // Negative before sticky activates → blur stays at full strength.
+        const blurLift = Math.max(0, Math.min(1, scrollPastStick / (vh * 0.3)))
+        const blurVal = (1 - blurLift) * 32
+        video.style.filter = `blur(${blurVal}px)`
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  /* 200vh wrapper + 100vh sticky inner stage. 100vh of stuck time gives the
+     reveal room: 30vh for blur to lift, 70vh of clarity hold before the page
+     scrolls past. */
   return (
-    <section ref={wrapRef} style={{ height: '300vh', position: 'relative', zIndex: 0 }}>
-      {/* Sticky stage — pinned for the full scroll */}
+    <section ref={wrapRef} className="hero-video-wrap" style={{ position: 'relative', zIndex: 0 }}>
       <div
+        ref={stickyRef}
         style={{
           position: 'sticky',
           top: 0,
@@ -138,7 +139,6 @@ function HeroVideo() {
           overflow: 'hidden',
         }}
       >
-        {/* Video background */}
         <video
           ref={videoRef}
           muted
@@ -152,26 +152,17 @@ function HeroVideo() {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
+            /* Initial heavy blur from first paint; scroll listener lifts it. */
+            filter: 'blur(32px)',
+            transform: 'scale(1.1)',
+            willChange: 'filter',
           }}
         >
           <source src="/aura-hero.mp4" type="video/mp4" />
         </video>
 
-        {/* Blur + dark overlay */}
+        {/* Centered rotating logo — mix-blend-mode: difference for contrast. */}
         <div
-          ref={blurRef}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'rgba(0,0,0,0.5)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-          }}
-        />
-
-        {/* Centered rotating logo — difference blend pops against the video */}
-        <div
-          ref={copyRef}
           style={{
             position: 'absolute',
             inset: 0,
@@ -179,8 +170,8 @@ function HeroVideo() {
             alignItems: 'center',
             justifyContent: 'center',
             padding: '0 var(--gutter)',
-            opacity: 0,
             mixBlendMode: 'difference',
+            pointerEvents: 'none',
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -194,7 +185,109 @@ function HeroVideo() {
             }}
           />
         </div>
+
+        {/* Bottom CTA row — sits inside the sticky stage so it remains pinned
+            for the full hero hold. Left: mono caption "Land. Time. Practice."
+            (the three pillars of the practice, set as a quiet signature).
+            Right: "Enter the ecosystem" film trigger. Same mono-uppercase
+            language so the two ends of the banner read as one row. */}
+        <div
+          className="hero-cta-row"
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 'clamp(24px, 5vh, 56px)',
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'space-between',
+            /* gap kept as a minimum so the two ends never touch if the
+               viewport ever gets narrower than the sum of both labels. */
+            gap: 'var(--space-4)',
+            padding: '0 var(--gutter)',
+            pointerEvents: 'none',
+          }}
+        >
+          <p
+            className="hero-caption"
+            style={{
+              margin: 0,
+              color: '#fff',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 11,
+              fontWeight: 400,
+              letterSpacing: '1px',
+              textTransform: 'uppercase',
+            }}
+          >
+            Land. Time. Practice.
+          </p>
+          <button
+            type="button"
+            onClick={onWatch}
+            aria-label="Enter the ecosystem — watch the Aura film"
+            className="hero-watch"
+            style={{
+              pointerEvents: 'auto',
+              background: 'transparent',
+              border: 'none',
+              padding: 0,
+              color: '#fff',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 11,
+              fontWeight: 400,
+              letterSpacing: '1px',
+              textTransform: 'uppercase',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 10,
+            }}
+          >
+            <span
+              aria-hidden
+              className="hero-watch__dot"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 22,
+                height: 22,
+                borderRadius: '50%',
+                border: '1px solid rgba(255,255,255,0.7)',
+                transition: 'background var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out)',
+              }}
+            >
+              <span
+                style={{
+                  width: 0,
+                  height: 0,
+                  marginLeft: 2,
+                  borderLeft: '5px solid #fff',
+                  borderTop: '3.5px solid transparent',
+                  borderBottom: '3.5px solid transparent',
+                }}
+              />
+            </span>
+            Enter the ecosystem
+          </button>
+        </div>
       </div>
+      <style jsx>{`
+        .hero-watch:hover :global(.hero-watch__dot) {
+          border-color: #fff;
+          background: rgba(255, 255, 255, 0.12);
+        }
+        /* Desktop: 200vh wrapper gives the sticky stage a 100vh scroll-zone
+           for the blur to lift over once the stage is pinned. */
+        .hero-video-wrap { height: 200vh; }
+        /* Mobile: collapse the wrapper to a single viewport. The scroll-driven
+           blur listener early-exits on mobile, so the extra 100vh of empty
+           scroll past the sticky stage served no purpose and read as a big
+           dead band of whitespace between the hero and the next section. */
+        @media (max-width: 768px) {
+          .hero-video-wrap { height: 100vh; }
+        }
+      `}</style>
     </section>
   )
 }
@@ -211,9 +304,90 @@ function ExpandingVideo({ src, poster, alt }: { src: string; poster: string; alt
   const cardRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  // Scroll-driven expansion
+  // Scroll-driven expansion — follows the site-wide BLUR → CLARITY → HOLD →
+  // SCROLL rhythm (same as the sanctuary stack panels).
+  //
+  //   Phase 0 — BLUR    : card enters as a centred frame with heavy blur
+  //   Phase 1 — CLARITY : as scroll progresses, blur lifts and the card
+  //                       grows to full viewport
+  //   Phase 2 — HOLD    : card stays fullscreen and clear for a beat
+  //   Phase 3 — SCROLL  : sticky releases, card slides up attached to
+  //                       wrapper.bottom, next section enters
+  //
+  // The wrapper height = sticky stage (100vh) + animation distance + hold
+  // distance. After the wrapper exits, the OS section sits right against
+  // it — no internal empty band.
   useEffect(() => {
+    if (typeof window === 'undefined') return
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const matchMobile = window.matchMedia('(max-width: 768px)')
+
+    // Animation tuning. Desktop runs the full scroll-driven 16:9 → fullscreen
+    // expand. Mobile takes a different path: the card is a flat 100vh
+    // banner (same footprint as the Mudigere panel) with a one-shot
+    // entry animation — a quick scale-up + blur-lift fired by an
+    // IntersectionObserver the moment the section enters view. By the
+    // time the user has scrolled into the banner it's already settled.
+    const isMobileMatch = window.matchMedia('(max-width: 768px)').matches
+    if (isMobileMatch) {
+      // Scroll-tied entry animation. As the 100vh wrapper enters the
+      // viewport from below — wrap.top descending from `vh` toward `0` —
+      // we ramp `p` from 0 to 1. The card scales 0.7 → 1 and the video
+      // blur lifts 14 → 0 over that same range. Once wrap.top reaches 0
+      // (section fully aligned to viewport top), `p` is clamped at 1 and
+      // the card stays fullscreen + clear while the wrapper scrolls past.
+      // No sticky zone, no internal whitespace.
+      const wrapEl = wrapRef.current
+      const innerEl = innerRef.current
+      const cardEl = cardRef.current
+      const videoEl = videoRef.current
+      if (!wrapEl || !innerEl || !cardEl) return
+
+      // Layout: card always laid out fullscreen; the transform supplies
+      // the scaled-down entry state.
+      innerEl.style.padding = '0'
+      cardEl.style.aspectRatio = 'auto'
+      cardEl.style.maxWidth = 'none'
+      cardEl.style.width = '100vw'
+      cardEl.style.height = '100vh'
+      cardEl.style.transformOrigin = 'center'
+
+      let raf = 0
+      const tick = () => {
+        raf = 0
+        const wrap = wrapRef.current
+        const card = cardRef.current
+        const video = videoRef.current
+        if (!wrap || !card) return
+
+        const rect = wrap.getBoundingClientRect()
+        const vh = window.innerHeight
+        const raw = Math.max(0, Math.min(1, (vh - rect.top) / vh))
+        // Smootherstep — gentle in/out at both ends.
+        const p = raw * raw * raw * (raw * (raw * 6 - 15) + 10)
+
+        const scale = 0.7 + 0.3 * p
+        card.style.transform = `scale(${scale})`
+
+        if (video) {
+          video.style.filter = `blur(${(1 - p) * 14}px)`
+          video.style.transform = 'scale(1.04)'
+        }
+      }
+      const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
+      window.addEventListener('scroll', onScroll, { passive: true })
+      window.addEventListener('resize', onScroll, { passive: true })
+      tick()
+      return () => {
+        window.removeEventListener('scroll', onScroll)
+        window.removeEventListener('resize', onScroll)
+        if (raf) cancelAnimationFrame(raf)
+      }
+    }
+
+    const ANIMATION_VH = 0.6
+    const HOLD_VH = 0.2
+    const BLUR_MAX = 18       // px — heavier than the sanctuary tint blur
 
     let ticking = false
     const onScroll = () => {
@@ -224,27 +398,76 @@ function ExpandingVideo({ src, poster, alt }: { src: string; poster: string; alt
         const wrap = wrapRef.current
         const inner = innerRef.current
         const card = cardRef.current
+        const video = videoRef.current
         if (!wrap || !inner || !card) return
 
-        const rect = wrap.getBoundingClientRect()
-        const zone = wrap.offsetHeight - window.innerHeight
-        if (zone <= 0) return
-        const raw = Math.max(0, Math.min(1, -rect.top / zone))
-        const p = prefersReduced ? (raw > 0.5 ? 1 : 0) : raw * raw * (3 - 2 * raw)
+        const vw = window.innerWidth
+        const vh = window.innerHeight
+        const isMobile = matchMobile.matches
 
-        const navPad = 56 * (1 - p)
-        const sidePad = 48 * (1 - p)
+        const rect = wrap.getBoundingClientRect()
+        const scrollIntoWrap = -rect.top
+        const animationDist = ANIMATION_VH * vh
+        const raw = Math.max(0, Math.min(1, scrollIntoWrap / animationDist))
+        // Smootherstep — gentle in/out at both ends.
+        const p = prefersReduced
+          ? (raw > 0.5 ? 1 : 0)
+          : raw * raw * raw * (raw * (raw * 6 - 15) + 10)
+
+        const initialNavPad = 56
+        const initialSidePad = isMobile ? 20 : 48
+
+        // Initial card dimensions — a centred frame, smaller than viewport.
+        let initialW: number
+        let initialH: number
+        if (isMobile) {
+          // 3:4 portrait spanning the inner content width.
+          initialW = vw - 2 * initialSidePad
+          initialH = (initialW * 4) / 3
+        } else {
+          // 16:9 frame fit within (vh - nav - bottom buffer) and gutter-padded
+          // width. Constrained by whichever dimension hits the limit first.
+          const availH = vh - initialNavPad - 96
+          const availW = vw - 2 * initialSidePad
+          if ((availH * 16) / 9 <= availW) {
+            initialH = availH
+            initialW = (availH * 16) / 9
+          } else {
+            initialW = availW
+            initialH = (availW * 9) / 16
+          }
+        }
+
+        // Continuous interpolation — no aspect-ratio threshold jump.
+        const cardW = initialW + (vw - initialW) * p
+        const cardH = initialH + (vh - initialH) * p
+        const navPad = initialNavPad * (1 - p)
+        const sidePad = initialSidePad * (1 - p)
 
         inner.style.padding = `${navPad}px ${sidePad}px 0`
-        card.style.maxWidth = p < 1 ? `calc((100vh - 56px - 96px + ${p * 96}px) * 16 / 9)` : 'none'
-        card.style.aspectRatio = p > 0.9 ? 'auto' : ''
-        card.style.height = p > 0.9 ? '100%' : 'auto'
+        card.style.aspectRatio = 'auto'
+        card.style.maxWidth = 'none'
+        card.style.width = `${cardW}px`
+        card.style.height = `${cardH}px`
+
+        // Blur layer — heavy at p=0 (frame entering), zero at p=1 (cleared).
+        if (video) {
+          const blurVal = (1 - p) * BLUR_MAX
+          video.style.filter = `blur(${blurVal}px)`
+          video.style.transform = `scale(${1 + 0.04 * (1 - p)})`
+        }
+        // Keep the HOLD_VH read so the wrapper height stays linked to it.
+        void HOLD_VH
       })
     }
 
     window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
     onScroll()
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [])
 
   // Autoplay when visible
@@ -263,14 +486,18 @@ function ExpandingVideo({ src, poster, alt }: { src: string; poster: string; alt
   }, [])
 
   return (
-    <div ref={wrapRef} style={{ height: '160vh', position: 'relative', zIndex: 0 }}>
+    <div ref={wrapRef} className="expanding-video-wrap" style={{ position: 'relative', zIndex: 0 }}>
       <div
         ref={innerRef}
+        className="expanding-video-inner"
         style={{
           position: 'sticky',
           top: 0,
           height: '100vh',
           display: 'flex',
+          /* alignItems is overridden per-mode below (centred on desktop,
+             top-anchored on mobile so the card lands just under the nav
+             instead of mid-screen). */
           alignItems: 'center',
           justifyContent: 'center',
           padding: '56px 48px 0',
@@ -304,20 +531,69 @@ function ExpandingVideo({ src, poster, alt }: { src: string; poster: string; alt
               height: '100%',
               objectFit: 'cover',
               display: 'block',
+              /* Slight initial scale prevents the blur from revealing
+                 transparent edges of the video element before the JS
+                 first-tick takes over. JS animates scale to 1 as p → 1. */
+              transform: 'scale(1.04)',
+              willChange: 'filter, transform',
             }}
           >
             <source src={src} type="video/mp4" />
           </video>
+          {/* Bottom-left label overlay — mono uppercase, sits over the film. */}
+          <p
+            className="label"
+            style={{
+              position: 'absolute',
+              left: 'clamp(20px, 4vw, 48px)',
+              bottom: 'clamp(20px, 4vh, 48px)',
+              margin: 0,
+              maxWidth: 'min(320px, 60vw)',
+              color: '#ffffff',
+              letterSpacing: '1px',
+              lineHeight: 1.5,
+              zIndex: 2,
+            }}
+          >
+            We cultivate environments designed to sharpen thought and restore balance.
+          </p>
         </div>
       </div>
 
       <style jsx>{`
+        /* DESKTOP wrapper MUST stay in sync with JS animation tuning:
+           ANIMATION_VH (60vh) + HOLD_VH (20vh) + sticky stage (100vh) = 180vh.
+           After scroll-into-wrap exceeds the sticky zone, the inner releases
+           and attaches to wrapper.bottom — no internal empty band. */
+        .expanding-video-wrap {
+          height: 180vh;
+        }
+        /* Pre-hydration aspect-ratio so the card has a sensible size before
+           the scroll listener runs. JS overrides to 'auto' on first tick. */
         .expanding-video-card {
           aspect-ratio: 16 / 9;
         }
-        @media (max-width: 767px) {
+        @media (max-width: 768px) {
+          /* MOBILE: flat 100vh banner — same footprint as a Mudigere panel.
+             No sticky scroll-zone, so no whitespace beneath. The entry
+             animation (scale up + blur lift) is driven by the wrapper's
+             viewport position in JS — see the isMobileMatch branch in
+             the ExpandingVideo useEffect. */
+          .expanding-video-wrap {
+            height: 100vh;
+          }
+          .expanding-video-inner {
+            position: static !important;
+            height: 100vh !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+          }
           .expanding-video-card {
-            aspect-ratio: 3 / 4;
+            aspect-ratio: auto;
+            width: 100% !important;
+            height: 100% !important;
             max-width: none !important;
           }
         }
@@ -325,6 +601,108 @@ function ExpandingVideo({ src, poster, alt }: { src: string; poster: string; alt
     </div>
   )
 }
+
+/* ═══════════════════════════════════════════
+   SCROLL HIGHLIGHT — Apple-style word-by-word reveal
+   Long-form heading where each word starts at a muted opacity and brightens
+   to full as it crosses the upper-third of the viewport. The whole block
+   reads as one flowing h2; the scroll position becomes the reading rhythm.
+═══════════════════════════════════════════ */
+
+function ScrollHighlight({ children, as: As = 'h2', maxWidth = 760 }: {
+  children: string
+  as?: 'h1' | 'h2' | 'h3'
+  maxWidth?: number
+}) {
+  const wordRefs = useRef<(HTMLSpanElement | null)[]>([])
+  // Each newline becomes its own line break. Words inside each line are
+  // wrapped individually so the scroll-highlight runs word-by-word top to
+  // bottom without ever splitting a line across two flows.
+  const lines = children.split(/\n+/).map(line => line.trim()).filter(Boolean)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+      wordRefs.current.forEach(s => { if (s) s.style.opacity = '1' })
+      return
+    }
+
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const vh = window.innerHeight
+        // A word starts brightening when its top edge enters the bottom 78%
+        // of the viewport, and reaches full strength once its top is in the
+        // upper 38%. That ~40vh window gives each line a moment of "pulling
+        // forward" without the whole block flashing at once.
+        const startY = vh * 0.78
+        const endY = vh * 0.38
+        wordRefs.current.forEach(span => {
+          if (!span) return
+          const y = span.getBoundingClientRect().top
+          const p = Math.max(0, Math.min(1, (startY - y) / (startY - endY)))
+          // Floor at 0.18 — muted but still legible as a tone setter, never
+          // an invisible state. Top at 1.0 = full var(--text).
+          span.style.opacity = String(0.18 + p * 0.82)
+        })
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [children])
+
+  // Flatten lines into a single sequence of words so the scroll handler can
+  // address all spans by a single contiguous index range. Each line gets a
+  // <span style="display:block"> so it always wraps to its own row.
+  let wordIndex = -1
+  return (
+    <As style={{ margin: 0, maxWidth, textAlign: 'left' }}>
+      {lines.map((line, lineIdx) => {
+        const words = line.split(/\s+/).filter(Boolean)
+        const isLast = lineIdx === lines.length - 1
+        return (
+          <span
+            key={lineIdx}
+            style={{
+              display: 'block',
+              // Paragraph-style gap between sentences. The last line never
+              // adds bottom margin so the block ends flush with whatever
+              // follows.
+              marginBottom: isLast ? 0 : 'clamp(28px, 4vh, 56px)',
+            }}
+          >
+            {words.map((w, i) => {
+              wordIndex++
+              const idx = wordIndex
+              return (
+                <span key={i}>
+                  <span
+                    ref={el => { wordRefs.current[idx] = el }}
+                    style={{
+                      opacity: 0.18,
+                      transition: 'opacity var(--dur-fast) var(--ease)',
+                      willChange: 'opacity',
+                    }}
+                  >
+                    {w}
+                  </span>
+                  {i < words.length - 1 ? ' ' : ''}
+                </span>
+              )
+            })}
+          </span>
+        )
+      })}
+    </As>
+  )
+}
+
 
 /* ═══════════════════════════════════════════
    PILLAR VIDEO — Portrait autoplay video
@@ -392,7 +770,7 @@ function PillarVideo({ src, poster, alt }: { src: string; poster: string; alt: s
    LOCATION MODAL — Shared shell with slide transitions
    Slide up on open, slide down on close, scroll-to-dismiss with elasticity
 ═══════════════════════════════════════════ */
-function LocationModal({ open, onClose, label, children }: { open: boolean; onClose: () => void; label: string; children: React.ReactNode }) {
+function LocationModal({ open, onClose, label, bleed, children }: { open: boolean; onClose: () => void; label: string; bleed?: boolean; children: React.ReactNode }) {
   const overlayRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
@@ -414,7 +792,7 @@ function LocationModal({ open, onClose, label, children }: { open: boolean; onCl
       // Drive the slide-down via DOM directly so it can't be blocked
       // by stale transforms from wheel/touch dismiss handlers
       if (overlayRef.current) {
-        overlayRef.current.style.transition = 'transform 0.5s cubic-bezier(0.32, 0.72, 0, 1)'
+        overlayRef.current.style.transition = 'transform 0.5s var(--ease-out)'
         overlayRef.current.style.transform = 'translateY(100%)'
       }
       const timer = setTimeout(() => {
@@ -477,12 +855,12 @@ function LocationModal({ open, onClose, label, children }: { open: boolean; onCl
       const dy = e.changedTouches[0].clientY - startY
       if (dy > 180 && el.scrollTop <= 0 && !dismissing.current) {
         dismissing.current = true
-        overlay.style.transition = 'transform 0.45s cubic-bezier(0.32, 0.72, 0, 1)'
+        overlay.style.transition = 'transform var(--dur-slow) var(--ease-out)'
         overlay.style.transform = 'translateY(100%)'
         setTimeout(onClose, 450)
       } else {
         // Snap back with elastic overshoot
-        overlay.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'
+        overlay.style.transition = 'transform 0.5s var(--ease-out)'
         overlay.style.transform = 'translateY(0)'
         setTimeout(() => { overlay.style.transition = '' }, 500)
       }
@@ -501,7 +879,7 @@ function LocationModal({ open, onClose, label, children }: { open: boolean; onCl
         overlay.style.transform = `translateY(${elastic}px)`
         if (overscroll > 300 && !dismissing.current) {
           dismissing.current = true
-          overlay.style.transition = 'transform 0.45s cubic-bezier(0.32, 0.72, 0, 1)'
+          overlay.style.transition = 'transform var(--dur-slow) var(--ease-out)'
           overlay.style.transform = 'translateY(100%)'
           setTimeout(onClose, 450)
         }
@@ -509,7 +887,7 @@ function LocationModal({ open, onClose, label, children }: { open: boolean; onCl
         wheelTimer = setTimeout(() => {
           if (!dismissing.current) {
             overscroll = 0
-            overlay.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'
+            overlay.style.transition = 'transform 0.5s var(--ease-out)'
             overlay.style.transform = 'translateY(0)'
             setTimeout(() => { overlay.style.transition = '' }, 500)
           }
@@ -517,7 +895,7 @@ function LocationModal({ open, onClose, label, children }: { open: boolean; onCl
       } else {
         if (overscroll > 0 && !dismissing.current) {
           overscroll = 0
-          overlay.style.transition = 'transform 0.3s ease'
+          overlay.style.transition = 'transform var(--dur-base) var(--ease)'
           overlay.style.transform = 'translateY(0)'
           setTimeout(() => { overlay.style.transition = '' }, 300)
         }
@@ -551,40 +929,83 @@ function LocationModal({ open, onClose, label, children }: { open: boolean; onCl
     <div
       ref={overlayRef}
       className="loc-modal"
+      data-bleed={bleed ? 'true' : 'false'}
       style={{
         position: 'fixed',
         inset: 0,
         zIndex: 9990,
         transform: visible ? 'translateY(0)' : 'translateY(100%)',
-        transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        transition: 'transform 0.5s var(--ease-out)',
       }}
     >
       <div ref={scrollRef} style={{ width: '100%', height: '100%', overflow: 'auto', WebkitOverflowScrolling: 'touch' }}>
-        {/* ── Header ── */}
-        <div style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56, padding: '0 var(--gutter)', maxWidth: 'var(--max-w)', margin: '0 auto', width: '100%' }}>
-          <p className="label loc-label" style={{ margin: 0 }}>{label}</p>
-          <button onClick={onClose} aria-label="Close" className="loc-close" style={{ background: 'none', border: 'none', padding: '10px 4px', display: 'flex', flexDirection: 'column', gap: 6, opacity: visible ? 1 : 0, transition: 'opacity 0.3s ease 0.2s', cursor: 'none' }}>
+        {/* ── Header ── full viewport width. Desktop uses 10vw rails to
+            mirror the navbar's logo + hamburger axis. Mobile collapses to
+            auto-sized end columns with var(--gutter) padding so the X sits
+            at the same inset as the hamburger. */}
+        <div className="loc-header" data-bleed={bleed ? 'true' : 'false'} style={{ position: bleed ? 'absolute' : 'sticky', top: 0, left: 0, right: 0, zIndex: 10 }}>
+          <p className="label loc-label loc-header__label" style={{ margin: 0, opacity: bleed ? 0 : 1 }}>{label}</p>
+          <span />
+          <button onClick={onClose} aria-label="Close" className="loc-close loc-header__close" style={{ background: 'none', border: 'none', padding: '10px 4px', display: 'flex', flexDirection: 'column', gap: 6, opacity: visible ? 1 : 0, transition: 'opacity var(--dur-base) var(--ease) 0.2s' }}>
             <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor', transform: 'translateY(3.75px) rotate(45deg)' }} />
             <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor', transform: 'translateY(-3.75px) rotate(-45deg)' }} />
           </button>
         </div>
-        <div className="section-w" style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.4s ease 0.15s', paddingTop: 'clamp(24px, 4vh, 56px)', paddingBottom: 'clamp(60px, 8vh, 100px)' }}>
-          {children}
-        </div>
+        {bleed ? (
+          <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.4s ease 0.15s', height: '100vh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {children}
+          </div>
+        ) : (
+          <div className="section-w" style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.4s ease 0.15s', paddingTop: 'clamp(24px, 4vh, 56px)', paddingBottom: 'clamp(60px, 8vh, 100px)' }}>
+            {children}
+          </div>
+        )}
       </div>
       <style jsx global>{`
-        .loc-modal { background: #f5f5f0; }
-        .loc-modal .loc-h2 { color: #1a1a1a; }
-        .loc-modal .loc-body { font-family: var(--font-sans); font-size: 16px; line-height: 1.65; color: rgba(26, 26, 26, 0.65); }
-        .loc-modal .loc-label { color: rgba(26, 26, 26, 0.4) !important; }
-        .loc-modal .loc-close { color: #1a1a1a; }
+        /* Modal palette is always INVERTED from the page. Day page → dark
+           modal + light text. Night page → light modal + dark text. The map
+           asset is authored dark-on-light, so it needs an invert whenever
+           the modal surface is dark — i.e. when the page theme is day. */
+        .loc-modal { background: var(--contrast-bg); }
+        .loc-modal .loc-h2 { color: var(--contrast-text); }
+        .loc-modal .loc-body {
+          font-family: var(--font-sans);
+          font-size: 16px;
+          line-height: 1.65;
+          color: var(--contrast-text-body);
+        }
+        .loc-modal .loc-label { color: var(--contrast-text-muted) !important; }
+        .loc-modal .loc-close { color: var(--contrast-text); }
         .loc-modal .loc-map { filter: none; }
-        [data-theme="day"] .loc-modal { background: #131719; }
-        [data-theme="day"] .loc-modal .loc-h2 { color: #ededed; }
-        [data-theme="day"] .loc-modal .loc-body { color: rgba(237, 237, 237, 0.65); }
-        [data-theme="day"] .loc-modal .loc-label { color: rgba(237, 237, 237, 0.4) !important; }
-        [data-theme="day"] .loc-modal .loc-close { color: #ededed; }
-        [data-theme="day"] .loc-modal .loc-map { filter: invert(1); }
+        /* Map asset is dark-on-light. It needs inverting when it sits on a
+           dark modal surface — which is now whenever the page theme is day. */
+        html [data-theme="day"] .loc-modal:not([data-bleed="true"]) .loc-map {
+          filter: invert(1);
+        }
+        /* Bleed mode — full-bleed black for video regardless of theme. */
+        .loc-modal[data-bleed="true"] { background: #000; }
+        .loc-modal[data-bleed="true"] .loc-close { color: #fff; }
+
+        /* Modal header — desktop: 10vw rails matching navbar; mobile: auto
+           end columns with var(--gutter) padding matching the hamburger. */
+        .loc-header {
+          display: grid;
+          grid-template-columns: 10vw 1fr 10vw;
+          align-items: center;
+          height: 56px;
+          width: 100%;
+        }
+        .loc-header .loc-header__label { justify-self: center; }
+        .loc-header .loc-header__close { justify-self: center; }
+        @media (max-width: 768px) {
+          .loc-header {
+            grid-template-columns: auto 1fr auto;
+            padding-left: var(--gutter);
+            padding-right: var(--gutter);
+          }
+          .loc-header .loc-header__label { justify-self: start; }
+          .loc-header .loc-header__close { justify-self: end; padding-right: 0 !important; }
+        }
       `}</style>
     </div>
   )
@@ -600,7 +1021,7 @@ function LocationContent({ children }: { children: React.ReactNode }) {
         :global(.loc-pencil-mobile) { display: none; }
         :global(.loc-images-desktop) { display: block; }
         :global(.loc-bottom) { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gap); }
-        @media (max-width: 767px) {
+        @media (max-width: 768px) {
           :global(.loc-top) { grid-template-columns: 1fr; }
           :global(.loc-pencil-mobile) { display: block; }
           :global(.loc-images-desktop) { display: none !important; }
@@ -657,6 +1078,116 @@ function LocationDataGrid({ location, coords, altitude, tempRange, avgHumidity, 
       </div>
       {children}
     </div>
+  )
+}
+
+/* ═══ AURA FILM ═══
+   Full-bleed video modal. Plyr provides a minimalist control bar that
+   auto-hides on idle. Theming overrides Plyr's default blue accent so it
+   reads in the Aura monochrome language. */
+function AuraVideoModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const playerRef = useRef<any>(null)
+
+  // Ref callback fires the moment the <video> element mounts inside the
+  // modal — guaranteed to run after the inner LocationModal has rendered.
+  // A plain useEffect on the parent fires before that child render commits,
+  // so the video ref would still be null.
+  const videoCallback = useCallback((node: HTMLVideoElement | null) => {
+    if (!node) {
+      // Element unmounting — tear down the player.
+      if (playerRef.current) {
+        try { playerRef.current.destroy() } catch {}
+        playerRef.current = null
+      }
+      return
+    }
+    /* Don't try to autoplay with sound — modern browsers block it even
+       after a user gesture once an async boundary (Plyr's dynamic import)
+       separates the click from the play(). Instead the big-play overlay
+       sits centred on the first frame; one tap starts playback with
+       sound, no surprise muting. */
+    let cancelled = false
+    ;(async () => {
+      const PlyrMod = await import('plyr')
+      if (cancelled) return
+      const p = new PlyrMod.default(node, {
+        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'fullscreen'],
+        hideControls: true,
+        autoplay: false,
+        clickToPlay: true,
+        keyboard: { focused: true, global: true },
+        ratio: '16:9',
+        tooltips: { controls: false, seek: true },
+      })
+      playerRef.current = p
+    })()
+  }, [])
+
+  return (
+    <LocationModal open={open} onClose={onClose} label="WATCH" bleed>
+      <div className="aura-film">
+        <video
+          ref={videoCallback}
+          playsInline
+          preload="auto"
+        >
+          {/* The "Enter the ecosystem" film. Browsers pick the first source
+              they can decode — webm preferred on Chrome / Firefox (smaller),
+              mp4 fallback for Safari which doesn't support webm. */}
+          <source src="/aura-25.webm" type="video/webm" />
+          <source src="/aura-25.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <style jsx global>{`
+        /* Container fills the bleed area; Plyr handles the 16:9 ratio. */
+        .aura-film { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0; }
+        .aura-film .plyr { width: 100%; max-width: min(100vw, calc(100vh * 16 / 9)); }
+        .aura-film .plyr--video { background: #000; }
+
+        /* Minimalist theme — white accent, no blue, subtle gradient. */
+        .aura-film .plyr {
+          --plyr-color-main: #ffffff;
+          --plyr-video-control-color: #ffffff;
+          --plyr-video-control-color-hover: #ffffff;
+          --plyr-video-control-background-hover: rgba(255, 255, 255, 0.12);
+          --plyr-video-background: #000;
+          --plyr-control-icon-size: 16px;
+          --plyr-control-spacing: 14px;
+          --plyr-font-family: var(--font-mono);
+          --plyr-font-size-time: 12px;
+          --plyr-range-track-height: 2px;
+          --plyr-range-thumb-height: 10px;
+          --plyr-range-thumb-background: #ffffff;
+          --plyr-range-fill-background: #ffffff;
+          --plyr-range-thumb-shadow: none;
+          --plyr-tooltip-background: rgba(0, 0, 0, 0.7);
+          --plyr-tooltip-color: #ffffff;
+          --plyr-video-controls-background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0) 100%);
+        }
+        /* Hide chrome we don't want for a brand film. */
+        .aura-film .plyr__menu,
+        .aura-film .plyr__captions,
+        .aura-film .plyr__poster { display: none; }
+        /* Cursor follows the site convention — hide the system cursor inside the player. */
+        .aura-film .plyr,
+        /* Plyr controls — let the native arrow / pointer show through. */
+        /* Refine the big centered play button. */
+        .aura-film .plyr__control--overlaid {
+          background: rgba(0, 0, 0, 0.35);
+          border: 1px solid rgba(255, 255, 255, 0.7);
+          padding: 22px;
+          backdrop-filter: blur(4px);
+          transition: background var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+        }
+        .aura-film .plyr__control--overlaid:hover {
+          background: rgba(0, 0, 0, 0.55);
+          border-color: #fff;
+        }
+        .aura-film .plyr__control--overlaid svg { width: 22px; height: 22px; }
+        /* Time text in DM Mono. */
+        .aura-film .plyr__time { font-family: var(--font-mono); letter-spacing: 0.04em; }
+      `}</style>
+    </LocationModal>
   )
 }
 
@@ -753,139 +1284,218 @@ function OharaModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   )
 }
 
+/* ═══════════════════════════════════════════
+   AGENT HOME — plain-text view for crawlers / LLMs / screen readers.
+   Activated by viewMode === 'agent' (toggle in the menu). Renders the
+   entire site's homepage information as a structured DM Mono document
+   with proper semantic HTML — headings, lists, definition lists, links.
+   No images, no animations, no overlays. CSS in globals.css does the
+   typography (forces mono everywhere, normalises heading sizes, etc.).
+═══════════════════════════════════════════ */
 function AgentHome() {
   return (
-    <div className="section-w" style={{ paddingTop: 300, paddingBottom: 80 }}>
-      <p># Aura</p>
-      <p>## A regenerative ecosystem for generational impact.</p>
-      <br />
-      <p>Aura is a platform that joins ancient land intelligence with modern tools to build systems that endure across generations. Not a company. Not an NGO. Not a farm. Not a hotel. An open-source framework for how to live with land.</p>
-      <br />
-      <p>---</p>
-      <br />
-      <p>## Entity</p>
-      <br />
-      <p>type: regenerative_ecosystem</p>
-      <p>founded: 2024</p>
-      <p>founder: Arvind Singh</p>
-      <p>hq: Singapore</p>
-      <p>domain: theaura.life</p>
-      <p>contact: hello@theaura.life</p>
-      <br />
-      <p>---</p>
-      <br />
-      <p>## Reason</p>
-      <br />
-      <p>The reason is to restore what sustains us.</p>
-      <br />
-      <p>In a world optimised for speed and short-term gain, Aura offers a different model — one rooted in patience, regeneration, and rhythm.</p>
-      <br />
-      <p>Set across a working plantation and creative sanctuary, Aura brings together ancient knowledge and modern tools to build systems that endure. From soil to studio, every element is designed to support a new kind of creator — one who thinks beyond outcomes, and builds for generations to come.</p>
-      <br />
-      <p>---</p>
-      <br />
-      <p>## Operating System</p>
-      <br />
-      <p>Aura operates through three integrated pillars:</p>
-      <br />
-      <p>1. Sanctuary — A living estate in rhythm with the land. Silence, stillness, a 30-year Japanese garden. Forest walks. The river from every room.</p>
-      <br />
-      <p>2. Agroculture — 100 acres of specialty coffee. 52 indigenous Gidda cattle. Biodynamic (BD 500-508, CPP, lunar cycles) + Vedic (Jeevamrit, Panchgavya, Beejamrit) farming systems. UNESCO biodiversity zone.</p>
-      <br />
-      <p>3. Artistry — Studios, workshops, gallery, gurukul, labs, festivals. Residencies for founders, designers, artists, and monastic polymaths.</p>
-      <br />
-      <p>---</p>
-      <br />
-      <p>## Locations</p>
-      <br />
-      <p>### Aura Mudigere [ACTIVE]</p>
-      <p>coordinates: 13.1365°N, 75.6403°E</p>
-      <p>altitude: 3,600 ft</p>
-      <p>area: 150 acres (100 coffee)</p>
-      <p>soil: Laterite, pH 6.0-6.5</p>
-      <p>zone: UNESCO Western Ghats</p>
-      <p>climate: 14°C-30°C, humidity 58%, wind 5 km/h</p>
-      <p>herd: 52 Gidda cattle</p>
-      <br />
-      <p>### Aura Ohara [ACTIVE]</p>
-      <p>coordinates: 35.2375°N, 140.3947°E</p>
-      <p>altitude: 1,099 ft</p>
-      <p>climate: 7°C-28°C, humidity 64%, wind 14 km/h</p>
-      <p>features: Japanese garden, teahouse, cafe, studios</p>
-      <br />
-      <p>### Aura Munduk [PLANNED]</p>
-      <p>location: Bali, Indonesia</p>
-      <br />
-      <p>### Aura Daylesford [PLANNED]</p>
-      <p>location: Victoria, Australia</p>
-      <br />
-      <p>---</p>
-      <br />
-      <p>## Coffee Program</p>
-      <br />
-      <p>varieties: Arabica S795, Selection 9, Chandragiri</p>
-      <p>processing: 6 micro lots, 6 methods</p>
-      <p>stage: Optimize → Specialize (Stage 3→4)</p>
-      <br />
-      <p>LOT_001: Anaerobic Natural — 450kg, Brix 24-26, 72h sealed + 20d dry [Berries, Wine, Stone Fruit]</p>
-      <p>LOT_002: Dry Osmosis — 380kg, Brix 28-30, Sun + time [Chocolate, Dried Fruit, Caramel]</p>
-      <p>LOT_003: Red Honey — 520kg, Brix 22-24, 48h wet + 20d dry [Florals, Honey, Citrus]</p>
-      <p>LOT_004: Banana Wash — 410kg, Brix 20-22, 36h + 18d dry [Tropical, Fruit Punch, Bright]</p>
-      <p>LOT_005: Solera Maceration — 480kg, Brix 25-27, 96h sealed + 22d dry [Plum, Jasmine, Dark Chocolate]</p>
-      <p>LOT_006: Solera Wash — 390kg, Brix 21-23, 60h wet + 21d dry [Clean, Almond, White Tea]</p>
-      <br />
-      <p>---</p>
-      <br />
-      <p>## Crops</p>
-      <br />
-      <p>coffee: 100 acres, Arabica S795/Selection 9/Chandragiri, specialty-grade</p>
-      <p>pepper: Malabar, shade-grown under native canopy, biodynamic</p>
-      <p>areca: Traditional intercrop, economic anchor, forest structure</p>
-      <p>tea: Experimental plots at 3,600 ft, testing cultivar adaptation</p>
-      <br />
-      <p>---</p>
-      <br />
-      <p>## Farming Method</p>
-      <br />
-      <p>system_1: Biodynamic (BD 500-508, CPP, lunar cycles)</p>
-      <p>system_2: Vedic (Jeevamrit, Panchgavya, Beejamrit)</p>
-      <p>approach: Not competing — complementary intelligence</p>
-      <p>certification: Regenerative (not organic as marketing)</p>
-      <p>stages: Stabilize → Rebuild → Optimize → Specialize → Higher-value</p>
-      <p>current_stage: 3 → 4</p>
-      <br />
-      <p>## Six Rules</p>
-      <br />
-      <p>1. Soil Comes First — All decisions flow from soil health.</p>
-      <p>2. Do Small Work Properly — Mastery before scaling.</p>
-      <p>3. No Shortcuts — Right timing over quick gains.</p>
-      <p>4. Quality Before Quantity — One excellent lot over five average ones.</p>
-      <p>5. Think 10 Years Ahead — Every action serves the long game.</p>
-      <p>6. Leaders on the Field — Authority comes from presence and practice.</p>
-      <br />
-      <p>---</p>
-      <br />
-      <p>## Experience Offerings</p>
-      <br />
-      <p>- Forest-to-table dining (every ingredient grown within sight)</p>
-      <p>- Coffee festivals (6 micro lots cupped side-by-side)</p>
-      <p>- Pottery with Shigaraki clay, indigo dyeing, kintsugi</p>
-      <p>- Fermentation circles</p>
-      <p>- Creative residencies for founders and artists</p>
-      <p>- Silence retreats (tea at four is the only appointment)</p>
-      <p>- Studios with garden views</p>
-      <br />
-      <p>---</p>
-      <br />
-      <p>## Contact</p>
-      <br />
-      <p>email: hello@theaura.life</p>
-      <p>instagram: @theaura.life</p>
-      <p>presence: Singapore, India, Japan, Indonesia, Australia</p>
-      <br />
-      <p>Arvind Singh, Founder</p>
-      <p>Mudigere &amp; Ohara · 2026</p>
-    </div>
+    <article className="section-w" style={{ paddingTop: 80, paddingBottom: 80 }}>
+      {/* Site nav — plain link list so crawlers can reach every route. */}
+      <nav className="agent-nav" aria-label="Aura site navigation">
+        <p className="label">AURA · theaura.life · agent view</p>
+        <ul className="agent-nav__list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/reason">Reason</a></li>
+          <li><a href="/brand">Brand</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/idea">1000 Year Idea</a></li>
+          <li><a href="/sanctuary">Sanctuary</a></li>
+          <li><a href="/artistry">Artistry</a></li>
+          <li><a href="/residency">Residency</a></li>
+          <li><a href="/provenance">Provenance</a></li>
+          <li><a href="/coffee">Coffee</a></li>
+          <li><a href="/pepper">Pepper</a></li>
+          <li><a href="/areca">Areca</a></li>
+          <li><a href="/biodynamic">Biodynamic</a></li>
+          <li><a href="/vedic">Vedic</a></li>
+          <li><a href="/fermentation">Fermentation</a></li>
+          <li><a href="/living-systems">Living Systems</a></li>
+          <li><a href="/land">Land</a></li>
+          <li><a href="/wisdom">Moral Spine</a></li>
+          <li><a href="/rta">Rta</a></li>
+        </ul>
+      </nav>
+
+      <header>
+        <h1>Aura — a regenerative ecosystem for generational impact.</h1>
+        <p>Aura is a platform that joins ancient land intelligence with modern tools to build systems that endure across generations. Not a company. Not an NGO. Not a farm. Not a hotel. An open-source framework for how to live with land.</p>
+        <p>The reason is to restore what sustains us. Everything here is built to endure. Land, hospitality, craft, and technology — one regenerative ecosystem.</p>
+        <p><strong>Tagline:</strong> Land. Time. Practice.</p>
+      </header>
+
+      <hr />
+
+      <section>
+        <h2>Entity</h2>
+        <dl>
+          <dt>Type</dt><dd>Regenerative ecosystem</dd>
+          <dt>Founded</dt><dd>2024</dd>
+          <dt>Founder</dt><dd>Arvind Singh</dd>
+          <dt>Headquarters</dt><dd>Singapore</dd>
+          <dt>Domain</dt><dd><a href="https://theaura.life">theaura.life</a></dd>
+          <dt>Contact</dt><dd><a href="mailto:hello@theaura.life">hello@theaura.life</a></dd>
+          <dt>Instagram</dt><dd><a href="https://www.instagram.com/theaura.life/" rel="noopener noreferrer">@theaura.life</a></dd>
+        </dl>
+      </section>
+
+      <hr />
+
+      <section>
+        <h2>Operating system — three pillars</h2>
+        <ol>
+          <li><strong>Sanctuary</strong> — a living estate in rhythm with the land. Silence, stillness, a 30-year Japanese garden, forest walks, the river from every room.</li>
+          <li><strong>Agroculture</strong> — 100 acres of specialty coffee. 52 indigenous Gidda cattle. Biodynamic (BD 500–508, CPP, lunar cycles) plus Vedic (Jeevamrit, Panchgavya, Beejamrit) farming systems. UNESCO biodiversity zone.</li>
+          <li><strong>Artistry</strong> — studios, workshops, gallery, gurukul, labs, festivals. Residencies for founders, designers, artists, and monastic polymaths.</li>
+        </ol>
+      </section>
+
+      <hr />
+
+      <section>
+        <h2>Locations</h2>
+
+        <h3>Aura Mudigere — active</h3>
+        <p><a href="/sanctuary">Read more</a></p>
+        <dl>
+          <dt>Coordinates</dt><dd>13.1365°N, 75.6403°E</dd>
+          <dt>Altitude</dt><dd>3,600 ft (900–1,100 m)</dd>
+          <dt>Area</dt><dd>150 acres (100 coffee)</dd>
+          <dt>Soil</dt><dd>Laterite, pH 6.0–6.5</dd>
+          <dt>Zone</dt><dd>UNESCO Western Ghats biodiversity hotspot</dd>
+          <dt>Climate</dt><dd>14–30°C, humidity 58%, wind 5 km/h</dd>
+          <dt>Herd</dt><dd>52 Gidda cattle (indigenous breed)</dd>
+        </dl>
+
+        <h3>Aura Ohara — active</h3>
+        <p><a href="/sanctuary">Read more</a></p>
+        <dl>
+          <dt>Coordinates</dt><dd>35.1200°N, 135.8300°E</dd>
+          <dt>Altitude</dt><dd>1,099 ft</dd>
+          <dt>Climate</dt><dd>7–28°C, humidity 64%, wind 14 km/h</dd>
+          <dt>Features</dt><dd>Japanese garden, teahouse, café, studios</dd>
+        </dl>
+
+        <h3>Aura Munduk — planned</h3>
+        <dl><dt>Location</dt><dd>Bali, Indonesia</dd></dl>
+
+        <h3>Aura Daylesford — planned</h3>
+        <dl><dt>Location</dt><dd>Victoria, Australia</dd></dl>
+      </section>
+
+      <hr />
+
+      <section>
+        <h2>Coffee programme</h2>
+        <p><a href="/coffee">Read more</a></p>
+        <dl>
+          <dt>Varieties</dt><dd>Arabica S795, Selection 9, Chandragiri</dd>
+          <dt>Processing</dt><dd>6 micro lots, 6 methods</dd>
+          <dt>Stage</dt><dd>Optimize → Specialize (Stage 3 → 4)</dd>
+        </dl>
+        <h3>Lots</h3>
+        <ul>
+          <li><strong>LOT_001 · Anaerobic Natural</strong> — 450 kg, Brix 24–26, 72 h sealed + 20 d dry. Notes: berries, wine, stone fruit.</li>
+          <li><strong>LOT_002 · Dry Osmosis</strong> — 380 kg, Brix 28–30, sun + time. Notes: chocolate, dried fruit, caramel.</li>
+          <li><strong>LOT_003 · Red Honey</strong> — 520 kg, Brix 22–24, 48 h wet + 20 d dry. Notes: florals, honey, citrus.</li>
+          <li><strong>LOT_004 · Banana Wash</strong> — 410 kg, Brix 20–22, 36 h + 18 d dry. Notes: tropical, fruit punch, bright.</li>
+          <li><strong>LOT_005 · Solera Maceration</strong> — 480 kg, Brix 25–27, 96 h sealed + 22 d dry. Notes: plum, jasmine, dark chocolate.</li>
+          <li><strong>LOT_006 · Solera Wash</strong> — 390 kg, Brix 21–23, 60 h wet + 21 d dry. Notes: clean, almond, white tea.</li>
+        </ul>
+      </section>
+
+      <hr />
+
+      <section>
+        <h2>Crops</h2>
+        <dl>
+          <dt>Coffee</dt><dd>100 acres, Arabica S795 / Selection 9 / Chandragiri, specialty-grade.</dd>
+          <dt>Pepper</dt><dd>Malabar, shade-grown under native canopy, biodynamic. <a href="/pepper">More</a></dd>
+          <dt>Areca</dt><dd>Traditional intercrop, economic anchor, forest structure. <a href="/areca">More</a></dd>
+          <dt>Tea</dt><dd>Experimental plots at 3,600 ft, testing cultivar adaptation.</dd>
+        </dl>
+      </section>
+
+      <hr />
+
+      <section>
+        <h2>Farming method</h2>
+        <p><a href="/biodynamic">Biodynamic</a> · <a href="/vedic">Vedic</a> · <a href="/living-systems">Living systems</a> · <a href="/fermentation">Fermentation</a></p>
+        <dl>
+          <dt>System 1</dt><dd>Biodynamic — BD 500–508, CPP, lunar cycles.</dd>
+          <dt>System 2</dt><dd>Vedic — Jeevamrit, Panchgavya, Beejamrit.</dd>
+          <dt>Approach</dt><dd>Not competing — complementary intelligence.</dd>
+          <dt>Certification</dt><dd>Regenerative (not organic-as-marketing).</dd>
+          <dt>Stages</dt><dd>Stabilize → Rebuild → Optimize → Specialize → Higher-value.</dd>
+          <dt>Current stage</dt><dd>3 → 4</dd>
+        </dl>
+      </section>
+
+      <hr />
+
+      <section>
+        <h2>Six rules</h2>
+        <p><a href="/wisdom">Moral spine</a> · <a href="/rta">Rta</a></p>
+        <ol>
+          <li><strong>Soil comes first</strong> — all decisions flow from soil health.</li>
+          <li><strong>Do small work properly</strong> — mastery before scaling.</li>
+          <li><strong>No shortcuts</strong> — right timing over quick gains.</li>
+          <li><strong>Quality before quantity</strong> — one excellent lot over five average ones.</li>
+          <li><strong>Think 10 years ahead</strong> — every action serves the long game.</li>
+          <li><strong>Leaders on the field</strong> — authority comes from presence and practice.</li>
+        </ol>
+      </section>
+
+      <hr />
+
+      <section>
+        <h2>Residency</h2>
+        <p><a href="/residency">Read more</a> · <a href="/artistry">Artistry</a></p>
+        <p>Monastic polymaths. Crazy misfits. An embedded residency across two countries (soon three). Two weeks minimum. Pre-selected.</p>
+        <ul>
+          <li>Design residencies — 2–4 weeks. Working briefs from the farm, sanctuary, product OS.</li>
+          <li>Craft workshops — 5–10 days. Shigaraki ceramics, Washi Kobo paper, Uji tea, Malnad weaving, natural dye.</li>
+          <li>Gurukul — 1 teacher, 1 student. Long apprenticeships in a single discipline.</li>
+          <li>Labs — project-scoped. Sensor, world-model, or workflow problems.</li>
+          <li>Gallery — rolling. An exhibition arm for work made on the estate.</li>
+          <li>Festivals — annual. The Gathering / Bhoomi Festival.</li>
+        </ul>
+        <p>Apply: write to <a href="mailto:residency@theaura.life">residency@theaura.life</a>.</p>
+      </section>
+
+      <hr />
+
+      <section>
+        <h2>Provenance</h2>
+        <p><a href="/provenance">Read more</a></p>
+        <p>Cherry to cup, on chain. Three layers — blockchain provenance, live sensors, and a persistent machine memory grown from the farm&rsquo;s own readings. Together they replace the forty-thousand-dollar certification stack with something the land itself can verify.</p>
+      </section>
+
+      <hr />
+
+      <section>
+        <h2>The 1,000-year idea</h2>
+        <p><a href="/idea">Read more</a></p>
+        <p>The frame by which every choice is measured. We think in generations.</p>
+      </section>
+
+      <hr />
+
+      <section>
+        <h2>Contact</h2>
+        <dl>
+          <dt>Email</dt><dd><a href="mailto:hello@theaura.life">hello@theaura.life</a></dd>
+          <dt>Residency</dt><dd><a href="mailto:residency@theaura.life">residency@theaura.life</a></dd>
+          <dt>Instagram</dt><dd><a href="https://www.instagram.com/theaura.life/" rel="noopener noreferrer">@theaura.life</a></dd>
+          <dt>Presence</dt><dd>Singapore · India · Japan · Indonesia · Australia</dd>
+        </dl>
+        <p>Arvind Singh, Founder · Mudigere &amp; Ohara · 2026</p>
+      </section>
+    </article>
   )
 }
 
@@ -899,9 +1509,12 @@ type Sanctuary = {
   name: string
   tagline: string
   region: string
-  facts: string[]
   coords: string
+  /** Static image background (also doubles as poster for video). */
   bgSrc?: string
+  /** Optional MP4 background. Plays muted+looped+autoplay+inline. Falls back
+   *  to bgSrc when video can't load or while it buffers. */
+  bgVideo?: string
   bgColor?: string
   comingSoon?: boolean
 }
@@ -910,34 +1523,34 @@ const MUDIGERE: Sanctuary = {
   name: 'Mudigere',
   tagline: 'Regenerative plantation sanctuary',
   region: 'KARNATAKA, INDIA',
-  facts: ['150 ACRES', 'WESTERN GHATS BIOSPHERE', '900–1100M ALTITUDE', 'TROPICAL MONSOON'],
   coords: '13.13°N · 75.63°E',
-  bgSrc: '/aura-mudigere-landscape.jpg',
+  bgVideo: '/aura-mudigere.mp4',
+  bgSrc: '/aura-mudigere.jpg',
 }
 const OHARA_S: Sanctuary = {
   name: 'Ohara',
   tagline: 'Retreats and slow living in nature',
   region: 'KYOTO PREFECTURE, JAPAN',
-  facts: ['GARDEN, TEAHOUSE, CAFÉ AND STUDIOS', '270M ALTITUDE', 'FOUR-SEASON TEMPERATE'],
   coords: '35.13°N · 135.83°E',
-  bgSrc: '/aura-ohara-landscape.jpg',
+  bgVideo: '/aura-ohara.mp4',
+  bgSrc: '/aura-ohara.jpg',
 }
 const DAYLESFORD: Sanctuary = {
   name: 'Daylesford',
   tagline: 'A space for craft and wellbeing',
   region: 'VICTORIA, AUSTRALIA',
-  facts: ['MINERAL SPRING COUNTRY', '450M ALTITUDE', 'COOL-TEMPERATE', 'FOUR SEASONS'],
   coords: '37.34°S · 144.14°E',
-  bgSrc: '/aura-ohara-landscape.jpg',
+  /* Daylesford ships as a still image only — no MP4 available. */
+  bgSrc: '/aura-daylesford.jpg',
   comingSoon: true,
 }
 const MUNDUK: Sanctuary = {
   name: 'Munduk',
   tagline: 'Mountain sanctuary for restoration',
   region: 'BALI, INDONESIA',
-  facts: ['HIGHLAND CLOUD FOREST', 'VOLCANIC GROUND', '800–1200M ALTITUDE', 'EQUATORIAL HUMID'],
   coords: '8.27°S · 115.06°E',
-  bgSrc: '/aura-mudigere-landscape.jpg',
+  bgVideo: '/aura-munduk.mp4',
+  bgSrc: '/aura-munduk.jpg',
   comingSoon: true,
 }
 
@@ -961,13 +1574,11 @@ function useBlurReveal() {
         if (range <= 0) return
         const p = Math.max(0, Math.min(1, -rect.top / range))
         const fadeIn = Math.min(1, p / 0.15)
-        const blurLift = Math.max(0, Math.min(1, (p - 0.5) / 0.35))
+        const blurLift = Math.max(0, Math.min(1, (p - 0.7) / 0.3))
         if (content) content.style.opacity = `${fadeIn}`
         const blurVal = (1 - blurLift) * 16
-        const overlayAlpha = (1 - blurLift) * 0.5
         blur.style.backdropFilter = `blur(${blurVal}px)`
         ;(blur.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = `blur(${blurVal}px)`
-        blur.style.background = `rgba(0,0,0,${overlayAlpha})`
       })
     }
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -1004,14 +1615,12 @@ function useBlurReveal2() {
         if (range <= 0) return
         const p = Math.max(0, Math.min(1, -rect.top / range))
         const fadeIn = Math.min(1, p / 0.15)
-        const blurLift = Math.max(0, Math.min(1, (p - 0.5) / 0.35))
+        const blurLift = Math.max(0, Math.min(1, (p - 0.7) / 0.3))
         if (content) content.style.opacity = `${fadeIn}`
         const blurVal = (1 - blurLift) * 16
-        const overlayAlpha = (1 - blurLift) * 0.5
         for (const el of [bL, bR]) {
           el.style.backdropFilter = `blur(${blurVal}px)`
           ;(el.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = `blur(${blurVal}px)`
-          el.style.background = `rgba(0,0,0,${overlayAlpha})`
         }
       })
     }
@@ -1027,180 +1636,882 @@ function useBlurReveal2() {
 }
 
 function SanctuaryBg({ s }: { s: Sanctuary }) {
+  /* Sanctuary background tint — flat 12% black, no radial darkening.
+     The heading + tagline rely on their text-shadow for contrast against
+     bright photo regions; the dark circle vignette is gone. */
+  const TINT = (
+    <div
+      aria-hidden
+      style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'rgba(0, 0, 0, 0.12)',
+        pointerEvents: 'none',
+      }}
+    />
+  )
+
+  if (s.bgVideo) {
+    return (
+      <>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster={s.bgSrc}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        >
+          <source src={s.bgVideo} type="video/mp4" />
+        </video>
+        {TINT}
+      </>
+    )
+  }
   if (s.bgSrc) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img src={s.bgSrc} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+      <>
+        {/* Background plate for the sanctuary panel — the heading above
+            already names the place; this image is purely decorative. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={s.bgSrc} alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+        {TINT}
+      </>
     )
   }
   return <div style={{ position: 'absolute', inset: 0, background: s.bgColor || '#7e807c' }} />
 }
 
-function SanctuaryContent({ s, large = false }: { s: Sanctuary; large?: boolean }) {
+function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large?: boolean; onExplore?: () => void }) {
   const Heading = large ? 'h1' : 'h2'
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 var(--gutter)', height: '100%', color: '#ffffff' }}>
-      {s.comingSoon && (
-        <p className="label" style={{ marginBottom: 16, color: '#ffffff', fontSize: 10, letterSpacing: 2 }}>COMING SOON</p>
-      )}
-      <Heading style={{
-        fontFamily: 'var(--font-grotesque)',
-        fontSize: large ? 'clamp(64px, 16vw, 280px)' : 'clamp(32px, 5.5vw, 60px)',
-        lineHeight: large ? 1 : 1.06,
-        letterSpacing: large ? '-0.06em' : '-0.05em',
-        margin: 0,
-        marginBottom: 24,
+    <div
+      className="sanctuary-content"
+      data-large={large ? 'true' : 'false'}
+      style={{
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        /* Single-banner (large=true): top-anchored heading via 32vh padding.
+           2-col panel (large=false): heading vertically centred, meta absolutely
+           anchored to the bottom (see meta block below). Padding is symmetric
+           on the 2-col so `justify-content: center` lands the heading on the
+           true vertical centre of the picture. Mobile override below centres
+           the large heading too. */
+        justifyContent: large ? 'space-between' : 'center',
+        alignItems: 'center',
+        height: '100%',
+        padding: large ? '32vh var(--gutter) 48px' : '48px var(--gutter)',
+        textAlign: 'center',
         color: '#ffffff',
-        fontWeight: 400,
-      }}>
-        {s.name}
-      </Heading>
-      <p className="p1" style={{ color: '#ffffff', margin: 0, maxWidth: 'min(280px, 84vw)' }}>{s.tagline}</p>
-      <p className="label" style={{ marginTop: 16, color: '#ffffff', fontSize: 10, letterSpacing: 1.5 }}>{s.region}</p>
-      <p className="label" style={{ marginTop: 8, color: '#ffffff', fontSize: 9, letterSpacing: 1.2, maxWidth: 'min(320px, 84vw)' }}>{s.facts.join('  ·  ')}</p>
-      <p className="label" style={{ marginTop: 20, color: '#ffffff', fontSize: 9, letterSpacing: 1.2 }}>{s.coords}</p>
+      }}
+    >
+      {/* Name + tagline — subtle text-shadow plus the radial darken on the
+          photo guarantees legibility against any image highlight. */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Heading style={{
+          fontFamily: 'var(--font-grotesque)',
+          fontSize: large ? 'clamp(64px, 16vw, 280px)' : 'clamp(32px, 5.5vw, 60px)',
+          lineHeight: large ? 1 : 1.06,
+          letterSpacing: large ? '-0.06em' : '-0.05em',
+          margin: 0,
+          marginBottom: 20,
+          color: '#ffffff',
+          fontWeight: 400,
+          textShadow: '0 2px 24px rgba(0, 0, 0, 0.35)',
+        }}>
+          {s.name}
+        </Heading>
+        <p className="p2" style={{ color: '#ffffff', margin: 0, maxWidth: 'min(260px, 80vw)', textShadow: '0 1px 12px rgba(0, 0, 0, 0.4)' }}>{s.tagline}</p>
+      </div>
+
+      {/* Bottom-anchored meta. For large (Mudigere/Ohara): region/coords pinned
+          bottom-left, "Explore Sanctuary" pinned bottom-right — mirrors the
+          aura-hero banner CTA pattern. For 2-col (Munduk/Daylesford): keep the
+          centered stack — those panels aren't clickable, just announce
+          "coming soon". */}
+      {large ? (
+        <div className="sanctuary-meta" style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          padding: '0 var(--gutter)',
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'space-between',
+          gap: 24,
+        }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
+            <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: '1px', margin: 0 }}>{s.region}</p>
+            <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: '1px', margin: 0 }}>{s.coords}</p>
+          </div>
+          {/* The Explore CTA is the only hit area for the whole panel. */}
+          <button
+            type="button"
+            onClick={onExplore}
+            aria-label={`Open ${s.name} details`}
+            className="label"
+            style={{
+              background: 'transparent',
+              border: 'none',
+              padding: 0,
+              color: '#ffffff',
+              fontSize: 11,
+              letterSpacing: '1px',
+              margin: 0,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 10,
+              pointerEvents: 'auto',
+            }}
+          >
+            <span
+              aria-hidden
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 22,
+                height: 22,
+                borderRadius: '50%',
+                border: '1px solid rgba(255,255,255,0.7)',
+                fontFamily: 'var(--font-mono)',
+                fontSize: 13,
+                lineHeight: 1,
+                letterSpacing: 0,
+                fontWeight: 400,
+                color: '#fff',
+              }}
+            >
+              +
+            </span>
+            Explore {s.name}
+          </button>
+        </div>
+      ) : (
+        /* Bottom labels — same rhythm as the large-banner Ohara/Mudigere
+           meta: bottom inset matches `.sanctuary-meta` (clamp 24-56), and
+           the two labels sit 6px apart in a column. Centred (not left-
+           anchored) because the 2-col panels don't carry an Explore CTA on
+           the opposite side. */
+        <div style={{ position: 'absolute', bottom: 'clamp(24px, 5vh, 56px)', left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+          <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: '1px', margin: 0 }}>{s.region}</p>
+          {s.comingSoon ? (
+            <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: 2, margin: 0 }}>COMING SOON</p>
+          ) : (
+            <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: '1px', margin: 0 }}>{s.coords}</p>
+          )}
+        </div>
+      )}
+      <style jsx>{`
+        :global(.sanctuary-meta) {
+          bottom: clamp(24px, 5vh, 56px);
+        }
+        @media (max-width: 768px) {
+          :global(.sanctuary-meta) {
+            bottom: var(--gutter);
+          }
+        }
+      `}</style>
     </div>
   )
 }
 
-function SanctuaryBanner({ s, onClick }: { s: Sanctuary; onClick?: () => void }) {
-  const { wrapRef, blurRef, contentRef } = useBlurReveal()
+/* ──────────────────────────────────────────────────────────────
+   Stacking sanctuary panels with per-panel blur reveal.
+
+   Layout: each panel is `position: sticky; top: 0; height: 100vh`
+   inside a shared 300vh parent. Stacking happens via document flow
+   (panel N at parent y = (N-1) × 100vh) and z-index ascending.
+
+   Scroll narrative (per banner):
+     1. Panel slides up from below — heavy 16 px blur
+     2. Panel sticks at top:0 — blur lifts smoothly to 0 over ~40vh
+     3. Panel is clear and admired
+     4. Next panel slides up over it (this panel stays clear underneath)
+
+   Each panel computes its own blur from the PARENT container's scroll
+   position. Panel z's "stick start" is at scrollIntoParent = (z-1)*vh.
+   Blur lifts during the next 0.4 × vh of scroll past that point.
+   ────────────────────────────────────────────────────────────── */
+
+/* Per-panel scroll rhythm (with spacers between panels):
+     Panel z natural position in parent  = (z-1) × 200vh
+     Panel z stick start (top:0)         = (z-1) × 200vh
+     Panel z slide-up phase              = (z-1) × 200vh - 100vh  →  (z-1) × 200vh
+     Panel z clarity hold                = (z-1) × 200vh + 30vh   →  z × 200vh - 100vh
+     Panel z gets covered by next        = z × 200vh - 100vh      →  z × 200vh
+
+   PANEL_STRIDE = 200vh (one panel + one spacer). Bumped from a 100vh stride
+   to give each panel a real 70vh clarity hold before the next slides over.
+
+   Hook: drives 1..N blur refs. Blur is heavy (BLUR_MAX) while the panel is
+   sliding up from below + at the moment it sticks, then lifts smoothly over
+   the next BLUR_LIFT_RANGE of scroll. Stays at 0 for the rest of the panel's
+   topmost window (the clarity hold) until the next panel covers it. */
+const PANEL_STRIDE_VH = 2 // 200vh per panel slot (100vh panel + 100vh spacer)
+const BLUR_MAX = 24       // heavier initial blur than before (was 16)
+const BLUR_LIFT_RANGE = 0.3 // lift over 30% of a viewport once stuck
+
+function useStackBlur(z: number, blurRefs: React.RefObject<HTMLDivElement | null>[]) {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+      for (const r of blurRefs) {
+        if (r.current) {
+          r.current.style.backdropFilter = 'blur(0)'
+          ;(r.current.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = 'blur(0)'
+        }
+      }
+      return
+    }
+    const matchMobile = window.matchMedia('(max-width: 768px)')
+
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const wrap = wrapRef.current
+        if (!wrap) return
+        const vh = window.innerHeight
+        const isMobile = matchMobile.matches
+
+        let blurLift: number
+        if (isMobile) {
+          // Mobile: each panel is in normal flow (no sticky-stack rhythm).
+          // Compute entry progress per-panel from its own bounding rect —
+          // heavy blur when the panel is below the viewport, lifts to 0
+          // as the panel reaches the upper third of the viewport.
+          //   rect.top = vh   → blurLift 0 (full blur, just entering)
+          //   rect.top = vh*0.2 → blurLift 1 (cleared)
+          const rect = wrap.getBoundingClientRect()
+          const startY = vh
+          const endY = vh * 0.2
+          blurLift = Math.max(0, Math.min(1, (startY - rect.top) / (startY - endY)))
+        } else {
+          // Desktop: sticky-stack rhythm. Panel z's natural stick-start lives
+          // at (z-1) × PANEL_STRIDE_VH × vh into the parent. Blur is heavy
+          // until that point, then lifts over BLUR_LIFT_RANGE × vh.
+          const parent = wrap.parentElement
+          if (!parent) return
+          const parentRect = parent.getBoundingClientRect()
+          const scrollIntoParent = -parentRect.top
+          const stickStart = (z - 1) * PANEL_STRIDE_VH * vh
+          const scrollPastStickStart = scrollIntoParent - stickStart
+          blurLift = Math.max(0, Math.min(1, scrollPastStickStart / (vh * BLUR_LIFT_RANGE)))
+        }
+
+        const blurVal = (1 - blurLift) * BLUR_MAX
+        for (const r of blurRefs) {
+          if (!r.current) continue
+          r.current.style.backdropFilter = `blur(${blurVal}px)`
+          ;(r.current.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = `blur(${blurVal}px)`
+        }
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    onScroll()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      cancelAnimationFrame(raf)
+    }
+    // blurRefs is intentionally read fresh each call — its array identity may
+    // change per render but the ref objects inside are stable.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [z])
+  return wrapRef
+}
+
+function SanctuaryStackPanel({ s, z, onClick }: { s: Sanctuary; z: number; onClick?: () => void }) {
+  const blurRef = useRef<HTMLDivElement>(null)
+  const wrapRef = useStackBlur(z, [blurRef])
   const clickable = !!onClick
   return (
-    <section ref={wrapRef} style={{ height: '300vh', position: 'relative', zIndex: 0, display: 'block' }}>
-      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
-        <SanctuaryBg s={s} />
-        <div ref={blurRef} style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
-        <div
-          ref={contentRef}
-          onClick={onClick}
-          role={clickable ? 'button' : undefined}
-          tabIndex={clickable ? 0 : undefined}
-          onKeyDown={clickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') onClick?.() } : undefined}
-          aria-label={clickable ? `Open ${s.name} details` : undefined}
-          style={{ position: 'absolute', inset: 0, opacity: 0, cursor: clickable ? 'pointer' : 'default' }}
-        >
-          <SanctuaryContent s={s} large />
-        </div>
+    <div ref={wrapRef} className="sanctuary-panel" style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', zIndex: z }}>
+      <SanctuaryBg s={s} />
+      <div ref={blurRef} style={{ position: 'absolute', inset: 0, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
+      <div
+        className="sanctuary-clickable"
+        style={{ position: 'absolute', inset: 0 }}
+      >
+        <SanctuaryContent s={s} large onExplore={clickable ? onClick : undefined} />
       </div>
-    </section>
+    </div>
   )
 }
 
-function SanctuaryBanner2Col({ left, right }: { left: Sanctuary; right: Sanctuary }) {
-  const { wrapRef, blurLeftRef, blurRightRef, contentRef } = useBlurReveal2()
+function SanctuaryStackPanel2Col({ left, right, z }: { left: Sanctuary; right: Sanctuary; z: number }) {
+  const blurLeftRef = useRef<HTMLDivElement>(null)
+  const blurRightRef = useRef<HTMLDivElement>(null)
+  const wrapRef = useStackBlur(z, [blurLeftRef, blurRightRef])
   return (
-    <section ref={wrapRef} style={{ height: '300vh', position: 'relative', zIndex: 0, display: 'block' }}>
-      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
-        <div className="sanctuary-2col-bg" style={{ position: 'absolute', inset: 0, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
-          <div style={{ position: 'relative', overflow: 'hidden', marginRight: -1 }}>
-            <SanctuaryBg s={left} />
-            <div ref={blurLeftRef} style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
-          </div>
-          <div style={{ position: 'relative', overflow: 'hidden' }}>
-            <SanctuaryBg s={right} />
-            <div ref={blurRightRef} style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
-          </div>
+    <div ref={wrapRef} className="sanctuary-2col-panel" style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', zIndex: z }}>
+      <div className="sanctuary-2col-bg" style={{ position: 'absolute', inset: 0, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
+        <div style={{ position: 'relative', overflow: 'hidden', marginRight: -1 }}>
+          <SanctuaryBg s={left} />
+          <div ref={blurLeftRef} style={{ position: 'absolute', inset: 0, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
         </div>
-        <div ref={contentRef} className="sanctuary-2col-content" style={{ position: 'absolute', inset: 0, display: 'grid', gridTemplateColumns: '1fr 1fr', opacity: 0 }}>
-          <SanctuaryContent s={left} />
-          <SanctuaryContent s={right} />
+        <div style={{ position: 'relative', overflow: 'hidden' }}>
+          <SanctuaryBg s={right} />
+          <div ref={blurRightRef} style={{ position: 'absolute', inset: 0, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
         </div>
       </div>
-      <style jsx>{`
-        @media (max-width: 767px) {
-          :global(.sanctuary-2col-bg),
-          :global(.sanctuary-2col-content) {
-            grid-template-columns: 1fr 1fr !important;
-          }
-        }
-      `}</style>
-    </section>
+      <div className="sanctuary-2col-content" style={{ position: 'absolute', inset: 0, display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+        <SanctuaryContent s={left} />
+        <SanctuaryContent s={right} />
+      </div>
+      {/* Mobile-specific overrides for this 2-col now live in globals.css —
+          on mobile the grid collapses to 1fr + 2 stacked rows so each
+          sanctuary gets a full-width readable cell. */}
+    </div>
   )
 }
 
 export default function Home() {
   const [mudigereOpen, setMudigereOpen] = useState(false)
   const [oharaOpen, setOharaOpen] = useState(false)
-  const closeMudigere = useCallback(() => setMudigereOpen(false), [])
-  const closeOhara = useCallback(() => setOharaOpen(false), [])
+  const [filmOpen, setFilmOpen] = useState(false)
+  const closeFilm = useCallback(() => setFilmOpen(false), [])
+  const openFilm = useCallback(() => setFilmOpen(true), [])
+
+  /* Sanctuary modals get a vanity URL: /mudigere or /ohara. We use
+     history.pushState (not Next.js routing) so no real route is fetched —
+     the modal stays mounted on the homepage. On close, push back to /;
+     on the browser back button, popstate closes whichever is open. */
+  const openMudigere = useCallback(() => {
+    setMudigereOpen(true)
+    if (typeof window !== 'undefined' && window.location.pathname !== '/mudigere') {
+      window.history.pushState({ modal: 'mudigere' }, '', '/mudigere')
+    }
+  }, [])
+  const closeMudigere = useCallback(() => {
+    setMudigereOpen(false)
+    if (typeof window !== 'undefined' && window.location.pathname === '/mudigere') {
+      window.history.pushState({}, '', '/')
+    }
+  }, [])
+  const openOhara = useCallback(() => {
+    setOharaOpen(true)
+    if (typeof window !== 'undefined' && window.location.pathname !== '/ohara') {
+      window.history.pushState({ modal: 'ohara' }, '', '/ohara')
+    }
+  }, [])
+  const closeOhara = useCallback(() => {
+    setOharaOpen(false)
+    if (typeof window !== 'undefined' && window.location.pathname === '/ohara') {
+      window.history.pushState({}, '', '/')
+    }
+  }, [])
+
+  // Back-button closes whichever sanctuary modal is open.
+  useEffect(() => {
+    const onPop = () => {
+      setMudigereOpen(false)
+      setOharaOpen(false)
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
+
+  /* Gate hero entrance animations until after React has mounted client-side.
+     Server-rendered HTML has the .hero-anim-- modifier classes but no
+     animation-name (CSS gates that on [data-hero-ready="true"]). Once this
+     effect fires, animations begin — guaranteeing no SSR/CSR race that
+     could flash an element at the wrong opacity/transform. */
+  const [heroReady, setHeroReady] = useState(false)
+  useEffect(() => {
+    // rAF ensures we don't dispatch on the same paint frame as hydration
+    const id = requestAnimationFrame(() => setHeroReady(true))
+    return () => cancelAnimationFrame(id)
+  }, [])
 
   return (
     <div>
       <MudigereModal open={mudigereOpen} onClose={closeMudigere} />
       <OharaModal open={oharaOpen} onClose={closeOhara} />
+      <AuraVideoModal open={filmOpen} onClose={closeFilm} />
 
-      {/* Agent mode — structured data view */}
-      <div className="agent-only">
-        <AgentHome />
-      </div>
+      {/* Hero — display row / metadata row / display row / 3 CTA tiles.
+          data-hero-ready flips to "true" after first paint; CSS uses this to
+          gate animation-name on .hero-anim children so they can't run until
+          React is fully mounted. */}
+      <section className="hero-section" data-hero-ready={heroReady ? 'true' : 'false'}>
+        <div className="hero-section-w">
+          {/*
+            Above-the-fold entrance — flows like water.
+            Each step starts before the previous finishes; tails blend so there
+            are no pauses. ~160ms cadence between starts, ~600–700ms tails.
 
-      {/* Human mode */}
-      <div className="human-only">
+              1. A REGENERATIVE COMPANY      — fall  (0    → 700ms)
+              2. FOR GENERATIONAL IMPACT     — rise  (140  → 840ms)
+              3. Aura logo                   — fade  (320  → 820ms)
+              4. Nestled in nature… (think)  — fade  (480  → 980ms)
+              5. We combine… (copy)          — fade  (640  → 1140ms)
+              6. Tile 1: Aura is not built   — rise  (800  → 1400ms)
+              7. Tile 2: Rhythm over speed   — rise  (920  → 1520ms)
+              8. Tile 3: Get in touch        — rise  (1040 → 1640ms)
+            Total ~1.65s.
+          */}
 
-      {/* Hero — full viewport, copy centered, whitespace for future design */}
-      <section
-        style={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: 'calc(var(--section-gap) + 56px) var(--gutter) var(--section-gap)',
-        }}
-      >
-        <div className="hero-stack">
-          <Reveal>
-            <div className="hero-logo" style={{ color: 'var(--text)', marginBottom: 32, display: 'flex', justifyContent: 'center', width: 'clamp(110px, 16vw, 210px)' }}>
-              <LogoEmblem size={210} />
+          {/* 1. Top display: A REGENERATIVE COMPANY (justified edge-to-edge).
+              Inline `opacity: 0` guards against the global CSS rule not having
+              applied yet on first paint — the keyframe animation still drives
+              the reveal and `animation-fill-mode: both` holds the final state. */}
+          <h1 className="hero-display hero-anim hero-anim--fall" style={{ opacity: 0, animationDuration: '700ms', animationDelay: '0ms' }}>
+            <span>A</span>{' '}
+            <span>REGENERATIVE</span>{' '}
+            <span>COMPANY</span>
+          </h1>
+
+          {/* Mid row: aura wordmark · think in generations · we combine. */}
+          <div className="hero-mid">
+            {/* 3. Aura logo */}
+            <div className="hero-mid__logo hero-anim hero-anim--fade" style={{ opacity: 0, animationDuration: '500ms', animationDelay: '320ms' }}>
+              <LogoEmblem size={132} />
             </div>
-          </Reveal>
-          <Reveal delay={80}>
-            <h3>A regenerative company<br />for generational impact</h3>
-          </Reveal>
-          <Reveal delay={160}>
-            <p className="p2 hero-p">
-              We combine ancestral intelligence with creative capital to make what the future cannot automate
+            {/* 4. Think label */}
+            <p className="label hero-mid__think hero-anim hero-anim--fade" style={{ opacity: 0, animationDuration: '500ms', animationDelay: '480ms' }}>
+              Nestled in nature, our sanctuary invites leaders, creators, and organisations into inspiration and flow
             </p>
-          </Reveal>
+            {/* 5. Copy label */}
+            <p className="label hero-mid__copy hero-anim hero-anim--fade" style={{ opacity: 0, animationDuration: '500ms', animationDelay: '640ms' }}>
+              We combine ancestral wisdom with creative capital to make what the future cannot automate
+            </p>
+          </div>
+
+          {/* 2. Bottom display: FOR GENERATIONAL IMPACT (justified edge-to-edge) */}
+          <h1 className="hero-display hero-anim hero-anim--rise" style={{ opacity: 0, animationDuration: '700ms', animationDelay: '140ms' }}>
+            <span>FOR</span>{' '}
+            <span>GENERATIONAL</span>{' '}
+            <span>IMPACT</span>
+          </h1>
+
+          {/* 6 / 7 / 8. Three CTA tiles — staggered after the mid-row text settles.
+              Media slots map to dedicated /public assets:
+                · aura-grown.jpg   — Reason  (left)
+                · aura-depth.jpg   — Brand   (middle)
+                · aura-contact.jpg — Contact (right) */}
+          <div className="hero-tiles">
+            {[
+              { href: '/reason',  l1: 'Aura is not built,',     l2: 'it is grown',     pill: 'The Reason', img: '/aura-grown.jpg',   video: '/aura-grown.mp4', symbol: '/aura-symbol-1.png', alt: 'Aura — patient, grown systems'              },
+              { href: '/brand',   l1: 'Rhythm over speed,',     l2: 'depth and width', pill: 'Our Brand',  img: '/aura-depth.jpg',   video: '/aura-depth.mp4', symbol: '/aura-symbol-2.png', alt: 'Aura — rhythm, depth and breadth of practice' },
+              { href: '/contact', l1: 'Get in touch',           l2: 'with Aura',       pill: 'Contact Us', img: '/aura-contact.jpg', video: undefined,         symbol: '/aura-symbol-3.png', alt: 'Aura — people behind the sanctuary'         },
+            ].map((tile, i) => (
+              <Link
+                key={tile.href}
+                href={tile.href}
+                className="hero-tile hero-anim hero-anim--rise"
+                style={{ opacity: 0, animationDuration: '600ms', animationDelay: `${800 + i * 120}ms` }}
+              >
+                <div className="hero-tile__media" aria-hidden>
+                  {tile.video ? (
+                    /* Tile with motion: autoplay + loop, jpg poster as
+                       fallback while it buffers (or for browsers that
+                       can't decode). */
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                      poster={tile.img}
+                      aria-label={tile.alt}
+                    >
+                      <source src={tile.video} type="video/mp4" />
+                    </video>
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={tile.img} alt={tile.alt} />
+                  )}
+                  {/* Symbol fades in centred over the blurred image on hover.
+                      Order matches position: 1 = left, 2 = mid, 3 = right. */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img className="hero-tile__symbol" src={tile.symbol} alt="" aria-hidden />
+                </div>
+                <p className="label hero-tile__caption">{tile.l1}<br />{tile.l2}</p>
+              </Link>
+            ))}
+          </div>
         </div>
+
         <style jsx>{`
-          .hero-stack { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; }
-          :global(.hero-stack h3) { max-width: 32ch; }
-          :global(.hero-p) { max-width: 420px; }
-          :global(.hero-logo svg) { width: 100% !important; height: auto !important; }
+          .hero-section {
+            min-height: 100vh;
+            /* Pulled up 40px from the original baseline (was -20px, now -40px). */
+            padding: calc(var(--section-gap) + 56px - 40px) 0 var(--section-gap);
+            display: flex;
+            align-items: center;
+          }
+          .hero-section-w {
+            /* Match the navbar's 10vw rails — content sits inside the same
+               span as the logo and hamburger. 5vw side margin gets us there. */
+            width: calc(100% - 10vw);
+            margin: 0 5vw;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(32px, 6vh, 72px);
+          }
+
+          /* Hero rows on the homepage are justified edge-to-edge (each word
+             in its own span). The base type comes from the global .hero-display. */
+          .hero-display {
+            display: flex;
+            justify-content: space-between;
+            white-space: nowrap;
+          }
+
+          /* Same column structure as the tile grid below, so the mid-row text
+             aligns with the tile captions vertically. */
+          .hero-mid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            align-items: center;
+            /* Match the hero-tiles gap so the 3 columns of mid metadata
+               line up exactly with the 3 tile columns below. */
+            gap: clamp(48px, 6vw, 120px);
+          }
+          .hero-mid__logo {
+            color: var(--text);
+            display: inline-flex;
+            align-items: center;
+            /* Minimal indent — just enough to nudge the wordmark off the
+               column's left edge without losing alignment with the heading. */
+            padding-left: 8px;
+          }
+          .hero-mid__logo :global(svg) { width: clamp(96px, 11vw, 132px); height: auto; }
+          .hero-mid__think,
+          .hero-mid__copy {
+            color: var(--text);
+            margin: 0;
+            line-height: 1.6;
+            font-size: 10px;
+            letter-spacing: 1.4px;
+            max-width: 290px;
+          }
+          .hero-mid__think {
+            justify-self: start;
+            text-align: left;
+          }
+          .hero-mid__copy {
+            text-align: right;
+            justify-self: end;
+          }
+
+          .hero-tiles {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* Larger gap between thumbnails — more breathing room. */
+            gap: clamp(48px, 6vw, 120px);
+            margin-top: clamp(-12px, 2vh, 60px);
+          }
+          .hero-tile {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: var(--text);
+          }
+          .hero-tile :global(.hero-tile__caption) {
+            text-decoration: none !important;
+          }
+          /* Justify the three 80% media blocks to mirror the edge-to-edge
+             FOR / GENERATIONAL / IMPACT row above: left / centre / right.
+             Both align-items AND an explicit margin force the layout for
+             each child so it's bullet-proof against flex quirks. */
+          .hero-tiles > .hero-tile:nth-child(1) { align-items: flex-start; }
+          .hero-tiles > .hero-tile:nth-child(1) :global(.hero-tile__media),
+          .hero-tiles > .hero-tile:nth-child(1) :global(.hero-tile__caption) {
+            margin-right: auto;
+          }
+          .hero-tiles > .hero-tile:nth-child(2) { align-items: center; }
+          .hero-tiles > .hero-tile:nth-child(2) :global(.hero-tile__media),
+          .hero-tiles > .hero-tile:nth-child(2) :global(.hero-tile__caption) {
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .hero-tiles > .hero-tile:nth-child(3) { align-items: flex-end; }
+          .hero-tiles > .hero-tile:nth-child(3) :global(.hero-tile__media),
+          .hero-tiles > .hero-tile:nth-child(3) :global(.hero-tile__caption) {
+            margin-left: auto;
+          }
+          .hero-tile__media {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #d6d6d6;
+            border-radius: var(--radius-1);
+            overflow: hidden;
+            transition: opacity var(--dur-base) var(--ease);
+          }
+          .hero-tile__media :global(img:not(.hero-tile__symbol)),
+          .hero-tile__media :global(video) {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            /* will-change forces a compositor layer so the filter actually
+               applies smoothly (some browsers ignore filter without GPU
+               promotion). Slight scale to hide blur-edge soft pixels. */
+            will-change: filter;
+            transform: scale(1.05);
+            transition: filter var(--dur-fast) var(--ease);
+          }
+          /* Symbol overlay — sits above the blurred image and blends in
+             difference mode so it reads on any underlying tone. Tile 1
+             (left) → aura-symbol-1, Tile 2 (mid) → symbol-2, Tile 3
+             (right) → symbol-3. z-index lifts it above the blur layer. */
+          .hero-tile__media :global(.hero-tile__symbol) {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 2;
+            width: clamp(64px, 22%, 120px);
+            height: auto;
+            transform: translate(-50%, -50%) scale(0.85);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.32s var(--ease-out), transform 0.4s var(--ease-spring);
+            mix-blend-mode: difference;
+          }
+          :global(.hero-tile:hover) .hero-tile__media :global(.hero-tile__symbol) {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+          }
+          /* Hover: only the photo / video blurs out — the symbol stays
+             sharp so it sits above the blur clearly. The Link wrapper
+             (<a class="hero-tile">) never receives the styled-jsx scope
+             class, so the hover selector must be marked :global() to match. */
+          :global(.hero-tile:hover) .hero-tile__media :global(img:not(.hero-tile__symbol)),
+          :global(.hero-tile:hover) .hero-tile__media :global(video) {
+            filter: blur(16px) !important;
+          }
+          :global(.hero-tile:hover) .hero-tile__media { opacity: 0.85; }
+          .hero-tile__caption {
+            margin: 16px 0 0;
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 10px;
+            letter-spacing: 1.4px;
+            /* Desktop: captions stay hidden until the tile is hovered.
+               Fades in on hover, fades out when the pointer leaves. */
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.28s var(--ease-out), transform 0.28s var(--ease-out);
+          }
+          :global(.hero-tile:hover) .hero-tile__caption {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          /* Caption alignment matches the media justification:
+             first = left (default), middle = center, last = right. */
+          .hero-tiles > .hero-tile:nth-child(2) .hero-tile__caption {
+            text-align: center;
+          }
+          .hero-tiles > .hero-tile:last-child .hero-tile__caption {
+            text-align: right;
+          }
+
+          /* Mobile + tablet — top-fold matches paper.design/Aura-Mobile artboard:
+             centered display headlines, vertical mid-stack, full-width
+             horizontal tile rows with dividers between. Breakpoint pushed up
+             to 1023px so tablets get the row layout too (3-col only above
+             desktop width). */
+          @media (max-width: 1023px) {
+            .hero-section {
+              /* Tighten the top pad so the headline sits ~64px below the nav,
+                 as in the Aura-Mobile artboard. */
+              padding: calc(var(--nav-h, 56px) + 24px) 0 var(--section-gap);
+            }
+            .hero-section-w {
+              width: 100%;
+              max-width: none;
+              margin: 0;
+              padding: 0 var(--gutter);
+              gap: 53px;
+              box-sizing: border-box;
+            }
+
+            /* Headlines — Bricolage 44/46 semibold, watermark grey (the same
+               #F2F2F2 the desktop hero uses). Block layout + text-align
+               justify so each line spreads edge-to-edge inside a column
+               that matches the paragraph's larger side margin below. The
+               orphan last line stays centred. */
+            /* Headlines fill the gutter-bounded content area (full width
+               minus var(--gutter) on each side), so left/right text-align
+               anchors each line to the same x as the nav logo / hamburger.
+               Font sized so both manifesto rows break cleanly into two
+               lines:
+                 A REGENERATIVE / COMPANY
+                 FOR GENERATIONAL / IMPACT
+               This requires the long second word (REGENERATIVE / GENERATIONAL)
+               plus its preceding short word to fit on one line. */
+            .hero-display {
+              display: block;
+              width: 100%;
+              max-width: 100%;
+              margin: 0;
+              align-self: stretch;
+              /* Mobile clamp — tuned so each manifesto h1 wraps to exactly
+                 two lines ("A REGENERATIVE / COMPANY", "FOR GENERATIONAL /
+                 IMPACT"). 9vw keeps the type display-weight without forcing
+                 single-word line breaks. */
+              font-size: clamp(36px, 9vw, 52px);
+              line-height: 1.04;
+              letter-spacing: -0.04em;
+              white-space: normal;
+              hyphens: none;
+              word-break: normal;
+              overflow-wrap: normal;
+            }
+            .hero-display :global(span) { display: inline; }
+            /* Mobile: both manifesto headlines centre-aligned across the
+               two-line wrap. */
+            .hero-display.hero-anim--fall,
+            .hero-display.hero-anim--rise {
+              text-align: center;
+              text-align-last: center;
+            }
+
+            /* Mid stack — single column, centered, narrower than the page. */
+            .hero-mid {
+              grid-template-columns: 1fr;
+              gap: 20px;
+              align-items: center;
+              text-align: center;
+              max-width: 240px;
+              margin: 0 auto;
+            }
+            .hero-mid__logo {
+              justify-self: center;
+              padding-left: 0;
+            }
+            .hero-mid__logo :global(svg) {
+              width: 96px;
+              height: auto;
+            }
+            .hero-mid__think,
+            .hero-mid__copy {
+              justify-self: center;
+              /* Match the .hero-tile__caption type treatment exactly:
+                 DM Mono 11px / 1.5, weight 400, 1px tracking, uppercase.
+                 Kept full-justified on the long block so it reads as a tidy
+                 mono rectangle; the orphan last line centres. */
+              text-align: justify;
+              text-align-last: center;
+              max-width: none;
+              font-family: var(--font-mono);
+              font-size: 11px;
+              line-height: 1.5;
+              letter-spacing: 1px;
+              font-weight: 400;
+              text-transform: uppercase;
+              hyphens: none;
+            }
+
+            /* Tiles — full-width horizontal rows with dividers between.
+               Bigger image (160px → ~45% of viewport), captions in the same
+               DM Mono label style used by the rest of the site. Link element
+               (<a class="hero-tile">) lives outside the styled-jsx scope, so
+               all .hero-tile selectors here use :global. */
+            .hero-tiles {
+              grid-template-columns: 1fr;
+              gap: 0;
+              margin-top: 8px;
+              border-top: 1px solid var(--border);
+            }
+            :global(.hero-tiles) > :global(.hero-tile) {
+              display: grid !important;
+              grid-template-columns: 160px 1fr !important;
+              gap: 32px !important;
+              align-items: center !important;
+              padding: 24px 0 !important;
+              border-bottom: 1px solid var(--border) !important;
+              flex-direction: row !important;
+            }
+            :global(.hero-tiles) > :global(.hero-tile):nth-child(1),
+            :global(.hero-tiles) > :global(.hero-tile):nth-child(2),
+            :global(.hero-tiles) > :global(.hero-tile):nth-child(3) {
+              align-items: center !important;
+            }
+            :global(.hero-tiles) > :global(.hero-tile) :global(.hero-tile__media),
+            :global(.hero-tiles) > :global(.hero-tile) :global(.hero-tile__caption) {
+              margin-left: 0 !important;
+              margin-right: 0 !important;
+            }
+            :global(.hero-tile__media) {
+              width: 160px !important;
+            }
+            :global(.hero-tile__caption) {
+              margin: 0 !important;
+              text-align: left !important;
+              font-family: var(--font-mono) !important;
+              font-size: 11px !important;
+              line-height: 1.5 !important;
+              font-weight: 400 !important;
+              letter-spacing: 1px !important;
+              text-transform: uppercase !important;
+              /* Mobile: always visible — hover-reveal is desktop-only. */
+              opacity: 1 !important;
+              transform: none !important;
+              color: var(--text) !important;
+            }
+            /* Hover-only symbols don't apply on touch — hide on mobile. */
+            :global(.hero-tile__symbol) {
+              display: none !important;
+            }
+          }
         `}</style>
       </section>
 
       {/* Hero Video — scroll-driven blur reveal */}
-      <HeroVideo />
+      <HeroVideo onWatch={openFilm} />
 
-      {/* Reason */}
-      <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
+      {/* Reason — one flowing h2 with Apple-style scroll-to-highlight.
+          The three former pieces (manifesto · lead · ecosystem line) read as
+          a single statement; each word brightens from muted to full as it
+          crosses the upper third of the viewport. */}
+      <section className="reason-section" style={{ borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         <div className="section-w">
-          <Reveal>
-            <h2 style={{ marginBottom: 'clamp(48px, 8vh, 96px)', maxWidth: 520 }}>We exist to restore what sustains us</h2>
-          </Reveal>
-          <Reveal delay={80}>
-            <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)' }}>
-              <p className="p2">In a world optimised for speed and short-term gain, Aura offers a different model — one rooted in patience, regeneration, and rhythm. Set across a working plantation and creative sanctuary, Aura brings together ancient knowledge and modern tools to build systems that endure. From soil to studio, every element is designed to support a new kind of creation — one who thinks beyond outcomes, and builds for generations to come.</p>
-              <p className="p2">Aura exists because modern life has optimised for speed, scale, and extraction — often at the cost of land, attention, health, and human depth. We believe the future will belong to places and systems that restore balance between nature and technology, intelligence and craft, ambition and stillness, people and the planet. Our work is to build those systems — slowly, intentionally, and across generations.</p>
-            </div>
-          </Reveal>
+          <ScrollHighlight>{`The reason is to restore what sustains us.
+Everything here is built to endure.
+Land, hospitality, craft, and technology — one regenerative ecosystem.`}</ScrollHighlight>
         </div>
+        <style jsx>{`
+          /* Reason copy sits directly above the expanding video — the
+             card is meant to read as a continuation of the manifesto, so
+             the bottom padding is intentionally light. Full section-gap
+             on top still gives the heading proper breathing room. */
+          .reason-section {
+            padding: var(--section-gap) 0 clamp(40px, 6vh, 80px);
+          }
+          @media (max-width: 768px) {
+            .reason-section {
+              padding: var(--section-gap) 0 clamp(28px, 4vh, 48px) !important;
+            }
+          }
+        `}</style>
       </section>
 
       {/* Reason Video — expanding 16:9 → fullscreen */}
       <ExpandingVideo
-        src="/aura-reason.mp4"
-        poster="/aura-reason.jpg"
-        alt="Aura regenerative plantation in the Western Ghats"
+        src="/aura-people.mp4"
+        poster="/aura-people.jpg"
+        alt="Aura — the people behind the practice"
       />
 
-      {/* Operating System */}
-      <section style={{ paddingTop: 'calc(var(--section-gap) + clamp(40px, 6vh, 80px))', paddingBottom: 'var(--section-gap)', borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
+      {/* Operating System — full section-gap on both ends, matching the
+          rhythm of every other top-level section on the page. */}
+      <section style={{ padding: 'var(--section-gap) 0', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         <div className="section-w">
           <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 'clamp(80px, 12vh, 140px)' }}>
+            <div style={{ textAlign: 'center', marginBottom: 'clamp(48px, 7vh, 80px)' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/aura-os.svg"
@@ -1213,17 +2524,16 @@ export default function Home() {
                   height: 'auto',
                 }}
               />
-              <p className="p1" style={{ marginTop: 28 }}>Ancestral. Natural. Human. Machine Intelligence</p>
-              <p className="p2" style={{ marginTop: 12, maxWidth: 480, marginLeft: 'auto', marginRight: 'auto' }}>
-                Aura-OS is our operating philosophy — combining ancestral wisdom, natural systems, human creativity and modern technology into one integrated way of living and building.
+              <p className="p1" style={{ marginTop: 'var(--space-5)' }}>Ancestral. Natural. Human. Machine Intelligence</p>
+              <p className="p2" style={{ marginTop: 'var(--space-3)', maxWidth: 480, marginLeft: 'auto', marginRight: 'auto' }}>
+                The Aura Operating System brings together land intelligence, human craft, and modern technology into one integrated practice.
               </p>
             </div>
           </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 stagger" style={{ gap: 'var(--grid-gap)', marginBottom: 'clamp(80px, 12vh, 140px)' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 stagger pillar-grid" style={{ gap: 'var(--grid-gap)' }}>
             {[
               {
-                title: 'Plantation',
-                href: '/plantation',
+                title: 'Agroculture',
                 lead: 'We cultivate regenerative land systems',
                 desc: 'Coffee, pepper, areca, tea, soil, biodiversity, and long-term stewardship — managed through biodynamic and Vedic agricultural practices.',
                 video: '/aura-agroculture.mp4',
@@ -1232,87 +2542,92 @@ export default function Home() {
               },
               {
                 title: 'Hospitality',
-                href: '/hospitality',
-                lead: 'Luxury spaces for retreat and reconnection',
+                lead: 'Sanctuaries designed for clarity',
                 desc: 'Architect-led sanctuaries, slow living experiences, workshops, residencies, and time designed around nature and clarity.',
-                video: '/aura-sanctuary.mp4',
-                poster: '/aura-sanctuary.jpg',
+                video: '/aura-hospitality.mp4',
+                poster: '/aura-hospitality.jpg',
                 alt: 'Aura hospitality — sanctuary, retreats, slow living',
               },
               {
                 title: 'Labs',
-                href: '/labs',
-                lead: 'Design, technology and innovation consulting',
+                lead: 'Studios for regenerative thinking',
                 desc: 'Small-group residencies, experiments, and learning experiences spanning AI, systems thinking, creativity, wellbeing, and craft.',
-                video: '/aura-artistry.mp4',
-                poster: '/aura-artistry.jpg',
+                video: '/aura-labs.mp4',
+                poster: '/aura-labs.jpg',
                 alt: 'Aura labs — residencies, experiments, learning',
               },
             ].map((card) => (
               <Reveal key={card.title}>
-                <Link href={card.href} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
+                {/* Pillar cards are descriptive only — the underlying pages
+                    (/land, /sanctuary, /artistry) are reachable via the
+                    journal index in the main nav, not from here. No Link,
+                    no hover affordance, no cursor pill. */}
+                <div className="pillar-card">
                   <PillarVideo src={card.video} poster={card.poster} alt={card.alt} />
-                  <h3 style={{ marginTop: 24, marginBottom: 8 }}>{card.title}</h3>
-                  <p className="p1" style={{ marginBottom: 10 }}>{card.lead}</p>
+                  <h3 style={{ marginTop: 24, marginBottom: 12 }}>{card.title}</h3>
+                  {/* Lead reads as a meta caption underneath the title —
+                      mono uppercase via the global .label spec, matching
+                      every other meta caption on the page. */}
+                  <p className="label" style={{ marginBottom: 16 }}>{card.lead}</p>
                   <p className="p2">{card.desc}</p>
-                </Link>
+                </div>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Our Sanctuaries — full-screen blur-reveal banners (wrapped to keep bg continuous) */}
-      <div style={{ background: '#0a0a0a', position: 'relative' }}>
-        <div style={{ marginBottom: -2 }}><SanctuaryBanner s={MUDIGERE} onClick={() => setMudigereOpen(true)} /></div>
-        <div style={{ marginBottom: -2 }}><SanctuaryBanner s={OHARA_S} onClick={() => setOharaOpen(true)} /></div>
-        <SanctuaryBanner2Col left={MUNDUK} right={DAYLESFORD} />
-      </div>
-
-      {/* Closing — manifesto centered on top of computational art */}
-      <section style={{ position: 'relative', background: 'var(--bg)', zIndex: 1, overflow: 'hidden', minHeight: 'clamp(420px, 60vh, 640px)' }}>
-        {/* Computational art — fills the section as backdrop */}
-        <VideoReactiveArt
-          src="/aura-hero.mp4"
-          overlay
-          cellSize={10}
-          opacity={0.85}
-          sparsity={0.42}
-          reactivity={0.1}
-          colors={['#CA4926', '#DD7C37', '#E4B239', '#E1ADA2', '#A5B6C8', '#B6B050', '#7A7C5C']}
-          style={{ position: 'absolute', inset: 0, background: 'transparent', pointerEvents: 'none' }}
-        />
-        {/* Top fade so the art emerges into the section */}
-        <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, height: '40%',
-          background: 'linear-gradient(to bottom, var(--bg) 0%, transparent 100%)',
-          pointerEvents: 'none',
-          zIndex: 1,
-        }} />
-
-        {/* Manifesto on top of the art — left aligned within section-w */}
-        <div style={{
-          position: 'relative',
-          zIndex: 2,
-          minHeight: 'inherit',
-          display: 'flex',
-          alignItems: 'center',
-          padding: 'var(--section-gap) 0',
-        }}>
-          <div className="section-w" style={{ textAlign: 'left' }}>
-            <div style={{ maxWidth: 720 }}>
-              <Reveal>
-                <h2>A 1,000 Year Idea</h2>
-              </Reveal>
-              <Reveal delay={80}>
-                <p className="p2" style={{ marginTop: 16 }}>We think in generations</p>
-              </Reveal>
-            </div>
-          </div>
+      {/* Sanctuary lede — same scroll-to-highlight component as the Reason
+          section above. Three-line manifesto that introduces the sanctuary
+          stack which follows. */}
+      <section className="sanctuary-lede" style={{ borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
+        <div className="section-w">
+          <ScrollHighlight>{`Aura unfolds through sanctuary, land, and practice.
+Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm.
+Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
         </div>
+        <style jsx>{`
+          /* Generous padding on both ends — the lede needs proper
+             breathing room between the pillars above and the sanctuary
+             stack below. Top and bottom both use the full section-gap
+             plus an extra clamp so the manifesto reads as a deliberate
+             pause, not a sandwiched caption. */
+          .sanctuary-lede {
+            padding: calc(var(--section-gap) + clamp(40px, 6vh, 80px)) 0;
+          }
+          @media (max-width: 768px) {
+            .sanctuary-lede {
+              padding: calc(var(--section-gap) + clamp(24px, 4vh, 56px)) 0 !important;
+            }
+          }
+        `}</style>
       </section>
 
-      </div>{/* end human-only */}
+      {/* Our Sanctuaries — sticky-stack scroll with clarity holds.
+          Parent is 600vh: 3 panels (100vh each) + 2 inter-panel spacers
+          (100vh each) + 1 trailing buffer (100vh). The trailing buffer is
+          critical — without it the last panel has ZERO stuck time (its
+          sticky range collapses to a single point because the parent's
+          bottom releases it the instant it hits top:0). Adding 100vh of
+          buffer gives panel 3 a full 100vh of stuck time: ~30vh for the
+          blur to lift, ~70vh of held clarity, then it scrolls out as a
+          group with the rest. */}
+      <div className="sanctuary-stack" style={{ background: '#0a0a0a', position: 'relative', height: '600vh' }}>
+        <SanctuaryStackPanel s={MUDIGERE} z={1} onClick={openMudigere} />
+        <div className="sanctuary-stack__spacer" style={{ height: '100vh' }} aria-hidden />
+        <SanctuaryStackPanel s={OHARA_S} z={2} onClick={openOhara} />
+        <div className="sanctuary-stack__spacer sanctuary-stack__post-ohara" style={{ height: '100vh' }} aria-hidden />
+        <SanctuaryStackPanel2Col left={MUNDUK} right={DAYLESFORD} z={3} />
+        <div className="sanctuary-stack__trailing" style={{ height: '100vh' }} aria-hidden />
+      </div>
+
+      {/* Closing line above the footer. Headline reveals word-by-word
+          via ScrollHighlight as the section enters the viewport. */}
+      <section className="closing-line" style={{ padding: 'var(--section-gap) 0', position: 'relative', zIndex: 1, background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
+        <div className="section-w">
+          <ScrollHighlight>Live, make, and restore in rhythm with the land.</ScrollHighlight>
+        </div>
+      </section>
     </div>
   )
 }

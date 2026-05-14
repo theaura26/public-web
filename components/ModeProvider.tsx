@@ -94,6 +94,39 @@ export function ModeProvider({ children }: { children: ReactNode }) {
     }
   }, [toggleTheme])
 
+  /* Agent mode: show alt-text instead of images.
+     When viewMode flips to 'agent', stash each <img>'s src in a data attribute
+     and clear it — the browser then paints the alt text in place of the
+     missing image. When flipping back to 'human', restore the original src.
+     A MutationObserver keeps newly-rendered images consistent with the mode. */
+  useEffect(() => {
+    const apply = (img: HTMLImageElement) => {
+      if (viewMode === 'agent') {
+        if (img.src && !img.dataset.origSrc) {
+          img.dataset.origSrc = img.getAttribute('src') || ''
+          img.removeAttribute('src')
+        }
+      } else {
+        if (img.dataset.origSrc) {
+          img.setAttribute('src', img.dataset.origSrc)
+          delete img.dataset.origSrc
+        }
+      }
+    }
+    document.querySelectorAll('img').forEach(apply)
+
+    const obs = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        m.addedNodes.forEach((n) => {
+          if (n instanceof HTMLImageElement) apply(n)
+          else if (n instanceof HTMLElement) n.querySelectorAll('img').forEach(apply)
+        })
+      }
+    })
+    obs.observe(document.body, { childList: true, subtree: true })
+    return () => obs.disconnect()
+  }, [viewMode])
+
   return (
     <ModeContext.Provider value={{ theme, setTheme, viewMode, setViewMode }}>
       <div data-theme={theme} data-view={viewMode}>

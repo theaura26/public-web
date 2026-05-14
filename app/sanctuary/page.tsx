@@ -10,7 +10,6 @@ import {
   PullStat,
   SideBySide,
   Continue,
-  Chapter,
 } from '@/components/article/Article'
 
 export default function SanctuaryPage() {
@@ -37,27 +36,25 @@ export default function SanctuaryPage() {
       {/* eyebrow was: "The Premise" */}
       <Section id="premise" heading="Four valleys. One rhythm.">
         <P>
-          Aura is not a brand laid over a landscape. It is a way of occupying land that begins by asking
-          what the land already knows. We start from the earth and work up — soil, water, canopy,
-          cattle, craft, kitchen, code. The buildings come last. The philosophy was there first.
+          Aura is not a brand laid over a landscape. It is a way of tending land that begins by
+          asking what the land already knows. We start from the earth and work up — soil, water,
+          canopy, cattle, craft, kitchen, code. The buildings come last. The philosophy was
+          there first.
         </P>
         <P>
-          Our first two sanctuaries are already at work. Mudigere, in the Western Ghats of Karnataka,
-          is 150 acres of biodynamic plantation, forest, and herd. Ohara, a valley north of Kyoto, is a
-          70-year-old home, a 30-year-old garden, and a restored teahouse. One is scale; the other is
-          refinement. Together they are the operating system.
+          Our first two sanctuaries are already at work. Mudigere, in the Western Ghats of
+          Karnataka, is 150 acres of biodynamic plantation, forest, and herd. Ohara, a valley
+          north of Kyoto, is a 70-year-old home, a 30-year-old garden, and a restored teahouse.
+          One is scale; the other is refinement. Together they are one organism with two
+          climates.
         </P>
         <P>
-          Two more valleys are forming — Munduk in the Bali highlands, Daylesford in the cooler south
-          of Australia. Neither is a launch date. Both are listening exercises. We will know when the
-          land tells us it is ready.
+          Two more valleys are forming — Munduk in the Bali highlands, Daylesford in the cooler
+          south of Australia. Neither has a date. Both are listening exercises. We will know
+          when the land tells us it is ready.
         </P>
       </Section>
-
-      {/* number was: "01" */}
-      <Chapter number="" title="Guests of the Mountain" id="guest" />
-
-      <Section>
+      <Section id="guest" heading="Guests of the Mountain">
         <P>
           A sanctuary is not a property. It is a posture. It is what happens when a piece of
           land is tended long enough that it begins to tend the people who stand on it. The
@@ -72,9 +69,10 @@ export default function SanctuaryPage() {
           answering.
         </P>
         <P>
-          The framework is open. The philosophy is transferable. Any community, anywhere, can
-          take this pattern and grow it in their own soil. Aura is an open-source framework for
-          how to live with land across generations.
+          The pattern is portable. Any community, anywhere, could grow it in their own soil —
+          the four-pillared rhythm of land, hospitality, craft, and code, tuned to a particular
+          climate and a particular lineage. Aura is one expression of that pattern. Not the only
+          one. Not the last.
         </P>
       </Section>
 
@@ -204,8 +202,8 @@ export default function SanctuaryPage() {
 
       <Continue
         items={[
-          { href: '/mudigere', label: 'Mudigere', description: 'Bhoomi · Aaranya. 150 acres in the Western Ghats.' },
-          { href: '/ohara', label: 'Ohara', description: 'Asa · Niwa. A valley north of Kyoto.' },
+          { href: '/residency', label: 'Residency', description: 'Monastic polymaths. Crazy misfits. Two weeks on the land.' },
+          { href: '/artistry', label: 'Artistry', description: 'The third pillar — studios, residencies, kitchens, code.' },
           { href: '/idea', label: 'The 1000 Year Idea', description: 'The philosophy that anchors every valley.' },
         ]}
       />

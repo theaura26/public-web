@@ -46,7 +46,7 @@ export default function PepperPage() {
           Our vines sit at <strong>3,600 ft</strong> on red laterite, the same block as the
           coffee. Monsoon arrives in June and leaves in September. Flowering follows the first
           rain. Harvest runs{' '}
-          <strong>{`{confirm: December – February}`}</strong>, picked by hand, cluster by cluster.
+          <strong>December – February</strong>, picked by hand, cluster by cluster.
         </P>
         <P>
           Malabar pepper is one of the oldest geographical indications in the world — prized for
@@ -57,10 +57,10 @@ export default function PepperPage() {
       </TwoCol>
 
       <DataGrid cols={4}>
-        <DataCard label="Variety" value={`{confirm: Karimunda}`}>Malabar heirloom, GI Ghats.</DataCard>
+        <DataCard label="Variety" value="Karimunda">Malabar heirloom, GI Ghats.</DataCard>
         <DataCard label="Support" value="Areca palm">Live-tree climber, 15 – 20 m.</DataCard>
         <DataCard label="Elevation" value="3,600 ft" />
-        <DataCard label="Harvest" value={`{confirm: Dec – Feb}`}>By hand, by cluster.</DataCard>
+        <DataCard label="Harvest" value="Dec – Feb">By hand, by cluster.</DataCard>
       </DataGrid>
 
       {/* THREE TYPES */}
@@ -79,12 +79,12 @@ export default function PepperPage() {
       <DataGrid cols={3}>
         <DataCard label="Black Pepper" value="Unripe · sun-dried">
           Picked just before ripeness, blanched briefly and sun-dried on raised beds for{' '}
-          {`{confirm: 5 – 7}`} days. The skin wrinkles and darkens. The heat is forward; the
+          5 – 7 days. The skin wrinkles and darkens. The heat is forward; the
           aromatics — limonene, pinene, caryophyllene — are at their peak.
         </DataCard>
         <DataCard label="White Pepper" value="Ripe · water-retted">
           Picked fully ripe, soaked in flowing cool water for{' '}
-          {`{confirm: 7 – 10}`} days to soften and ferment off the outer pericarp, then rubbed
+          7 – 10 days to soften and ferment off the outer pericarp, then rubbed
           clean and dried. Heat without top-note. Preferred by chefs who want the bite without
           the smell.
         </DataCard>
@@ -106,14 +106,14 @@ export default function PepperPage() {
           Traditional white pepper is made by retting — a controlled microbial fermentation in
           running water. We run our retting in spring water from the estate catchment, changed
           daily, at{' '}
-          <strong>{`{confirm: 18 – 22}`} °C</strong>. The bacterial population that breaks down
+          <strong>18 – 22 °C</strong>. The bacterial population that breaks down
           the pericarp also introduces volatile esters that traditional dry-process white pepper
           never develops. The cup — or the grind, rather — is rounder.
         </P>
         <P>
-          Since <strong>{`{confirm: 2025}`}</strong> we have been running a small{' '}
+          Since <strong>2025</strong> we have been running a small{' '}
           <strong>anaerobic black pepper</strong> lot as well. Unripe drupes sealed under CO₂ for
-          {' '}<strong>{`{confirm: 36}`} hours</strong> before sun-drying. The flavour arrives
+          {' '}<strong>36 hours</strong> before sun-drying. The flavour arrives
           fruitier, closer to a dried berry than a classic pepper. Experimental. The kind of lot
           we run when the kitchen is curious.
         </P>
@@ -168,7 +168,7 @@ export default function PepperPage() {
             description: 'Water-retting, anaerobic, and the wet mill.',
           },
           {
-            href: '/mudigere',
+            href: '/sanctuary',
             label: 'Mudigere',
             description: 'The land the vine remembers.',
           },

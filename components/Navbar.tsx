@@ -547,12 +547,6 @@ export default function Navbar() {
           </div>
         </section>
 
-        {/* Bottom blur vignette — a SIBLING of .menu-right, not a child,
-            so it stays fixed at the bottom of the visible scroll area
-            instead of scrolling with the cards. backdrop-filter blurs
-            whatever sits behind it; the linear mask feathers the blur
-            from full-strength at the bottom to zero going up. */}
-        <div className="tile-feed-vignette" aria-hidden />
 
         <style jsx>{`
           :global(.menu-overlay) { width: 90vw; color: var(--contrast-text); }
@@ -785,21 +779,22 @@ export default function Navbar() {
             height: 0;
           }
 
-          /* Bottom blur vignette — pure backdrop-filter, no background.
-             Full menu width so there's no vertical seam between blurred
-             and sharp halves. The blur top edge lands at ~87 % of the
-             panel height (matching the upper boundary of the last card
-             in a typical viewport), and the mask fades the top 15 % of
-             the band so the upper edge reads as a soft horizon rather
-             than a hard cut. */
+          /* Bottom blur vignette — full-viewport-width band at the
+             bottom of the screen. position: fixed so it spans edge to
+             edge regardless of the menu panel width (which is only
+             90 vw and would otherwise leave a hard seam at its left
+             boundary). Sits z-51, ABOVE .menu-overlay (z-50), so the
+             backdrop-filter blurs the tile thumbnails behind it. The
+             vertical band is the lower 6 % of the viewport (~48 px on
+             800 px tall, ~120 px on 2000 px tall) so only the bottom
+             edge of one card sits inside it. */
           :global(.tile-feed-vignette) {
-            position: absolute;
-            top: 87%;
+            position: fixed;
+            top: 94%;
             left: 0;
             right: 0;
             bottom: 0;
-            pointer-events: none;
-            z-index: 5;
+            z-index: 51;
             isolation: isolate;
             backdrop-filter: blur(28px) saturate(1.05);
             -webkit-backdrop-filter: blur(28px) saturate(1.05);
@@ -981,6 +976,22 @@ export default function Navbar() {
           }
         `}</style>
       </div>
+
+      {/* Bottom blur vignette — SIBLING of .menu-overlay (not a child)
+          so position: fixed is honoured by the viewport and not trapped
+          inside .menu-overlay's transform (which would make `fixed`
+          behave like `absolute` relative to that transformed ancestor).
+          Spans the FULL viewport width so there's no inner left edge
+          where blurred meets unblurred. Visibility tracks menuOpen. */}
+      <div
+        className="tile-feed-vignette"
+        aria-hidden
+        style={{
+          opacity: menuOpen ? 1 : 0,
+          pointerEvents: 'none',
+          transition: 'opacity var(--dur-base) var(--ease)',
+        }}
+      />
     </>
   )
 }

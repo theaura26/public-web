@@ -384,31 +384,30 @@ html [data-view="agent"] {
   color: var(--text) !important;
 }
 
-/* Hero on the home page is a precisely-typeset grid in human mode —
-   words at different sizes, padded copy on the right, justified
-   display rows. In agent mode every descendant of `.hero-section`
-   should drop into a plain left-aligned block flow with no width
-   caps, no grid placement, no margin-auto centring. */
+/* Collapse the home page hero's custom grids (hero-section,
+   hero-mid, hero-tiles) to block flow and reset the grid placement
+   on their children, so the hero reads as the same plain paragraph
+   list as every other page. Section-w's 720 px max-width still
+   applies — we don't strip widths from the section wrapper. */
 [data-view="agent"] .hero-section,
-[data-view="agent"] .hero-section *,
-[data-view="agent"] .hero-section-w,
 [data-view="agent"] .hero-mid,
-[data-view="agent"] .hero-mid > *,
 [data-view="agent"] .hero-tiles,
 [data-view="agent"] .hero-tile {
   display: block !important;
-  width: auto !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+  grid-template-columns: 1fr !important;
+}
+[data-view="agent"] .hero-section > *,
+[data-view="agent"] .hero-mid > *,
+[data-view="agent"] .hero-tiles > *,
+[data-view="agent"] .hero-tile > * {
   justify-self: stretch !important;
   align-self: stretch !important;
   grid-column: auto !important;
   grid-row: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   text-align: left !important;
-  float: none !important;
-  position: static !important;
+  max-width: none !important;
 }
 [data-view="agent"] .hero-tile__media,
 [data-view="agent"] .hero-mid__logo {

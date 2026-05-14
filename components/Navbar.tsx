@@ -785,11 +785,10 @@ export default function Navbar() {
             height: 0;
           }
 
-          /* Bottom blur vignette — pure backdrop-filter, no background
-             overlay. Slim 100 px band feathered from full blur at the
-             bottom to zero at the top, so cards lose clarity only at
-             the very bottom edge. Pinned to the tile-feed column so
-             it never spills over the left rail / utility chips. */
+          /* Bottom blur vignette — strict 100 px band at the bottom of
+             the tile column. Pure backdrop-filter, no background. The
+             blur is solid for the lower 85 px and feathers over the
+             last 15 px so the top edge doesn't read as a hard cut. */
           :global(.tile-feed-vignette) {
             position: absolute;
             top: auto;
@@ -804,12 +803,12 @@ export default function Navbar() {
             -webkit-backdrop-filter: blur(28px) saturate(1.05);
             -webkit-mask-image: linear-gradient(to top,
               rgba(0, 0, 0, 1) 0%,
-              rgba(0, 0, 0, 1) 45%,
+              rgba(0, 0, 0, 1) 85%,
               rgba(0, 0, 0, 0) 100%
             );
             mask-image: linear-gradient(to top,
               rgba(0, 0, 0, 1) 0%,
-              rgba(0, 0, 0, 1) 45%,
+              rgba(0, 0, 0, 1) 85%,
               rgba(0, 0, 0, 0) 100%
             );
           }

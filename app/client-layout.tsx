@@ -22,9 +22,10 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
           left: 0;
           right: 0;
           bottom: 0;
-          /* Slim 100 px band at the very bottom of the viewport. Enough
-             to give the page a soft horizon line without intruding on
-             readable content above. */
+          /* Strict 100 px band at the very bottom of the viewport — the
+             blur is solid for the lower 85 px and feathers over the
+             top 15 px so the band has a soft top edge without bleeding
+             into readable content above. */
           height: 100px;
           pointer-events: none;
           z-index: 40;
@@ -33,12 +34,12 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
           -webkit-backdrop-filter: blur(20px) saturate(1.05);
           -webkit-mask-image: linear-gradient(to top,
             rgba(0, 0, 0, 1) 0%,
-            rgba(0, 0, 0, 1) 50%,
+            rgba(0, 0, 0, 1) 85%,
             rgba(0, 0, 0, 0) 100%
           );
           mask-image: linear-gradient(to top,
             rgba(0, 0, 0, 1) 0%,
-            rgba(0, 0, 0, 1) 50%,
+            rgba(0, 0, 0, 1) 85%,
             rgba(0, 0, 0, 0) 100%
           );
         }

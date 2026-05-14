@@ -191,7 +191,16 @@ html [data-view="agent"] {
   letter-spacing: 0 !important;
   text-transform: none !important;
   text-align: left !important;
+  text-decoration: none !important;
   color: var(--text) !important;
+}
+/* Every readable text node in <main> at full opacity. The home page
+   uses inline `opacity: 0.18 + p*0.82` per word for the scroll-tied
+   "Reason is to restore..." reveal — in agent mode those words stay
+   muted unless we force them visible. */
+[data-view="agent"] main,
+[data-view="agent"] main * {
+  opacity: 1 !important;
 }
 
 /* ── Consistent vertical rhythm ──

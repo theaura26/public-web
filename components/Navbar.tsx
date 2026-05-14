@@ -802,14 +802,16 @@ export default function Navbar() {
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
             will-change: transform;
+            /* Pure linear feather — full blur at the bottom edge,
+               easing smoothly to zero at the top. No solid plateau so
+               the band reads as a soft horizon rather than a defined
+               strip with a fade tacked on. */
             -webkit-mask-image: linear-gradient(to top,
               rgba(0, 0, 0, 1) 0%,
-              rgba(0, 0, 0, 1) 75%,
               rgba(0, 0, 0, 0) 100%
             );
             mask-image: linear-gradient(to top,
               rgba(0, 0, 0, 1) 0%,
-              rgba(0, 0, 0, 1) 75%,
               rgba(0, 0, 0, 0) 100%
             );
           }

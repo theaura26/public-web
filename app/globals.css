@@ -175,7 +175,11 @@ html [data-view="agent"] {
 }
 
 /* One font, one size, left-aligned. Every text node gets the same
-   spec. Hierarchy disappears — it's a plain text document. */
+   spec. Hierarchy disappears — it's a plain text document. NOTE:
+   `opacity` is NOT forced here — the menu-backdrop and menu-overlay
+   rely on inline `opacity: 0` to stay hidden when the menu is closed.
+   Animation-gated content (.reveal, .hero-anim) gets opacity forced
+   to 1 by a separate rule below. */
 [data-view="agent"],
 [data-view="agent"] *,
 [data-view="agent"] *::before,
@@ -187,7 +191,6 @@ html [data-view="agent"] {
   letter-spacing: 0 !important;
   text-transform: none !important;
   text-align: left !important;
-  opacity: 1 !important;
   color: var(--text) !important;
 }
 

@@ -357,6 +357,41 @@ html [data-theme="night"] .loc-modal:not([data-bleed="true"]) .invert-on-light {
   padding: 0 !important;
 }
 
+/* ── Pillar video frames carry a 3:4 aspect-ratio that holds a 700-px
+      empty box once the inner video is display:none in agent mode.
+      Collapse the wrapper entirely so the pillar cards read as title +
+      blurb only. ── */
+[data-view="agent"] .pillar-media {
+  display: none !important;
+}
+
+/* ── Flatten every inline-styled absolutely-positioned descendant of
+      the major fullscreen wrappers. Most of the home page composes
+      its layers with `style="position:absolute; inset:0; ..."` divs
+      (rotating logo overlay, sanctuary background plates, sanctuary
+      2-col bottom-label rows, ExpandingVideo captions, etc.). In
+      agent mode those layers should drop into natural flow instead
+      of stacking on top of each other against a now-collapsed
+      parent. Attribute selector matches React's serialised inline
+      style which is written without spaces ("position:absolute"). ── */
+[data-view="agent"] .hero-section [style*="position:absolute"],
+[data-view="agent"] .hero-video-wrap [style*="position:absolute"],
+[data-view="agent"] .expanding-video-wrap [style*="position:absolute"],
+[data-view="agent"] .sanctuary-stack [style*="position:absolute"],
+[data-view="agent"] .sanctuary-panel [style*="position:absolute"],
+[data-view="agent"] .sanctuary-2col-panel [style*="position:absolute"],
+[data-view="agent"] .sanctuary-content [style*="position:absolute"] {
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  width: auto !important;
+}
+
 /* Agent mode: <img> elements have their `src` stripped by ModeProvider so the
    browser renders the alt text in place. Style that fallback as monospace
    body text so it reads like the rest of the agent view. */

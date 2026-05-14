@@ -727,7 +727,7 @@ function PillarVideo({ src, poster, alt }: { src: string; poster: string; alt: s
   }, [])
 
   return (
-    <div style={{
+    <div className="pillar-media" style={{
       position: 'relative',
       width: '100%',
       aspectRatio: '3 / 4',

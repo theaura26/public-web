@@ -530,7 +530,7 @@ export default function Navbar() {
                         </video>
                       ) : a.img ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img src={a.img} alt="" />
+                        <img src={a.img} alt={a.title} />
                       ) : null}
                       {/* Hover symbol — one of the three aura emblems
                           (aura-symbol-1/2/3), cycled by tile index. Same

@@ -17,12 +17,34 @@ export function useMode() {
 }
 
 export function ModeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('day')
-  const [viewMode, setViewMode] = useState<ViewMode>('human')
+  const [theme, setThemeState] = useState<Theme>('day')
+  const [viewMode, setViewModeState] = useState<ViewMode>('human')
+
+  // Hydrate persisted preferences after mount (avoids SSR mismatch by
+  // keeping the initial render at the defaults and updating once
+  // localStorage is reachable).
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      const t = window.localStorage.getItem('aura:theme')
+      if (t === 'day' || t === 'night') setThemeState(t)
+      const v = window.localStorage.getItem('aura:view')
+      if (v === 'human' || v === 'agent') setViewModeState(v)
+    } catch {}
+  }, [])
+
+  const setTheme = useCallback((t: Theme) => {
+    setThemeState(t)
+    try { window.localStorage.setItem('aura:theme', t) } catch {}
+  }, [])
+  const setViewMode = useCallback((v: ViewMode) => {
+    setViewModeState(v)
+    try { window.localStorage.setItem('aura:view', v) } catch {}
+  }, [])
 
   const toggleTheme = useCallback(() => {
-    setTheme(t => t === 'night' ? 'day' : 'night')
-  }, [])
+    setTheme(theme === 'night' ? 'day' : 'night')
+  }, [theme, setTheme])
 
   // Shake to toggle theme on mobile (iOS 13+ requires permission on first tap)
   const lastShake = useRef(0)

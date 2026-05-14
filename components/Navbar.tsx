@@ -783,10 +783,10 @@ export default function Navbar() {
              of the bottommost card by enough pixels to read. The mask
              keeps the bottom 75 % at full blur and fades the top 25 %
              so the upper edge feathers softly into the cards above
-             rather than landing as a hard cut. No `isolation: isolate`
-             — that creates a new stacking context that on some
-             browsers causes backdrop-filter to miss the menu content
-             below. */
+             rather than landing as a hard cut. Note: isolation has
+             been removed — it creates a new stacking context that on
+             some browsers causes backdrop-filter to miss the menu
+             content underneath. */
           :global(.tile-feed-vignette) {
             position: fixed;
             left: 0;

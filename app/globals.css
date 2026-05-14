@@ -276,16 +276,30 @@ html [data-view="agent"] {
   margin-bottom: var(--space-5) !important;
 }
 
-/* Cap section width so long lines stay readable, centred in the
-   viewport. Single column on every page — clean, neat, centred. */
+/* One column. Left-aligned. Single 720 px max-width with gutter
+   padding. Both <section> and .section-w (some pages render
+   content with one or the other as the top-level wrapper) get the
+   same treatment so the column position is identical everywhere. */
 [data-view="agent"] section,
 [data-view="agent"] .section-w,
 [data-view="agent"] .article-body {
   max-width: 720px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   padding-left: var(--gutter) !important;
   padding-right: var(--gutter) !important;
+}
+/* Nested wrappers reset to flow inside the outer wrapper without
+   adding more padding — otherwise a <section> wrapping a .section-w
+   would double-indent everything by 2 × var(--gutter). */
+[data-view="agent"] section .section-w,
+[data-view="agent"] section .article-body,
+[data-view="agent"] .section-w .section-w,
+[data-view="agent"] .section-w .article-body,
+[data-view="agent"] .article-body .article-body {
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /* ── Visual chrome stripped, page structure intact. ──

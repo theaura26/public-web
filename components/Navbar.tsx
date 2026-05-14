@@ -358,18 +358,26 @@ export default function Navbar() {
 
       {/* Menu panel — 90vw, anchored right, sits over the nav. Background and
           text bind to the CONTRAST palette so the overlay is always inverted
-          from the page (dark panel in day, light panel in night). */}
+          from the page (dark panel in day, light panel in night).
+
+          Slide-in is animated via `right` rather than `transform: translateX`
+          on purpose: the .tile-feed-vignette below uses `backdrop-filter`
+          to blur the menu content, and a transformed parent forces this
+          panel onto its own GPU compositor layer which the sibling
+          backdrop-filter can't see through. Animating `right` keeps the
+          panel un-transformed at rest, so the backdrop-filter behind it
+          works as expected. */}
       <div
-        className="menu-overlay fixed right-0 z-50"
+        className="menu-overlay fixed z-50"
         style={{
           top: 0,
           bottom: 0,
+          right: menuOpen ? 0 : '-100vw',
           background: 'var(--contrast-bg)',
           color: 'var(--contrast-text)',
-          transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? 'auto' : 'none',
-          transition: 'transform var(--dur-slow) var(--ease-out), opacity var(--dur-base) var(--ease)',
+          transition: 'right var(--dur-slow) var(--ease-out), opacity var(--dur-base) var(--ease)',
           overflow: 'hidden',
         }}
       >
@@ -777,15 +785,13 @@ export default function Navbar() {
           }
 
           /* Bottom blur band — fixed-positioned strip at the bottom of
-             the viewport (NOT inside .menu-overlay so position: fixed
-             isn't trapped by its transform). The .menu-overlay above
-             carries its own transform, which forces it onto a GPU
-             composited layer; backdrop-filter on a vanilla sibling
-             can fail to see through that layer, so we force the
-             vignette onto its own GPU layer with translateZ(0).
-             Also adds a very subtle dark tint as a fallback so the
-             band is visible even when backdrop-filter is unsupported
-             or fails (Firefox without webrender, Safari < 15.4). */
+             the viewport. Lives as a sibling of .menu-overlay so it can
+             span the full viewport width, and .menu-overlay no longer
+             carries a transform (it slides via the right property now)
+             so this sibling backdrop-filter can see through to the
+             cards behind. The actual backdrop-filter declarations are
+             set INLINE on the element — styled-jsx emitted rules drop
+             them on this build, but inline survives every time. */
           :global(.tile-feed-vignette) {
             position: fixed;
             left: 0;
@@ -796,12 +802,6 @@ export default function Navbar() {
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
             will-change: transform;
-            background: linear-gradient(to top,
-              rgba(0, 0, 0, 0.45) 0%,
-              rgba(0, 0, 0, 0)    100%
-            );
-            backdrop-filter: blur(32px) saturate(1.05);
-            -webkit-backdrop-filter: blur(32px) saturate(1.05);
             -webkit-mask-image: linear-gradient(to top,
               rgba(0, 0, 0, 1) 0%,
               rgba(0, 0, 0, 1) 75%,
@@ -995,6 +995,11 @@ export default function Navbar() {
           opacity: menuOpen ? 1 : 0,
           pointerEvents: 'none',
           transition: 'opacity var(--dur-base) var(--ease)',
+          /* Inline because styled-jsx silently drops these declarations
+             from the emitted rule on this codebase / build. Inline
+             always survives. */
+          backdropFilter: 'blur(28px) saturate(1.05)',
+          WebkitBackdropFilter: 'blur(28px) saturate(1.05)',
         }}
       />
     </>

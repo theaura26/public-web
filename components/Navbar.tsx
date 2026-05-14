@@ -165,25 +165,27 @@ export default function Navbar() {
     // Two motions composed on each card:
     //   1. PARALLAX — subtle ±8 px drift (signed per tile) based on the
     //      card's bounded viewport position. A static depth cue.
-    //   2. ENTRY — cards in the lower band of the scroller are blurred
-    //      and offset DOWN, animating to clarity as they scroll up.
+    //   2. ENTRY — cards in the lower band of the scroller are offset
+    //      DOWN, animating to their resting position as they scroll up.
     //      Upper half of the scroller is the "settled" zone where cards
-    //      sit at their resting position and gap rhythm.
+    //      sit at their resting position and gap rhythm. No blur — the
+    //      tiles enter sharp from the bottom.
     const PARALLAX_DRIFT = 8       // ± px parallax depth
     const ENTRY_DRIFT = 28         // px the card lifts as it enters
-    const ENTRY_BLUR = 10          // px blur on the entering card
     const SETTLED_START = 0.5      // ratio of scrollerH where clarity begins
-    const SETTLED_END = 0.95       // ratio where full entry blur is applied
+    const SETTLED_END = 0.95       // ratio of scrollerH where the entry offset finishes
     const directions = tiles.map((_, i) => Math.sign(Math.sin(i * 1.37)) || 1)
 
     // Images locked at resting scale — all motion now happens on the card.
     for (const img of images) {
       if (img) img.style.transform = 'scale(1.06)'
     }
-    // Card gets the will-change/filter once.
+    // Card gets the will-change once. No filter property — entry blur
+    // has been removed so the cards never carry a filter.
     for (const t of tiles) {
-      t.style.willChange = 'transform, filter'
+      t.style.willChange = 'transform'
       t.style.transition = 'none'
+      t.style.filter = ''
     }
 
     let raf = 0
@@ -226,10 +228,8 @@ export default function Navbar() {
         const p = rawEntry * rawEntry * rawEntry * (rawEntry * (rawEntry * 6 - 15) + 10)
 
         const entryY = (1 - p) * ENTRY_DRIFT
-        const blurVal = (1 - p) * ENTRY_BLUR
 
         t.style.transform = `translateY(${parallaxY + entryY}px)`
-        t.style.filter = blurVal > 0.1 ? `blur(${blurVal}px)` : ''
       })
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }

@@ -939,10 +939,18 @@ export default function Navbar() {
               aspect-ratio: 16 / 10;
               border-radius: 3px;
             }
-            /* Phone — stay on the unified 11px / 1px label spec; just
-               tighten the gap above the title. */
+            /* Phone — pin the tile title to the global label spec
+               (mono 10 px, 1 px letter-spacing, uppercase, muted)
+               so it reads as a caption rather than a headline under
+               the smaller cards. !important to beat any inherited
+               styles from p / agent-mode rules. */
             :global(.tile-title) {
+              font-size: 10px !important;
+              line-height: 1.4 !important;
+              letter-spacing: 1px !important;
+              font-weight: 400 !important;
               margin-top: 10px;
+              opacity: 0.7;
             }
             .tile-feed {
               gap: 40px;

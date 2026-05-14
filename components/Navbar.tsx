@@ -142,6 +142,16 @@ export default function Navbar() {
       img.style.filter = ''
     }
 
+    // Agent mode: no infinite scroll, no parallax, no scroll seeding.
+    // Just let the tile-feed render from the top so the titles read as
+    // a plain list. Without this, the scroll seeding below would jump
+    // ~5000 px into the cycle, leaving the visible viewport empty
+    // since the tile thumbnails are display:none in agent mode.
+    if (viewMode === 'agent') {
+      root.scrollTop = 0
+      return
+    }
+
     // Seed scroll position to the start of the middle (canonical) cycle.
     // Wait a frame so layout is settled before we read scrollHeight.
     let seeded = false
@@ -241,7 +251,7 @@ export default function Navbar() {
       window.removeEventListener('resize', onScroll)
       if (raf) cancelAnimationFrame(raf)
     }
-  }, [menuOpen])
+  }, [menuOpen, viewMode])
 
   const isAgent = viewMode === 'agent'
   const toggleTheme = () => setTheme(theme === 'day' ? 'night' : 'day')

@@ -785,14 +785,15 @@ export default function Navbar() {
             height: 0;
           }
 
-          /* Bottom blur vignette — strict 100 px band at the bottom of
-             the tile column. Pure backdrop-filter, no background. The
-             blur is solid for the lower 85 px and feathers over the
-             last 15 px so the top edge doesn't read as a hard cut. */
+          /* Bottom blur vignette — pure backdrop-filter, no background.
+             Spans the lower 10 % of the tile column (top: 90%, bottom: 0)
+             so it scales with the menu height instead of a fixed pixel
+             band. The mask keeps the blur solid for 85 % of that band
+             and feathers over the top 15 % so the upper edge reads as
+             a soft horizon rather than a hard cut. */
           :global(.tile-feed-vignette) {
             position: absolute;
-            top: auto;
-            height: 100px;
+            top: 90%;
             left: calc(var(--gutter) + 240px + clamp(64px, 8vw, 160px));
             right: var(--gutter);
             bottom: 0;

@@ -22,11 +22,12 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
           left: 0;
           right: 0;
           bottom: 0;
-          /* Strict 100 px band at the very bottom of the viewport — the
-             blur is solid for the lower 85 px and feathers over the
-             top 15 px so the band has a soft top edge without bleeding
-             into readable content above. */
-          height: 100px;
+          /* Lower 10 % of the viewport (top: 90%, bottom: 0) so the
+             band scales with screen height rather than locking to a
+             fixed pixel value. The mask keeps the blur solid for the
+             lower 85 % of that band and feathers over the top 15 %
+             so the upper edge reads as a soft horizon. */
+          top: 90%;
           pointer-events: none;
           z-index: 40;
           isolation: isolate;

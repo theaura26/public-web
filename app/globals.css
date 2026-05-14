@@ -191,6 +191,41 @@ html [data-view="agent"] {
   color: var(--text) !important;
 }
 
+/* Collapse every multi-column grid down to a single linear column so
+   article pages and pillar grids read top-to-bottom instead of
+   zig-zagging across two columns. Covers Tailwind's `grid-cols-*` as
+   well as the project's bespoke `.grid-2col`, `.sidebyside`,
+   `.continue-grid`, and `.stagger` containers. */
+[data-view="agent"] .grid,
+[data-view="agent"] .grid-2col,
+[data-view="agent"] .stagger,
+[data-view="agent"] .sidebyside,
+[data-view="agent"] .continue-grid,
+[data-view="agent"] .pillar-grid,
+[data-view="agent"] [class*="grid-cols-"],
+[data-view="agent"] [class*="md:grid-cols-"] {
+  display: block !important;
+  grid-template-columns: 1fr !important;
+}
+[data-view="agent"] .grid > *,
+[data-view="agent"] .grid-2col > *,
+[data-view="agent"] .sidebyside > *,
+[data-view="agent"] .continue-grid > *,
+[data-view="agent"] .pillar-grid > * {
+  margin-bottom: var(--space-5) !important;
+}
+
+/* Cap section width so long lines stay readable; the article-body
+   max-widths (640 / 760 px) become moot once columns collapse, so
+   reapply a sensible max on sections. */
+[data-view="agent"] section,
+[data-view="agent"] .section-w,
+[data-view="agent"] .article-body {
+  max-width: 720px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 /* ── Visual chrome stripped, page structure intact. ──
    Hide ONLY decorative media: videos, canvases, vignettes, blur
    overlays, decorative symbol overlays, the giant footer watermark.

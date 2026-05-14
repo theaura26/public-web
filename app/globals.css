@@ -153,19 +153,15 @@ html [data-theme="night"] .loc-modal:not([data-bleed="true"]) .invert-on-light {
 
 
 /* ═══ Agent Mode (machine-readable view) ═══
-   A view-toggle, the same way day/night theme is a toggle. The same
-   pages, same content, same routes — rendered in document order with
-   visual chrome stripped and the colour palette INVERTED relative to
-   the current theme. Day pages render as dark; night pages render as
-   light. No font swaps, no text-transform tricks, no opacity dimming
-   — text shows in the page's native typography. Just animations off,
-   decorative media hidden, fullscreen wrappers collapsed to natural
-   flow so the content reads top-to-bottom. */
+   A view-toggle, the same way day/night theme is a toggle.
 
-/* Invert the colour palette by re-binding the theme tokens to their
-   contrast counterparts. `html [data-view="agent"]` keeps the rule at
-   the same specificity (0,1,1) as the theme blocks above and sits
-   after them in cascade, so it wins. */
+   - All text in DM Mono at one size (14 px / 1.5).
+   - Left-aligned. No uppercase, letter-spacing, opacity dimming.
+   - Colour palette INVERTED relative to the current theme via
+     contrast-* token rebind. Day → dark agent; night → light agent.
+   - Animations off, decorative media hidden, fullscreen wrappers
+     collapsed so content reads top-to-bottom in document order. */
+
 html [data-view="agent"] {
   --bg: var(--contrast-bg);
   --bg-elevated: var(--contrast-bg-card);
@@ -176,6 +172,23 @@ html [data-view="agent"] {
   --text-muted: var(--contrast-text-muted);
   --text-dim: var(--contrast-text-muted);
   --border: var(--contrast-border);
+}
+
+/* One font, one size, left-aligned. Every text node gets the same
+   spec. Hierarchy disappears — it's a plain text document. */
+[data-view="agent"],
+[data-view="agent"] *,
+[data-view="agent"] *::before,
+[data-view="agent"] *::after {
+  font-family: var(--font-mono) !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  text-align: left !important;
+  opacity: 1 !important;
+  color: var(--text) !important;
 }
 
 /* ── Visual chrome stripped, page structure intact. ──

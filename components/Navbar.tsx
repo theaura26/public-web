@@ -786,16 +786,15 @@ export default function Navbar() {
           }
 
           /* Bottom blur vignette — pure backdrop-filter, no background.
-             Spans the FULL menu width so there's no vertical seam at
-             the left edge of the tile column (the previous left calc
-             made the vignette start mid-panel, drawing a visible line
-             where blurred backdrop met sharp panel). Vertically the
-             band is the lower 5 % of the menu so only the very bottom
-             of one card sits inside it; the mask keeps that 5 % solid
-             for 85 % of its height and feathers the upper 15 %. */
+             Full menu width so there's no vertical seam between blurred
+             and sharp halves. The blur top edge lands at ~87 % of the
+             panel height (matching the upper boundary of the last card
+             in a typical viewport), and the mask fades the top 15 % of
+             the band so the upper edge reads as a soft horizon rather
+             than a hard cut. */
           :global(.tile-feed-vignette) {
             position: absolute;
-            top: 95%;
+            top: 87%;
             left: 0;
             right: 0;
             bottom: 0;

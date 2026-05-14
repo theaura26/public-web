@@ -481,11 +481,12 @@ a:hover, button:hover, [role="button"]:hover {
 /* Sanctuary banner: hover affordance is the cursor pill (Explore X) — no
    text underline anywhere inside the clickable region. The parent rule above
    draws an underline across [role="button"]:hover; this kills it both on the
-   wrapper itself and any nested text node. */
+   wrapper itself and any nested text node (including the "Explore X"
+   button that sits inside .sanctuary-content / .sanctuary-meta). */
 .sanctuary-clickable,
 .sanctuary-clickable:hover,
-.sanctuary-clickable :is(p, span, h1, h2),
-.sanctuary-clickable:hover :is(p, span, h1, h2) {
+.sanctuary-clickable :is(p, span, h1, h2, button),
+.sanctuary-clickable:hover :is(p, span, h1, h2, button) {
   text-decoration: none !important;
 }
 

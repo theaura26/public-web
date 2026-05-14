@@ -505,6 +505,7 @@ export default function Navbar() {
                     onClick={() => setMenuOpen(false)}
                     ref={(el) => { tileRefs.current[flatIndex] = el }}
                     className="tile"
+                    data-size={a.size}
                     style={{
                       /* Two-size system: lg = ~470 px max, sm = ~280 px max.
                          All tiles snap to the LEFT edge of the feed column
@@ -660,14 +661,16 @@ export default function Navbar() {
             transition: filter var(--dur-base) var(--ease);
           }
           /* Hover symbol — vector glyph centred over the photo, hidden
-             at rest and revealed on hover. Difference blend so it reads
-             on any underlying tone; z-index kept high so the mark sits
-             above the thumbnail unambiguously. */
+             at rest and revealed on hover. Pure 35 % of the card width
+             (no clamp) so the mark scales with the tile — small cards
+             get a small mark, large cards get a large one. Difference
+             blend so it reads on any underlying tone; z-index high so
+             the mark sits above the thumbnail unambiguously. */
           :global(.tile-img .tile-symbol) {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: clamp(56px, 28%, 96px);
+            width: 35%;
             height: auto;
             transform: translate(-50%, -50%) scale(0.85);
             opacity: 0;
@@ -917,10 +920,11 @@ export default function Navbar() {
 
             .menu-right {
               top: 0;
-              /* Tile column pushed 60 px further right on phone for a
-                 deliberate negative-space gap between the nav rail and
-                 the journal feed. */
-              left: calc(var(--gutter) + 96px + 32px + 60px);
+              /* Original phone offset (no shift). The previous +60 px
+                 nudge shrank the column too much, squashing the
+                 cards — left at the pre-shift position so tiles
+                 keep their previous pixel sizes. */
+              left: calc(var(--gutter) + 96px + 32px);
               right: var(--gutter);
               bottom: 0;
               /* Match HOME's top edge in the left rail (menu-left top: 76px)
@@ -940,7 +944,15 @@ export default function Navbar() {
             :global(.tile-title) {
               margin-top: 10px;
             }
-            .tile-feed { gap: 40px; }
+            .tile-feed {
+              gap: 40px;
+              /* Desktop reserves a 100 px right margin to keep the feed
+                 inside a 560 px lane on a wide menu. On phone that
+                 margin kills two thirds of the column width — drop it
+                 so the tiles can actually use the space. */
+              margin-right: 0;
+              max-width: none;
+            }
 
             :global(.menu-utils) {
               left: var(--gutter);

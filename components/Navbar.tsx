@@ -786,16 +786,18 @@ export default function Navbar() {
           }
 
           /* Bottom blur vignette — pure backdrop-filter, no background.
-             Spans the lower 10 % of the tile column (top: 90%, bottom: 0)
-             so it scales with the menu height instead of a fixed pixel
-             band. The mask keeps the blur solid for 85 % of that band
-             and feathers over the top 15 % so the upper edge reads as
-             a soft horizon rather than a hard cut. */
+             Spans the FULL menu width so there's no vertical seam at
+             the left edge of the tile column (the previous left calc
+             made the vignette start mid-panel, drawing a visible line
+             where blurred backdrop met sharp panel). Vertically the
+             band is the lower 5 % of the menu so only the very bottom
+             of one card sits inside it; the mask keeps that 5 % solid
+             for 85 % of its height and feathers the upper 15 %. */
           :global(.tile-feed-vignette) {
             position: absolute;
-            top: 90%;
-            left: calc(var(--gutter) + 240px + clamp(64px, 8vw, 160px));
-            right: var(--gutter);
+            top: 95%;
+            left: 0;
+            right: 0;
             bottom: 0;
             pointer-events: none;
             z-index: 5;
@@ -812,13 +814,6 @@ export default function Navbar() {
               rgba(0, 0, 0, 1) 85%,
               rgba(0, 0, 0, 0) 100%
             );
-          }
-          @media (max-width: 900px) {
-            /* Mobile menu — no left rail, vignette spans full width. */
-            :global(.tile-feed-vignette) {
-              left: 0;
-              right: 0;
-            }
           }
 
           .tile-feed {

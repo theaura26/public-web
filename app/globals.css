@@ -263,6 +263,8 @@ html [data-view="agent"] {
 [data-view="agent"] .sidebyside,
 [data-view="agent"] .continue-grid,
 [data-view="agent"] .pillar-grid,
+[data-view="agent"] .sanctuary-2col-content,
+[data-view="agent"] .sanctuary-2col-bg,
 [data-view="agent"] [class*="grid-cols-"],
 [data-view="agent"] [class*="md:grid-cols-"] {
   display: block !important;
@@ -277,27 +279,40 @@ html [data-view="agent"] {
 }
 
 /* One column. Left-aligned. Single 720 px max-width with gutter
-   padding. Both <section> and .section-w (some pages render
-   content with one or the other as the top-level wrapper) get the
-   same treatment so the column position is identical everywhere. */
-[data-view="agent"] section,
-[data-view="agent"] .section-w,
-[data-view="agent"] .article-body {
+   padding applied ONCE on <main> — every section / .section-w /
+   .article-body inside resets its own padding/max-width so nothing
+   double-indents and every paragraph lines up at the same x. */
+[data-view="agent"] main {
   max-width: 720px !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
   padding-left: var(--gutter) !important;
   padding-right: var(--gutter) !important;
 }
-/* Nested wrappers reset to flow inside the outer wrapper without
-   adding more padding — otherwise a <section> wrapping a .section-w
-   would double-indent everything by 2 × var(--gutter). */
-[data-view="agent"] section .section-w,
-[data-view="agent"] section .article-body,
-[data-view="agent"] .section-w .section-w,
-[data-view="agent"] .section-w .article-body,
-[data-view="agent"] .article-body .article-body {
+[data-view="agent"] main section,
+[data-view="agent"] main .section-w,
+[data-view="agent"] main .article-body,
+[data-view="agent"] main .sanctuary-stack,
+[data-view="agent"] main .expanding-video-wrap,
+[data-view="agent"] main .expanding-video-inner,
+[data-view="agent"] main .expanding-video-card,
+[data-view="agent"] main .hero-section,
+[data-view="agent"] main .hero-section-w {
   max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Wipe horizontal margins/padding on every descendant inside <main>.
+   Article bodies sometimes use bare <div style="margin-left: 72px">
+   wrappers for indented asides; those break the single-column
+   alignment in agent mode. Headings, paragraphs, lists keep their
+   vertical rhythm from the typography rules above. */
+[data-view="agent"] main * {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
@@ -377,24 +392,55 @@ html [data-view="agent"] {
   display: none !important;
 }
 
-/* Absolute-positioned overlays inside the now-static sanctuary panels
-   need to flow in-line too, otherwise they collapse to zero height. */
+/* Sanctuary panels — flatten the centred flex column to a plain
+   left-aligned block so headings + meta labels line up with the rest
+   of the page text. Inline styles on the children (max-width: 260,
+   alignItems centre, text-align centre, color #ffffff) all reset. */
 [data-view="agent"] .sanctuary-content,
-[data-view="agent"] .sanctuary-clickable {
-  position: static !important;
-  inset: auto !important;
-  padding: var(--space-4) 0 !important;
-  text-align: left !important;
-  color: var(--text) !important;
-}
+[data-view="agent"] .sanctuary-clickable,
 [data-view="agent"] .sanctuary-meta {
   position: static !important;
   inset: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: block !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
+[data-view="agent"] .sanctuary-content > *,
+[data-view="agent"] .sanctuary-content > * > *,
+[data-view="agent"] .sanctuary-meta > * {
+  position: static !important;
+  inset: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: none !important;
+  text-align: left !important;
+  align-self: stretch !important;
+  justify-self: stretch !important;
 }
 /* Sanctuary white text is set inline (#ffffff); override to readable
    theme color in agent view. */
 [data-view="agent"] .sanctuary-content,
 [data-view="agent"] .sanctuary-content * {
+  color: var(--text) !important;
+}
+
+/* ExpandingVideo caption is absolute-positioned with bottom/left
+   clamp() values. Flatten to in-flow block in agent mode. */
+[data-view="agent"] .expanding-video-card,
+[data-view="agent"] .expanding-video-card * {
+  position: static !important;
+  inset: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: none !important;
+  text-align: left !important;
   color: var(--text) !important;
 }
 

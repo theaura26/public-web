@@ -202,7 +202,6 @@ html [data-theme="night"] .loc-modal:not([data-bleed="true"]) .invert-on-light {
 [data-view="agent"] video,
 [data-view="agent"] canvas,
 [data-view="agent"] .page-vignette,
-[data-view="agent"] .tile-feed-vignette,
 [data-view="agent"] .hero-tile__symbol,
 [data-view="agent"] .tile-symbol,
 [data-view="agent"] .footer-logo-scale {

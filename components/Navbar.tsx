@@ -776,31 +776,34 @@ export default function Navbar() {
             height: 0;
           }
 
-          /* Bottom blur band — fixed-positioned thin strip at the
-             bottom of the viewport (NOT inside .menu-overlay so
-             position: fixed isn't trapped by its transform). Spans
-             the full viewport width, ~8 vh tall, with a soft top
-             edge via a linear mask. Backdrop-filter blurs whatever
-             scrolls behind it; on a dark menu panel the visual
-             effect is a gentle softening of the bottommost tile. */
+          /* Bottom blur band — fixed-positioned strip at the bottom of
+             the viewport (NOT inside .menu-overlay so position: fixed
+             isn't trapped by its transform). Spans the full viewport
+             width, 18 vh tall so it actually overlaps the lower edge
+             of the bottommost card by enough pixels to read. The mask
+             keeps the bottom 75 % at full blur and fades the top 25 %
+             so the upper edge feathers softly into the cards above
+             rather than landing as a hard cut. No `isolation: isolate`
+             — that creates a new stacking context that on some
+             browsers causes backdrop-filter to miss the menu content
+             below. */
           :global(.tile-feed-vignette) {
             position: fixed;
             left: 0;
             right: 0;
             bottom: 0;
-            height: 8vh;
+            height: 18vh;
             z-index: 51;
-            isolation: isolate;
-            backdrop-filter: blur(24px) saturate(1.05);
-            -webkit-backdrop-filter: blur(24px) saturate(1.05);
+            backdrop-filter: blur(32px) saturate(1.05);
+            -webkit-backdrop-filter: blur(32px) saturate(1.05);
             -webkit-mask-image: linear-gradient(to top,
               rgba(0, 0, 0, 1) 0%,
-              rgba(0, 0, 0, 1) 60%,
+              rgba(0, 0, 0, 1) 75%,
               rgba(0, 0, 0, 0) 100%
             );
             mask-image: linear-gradient(to top,
               rgba(0, 0, 0, 1) 0%,
-              rgba(0, 0, 0, 1) 60%,
+              rgba(0, 0, 0, 1) 75%,
               rgba(0, 0, 0, 0) 100%
             );
           }

@@ -203,30 +203,21 @@ html [data-view="agent"] {
   opacity: 1 !important;
 }
 
-/* ── Consistent vertical rhythm ──
-   Every page reads with the same spacing scale:
-   - Section padding: 32 px top + bottom
-   - Heading breathing room: 40 / 16 px above + below for h1/h2
-   - Body paragraph: 12 px bottom only
-   - Lists: 16 px bottom; items 4 px apart
-   - Hard reset on margin-top/padding-top for the first child of
-     a section so we don't double-space when a section starts with
-     a heading. */
+/* ── Tight vertical rhythm — no containers, minimal spacing ──
+   No section padding, no chrome. Headings and paragraphs sit one
+   on top of the other with just enough breathing room (~1 line)
+   between blocks. Reads like a plain document, not a page. */
 [data-view="agent"] section,
 [data-view="agent"] article,
 [data-view="agent"] .section-w {
-  padding-top: 32px !important;
-  padding-bottom: 32px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
   margin: 0 !important;
 }
 [data-view="agent"] h1,
-[data-view="agent"] h2 {
-  margin: 40px 0 16px !important;
-}
+[data-view="agent"] h2,
 [data-view="agent"] h3,
-[data-view="agent"] h4 {
-  margin: 24px 0 8px !important;
-}
+[data-view="agent"] h4,
 [data-view="agent"] h5,
 [data-view="agent"] h6 {
   margin: 16px 0 4px !important;
@@ -234,31 +225,47 @@ html [data-view="agent"] {
 [data-view="agent"] p,
 [data-view="agent"] .p1,
 [data-view="agent"] .p2 {
-  margin: 0 0 12px !important;
+  margin: 0 0 8px !important;
 }
 [data-view="agent"] ul,
 [data-view="agent"] ol {
-  margin: 0 0 16px !important;
+  margin: 0 0 8px !important;
   padding-left: 0 !important;
   list-style: none !important;
 }
 [data-view="agent"] li {
-  margin-bottom: 4px !important;
+  margin-bottom: 0 !important;
 }
 [data-view="agent"] li::before {
   content: '— ' !important;
   opacity: 0.6;
 }
 [data-view="agent"] hr {
-  border: 0 !important;
-  border-top: 1px solid var(--border) !important;
-  margin: 32px 0 !important;
+  display: none !important;
 }
-/* First child of a section drops its top margin to avoid double gap */
-[data-view="agent"] section > :first-child,
-[data-view="agent"] .section-w > :first-child,
-[data-view="agent"] article > :first-child {
-  margin-top: 0 !important;
+
+/* Strip every container — no backgrounds, borders, shadows, or
+   rounded corners on anything inside <main>. Plain text on the
+   page background. Form fields keep a thin bottom border so the
+   contact form is still usable. */
+[data-view="agent"] main *:not(input):not(textarea):not(select) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+[data-view="agent"] main input,
+[data-view="agent"] main textarea,
+[data-view="agent"] main select {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--text-muted) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 4px 0 !important;
 }
 
 /* Collapse every multi-column grid down to a single linear column so

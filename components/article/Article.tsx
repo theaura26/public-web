@@ -416,6 +416,8 @@ export function Placeholder({
   mediaType?: 'image' | 'video'
   /** Video poster (or fallback still). */
   poster?: string
+  /** @deprecated Aspect is fixed by the full-screen ExpandingBanner. */
+  aspect?: string
 }) {
   caption = caption ?? note ?? label
   return (

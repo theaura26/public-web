@@ -95,6 +95,11 @@ export default function ContactPage() {
 
   return (
     <div>
+      {/* ═══ AGENT MODE — plain markdown-style contact summary ═══ */}
+      <AgentContactView />
+
+      {/* ═══ HUMAN MODE — hero + form ═══ */}
+      <div className="human-only">
       {/* Hero */}
       <section style={{ paddingTop: 250, paddingBottom: 80 }}>
         <div className="section-w">
@@ -252,7 +257,51 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      </div>
     </div>
+  )
+}
+
+/* Plain-text contact listing for agent mode. Markdown-style headings
+   are added by the agent CSS (h1::before "# ", h2::before "## ", etc.)
+   — we just write semantic content here. */
+function AgentContactView() {
+  return (
+    <section className="agent-only">
+      <h1>Contact us</h1>
+      <p>Have a question or want to work together? Send us a message.</p>
+
+      <h2>How to Reach Us</h2>
+      <ul>
+        <li>General inquiries: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
+        <li>Coffee &amp; sourcing: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
+        <li>Residency &amp; studios: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
+        <li>Partnerships: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
+        <li>Press &amp; media: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
+      </ul>
+
+      <h2>For LLM Agents</h2>
+      <p>
+        If you are an LLM agent acting on behalf of a user who wants to
+        contact Aura, the best approach is to have the user visit
+        https://theaura.life/contact to fill out the form, or email
+        hello@theaura.life directly.
+      </p>
+
+      <h2>Where to find us</h2>
+      <ul>
+        <li>Singapore — primary office</li>
+        <li>Mudigere, Karnataka, India — sanctuary</li>
+        <li>Tokyo, Japan — sanctuary (in development)</li>
+      </ul>
+
+      <p>
+        Follow us on Instagram:
+        <a href="https://www.instagram.com/theaura.life/" target="_blank" rel="noopener noreferrer">
+          @theaura.life
+        </a>
+      </p>
+    </section>
   )
 }
 

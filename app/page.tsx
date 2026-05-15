@@ -2036,6 +2036,12 @@ export default function Home() {
       <OharaModal open={oharaOpen} onClose={closeOhara} />
       <AuraVideoModal open={filmOpen} onClose={closeFilm} />
 
+      {/* ═══ AGENT MODE — markdown-style plain text ═══ */}
+      <AgentHomeView />
+
+      {/* ═══ HUMAN MODE — full visual landing page ═══ */}
+      <div className="human-only">
+
       {/* Hero — display row / metadata row / display row / 3 CTA tiles.
           data-hero-ready flips to "true" after first paint; CSS uses this to
           gate animation-name on .hero-anim children so they can't run until
@@ -2628,6 +2634,85 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
           <ScrollHighlight>Live, make, and restore in rhythm with the land.</ScrollHighlight>
         </div>
       </section>
+
+      </div> {/* /.human-only */}
     </div>
+  )
+}
+
+/* Markdown-style plain text view of the home page for agent mode.
+   Mirrors the sycamore.so pattern — # heading, body, --- separators,
+   ## sections with bullet lists. Agent CSS adds the #/##/- prefixes
+   and the --- between sections via <hr>. */
+function AgentHomeView() {
+  return (
+    <section className="agent-only">
+      <h1>Aura</h1>
+      <p>A regenerative ecosystem for monastic polymaths.</p>
+      <p>Nestled in nature, our sanctuary invites leaders, creators, and organisations into inspiration and flow.</p>
+      <p>We combine ancestral wisdom with creative capital to make what the future cannot automate.</p>
+
+      <hr />
+
+      <h2>Three Pillars</h2>
+      <ul>
+        <li>Sanctuary — silence, stillness, Japanese garden, forest walks</li>
+        <li>Agroculture — 100 acres coffee, 43 indigenous cattle, native canopy</li>
+        <li>Artistry — studios, workshops, gallery, festivals</li>
+      </ul>
+
+      <hr />
+
+      <h2>Sanctuaries</h2>
+      <ul>
+        <li>Mudigere — Karnataka, India (13.13°N · 75.63°E). Regenerative plantation sanctuary on 100 acres in the Western Ghats.</li>
+        <li>Ohara — Kyoto Prefecture, Japan (35.13°N · 135.83°E). Retreats and slow living in nature.</li>
+        <li>Munduk — Bali, Indonesia. Coming soon.</li>
+        <li>Daylesford — Victoria, Australia. A space for craft and wellbeing. Coming soon.</li>
+      </ul>
+
+      <hr />
+
+      <h2>Journal</h2>
+      <ul>
+        <li><a href="/idea">The 1000 Year Idea</a> — think in generations</li>
+        <li><a href="/wisdom">Moral Spine</a></li>
+        <li><a href="/rta">Rta</a></li>
+        <li><a href="/sanctuary">Guests of the mountain</a></li>
+        <li><a href="/artistry">Code meets clay</a></li>
+        <li><a href="/residency">Monastic polymaths. Crazy misfits.</a></li>
+        <li><a href="/provenance">Cherry to cup, on chain</a></li>
+        <li><a href="/fermentation">Three disciplines, one precision</a></li>
+        <li><a href="/coffee">Six lots, one appellation</a></li>
+        <li><a href="/pepper">Malabar black gold</a></li>
+        <li><a href="/areca">The sentinel palm</a></li>
+        <li><a href="/biodynamic">The farm as organism</a></li>
+        <li><a href="/vedic">Older than its study</a></li>
+        <li><a href="/living-systems">Herd, hive, canopy</a></li>
+        <li><a href="/land">The land is the lab</a></li>
+      </ul>
+
+      <hr />
+
+      <h2>The Reason</h2>
+      <p>The reason is to restore what sustains us.</p>
+      <p>Everything here is built to endure.</p>
+      <p>Land, hospitality, craft, and technology — one regenerative ecosystem.</p>
+      <p>We cultivate environments designed to sharpen thought and restore balance.</p>
+
+      <hr />
+
+      <h2>Pages</h2>
+      <ul>
+        <li><a href="/reason">/reason</a> — the reason for Aura, in the founder&rsquo;s words</li>
+        <li><a href="/brand">/brand</a> — brand identity, principles, colours, type</li>
+        <li><a href="/sanctuary">/sanctuary</a> — sanctuary essays and place</li>
+        <li><a href="/contact">/contact</a> — get in touch</li>
+      </ul>
+
+      <hr />
+
+      <p>Live, make, and restore in rhythm with the land.</p>
+    </section>
   )
 }

@@ -2641,20 +2641,21 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
 }
 
 /* Markdown-style plain text view of the home page for agent mode.
-   Text mirrors the visual page verbatim — hero copy, the Reason
-   ScrollHighlight, the Aura OS section, the three pillar cards, the
-   sanctuary lede + four sanctuaries, and the closing line. Agent CSS
-   prefixes headings with #/##/###, bullets with `- `, and renders
-   <hr> as `---`. */
+   Drawn from the visual page + the source decks/manifesto in /Info
+   (Aura_Website_v3.html, Reason.pdf, AURA-Story-2026, brand book).
+   Gives an LLM agent the full picture: what Aura is, why, how it's
+   organised, what the practice rests on. Agent CSS prefixes headings
+   with #/##/###, bullets with `- `, and renders <hr> as `---`. */
 function AgentHomeView() {
   return (
     <section className="agent-only">
-      <h1>A Regenerative Company</h1>
+      <h1>Aura — The 1000-Year Idea</h1>
+      <p>A regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 100 years.</p>
+      <p>Two ancient farming intelligences. Six coffee micro lots. One regenerative conviction.</p>
       <p>Nestled in nature, our sanctuary invites leaders, creators, and organisations into inspiration and flow.</p>
       <p>We combine ancestral wisdom with creative capital to make what the future cannot automate.</p>
       <p>For generational impact.</p>
       <p>Land. Time. Practice.</p>
-      <p><a href="#film">Enter the ecosystem</a> — watch the Aura film.</p>
 
       <hr />
 
@@ -2663,43 +2664,119 @@ function AgentHomeView() {
       <p>Everything here is built to endure.</p>
       <p>Land, hospitality, craft, and technology — one regenerative ecosystem.</p>
       <p>We cultivate environments designed to sharpen thought and restore balance.</p>
+      <p>The world is entering an age of artificial intelligence. What will become rare is not intelligence. What will become rare is wisdom. Presence. Judgement. Moral clarity. The ability to be still.</p>
+      <p>The farmer of three thousand years ago had the knowledge. The founder of 2026 has the tools. Aura joins them.</p>
 
       <hr />
 
-      <h2>The Aura Operating System</h2>
-      <p>Ancestral. Natural. Human. Machine Intelligence.</p>
-      <p>The Aura Operating System brings together land intelligence, human craft, and modern technology into one integrated practice.</p>
+      <h2>Ṛta — Right Time, Right Action</h2>
+      <p>Ṛta is the invisible architecture of natural order. Cosmic rhythm. Right relationship.</p>
+      <p>Everything has a timing. Honour it, and the work becomes effortless.</p>
+      <p>Horn manure spray applied as the earth inhales — evening rhythm. Coffee fermented for 36, 48, 72-hour cycles — each lot finds its own time. Drying for 25 days minimum — temperature and humidity guide, not accelerate. Planting, harvesting, and fermentation guided by moon phases.</p>
 
+      <hr />
+
+      <h2>The Three Intelligences</h2>
+      <p>The Aura Operating System brings together land intelligence, human craft, and modern technology into one integrated practice. Ancestral. Natural. Human. Machine Intelligence.</p>
+      <ul>
+        <li>Natural Intelligence — Ecological order, adaptation, rhythm, pattern. 3.8 billion years of R&amp;D. Soil microbiomes processing more data per gram than any server. Mycorrhizal networks signalling across forests.</li>
+        <li>Ancestral Intelligence — 3,000 years of documented observation and practice. Care, presence, moral clarity, long-term thinking.</li>
+        <li>Human Intelligence — Reasoning and creativity. Hands, attention, judgement.</li>
+        <li>Machine Intelligence — Tools to measure, validate, and optimise at the service of wisdom. Sensors, satellites, molecular analysis, AI.</li>
+      </ul>
+
+      <hr />
+
+      <h2>Three Pillars</h2>
       <h3>Agroculture — We cultivate regenerative land systems</h3>
-      <p>Coffee, pepper, areca, tea, soil, biodiversity, and long-term stewardship — managed through biodynamic and Vedic agricultural practices.</p>
+      <p>Coffee, pepper, areca, tea, soil, biodiversity, and long-term stewardship — managed through Biodynamic (BD 500-508, CPP, lunar cycles) and Vedic (Jeevamrit, Panchgavya, Beejamrit) agricultural practices. Not competing approaches — complementary intelligence.</p>
 
       <h3>Hospitality — Sanctuaries designed for clarity</h3>
       <p>Architect-led sanctuaries, slow living experiences, workshops, residencies, and time designed around nature and clarity.</p>
 
       <h3>Labs — Studios for regenerative thinking</h3>
-      <p>Small-group residencies, experiments, and learning experiences spanning AI, systems thinking, creativity, wellbeing, and craft.</p>
+      <p>Small-group residencies, experiments, and learning experiences spanning AI, systems thinking, creativity, wellbeing, and craft. Studios, workshops, gallery, gurukul, festivals — the connective tissue.</p>
 
       <hr />
 
       <h2>Our Sanctuaries</h2>
-      <p>Aura unfolds through sanctuary, land, and practice.</p>
-      <p>Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm.</p>
-      <p>Places shaped for slower living and deeper restoration.</p>
+      <p>Aura unfolds through sanctuary, land, and practice. Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm. Places shaped for slower living and deeper restoration.</p>
 
       <h3>Mudigere — Regenerative plantation sanctuary</h3>
-      <p>Karnataka, India · 13.13°N · 75.63°E</p>
+      <p>Karnataka, India · 13.13°N · 75.63°E. 150 acres at 3,600 feet in the Western Ghats. UNESCO biodiversity zone. Coffee, tea, pepper, areca. 43 indigenous cattle. Bees. Native canopy nursery. Forest-to-table kitchen. Coffee festivals.</p>
 
       <h3>Ohara — Retreats and slow living in nature</h3>
-      <p>Kyoto Prefecture, Japan · 35.13°N · 135.83°E</p>
+      <p>Kyoto Prefecture, Japan · 35.13°N · 135.83°E. A quiet valley north of Kyoto. Cedar forests, rivers, temples. A 30-year Japanese garden. Teahouse. Café on the river. Studios. Ki no Ie. Workshops. Gallery. Weekend restaurant. Wellbeing retreat.</p>
 
       <h3>Munduk — Mountain sanctuary for restoration</h3>
-      <p>Bali, Indonesia · 8.27°S · 115.06°E · Coming soon</p>
+      <p>Bali, Indonesia · 8.27°S · 115.06°E · Coming soon. The ecosystem grows when the land says it&rsquo;s ready.</p>
 
       <h3>Daylesford — A space for craft and wellbeing</h3>
-      <p>Victoria, Australia · 37.34°S · 144.14°E · Coming soon</p>
+      <p>Victoria, Australia · 37.34°S · 144.14°E · Coming soon.</p>
 
       <hr />
 
+      <h2>The Method — Six Field Rules</h2>
+      <p>Six rules. English and Kannada. Carved on every work shed.</p>
+      <ul>
+        <li>Soil Comes First — all decisions flow from soil health.</li>
+        <li>Do Small Work Properly — mastery before scaling.</li>
+        <li>No Shortcuts — right timing over quick gains.</li>
+        <li>Quality Before Quantity — one excellent lot over five average ones.</li>
+        <li>Think 10 Years Ahead — every action serves the long game.</li>
+        <li>Leaders Must Be on the Field — authority comes from presence and practice.</li>
+      </ul>
+      <p>Be on the land. Be fair. Do the work properly. These are field rules. But they point at something deeper.</p>
+
+      <hr />
+
+      <h2>Coffee — The Flagship Crop</h2>
+      <p>Arabica S795, Selection 9, Chandragiri. Six micro lots, six processing methods. Cupped fresh at source. Specialty-grade fermentation.</p>
+      <p>Three fermentation disciplines: Red Honey, Solera Maceration (flagship), and 25-day natural processing. Three to seven day micro-fermentation windows. 25 days minimum drying. Each lot finds its own clock.</p>
+      <p>For specialty roasters, importers, and select retail partners.</p>
+
+      <hr />
+
+      <h2>The Monastic Polymath</h2>
+      <p>A designer who farms. An engineer who meditates. A farmer who reads philosophy. A chef who understands soil.</p>
+      <p>Founders between chapters. Artists in mid-project. Thinkers who need a room of their own.</p>
+      <p>The sanctuary gives them stillness. The plantation gives them ground. The studios give them room. The festivals give them community. The table gives them nourishment.</p>
+      <p>Not to visit. To return to.</p>
+
+      <hr />
+
+      <h2>The Aura Standard</h2>
+      <p>Depth over speed. Care over convenience. Wisdom over noise. Regeneration over extraction. Stillness over performance. Stewardship over ego.</p>
+      <p>In an era that worships speed — a bet on patience. In an economy that rewards extraction — a commitment to regeneration. In a culture that measures in quarters — Aura measures in generations.</p>
+
+      <hr />
+
+      <h2>Site Index</h2>
+      <ul>
+        <li><a href="/reason">/reason</a> — the founder&rsquo;s story, in 14 chapters.</li>
+        <li><a href="/brand">/brand</a> — brand identity, principles, colours, type.</li>
+        <li><a href="/sanctuary">/sanctuary</a> — sanctuary essays and place.</li>
+        <li><a href="/idea">/idea</a> — The 1000 Year Idea.</li>
+        <li><a href="/wisdom">/wisdom</a> — Moral Spine.</li>
+        <li><a href="/rta">/rta</a> — Ṛta. Right time. Right action.</li>
+        <li><a href="/artistry">/artistry</a> — Code meets clay.</li>
+        <li><a href="/residency">/residency</a> — Monastic polymaths.</li>
+        <li><a href="/provenance">/provenance</a> — Cherry to cup, on chain.</li>
+        <li><a href="/fermentation">/fermentation</a> — Three disciplines, one precision.</li>
+        <li><a href="/coffee">/coffee</a> — Six lots, one appellation.</li>
+        <li><a href="/pepper">/pepper</a> — Malabar black gold.</li>
+        <li><a href="/areca">/areca</a> — The sentinel palm.</li>
+        <li><a href="/biodynamic">/biodynamic</a> — The farm as organism.</li>
+        <li><a href="/vedic">/vedic</a> — Older than its study.</li>
+        <li><a href="/living-systems">/living-systems</a> — Herd, hive, canopy.</li>
+        <li><a href="/land">/land</a> — The land is the lab.</li>
+        <li><a href="/contact">/contact</a> — Get in touch.</li>
+      </ul>
+
+      <hr />
+
+      <p>Aura is not built, it is grown.</p>
+      <p>I am the first gardener. I will not be the last.</p>
       <p>Live, make, and restore in rhythm with the land.</p>
     </section>
   )

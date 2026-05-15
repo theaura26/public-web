@@ -24,22 +24,25 @@ type Article = {
   img?: string
   /** Optional autoplay loop. /sanctuary is the only one with motion right now. */
   video?: string
+  /** Mark a journal as not-yet-live. Tile renders muted, non-clickable,
+   *  with a "COMING SOON" overlay instead of the title link. */
+  comingSoon?: boolean
 }
 
 const ARTICLES: Article[] = [
-  { href: '/idea',           title: 'The 1000 Year Idea',                 size: 'lg', img: '/aura-idea.jpg' },
+  { href: '/idea',           title: 'The 1000 Year Idea',                 size: 'lg', img: '/aura-idea.jpg',          comingSoon: true },
   { href: '/wisdom',         title: 'Moral Spine',                        size: 'sm', img: '/aura-wisdom.jpg' },
   { href: '/rta',            title: 'Rta',                                size: 'sm', img: '/aura-rta.jpg' },
-  { href: '/sanctuary',      title: 'Guests of the mountain.',            size: 'lg', img: '/aura-sanctuary.jpg', video: '/aura-sanctuary.mp4' },
-  { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg' },
-  { href: '/residency',      title: 'Monastic polymaths. Crazy misfits.', size: 'lg', img: '/aura-residency.jpg' },
-  { href: '/provenance',     title: 'Cherry to cup. On chain.',           size: 'sm', img: '/aura-provenance.jpg' },
+  { href: '/sanctuary',      title: 'Guests of the mountain.',            size: 'lg', img: '/aura-sanctuary.jpg', video: '/aura-sanctuary.mp4', comingSoon: true },
+  { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg',      comingSoon: true },
+  { href: '/residency',      title: 'Monastic polymaths. Crazy misfits.', size: 'lg', img: '/aura-residency.jpg',     comingSoon: true },
+  { href: '/provenance',     title: 'Cherry to cup. On chain.',           size: 'sm', img: '/aura-provenance.jpg',    comingSoon: true },
   { href: '/fermentation',   title: 'Three disciplines, one precision.',  size: 'lg', img: '/aura-fermentation.jpg' },
   { href: '/coffee',         title: 'Six Lots, One Appellation.',         size: 'sm', img: '/aura-coffee.jpg' },
-  { href: '/pepper',         title: 'Malabar black gold.',                size: 'lg', img: '/aura-pepper.jpg' },
-  { href: '/areca',          title: 'The sentinel palm.',                 size: 'sm', img: '/aura-areca.jpg' },
+  { href: '/pepper',         title: 'Malabar black gold.',                size: 'lg', img: '/aura-pepper.jpg',        comingSoon: true },
+  { href: '/areca',          title: 'The sentinel palm.',                 size: 'sm', img: '/aura-areca.jpg',         comingSoon: true },
   { href: '/biodynamic',     title: 'The farm as organism.',              size: 'lg', img: '/aura-biodynamic.jpg' },
-  { href: '/vedic',          title: 'Older than its study.',              size: 'sm', img: '/aura-vedic.jpg' },
+  { href: '/vedic',          title: 'Older than its study.',              size: 'sm', img: '/aura-vedic.jpg',         comingSoon: true },
   { href: '/living-systems', title: 'Herd, hive, canopy.',                size: 'lg', img: '/aura-living-systems.jpg' },
   { href: '/land',           title: 'The land is the lab.',               size: 'sm', img: '/aura-land.jpg' },
 ]
@@ -512,10 +515,16 @@ export default function Navbar() {
                   <Link
                     href={a.href}
                     key={`${cycle}-${a.href}`}
-                    onClick={() => setMenuOpen(false)}
+                    onClick={(e) => {
+                      if (a.comingSoon) { e.preventDefault(); return }
+                      setMenuOpen(false)
+                    }}
                     ref={(el) => { tileRefs.current[flatIndex] = el }}
                     className="tile"
                     data-size={a.size}
+                    data-coming-soon={a.comingSoon ? 'true' : undefined}
+                    aria-disabled={a.comingSoon ? true : undefined}
+                    tabIndex={a.comingSoon ? -1 : undefined}
                     style={{
                       /* Two-size system: lg = ~470 px max, sm = ~280 px max.
                          All tiles snap to the LEFT edge of the feed column
@@ -554,6 +563,9 @@ export default function Navbar() {
                         alt=""
                         aria-hidden
                       />
+                      {a.comingSoon && (
+                        <span className="tile-coming-soon">Coming Soon</span>
+                      )}
                     </div>
                     <p className="tile-title">{a.title}</p>
                   </Link>
@@ -699,6 +711,51 @@ export default function Navbar() {
           :global(.tile:hover .tile-img .tile-symbol) {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
+          }
+          /* Coming-soon tiles: muted card, no hover effects, label overlay
+             centred on the placeholder. Tile is non-interactive (preventDefault
+             on click + tabIndex -1) so all that's left is the visual treatment. */
+          :global(.tile[data-coming-soon="true"]) {
+            cursor: default;
+            pointer-events: auto;
+          }
+          :global(.tile[data-coming-soon="true"] .tile-img) {
+            opacity: 0.55;
+          }
+          :global(.tile[data-coming-soon="true"] .tile-img img:not(.tile-symbol)),
+          :global(.tile[data-coming-soon="true"] .tile-img video) {
+            filter: grayscale(1) brightness(0.85);
+          }
+          :global(.tile[data-coming-soon="true"]:hover .tile-img) {
+            opacity: 0.55;
+          }
+          :global(.tile[data-coming-soon="true"]:hover .tile-img img:not(.tile-symbol)),
+          :global(.tile[data-coming-soon="true"]:hover .tile-img video) {
+            filter: grayscale(1) brightness(0.85);
+          }
+          :global(.tile[data-coming-soon="true"] .tile-symbol) {
+            display: none;
+          }
+          :global(.tile[data-coming-soon="true"] .tile-title) {
+            opacity: 0.5;
+          }
+          :global(.tile-coming-soon) {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 11;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--contrast-text);
+            white-space: nowrap;
+            pointer-events: none;
+            padding: 6px 10px;
+            background: color-mix(in oklab, var(--contrast-bg) 70%, transparent);
+            border-radius: 2px;
           }
           /* Matches the global .label style exactly: DM Mono 11px, 1px
              letter-spacing, uppercase. Title and meta labels site-wide now

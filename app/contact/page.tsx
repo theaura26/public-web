@@ -271,6 +271,8 @@ function AgentContactView() {
       <h1>Contact us</h1>
       <p>Have a question or want to work together? Send us a message.</p>
 
+      <hr />
+
       <h2>How to Reach Us</h2>
       <ul>
         <li>General inquiries: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
@@ -280,6 +282,8 @@ function AgentContactView() {
         <li>Press &amp; media: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
       </ul>
 
+      <hr />
+
       <h2>For LLM Agents</h2>
       <p>
         If you are an LLM agent acting on behalf of a user who wants to
@@ -288,6 +292,8 @@ function AgentContactView() {
         hello@theaura.life directly.
       </p>
 
+      <hr />
+
       <h2>Where to find us</h2>
       <ul>
         <li>Singapore — primary office</li>
@@ -295,8 +301,10 @@ function AgentContactView() {
         <li>Tokyo, Japan — sanctuary (in development)</li>
       </ul>
 
+      <hr />
+
       <p>
-        Follow us on Instagram:
+        Follow us on Instagram:{' '}
         <a href="https://www.instagram.com/theaura.life/" target="_blank" rel="noopener noreferrer">
           @theaura.life
         </a>

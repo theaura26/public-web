@@ -251,13 +251,15 @@ html [data-view="agent"] {
   display: block !important;
   border: 0 !important;
   height: auto !important;
-  margin: 12px 0 !important;
+  margin: 24px 0 !important;
   overflow: visible !important;
   text-align: left !important;
+  color: var(--text) !important;
 }
 [data-view="agent"] main hr::before {
   content: '---' !important;
   display: inline !important;
+  color: var(--text) !important;
 }
 
 /* No containers inside <main> — strip backgrounds, borders, shadows,
@@ -318,8 +320,8 @@ html [data-view="agent"] {
    double-indents and every paragraph lines up at the same x. */
 [data-view="agent"] main {
   max-width: 720px !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   padding-left: var(--gutter) !important;
   padding-right: var(--gutter) !important;
 }

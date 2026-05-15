@@ -319,74 +319,69 @@ function SlideGrid({ from, to, skip }: { from: number; to: number; skip?: number
 
 function AgentBrandView() {
   return (
-    <div className="agent-only" style={{ padding: '120px var(--gutter) 80px', maxWidth: 720, margin: '0 auto' }}>
-      <p style={{ marginBottom: 32, color: 'var(--text-muted)', fontSize: 14 }}>~/aura/brand</p>
+    <section className="agent-only">
+      <h1>Brand</h1>
+      <p>Aura is a regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 100 years.</p>
+      <p>The brand identity is built around three intelligences: Natural, Human, and Machine. Design language favours silence over noise, depth over width, memory over trend.</p>
 
-      <h2 style={{ marginBottom: 24 }}>Brand Identity System</h2>
-      <div className="p2" style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 48 }}>
-        <p>Aura is a regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 100 years.</p>
-        <p>The brand identity is built around three intelligences: Natural, Human, and Machine. Design language favours silence over noise, depth over width, memory over trend.</p>
-      </div>
+      <hr />
 
-      <div style={{ borderTop: '1px solid var(--border)', paddingTop: 32, marginBottom: 48 }}>
-        <p style={{ color: 'var(--text-muted)', fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 16 }}>brand_principles</p>
-        <div className="p2" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <p>- Rhythm over Speed</p>
-          <p>- Depth over Width</p>
-          <p>- Silence over Noise</p>
-          <p>- Memory over Trend</p>
-          <p>- Quality before Quantity</p>
-          <p>- Think 10 years ahead</p>
-        </div>
-      </div>
+      <h2>Brand Principles</h2>
+      <ul>
+        <li>Rhythm over Speed</li>
+        <li>Depth over Width</li>
+        <li>Silence over Noise</li>
+        <li>Memory over Trend</li>
+        <li>Quality before Quantity</li>
+        <li>Think 10 years ahead</li>
+      </ul>
 
-      <div style={{ borderTop: '1px solid var(--border)', paddingTop: 32, marginBottom: 48 }}>
-        <p style={{ color: 'var(--text-muted)', fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 16 }}>brand_colours</p>
-        <div className="p2" style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          {BRAND_COLORS.map((c, i) => (
-            <p key={i} style={{ fontFamily: 'var(--font-mono)', fontSize: 13 }}>
-              <span style={{ display: 'inline-block', width: 12, height: 12, background: c, borderRadius: 2, marginRight: 8, verticalAlign: 'middle', border: c === '#FFFFFF' ? '1px solid var(--border)' : 'none' }} />
-              {c} — {['Dry Osmosis', 'Red Honey', 'Banana Wash', 'Solera Maceration', 'Solera Wash', 'Grappa', 'Volcanic', 'Appassimento'][i]}
-            </p>
-          ))}
-        </div>
-      </div>
+      <hr />
 
-      <div style={{ borderTop: '1px solid var(--border)', paddingTop: 32, marginBottom: 48 }}>
-        <p style={{ color: 'var(--text-muted)', fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 16 }}>typography</p>
-        <div className="p2" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <p>Display — Instrument Serif, 400</p>
-          <p>Body — DM Sans, 400</p>
-          <p>Mono — DM Mono, 400</p>
-        </div>
-      </div>
+      <h2>Brand Colours</h2>
+      <ul>
+        {BRAND_COLORS.map((c, i) => (
+          <li key={i}>
+            {c} — {['Dry Osmosis', 'Red Honey', 'Banana Wash', 'Solera Maceration', 'Solera Wash', 'Grappa', 'Volcanic', 'Appassimento'][i]}
+          </li>
+        ))}
+      </ul>
 
-      <div style={{ borderTop: '1px solid var(--border)', paddingTop: 32, marginBottom: 48 }}>
-        <p style={{ color: 'var(--text-muted)', fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 16 }}>three_pillars</p>
-        <div className="p2" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <p>Sanctuary — Silence, stillness, Japanese garden, forest walks</p>
-          <p>Agroculture — 100 acres coffee, 43 indigenous cattle, native canopy</p>
-          <p>Artistry — Studios, workshops, gallery, festivals</p>
-        </div>
-      </div>
+      <hr />
 
-      <div style={{ borderTop: '1px solid var(--border)', paddingTop: 32, marginBottom: 48 }}>
-        <p style={{ color: 'var(--text-muted)', fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 16 }}>method</p>
-        <div className="p2" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <p>1. Soil Comes First</p>
-          <p>2. Do Small Work Properly</p>
-          <p>3. No Shortcuts</p>
-          <p>4. Quality Before Quantity</p>
-          <p>5. Think 10 Years Ahead</p>
-          <p>6. Leaders Must Be on the Field</p>
-        </div>
-      </div>
+      <h2>Typography</h2>
+      <ul>
+        <li>Display — Instrument Serif, 400</li>
+        <li>Body — DM Sans, 400</li>
+        <li>Mono — DM Mono, 400</li>
+      </ul>
 
-      <div style={{ borderTop: '1px solid var(--border)', paddingTop: 32 }}>
-        <p style={{ color: 'var(--text-muted)', fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 16 }}>closing</p>
-        <p className="p2">The choices made by one generation shape a thousand that follow.</p>
-      </div>
-    </div>
+      <hr />
+
+      <h2>Three Pillars</h2>
+      <ul>
+        <li>Sanctuary — Silence, stillness, Japanese garden, forest walks</li>
+        <li>Agroculture — 100 acres coffee, 43 indigenous cattle, native canopy</li>
+        <li>Artistry — Studios, workshops, gallery, festivals</li>
+      </ul>
+
+      <hr />
+
+      <h2>Method</h2>
+      <ul>
+        <li>Soil Comes First</li>
+        <li>Do Small Work Properly</li>
+        <li>No Shortcuts</li>
+        <li>Quality Before Quantity</li>
+        <li>Think 10 Years Ahead</li>
+        <li>Leaders Must Be on the Field</li>
+      </ul>
+
+      <hr />
+
+      <h2>Closing</h2>
+      <p>The choices made by one generation shape a thousand that follow.</p>
+    </section>
   )
 }
 

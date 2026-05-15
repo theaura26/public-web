@@ -38,6 +38,9 @@ function Chapter({ title, children, sectionRef, idx, isMobile, isAgent }: {
 }) {
   return (
     <div ref={sectionRef}>
+      {/* In agent mode insert a `---` separator before each chapter
+          so the markdown view reads as discrete sections. */}
+      {isAgent && <hr />}
       <Reveal>
         <div className="section-w" style={{ paddingTop: isAgent ? 24 : 'clamp(48px, 8vh, 80px)', paddingBottom: isAgent ? 24 : 'clamp(48px, 8vh, 80px)', borderTop: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 640 }}>
@@ -171,6 +174,7 @@ export default function ReasonPage() {
 
         {/* 0 — Opening */}
         <div ref={setRef(0)}>
+          {isAgent && <hr />}
           <Reveal>
             <div className="section-w" style={{ paddingTop: isAgent ? 24 : 'clamp(48px, 8vh, 80px)', paddingBottom: isAgent ? 24 : 'clamp(48px, 8vh, 80px)' }}>
               <div style={{ maxWidth: 640 }}>
@@ -286,6 +290,7 @@ export default function ReasonPage() {
 
         {/* Closing */}
         <div ref={setRef(13)} style={{ marginTop: isAgent ? 0 : 'clamp(80px, 12vh, 120px)' }}>
+          {isAgent && <hr />}
           <Reveal>
             <div className="section-w" style={{ paddingTop: isAgent ? 24 : 'clamp(48px, 8vh, 80px)', paddingBottom: isAgent ? 40 : 'clamp(80px, 14vh, 140px)', borderTop: '1px solid var(--border)' }}>
               <div style={{ maxWidth: 640 }}>

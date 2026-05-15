@@ -8,6 +8,7 @@ import {
   PullQuote,
   Continue,
   ScrollHighlight,
+  Term,
 } from '@/components/article/Article'
 
 export default function CoffeePage() {
@@ -32,7 +33,7 @@ export default function CoffeePage() {
         </p>
         <p className="p2">
           Aura grows shade-grown Arabica at 3,600 feet beneath a four-story
-          canopy in the Western Ghats. Two cultivars — Sln.9 and Sln.795. Every
+          canopy in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>. Two cultivars — <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>. Every
           lot is a document of place and method.
         </p>
       </TwoCol>
@@ -71,18 +72,22 @@ export default function CoffeePage() {
           The differences in the cup are the result of fermentation decisions —
           not terroir alone, but terroir expressed through technique.
         </p>
+        <p className="p2">
+          These are not targets. They are the climate of the estate, printed
+          into the bean.
+        </p>
       </TwoCol>
 
       <DataGrid cols={3} standalone>
         <DataCard type="Process · sealed tanks" value="Lot 001 — Anaerobic Natural.">
           11,984 kg harvest, 1,151 kg immature removed, 878 kg floats. 48 hr
-          sealed ferment. Water TDS 29.28 ppm. 22 days drying on raised beds.
+          sealed ferment. Water <Term tip="Total dissolved solids. Mineral load in the ferment water, in parts per million.">TDS</Term> 29.28 ppm. 22 days drying on raised beds.
           The simplest method — where the cherry&rsquo;s own microbial
           environment does the work.
         </DataCard>
         <DataCard type="Process · partial dry, then ferment" value="Lot 002 — Dry Osmosis.">
           8,726 kg harvest, 229 kg immature (lowest ratio, exceptional
-          selection), 720 kg floats. Brix 19.55%. Dried to 45% moisture, then
+          selection), 720 kg floats. <Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term> 19.55%. Dried to 45% moisture, then
           48 hr anaerobic. 25 days drying. Notes: blueberry, fig, raisin.
         </DataCard>
         <DataCard type="Detail · sticky mucilage on parchment" value="Lot 003 — Red Honey · &ldquo;Liquid Gold&rdquo;.">
@@ -100,7 +105,7 @@ export default function CoffeePage() {
         <DataCard type="Process · solera tanks, transfer lines" value="Lot 005 — Solera Maceration · Flagship.">
           770 kg harvest, 179 kg immature, 80 kg floats. Brix 18%. Water TDS
           42 ppm. Three-day initial ferment, 50% carry-forward into freshly
-          harvested cherries. Alternating two-day ferment and rest. Day-night
+          harvested cherries — the <Term tip="Sherry-making technique: carry a fraction of the previous batch forward as a live mother culture.">Solera</Term> carry-forward. Alternating two-day ferment and rest. Day-night
           drying to 12% moisture. The flagship.
         </DataCard>
         <DataCard type="Detail · hand-washed beans" value="Lot 006 — Solera Wash · Rarest.">
@@ -142,7 +147,7 @@ export default function CoffeePage() {
           per SCA protocol. Every lot is cupped — target 80+ specialty.
         </p>
         <p className="p2">
-          By Year 3: caffeine and polyphenol profiling via colorimeter, Q-grader
+          By Year 3: caffeine and polyphenol profiling via colorimeter, <Term tip="SCA-certified coffee grader.">Q-grader</Term>
           certification on-site, and a purpose-built 1,200 sq ft lab with a
           professional cupping room for buyer visits.
         </p>

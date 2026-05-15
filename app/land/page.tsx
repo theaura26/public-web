@@ -8,6 +8,7 @@ import {
   PullQuote,
   Continue,
   ScrollHighlight,
+  Term,
 } from '@/components/article/Article'
 
 export default function LandPage() {
@@ -22,11 +23,10 @@ export default function LandPage() {
 
       <TwoCol heading="Land is not an asset. It is ancestry.">
         <p className="p1">
-          The Sampigelkhan Estate sits at 13.1365°N, 75.6403°E — in the Western
-          Ghats of Karnataka, at 3,600 feet above sea level.
+          The Sampigelkhan Estate sits at 13.1365°N, 75.6403°E — in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term> of Karnataka, at 3,600 feet above sea level.
         </p>
         <p className="p2">
-          The soil is laterite, red and volcanic, pH 6.0–6.5. Rainfall runs
+          The soil is <Term tip="Red, iron-rich, free-draining volcanic soil typical of the Western Ghats.">laterite</Term>, red and volcanic, pH 6.0–6.5. Rainfall runs
           between 40 and 100 inches annually, arriving in monsoon sheets that
           reshape the ground and fill the streams. Temperature swings from
           14 °C before dawn to 30 °C at noon. Humidity holds at 58%.
@@ -59,7 +59,7 @@ export default function LandPage() {
 
       <TwoCol id="grows" heading="What grows here.">
         <p className="p1">
-          One hundred acres of shade-grown coffee — Arabica Sln.9 and Sln.795,
+          One hundred acres of shade-grown coffee — Arabica <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>,
           planted beneath a four-story canopy of silver oak, Albizzia,
           jackfruit, and native fig. Thirty-five acres of tea, in organic
           transition targeting 2027.
@@ -70,7 +70,7 @@ export default function LandPage() {
           flowering seasons. 35,000 individual trees across the estate.
         </p>
         <p className="p2">
-          And 52 Malnad Gidda cattle — an indigenous breed native to this
+          And 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle — an indigenous breed native to this
           altitude, rotating through blocks timed to cherry development stages.
           Their dung drives the biodynamic programme. Their presence shapes the
           soil biology season by season.
@@ -86,7 +86,7 @@ export default function LandPage() {
           The progression is deliberate, and it does not skip steps. There is
           no phase where we arrive and declare the work done. The land is
           always in transition. The question is whether the trajectory points
-          toward regeneration or extraction.
+          toward regeneration or extraction. Ours points toward regeneration.
         </p>
         <DataGrid cols={3}>
           <DataCard value="01 — Stabilise and maintain.">
@@ -110,7 +110,7 @@ export default function LandPage() {
       <TwoCol id="east-east" heading="Mudigere and Ohara.">
         <p className="p1">
           Aura is not one estate. It is two. The second sits in Ohara, Kyoto —
-          two properties totalling roughly 1,200 tsubo, with seven existing
+          two properties totalling roughly 1,200 <Term tip="Japanese land measure. About 3.3 m² per tsubo.">tsubo</Term>, with seven existing
           buildings, a teahouse with a hearth, a thirty-year-old Japanese
           garden, and a cafe overlooking a river.
         </p>

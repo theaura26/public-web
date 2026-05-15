@@ -8,6 +8,7 @@ import {
   PullQuote,
   Continue,
   ScrollHighlight,
+  Term,
 } from '@/components/article/Article'
 
 export default function BiodynamicPage() {
@@ -40,7 +41,7 @@ export default function BiodynamicPage() {
 
       <TwoCol id="steiner" heading="The Steiner preparations.">
         <p className="p1">
-          BD 500 — horn manure. Cow dung packed into a cow horn, buried over
+          <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure. Cow dung packed into a cow horn, buried over
           winter, exhumed in spring. The microbial transformation that occurs
           underground produces a concentrate of soil-building biology. Stirred
           dynamically for one hour — creating a vortex, breaking it, reversing
@@ -48,13 +49,13 @@ export default function BiodynamicPage() {
         </p>
         <DataGrid cols={2}>
           <DataCard value="BD 500 — Horn manure.">Soil biology.</DataCard>
-          <DataCard value="BD 501 — Horn silica.">
+          <DataCard value={<><Term tip="Horn silica. Ground quartz buried over summer, sprayed as fine mist for light metabolism.">BD 501</Term> — Horn silica.</>}>
             Light metabolism. Foliar mist, early morning.
           </DataCard>
-          <DataCard value="BD 502–507 — Compost preparations.">
+          <DataCard value={<><Term tip="Compost preparations: yarrow, chamomile, nettle, oak bark, dandelion, valerian.">BD 502–507</Term> — Compost preparations.</>}>
             Yarrow, chamomile, nettle, oak bark, dandelion, valerian.
           </DataCard>
-          <DataCard value="BD 508 — Horsetail.">
+          <DataCard value={<><Term tip="Horsetail spray. Silica-rich, used as a fungal preventative through the monsoon.">BD 508</Term> — Horsetail.</>}>
             Silica-rich spray. Fungal preventative for the monsoon.
           </DataCard>
         </DataGrid>
@@ -66,19 +67,19 @@ export default function BiodynamicPage() {
           parallel set of inputs rooted in Indian agricultural science.
         </p>
         <p className="p2">
-          Aura does not abandon CPP for newer methods. We scale wisdom. We do
+          Aura does not abandon <Term tip="Cow pat pit. Composted dung layered with BD preparations, fermented ninety days.">CPP</Term> for newer methods. We scale wisdom. We do
           not replace it.
         </p>
         <DataGrid cols={3}>
-          <DataCard value="Jeevamrit.">
+          <DataCard value={<><Term tip="Cow dung, cow urine, jaggery, gram flour, water. Fermented 5–7 days. Soil drench.">Jeevamrit</Term>.</>}>
             Cow dung, cow urine, jaggery, gram flour, water. Fermented 5–7
             days. Soil drench.
           </DataCard>
-          <DataCard value="Panchgavya.">
+          <DataCard value={<><Term tip="Five cow products (dung, urine, milk, curd, ghee) fermented together. Foliar and soil.">Panchgavya</Term>.</>}>
             Five cow products fermented together. Foliar spray and soil
             amendment.
           </DataCard>
-          <DataCard value="Beejamrit.">
+          <DataCard value={<><Term tip="Seed treatment of cow dung, cow urine, and lime.">Beejamrit</Term>.</>}>
             Cow dung, cow urine, lime. Seed treatment.
           </DataCard>
           <DataCard value="CPP.">
@@ -90,7 +91,7 @@ export default function BiodynamicPage() {
           <DataCard value="Vermicompost tea.">Soil drench.</DataCard>
           <DataCard value="Vermiwash.">Liquid extract from worm castings.</DataCard>
           <DataCard value="Kunapjal.">
-            Ancient Vrikshayurveda preparation.
+            Ancient <Term tip="Ancient Indian plant science. Older than written agriculture.">Vrikshayurveda</Term> preparation.
           </DataCard>
         </DataGrid>
       </TwoCol>
@@ -102,7 +103,7 @@ export default function BiodynamicPage() {
 
       <TwoCol id="herd" heading="The herd as engine.">
         <p className="p1">
-          Everything begins with the cattle. The 52 Malnad Gidda are an
+          Everything begins with the cattle. The 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> are an
           indigenous Karnataka breed — not Holsteins, not Jersey crosses. They
           have grazed at this altitude for centuries. Their gut microbiome is
           adapted to the estate&rsquo;s grasses and soil. Their dung carries
@@ -114,14 +115,14 @@ export default function BiodynamicPage() {
           activation. The system tracks which animals contributed to which
           preparation batch. Ninety days after application, soil biology
           outcomes are cross-referenced with the preparation&rsquo;s lab
-          results — pH, EC, microbial colony counts, Trichoderma viability,
-          Pseudomonas counts.
+          results — pH, EC, microbial colony counts, <Term tip="Soil-borne fungus that suppresses plant pathogens.">Trichoderma</Term> viability,
+          <Term tip="Soil bacteria that fix nitrogen and dissolve phosphate.">Pseudomonas</Term> counts.
         </p>
         <p className="p2">
           The cattle rotate through blocks timed to coffee cherry development
           stages. At the right time, their presence enriches soil biology for
           the next season. At the wrong time, it compacts the ground. Timing
-          is everything.
+          is everything. Right time, right action.
         </p>
       </TwoCol>
 
@@ -133,8 +134,11 @@ export default function BiodynamicPage() {
       <TwoCol id="testing" heading="No untested material touches the soil.">
         <p className="p1">
           Every batch is tested before application. The BD application data
-          stream records every variable. Every entry is cross-referenced with
-          soil health outcomes over the following months.
+          stream records which crop layer was targeted, which blocks received
+          the application, the lunar calendar day, the weather at the moment
+          of spraying, the field worker, and the dung source batch. Every
+          entry is cross-referenced with soil health outcomes over the
+          following months.
         </p>
         <DataGrid cols={3}>
           <DataCard value="pH and EC.">Every batch.</DataCard>
@@ -143,7 +147,7 @@ export default function BiodynamicPage() {
             Temperature, C:N ratio, moisture.
           </DataCard>
           <DataCard value="Heavy metals and pathogens.">External lab.</DataCard>
-          <DataCard value="AAT chromatography.">
+          <DataCard value={<><Term tip="Soil vitality imaging: a chromatogram pattern read from filter paper.">AAT chromatography</Term>.</>}>
             BD soil vitality imaging.
           </DataCard>
           <DataCard value="Spray teams.">Three in-house BD teams.</DataCard>

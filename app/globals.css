@@ -885,6 +885,51 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
   width: 100%;
 }
 
+/* ── Term — inline glossary marker for jargon. Dotted underline in the
+   running text; a small mono-uppercase tooltip lifts above on hover.
+   Force rebuild key — bumping comment to nudge Turbopack. */
+.aura-term {
+  position: relative;
+  border-bottom: 1px dotted var(--text-muted);
+  cursor: help;
+  text-decoration: none;
+  /* Hide the native browser title tooltip — we render our own. */
+}
+.aura-term__tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  z-index: 30;
+  pointer-events: none;
+  max-width: min(320px, 60vw);
+  width: max-content;
+  padding: 8px 12px;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: left;
+  white-space: normal;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.aura-term:hover .aura-term__tip,
+.aura-term:focus-visible .aura-term__tip {
+  opacity: 1;
+}
+@media (max-width: 768px) {
+  /* Touch devices fall back to the native title attribute, which the
+     OS surfaces on long-press. Hide the custom tooltip to avoid double
+     UI. */
+  .aura-term__tip { display: none; }
+}
+
 /* Fixed 50/50 two-column at desktop */
 @media (min-width: 768px) {
   .grid-2col {

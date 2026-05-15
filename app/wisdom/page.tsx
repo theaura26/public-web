@@ -33,6 +33,11 @@ export default function WisdomPage() {
           Aura begins from another premise. Restraint is intelligence.
         </p>
         <p className="p2">
+          Distraction is not neutral. It degrades the quality of everything
+          downstream — decisions, designs, soil, fermentation, the taste of the
+          cup.
+        </p>
+        <p className="p2">
           Before Aura became a regenerative estate system, it became a moral
           position. Every decision must survive pressure across time.
         </p>
@@ -65,6 +70,9 @@ export default function WisdomPage() {
           Every significant action — a planting decision, a brand expression, a
           partnership, a building plan — passes through seven filters before it
           moves. If any answer is no, the work does not ship.
+        </p>
+        <p className="p2">
+          What does this train the system to become over time?
         </p>
         <DataGrid cols={2}>
           <DataCard value="Ecological.">Improve or extract?</DataCard>

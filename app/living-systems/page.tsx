@@ -8,6 +8,7 @@ import {
   PullQuote,
   Continue,
   ScrollHighlight,
+  Term,
 } from '@/components/article/Article'
 
 export default function LivingSystemsPage() {
@@ -26,9 +27,9 @@ export default function LivingSystemsPage() {
           instead.
         </p>
         <p className="p2">
-          The Sampigelkhan Estate sits at 3,600 feet in the Western Ghats — 150
+          The Sampigelkhan Estate sits at 3,600 feet in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term> — 150
           acres within a UNESCO biodiversity zone. 35,000 trees. 52 indigenous
-          Malnad Gidda cattle. Beehives, streams, and a four-story agroforestry
+          <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle. Beehives, streams, and a four-story agroforestry
           system that sequesters three to five times more carbon per acre than
           monoculture coffee.
         </p>
@@ -55,7 +56,7 @@ export default function LivingSystemsPage() {
           the next.
         </p>
         <p className="p2">
-          Canopy density predicts coffee cherry Brix. Areca health signals
+          Canopy density predicts coffee cherry <Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term>. Areca health signals
           pepper yield weeks early. Cattle rotation shapes microbial conditions
           that later affect fermentation. Bee activity predicts flowering
           quality.
@@ -75,7 +76,7 @@ export default function LivingSystemsPage() {
           weeks.
         </DataCard>
         <DataCard type="Coffee under shade" value="03 — Primary crop.">
-          Arabica Sln.9 and Sln.795. Thirty-five acres of tea, in organic
+          Arabica <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>. Thirty-five acres of tea, in organic
           transition targeting 2027. Every input logged against the transition
           clock. A single prohibited substance resets it.
         </DataCard>
@@ -126,7 +127,7 @@ export default function LivingSystemsPage() {
             Pasture, health, rotation timing per block.
           </DataCard>
           <DataCard value="Canopy health.">
-            NDVI per block, quarterly.
+            <Term tip="Normalised Difference Vegetation Index. Satellite-derived canopy vitality reading.">NDVI</Term> per block, quarterly.
           </DataCard>
           <DataCard value="Pepper & areca.">
             Column health, vine density, fermentation.
@@ -147,10 +148,15 @@ export default function LivingSystemsPage() {
 
       <TwoCol id="signals" heading="The signals between.">
         <p className="p1">
+          The most valuable data is not within any single stream. It is between
+          them.
+        </p>
+        <p className="p2">
           Canopy density predicts coffee cherry Brix. Areca health signals
           pepper yield weeks early. Cattle rotation timing shapes soil biology
           for the next season. Beehive activity forecasts flowering quality.
-          Dung batch quality determines BD preparation potency.
+          Dung batch quality determines BD preparation potency. Cover crop
+          biomass after incorporation predicts fermentation character.
         </p>
         <p className="p2">
           This is what we mean by a living system. Every layer talks to every

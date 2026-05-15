@@ -8,6 +8,7 @@ import {
   PullQuote,
   Continue,
   ScrollHighlight,
+  Term,
 } from '@/components/article/Article'
 
 export default function FermentationPage() {
@@ -43,7 +44,7 @@ export default function FermentationPage() {
         </p>
         <p className="p2">
           Every lot is tracked: pH every 15 minutes, temperature three times
-          daily, Brix at start, mid, and end. The data does not average across
+          daily, <Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term> at start, mid, and end. The data does not average across
           the harvest. It follows each lot as an individual.
         </p>
         <DataGrid cols={3}>
@@ -63,7 +64,7 @@ export default function FermentationPage() {
             24 hr anaerobic, then layered with banana leaves for 48 more. The
             most distinctly Indian lot.
           </DataCard>
-          <DataCard value="Solera Maceration.">
+          <DataCard value={<><Term tip="Sherry-making technique: carry a fraction of the previous batch forward as a live mother culture.">Solera</Term> Maceration.</>}>
             Multi-cycle carry-forward. The microbial culture of one batch
             shapes every batch that follows. The flagship.
           </DataCard>
@@ -98,8 +99,12 @@ export default function FermentationPage() {
           as the fermentation of coffee cherry.
         </p>
         <p className="p2">
-          BD 500 — horn manure — begins as fresh dung from the estate&rsquo;s
-          52 Malnad Gidda cattle, packed into a cow horn, buried over winter.
+          The dung batch that produced the BD preparation is tracked back to
+          the individual animals that contributed to it.
+        </p>
+        <p className="p2">
+          <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure — begins as fresh dung from the estate&rsquo;s
+          52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle, packed into a cow horn, buried over winter.
           The microbial transformation that occurs underground is a
           fermentation. When it is exhumed, stirred dynamically for one hour,
           and applied to soil at dusk, it carries a specific microbial signature
@@ -122,8 +127,8 @@ export default function FermentationPage() {
           <DataCard value="Compost maturity.">
             Temperature, C:N ratio, moisture.
           </DataCard>
-          <DataCard value="Trichoderma viability.">Counted.</DataCard>
-          <DataCard value="Pseudomonas.">Counted.</DataCard>
+          <DataCard value={<><Term tip="Soil-borne fungus that suppresses plant pathogens.">Trichoderma</Term> viability.</>}>Counted.</DataCard>
+          <DataCard value={<><Term tip="Soil bacteria that fix nitrogen and dissolve phosphate.">Pseudomonas</Term>.</>}>Counted.</DataCard>
           <DataCard value="Soil outcome.">
             Re-checked 90 days post-application.
           </DataCard>

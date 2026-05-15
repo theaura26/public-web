@@ -9,6 +9,7 @@ import {
   Continue,
   ScrollHighlight,
   Rta,
+  Term,
 } from '@/components/article/Article'
 
 export default function RtaPage() {
@@ -43,14 +44,19 @@ export default function RtaPage() {
 
       <TwoCol id="field" heading="In the field.">
         <p className="p1">
-          BD 500 — horn manure — is applied at dusk, when the earth is inhaling.
+          <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure — is applied at dusk, when the earth is inhaling.
           This is not poetry. Evening application allows the preparation to
           work with the soil&rsquo;s natural absorption cycle.
         </p>
         <p className="p2">
+          Every BD application is timestamped to the minute, tagged with the
+          lunar calendar day, the weather at the moment of spraying, the field
+          worker who applied it, the dung batch it came from.
+        </p>
+        <p className="p2">
           A spray logged at 06:12 carries more integrity than a weekly report
           written on Friday. The data does not say &ldquo;we sprayed this
-          week.&rdquo; It says &ldquo;BD 501 was applied to Block 07 at 06:14 on
+          week.&rdquo; It says &ldquo;<Term tip="Horn silica. Ground quartz buried over summer, sprayed as fine mist for light metabolism.">BD 501</Term> was applied to Block 07 at 06:14 on
           a waning moon, humidity 78%, by Raju, using dung batch G-03.&rdquo;
         </p>
         <DataGrid cols={3}>
@@ -90,7 +96,7 @@ export default function RtaPage() {
 
       <TwoCol id="herd" heading="In the herd.">
         <p className="p1">
-          Fifty-two Malnad Gidda cattle rotate through blocks timed to coffee
+          Fifty-two <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle rotate through blocks timed to coffee
           cherry development stages. The cattle enrich soil biology for the
           next season — but only if they are in the right block at the right
           time.

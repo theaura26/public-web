@@ -384,6 +384,19 @@ export function Rta() {
   )
 }
 
+/* ── Term — inline glossary marker for jargon (Sln.9, BD 500, Solera, etc.).
+      Underdotted in body text; on hover a small mono-uppercase tooltip
+      lifts above the term with a 1-line definition. The `title` attribute
+      keeps the explanation accessible without JS (and on touch devices). */
+export function Term({ tip, children }: { tip: string; children: ReactNode }) {
+  return (
+    <span className="aura-term" data-tip title={tip}>
+      {children}
+      <span className="aura-term__tip" aria-hidden>{tip}</span>
+    </span>
+  )
+}
+
 /* ── Placeholder — the kit's image moment.
       Thin wrapper around <ExpandingBanner>, the same scroll-driven
       blur → clarity → hold component the homepage uses for its hero

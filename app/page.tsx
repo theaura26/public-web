@@ -2641,56 +2641,20 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
 }
 
 /* Markdown-style plain text view of the home page for agent mode.
-   Mirrors the sycamore.so pattern — # heading, body, --- separators,
-   ## sections with bullet lists. Agent CSS adds the #/##/- prefixes
-   and the --- between sections via <hr>. */
+   Text mirrors the visual page verbatim — hero copy, the Reason
+   ScrollHighlight, the Aura OS section, the three pillar cards, the
+   sanctuary lede + four sanctuaries, and the closing line. Agent CSS
+   prefixes headings with #/##/###, bullets with `- `, and renders
+   <hr> as `---`. */
 function AgentHomeView() {
   return (
     <section className="agent-only">
-      <h1>Aura</h1>
-      <p>A regenerative ecosystem for monastic polymaths.</p>
+      <h1>A Regenerative Company</h1>
       <p>Nestled in nature, our sanctuary invites leaders, creators, and organisations into inspiration and flow.</p>
       <p>We combine ancestral wisdom with creative capital to make what the future cannot automate.</p>
-
-      <hr />
-
-      <h2>Three Pillars</h2>
-      <ul>
-        <li>Sanctuary — silence, stillness, Japanese garden, forest walks</li>
-        <li>Agroculture — 100 acres coffee, 43 indigenous cattle, native canopy</li>
-        <li>Artistry — studios, workshops, gallery, festivals</li>
-      </ul>
-
-      <hr />
-
-      <h2>Sanctuaries</h2>
-      <ul>
-        <li>Mudigere — Karnataka, India (13.13°N · 75.63°E). Regenerative plantation sanctuary on 100 acres in the Western Ghats.</li>
-        <li>Ohara — Kyoto Prefecture, Japan (35.13°N · 135.83°E). Retreats and slow living in nature.</li>
-        <li>Munduk — Bali, Indonesia. Coming soon.</li>
-        <li>Daylesford — Victoria, Australia. A space for craft and wellbeing. Coming soon.</li>
-      </ul>
-
-      <hr />
-
-      <h2>Journal</h2>
-      <ul>
-        <li><a href="/idea">The 1000 Year Idea</a> — think in generations</li>
-        <li><a href="/wisdom">Moral Spine</a></li>
-        <li><a href="/rta">Rta</a></li>
-        <li><a href="/sanctuary">Guests of the mountain</a></li>
-        <li><a href="/artistry">Code meets clay</a></li>
-        <li><a href="/residency">Monastic polymaths. Crazy misfits.</a></li>
-        <li><a href="/provenance">Cherry to cup, on chain</a></li>
-        <li><a href="/fermentation">Three disciplines, one precision</a></li>
-        <li><a href="/coffee">Six lots, one appellation</a></li>
-        <li><a href="/pepper">Malabar black gold</a></li>
-        <li><a href="/areca">The sentinel palm</a></li>
-        <li><a href="/biodynamic">The farm as organism</a></li>
-        <li><a href="/vedic">Older than its study</a></li>
-        <li><a href="/living-systems">Herd, hive, canopy</a></li>
-        <li><a href="/land">The land is the lab</a></li>
-      </ul>
+      <p>For generational impact.</p>
+      <p>Land. Time. Practice.</p>
+      <p><a href="#film">Enter the ecosystem</a> — watch the Aura film.</p>
 
       <hr />
 
@@ -2702,13 +2666,37 @@ function AgentHomeView() {
 
       <hr />
 
-      <h2>Pages</h2>
-      <ul>
-        <li><a href="/reason">/reason</a> — the reason for Aura, in the founder&rsquo;s words</li>
-        <li><a href="/brand">/brand</a> — brand identity, principles, colours, type</li>
-        <li><a href="/sanctuary">/sanctuary</a> — sanctuary essays and place</li>
-        <li><a href="/contact">/contact</a> — get in touch</li>
-      </ul>
+      <h2>The Aura Operating System</h2>
+      <p>Ancestral. Natural. Human. Machine Intelligence.</p>
+      <p>The Aura Operating System brings together land intelligence, human craft, and modern technology into one integrated practice.</p>
+
+      <h3>Agroculture — We cultivate regenerative land systems</h3>
+      <p>Coffee, pepper, areca, tea, soil, biodiversity, and long-term stewardship — managed through biodynamic and Vedic agricultural practices.</p>
+
+      <h3>Hospitality — Sanctuaries designed for clarity</h3>
+      <p>Architect-led sanctuaries, slow living experiences, workshops, residencies, and time designed around nature and clarity.</p>
+
+      <h3>Labs — Studios for regenerative thinking</h3>
+      <p>Small-group residencies, experiments, and learning experiences spanning AI, systems thinking, creativity, wellbeing, and craft.</p>
+
+      <hr />
+
+      <h2>Our Sanctuaries</h2>
+      <p>Aura unfolds through sanctuary, land, and practice.</p>
+      <p>Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm.</p>
+      <p>Places shaped for slower living and deeper restoration.</p>
+
+      <h3>Mudigere — Regenerative plantation sanctuary</h3>
+      <p>Karnataka, India · 13.13°N · 75.63°E</p>
+
+      <h3>Ohara — Retreats and slow living in nature</h3>
+      <p>Kyoto Prefecture, Japan · 35.13°N · 135.83°E</p>
+
+      <h3>Munduk — Mountain sanctuary for restoration</h3>
+      <p>Bali, Indonesia · 8.27°S · 115.06°E · Coming soon</p>
+
+      <h3>Daylesford — A space for craft and wellbeing</h3>
+      <p>Victoria, Australia · 37.34°S · 144.14°E · Coming soon</p>
 
       <hr />
 

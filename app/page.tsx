@@ -2102,6 +2102,7 @@ Land, hospitality, craft, and technology — one regenerative ecosystem.`}</Scro
         mediaType="video"
         poster="/aura-people.jpg"
         alt="Aura — the people behind the practice"
+        caption="We cultivate environments designed to sharpen thought and restore balance."
       />
 
       {/* Operating System — full section-gap on both ends, matching the

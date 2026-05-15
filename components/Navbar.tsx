@@ -30,21 +30,23 @@ type Article = {
 }
 
 const ARTICLES: Article[] = [
-  { href: '/idea',           title: 'The 1000 Year Idea',                 size: 'lg', img: '/aura-idea.jpg',          comingSoon: true },
-  { href: '/wisdom',         title: 'Moral Spine',                        size: 'sm', img: '/aura-wisdom.jpg' },
+  // Active journals — listed first, in the order the user wants them.
+  { href: '/wisdom',         title: 'Moral Spine',                        size: 'lg', img: '/aura-wisdom.jpg' },
+  { href: '/living-systems', title: 'Living Systems',                     size: 'sm', img: '/aura-living-systems.jpg' },
+  { href: '/coffee',         title: 'Our Coffee Story',                   size: 'lg', img: '/aura-coffee.jpg' },
   { href: '/rta',            title: 'Rta',                                size: 'sm', img: '/aura-rta.jpg' },
+  { href: '/fermentation',   title: 'Fermentation',                       size: 'lg', img: '/aura-fermentation.jpg' },
+  { href: '/land',           title: 'The Land',                           size: 'sm', img: '/aura-land.jpg' },
+  { href: '/biodynamic',     title: 'Biodynamic',                         size: 'lg', img: '/aura-biodynamic.jpg' },
+  // Coming-soon — render at the tail of the feed.
+  { href: '/idea',           title: 'The 1000 Year Idea',                 size: 'sm', img: '/aura-idea.jpg',          comingSoon: true },
   { href: '/sanctuary',      title: 'Guests of the mountain.',            size: 'lg', img: '/aura-sanctuary.jpg', video: '/aura-sanctuary.mp4', comingSoon: true },
   { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg',      comingSoon: true },
   { href: '/residency',      title: 'Monastic polymaths. Crazy misfits.', size: 'lg', img: '/aura-residency.jpg',     comingSoon: true },
   { href: '/provenance',     title: 'Cherry to cup. On chain.',           size: 'sm', img: '/aura-provenance.jpg',    comingSoon: true },
-  { href: '/fermentation',   title: 'Three disciplines, one precision.',  size: 'lg', img: '/aura-fermentation.jpg' },
-  { href: '/coffee',         title: 'Six Lots, One Appellation.',         size: 'sm', img: '/aura-coffee.jpg' },
   { href: '/pepper',         title: 'Malabar black gold.',                size: 'lg', img: '/aura-pepper.jpg',        comingSoon: true },
   { href: '/areca',          title: 'The sentinel palm.',                 size: 'sm', img: '/aura-areca.jpg',         comingSoon: true },
-  { href: '/biodynamic',     title: 'The farm as organism.',              size: 'lg', img: '/aura-biodynamic.jpg' },
-  { href: '/vedic',          title: 'Older than its study.',              size: 'sm', img: '/aura-vedic.jpg',         comingSoon: true },
-  { href: '/living-systems', title: 'Herd, hive, canopy.',                size: 'lg', img: '/aura-living-systems.jpg' },
-  { href: '/land',           title: 'The land is the lab.',               size: 'sm', img: '/aura-land.jpg' },
+  { href: '/vedic',          title: 'Older than its study.',              size: 'lg', img: '/aura-vedic.jpg',         comingSoon: true },
 ]
 
 const PRIMARY_LINKS = [

@@ -324,6 +324,10 @@ html [data-view="agent"] {
   margin-right: auto !important;
   padding-left: var(--gutter) !important;
   padding-right: var(--gutter) !important;
+  /* Clear the fixed top navbar (56 px tall) so the first heading
+     doesn't render underneath it. */
+  padding-top: 96px !important;
+  padding-bottom: 64px !important;
 }
 [data-view="agent"] main section,
 [data-view="agent"] main .section-w,

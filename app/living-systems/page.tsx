@@ -63,30 +63,46 @@ export default function LivingSystemsPage() {
         </p>
       </TwoCol>
 
-      <DataGrid cols={4} standalone>
-        <DataCard type="Looking up · canopy" value="01 — Canopy.">
-          Silver oak, Albizzia, jackfruit, fig, native hardwoods. Target cover
-          60–80% per block. Blocks with 65–75% canopy produce measurably higher
-          Brix in the coffee beneath them.
-        </DataCard>
-        <DataCard type="Mid-canopy · areca with pepper" value="02 — Mid-canopy.">
-          Arecanut palms rise through the shade. Black pepper climbs them — each
-          areca palm simultaneously a trellis and a companion. If an areca
-          column stresses, the pepper vine loses vigour within six to eight
-          weeks.
-        </DataCard>
-        <DataCard type="Coffee under shade" value="03 — Primary crop.">
-          Arabica <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>. Thirty-five acres of tea, in organic
-          transition targeting 2027. Every input logged against the transition
-          clock. A single prohibited substance resets it.
-        </DataCard>
-        <DataCard type="Ground · understorey, hive" value="04 — Understorey.">
-          Cardamom, cacao, avocado, cover crops, beehives, chickens. Hives
-          connect the flowering seasons across every layer. When activity drops
-          during flowering, it predicts lower cherry set four to six weeks
-          ahead.
-        </DataCard>
-      </DataGrid>
+      <TwoCol id="layer-1" heading="Layer 1 — Canopy.">
+        <p className="p1">
+          Silver oak, Albizzia, jackfruit, fig, native hardwoods. They regulate
+          shade, sequester carbon, and shelter the stories below. Target canopy
+          coverage: 60–80% per block. Blocks with 65–75% canopy produce
+          measurably higher Brix in the coffee beneath them.
+        </p>
+      </TwoCol>
+
+      <TwoCol id="layer-2" heading="Layer 2 — Mid-canopy.">
+        <p className="p1">
+          Arecanut palms rise through the shade. Black pepper climbs them —
+          using each areca palm simultaneously as trellis and companion. If an
+          areca column shows stress, the pepper vine on it loses vigour within
+          6–8 weeks. The intervention window is roughly three weeks.
+        </p>
+      </TwoCol>
+
+      <Placeholder
+        type="Process · areca harvest"
+        caption="Mid-canopy — areca palm harvest"
+      />
+
+      <TwoCol id="layer-3" heading="Layer 3 — Primary crop.">
+        <p className="p1">
+          Arabica coffee (<Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term>, <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>) and 35 acres of tea, currently
+          in organic transition targeting 2027 certification. Every input is
+          logged against the transition clock — a single prohibited substance
+          resets it.
+        </p>
+      </TwoCol>
+
+      <TwoCol id="layer-4" heading="Layer 4 — Understorey and ground.">
+        <p className="p1">
+          Cardamom, cacao, avocado, cover crops, beehives, chickens. Beehives
+          connect the flowering seasons across all layers. When bee activity
+          drops during flowering, it predicts lower cherry set four to six
+          weeks ahead.
+        </p>
+      </TwoCol>
 
       <Placeholder
         type="Portrait · indigenous breed"

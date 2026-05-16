@@ -59,6 +59,32 @@ export default function BiodynamicPage() {
             Silica-rich spray. Fungal preventative for the monsoon.
           </DataCard>
         </DataGrid>
+        <p className="p2">
+          <strong>BD 500 — Horn Manure.</strong> Cow dung packed into a cow
+          horn, buried over winter, exhumed in spring. The microbial
+          transformation that occurs underground produces a concentrate of
+          soil-building biology. Stirred dynamically for one hour — creating a
+          vortex, breaking it, reversing — then applied to soil in the
+          evening, when the earth is inhaling.
+        </p>
+        <p className="p2">
+          <strong>BD 501 — Horn Silica.</strong> Ground quartz crystal, packed
+          into a horn, buried over summer. Applied as a fine mist to foliage
+          in early morning. Enhances photosynthesis and light metabolism in
+          the plant.
+        </p>
+        <p className="p2">
+          <strong>BD 502 through 507 — Compost preparations</strong> made from
+          yarrow, chamomile, stinging nettle, oak bark, dandelion, and
+          valerian. Each is added in small quantities to the compost heap,
+          where they regulate decomposition and enrich the final compost with
+          specific mineral and microbial qualities.
+        </p>
+        <p className="p2">
+          <strong>BD 508 — Horsetail.</strong> A silica-rich spray used as a
+          fungal disease preventative, particularly relevant in the
+          monsoon-heavy Western Ghats.
+        </p>
       </TwoCol>
 
       <TwoCol id="vedic" heading="The Vedic system.">

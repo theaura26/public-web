@@ -78,53 +78,127 @@ export default function CoffeePage() {
         </p>
       </TwoCol>
 
-      <DataGrid cols={3} standalone>
-        <DataCard type="Process · sealed tanks" value="Lot 001 — Anaerobic Natural.">
-          11,984 kg harvest, 1,151 kg immature removed, 878 kg floats. 48 hr
-          sealed ferment. Water <Term tip="Total dissolved solids. Mineral load in the ferment water, in parts per million.">TDS</Term> 29.28 ppm. 22 days drying on raised beds.
-          The simplest method — where the cherry&rsquo;s own microbial
-          environment does the work.
-        </DataCard>
-        <DataCard type="Process · partial dry, then ferment" value="Lot 002 — Dry Osmosis.">
-          8,726 kg harvest, 229 kg immature (lowest ratio, exceptional
-          selection), 720 kg floats. <Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term> 19.55%. Dried to 45% moisture, then
-          48 hr anaerobic. 25 days drying. Notes: blueberry, fig, raisin.
-        </DataCard>
-        <DataCard type="Detail · sticky mucilage on parchment" value="Lot 003 — Red Honey · &ldquo;Liquid Gold&rdquo;.">
-          6,715 kg harvest, 880 kg immature, 511 kg floats. Brix 19.25%. 48 hr
-          anaerobic, pulped with mucilage on. 5 days thick drying, then 25
-          days thin. Named &ldquo;Liquid Gold&rdquo; by Boojee Mumbai. Notes:
-          honey, caramel, nutty.
-        </DataCard>
-        <DataCard type="Detail · banana leaves layering" value="Lot 004 — Banana Wash.">
-          8,086 kg harvest, 1,241 kg immature, 673 kg floats. Brix 19.25%. 24 hr
-          anaerobic, then pulped and layered with banana leaves for 48 hr more.
-          The leaves contribute wild yeasts and a micro-environment. The most
-          distinctly Indian lot.
-        </DataCard>
-        <DataCard type="Process · solera tanks, transfer lines" value="Lot 005 — Solera Maceration · Flagship.">
-          770 kg harvest, 179 kg immature, 80 kg floats. Brix 18%. Water TDS
-          42 ppm. Three-day initial ferment, 50% carry-forward into freshly
-          harvested cherries — the <Term tip="Sherry-making technique: carry a fraction of the previous batch forward as a live mother culture.">Solera</Term> carry-forward. Alternating two-day ferment and rest. Day-night
-          drying to 12% moisture. The flagship.
-        </DataCard>
-        <DataCard type="Detail · hand-washed beans" value="Lot 006 — Solera Wash · Rarest.">
-          620 kg harvest, 146 kg immature, 75 kg floats. Brix 23% — the highest
-          of any lot. 24 hr ferment, three-day soak, hand-washed, raised-bed
-          dry. Highest sugar, then everything non-essential stripped away.
-          Ascetic focus applied to coffee.
-        </DataCard>
-      </DataGrid>
+      <TwoCol id="lot-001" heading="Lot 001 — Anaerobic Natural.">
+        <p className="p1">
+          Cherries washed, floats removed, transferred to sealed containers,
+          fermented 48 hours under controlled conditions. Moved to raised beds
+          for 22 days of slow drying. The simplest method — and the one where
+          the cherry&rsquo;s own microbial environment does the work.
+        </p>
+        <DataGrid>
+          <DataCard value="11,984 kg">Harvest.</DataCard>
+          <DataCard value="1,151 kg">Immature removed.</DataCard>
+          <DataCard value="878 kg">Floats.</DataCard>
+          <DataCard value="48 hr">Fermentation.</DataCard>
+          <DataCard value="29.28 ppm">Water <Term tip="Total dissolved solids. Mineral load in the ferment water, in parts per million.">TDS</Term>.</DataCard>
+          <DataCard value="22 days">Drying.</DataCard>
+        </DataGrid>
+      </TwoCol>
+
+      <TwoCol id="lot-002" heading="Lot 002 — Dry Osmosis.">
+        <p className="p1">
+          The innovation: cherries are dried to 45% moisture first, then
+          fermented anaerobically for 48 hours. Partial drying before
+          fermentation concentrates sugars and shifts the microbial
+          environment. Only 229 kg immature removed — the lowest ratio,
+          indicating exceptional selection at harvest. Notes: blueberry · fig
+          · raisin.
+        </p>
+        <DataGrid>
+          <DataCard value="8,726 kg">Harvest.</DataCard>
+          <DataCard value="229 kg">Immature removed.</DataCard>
+          <DataCard value="720 kg">Floats.</DataCard>
+          <DataCard value="19.55%"><Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term>.</DataCard>
+          <DataCard value="48 hr">Anaerobic ferment.</DataCard>
+          <DataCard value="25 days">Drying.</DataCard>
+        </DataGrid>
+      </TwoCol>
+
+      <TwoCol id="lot-003" heading="Lot 003 — Red Honey · &ldquo;Liquid Gold&rdquo;.">
+        <p className="p1">
+          Fermented 48 hours anaerobically, then pulped — but the mucilage is
+          kept on. The sticky fruit layer slowly absorbs into the bean during
+          5 days of thick drying, then 25 days thin on raised beds. The red
+          colour comes from oxidation. Named &ldquo;Liquid Gold&rdquo; by
+          Boojee Mumbai — the first lot from Aura to carry a name. Notes:
+          honey · caramel · nutty.
+        </p>
+        <DataGrid>
+          <DataCard value="6,715 kg">Harvest.</DataCard>
+          <DataCard value="880 kg">Immature removed.</DataCard>
+          <DataCard value="511 kg">Floats.</DataCard>
+          <DataCard value="19.25%">Brix.</DataCard>
+          <DataCard value="48 hr">Anaerobic ferment.</DataCard>
+          <DataCard value="5 + 25 days">Drying.</DataCard>
+        </DataGrid>
+      </TwoCol>
+
+      <Placeholder
+        type="Process · screen grading"
+        caption="Screen grading — defect analysis per SCA protocol"
+      />
+
+      <TwoCol id="lot-004" heading="Lot 004 — Banana Wash.">
+        <p className="p1">
+          24 hours anaerobic natural, then pulped and layered with banana
+          leaves for 48 more. The leaves contribute natural yeasts and
+          enzymes, create a micro-environment, and impart tropical notes. pH,
+          temperature, and humidity controlled throughout. The most distinctly
+          Indian lot. Indigenous technique meets precision.
+        </p>
+        <DataGrid>
+          <DataCard value="8,086 kg">Harvest.</DataCard>
+          <DataCard value="1,241 kg">Immature removed.</DataCard>
+          <DataCard value="673 kg">Floats.</DataCard>
+          <DataCard value="19.25%">Brix.</DataCard>
+          <DataCard value="24 + 48 hr">Fermentation.</DataCard>
+          <DataCard value="30.37 ppm">Water TDS.</DataCard>
+        </DataGrid>
+      </TwoCol>
+
+      <TwoCol id="lot-005" heading="Lot 005 — Solera Maceration · Flagship.">
+        <p className="p1">
+          The smallest, most precious lot. Borrowed from sherry-making: 100%
+          ripe cherries, floatation-sorted, sealed in stainless-steel tanks.
+          Three-day initial fermentation. During the first phase only, 50% of
+          actively fermenting cherries are mixed with freshly harvested
+          cherries — the <Term tip="Sherry-making technique: carry a fraction of the previous batch forward as a live mother culture.">Solera</Term> carry-forward. After the initial cycle:
+          alternating two-day fermentation and raised-bed resting phases.
+          Final drying follows a day-night rhythm — raised beds by day,
+          breathable bags by night — down to 12% moisture.
+        </p>
+        <DataGrid>
+          <DataCard value="770 kg">Harvest.</DataCard>
+          <DataCard value="179 kg">Immature removed.</DataCard>
+          <DataCard value="80 kg">Floats.</DataCard>
+          <DataCard value="18%">Brix.</DataCard>
+          <DataCard value="42 ppm">Water TDS.</DataCard>
+          <DataCard value="Multi-cycle">Process.</DataCard>
+        </DataGrid>
+      </TwoCol>
 
       <PullQuote>
         The choices made by one batch shape every batch that follows. This is
         not metaphor. It is microbiology.
       </PullQuote>
 
-      <Placeholder
-        type="Process · screen grading"
-        caption="Screen grading — defect analysis per SCA protocol"
-      />
+      <TwoCol id="lot-006" heading="Lot 006 — Solera Wash · Rarest.">
+        <p className="p1">
+          The rarest lot. Highest sugar content of any lot at 23% Brix.
+          24-hour controlled fermentation, pulped, soaked in water for three
+          days, hand-washed, dried on raised beds. The cleanest, most
+          restrained process. Highest sugar, then everything non-essential
+          stripped away. Ascetic focus applied to coffee.
+        </p>
+        <DataGrid>
+          <DataCard value="620 kg">Harvest.</DataCard>
+          <DataCard value="146 kg">Immature removed.</DataCard>
+          <DataCard value="75 kg">Floats.</DataCard>
+          <DataCard value="23%">Brix.</DataCard>
+          <DataCard value="24 hr">Fermentation.</DataCard>
+          <DataCard value="3 days">Soak.</DataCard>
+        </DataGrid>
+      </TwoCol>
 
       <TwoCol id="solera" heading="Solera carry-forward.">
         <p className="p1">

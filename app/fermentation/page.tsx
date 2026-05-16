@@ -73,6 +73,45 @@ export default function FermentationPage() {
             The cleanest expression of the cherry.
           </DataCard>
         </DataGrid>
+        <p className="p2">
+          <strong>Anaerobic Natural:</strong> 48 hours sealed. The simplest
+          method, and the one where the cherry&rsquo;s own microbial environment
+          does the work.
+        </p>
+        <p className="p2">
+          <strong>Dry Osmosis:</strong> dried to 45% moisture first, then
+          fermented. Patience before process. The partial drying concentrates
+          sugars and shifts the microbial starting point. The cup carries
+          blueberry, fig, raisin.
+        </p>
+        <p className="p2">
+          <strong>Red Honey:</strong> fermented, pulped, but the mucilage stays
+          on. Five days of thick drying, then 25 thin. The mucilage sugars
+          absorb slowly into the bean. Oxidation turns it red. Named
+          &ldquo;Liquid Gold&rdquo; at its first public tasting.
+        </p>
+        <p className="p2">
+          <strong>Banana Wash:</strong> 24 hours anaerobic, then layered with
+          banana leaves for 48 more. The leaves contribute wild yeasts,
+          enzymes, and a micro-environment that imparts tropical character.
+          Indigenous technique refined with precision controls — pH,
+          temperature, humidity monitored throughout. The most distinctly
+          Indian lot we produce.
+        </p>
+        <p className="p2">
+          <strong>Solera Maceration:</strong> borrowed from sherry production.
+          During the first fermentation phase, actively fermenting cherries
+          are mixed with freshly harvested ones — the Solera carry-forward.
+          The microbial culture of one batch shapes every batch that follows.
+          Alternating fermentation and rest cycles. Day-night drying rhythm.
+          770 kg total. The flagship.
+        </p>
+        <p className="p2">
+          <strong>Solera Wash:</strong> the rarest lot at 620 kg. Highest Brix
+          at 23%. Fermented 24 hours, pulped, soaked three days in water,
+          hand-washed. Everything non-essential removed. The cleanest
+          expression of the cherry.
+        </p>
       </TwoCol>
 
       <Placeholder

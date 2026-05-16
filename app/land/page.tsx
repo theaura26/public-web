@@ -23,6 +23,10 @@ export default function LandPage() {
 
       <TwoCol heading="Land is not an asset. It is ancestry.">
         <p className="p1">
+          150 acres within a UNESCO biodiversity zone. 3,600 feet. Volcanic
+          soil. Monsoon rhythm.
+        </p>
+        <p className="p2">
           The Sampigelkhan Estate sits at 13.1365°N, 75.6403°E — in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term> of Karnataka, at 3,600 feet above sea level.
         </p>
         <p className="p2">

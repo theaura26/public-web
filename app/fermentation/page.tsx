@@ -21,7 +21,7 @@ export default function FermentationPage() {
         caption="Foam lifting and collapsing on a coffee cherry ferment"
       />
 
-      <TwoCol heading="Three disciplines. One estate.">
+      <TwoCol heading="Three fermentation disciplines. One estate.">
         <p className="p1">
           Coffee, pepper, and cow dung. Each one transforms raw material into
           something the land could not produce alone.
@@ -30,10 +30,6 @@ export default function FermentationPage() {
           Fermentation at Aura is not a step in a process. It is the moment
           where the estate&rsquo;s character becomes audible in flavour — or
           invisible in soil biology.
-        </p>
-        <p className="p2">
-          We practise three fermentation disciplines, and we take each one as
-          seriously as the others.
         </p>
       </TwoCol>
 

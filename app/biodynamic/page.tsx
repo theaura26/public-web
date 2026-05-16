@@ -23,6 +23,10 @@ export default function BiodynamicPage() {
 
       <TwoCol heading="This is not a technique. It is a worldview.">
         <p className="p1">
+          BD 500 through 508. Jeevamrit. Panchgavya. Two ancient farming
+          intelligences working together on one estate.
+        </p>
+        <p className="p2">
           At Aura, biodynamic farming is not a certification to pursue or a
           label to put on packaging. It is a closed-loop operating system — a
           way of understanding the estate as a single organism where soil,

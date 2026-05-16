@@ -20,6 +20,16 @@ export default function WisdomPage() {
         caption="Attention as moral choice — Sampigelkhan Estate"
       />
 
+      <TwoCol heading="The things we will not do.">
+        <p className="p1">
+          Aura is not defined by ambition. It is defined by restraint — the
+          decisions we make before anyone is watching.
+        </p>
+        <p className="p2">
+          Every organisation has values on a wall. Aura has a spine.
+        </p>
+      </TwoCol>
+
       <TwoCol heading="The things we refuse to become.">
         <p className="p1">
           Modern systems reward extraction. More speed. More output. More

@@ -24,13 +24,16 @@ export default function RtaPage() {
 
       <TwoCol heading="Right time. Right action. Everything else is noise.">
         <p className="p1">
-          <Rta /> is a Sanskrit word. It means natural order — the rhythm that
-          governs seasons, tides, germination, decay, and renewal.
+          A Vedic principle that governs how every decision at Aura is made —
+          from when to spray, to when to seal a fermentation tank, to when to
+          stay still.
         </p>
         <p className="p2">
-          It predates organised religion. It is not mysticism. It is
-          observation: the world works on timing, and intelligence is alignment
-          with that timing, not control over it.
+          <Rta /> is a Sanskrit word. It means natural order — the rhythm that
+          governs seasons, tides, germination, decay, and renewal. It predates
+          organised religion. It is not mysticism. It is observation: the world
+          works on timing, and intelligence is alignment with that timing, not
+          control over it.
         </p>
         <p className="p2">
           At Aura, <Rta /> is not a philosophy posted on a wall. It is the

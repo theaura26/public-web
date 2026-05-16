@@ -21,8 +21,12 @@ export default function LivingSystemsPage() {
         caption="Sampigelkhan Estate, 3,600 ft — Western Ghats"
       />
 
-      <TwoCol heading="The forest is not adjacent to the farm. The forest is the farm.">
+      <TwoCol heading="A forest that produces crops. Not a farm that plants trees.">
         <p className="p1">
+          150 acres of four-story polyculture within a UNESCO biodiversity zone,
+          read as a single living dataset.
+        </p>
+        <p className="p2">
           Most agricultural systems isolate variables. Aura studies relationships
           instead.
         </p>

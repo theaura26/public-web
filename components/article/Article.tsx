@@ -70,50 +70,54 @@ export function HeroBanner({
   const words = title.split(/\s+/).filter(Boolean)
   const draftingHint = [type, caption].filter(Boolean).join(' · ')
 
-  // Two motions on the hero:
-  //   1. ENTRY    — banner image opens blurred + 1.1× scale, holds for
-  //                 ~250 ms, then animates to clear over a CSS transition
-  //                 (~1.8 s ease-out). One-shot, fires on mount.
-  //   2. PARALLAX — once cleared, the title overlay drifts upward at
-  //                 half scroll speed so it lingers over the image as
-  //                 the reader scrolls past.
-  const sectionRef = useRef<HTMLElement>(null)
+  // Pinned banner with scroll-driven blur clear — same gesture as the
+  // homepage HeroVideo. The outer wrapper is 200vh; the inner stage is
+  // sticky 100vh. As the reader scrolls into the wrapper, the sticky
+  // pins the banner in view; during the first 80vh of that scroll the
+  // image's blur lifts and the 1.1× scale eases to 1. Once the wrapper
+  // exits the sticky range, the banner scrolls away. Title parallaxes
+  // upward at ~30% of scroll-into-wrap so it lingers above the image.
+  const wrapRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLDivElement>(null)
   const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
   useEffect(() => {
     if (typeof window === 'undefined') return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    // ENTRY — clear the blur after a brief hold, letting CSS transition
-    // do the easing. Reduced motion: instant clear, no hold.
-    const holdMs = reduced ? 0 : 250
-    const entryT = window.setTimeout(() => {
-      const m = mediaRef.current
-      if (!m) return
-      m.style.filter = 'blur(0px)'
-      m.style.transform = 'scale(1)'
-    }, holdMs)
-
-    // PARALLAX — title drifts up at half scroll speed.
     let raf = 0
     const tick = () => {
       raf = 0
-      const sec = sectionRef.current
+      const wrap = wrapRef.current
       const t = titleRef.current
-      if (!sec || !t) return
-      if (reduced) {
-        t.style.transform = 'translate3d(0, 0, 0)'
-        return
+      const m = mediaRef.current
+      if (!wrap) return
+      const rect = wrap.getBoundingClientRect()
+      const vh = window.innerHeight
+      const scrollIntoWrap = Math.max(0, -rect.top)
+      // Blur clears across the first 80vh of scroll-into-wrap. Smootherstep.
+      const animDist = vh * 0.8
+      const raw = Math.max(0, Math.min(1, scrollIntoWrap / animDist))
+      const p = reduced
+        ? (raw > 0.05 ? 1 : 0)
+        : raw * raw * raw * (raw * (raw * 6 - 15) + 10)
+
+      if (m) {
+        const BLUR_MAX = 20
+        m.style.filter = `blur(${(1 - p) * BLUR_MAX}px)`
+        m.style.transform = `scale(${1 + 0.1 * (1 - p)})`
       }
-      const offset = Math.max(0, -sec.getBoundingClientRect().top)
-      t.style.transform = `translate3d(0, ${offset * 0.5}px, 0)`
+      if (t) {
+        // Title parallax — drifts upward at 30% of scroll-into-wrap so
+        // it floats over the image without leaving the sticky stage.
+        t.style.transform = reduced
+          ? 'translate3d(0, 0, 0)'
+          : `translate3d(0, ${scrollIntoWrap * 0.3}px, 0)`
+      }
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll, { passive: true })
     tick()
     return () => {
-      window.clearTimeout(entryT)
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
       if (raf) cancelAnimationFrame(raf)
@@ -152,17 +156,28 @@ export function HeroBanner({
     </Link>
   )
   return (
-    <section
-      ref={sectionRef}
+    <div
+      ref={wrapRef}
       style={{
         position: 'relative',
         width: '100vw',
         marginLeft: 'calc(50% - 50vw)',
-        height: '100vh',
-        background: src ? 'var(--bg)' : '#d6d6d6',
-        overflow: 'hidden',
+        // 200vh wrapper holds the sticky stage in view for ~100vh of
+        // scroll past first paint, giving the blur clear room to play
+        // before the banner releases and the next section enters.
+        height: '200vh',
       }}
     >
+      <section
+        style={{
+          position: 'sticky',
+          top: 0,
+          width: '100%',
+          height: '100vh',
+          background: src ? 'var(--bg)' : '#d6d6d6',
+          overflow: 'hidden',
+        }}
+      >
       {backLink}
       {src && mediaType === 'video' && (
         <video
@@ -291,7 +306,8 @@ export function HeroBanner({
           ))}
         </h1>
       </div>
-    </section>
+      </section>
+    </div>
   )
 }
 

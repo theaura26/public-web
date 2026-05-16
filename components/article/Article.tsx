@@ -70,6 +70,39 @@ export function HeroBanner({
   const words = title.split(/\s+/).filter(Boolean)
   const draftingHint = [type, caption].filter(Boolean).join(' · ')
 
+  // Title parallax — translates the title overlay UP at half scroll
+  // speed, so it lingers over the image as the reader scrolls past. The
+  // image scrolls at full page speed; the title at half. Reduces motion
+  // for users who request it.
+  const sectionRef = useRef<HTMLElement>(null)
+  const titleRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) return
+    let raf = 0
+    const tick = () => {
+      raf = 0
+      const sec = sectionRef.current
+      const t = titleRef.current
+      if (!sec || !t) return
+      // How far past the top of the section the viewport has scrolled.
+      // Negative when section is below the fold; clamped at 0 there.
+      const offset = Math.max(0, -sec.getBoundingClientRect().top)
+      // Half-speed parallax — title appears to drift up at ~50% of scroll.
+      t.style.transform = `translate3d(0, ${offset * 0.5}px, 0)`
+    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    tick()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [])
+
   // Fixed back arrow — anchored to the top-left of the viewport, aligned
   // with the navbar's vertical centre. `mix-blend-mode: difference` keeps
   // it legible against the hero banner AND any prose surface as the
@@ -103,6 +136,7 @@ export function HeroBanner({
   )
   return (
     <section
+      ref={sectionRef}
       style={{
         position: 'relative',
         width: '100vw',
@@ -133,6 +167,23 @@ export function HeroBanner({
           src={src}
           alt={alt ?? title}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
+      )}
+
+      {/* Title-band scrim — a darker horizontal band centred where the
+          title sits. Makes the `mix-blend-mode: difference` title legible
+          on bright/multi-toned photos (where straight difference loses
+          contrast on midtones) without darkening the whole image. */}
+      {src && (
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 2,
+            pointerEvents: 'none',
+            background: 'linear-gradient(to bottom, transparent 28%, rgba(0,0,0,0.45) 50%, transparent 72%)',
+          }}
         />
       )}
 
@@ -173,8 +224,12 @@ export function HeroBanner({
       )}
 
       {/* Title overlay — single line, justified edge-to-edge, inverts
-          against any background via `mix-blend-mode: difference`. */}
+          against any background via `mix-blend-mode: difference`. The
+          ref drives a half-speed parallax: as the reader scrolls past
+          the hero, the title drifts upward at ~50% of scroll, so it
+          lingers over the image. */}
       <div
+        ref={titleRef}
         style={{
           position: 'absolute',
           inset: 0,
@@ -186,6 +241,7 @@ export function HeroBanner({
           color: '#ffffff',
           pointerEvents: 'none',
           zIndex: 3,
+          willChange: 'transform',
         }}
       >
         <h1

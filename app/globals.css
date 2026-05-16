@@ -637,13 +637,19 @@ html {
   text-rendering: optimizeLegibility;
   font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
   font-kerning: normal;
+  /* Horizontal overflow clip lives on the html element, NOT on body.
+     Putting `overflow-x: hidden` on body forces the browser to compute
+     `overflow-y: auto`, which turns body into a scroll container and
+     breaks `position: sticky` on descendants (the sticky tries to pin
+     to body's viewport, but body doesn't actually scroll — the html
+     does). Sticky now resolves cleanly against the document scroller. */
+  overflow-x: hidden;
 }
 
 body {
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.6;
-  overflow-x: hidden;
   scrollbar-width: none;
 }
 
@@ -1031,9 +1037,16 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
   /* Belt-and-braces guard against horizontal scroll on small screens. If a
      descendant ever overruns the viewport (justified headline, sticky
      panel, fixed nav with overshoot, etc.), the page just clips instead of
-     introducing a horizontal scrollbar. */
-  html, body {
+     introducing a horizontal scrollbar.
+
+     html ONLY — putting overflow-x on body forces overflow-y: auto which
+     turns body into a scroll container and breaks `position: sticky` on
+     descendants. The html element clips horizontal overflow on its own. */
+  html {
     overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+  body {
     max-width: 100vw !important;
   }
 

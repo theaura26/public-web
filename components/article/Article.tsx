@@ -102,32 +102,23 @@ export function HeroBanner({
         : raw * raw * raw * (raw * (raw * 6 - 15) + 10)
 
       if (m) {
+        // Clear → blur on scroll. At first paint the image is sharp;
+        // as the reader scrolls into the sticky stage the blur grows
+        // and the image pulls back (1.1× scale) — a departure reveal
+        // rather than an arrival reveal.
         const BLUR_MAX = 20
-        m.style.filter = `blur(${(1 - p) * BLUR_MAX}px)`
-        m.style.transform = `scale(${1 + 0.1 * (1 - p)})`
+        m.style.filter = `blur(${p * BLUR_MAX}px)`
+        m.style.transform = `scale(${1 + 0.1 * p})`
       }
       if (t) {
-        // Title parallax — title is bottom-anchored above the caption.
-        // As the reader scrolls into the sticky stage, the title drifts
-        // UPWARD at ~30% of scroll-into-wrap, opening more air above
-        // the caption rather than ever moving toward it.
+        // Title parallax — title is vertically centred and drifts DOWN
+        // at ~30% of scroll-into-wrap so it lingers in view as the
+        // reader scrolls past, rather than scrolling out at full speed.
         t.style.transform = reduced
           ? 'translate3d(0, 0, 0)'
-          : `translate3d(0, ${-scrollIntoWrap * 0.3}px, 0)`
+          : `translate3d(0, ${scrollIntoWrap * 0.3}px, 0)`
       }
 
-      // Smart back link colour. The back sits fixed at top:80px on the
-      // viewport. While the banner wrapper covers that y position the
-      // back is over the photo → use white. Once the reader has scrolled
-      // past the banner, the back sits over the page surface → use the
-      // theme's text colour. Single source of truth, no mix-blend
-      // muddiness on bright midtone photos.
-      const back = backRef.current
-      if (back) {
-        const BACK_TOP = 80
-        const overBanner = rect.top <= BACK_TOP && rect.bottom > BACK_TOP
-        back.style.color = overBanner ? '#ffffff' : 'var(--text)'
-      }
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -140,18 +131,17 @@ export function HeroBanner({
     }
   }, [])
 
-  // Fixed back arrow — anchored top-left of the viewport. Its colour is
-  // updated each frame by the scroll tick: white while it sits over the
-  // hero banner, theme-text colour once the reader has scrolled past
-  // the banner onto the page surface. Initial paint is white so the
-  // back stays legible against the banner before the first tick runs.
+  // Back arrow — absolutely positioned inside the banner wrapper so it
+  // scrolls with the page (no longer fixed). Painted with
+  // `mix-blend-mode: difference` so it inverts against whatever it sits
+  // over — same colour logic as the title.
   const backLink = (
     <Link
       ref={backRef}
       href="/"
       aria-label="Back to home"
       style={{
-        position: 'fixed',
+        position: 'absolute',
         top: 80,
         left: 'var(--gutter)',
         zIndex: 60,
@@ -161,12 +151,12 @@ export function HeroBanner({
         fontSize: 11,
         letterSpacing: '1.5px',
         textTransform: 'uppercase',
+        mixBlendMode: 'difference',
         display: 'inline-flex',
         alignItems: 'center',
         gap: 8,
         height: 16,
         lineHeight: '16px',
-        transition: 'color var(--dur-fast) var(--ease)',
       }}
     >
       <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
@@ -186,6 +176,7 @@ export function HeroBanner({
         height: '200vh',
       }}
     >
+      {backLink}
       <section
         style={{
           position: 'sticky',
@@ -196,7 +187,6 @@ export function HeroBanner({
           overflow: 'hidden',
         }}
       >
-      {backLink}
       {src && mediaType === 'video' && (
         <video
           ref={mediaRef as React.RefObject<HTMLVideoElement>}
@@ -216,8 +206,8 @@ export function HeroBanner({
             display: 'block',
             // Initial blur + scale so the first paint matches the entry
             // state. JS animates to clear on scroll.
-            filter: 'blur(20px)',
-            transform: 'scale(1.1)',
+            filter: 'blur(0px)',
+            transform: 'scale(1)',
             willChange: 'filter, transform',
           }}
         >
@@ -237,8 +227,8 @@ export function HeroBanner({
             height: '100%',
             objectFit: 'cover',
             display: 'block',
-            filter: 'blur(20px)',
-            transform: 'scale(1.1)',
+            filter: 'blur(0px)',
+            transform: 'scale(1)',
             willChange: 'filter, transform',
           }}
         />
@@ -280,24 +270,21 @@ export function HeroBanner({
         </p>
       )}
 
-      {/* Title overlay — bottom-anchored above the caption so the
-          composition reads: photo → big title → small caption, in a
-          stable hierarchy. The parallax lifts the title upward as the
-          reader scrolls into the sticky stage; it never moves toward
-          the caption. Plain white over the image; blur-to-clear on
-          the image carries legibility while the photo is settling. */}
+      {/* Title overlay — vertically centred, white text inverted against
+          the image via `mix-blend-mode: difference` (dark text on light
+          photos, light text on dark photos, automatically). Parallax
+          drifts the title downward at 30% of scroll-into-wrap so it
+          lingers in view as the reader scrolls. */}
       <div
         ref={titleRef}
         style={{
           position: 'absolute',
           inset: 0,
           display: 'flex',
-          alignItems: 'flex-end',
+          alignItems: 'center',
           justifyContent: 'center',
           padding: 'clamp(20px, 4vw, 48px)',
-          // Reserve room for the caption (it sits in the bottom
-          // ~clamp(20, 4vh, 48) band) plus a generous editorial gap.
-          paddingBottom: 'clamp(96px, 14vh, 180px)',
+          mixBlendMode: 'difference',
           color: '#ffffff',
           pointerEvents: 'none',
           zIndex: 3,
@@ -318,7 +305,9 @@ export function HeroBanner({
             color: 'inherit',
             width: '100%',
             display: 'flex',
-            justifyContent: 'space-between',
+            // Multi-word titles spread edge-to-edge across the section
+            // rail; single-word titles centre instead.
+            justifyContent: words.length > 1 ? 'space-between' : 'center',
             whiteSpace: 'nowrap',
           }}
         >

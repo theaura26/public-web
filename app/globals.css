@@ -786,8 +786,8 @@ h3 {
 /* P1 — primary body, full-strength text */
 .p1 {
   font-family: var(--font-sans);
-  font-size: 17px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.55;
   color: var(--text);
   font-weight: 400;
 }
@@ -795,8 +795,8 @@ h3 {
 /* P2 — secondary body, slightly muted */
 .p2 {
   font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.6;
   color: var(--text-body);
   font-weight: 400;
 }

@@ -106,11 +106,13 @@ export function HeroBanner({
         m.style.transform = `scale(${1 + 0.1 * (1 - p)})`
       }
       if (t) {
-        // Title parallax — drifts upward at 30% of scroll-into-wrap so
-        // it floats over the image without leaving the sticky stage.
+        // Title parallax — title is bottom-anchored above the caption.
+        // As the reader scrolls into the sticky stage, the title drifts
+        // UPWARD at ~30% of scroll-into-wrap, opening more air above
+        // the caption rather than ever moving toward it.
         t.style.transform = reduced
           ? 'translate3d(0, 0, 0)'
-          : `translate3d(0, ${scrollIntoWrap * 0.3}px, 0)`
+          : `translate3d(0, ${-scrollIntoWrap * 0.3}px, 0)`
       }
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
@@ -262,21 +264,24 @@ export function HeroBanner({
         </p>
       )}
 
-      {/* Title overlay — single line, justified edge-to-edge, plain
-          white. The blur-to-clear reveal on the image carries the
-          legibility (image starts heavily blurred so the title pops
-          immediately, then clears as the reader scrolls). The titleRef
-          drives a half-speed parallax so the title lingers over the
-          image as the reader scrolls past. */}
+      {/* Title overlay — bottom-anchored above the caption so the
+          composition reads: photo → big title → small caption, in a
+          stable hierarchy. The parallax lifts the title upward as the
+          reader scrolls into the sticky stage; it never moves toward
+          the caption. Plain white over the image; blur-to-clear on
+          the image carries legibility while the photo is settling. */}
       <div
         ref={titleRef}
         style={{
           position: 'absolute',
           inset: 0,
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-end',
           justifyContent: 'center',
           padding: 'clamp(20px, 4vw, 48px)',
+          // Reserve room for the caption (it sits in the bottom
+          // ~clamp(20, 4vh, 48) band) plus a generous editorial gap.
+          paddingBottom: 'clamp(96px, 14vh, 180px)',
           color: '#ffffff',
           pointerEvents: 'none',
           zIndex: 3,

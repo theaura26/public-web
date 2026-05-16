@@ -70,27 +70,50 @@ export function HeroBanner({
   const words = title.split(/\s+/).filter(Boolean)
   const draftingHint = [type, caption].filter(Boolean).join(' · ')
 
-  // Title parallax — translates the title overlay UP at half scroll
-  // speed, so it lingers over the image as the reader scrolls past. The
-  // image scrolls at full page speed; the title at half. Reduces motion
-  // for users who request it.
+  // Scroll-driven reveal — same gesture as the homepage HeroVideo. The
+  // banner image starts blurred + slightly scaled and clears as the
+  // viewport enters; the title parallaxes upward at half scroll speed
+  // so it lingers over the image. Reduced motion: skip the blur, drop
+  // the parallax to identity.
   const sectionRef = useRef<HTMLElement>(null)
   const titleRef = useRef<HTMLDivElement>(null)
+  const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
   useEffect(() => {
     if (typeof window === 'undefined') return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced) return
     let raf = 0
     const tick = () => {
       raf = 0
       const sec = sectionRef.current
       const t = titleRef.current
-      if (!sec || !t) return
-      // How far past the top of the section the viewport has scrolled.
-      // Negative when section is below the fold; clamped at 0 there.
-      const offset = Math.max(0, -sec.getBoundingClientRect().top)
-      // Half-speed parallax — title appears to drift up at ~50% of scroll.
-      t.style.transform = `translate3d(0, ${offset * 0.5}px, 0)`
+      const m = mediaRef.current
+      if (!sec) return
+      const rect = sec.getBoundingClientRect()
+      const vh = window.innerHeight
+      // p: 0 at first paint (banner heavily blurred), 1 once the reader
+      // has scrolled by one viewport height (banner fully clear). Same
+      // blur-to-clear gesture as the homepage HeroVideo.
+      const raw = Math.max(0, Math.min(1, window.scrollY / vh))
+      const p = reduced
+        ? (raw > 0.05 ? 1 : 0)
+        : raw * raw * raw * (raw * (raw * 6 - 15) + 10)
+
+      // Image: heavy blur + 1.1× scale at entry, clears to 0 + 1× over
+      // the first 100vh of scroll.
+      if (m) {
+        const BLUR_MAX = 20
+        const blurVal = (1 - p) * BLUR_MAX
+        m.style.filter = `blur(${blurVal}px)`
+        m.style.transform = `scale(${1 + 0.1 * (1 - p)})`
+      }
+
+      // Title parallax — half-speed drift up as the reader scrolls past.
+      if (t) {
+        const offset = Math.max(0, -rect.top)
+        t.style.transform = reduced
+          ? 'translate3d(0, 0, 0)'
+          : `translate3d(0, ${offset * 0.5}px, 0)`
+      }
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -149,6 +172,7 @@ export function HeroBanner({
       {backLink}
       {src && mediaType === 'video' && (
         <video
+          ref={mediaRef as React.RefObject<HTMLVideoElement>}
           muted
           loop
           playsInline
@@ -156,7 +180,19 @@ export function HeroBanner({
           preload="metadata"
           poster={poster}
           aria-label={alt ?? title}
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            // Initial blur + scale so the first paint matches the entry
+            // state. JS animates to clear on scroll.
+            filter: 'blur(20px)',
+            transform: 'scale(1.1)',
+            willChange: 'filter, transform',
+          }}
         >
           <source src={src} type="video/mp4" />
         </video>
@@ -164,25 +200,19 @@ export function HeroBanner({
       {src && mediaType === 'image' && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
+          ref={mediaRef as React.RefObject<HTMLImageElement>}
           src={src}
           alt={alt ?? title}
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        />
-      )}
-
-      {/* Title-band scrim — a darker horizontal band centred where the
-          title sits. Makes the `mix-blend-mode: difference` title legible
-          on bright/multi-toned photos (where straight difference loses
-          contrast on midtones) without darkening the whole image. */}
-      {src && (
-        <div
-          aria-hidden
           style={{
             position: 'absolute',
             inset: 0,
-            zIndex: 2,
-            pointerEvents: 'none',
-            background: 'linear-gradient(to bottom, transparent 28%, rgba(0,0,0,0.45) 50%, transparent 72%)',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            filter: 'blur(20px)',
+            transform: 'scale(1.1)',
+            willChange: 'filter, transform',
           }}
         />
       )}
@@ -223,11 +253,12 @@ export function HeroBanner({
         </p>
       )}
 
-      {/* Title overlay — single line, justified edge-to-edge, inverts
-          against any background via `mix-blend-mode: difference`. The
-          ref drives a half-speed parallax: as the reader scrolls past
-          the hero, the title drifts upward at ~50% of scroll, so it
-          lingers over the image. */}
+      {/* Title overlay — single line, justified edge-to-edge, plain
+          white. The blur-to-clear reveal on the image carries the
+          legibility (image starts heavily blurred so the title pops
+          immediately, then clears as the reader scrolls). The titleRef
+          drives a half-speed parallax so the title lingers over the
+          image as the reader scrolls past. */}
       <div
         ref={titleRef}
         style={{
@@ -237,7 +268,6 @@ export function HeroBanner({
           alignItems: 'center',
           justifyContent: 'center',
           padding: 'clamp(20px, 4vw, 48px)',
-          mixBlendMode: 'difference',
           color: '#ffffff',
           pointerEvents: 'none',
           zIndex: 3,

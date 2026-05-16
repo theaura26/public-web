@@ -885,6 +885,17 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
   width: 100%;
 }
 
+/* ── Article body — vertical gap between sequential paragraphs so the
+   p1 lead and the p2 body lines breathe. Without this, consecutive
+   <p> blocks inside <TwoCol>/<OneCol> stack with zero space because
+   `.p1` / `.p2` carry their type spec but no margin. */
+.article-body > p + p,
+.article-body > p + div,
+.article-body > div + p,
+.article-body p + p {
+  margin-top: clamp(12px, 1.4vh, 20px) !important;
+}
+
 /* ── Term — inline glossary marker for jargon. Dotted underline in the
    running text; a small mono-uppercase tooltip lifts above on hover.
    Force rebuild key — bumping comment to nudge Turbopack. */

@@ -111,14 +111,27 @@ export function HeroBanner({
         m.style.transform = `scale(${1 + 0.1 * p})`
       }
       if (t) {
-        // Title parallax — title is vertically centred and drifts DOWN
-        // at ~30% of scroll-into-wrap so it lingers in view as the
-        // reader scrolls past, rather than scrolling out at full speed.
+        // Title parallax — title is vertically centred and drifts UP
+        // at ~30% of scroll-into-wrap so it rises out of frame as the
+        // image blurs behind it.
         t.style.transform = reduced
           ? 'translate3d(0, 0, 0)'
-          : `translate3d(0, ${scrollIntoWrap * 0.3}px, 0)`
+          : `translate3d(0, ${-scrollIntoWrap * 0.3}px, 0)`
       }
 
+      // Smart back link colour — back is fixed to the viewport so it
+      // stays accessible the whole way through. While the banner
+      // wrapper covers the back's y position the back is over the
+      // photo → mix-blend inverts it. Once past the banner the back
+      // sits on the page surface → switch to the theme text colour
+      // (dark in day mode, light in night) without the blend.
+      const back = backRef.current
+      if (back) {
+        const BACK_TOP = 80
+        const overBanner = rect.top <= BACK_TOP && rect.bottom > BACK_TOP
+        back.style.color = overBanner ? '#ffffff' : 'var(--text)'
+        back.style.mixBlendMode = overBanner ? 'difference' : 'normal'
+      }
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -131,17 +144,18 @@ export function HeroBanner({
     }
   }, [])
 
-  // Back arrow — absolutely positioned inside the banner wrapper so it
-  // scrolls with the page (no longer fixed). Painted with
-  // `mix-blend-mode: difference` so it inverts against whatever it sits
-  // over — same colour logic as the title.
+  // Back arrow — fixed to the viewport so it stays accessible across
+  // the entire journal. Colour and mix-blend are toggled each frame by
+  // the scroll tick: difference + white while over the banner photo,
+  // plain var(--text) once the reader has scrolled past the banner
+  // onto the page surface.
   const backLink = (
     <Link
       ref={backRef}
       href="/"
       aria-label="Back to home"
       style={{
-        position: 'absolute',
+        position: 'fixed',
         top: 80,
         left: 'var(--gutter)',
         zIndex: 60,
@@ -157,6 +171,7 @@ export function HeroBanner({
         gap: 8,
         height: 16,
         lineHeight: '16px',
+        transition: 'color var(--dur-fast) var(--ease)',
       }}
     >
       <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>

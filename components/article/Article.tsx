@@ -80,6 +80,7 @@ export function HeroBanner({
   const wrapRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLDivElement>(null)
   const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
+  const backRef = useRef<HTMLAnchorElement>(null)
   useEffect(() => {
     if (typeof window === 'undefined') return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -114,6 +115,19 @@ export function HeroBanner({
           ? 'translate3d(0, 0, 0)'
           : `translate3d(0, ${-scrollIntoWrap * 0.3}px, 0)`
       }
+
+      // Smart back link colour. The back sits fixed at top:80px on the
+      // viewport. While the banner wrapper covers that y position the
+      // back is over the photo → use white. Once the reader has scrolled
+      // past the banner, the back sits over the page surface → use the
+      // theme's text colour. Single source of truth, no mix-blend
+      // muddiness on bright midtone photos.
+      const back = backRef.current
+      if (back) {
+        const BACK_TOP = 80
+        const overBanner = rect.top <= BACK_TOP && rect.bottom > BACK_TOP
+        back.style.color = overBanner ? '#ffffff' : 'var(--text)'
+      }
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -126,12 +140,14 @@ export function HeroBanner({
     }
   }, [])
 
-  // Fixed back arrow — anchored to the top-left of the viewport, aligned
-  // with the navbar's vertical centre. `mix-blend-mode: difference` keeps
-  // it legible against the hero banner AND any prose surface as the
-  // reader scrolls past it.
+  // Fixed back arrow — anchored top-left of the viewport. Its colour is
+  // updated each frame by the scroll tick: white while it sits over the
+  // hero banner, theme-text colour once the reader has scrolled past
+  // the banner onto the page surface. Initial paint is white so the
+  // back stays legible against the banner before the first tick runs.
   const backLink = (
     <Link
+      ref={backRef}
       href="/"
       aria-label="Back to home"
       style={{
@@ -145,12 +161,12 @@ export function HeroBanner({
         fontSize: 11,
         letterSpacing: '1.5px',
         textTransform: 'uppercase',
-        mixBlendMode: 'difference',
         display: 'inline-flex',
         alignItems: 'center',
         gap: 8,
         height: 16,
         lineHeight: '16px',
+        transition: 'color var(--dur-fast) var(--ease)',
       }}
     >
       <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>

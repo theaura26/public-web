@@ -896,6 +896,15 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
   margin-top: clamp(12px, 1.4vh, 20px) !important;
 }
 
+/* Mobile: trim the section rhythm by ~30% so the journals don't feel
+   over-padded on a narrow viewport. Affects every kit primitive that
+   uses `var(--section-gap)` for its top/bottom padding. */
+@media (max-width: 768px) {
+  :root {
+    --section-gap: clamp(56px, 9vh, 100px);
+  }
+}
+
 /* ── Term — inline glossary marker for jargon. Dotted underline in the
    running text; a small mono-uppercase tooltip lifts above on hover.
    Force rebuild key — bumping comment to nudge Turbopack. */

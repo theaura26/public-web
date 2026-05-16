@@ -70,56 +70,50 @@ export function HeroBanner({
   const words = title.split(/\s+/).filter(Boolean)
   const draftingHint = [type, caption].filter(Boolean).join(' · ')
 
-  // Scroll-driven reveal — same gesture as the homepage HeroVideo. The
-  // banner image starts blurred + slightly scaled and clears as the
-  // viewport enters; the title parallaxes upward at half scroll speed
-  // so it lingers over the image. Reduced motion: skip the blur, drop
-  // the parallax to identity.
+  // Two motions on the hero:
+  //   1. ENTRY    — banner image opens blurred + 1.1× scale, holds for
+  //                 ~250 ms, then animates to clear over a CSS transition
+  //                 (~1.8 s ease-out). One-shot, fires on mount.
+  //   2. PARALLAX — once cleared, the title overlay drifts upward at
+  //                 half scroll speed so it lingers over the image as
+  //                 the reader scrolls past.
   const sectionRef = useRef<HTMLElement>(null)
   const titleRef = useRef<HTMLDivElement>(null)
   const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
   useEffect(() => {
     if (typeof window === 'undefined') return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    // ENTRY — clear the blur after a brief hold, letting CSS transition
+    // do the easing. Reduced motion: instant clear, no hold.
+    const holdMs = reduced ? 0 : 250
+    const entryT = window.setTimeout(() => {
+      const m = mediaRef.current
+      if (!m) return
+      m.style.filter = 'blur(0px)'
+      m.style.transform = 'scale(1)'
+    }, holdMs)
+
+    // PARALLAX — title drifts up at half scroll speed.
     let raf = 0
     const tick = () => {
       raf = 0
       const sec = sectionRef.current
       const t = titleRef.current
-      const m = mediaRef.current
-      if (!sec) return
-      const rect = sec.getBoundingClientRect()
-      const vh = window.innerHeight
-      // p: 0 at first paint (banner heavily blurred), 1 once the reader
-      // has scrolled by one viewport height (banner fully clear). Same
-      // blur-to-clear gesture as the homepage HeroVideo.
-      const raw = Math.max(0, Math.min(1, window.scrollY / vh))
-      const p = reduced
-        ? (raw > 0.05 ? 1 : 0)
-        : raw * raw * raw * (raw * (raw * 6 - 15) + 10)
-
-      // Image: heavy blur + 1.1× scale at entry, clears to 0 + 1× over
-      // the first 100vh of scroll.
-      if (m) {
-        const BLUR_MAX = 20
-        const blurVal = (1 - p) * BLUR_MAX
-        m.style.filter = `blur(${blurVal}px)`
-        m.style.transform = `scale(${1 + 0.1 * (1 - p)})`
+      if (!sec || !t) return
+      if (reduced) {
+        t.style.transform = 'translate3d(0, 0, 0)'
+        return
       }
-
-      // Title parallax — half-speed drift up as the reader scrolls past.
-      if (t) {
-        const offset = Math.max(0, -rect.top)
-        t.style.transform = reduced
-          ? 'translate3d(0, 0, 0)'
-          : `translate3d(0, ${offset * 0.5}px, 0)`
-      }
+      const offset = Math.max(0, -sec.getBoundingClientRect().top)
+      t.style.transform = `translate3d(0, ${offset * 0.5}px, 0)`
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll, { passive: true })
     tick()
     return () => {
+      window.clearTimeout(entryT)
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
       if (raf) cancelAnimationFrame(raf)
@@ -563,6 +557,9 @@ export function DataGrid({
         @media (max-width: 768px) {
           .data-grid {
             grid-template-columns: 1fr !important;
+            /* Stacked tiles on mobile need real breathing room — match
+               the homepage .pillar-grid rhythm. */
+            gap: 56px !important;
           }
         }
       `}</style>

@@ -375,11 +375,9 @@ export function HeroBanner({
         <h1
           style={{
             margin: 0,
-            /* Match the homepage `.hero-display` exactly so the journal
-               opener reads as a sibling of "FOR · GENERATIONAL · IMPACT". */
             fontFamily: 'var(--font-grotesque)',
             fontWeight: 600,
-            fontSize: 'clamp(36px, 6.6vw, 96px)',
+            fontSize: 'clamp(56px, 12vw, 160px)',
             lineHeight: 0.95,
             letterSpacing: '-0.04em',
             textTransform: 'uppercase',

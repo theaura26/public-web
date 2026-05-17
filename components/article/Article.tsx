@@ -86,14 +86,12 @@ export function HeroBanner({
   const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
   const backRef = useRef<HTMLAnchorElement>(null)
 
-  // Title legibility mode — chosen per image by luminance variance.
-  //   • Flat / near-monochromatic image (low std, e.g. the RTA orange
-  //     plate) → 'difference': inverts white to a clean contrasting hue.
-  //   • Busy / varied photo (high std, e.g. the Coffee scene) → 'white':
-  //     plain white reads against the busier detail without the muddy
-  //     mid-tones that mix-blend-difference produces on varied imagery.
-  // The 10% black tint sits between image and title regardless, as a
-  // legibility floor. SSR default 'white' covers the common photo case.
+  // Title legibility mode — chosen per image by luminance stats. Plain
+  // white works on dark or busy mid-tone photos; mix-blend-difference
+  // wins when the image is either near-monochromatic (clean inversion)
+  // or mostly-bright with sparse dark accents (plain white would fall on
+  // the bright field and disappear). The 10% black tint sits between
+  // image and title regardless, as a legibility floor.
   const [textMode, setTextMode] = useState<'difference' | 'white'>('white')
   useEffect(() => {
     if (!src || mediaType !== 'image') return
@@ -119,9 +117,14 @@ export function HeroBanner({
         }
         const avg = sum / n
         const std = Math.sqrt(Math.max(0, sumSq / n - avg * avg))
-        // Threshold tuned against /aura-rta.jpg (std≈0.05, flat plate)
-        // and /aura-coffee.jpg (std≈0.17, busy illustration).
-        setTextMode(std < 0.1 ? 'difference' : 'white')
+        // Thresholds tuned against the active journal banners:
+        //   /aura-rta.jpg          std≈0.05            → flat plate    → difference
+        //   /aura-coffee.jpg       avg≈0.68, std≈0.17  → busy photo    → white
+        //   /aura-wisdom.jpg       avg≈0.74, std≈0.37  → bright + sparse → difference
+        //   /aura-fermentation.jpg avg≈0.33, std≈0.15  → dark photo    → white
+        const flat = std < 0.1
+        const brightAndSparse = avg > 0.5 && std > 0.25
+        setTextMode(flat || brightAndSparse ? 'difference' : 'white')
       } catch {
         // CORS or other — leave as default.
       }

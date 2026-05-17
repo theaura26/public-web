@@ -25,7 +25,7 @@ Every journal starts with **exactly one** opener.
 
 ### 1a. `<HeroBanner>` — display opener
 
-Sticky full-screen banner. The reader sees the image clearly at first paint; as they scroll into the sticky stage, the image **blurs and pulls back** (1 → 1.1× scale, 0 → 20px blur) while the title parallaxes **upward** at 30% of scroll-into-wrap. Title is `mix-blend-mode: difference` so the colour inverts against whatever's behind it.
+Sticky full-screen banner. The reader sees the image clearly at first paint; as they scroll into the sticky stage, the image **blurs and pulls back** (1 → 1.1× scale, 0 → 20px blur) while the title parallaxes **upward** at 30% of scroll-into-wrap. Every banner gets a 10% black tint overlay as a legibility floor; title style is chosen **per image** by sampling luminance variance on load — flat / near-monochromatic plates (e.g. /aura-rta.jpg) get `mix-blend-mode: difference` (clean inversion); busy varied photos (e.g. /aura-coffee.jpg) get plain white (reads against the tinted detail without the muddy mid-tones difference produces on photos).
 
 ```tsx
 <HeroBanner
@@ -40,7 +40,7 @@ Sticky full-screen banner. The reader sees the image clearly at first paint; as 
 - Single-word titles centre; multi-word titles spread edge-to-edge (justify-between) across the section rail. Match the homepage hero spec exactly.
 - The banner pins for the first 100vh of scroll, then releases. Title parallaxes up so it rises out of frame as the image blurs.
 - Drafting state: drop `src` (or rely on the journal index), pass `type` + `caption` — the slot renders as a grey `#d6d6d6` card with the centered "type · caption" hint.
-- A fixed back arrow (`← BACK`) sits top-left across the whole page. Its colour adapts via mix-blend over the banner and switches to `var(--text)` once the reader scrolls past.
+- A fixed back arrow (`← BACK`) sits top-left across the whole page. Plain white above the fold (over the tinted banner), then switches to `var(--text)` once the reader scrolls past — no blend mode.
 
 ### 1b. `<ArticleHero>` — indexed opener
 

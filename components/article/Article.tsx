@@ -21,7 +21,7 @@
 ═══════════════════════════════════════════════════════════════════ */
 
 import Link from 'next/link'
-import { ReactNode, useEffect, useRef } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import Reveal from '@/components/RevealOnScroll'
 import { ExpandingBanner } from '@/components/ExpandingBanner'
 import { ACTIVE_JOURNALS, nextActiveJournals, type Journal } from '@/lib/journals'
@@ -32,9 +32,13 @@ import { ACTIVE_JOURNALS, nextActiveJournals, type Journal } from '@/lib/journal
 
       Drafting state renders a grey card with a small centred `type +
       caption` hint; once `src` is set, the card holds the photo or video
-      with the caption pinned bottom-left. Title legibility comes from
-      `mix-blend-mode: difference` so the same overlay inverts cleanly
-      against grey drafts, dark photos, and light photos. */
+      with a 10% black tint overlay (legibility floor) and the caption
+      pinned bottom-left. Title style is chosen *per image*: a hidden
+      canvas samples the loaded image; if it's uniformly dark we use plain
+      white text (reads cleanly against a low-key photo), otherwise we use
+      `mix-blend-mode: difference` (inverts cleanly against varied or
+      light scenes). Same logic drives the back link while it's over the
+      banner; once past the banner the back switches to var(--text). */
 export function HeroBanner({
   title,
   src,
@@ -81,6 +85,49 @@ export function HeroBanner({
   const titleRef = useRef<HTMLDivElement>(null)
   const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
   const backRef = useRef<HTMLAnchorElement>(null)
+
+  // Title legibility mode — chosen per image by luminance variance.
+  //   • Flat / near-monochromatic image (low std, e.g. the RTA orange
+  //     plate) → 'difference': inverts white to a clean contrasting hue.
+  //   • Busy / varied photo (high std, e.g. the Coffee scene) → 'white':
+  //     plain white reads against the busier detail without the muddy
+  //     mid-tones that mix-blend-difference produces on varied imagery.
+  // The 10% black tint sits between image and title regardless, as a
+  // legibility floor. SSR default 'white' covers the common photo case.
+  const [textMode, setTextMode] = useState<'difference' | 'white'>('white')
+  useEffect(() => {
+    if (!src || mediaType !== 'image') return
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      try {
+        const size = 64
+        const canvas = document.createElement('canvas')
+        canvas.width = size
+        canvas.height = size
+        const ctx = canvas.getContext('2d', { willReadFrequently: true })
+        if (!ctx) return
+        ctx.drawImage(img, 0, 0, size, size)
+        const { data } = ctx.getImageData(0, 0, size, size)
+        let sum = 0
+        let sumSq = 0
+        const n = size * size
+        for (let i = 0; i < data.length; i += 4) {
+          const l = (0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255
+          sum += l
+          sumSq += l * l
+        }
+        const avg = sum / n
+        const std = Math.sqrt(Math.max(0, sumSq / n - avg * avg))
+        // Threshold tuned against /aura-rta.jpg (std≈0.05, flat plate)
+        // and /aura-coffee.jpg (std≈0.17, busy illustration).
+        setTextMode(std < 0.1 ? 'difference' : 'white')
+      } catch {
+        // CORS or other — leave as default.
+      }
+    }
+    img.src = src
+  }, [src, mediaType])
   useEffect(() => {
     if (typeof window === 'undefined') return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -120,17 +167,17 @@ export function HeroBanner({
       }
 
       // Smart back link colour — back is fixed to the viewport so it
-      // stays accessible the whole way through. While the banner
-      // wrapper covers the back's y position the back is over the
-      // photo → mix-blend inverts it. Once past the banner the back
-      // sits on the page surface → switch to the theme text colour
-      // (dark in day mode, light in night) without the blend.
+      // stays accessible the whole way through. Above the fold (while
+      // the banner sits behind the back) it reads plain white against
+      // the tinted photo. Once past the banner it switches to
+      // var(--text) so it stays legible on the page surface (dark in
+      // day mode, light in night). No mix-blend on either state — the
+      // 10% black tint gives the white enough lift above the fold.
       const back = backRef.current
       if (back) {
         const BACK_TOP = 80
         const overBanner = rect.top <= BACK_TOP && rect.bottom > BACK_TOP
         back.style.color = overBanner ? '#ffffff' : 'var(--text)'
-        back.style.mixBlendMode = overBanner ? 'difference' : 'normal'
       }
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
@@ -165,7 +212,7 @@ export function HeroBanner({
         fontSize: 11,
         letterSpacing: '1.5px',
         textTransform: 'uppercase',
-        mixBlendMode: 'difference',
+        mixBlendMode: 'normal',
         display: 'inline-flex',
         alignItems: 'center',
         gap: 8,
@@ -249,6 +296,21 @@ export function HeroBanner({
         />
       )}
 
+      {/* 10% black tint — legibility floor over every banner image. Sits
+          above the photo, below the title/caption. */}
+      {src && (
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.1)',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+        />
+      )}
+
       {/* Drafting hint — small mono label under the title while `src` is empty. */}
       {!src && draftingHint && (
         <div
@@ -285,11 +347,12 @@ export function HeroBanner({
         </p>
       )}
 
-      {/* Title overlay — vertically centred, white text inverted against
-          the image via `mix-blend-mode: difference` (dark text on light
-          photos, light text on dark photos, automatically). Parallax
-          drifts the title downward at 30% of scroll-into-wrap so it
-          lingers in view as the reader scrolls. */}
+      {/* Title overlay — vertically centred white text. textMode picks
+          between mix-blend-difference (varied/light scenes — inverts for
+          contrast) and plain white (uniformly dark scenes — reads as-is
+          without muddying mid-tones). Parallax drifts the title upward
+          at 30% of scroll-into-wrap so it lingers in view as the reader
+          scrolls. */}
       <div
         ref={titleRef}
         style={{
@@ -299,7 +362,7 @@ export function HeroBanner({
           alignItems: 'center',
           justifyContent: 'center',
           padding: 'clamp(20px, 4vw, 48px)',
-          mixBlendMode: 'difference',
+          mixBlendMode: textMode === 'difference' ? 'difference' : 'normal',
           color: '#ffffff',
           pointerEvents: 'none',
           zIndex: 3,

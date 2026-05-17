@@ -178,7 +178,7 @@ export function HeroBanner({
       // 10% black tint gives the white enough lift above the fold.
       const back = backRef.current
       if (back) {
-        const BACK_TOP = 80
+        const BACK_TOP = 104
         const overBanner = rect.top <= BACK_TOP && rect.bottom > BACK_TOP
         back.style.color = overBanner ? '#ffffff' : 'var(--text)'
       }
@@ -206,7 +206,7 @@ export function HeroBanner({
       aria-label="Back to home"
       style={{
         position: 'fixed',
-        top: 80,
+        top: 104,
         left: 'var(--gutter)',
         zIndex: 60,
         color: '#ffffff',

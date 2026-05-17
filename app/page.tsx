@@ -1910,11 +1910,11 @@ export default function Home() {
               max-width: 100%;
               margin: 0;
               align-self: stretch;
-              /* Mobile clamp — tuned so each manifesto h1 wraps to exactly
-                 two lines ("A REGENERATIVE / COMPANY", "FOR GENERATIONAL /
-                 IMPACT"). 9vw keeps the type display-weight without forcing
-                 single-word line breaks. */
-              font-size: clamp(36px, 9vw, 52px);
+              /* Match the journal HeroBanner slope (12vw, max 160px).
+                 Smaller floor than the journal (36 vs 56) so the long
+                 manifesto words ("REGENERATIVE", "GENERATIONAL") still
+                 fit inside the gutter on narrow phones. */
+              font-size: clamp(36px, 12vw, 160px);
               line-height: 1.04;
               letter-spacing: -0.04em;
               white-space: normal;

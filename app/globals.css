@@ -4,34 +4,29 @@
    AURA — Design System
    ─────────────────────────────────────────────────────────────────────
    Token reference. Edit values here, never hard-code in components.
+   Every token below has at least one live consumer — anything unused
+   has been removed during the May 2026 audit. If you need a new
+   spacing/radius/z step, add it here first.
+
    Section order:
-     1.  Brand colour palette          --brand-*
+     1.  Brand palette                 --brand-accent, --error
      2.  Theme — Night (default)       --bg / --text / --border
      3.  Theme — Day
-     4.  Spacing scale                 --space-1 → --space-12
-     5.  Layout                        --gutter / --max-w / --section-gap / --grid-gap
-     6.  Radius                        --radius-1 / --radius-2 / --radius-pill
-     7.  Z-index                       --z-content → --z-cursor
-     8.  Motion — easings + durations  --ease-* / --dur-*
+     4.  Spacing scale                 --space-2 → --space-9
+     5.  Layout                        --gutter / --max-w / --nav-h /
+                                       --section-gap / --grid-gap
+     6.  Radius                        --radius-1 (cards), --radius-2 (inputs)
+     7.  Z-index                       --z-modal
+     8.  Motion — easings + durations  --ease* / --dur-*
      9.  Type roles                    h1 / h2 / h3 / .p1 / .p2 / .label
    ═══════════════════════════════════════════════════════════════════════ */
 
 :root {
   /* ── 1. Brand palette (immutable across themes) ── */
   --brand-accent: #E37128;          /* primary action / hover */
-  --brand-dry-osmosis: #CA4926;
-  --brand-red-honey: #DD7C37;
-  --brand-banana-wash: #E4B239;
-  --brand-solera-maceration: #E1ADA2;
-  --brand-solera-wash: #A5B6C8;
-  --brand-grappa: #B6B050;
-  --brand-volcanic: #7A7C5C;
-  --brand-appassimento: #FFFFFF;
+  --error: #E8421A;                 /* form validation, destructive UI */
 
-  --error: #E8421A;
-
-  /* ── 4. Spacing scale (8px base, with 4px micro step) ── */
-  --space-1: 4px;
+  /* ── 4. Spacing scale (8px base, 4px micro step) ── */
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
@@ -40,42 +35,30 @@
   --space-7: 48px;
   --space-8: 64px;
   --space-9: 80px;
-  --space-10: 96px;
-  --space-11: 120px;
-  --space-12: 160px;
 
   /* ── 5. Layout ── */
   --gutter: clamp(20px, 4vw, 48px);          /* horizontal page padding */
   --max-w: 1200px;                            /* primary content width */
-  --max-w-narrow: 720px;                      /* long-form reading width */
   --nav-h: 56px;                              /* fixed navbar height */
   --section-gap: clamp(80px, 12vh, 140px);    /* between major sections */
   --grid-gap: clamp(32px, 5vw, 80px);         /* between grid items */
-  --col2-gap: clamp(40px, 6vw, 100px);        /* tighter 2-col asymmetry */
 
   /* ── 6. Radius ── */
   --radius-1: 2px;       /* tiles, video frames, cards */
   --radius-2: 4px;       /* buttons, inputs */
-  --radius-pill: 9999px; /* pills, chips, avatar */
 
   /* ── 7. Z-index scale ── */
-  --z-content: 1;
-  --z-overlay: 30;       /* backdrops behind nav */
-  --z-nav: 50;           /* navbar / hamburger panel */
   --z-modal: 9990;       /* LocationModal */
-  --z-cursor: 9999;      /* custom cursor stays on top */
 
   /* ── 8. Motion ── */
-  /* Motion: 3-curve system. Discipline > variety — same feel everywhere.
-     Inspired by 9to5studio.it which only uses 3 easings sitewide. */
+  /* Motion: 3-curve system. Discipline > variety — same feel everywhere. */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);            /* Material standard — micro transitions (color, opacity, border) */
-  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);      /* easeOutExpo — hero reveals, panel slides, hover swaps. Long buttery decel */
-  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);    /* Reserved for the cursor pill micro-snap. Do not use elsewhere */
+  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);      /* easeOutExpo — hero reveals, panel slides, hover swaps */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);    /* Spring micro-snap — used by navbar tile + Continue card symbol hover */
 
   --dur-fast: 150ms;
   --dur-base: 250ms;
   --dur-slow: 450ms;
-  --dur-slower: 700ms;
   --dur-theme: 400ms;     /* day/night theme cross-fade */
 }
 
@@ -85,9 +68,7 @@
    so they read as a contrasting strip against the rest of the page. */
 :root, html [data-theme="night"] {
   --bg: #131719;
-  --bg-elevated: #1a1d20;
   --bg-card: #1a1d20;
-  --nav-bg: rgba(19, 23, 25, 0.92);
 
   --text: #ededed;                            /* primary */
   --text-body: rgba(237, 237, 237, 0.65);     /* secondary */
@@ -111,9 +92,7 @@
 /* ── 3. Theme — Day ── */
 html [data-theme="day"] {
   --bg: #ffffff;
-  --bg-elevated: #ffffff;
   --bg-card: #ffffff;
-  --nav-bg: rgba(255, 255, 255, 0.7);
 
   --text: #1a1a1a;
   --text-body: rgba(26, 26, 26, 0.65);

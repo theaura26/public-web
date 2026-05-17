@@ -1,8 +1,10 @@
 # Journal Design Kit
 
-Two openers, seven blocks, one reveal utility. Nothing else.
+Two openers, seven blocks, two display utilities. Nothing else.
 
 If a journal needs something not in this kit, the journal is wrong — not the kit. Constraint is the point.
+
+The canonical example is [app/idea/page.tsx](app/idea/page.tsx). If your new journal looks more complicated than that, simplify.
 
 ---
 
@@ -13,32 +15,36 @@ There are exactly **two horizontal positions** anything in a journal can take:
 1. **Left rail** — every heading, paragraph, list, image caption, and OneCol block sits on the same left rail (the `.section-w` content edge). This rail is the spine of the page.
 2. **Center** — reserved exclusively for `<PullQuote>`. Nothing else uses it.
 
-Pages read like a clean column of writing with full-bleed images interrupting it, and the occasional centered quote as a beat.
+Pages read like a clean column of writing, with full-bleed images interrupting it and the occasional centered quote as a beat.
 
 ---
 
 ## Openers — pick one
 
-Every journal starts with **exactly one** opener. Choose the register that fits.
+Every journal starts with **exactly one** opener.
 
 ### 1a. `<HeroBanner>` — display opener
 
-Big centred display title with words justified edge-to-edge inside the section rail, then a full-screen banner below (same `<ExpandingBanner>` the homepage hero uses). Use this for marquee pieces — the manifesto, the flagship article — where the title itself is the statement.
+Sticky full-screen banner. The reader sees the image clearly at first paint; as they scroll into the sticky stage, the image **blurs and pulls back** (1 → 1.1× scale, 0 → 20px blur) while the title parallaxes **upward** at 30% of scroll-into-wrap. Title is `mix-blend-mode: difference` so the colour inverts against whatever's behind it.
 
 ```tsx
 <HeroBanner
-  title={`The 1000\nYear Idea`}
-  type="Aerial landscape"
-  caption="150 acres at sunrise, Mudigere"
+  currentHref="/wisdom"
+  title="Moral Spine"
+  type="Portrait · hands"
+  caption="Attention as moral choice — Sampigelkhan Estate"
 />
 ```
 
-- Split `title` on `\n` to control line breaks. Each line lays out as a flex row so the words spread evenly between the section rails.
-- The banner uses `type` + `caption` while drafting, `src` (and `mediaType="video"` for film) once you have approved media.
+- `currentHref` auto-derives the banner image from `lib/journals.ts` — the same thumbnail the navbar and Continue cards use. Pass it on every journal.
+- Single-word titles centre; multi-word titles spread edge-to-edge (justify-between) across the section rail. Match the homepage hero spec exactly.
+- The banner pins for the first 100vh of scroll, then releases. Title parallaxes up so it rises out of frame as the image blurs.
+- Drafting state: drop `src` (or rely on the journal index), pass `type` + `caption` — the slot renders as a grey `#d6d6d6` card with the centered "type · caption" hint.
+- A fixed back arrow (`← BACK`) sits top-left across the whole page. Its colour adapts via mix-blend over the banner and switches to `var(--text)` once the reader scrolls past.
 
 ### 1b. `<ArticleHero>` — indexed opener
 
-Title on the left rail with a TOC on the right. Use this for long reads where the reader needs to navigate sections.
+Title on the left rail with a TOC on the right. Use this for long reads where the reader needs to navigate sections — short reads (<800 words) should keep just `title` + `subline`.
 
 ```tsx
 <ArticleHero
@@ -50,8 +56,6 @@ Title on the left rail with a TOC on the right. Use this for long reads where th
   ]}
 />
 ```
-
-Drop the TOC if the journal is under ~800 words; keep just `title` + `subline`.
 
 ---
 
@@ -66,7 +70,7 @@ The narrow reading column. Sits on the left rail at the same 760px max-width as 
 </OneCol>
 ```
 
-**`heading` is required.** Every OneCol must declare what it is — orphan prose without a heading is what `<TwoCol>` is for. If you want a moment of declaration without a heading, use `<ScrollHighlight>`.
+**`heading` is required.** Orphan prose without a heading is what `<TwoCol>` is for, or `<ScrollHighlight>` if it's a declaration.
 
 ---
 
@@ -78,19 +82,18 @@ The workhorse. Heading on the left rail, body in the right column. Both columns 
 <TwoCol id="pillars" heading="Sanctuary. Agroculture. Artistry.">
   <p className="p1">First paragraph — sets the frame.</p>
   <p className="p2">Subsequent paragraphs.</p>
-  <p className="p2">Etc.</p>
 </TwoCol>
 ```
 
 First paragraph: `className="p1"` (lead size). Rest: `className="p2"`.
 
-`<DataGrid>` can live inside `<TwoCol>` body.
+`<DataGrid>` (stat mode) can live inside `<TwoCol>` body. `<DataGrid standalone>` (tile mode) lives at section-w width, never nested in a body.
 
 ---
 
 ## 4. `<PullQuote>` — centered grotesque display
 
-**The only centered element in the kit.** Bracketed top and bottom by full-viewport grey rules that ground the centered quote against the prose around it. Use sparingly — once per long section, twice max per page.
+**The only centered element in the kit.** Bracketed top and bottom by full-viewport `var(--border)` rules that ground the centered quote against the prose around it. Use sparingly — once per long section, twice max per page.
 
 ```tsx
 <PullQuote attribution="Arvind">
@@ -104,9 +107,9 @@ First paragraph: `className="p1"` (lead size). Rest: `className="p2"`.
 
 ## 5. `<DataGrid>` + `<DataCard>` — responsive cards
 
-The only "more than one column" pattern allowed. Two modes — same primitive, controlled by whether each card has an image.
+The only "more than one column" pattern allowed. Two modes — same primitive, different visual.
 
-**Stat mode** (no `img`, no `type`) — thin cards, top rule, value + body. Use inside `<TwoCol>` to frame filters or measurable claims:
+**Stat mode** (no `img`, no `type`) — thin top-rule cards. Use inside `<TwoCol>` to frame filters or measurable claims:
 
 ```tsx
 <TwoCol heading="Seven Decision Filters">
@@ -122,35 +125,25 @@ The only "more than one column" pattern allowed. Two modes — same primitive, c
 </TwoCol>
 ```
 
-**Tile mode** (with `img` — or `type` for drafting) — hero-style cards, **4:5 portrait** thumbnail on top, matching the homepage pillar grid. Always use `standalone` so the grid spans the full section width, never nested in a `<TwoCol>` body:
+**Tile mode** (with `img` — or `type` for drafting) — hero-style cards, **4:5 portrait** thumbnail on top, matching the homepage pillar grid. Always pass `standalone` so the grid spans the full section width, never nested in a `<TwoCol>` body:
 
 ```tsx
 <DataGrid cols={3} standalone>
   <DataCard type="Landscape · old growth" value="Natural Intelligence">
     3.8 billion years of field trials…
   </DataCard>
-  <DataCard type="Portrait · elder hands" value="Human Intelligence">
-    The accumulated craft of those who listened…
-  </DataCard>
-  <DataCard type="Detail · sensor / circuit" value="Machine Intelligence">
-    The most recent arrival — given the smallest jobs…
-  </DataCard>
+  <DataCard type="Portrait · elder hands" value="Human Intelligence">…</DataCard>
+  <DataCard type="Detail · sensor / circuit" value="Machine Intelligence">…</DataCard>
 </DataGrid>
 ```
 
-**Default to drafting tiles (`type` only).** Until you have approved imagery, leave `img` off — the thumbnail renders as the same grey drafting card `<Placeholder>` uses. Add `img` later when the photo is ready:
-
-```tsx
-<DataCard img="/aura-natural.jpg" type="Landscape · old growth" value="Natural Intelligence">
-  …
-</DataCard>
-```
+**Default to drafting tiles (`type` only).** Until you have approved imagery, leave `img` off — the thumbnail renders as the same grey drafting card `<Placeholder>` uses.
 
 ---
 
 ## 6. `<Placeholder>` — full-screen image with bottom-left caption
 
-Spans the **full viewport** — 100vw wide and 100vh tall, the same expanding-banner gesture the homepage hero video uses. Caption renders as a small label in the bottom-left corner of the image, anchored to the section-w left rail so it lines up with the prose above and below.
+Spans the **full viewport** — 100vw wide, 100vh tall, the same expanding-banner gesture the homepage hero uses. Caption renders as a label in the bottom-left corner, anchored to the section-w left rail so it lines up with the prose above and below.
 
 ```tsx
 <Placeholder
@@ -160,18 +153,15 @@ Spans the **full viewport** — 100vw wide and 100vh tall, the same expanding-ba
 />
 ```
 
-**Drafting state.** Drop `src` and supply `type` + `caption`. The slot renders as a neutral grey card (`#d6d6d6` — same in day and night) with a centered label combining the two, so a photo editor reads "what kind of image goes here, and of what":
+**Drafting state.** Drop `src`, supply `type` + `caption`. The slot becomes a `#d6d6d6` card with the centered "type · caption" hint:
 
 ```tsx
-<Placeholder
-  type="Aerial landscape"
-  caption="150 acres at sunrise, Mudigere"
-/>
+<Placeholder type="Aerial landscape" caption="150 acres at sunrise, Mudigere" />
 ```
 
-**Suggested `type` values:** `Landscape`, `Aerial landscape`, `Portrait`, `Portrait · animal`, `Detail`, `Hero banner`, `Process shot`, `Architecture`. Pick what's clearest for the editor — the value is a hint, not a constraint.
+**Suggested `type` values:** `Landscape`, `Aerial landscape`, `Portrait`, `Portrait · animal`, `Detail`, `Hero banner`, `Process shot`, `Architecture`.
 
-Images are an editorial beat — let them claim the full width. They interrupt the column rather than living inside it.
+For motion, pass `mediaType="video"` and a `.mp4` src — same component, autoplays in view.
 
 ---
 
@@ -183,13 +173,17 @@ Footer cards linking to the next 3 active journals. Pass the current page's href
 <Continue currentHref="/idea" />
 ```
 
-The active set is the source of truth in `lib/journals.ts`. To change the next-reads sequence, reorder that file — never override `items` unless you have a specific reason.
+The active journal set is the source of truth in `lib/journals.ts`. To change the next-reads sequence, reorder that file — never override `items` unless you have a specific reason.
+
+Each card carries the journal's thumbnail (16:9), title, and one-line description, and uses the same hover gesture as the navbar journal tiles (image blurs, aura-symbol glyph fades in).
 
 ---
 
-## The display utility — `<ScrollHighlight>`
+## Display utilities
 
-Apple-style word-by-word reveal. Words start at 18% opacity and brighten as they enter the upper viewport band.
+### `<ScrollHighlight>` — Apple-style word reveal
+
+Words start at 18% opacity and brighten as they enter the upper viewport band.
 
 ```tsx
 <ScrollHighlight>
@@ -200,9 +194,21 @@ Apple-style word-by-word reveal. Words start at 18% opacity and brighten as they
 ```
 
 - Pass a plain string. Newlines split into separate display lines.
-- Stands on its own — it carries its own section wrapper and left rail. **Don't** wrap it in `<OneCol>`.
+- Stands on its own — carries its own section wrapper and left rail. Don't wrap it in `<OneCol>`.
 - Use **at most once or twice per journal** — it's a tone-setter, not a workhorse.
-- It's the only way to make a declaration on the left rail without a heading. (If you want a heading + prose, use `<OneCol heading="…">`.)
+- The only way to make a declaration on the left rail without a heading. (For heading + prose, use `<OneCol>`.)
+
+### `<Term>` — inline glossary tooltip
+
+Wraps the **first** occurrence of a jargon term in a journal. Dotted underline; hover shows a small mono-uppercase tooltip with the explanation. Native `title` attribute keeps it accessible on touch / screen readers.
+
+```tsx
+<p className="p2">
+  Cow dung packed into a horn, applied at dusk — <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied at dusk.">BD 500</Term> in practice.
+</p>
+```
+
+Only wrap the first appearance per page — leave later mentions plain so the text doesn't get noisy.
 
 ---
 
@@ -212,13 +218,14 @@ Apple-style word-by-word reveal. Words start at 18% opacity and brighten as they
 HeroBanner or ArticleHero ← exactly one opener
   TwoCol                  ← section 1 (heading left, body right)
 Placeholder               ← full-screen image with bottom-left caption
-  PullQuote               ← editorial moment (CENTER — bracketed by grey rules)
+  PullQuote               ← editorial moment (CENTER — bracketed by border rules)
   TwoCol                  ← section 2
-    DataGrid              ← cards inside the body
+    DataGrid              ← stat-mode cards inside the body
+  DataGrid standalone     ← tile-mode row at full section width
   ScrollHighlight         ← declaration on the left rail, no heading
   TwoCol × N              ← keep sectioning
 Placeholder               ← another image beat
-  OneCol                  ← closing passage with a heading (left rail)
+  OneCol                  ← closing passage with a heading
   Continue                ← auto-pulled next reads (with thumbnails + hover)
 ```
 
@@ -230,12 +237,12 @@ Cadence: alternate `<TwoCol>` with `<Placeholder>` and the occasional `<PullQuot
 
 ## Type — paragraphs
 
-The kit no longer ships a `<P>` component. Use plain `<p>` with the existing global classes:
+Use plain `<p>` with the global classes — there is no `<P>` component:
 
 | Class | Use |
 |---|---|
-| `p1` | Lead paragraph — first of a section |
-| `p2` | Body paragraphs — everything after |
+| `p1` | Lead paragraph — first of a section. 16px, full-strength colour. |
+| `p2` | Body paragraphs — everything after. 14px, muted colour. |
 
 ```tsx
 <p className="p1">A thousand years is not a forecast. It is a discipline.</p>
@@ -243,8 +250,32 @@ The kit no longer ships a `<P>` component. Use plain `<p>` with the existing glo
 <p className="p2">Aura is measured in generations.</p>
 ```
 
-For inline glyphs:
+Inline glyphs:
 - `<Rta />` — renders "RTA" in DM Sans regardless of surrounding font.
+- `<Term tip="...">word</Term>` — see Display utilities above.
+
+---
+
+## Tokens
+
+All design tokens live in [`app/globals.css :root`](app/globals.css). The kit should never hardcode colours, radii, or spacing — if a value isn't tokenised, add a token there first.
+
+Active tokens (May 2026 audit):
+
+| Group | Tokens |
+|---|---|
+| Colour (brand) | `--brand-accent`, `--error` |
+| Colour (theme) | `--bg`, `--bg-card`, `--text`, `--text-body`, `--text-muted`, `--text-dim`, `--border`, `--border-strong`, `--selection` + `--contrast-*` mirrors |
+| Spacing | `--space-2` (8) → `--space-9` (80) |
+| Layout | `--gutter`, `--max-w`, `--nav-h`, `--section-gap`, `--grid-gap` |
+| Radius | `--radius-1` (2px, cards), `--radius-2` (4px, inputs) |
+| Motion | `--ease`, `--ease-out`, `--ease-spring`, `--dur-fast`, `--dur-base`, `--dur-slow`, `--dur-theme` |
+| Type families | `--font-sans`, `--font-mono`, `--font-grotesque`, `--font-instrument`, `--font-pixelify` |
+| Z-index | `--z-modal` |
+
+Mobile (≤768px) overrides `--section-gap` to `clamp(56px, 9vh, 100px)` — sections breathe ~25% less tight on a narrow viewport.
+
+All borders / rule lines use `var(--border)` — never hardcoded greys.
 
 ---
 
@@ -252,25 +283,14 @@ For inline glyphs:
 
 1. **Two positions only.** Left rail for everything. Center for `<PullQuote>` and nothing else.
 2. **Images are full-screen.** `<Placeholder>` spans 100vw × 100vh, caption at bottom-left.
-3. **`<OneCol>` always has a heading.** Orphan prose without a heading is what `<TwoCol>` is for, or `<ScrollHighlight>` if it's a declaration.
-4. **No bespoke layouts.** If the seven blocks don't cover it, rewrite the passage to fit them.
-5. **One `<ArticleHero>` per page.** Always at the top.
-6. **`<ScrollHighlight>` is a moment, not a pattern.** Once or twice, never inside another wrapper.
-7. **`<Continue>` always ends the page.** No exceptions.
-8. **The active journal list is `lib/journals.ts`.** Update it there — Navbar and Continue both read from the same source, including thumbnails.
-
----
-
-## What's deprecated (don't use in new journals)
-
-These exist as shims so existing pages keep compiling — they should be migrated off as we redesign each:
-
-- `<P>` → use plain `<p className="p1">` / `<p className="p2">`
-- `<Section>` → use `<OneCol>` or `<TwoCol>`
-- `<PullStat>` — dropped from the kit; if you need a number, use a single-card `<DataGrid>`
-- `<FocalImage>` → `<Placeholder>`
-- `<Figure>` → `<Placeholder>`
-- `<Couplet>`, `<SideBySide>` — inline if you need them, otherwise drop
+3. **`<OneCol>` always has a heading.** Orphan prose belongs in `<TwoCol>` or `<ScrollHighlight>`.
+4. **`<DataGrid standalone>` for tile mode.** Inline `<DataGrid>` (no `standalone`) only inside `<TwoCol>` bodies, stat mode only.
+5. **No bespoke layouts.** If the seven blocks don't cover it, rewrite the passage to fit them.
+6. **One opener per page.** `HeroBanner` or `ArticleHero`, always first.
+7. **`<ScrollHighlight>` is a moment, not a pattern.** Once or twice, never inside another wrapper.
+8. **`<Continue>` always ends the page.** No exceptions.
+9. **The active journal list is `lib/journals.ts`.** Update it there — Navbar, HeroBanner thumbnail, and Continue cards all read from the same source.
+10. **Tooltips only on first occurrence.** Wrap the first appearance of any jargon term with `<Term>`; later mentions stay plain.
 
 ---
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
 import Reveal from '@/components/RevealOnScroll'
 import { ScrollHighlight } from '@/components/article/Article'
@@ -323,7 +323,7 @@ function PillarVideo({ src, poster, alt }: { src: string; poster: string; alt: s
       width: '100%',
       aspectRatio: '3 / 4',
       overflow: 'hidden',
-      borderRadius: 3,
+      borderRadius: 'var(--radius-1)',
       background: 'var(--bg)',
     }}>
       <video
@@ -644,14 +644,14 @@ function LocationDataGrid({ location, coords, altitude, tempRange, avgHumidity, 
   const condition = weather ? (weatherLabels[weather.code] ?? 'Unknown') : null
   return (
     <div>
-      <div style={{ marginBottom: 24 }}>
+      <div style={{ marginBottom: 'var(--space-5)' }}>
         <p className="label loc-label" style={{ marginBottom: 6 }}>LOCATION</p>
         <p className="loc-body">{location}</p>
       </div>
 
       {weather && (
         <div style={{ marginBottom: 28 }}>
-          <p className="label loc-label" style={{ marginBottom: 8 }}>WEATHER NOW</p>
+          <p className="label loc-label" style={{ marginBottom: 'var(--space-2)' }}>WEATHER NOW</p>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <WeatherIcon code={weather.code} isDay={weather.isDay} size={20} className="loc-body" />
             <span className="loc-body">{weather.temp}&deg;C &middot; {condition}</span>
@@ -659,7 +659,7 @@ function LocationDataGrid({ location, coords, altitude, tempRange, avgHumidity, 
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 32px', marginBottom: children ? 32 : 0 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 32px', marginBottom: children ? 'var(--space-6)' : 0 }}>
         <div><p className="label loc-label">COORDINATES</p><p className="loc-body" style={{ marginTop: 2 }}>{coords}</p></div>
         <div><p className="label loc-label">ALTITUDE</p><p className="loc-body" style={{ marginTop: 2 }}>{altitude}</p></div>
         <div><p className="label loc-label">TEMP.</p><p className="loc-body" style={{ marginTop: 2 }}>{weather ? `${weather.temp}°C now · ${tempRange}` : tempRange}</p></div>
@@ -790,17 +790,17 @@ function MudigereModal({ open, onClose }: { open: boolean; onClose: () => void }
       <LocationContent>
         <div className="loc-top">
           <div className="loc-pencil-mobile">
-            <img src="/aura-mudigere-pencil.jpg" alt="Pencil illustration of the Mudigere estate" style={{ width: '100%', borderRadius: 3, display: 'block', objectFit: 'cover', aspectRatio: '4 / 5' }} />
+            <img src="/aura-mudigere-pencil.jpg" alt="Pencil illustration of the Mudigere estate" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '4 / 5' }} />
           </div>
           <div>
-            <h2 className="loc-h2" style={{ marginBottom: 24 }}>The Land Remembers.</h2>
-            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>The Land Remembers.</h2>
+            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               <p>Nestled in the mist of the Western Ghats, this estate operates on a timeline dictated by nature rather than urgency, honoring a legacy where the land continues its own story. Through a philosophy of patient stewardship, coffee and pepper are cultivated with deep restraint, allowing the rhythms of wind, soil, and sun to guide every harvest and fermentation.</p>
               <p>This slow, intentional process ensures that every cup serves as a sensory memory of its origin, reflecting a profound respect for the quiet continuity of the ancient landscape.</p>
             </div>
           </div>
           <div className="loc-images-desktop">
-            <img src="/aura-mudigere-pencil.jpg" alt="Pencil illustration of the Mudigere estate" style={{ width: '100%', borderRadius: 3, display: 'block', objectFit: 'cover', aspectRatio: '3 / 4' }} />
+            <img src="/aura-mudigere-pencil.jpg" alt="Pencil illustration of the Mudigere estate" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '3 / 4' }} />
           </div>
         </div>
         <div className="loc-bottom">
@@ -816,12 +816,12 @@ function MudigereModal({ open, onClose }: { open: boolean; onClose: () => void }
             <img src="/aura-mudigere-map.svg" alt="Map of the Aura Mudigere estate" className="loc-map" style={{ width: '100%', display: 'block' }} />
           </LocationDataGrid>
           <div>
-            <h2 className="loc-h2" style={{ marginBottom: 24 }}>World&rsquo;s Oldest Arabica Region, Rediscovered.</h2>
-            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>World&rsquo;s Oldest Arabica Region, Rediscovered.</h2>
+            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               <p>The Western Ghats are a UNESCO World Heritage biodiversity hotspot — one of the eight most biodiverse regions on earth. Chikmagalur sits within this range at 900&ndash;1100 metres, where altitude, monsoon rainfall, and ancient volcanic soil create conditions for coffee of exceptional complexity.</p>
               <p>Aura&rsquo;s 150&ndash;170 acres are farmed as a four-layer agroforestry system: native shade trees above, pepper vines in the mid-canopy, coffee and tea in the understory, cover crops and soil regeneration plants at ground level.</p>
             </div>
-            <img src="/aura-mudigere-landscape.jpg" alt="Aura Mudigere estate in the Western Ghats" style={{ width: '100%', borderRadius: 3, display: 'block', objectFit: 'cover', aspectRatio: '16 / 10', marginTop: 32 }} />
+            <img src="/aura-mudigere-landscape.jpg" alt="Aura Mudigere estate in the Western Ghats" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '16 / 10', marginTop: 'var(--space-6)' }} />
           </div>
         </div>
       </LocationContent>
@@ -837,18 +837,18 @@ function OharaModal({ open, onClose }: { open: boolean; onClose: () => void }) {
       <LocationContent>
         <div className="loc-top">
           <div className="loc-pencil-mobile">
-            <img src="/aura-ohara-pencil.jpg" alt="Pencil illustration of Aura Ohara" style={{ width: '100%', borderRadius: 3, display: 'block', objectFit: 'cover', aspectRatio: '4 / 5' }} />
+            <img src="/aura-ohara-pencil.jpg" alt="Pencil illustration of Aura Ohara" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '4 / 5' }} />
           </div>
           <div>
-            <h2 className="loc-h2" style={{ marginBottom: 24 }}>The Valley Listens.</h2>
-            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>The Valley Listens.</h2>
+            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               <p>Nestled in the quiet valley of Ohara, north of Kyoto, this place moves to the rhythm of light, water, and care rather than speed. Surrounded by cedar forests, rivers, and temples, it is shaped by a way of life that honours stillness, craft, and the quiet intelligence of the land.</p>
               <p>Through a philosophy of restoration over construction, Aura in Ohara grows by listening before leading. The home, garden, and teahouse are not remade in haste, but gently renewed through patience, restraint, and deep respect for what already exists.</p>
               <p>This slow, mindful approach allows each space to hold the memory of its setting — reflecting a way of living rooted in calm, renewal, and the richness of everyday ritual.</p>
             </div>
           </div>
           <div className="loc-images-desktop">
-            <img src="/aura-ohara-pencil.jpg" alt="Pencil illustration of Aura Ohara" style={{ width: '100%', borderRadius: 3, display: 'block', objectFit: 'cover', aspectRatio: '3 / 4' }} />
+            <img src="/aura-ohara-pencil.jpg" alt="Pencil illustration of Aura Ohara" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '3 / 4' }} />
           </div>
         </div>
         <div className="loc-bottom">
@@ -862,12 +862,12 @@ function OharaModal({ open, onClose }: { open: boolean; onClose: () => void }) {
             weather={weather}
           />
           <div>
-            <h2 className="loc-h2" style={{ marginBottom: 24 }}>Kyoto&rsquo;s Quiet Valley, Rediscovered.</h2>
-            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>Kyoto&rsquo;s Quiet Valley, Rediscovered.</h2>
+            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               <p>Ohara is a place of cedar forests, rivers, temples, and hand-tended fields — where farmers still work by hand and artisans move by rhythm, not by clock. It is here that Aura belongs: not to transform the valley, but to listen to it.</p>
               <p>The site is envisioned through the restoration of a 70-year-old home and a 30-year garden, with a teahouse renewed by a Kyoto craftsman and cared for across generations. Rooted in wabi-sabi, Aura Ohara embraces imperfection, continuity, and a rich, mindful life shaped by light, calm, and reflection.</p>
             </div>
-            <img src="/aura-ohara-landscape.jpg" alt="Aura Ohara in the valley of Kyoto" style={{ width: '100%', borderRadius: 3, display: 'block', objectFit: 'cover', aspectRatio: '16 / 10', marginTop: 32 }} />
+            <img src="/aura-ohara-landscape.jpg" alt="Aura Ohara in the valley of Kyoto" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '16 / 10', marginTop: 'var(--space-6)' }} />
           </div>
         </div>
       </LocationContent>
@@ -885,7 +885,7 @@ function OharaModal({ open, onClose }: { open: boolean; onClose: () => void }) {
 ═══════════════════════════════════════════ */
 function AgentHome() {
   return (
-    <article className="section-w" style={{ paddingTop: 80, paddingBottom: 80 }}>
+    <article className="section-w" style={{ paddingTop: 'var(--space-9)', paddingBottom: 'var(--space-9)' }}>
       {/* Site nav — plain link list so crawlers can reach every route. */}
       <nav className="agent-nav" aria-label="Aura site navigation">
         <p className="label">AURA · theaura.life · agent view</p>
@@ -1183,49 +1183,6 @@ function useBlurReveal() {
   return { wrapRef, blurRef, contentRef }
 }
 
-/* 2-col variant: independent blur layer per image (driven by a single scroll) */
-function useBlurReveal2() {
-  const wrapRef = useRef<HTMLDivElement>(null)
-  const blurLeftRef = useRef<HTMLDivElement>(null)
-  const blurRightRef = useRef<HTMLDivElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    let raf = 0
-    const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        const wrap = wrapRef.current
-        const bL = blurLeftRef.current
-        const bR = blurRightRef.current
-        const content = contentRef.current
-        if (!wrap || !bL || !bR) return
-        const rect = wrap.getBoundingClientRect()
-        const range = wrap.offsetHeight - window.innerHeight
-        if (range <= 0) return
-        const p = Math.max(0, Math.min(1, -rect.top / range))
-        const fadeIn = Math.min(1, p / 0.15)
-        const blurLift = Math.max(0, Math.min(1, (p - 0.7) / 0.3))
-        if (content) content.style.opacity = `${fadeIn}`
-        const blurVal = (1 - blurLift) * 16
-        for (const el of [bL, bR]) {
-          el.style.backdropFilter = `blur(${blurVal}px)`
-          ;(el.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = `blur(${blurVal}px)`
-        }
-      })
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(raf)
-    }
-  }, [])
-
-  return { wrapRef, blurLeftRef, blurRightRef, contentRef }
-}
-
 function SanctuaryBg({ s }: { s: Sanctuary }) {
   /* Sanctuary background tint — flat 12% black, no radial darkening.
      The heading + tagline rely on their text-shadow for contrast against
@@ -1331,11 +1288,11 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
           display: 'flex',
           alignItems: 'flex-end',
           justifyContent: 'space-between',
-          gap: 24,
+          gap: 'var(--space-5)',
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
-            <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: '1px', margin: 0 }}>{s.region}</p>
-            <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: '1px', margin: 0 }}>{s.coords}</p>
+            <p className="label" style={{ color: '#ffffff', margin: 0 }}>{s.region}</p>
+            <p className="label" style={{ color: '#ffffff', margin: 0 }}>{s.coords}</p>
           </div>
           {/* The Explore CTA is the only hit area for the whole panel. */}
           <button
@@ -1348,8 +1305,6 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
               border: 'none',
               padding: 0,
               color: '#ffffff',
-              fontSize: 11,
-              letterSpacing: '1px',
               margin: 0,
               display: 'inline-flex',
               alignItems: 'center',
@@ -1387,11 +1342,11 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
            anchored) because the 2-col panels don't carry an Explore CTA on
            the opposite side. */
         <div style={{ position: 'absolute', bottom: 'clamp(24px, 5vh, 56px)', left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-          <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: '1px', margin: 0 }}>{s.region}</p>
+          <p className="label" style={{ color: '#ffffff', margin: 0 }}>{s.region}</p>
           {s.comingSoon ? (
-            <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: 2, margin: 0 }}>COMING SOON</p>
+            <p className="label" style={{ color: '#ffffff', letterSpacing: 2, margin: 0 }}>COMING SOON</p>
           ) : (
-            <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: '1px', margin: 0 }}>{s.coords}</p>
+            <p className="label" style={{ color: '#ffffff', margin: 0 }}>{s.coords}</p>
           )}
         </div>
       )}
@@ -2163,11 +2118,11 @@ Land, hospitality, craft, and technology — one regenerative ecosystem.`}</Scro
                     no hover affordance, no cursor pill. */}
                 <div className="pillar-card">
                   <PillarVideo src={card.video} poster={card.poster} alt={card.alt} />
-                  <h3 style={{ marginTop: 24, marginBottom: 12 }}>{card.title}</h3>
+                  <h3 style={{ marginTop: 'var(--space-5)', marginBottom: 'var(--space-3)' }}>{card.title}</h3>
                   {/* Lead reads as a meta caption underneath the title —
                       mono uppercase via the global .label spec, matching
                       every other meta caption on the page. */}
-                  <p className="label" style={{ marginBottom: 16 }}>{card.lead}</p>
+                  <p className="label" style={{ marginBottom: 'var(--space-4)' }}>{card.lead}</p>
                   <p className="p2">{card.desc}</p>
                 </div>
               </Reveal>

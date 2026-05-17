@@ -141,10 +141,10 @@ export default function ContactPage() {
               border-bottom-color: var(--text);
             }
             .field-input.has-error {
-              border-bottom-color: #E8421A;
+              border-bottom-color: var(--error);
             }
             .field-input.has-error:focus {
-              border-bottom-color: #E8421A;
+              border-bottom-color: var(--error);
             }
             select.field-input {
               -webkit-appearance: none;
@@ -229,7 +229,7 @@ export default function ContactPage() {
                 </Field>
 
                 {apiError && (
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: '#E8421A' }}>{apiError}</p>
+                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--error)' }}>{apiError}</p>
                 )}
 
                 <button
@@ -328,7 +328,7 @@ function Field({ id, label, error, children }: {
           <p style={{
             fontFamily: 'var(--font-mono)',
             fontSize: 11,
-            color: '#E8421A',
+            color: 'var(--error)',
             marginTop: 2,
             animation: 'field-error-in 0.2s ease-out',
           }}>

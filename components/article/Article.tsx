@@ -528,9 +528,7 @@ export function Placeholder({
   src,
   alt,
   type,
-  label,
   caption,
-  note,
   mediaType = 'image',
   poster,
 }: {
@@ -539,21 +537,14 @@ export function Placeholder({
   /** Suggestion to the photo editor: "Landscape", "Portrait",
    *  "Aerial", "Detail", etc. Shown in the centered drafting label. */
   type?: string
-  /** @deprecated Use `caption` and `type` instead. */
-  label?: string
   /** Caption text. Renders as a small label in the bottom-left of the
    *  image when `src` is set. */
   caption?: string
-  /** @deprecated Use `caption` instead. Kept for older journal pages. */
-  note?: string
   /** Defaults to `image`. Pass `video` for an autoplaying loop. */
   mediaType?: 'image' | 'video'
   /** Video poster (or fallback still). */
   poster?: string
-  /** @deprecated Aspect is fixed by the full-screen ExpandingBanner. */
-  aspect?: string
 }) {
-  caption = caption ?? note ?? label
   return (
     <ExpandingBanner
       src={src}
@@ -684,7 +675,7 @@ export function DataCard({
   }
   return (
     <div style={{ borderTop: '1px solid var(--border)', paddingTop: 16 }}>
-      {value && <p className="p1" style={{ margin: 0, marginBottom: 6 }}>{value}</p>}
+      {value && <p className="p1" style={{ margin: 0, marginBottom: 12 }}>{value}</p>}
       {children && <div className="p2" style={{ color: 'var(--text-body)' }}>{children}</div>}
     </div>
   )
@@ -703,7 +694,9 @@ export function PullQuote({ children, attribution }: { children: ReactNode; attr
         width: '100vw',
         marginLeft: 'calc(50% - 50vw)',
         height: 1,
-        background: '#d6d6d6',
+        // Theme-aware so PullQuote rules match every other border in the
+        // kit (TOC, DataCard top-rule, Continue divider, etc.).
+        background: 'var(--border)',
       }}
     />
   )
@@ -950,159 +943,6 @@ export function Continue({
   )
 }
 
-/* ─────────────────────────────────────────────────────────────────────
-   DEPRECATED — legacy primitives kept as thin shims so older journal
-   pages keep compiling while we migrate them off the kit one by one.
-   Do NOT use these in new journals.
-   ───────────────────────────────────────────────────────────────────── */
-
-/** @deprecated Use plain <p className="p1"> / <p className="p2"> instead. */
-export function P({ children, lead }: { children: ReactNode; lead?: boolean }) {
-  return <p className={lead ? 'p1' : 'p2'} style={{ marginTop: '1em' }}>{children}</p>
-}
-
-/** @deprecated Use <TwoCol> (heading left, body right) or <OneCol>
- *  (heading centered) instead. */
-export function Section({
-  id,
-  heading,
-  children,
-  align = '2col',
-}: {
-  id?: string
-  heading?: ReactNode
-  children: ReactNode
-  align?: '2col' | 'center' | 'full'
-}) {
-  if (align === 'center') return <OneCol id={id} heading={heading}>{children}</OneCol>
-  if (align === 'full' || !heading) {
-    return (
-      <section id={id} style={{ padding: 'var(--section-gap) 0' }}>
-        <div className="section-w">
-          <Reveal>
-            {heading && <h2 style={{ marginBottom: 'var(--space-6)', maxWidth: 900 }}>{heading}</h2>}
-            <div className="article-body" style={{ maxWidth: 760 }}>{children}</div>
-          </Reveal>
-        </div>
-      </section>
-    )
-  }
-  return <TwoCol id={id} heading={heading}>{children}</TwoCol>
-}
-
-/** @deprecated Dropped from the journal kit — don't add new uses. */
-export function PullStat({ value, label, sub, wrap = true }: { value: ReactNode; label: string; sub?: string; wrap?: boolean }) {
-  const inner = (
-    <div style={{ margin: '0 auto', maxWidth: 480, textAlign: 'center' }}>
-      <h2 style={{ margin: 0, marginBottom: 12 }}>{value}</h2>
-      <div className="label">{label}</div>
-      {sub && <p className="p2" style={{ marginTop: 12 }}>{sub}</p>}
-    </div>
-  )
-  if (!wrap) return inner
-  return (
-    <section style={{ padding: 'var(--section-gap) 0' }}>
-      <div className="section-w">
-        <Reveal>{inner}</Reveal>
-      </div>
-    </section>
-  )
-}
-
-/** @deprecated Use <Figure> or <Placeholder> instead. */
-export function FocalImage({ src, alt, label, note }: { src?: string; alt?: string; label?: string; note?: string }) {
-  return <Placeholder src={src} alt={alt} label={label ?? note} />
-}
-
-/** @deprecated Use <Placeholder> for inline images. */
-export function Figure({
-  src,
-  poster,
-  alt,
-  caption,
-  type = 'image',
-  aspect = '16 / 9',
-}: {
-  src: string
-  poster?: string
-  alt: string
-  caption?: string
-  type?: 'image' | 'video'
-  aspect?: string
-}) {
-  return (
-    <figure style={{ margin: 'clamp(24px, 4vh, 48px) 0' }}>
-      <div style={{ borderRadius: 'var(--radius-1)', overflow: 'hidden', aspectRatio: aspect }}>
-        {type === 'video' ? (
-          <video
-            src={src}
-            poster={poster}
-            muted
-            loop
-            playsInline
-            autoPlay
-            preload="metadata"
-            aria-label={alt}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          />
-        ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-        )}
-      </div>
-      {caption && <figcaption className="label" style={{ marginTop: 12 }}>{caption}</figcaption>}
-    </figure>
-  )
-}
-
-/** @deprecated Tightly coupled to one journal — inline if you need it. */
-export function Couplet({ en, local, localLang }: { en: string; local?: string; localLang?: 'kn' | 'ja' | 'en' }) {
-  return (
-    <section style={{ padding: '0' }}>
-      <div className="section-w">
-        <div style={{ maxWidth: 760 }}>
-          <p className="p1" style={{ marginBottom: 4 }}>{en}</p>
-          {local && <p className="p2" lang={localLang || 'en'}>{local}</p>}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/** @deprecated Use <TwoCol> with two heading/body pairs instead. */
-export function SideBySide({
-  leftTitle,
-  rightTitle,
-  leftChildren,
-  rightChildren,
-}: {
-  leftTitle: string
-  rightTitle: string
-  leftChildren: ReactNode
-  rightChildren: ReactNode
-}) {
-  return (
-    <section style={{ padding: 'var(--section-gap) 0' }}>
-      <div className="section-w">
-        <div className="sidebyside" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--grid-gap)' }}>
-          <div style={{ borderTop: '1px solid var(--border)', paddingTop: 20 }}>
-            <div className="label" style={{ marginBottom: 12 }}>{leftTitle}</div>
-            <div className="p2" style={{ color: 'var(--text-body)' }}>{leftChildren}</div>
-          </div>
-          <div style={{ borderTop: '1px solid var(--border)', paddingTop: 20 }}>
-            <div className="label" style={{ marginBottom: 12 }}>{rightTitle}</div>
-            <div className="p2" style={{ color: 'var(--text-body)' }}>{rightChildren}</div>
-          </div>
-          <style jsx>{`
-            @media (max-width: 768px) {
-              .sidebyside { grid-template-columns: 1fr !important; }
-            }
-          `}</style>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 export { ACTIVE_JOURNALS, nextActiveJournals }
 export type { Journal }

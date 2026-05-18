@@ -48,8 +48,8 @@ export default function RtaPage() {
       <TwoCol id="field" heading="In the field.">
         <p className="p1">
           <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure — is applied at dusk, when the earth is inhaling.
-          This is not poetry. Evening application allows the preparation to
-          work with the soil&rsquo;s natural absorption cycle.
+          Evening application allows the preparation to work with the
+          soil&rsquo;s natural absorption cycle.
         </p>
         <p className="p2">
           Every BD application is timestamped to the minute, tagged with the
@@ -127,7 +127,7 @@ export default function RtaPage() {
         </p>
       </TwoCol>
 
-      <PullQuote attribution="Aura · Ṛta">
+      <PullQuote>
         Right time. Right action. The philosophy made technical.
       </PullQuote>
 
@@ -169,6 +169,11 @@ export default function RtaPage() {
           The practice requires the patience.
         </p>
       </TwoCol>
+
+      <PullQuote>
+        We are not optimising for this season. We are optimising for the
+        next hundred.
+      </PullQuote>
 
       <ScrollHighlight>
         {`Right time.

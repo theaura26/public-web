@@ -153,7 +153,7 @@ export default function WisdomPage() {
         </p>
       </OneCol>
 
-      <PullQuote attribution="Aura · Moral Spine">
+      <PullQuote>
         Every organisation has values on a wall. Aura has a spine.
       </PullQuote>
 

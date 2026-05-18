@@ -148,8 +148,7 @@ export default function CoffeePage() {
       </DataGrid>
 
       <PullQuote>
-        The choices made by one batch shape every batch that follows. This is
-        not metaphor. It is microbiology.
+        The choices made by one batch shape every batch that follows.
       </PullQuote>
 
       <Placeholder

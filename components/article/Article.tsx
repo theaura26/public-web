@@ -597,18 +597,28 @@ export function Term({ tip, children }: { tip: string; children: ReactNode }) {
   // attribute that CSS uses to show the tip. Tapping anywhere else
   // (or the term again) closes it. Hover and focus still work for
   // pointer / keyboard users via the sibling :hover/:focus rules.
+  //
+  // Only one tip is open at a time across the whole page — opening a
+  // term broadcasts an 'aura-term:open' CustomEvent that all other
+  // terms listen for and close themselves on.
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLSpanElement>(null)
+  const id = useRef(Symbol())
   useEffect(() => {
     if (!open) return
     const onDoc = (e: MouseEvent | TouchEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
     }
+    const onOtherOpen = (e: Event) => {
+      if ((e as CustomEvent).detail !== id.current) setOpen(false)
+    }
     document.addEventListener('click', onDoc)
     document.addEventListener('touchstart', onDoc, { passive: true })
+    document.addEventListener('aura-term:open', onOtherOpen)
     return () => {
       document.removeEventListener('click', onDoc)
       document.removeEventListener('touchstart', onDoc)
+      document.removeEventListener('aura-term:open', onOtherOpen)
     }
   }, [open])
   return (
@@ -621,7 +631,14 @@ export function Term({ tip, children }: { tip: string; children: ReactNode }) {
       tabIndex={0}
       role="button"
       aria-label={tip}
-      onClick={e => { e.stopPropagation(); setOpen(o => !o) }}
+      onClick={e => {
+        e.stopPropagation()
+        setOpen(o => {
+          const next = !o
+          if (next) document.dispatchEvent(new CustomEvent('aura-term:open', { detail: id.current }))
+          return next
+        })
+      }}
     >
       {children}
       <span className="aura-term__tip" aria-hidden>{tip}</span>

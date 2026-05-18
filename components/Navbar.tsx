@@ -38,11 +38,11 @@ const ARTICLES: Article[] = [
   { href: '/fermentation',   title: 'Fermentation',                       size: 'lg', img: '/aura-fermentation.jpg' },
   { href: '/land',           title: 'The Land',                           size: 'sm', img: '/aura-land.jpg' },
   { href: '/biodynamic',     title: 'Biodynamic',                         size: 'lg', img: '/aura-biodynamic.jpg' },
+  { href: '/residency',      title: 'Monastic polymaths. Crazy misfits.', size: 'lg', img: '/aura-residency.jpg' },
   // Coming-soon — render at the tail of the feed.
   { href: '/idea',           title: 'The 1000 Year Idea',                 size: 'sm', img: '/aura-idea.jpg',          comingSoon: true },
   { href: '/sanctuary',      title: 'Guests of the mountain.',            size: 'lg', img: '/aura-sanctuary.jpg', video: '/aura-sanctuary.mp4', comingSoon: true },
   { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg',      comingSoon: true },
-  { href: '/residency',      title: 'Monastic polymaths. Crazy misfits.', size: 'lg', img: '/aura-residency.jpg',     comingSoon: true },
   { href: '/provenance',     title: 'Cherry to cup. On chain.',           size: 'sm', img: '/aura-provenance.jpg',    comingSoon: true },
   { href: '/pepper',         title: 'Malabar black gold.',                size: 'lg', img: '/aura-pepper.jpg',        comingSoon: true },
   { href: '/areca',          title: 'The sentinel palm.',                 size: 'sm', img: '/aura-areca.jpg',         comingSoon: true },

@@ -126,7 +126,7 @@ export default function BiodynamicPage() {
         </DataGrid>
       </TwoCol>
 
-      <PullQuote attribution="Aura · Biodynamic">
+      <PullQuote>
         We do not abandon CPP for newer methods. We scale wisdom. We do not
         replace it.
       </PullQuote>

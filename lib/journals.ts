@@ -56,6 +56,12 @@ export const ACTIVE_JOURNALS: Journal[] = [
     description: 'BD 500 to 508. The farm as organism, on its own calendar.',
     img: '/aura-biodynamic.jpg',
   },
+  {
+    href: '/residency',
+    title: 'Monastic Polymaths',
+    description: 'Embedded residencies across two countries. Two weeks minimum. Pre-selected.',
+    img: '/aura-residency.jpg',
+  },
 ]
 
 /** The next N journals after `currentHref`, wrapping around. Excludes

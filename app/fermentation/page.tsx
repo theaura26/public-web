@@ -180,6 +180,11 @@ export default function FermentationPage() {
         caption="A gloved hand cracking a cured horn to reveal BD 500"
       />
 
+      <PullQuote>
+        Microbial signature is the slowest moat. Decades to build,
+        impossible to copy.
+      </PullQuote>
+
       <ScrollHighlight>
         {`Fermentation is not a process step.
          Transformation requires patience.

@@ -593,8 +593,36 @@ export function Rta() {
       lifts above the term with a 1-line definition. The `title` attribute
       keeps the explanation accessible without JS (and on touch devices). */
 export function Term({ tip, children }: { tip: string; children: ReactNode }) {
+  // Tap-to-open on touch: clicking the term toggles a data-open
+  // attribute that CSS uses to show the tip. Tapping anywhere else
+  // (or the term again) closes it. Hover and focus still work for
+  // pointer / keyboard users via the sibling :hover/:focus rules.
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLSpanElement>(null)
+  useEffect(() => {
+    if (!open) return
+    const onDoc = (e: MouseEvent | TouchEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('click', onDoc)
+    document.addEventListener('touchstart', onDoc, { passive: true })
+    return () => {
+      document.removeEventListener('click', onDoc)
+      document.removeEventListener('touchstart', onDoc)
+    }
+  }, [open])
   return (
-    <span className="aura-term" data-tip title={tip}>
+    <span
+      ref={ref}
+      className="aura-term"
+      data-tip
+      data-open={open || undefined}
+      title={tip}
+      tabIndex={0}
+      role="button"
+      aria-label={tip}
+      onClick={e => { e.stopPropagation(); setOpen(o => !o) }}
+    >
       {children}
       <span className="aura-term__tip" aria-hidden>{tip}</span>
     </span>

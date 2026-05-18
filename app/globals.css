@@ -924,15 +924,23 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
   opacity: 0;
   transition: opacity var(--dur-fast) var(--ease);
 }
+/* term tooltip — open on hover (pointer), on focus (keyboard), or
+   when [data-open] is set by the JSX tap handler (touch). */
 .aura-term:hover .aura-term__tip,
-.aura-term:focus-visible .aura-term__tip {
+.aura-term:focus .aura-term__tip,
+.aura-term[data-open] .aura-term__tip {
   opacity: 1;
 }
+.aura-term:focus { outline: none; }
 @media (max-width: 768px) {
-  /* Touch devices fall back to the native title attribute, which the
-     OS surfaces on long-press. Hide the custom tooltip to avoid double
-     UI. */
-  .aura-term__tip { display: none; }
+  /* Narrow viewports: anchor the tooltip to the term's left edge so
+     it doesn't push off the right rail, and cap its width to the
+     viewport minus a small gutter. */
+  .aura-term__tip {
+    left: 0;
+    transform: none;
+    max-width: calc(100vw - 32px);
+  }
 }
 
 /* Fixed 50/50 two-column at desktop */

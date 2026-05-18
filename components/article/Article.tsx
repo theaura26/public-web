@@ -21,7 +21,7 @@
 ═══════════════════════════════════════════════════════════════════ */
 
 import Link from 'next/link'
-import { ReactNode, useEffect, useRef } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import Reveal from '@/components/RevealOnScroll'
 import { ExpandingBanner } from '@/components/ExpandingBanner'
 import { ACTIVE_JOURNALS, nextActiveJournals, type Journal } from '@/lib/journals'
@@ -90,6 +90,56 @@ export function HeroBanner({
   // ink inverts cleanly against any photo (dark text on light areas,
   // light text on dark areas). The 10% black tint sits between image
   // and title as a contrast floor for the mid-tone case.
+
+  // The back arrow and caption use a different treatment: we sample
+  // the image at each element's region (top-left for the back, bottom-
+  // left for the caption) and pick pure white or pure black per
+  // region so each piece reads cleanly without the colour shift that
+  // difference would introduce. SSR default is white — overridden
+  // after the image loads.
+  const [bannerInk, setBannerInk] = useState<{ topLeft: string; bottomLeft: string }>(
+    { topLeft: '#ffffff', bottomLeft: '#ffffff' },
+  )
+  useEffect(() => {
+    if (!src || mediaType !== 'image') return
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      try {
+        const size = 64
+        const canvas = document.createElement('canvas')
+        canvas.width = size
+        canvas.height = size
+        const ctx = canvas.getContext('2d', { willReadFrequently: true })
+        if (!ctx) return
+        ctx.drawImage(img, 0, 0, size, size)
+        const { data } = ctx.getImageData(0, 0, size, size)
+        // Sample a 16×16 patch in the top-left (back link sits there)
+        // and the bottom-left (caption sits there). Account for the
+        // 10% black tint overlay by darkening the sample by 0.9.
+        const sample = (x0: number, y0: number, w: number, h: number) => {
+          let sum = 0
+          for (let y = y0; y < y0 + h; y++) {
+            for (let x = x0; x < x0 + w; x++) {
+              const i = (y * size + x) * 4
+              sum += (0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255
+            }
+          }
+          return (sum / (w * h)) * 0.9
+        }
+        const topL = sample(0, 6, 20, 8)        // ~y 9-22%  / x 0-31%
+        const botL = sample(0, 50, 32, 12)      // ~y 78-97% / x 0-50%
+        // Threshold ~0.5: brighter than that → use black ink, else white.
+        setBannerInk({
+          topLeft: topL > 0.5 ? '#000000' : '#ffffff',
+          bottomLeft: botL > 0.5 ? '#000000' : '#ffffff',
+        })
+      } catch {
+        // CORS or other — leave defaults.
+      }
+    }
+    img.src = src
+  }, [src, mediaType])
   useEffect(() => {
     if (typeof window === 'undefined') return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -130,16 +180,15 @@ export function HeroBanner({
 
       // Smart back link colour — back is fixed to the viewport so it
       // stays accessible the whole way through. Above the fold (while
-      // the banner sits behind the back) it uses mix-blend-difference
-      // so the same white ink inverts cleanly against any photo. Once
-      // past the banner it drops the blend and switches to var(--text)
-      // (dark in day mode, light in night) on the page surface.
+      // the banner sits behind the back) it uses bannerInk.topLeft —
+      // pure white or pure black, chosen by luminance of the top-left
+      // corner of the photo. Once past the banner it drops to
+      // var(--text) (dark in day mode, light in night).
       const back = backRef.current
       if (back) {
         const BACK_TOP = 104
         const overBanner = rect.top <= BACK_TOP && rect.bottom > BACK_TOP
-        back.style.color = overBanner ? '#ffffff' : 'var(--text)'
-        back.style.mixBlendMode = overBanner ? 'difference' : 'normal'
+        back.style.color = overBanner ? bannerInk.topLeft : 'var(--text)'
       }
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
@@ -151,7 +200,7 @@ export function HeroBanner({
       window.removeEventListener('resize', onScroll)
       if (raf) cancelAnimationFrame(raf)
     }
-  }, [])
+  }, [bannerInk.topLeft])
 
   // Back arrow — fixed to the viewport so it stays accessible across
   // the entire journal. Colour and mix-blend are toggled each frame by
@@ -174,7 +223,7 @@ export function HeroBanner({
         fontSize: 11,
         letterSpacing: '1.5px',
         textTransform: 'uppercase',
-        mixBlendMode: 'difference',
+        mixBlendMode: 'normal',
         display: 'inline-flex',
         alignItems: 'center',
         gap: 8,
@@ -289,7 +338,9 @@ export function HeroBanner({
         </div>
       )}
 
-      {/* Caption pinned bottom-left, on top of the photo. */}
+      {/* Caption pinned bottom-left, on top of the photo. Ink colour
+          picks white or black based on the bottom-left luminance of
+          the image, so it stays legible on any banner. */}
       {caption && src && (
         <p
           className="label"
@@ -299,10 +350,11 @@ export function HeroBanner({
             bottom: 'clamp(20px, 4vh, 48px)',
             margin: 0,
             maxWidth: 'min(320px, 60vw)',
-            color: '#ffffff',
+            color: bannerInk.bottomLeft,
             letterSpacing: '1px',
             lineHeight: 1.5,
             zIndex: 2,
+            transition: 'color var(--dur-fast) var(--ease)',
           }}
         >
           {caption}
@@ -329,28 +381,38 @@ export function HeroBanner({
           willChange: 'transform',
         }}
       >
-        <h1
-          style={{
-            margin: 0,
-            fontFamily: 'var(--font-grotesque)',
-            fontWeight: 600,
-            fontSize: 'clamp(48px, 10vw, 128px)',
-            lineHeight: 0.95,
-            letterSpacing: '-0.04em',
-            textTransform: 'uppercase',
-            color: 'inherit',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center',
-            whiteSpace: 'nowrap',
-          }}
-        >
+        <h1 className="hero-banner-title">
           {words.map((word, i) => (
             <span key={i}>{word}</span>
           ))}
         </h1>
+        <style jsx>{`
+          /* Mobile/tablet: one word per line, centred stack. */
+          .hero-banner-title {
+            margin: 0;
+            font-family: var(--font-grotesque);
+            font-weight: 600;
+            font-size: clamp(48px, 10vw, 128px);
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            color: inherit;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            white-space: nowrap;
+          }
+          /* Desktop: single row. Multi-word titles spread edge-to-edge
+             across the section rail; single-word titles stay centred. */
+          @media (min-width: 1024px) {
+            .hero-banner-title {
+              flex-direction: row;
+              justify-content: ${words.length > 1 ? 'space-between' : 'center'};
+            }
+          }
+        `}</style>
       </div>
       </section>
     </div>

@@ -425,6 +425,43 @@ Where Ancestral Intelligence and Creative Capital are deployed across a hundred 
         </div>
       </section>
 
+      {/* ═══ FOREWORD — what this brand book is ═══ */}
+      <Reveal>
+        <section style={{
+          padding: 'clamp(64px, 10vh, 120px) var(--gutter)',
+          borderTop: '1px solid var(--border)',
+        }}>
+          <div style={{
+            maxWidth: 720,
+            margin: '0 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--space-5)',
+          }}>
+            <p className="label" style={{ opacity: 0.7, margin: 0 }}>The brand book</p>
+            <p className="p1" style={{ margin: 0 }}>
+              A brand is not a logo, a colour, or a typeface. A brand is
+              what survives a hundred years of execution — the discipline
+              that makes the work recognisably Aura whether it lands on a
+              coffee bag, a residency invitation, a film title, a
+              Japanese letterpress, or a Kannada subtitle.
+            </p>
+            <p className="p2" style={{ margin: 0 }}>
+              The pages that follow set the wordmark, the palette, the
+              typography, the voice, and the principles that govern every
+              choice. They are not how the company runs. They are how the
+              brand endures.
+            </p>
+            <p className="p2" style={{ margin: 0 }}>
+              We chose to invent rather than borrow. Rather than play by
+              other people&rsquo;s rules, we set our own — because if you
+              are part of the invention, you have control over the
+              outcome. This book is the record of those rules.
+            </p>
+          </div>
+        </section>
+      </Reveal>
+
       {/* ═══ BRAND GUIDELINES — Pages 1–21 ═══ */}
       <SlideGrid from={1} to={21} skip={[6, 11, 15, 16, 18, 20, 21]} />
 

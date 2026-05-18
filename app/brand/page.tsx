@@ -170,8 +170,8 @@ function CopySection({ headline, children }: {
 }) {
   return (
     <section style={{
-      paddingTop: 'clamp(100px, 14vh, 180px)',
-      paddingBottom: 'clamp(100px, 14vh, 180px)',
+      paddingTop: 'var(--section-gap)',
+      paddingBottom: 'var(--section-gap)',
     }}>
       <div className="section-w">
         <ScrollHighlight maxWidth={880}>{headline}</ScrollHighlight>

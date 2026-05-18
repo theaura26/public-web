@@ -2033,8 +2033,9 @@ export default function Home() {
           crosses the upper third of the viewport. */}
       <section className="reason-section" style={{ borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         <div className="section-w">
-          <ScrollHighlight>{`#GenerationalImpact — the choices made by one generation can have long-lasting effects on future generations, either escalating or lessening difficulties.
-These impacts can be deep and complex, shaping different facets of life: culture, economy, technology, and values.`}</ScrollHighlight>
+          <ScrollHighlight>{`Generational Impact.
+The idea of Generational Impact suggests that the choices made by one generation can have long-lasting effects on future generations — either escalating or lessening difficulties.
+These impacts can be deep and complex, shaping different facets of life such as culture, economy, technology, and values.`}</ScrollHighlight>
         </div>
         <style jsx>{`
           /* Reason copy sits directly above the expanding video — the

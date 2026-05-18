@@ -933,13 +933,17 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
 }
 .aura-term:focus { outline: none; }
 @media (max-width: 768px) {
-  /* Narrow viewports: anchor the tooltip to the term's left edge so
-     it doesn't push off the right rail, and cap its width to the
-     viewport minus a small gutter. */
+  /* Mobile: detach the tooltip from the term's positioning context
+     and pin it to the viewport — fixed position, centred horizontally,
+     with the top set inline by the Term component at open time so the
+     pill still sits just above the tapped word. */
   .aura-term__tip {
-    left: 0;
-    transform: none;
+    position: fixed;
+    left: 50%;
+    bottom: auto;
+    transform: translateX(-50%);
     max-width: calc(100vw - 32px);
+    z-index: 1000;
   }
 }
 

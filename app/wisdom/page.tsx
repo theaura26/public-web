@@ -138,18 +138,25 @@ export default function WisdomPage() {
         </DataGrid>
       </TwoCol>
 
-      <TwoCol id="hiring" heading="On hiring.">
+      <TwoCol id="community" heading="On community.">
         <p className="p1">
-          Every person who joins Aura is measured on three dimensions:
-          competence, character, and coherence with the system.
+          Aura is not a company you join. It is a community you are invited
+          into. The shepherd, the cook, the coffee cuppers, the residents,
+          the cattle, the canopy, the children who will inherit this estate
+          — they are members. The work belongs to all of them.
         </p>
         <p className="p2">
-          Character means calm under complexity, intellectual honesty,
-          stewardship instinct, consistency.
+          We pre-select for three dimensions: competence, character, and
+          coherence. Character means calm under complexity, intellectual
+          honesty, stewardship instinct, consistency. Coherence means
+          understanding that this is not a company optimising for
+          quarterly returns. It is a living system optimising for
+          centuries.
         </p>
         <p className="p2">
-          Coherence means understanding that this is not a company optimising
-          for quarterly returns. It is a living system optimising for centuries.
+          We would rather host a twenty-year-old with conviction than a
+          forty-year-old name with none. We invite you to bring something
+          to the table. The community will know the difference.
         </p>
       </TwoCol>
 

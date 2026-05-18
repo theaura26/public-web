@@ -601,8 +601,15 @@ export function Term({ tip, children }: { tip: string; children: ReactNode }) {
   // Only one tip is open at a time across the whole page — opening a
   // term broadcasts an 'aura-term:open' CustomEvent that all other
   // terms listen for and close themselves on.
+  //
+  // On mobile the tip pops out of the term's positioning context and
+  // becomes position:fixed so it can centre on the viewport (CSS sets
+  // left:50%, transform:translateX(-50%); here we set the top from
+  // the term's bounding rect at open time so the pill still sits
+  // above the term rather than mid-screen).
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLSpanElement>(null)
+  const tipRef = useRef<HTMLSpanElement>(null)
   const id = useRef(Symbol())
   useEffect(() => {
     if (!open) return
@@ -611,6 +618,16 @@ export function Term({ tip, children }: { tip: string; children: ReactNode }) {
     }
     const onOtherOpen = (e: Event) => {
       if ((e as CustomEvent).detail !== id.current) setOpen(false)
+    }
+    // Position the fixed-mode tip above the term. CSS only switches to
+    // fixed at <=768px; on desktop the inline top is ignored because
+    // the rule keeps position:absolute.
+    const term = ref.current
+    const tipEl = tipRef.current
+    if (term && tipEl) {
+      const r = term.getBoundingClientRect()
+      const h = tipEl.offsetHeight || 64
+      tipEl.style.top = `${Math.max(8, r.top - h - 8)}px`
     }
     document.addEventListener('click', onDoc)
     document.addEventListener('touchstart', onDoc, { passive: true })
@@ -641,7 +658,7 @@ export function Term({ tip, children }: { tip: string; children: ReactNode }) {
       }}
     >
       {children}
-      <span className="aura-term__tip" aria-hidden>{tip}</span>
+      <span ref={tipRef} className="aura-term__tip" aria-hidden>{tip}</span>
     </span>
   )
 }

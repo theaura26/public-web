@@ -171,16 +171,16 @@ export function HeroBanner({
 
       // Smart back link colour — back is fixed to the viewport so it
       // stays accessible the whole way through. Above the fold (while
-      // the banner sits behind the back) it reads plain white against
-      // the tinted photo. Once past the banner it switches to
-      // var(--text) so it stays legible on the page surface (dark in
-      // day mode, light in night). No mix-blend on either state — the
-      // 10% black tint gives the white enough lift above the fold.
+      // the banner sits behind the back) it uses mix-blend-difference
+      // so the same white ink inverts cleanly against any photo. Once
+      // past the banner it drops the blend and switches to var(--text)
+      // (dark in day mode, light in night) on the page surface.
       const back = backRef.current
       if (back) {
         const BACK_TOP = 104
         const overBanner = rect.top <= BACK_TOP && rect.bottom > BACK_TOP
         back.style.color = overBanner ? '#ffffff' : 'var(--text)'
+        back.style.mixBlendMode = overBanner ? 'difference' : 'normal'
       }
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
@@ -215,7 +215,7 @@ export function HeroBanner({
         fontSize: 11,
         letterSpacing: '1.5px',
         textTransform: 'uppercase',
-        mixBlendMode: 'normal',
+        mixBlendMode: 'difference',
         display: 'inline-flex',
         alignItems: 'center',
         gap: 8,
@@ -377,7 +377,7 @@ export function HeroBanner({
             margin: 0,
             fontFamily: 'var(--font-grotesque)',
             fontWeight: 600,
-            fontSize: 'clamp(56px, 12vw, 160px)',
+            fontSize: 'clamp(48px, 10vw, 128px)',
             lineHeight: 0.95,
             letterSpacing: '-0.04em',
             textTransform: 'uppercase',

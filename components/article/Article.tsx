@@ -21,7 +21,7 @@
 ═══════════════════════════════════════════════════════════════════ */
 
 import Link from 'next/link'
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { ReactNode, useEffect, useRef } from 'react'
 import Reveal from '@/components/RevealOnScroll'
 import { ExpandingBanner } from '@/components/ExpandingBanner'
 import { ACTIVE_JOURNALS, nextActiveJournals, type Journal } from '@/lib/journals'
@@ -86,51 +86,10 @@ export function HeroBanner({
   const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
   const backRef = useRef<HTMLAnchorElement>(null)
 
-  // Title legibility mode — chosen per image by luminance stats. Plain
-  // white works on dark or busy mid-tone photos; mix-blend-difference
-  // wins when the image is either near-monochromatic (clean inversion)
-  // or mostly-bright with sparse dark accents (plain white would fall on
-  // the bright field and disappear). The 10% black tint sits between
-  // image and title regardless, as a legibility floor.
-  const [textMode, setTextMode] = useState<'difference' | 'white'>('white')
-  useEffect(() => {
-    if (!src || mediaType !== 'image') return
-    const img = new Image()
-    img.crossOrigin = 'anonymous'
-    img.onload = () => {
-      try {
-        const size = 64
-        const canvas = document.createElement('canvas')
-        canvas.width = size
-        canvas.height = size
-        const ctx = canvas.getContext('2d', { willReadFrequently: true })
-        if (!ctx) return
-        ctx.drawImage(img, 0, 0, size, size)
-        const { data } = ctx.getImageData(0, 0, size, size)
-        let sum = 0
-        let sumSq = 0
-        const n = size * size
-        for (let i = 0; i < data.length; i += 4) {
-          const l = (0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255
-          sum += l
-          sumSq += l * l
-        }
-        const avg = sum / n
-        const std = Math.sqrt(Math.max(0, sumSq / n - avg * avg))
-        // Thresholds tuned against the active journal banners:
-        //   /aura-rta.jpg          std≈0.05            → flat plate    → difference
-        //   /aura-coffee.jpg       avg≈0.68, std≈0.17  → busy photo    → white
-        //   /aura-wisdom.jpg       avg≈0.74, std≈0.37  → bright + sparse → difference
-        //   /aura-fermentation.jpg avg≈0.33, std≈0.15  → dark photo    → white
-        const flat = std < 0.1
-        const brightAndSparse = avg > 0.5 && std > 0.25
-        setTextMode(flat || brightAndSparse ? 'difference' : 'white')
-      } catch {
-        // CORS or other — leave as default.
-      }
-    }
-    img.src = src
-  }, [src, mediaType])
+  // Title is always rendered with mix-blend-difference — the white
+  // ink inverts cleanly against any photo (dark text on light areas,
+  // light text on dark areas). The 10% black tint sits between image
+  // and title as a contrast floor for the mid-tone case.
   useEffect(() => {
     if (typeof window === 'undefined') return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -350,12 +309,10 @@ export function HeroBanner({
         </p>
       )}
 
-      {/* Title overlay — vertically centred white text. textMode picks
-          between mix-blend-difference (varied/light scenes — inverts for
-          contrast) and plain white (uniformly dark scenes — reads as-is
-          without muddying mid-tones). Parallax drifts the title upward
-          at 30% of scroll-into-wrap so it lingers in view as the reader
-          scrolls. */}
+      {/* Title overlay — vertically centred white text in mix-blend-
+          difference so the colour inverts against whatever sits behind
+          it. Parallax drifts the title upward at 30% of scroll-into-
+          wrap so it lingers in view as the reader scrolls. */}
       <div
         ref={titleRef}
         style={{
@@ -365,7 +322,7 @@ export function HeroBanner({
           alignItems: 'center',
           justifyContent: 'center',
           padding: 'clamp(20px, 4vw, 48px)',
-          mixBlendMode: textMode === 'difference' ? 'difference' : 'normal',
+          mixBlendMode: 'difference',
           color: '#ffffff',
           pointerEvents: 'none',
           zIndex: 3,
@@ -384,9 +341,9 @@ export function HeroBanner({
             color: 'inherit',
             width: '100%',
             display: 'flex',
-            // Multi-word titles spread edge-to-edge across the section
-            // rail; single-word titles centre instead.
-            justifyContent: words.length > 1 ? 'space-between' : 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
             whiteSpace: 'nowrap',
           }}
         >

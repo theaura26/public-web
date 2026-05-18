@@ -1035,6 +1035,14 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
   }
   body {
     max-width: 100vw !important;
+    overflow-x: clip;
+  }
+  /* Belt-and-braces: any direct child of body and any main/article
+     also clip horizontally so a single overflowing descendant can't
+     create a horizontal scrollbar on touch devices. */
+  main, article, body > div {
+    max-width: 100vw;
+    overflow-x: clip;
   }
 
   /* Hero CTA — push the "Enter the ecosystem" closer to the bottom edge

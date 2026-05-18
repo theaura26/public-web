@@ -30,6 +30,24 @@ export default function WisdomPage() {
         </p>
       </TwoCol>
 
+      <TwoCol heading="Attention is a moral choice.">
+        <p className="p1">
+          It starts with a simple idea: what enters the mind shapes what the
+          hands build. Inner disorder creates outer disorder.
+        </p>
+        <p className="p2">
+          So we begin with input hygiene — a deliberate care about what we
+          consume, what we amplify, what we allow into the work. This is
+          not productivity advice. It is an ethical position. Distraction
+          is not neutral. It degrades the quality of everything downstream
+          — decisions, designs, soil, fermentation, the taste of the cup.
+        </p>
+        <p className="p2">
+          Before Aura became a regenerative estate system, it became a
+          moral position. Every decision must survive pressure across time.
+        </p>
+      </TwoCol>
+
       <TwoCol heading="The things we refuse to become.">
         <p className="p1">
           Modern systems reward extraction. More speed. More output. More

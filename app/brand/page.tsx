@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react'
 import Reveal from '@/components/RevealOnScroll'
+import { ScrollHighlight } from '@/components/article/Article'
 import VideoReactiveArt from '@/components/VideoReactiveArt'
 import { useMode } from '@/components/ModeProvider'
 import gsap from 'gsap'
@@ -168,24 +169,20 @@ function CopySection({ headline, children }: {
   children?: React.ReactNode
 }) {
   return (
-    <Reveal>
-      <section style={{
-        padding: 'clamp(100px, 14vh, 180px) var(--gutter)',
-        textAlign: 'center',
-      }}>
-        <div style={{ maxWidth: 880, margin: '0 auto' }}>
-          <h2 style={{
-            lineHeight: 1.15,
-            marginBottom: children ? 28 : 0,
-          }}>{headline}</h2>
-          {children && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <section style={{
+      padding: 'clamp(100px, 14vh, 180px) var(--gutter)',
+    }}>
+      <div style={{ maxWidth: 880, margin: '0 auto' }}>
+        <ScrollHighlight maxWidth={880}>{headline}</ScrollHighlight>
+        {children && (
+          <Reveal>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 28 }}>
               {children}
             </div>
-          )}
-        </div>
-      </section>
-    </Reveal>
+          </Reveal>
+        )}
+      </div>
+    </section>
   )
 }
 
@@ -404,12 +401,11 @@ export default function BrandPage() {
       <HeroBanner />
 
       {/* ═══ BRANDMARK + COPY ═══ */}
-      <Reveal>
-        <section className="human-only" style={{
-          padding: 'clamp(100px, 14vh, 180px) var(--gutter)',
-          textAlign: 'center',
-        }}>
-          <div style={{ maxWidth: 880, margin: '0 auto' }}>
+      <section className="human-only" style={{
+        padding: 'clamp(100px, 14vh, 180px) var(--gutter)',
+      }}>
+        <div style={{ maxWidth: 880, margin: '0 auto' }}>
+          <Reveal>
             <div style={{ marginBottom: 48, display: 'flex', justifyContent: 'center' }}>
               <img
                 src={logoSrc}
@@ -423,27 +419,28 @@ export default function BrandPage() {
                 }}
               />
             </div>
-            <h2 style={{
-              lineHeight: 1.15,
-              marginBottom: 28,
-            }}>Aura is a regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 100 years.</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <p className="p2">The following pages set out the fundamentals of the Aura brand identity. It demonstrates how the brand assets work together to create a consistent and coherent brand across all touch points.</p>
-              <p className="p2">They cover both the practical aspects of how to use our design elements, and the more intangible aspects such as what Aura represents, our values and how you should express them.</p>
+          </Reveal>
+          <ScrollHighlight maxWidth={880}>{`A regenerative ecosystem for monastic polymaths.
+Where Ancestral Intelligence and Creative Capital are deployed across a hundred years.`}</ScrollHighlight>
+          <Reveal>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 28 }}>
+              <p className="p2">The following pages set out the fundamentals of the Aura brand identity — how the assets work together across every touch point, and what they are meant to express.</p>
             </div>
-          </div>
-        </section>
-      </Reveal>
+          </Reveal>
+        </div>
+      </section>
 
       {/* ═══ BRAND GUIDELINES — Pages 1–21 ═══ */}
       <SlideGrid from={1} to={21} skip={[6, 11, 15, 16, 18, 20, 21]} />
 
       {/* ═══ COPY ═══ */}
       <CopySection
-        headline="Rhythm of the Land"
+        headline={`Rhythm over speed.
+Depth over width.
+Silence over noise.
+Memory over trend.`}
       >
-        <p className="p2">Rhythm over Speed. We don&rsquo;t rush. We follow the rhythm of the land or the internal rhythm of a project, much like the Aura philosophy.</p>
-        <p className="p2">Depth over Width. Silence over Noise. Memory over Trend. We build for the long memory. No trend-chasing. No seasonal pivots. Every decision is tested against time.</p>
+        <p className="p2">We follow the rhythm of the land, and the internal rhythm of a project. We do not rush. We build for the long memory — no trend-chasing, no seasonal pivots, every decision tested against time.</p>
       </CopySection>
 
       {/* ═══ STORIES — Pages 22–50 ═══ */}
@@ -451,10 +448,11 @@ export default function BrandPage() {
 
       {/* ═══ COPY ═══ */}
       <CopySection
-        headline="What will become rare is not intelligence. What will become rare is wisdom."
+        headline={`What will become rare is not intelligence.
+What will become rare is wisdom.`}
       >
-        <p className="p2">The farmer of three thousand years ago had the knowledge. The founder of 2026 has the tools. Aura joins them. Three intelligences — Artificial, Human, and Natural — woven into a single ecosystem.</p>
-        <p className="p2">Ecological order. Adaptation. Rhythm. Pattern. Living systems wisdom. Older than both artificial and human intelligence.</p>
+        <p className="p2">The farmer of three thousand years ago had the knowledge. The founder of 2026 has the tools. Aura joins them — three intelligences woven into a single ecosystem.</p>
+        <p className="p2">Ecological order. Adaptation. Rhythm. Pattern. Natural intelligence is older than both the artificial and the human kind, and it is the one most worth preserving.</p>
       </CopySection>
 
       {/* ═══ STORIES — Pages 51–75 ═══ */}
@@ -462,9 +460,13 @@ export default function BrandPage() {
 
       {/* ═══ COPY ═══ */}
       <CopySection
-        headline="Soil Comes First. Do Small Work Properly. No Shortcuts. Quality Before Quantity. Think 10 Years Ahead."
+        headline={`Soil comes first.
+Do small work properly.
+No shortcuts.
+Quality before quantity.
+Think ten years ahead.`}
       >
-        <p className="p2">Six rules. English and Kannada. Every work shed. Be on the land. Be fair. Do the work properly. Leaders must be on the field.</p>
+        <p className="p2">Six rules. English and Kannada. Posted in every work shed. Leaders must be on the field.</p>
       </CopySection>
 
       {/* ═══ STORIES — Pages 76–94 ═══ */}

@@ -21,6 +21,20 @@ export default function CoffeePage() {
         caption="Coffee flowers — the beginning of every lot"
       />
 
+      <TwoCol heading="Small is the strategy.">
+        <p className="p1">
+          One estate. 150 acres. One harvest a year. The scale is deliberate
+          — so is the patience.
+        </p>
+        <p className="p2">
+          We are not pursuing volume, category leadership, or distribution
+          at scale. We are building a coffee that answers for itself —
+          traceable to the morning it was picked, the canopy it grew under,
+          the ferment that shaped it. Small enough that every decision is
+          made by someone who walks the land.
+        </p>
+      </TwoCol>
+
       <TwoCol heading="Six lots. One harvest. No two cups the same.">
         <p className="p1">
           Arabica grown at 3,600 feet beneath a four-story canopy. Every lot
@@ -50,7 +64,12 @@ export default function CoffeePage() {
         </p>
       </TwoCol>
 
-      <TwoCol id="rules" heading="The rules.">
+      <PullQuote>
+        We are not building a brand. We are building a coffee that will
+        still be recognisable in a hundred years.
+      </PullQuote>
+
+      <TwoCol id="rules" heading="The discipline.">
         <p className="p1">
           Only fully ripe cherries are plucked. Minimum ripeness 95%. All floats
           — the under-dense beans that rise in water — are removed from every
@@ -71,7 +90,7 @@ export default function CoffeePage() {
         </DataGrid>
       </TwoCol>
 
-      <PullQuote attribution="Aura · Coffee">
+      <PullQuote>
         The cup is not the product. The cup is proof.
       </PullQuote>
 
@@ -166,6 +185,18 @@ export default function CoffeePage() {
         <p className="p2">
           We are not chasing trends. We are documenting what the land produces
           when you pay attention.
+        </p>
+      </TwoCol>
+
+      <TwoCol heading="By invitation.">
+        <p className="p1">
+          Aura coffee is not sold by the hundredweight to commodity buyers.
+          It is allocated — by lot, by harvest, by hand — to roasters,
+          sanctuaries, and cellars that care about provenance.
+        </p>
+        <p className="p2">
+          Promise less, deliver more. We do not roadshow. If the cup
+          interests you, the estate is open.
         </p>
       </TwoCol>
 

@@ -220,6 +220,7 @@ function HeroVideo({ onWatch }: { onWatch: () => void }) {
               fontWeight: 400,
               letterSpacing: '1px',
               textTransform: 'uppercase',
+              textShadow: '0 1px 6px rgba(0, 0, 0, 0.45)',
             }}
           >
             Land. Time. Practice.
@@ -243,6 +244,7 @@ function HeroVideo({ onWatch }: { onWatch: () => void }) {
               display: 'inline-flex',
               alignItems: 'center',
               gap: 10,
+              textShadow: '0 1px 6px rgba(0, 0, 0, 0.45)',
             }}
           >
             <span
@@ -2031,9 +2033,8 @@ export default function Home() {
           crosses the upper third of the viewport. */}
       <section className="reason-section" style={{ borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         <div className="section-w">
-          <ScrollHighlight>{`The reason is to restore what sustains us.
-Everything here is built to endure.
-Land, hospitality, craft, and technology — one regenerative ecosystem.`}</ScrollHighlight>
+          <ScrollHighlight>{`#GenerationalImpact — the choices made by one generation can have long-lasting effects on future generations, either escalating or lessening difficulties.
+These impacts can be deep and complex, shaping different facets of life: culture, economy, technology, and values.`}</ScrollHighlight>
         </div>
         <style jsx>{`
           /* Reason copy sits directly above the expanding video — the
@@ -2078,7 +2079,7 @@ Land, hospitality, craft, and technology — one regenerative ecosystem.`}</Scro
                   height: 'auto',
                 }}
               />
-              <p className="p1" style={{ marginTop: 'var(--space-5)' }}>Ancestral. Natural. Human. Machine Intelligence</p>
+              <p className="p1" style={{ marginTop: 'var(--space-5)' }}>Natural Intelligence</p>
               <p className="p2" style={{ marginTop: 'var(--space-3)', maxWidth: 480, marginLeft: 'auto', marginRight: 'auto' }}>
                 The Aura Operating System brings together land intelligence, human craft, and modern technology into one integrated practice.
               </p>

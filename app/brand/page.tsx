@@ -170,13 +170,21 @@ function CopySection({ headline, children }: {
 }) {
   return (
     <section style={{
-      padding: 'clamp(100px, 14vh, 180px) var(--gutter)',
+      paddingTop: 'clamp(100px, 14vh, 180px)',
+      paddingBottom: 'clamp(100px, 14vh, 180px)',
     }}>
-      <div style={{ maxWidth: 880, margin: '0 auto' }}>
+      <div className="section-w">
         <ScrollHighlight maxWidth={880}>{headline}</ScrollHighlight>
         {children && (
           <Reveal>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 28 }}>
+            <div style={{
+              maxWidth: 720,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 16,
+              marginTop: 28,
+              paddingLeft: 'var(--gutter)',
+            }}>
               {children}
             </div>
           </Reveal>
@@ -402,11 +410,17 @@ export default function BrandPage() {
 
       {/* ═══ BRANDMARK + COPY ═══ */}
       <section className="human-only" style={{
-        padding: 'clamp(100px, 14vh, 180px) var(--gutter)',
+        paddingTop: 'clamp(100px, 14vh, 180px)',
+        paddingBottom: 'clamp(100px, 14vh, 180px)',
       }}>
-        <div style={{ maxWidth: 880, margin: '0 auto' }}>
+        <div className="section-w">
           <Reveal>
-            <div style={{ marginBottom: 48, display: 'flex', justifyContent: 'center' }}>
+            <div style={{
+              marginBottom: 48,
+              display: 'flex',
+              justifyContent: 'flex-start',
+              paddingLeft: 'var(--gutter)',
+            }}>
               <img
                 src={logoSrc}
                 alt="Aura logo"
@@ -424,11 +438,11 @@ export default function BrandPage() {
           <Reveal>
             <div style={{
               maxWidth: 720,
-              margin: '0 auto',
               display: 'flex',
               flexDirection: 'column',
               gap: 16,
-              marginTop: 'var(--space-7)',
+              marginTop: 'var(--space-5)',
+              paddingLeft: 'var(--gutter)',
             }}>
               <p className="p2" style={{ margin: 0 }}>
                 The following pages set out the fundamentals of the Aura

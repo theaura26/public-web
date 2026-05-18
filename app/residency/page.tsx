@@ -21,26 +21,55 @@ export default function ResidencyPage() {
         caption="A working desk, a window onto the forest"
       />
 
-      <TwoCol heading="Small is the strategy.">
+      <TwoCol heading="An artist residency for natural intelligence.">
         <p className="p1">
-          Two weeks minimum. Pre-selected. Eight people per window per
-          location. The scale is deliberate — so is the patience.
+          A working studio inside a living system. The estate is the
+          studio. The forest is the studio. The kiln, the wet mill, the
+          cattle pen, the tea garden, the shepherd&apos;s lunch table —
+          all of it is the studio.
         </p>
         <p className="p2">
-          We are not building a residency programme. We are building a
-          place where the work you cannot do anywhere else gets made.
-          Small enough that every applicant is read by the founder. Small
-          enough that the shepherd, the cook, and the other residents
-          know your name by the second morning.
+          Artists, makers, scientists, chefs, and quiet thinkers come to
+          Aura not to retreat from the world but to make work that could
+          not have been made anywhere else. The work answers to the land,
+          to the season, and to the people who have been listening to
+          this place for longer than any of us have been alive.
+        </p>
+      </TwoCol>
+
+      <TwoCol heading="Natural intelligence.">
+        <p className="p1">
+          We treat the estate the way other people treat datasets. Canopy
+          density predicts cherry <Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term>. Bee activity forecasts flowering.
+          Cattle rotation shapes the next season&apos;s microbiome. Soil
+          biology thirty days after cover-crop incorporation predicts the
+          flavour profile of the coffee lot.
+        </p>
+        <p className="p2">
+          The land is the original general-purpose intelligence —
+          observed, transmitted, lived. Older than any model on a server.
+          Our residents come to study it. To work alongside it. To make
+          work that draws from it. Not to extract, not to optimise, not
+          to wrap in marketing — to listen to it long enough that it
+          changes what they make.
+        </p>
+        <p className="p2">
+          This is what we mean by ancestral intelligence. It is the
+          intelligence of a <Term tip="Centuries-old high-fire stoneware lineage from Shiga Prefecture; rough surface, ash-fly glaze, wood-fired anagama kiln.">Shigaraki</Term> potter who knows which wood the kiln
+          will accept this week. The intelligence of a shepherd who reads
+          the herd&apos;s mood like weather. The intelligence of a soil
+          that has been farmed biodynamically long enough to have a
+          memory. The work that comes out of this residency is the
+          attempt to render that intelligence visible.
         </p>
       </TwoCol>
 
       <TwoCol heading="Connective tissue between disciplines.">
         <p className="p1">
-          Most residencies put a painter next to a painter and call it
-          community. Aura does the opposite. A coffee fermenter next to a
-          ceramicist. A soil biologist next to a washi papermaker. A
-          designer next to a shepherd. The friction between disciplines
+          Most artist residencies put a painter next to a painter and
+          call it community. Aura does the opposite. A coffee fermenter
+          next to a ceramicist. A soil biologist next to a <Term tip="Hand-made Japanese paper from kozo (paper mulberry) — Ohara studio practising techniques designated Intangible Cultural Property.">Washi</Term> papermaker.
+          A designer next to a shepherd. The friction between disciplines
           is the point. That is where the work nobody else can make gets
           made.
         </p>
@@ -54,78 +83,59 @@ export default function ResidencyPage() {
       </TwoCol>
 
       <PullQuote>
-        We are not building a programme. We are building a residency that
-        will still be recognisable in a hundred years.
+        Rebel with a cause. Grounded in ancestral knowledge. Packaged
+        with edge.
       </PullQuote>
 
-      <TwoCol id="formats" heading="Five formats. One kitchen.">
+      <TwoCol heading="The work that gets made here.">
         <p className="p1">
-          The residency is not one thing. It is five overlapping formats,
-          sharing a kitchen, a kiln, a library, and a shepherd. You can
-          arrive for one and leave touched by all five.
+          A potter who arrives with a portfolio of urban ceramics leaves
+          firing vessels with banana-leaf ash from a wash lot. A composer
+          who comes to listen for a week leaves with a piece scored for
+          eighteen minutes of cricket-and-rain. A chef writing ferment
+          notes ends up cooking a season&apos;s menu around what the
+          cattle ate that month. A designer makes the first Kannada
+          colourway for an Ohara letterpress.
         </p>
-        <DataGrid cols={3}>
-          <DataCard value="2–4 weeks">
-            For designers, architects, and system thinkers. Working
-            briefs drawn from the farm, the sanctuary, the product OS.
-            One-to-one time with Arvind in the first four days.
-          </DataCard>
-          <DataCard value="5–10 days">
-            Intensives with master practitioners — <Term tip="Centuries-old high-fire stoneware lineage from Shiga Prefecture; rough surface, ash-fly glaze, wood-fired anagama kiln.">Shigaraki</Term> ceramics, <Term tip="Hand-made Japanese paper from kozo (paper mulberry) — Ohara studio practising techniques designated Intangible Cultural Property.">Washi</Term> paper, Uji tea, Malnad weaving, natural dye. Small
-            cohorts, seasonal.
-          </DataCard>
-          <DataCard value="Rolling">
-            An exhibition arm for work made on the estate or adjacent to
-            it. Not a retail channel. A frame for the work to be seen.
-          </DataCard>
-          <DataCard value="1 teacher · 1 student">
-            The oldest format on earth. Long apprenticeships in a single
-            discipline — biodynamic, fermentation, pottery, coffee.
-            Months, not weeks.
-          </DataCard>
-          <DataCard value="Project-scoped">
-            Embedded work on product, sensor, world-model, or workflow
-            problems. For the engineers, the researchers, the
-            forward-deployed.
-          </DataCard>
-          <DataCard value="Annual">
-            The Gathering — <Term tip="Sanskrit / Kannada for &ldquo;the earth&rdquo;. The annual gathering that opens the residency to former residents, teachers, and neighbours for one week each year.">Bhoomi</Term> Festival, the one week a year the residency
-            becomes public. Music, fire, food, field walks.
-          </DataCard>
-        </DataGrid>
-      </TwoCol>
-
-      <TwoCol id="expressions" heading="Two expressions, one residency.">
-        <p className="p1">
-          The same residency is expressed two ways in two countries. A
-          resident might spend the first week in Mudigere and the second
-          in Ohara, or commit the whole stay to one. Each location is raw
-          in its own way.
+        <p className="p2">
+          We do not assign briefs. We host the conditions and let the
+          land do the rest of the work. The residency&apos;s output is
+          intentionally varied — books, dishes, instruments, gardens,
+          tools, fragrances, music, films, software, glaze recipes,
+          fermentation calendars — because natural intelligence does not
+          come out in a single medium.
         </p>
-        <DataGrid cols={2}>
-          <DataCard value="India · Mudigere">
-            Raw. Monsoon. Soil. Twelve cabins in the canopy — The Twelve
-            Worlds — each named for an element of the estate: Hive, Root,
-            Flow, Flame, Bloom, Canopy, Echo, Seed, Mist, Stone, Pulse,
-            Ethereal. Days begin with the herd moving through the morning
-            mist. Work is loud, hot, and generous. Kannada is the common
-            tongue.
-          </DataCard>
-          <DataCard value="Japan · Ohara">
-            Refined. Tea. Washi. A 90%-restored Japanese house 20 minutes
-            from Kyoto, a natural onsen by the river, a third-generation
-            zen garden on the property, an 800-year fermentation lineage
-            in the valley. Days are quieter, slower, more deliberate.
-            Purple shiso grows nowhere else in Japan. Japanese is the
-            common tongue.
-          </DataCard>
-        </DataGrid>
       </TwoCol>
 
       <Placeholder
         type="Detail · hands on material"
         caption="A maker mid-task. India or Japan ambiguous."
       />
+
+      <TwoCol heading="Two estates. Two old intelligences.">
+        <p className="p1">
+          Mudigere is Vedic. Ohara is Zen. Neither apologises to a
+          Western sustainability narrative. Both operate from <Term tip="Sanskrit. Natural order; the rhythm that governs seasons, tides, germination, decay, and renewal. Predates organised religion.">Ṛta</Term> — right
+          time, right action, natural order. The residency moves between
+          them because the work that begins in one valley is often only
+          complete once it has been read in the other.
+        </p>
+        <DataGrid cols={2}>
+          <DataCard value="India · Mudigere">
+            Raw. Monsoon. Soil. The intelligence of a four-story canopy
+            and fifty-two indigenous cattle. Days begin with the herd
+            moving through the morning mist; work is loud, hot, and
+            generous; Kannada is the common tongue.
+          </DataCard>
+          <DataCard value="Japan · Ohara">
+            Refined. Tea. Washi. The intelligence of an eight-hundred-
+            year fermentation lineage in the valley and a third-
+            generation zen garden on the property. Days are quieter,
+            slower, more deliberate. Japanese is the common tongue.
+            Purple shiso grows nowhere else in Japan.
+          </DataCard>
+        </DataGrid>
+      </TwoCol>
 
       <TwoCol id="who" heading="The shape of the right applicant.">
         <p className="p1">
@@ -166,28 +176,25 @@ export default function ResidencyPage() {
       </TwoCol>
 
       <PullQuote>
-        Rebel with a cause. Grounded in ancestral knowledge. Packaged
-        with edge.
+        We are not building a programme. We are building a residency that
+        will still be recognisable in a hundred years.
       </PullQuote>
 
-      <TwoCol id="format" heading="The rhythm.">
+      <TwoCol heading="Teachers in residence.">
         <p className="p1">
-          Two weeks minimum. We have learned that anything shorter is
-          tourism. Arvind is present on the property for the first three
-          to four days of every residency — in the kitchen, at the field,
-          at the desk. After that, residents work alone, or with the
-          teachers in residence, or with each other.
+          The teachers are not visiting lecturers. They are people whose
+          practice the estate is built around — a master potter, a
+          biodynamic farmer, a washi papermaker, a coffee cupper, a
+          shepherd, a tea host, a soil scientist. Most have been doing
+          one thing for twenty to forty years.
         </p>
         <p className="p2">
-          The rhythm is not a schedule. It is a day. You wake when the
-          farm wakes. You eat what the farm ate yesterday. You work until
-          the light goes. You read, walk, or sit. You repeat.
+          What we are really asking residents to do is sit close to
+          someone who has been listening to one craft, one material, one
+          living system long enough to know it without speaking. The work
+          is the transcription of that knowing — into objects, recipes,
+          tools, scores, books, software.
         </p>
-        <DataGrid cols={3}>
-          <DataCard value="2 weeks">Minimum stay. Anything shorter is tourism.</DataCard>
-          <DataCard value="4 – 8">Cohort size per location, per window. Small enough to share a table.</DataCard>
-          <DataCard value="First 3 – 4 days">Founder time. Arvind on-property.</DataCard>
-        </DataGrid>
       </TwoCol>
 
       <TwoCol heading="The Gathering · Bhoomi Festival.">
@@ -200,7 +207,9 @@ export default function ResidencyPage() {
         </p>
         <p className="p2">
           The Gathering is the residency&apos;s annual culmination, and
-          the single best way to meet the people behind it.
+          the single best way to meet the people behind it. <Term tip="Sanskrit / Kannada for &ldquo;the earth&rdquo;. The annual gathering that opens the residency to former residents, teachers, and neighbours for one week each year.">Bhoomi</Term>
+          means &ldquo;the earth&rdquo; in Sanskrit and Kannada — the
+          name is the brief.
         </p>
       </TwoCol>
 
@@ -223,18 +232,22 @@ export default function ResidencyPage() {
       </TwoCol>
 
       <ScrollHighlight>
-        {`The residency is not the building.
-         The residency is the biosphere.
-         Two weeks minimum.
-         Anything shorter is tourism.`}
+        {`The land is the original intelligence.
+         Listen to it long enough
+         that it changes what you make.
+         Ancestral knowledge.
+         Packaged with edge.`}
       </ScrollHighlight>
 
-      <OneCol id="closing" heading="One residency. Two valleys. One week a year.">
+      <OneCol id="closing" heading="What the residency is really for.">
         <p className="p1">
-          Two weeks at a desk in the canopy. Two weeks at a desk by the
-          river. The friction of leaving one for the other is part of the
-          work. Most residencies offer continuity. We offer the opposite,
-          on purpose.
+          A century from now, very little of what we are calling artificial
+          intelligence today will still be running. The intelligence that
+          will still be running is the one that lives in soil, in craft,
+          in shepherds&apos; vocabulary, in fermentation lineages, in the
+          twenty-page notebooks of artists who spent two months on this
+          estate watching the canopy breathe. The residency exists to put
+          more of that into the world.
         </p>
       </OneCol>
 

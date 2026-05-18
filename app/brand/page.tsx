@@ -422,11 +422,6 @@ export default function BrandPage() {
           </Reveal>
           <ScrollHighlight maxWidth={880}>{`A regenerative ecosystem for monastic polymaths.
 Where Ancestral Intelligence and Creative Capital are deployed across a hundred years.`}</ScrollHighlight>
-          <Reveal>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 28 }}>
-              <p className="p2">The following pages set out the fundamentals of the Aura brand identity — how the assets work together across every touch point, and what they are meant to express.</p>
-            </div>
-          </Reveal>
         </div>
       </section>
 
@@ -439,9 +434,7 @@ Where Ancestral Intelligence and Creative Capital are deployed across a hundred 
 Depth over width.
 Silence over noise.
 Memory over trend.`}
-      >
-        <p className="p2">We follow the rhythm of the land, and the internal rhythm of a project. We do not rush. We build for the long memory — no trend-chasing, no seasonal pivots, every decision tested against time.</p>
-      </CopySection>
+      />
 
       {/* ═══ STORIES — Pages 22–50 ═══ */}
       <SlideGrid from={22} to={50} skip={[31, 37, 40, 41, 49]} />
@@ -450,10 +443,7 @@ Memory over trend.`}
       <CopySection
         headline={`What will become rare is not intelligence.
 What will become rare is wisdom.`}
-      >
-        <p className="p2">The farmer of three thousand years ago had the knowledge. The founder of 2026 has the tools. Aura joins them — three intelligences woven into a single ecosystem.</p>
-        <p className="p2">Ecological order. Adaptation. Rhythm. Pattern. Natural intelligence is older than both the artificial and the human kind, and it is the one most worth preserving.</p>
-      </CopySection>
+      />
 
       {/* ═══ STORIES — Pages 51–75 ═══ */}
       <SlideGrid from={51} to={75} skip={[54, 55, 57, 58, 60, 62, 75]} />
@@ -465,16 +455,14 @@ Do small work properly.
 No shortcuts.
 Quality before quantity.
 Think ten years ahead.`}
-      >
-        <p className="p2">Six rules. English and Kannada. Posted in every work shed. Leaders must be on the field.</p>
-      </CopySection>
+      />
 
       {/* ═══ STORIES — Pages 76–94 ═══ */}
       <SlideGrid from={76} to={94} skip={[76, 85, 89, 91, 92, 93, 94]} />
 
       {/* ═══ CLOSING ═══ */}
       <CopySection
-        headline="The choices made by one generation shape a thousand that follow."
+        headline="The choices made by one generation shape the future that follows."
       />
 
     </div>

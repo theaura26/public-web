@@ -936,7 +936,7 @@ export function ScrollHighlight({
             return (
               <span
                 key={lineIdx}
-                style={{ display: 'block', marginBottom: isLast ? 0 : 'clamp(28px, 4vh, 56px)' }}
+                style={{ display: 'block', marginBottom: isLast ? 0 : 'clamp(8px, 1.2vh, 18px)' }}
               >
                 {words.map((w, i) => {
                   wordIndex++

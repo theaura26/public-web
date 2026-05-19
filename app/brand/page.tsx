@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
+import Image from 'next/image'
 import Reveal from '@/components/RevealOnScroll'
 import { ScrollHighlight } from '@/components/article/Article'
 import VideoReactiveArt from '@/components/VideoReactiveArt'
@@ -253,7 +254,7 @@ function TiltCard({ children, index: i }: { children: React.ReactNode; index: nu
   )
 }
 
-function SlideGrid({ from, to, skip }: { from: number; to: number; skip?: number[] }) {
+function SlideGrid({ from, to, skip, eagerCount = 0 }: { from: number; to: number; skip?: number[]; eagerCount?: number }) {
   const skipSet = new Set(skip || [])
   const pages = Array.from({ length: to - from + 1 }, (_, i) => from + i).filter(p => !skipSet.has(p))
 
@@ -262,16 +263,24 @@ function SlideGrid({ from, to, skip }: { from: number; to: number; skip?: number
       <div className="brand-slide-grid">
         {pages.map((pg, idx) => {
           const n = String(pg).padStart(2, '0')
+          // First few slides on each grid get eager loading + priority so
+          // the above-the-fold cards paint immediately. Below-the-fold
+          // stays lazy. Next/Image handles responsive resizing — at the
+          // rendered 2-up tile size we only download ~600px wide, not
+          // the full 1920px source.
+          const isPriority = idx < eagerCount
           return (
             <TiltCard key={pg} index={idx}>
-              <img
+              <Image
                 src={`/brand-slides/slide-${n}.jpg`}
                 alt={`Aura brand guideline, slide ${n}`}
                 width={1920}
                 height={1080}
-                loading="lazy"
-                decoding="async"
-                fetchPriority="low"
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 45vw, 588px"
+                quality={78}
+                priority={isPriority}
+                loading={isPriority ? 'eager' : 'lazy'}
+                fetchPriority={isPriority ? 'high' : 'low'}
                 draggable={false}
                 style={{
                   position: 'absolute',
@@ -292,7 +301,7 @@ function SlideGrid({ from, to, skip }: { from: number; to: number; skip?: number
 
       <style jsx>{`
         .brand-slide-grid-wrap {
-          padding: clamp(20px, 3vw, 40px) clamp(12px, 2vw, 32px) clamp(60px, 10vw, 120px);
+          padding: 0 clamp(12px, 2vw, 32px);
           perspective: 3600px;
           perspective-origin: 50% 50%;
         }
@@ -301,15 +310,15 @@ function SlideGrid({ from, to, skip }: { from: number; to: number; skip?: number
           margin: 0 auto;
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 32px 24px;
+          gap: var(--space-6) var(--space-5);
           transform-style: preserve-3d;
         }
         @media (max-width: 768px) {
           .brand-slide-grid-wrap {
-            padding: 12px 6px 40px;
+            padding: 0 var(--space-2);
           }
           .brand-slide-grid {
-            gap: 10px 8px;
+            gap: var(--space-3) var(--space-2);
           }
         }
       `}</style>
@@ -410,8 +419,8 @@ export default function BrandPage() {
 
       {/* ═══ BRANDMARK + COPY ═══ */}
       <section className="human-only" style={{
-        paddingTop: 'clamp(100px, 14vh, 180px)',
-        paddingBottom: 'clamp(100px, 14vh, 180px)',
+        paddingTop: 'var(--section-gap)',
+        paddingBottom: 'var(--section-gap)',
       }}>
         <div className="section-w">
           <Reveal>
@@ -462,7 +471,7 @@ export default function BrandPage() {
       </section>
 
       {/* ═══ BRAND GUIDELINES — Pages 1–21 ═══ */}
-      <SlideGrid from={1} to={21} skip={[6, 11, 15, 16, 18, 20, 21]} />
+      <SlideGrid from={1} to={21} skip={[6, 11, 15, 16, 18, 20, 21]} eagerCount={4} />
 
       {/* ═══ COPY ═══ */}
       <CopySection

@@ -104,11 +104,16 @@ export default function ContactPage() {
       <section style={{ paddingTop: 250, paddingBottom: 80 }}>
         <div className="section-w">
           <Reveal>
-            <h1 style={{ maxWidth: 700 }}>Let&apos;s talk</h1>
+            <h1 style={{ maxWidth: 700 }}>Write to us.</h1>
           </Reveal>
           <Reveal delay={100}>
-            <p className="p2" style={{ maxWidth: 440, marginTop: 32 }}>
-              Whether it&apos;s coffee, collaboration, or just a conversation — we&apos;d love to hear from you.
+            <p className="p2" style={{ maxWidth: 520, marginTop: 32 }}>
+              Aura is invitation-based. Tell us who you are, what you are
+              working on, and why Aura. One page is plenty.
+            </p>
+            <p className="p2" style={{ maxWidth: 520, marginTop: 16 }}>
+              We promise less and deliver more. We do not roadshow. We
+              answer every note.
             </p>
           </Reveal>
         </div>

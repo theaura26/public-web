@@ -463,11 +463,11 @@ What will become rare is wisdom.`}
 
       {/* ═══ COPY ═══ */}
       <CopySection
-        headline={`Soil comes first.
-Do small work properly.
-No shortcuts.
-Quality before quantity.
-Think ten years ahead.`}
+        headline={`Invent, do not borrow.
+Set our own rules.
+Promise less, deliver more.
+Build for the long memory.
+Make the brand endure.`}
       />
 
       {/* ═══ STORIES — Pages 76–94 ═══ */}

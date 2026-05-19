@@ -484,29 +484,13 @@ export function JournalHero({
         </h1>
       </div>
 
-      {src && (
-        <figure className="journal-hero__media">
-          {mediaType === 'video' ? (
-            <video
-              muted
-              loop
-              playsInline
-              autoPlay
-              preload="metadata"
-              poster={poster}
-              aria-label={alt ?? title}
-            >
-              <source src={src} type="video/mp4" />
-            </video>
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={src} alt={alt ?? title} />
-          )}
-          {caption && (
-            <figcaption className="label">{caption}</figcaption>
-          )}
-        </figure>
-      )}
+      <ExpandingBanner
+        src={src}
+        mediaType={mediaType}
+        poster={poster}
+        alt={alt ?? title}
+        caption={caption}
+      />
 
       <style jsx>{`
         .journal-hero {
@@ -539,28 +523,6 @@ export function JournalHero({
             flex-direction: row;
             justify-content: ${words.length > 1 ? 'space-between' : 'flex-start'};
           }
-        }
-        .journal-hero__media {
-          margin: 0;
-          width: 100vw;
-          margin-left: calc(50% - 50vw);
-          position: relative;
-        }
-        .journal-hero__media :global(img),
-        .journal-hero__media :global(video) {
-          width: 100%;
-          height: auto;
-          display: block;
-        }
-        .journal-hero__media :global(figcaption) {
-          position: absolute;
-          left: clamp(20px, 4vw, 48px);
-          bottom: clamp(20px, 4vh, 48px);
-          margin: 0;
-          max-width: min(320px, 60vw);
-          color: #ffffff;
-          letter-spacing: 1px;
-          text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
         }
       `}</style>
     </header>

@@ -189,51 +189,51 @@ export function HeroBanner({
     }
   }, [])
 
-  // Back arrow lives in a small white plate above the banner — same
-  // pattern as <JournalHero>. Not fixed-positioned; scrolls with the
-  // page so it always reads as part of the journal article rather
-  // than as a chrome element bolted onto the nav.
+  // Back arrow sits over the banner image at top-left — position is
+  // identical across every journal so the back is always in the same
+  // spot regardless of which hero variant the page uses. White ink
+  // with a soft text-shadow keeps it legible against any photo;
+  // z-index lifts it above the image but below the global nav.
   const backLink = (
-    <div className="section-w" style={{
-      paddingTop: 'calc(var(--nav-h, 56px) + var(--space-7))',
-      paddingBottom: 'var(--space-7)',
-    }}>
-      <Link
-        href="/"
-        aria-label="Back"
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 8,
-          color: 'var(--text)',
-          fontFamily: 'var(--font-mono)',
-          fontSize: 11,
-          fontWeight: 400,
-          letterSpacing: '1.5px',
-          textTransform: 'uppercase',
-          textDecoration: 'none',
-        }}
-      >
-        <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
-        <span>Back</span>
-      </Link>
-    </div>
+    <Link
+      href="/"
+      aria-label="Back"
+      style={{
+        position: 'absolute',
+        top: 'calc(var(--nav-h, 56px) + var(--space-5))',
+        left: 'var(--gutter)',
+        zIndex: 5,
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 8,
+        color: '#ffffff',
+        fontFamily: 'var(--font-mono)',
+        fontSize: 11,
+        fontWeight: 400,
+        letterSpacing: '1.5px',
+        textTransform: 'uppercase',
+        textDecoration: 'none',
+        textShadow: '0 1px 6px rgba(0, 0, 0, 0.45)',
+      }}
+    >
+      <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
+      <span>Back</span>
+    </Link>
   )
   return (
-    <>
+    <div
+      ref={wrapRef}
+      style={{
+        position: 'relative',
+        width: '100vw',
+        marginLeft: 'calc(50% - 50vw)',
+        // 200vh wrapper holds the sticky stage in view for ~100vh of
+        // scroll past first paint, giving the blur clear room to play
+        // before the banner releases and the next section enters.
+        height: '200vh',
+      }}
+    >
       {backLink}
-      <div
-        ref={wrapRef}
-        style={{
-          position: 'relative',
-          width: '100vw',
-          marginLeft: 'calc(50% - 50vw)',
-          // 200vh wrapper holds the sticky stage in view for ~100vh of
-          // scroll past first paint, giving the blur clear room to play
-          // before the banner releases and the next section enters.
-          height: '200vh',
-        }}
-      >
       <section
         style={{
           position: 'sticky',
@@ -399,8 +399,7 @@ export function HeroBanner({
         `}</style>
       </div>
       </section>
-      </div>
-    </>
+    </div>
   )
 }
 
@@ -441,27 +440,6 @@ export function JournalHero({
   return (
     <header className="journal-hero">
       <div className="section-w journal-hero__top">
-        <Link
-          href={backHref}
-          aria-label="Back"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-            color: 'var(--text)',
-            fontFamily: 'var(--font-mono)',
-            fontSize: 11,
-            fontWeight: 400,
-            letterSpacing: '1.5px',
-            textTransform: 'uppercase',
-            textDecoration: 'none',
-            marginBottom: 'var(--space-7)',
-          }}
-        >
-          <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
-          <span>Back</span>
-        </Link>
-
         <h1 className="journal-hero__title">
           {words.map((w, i) => (
             <span key={i}>{w}</span>
@@ -469,13 +447,39 @@ export function JournalHero({
         </h1>
       </div>
 
-      <ExpandingBanner
-        src={src}
-        mediaType={mediaType}
-        poster={poster}
-        alt={alt ?? title}
-        caption={caption}
-      />
+      <div className="journal-hero__media">
+        <Link
+          href={backHref}
+          aria-label="Back"
+          style={{
+            position: 'absolute',
+            top: 'var(--space-5)',
+            left: 'var(--gutter)',
+            zIndex: 5,
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            color: '#ffffff',
+            fontFamily: 'var(--font-mono)',
+            fontSize: 11,
+            fontWeight: 400,
+            letterSpacing: '1.5px',
+            textTransform: 'uppercase',
+            textDecoration: 'none',
+            textShadow: '0 1px 6px rgba(0, 0, 0, 0.45)',
+          }}
+        >
+          <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
+          <span>Back</span>
+        </Link>
+        <ExpandingBanner
+          src={src}
+          mediaType={mediaType}
+          poster={poster}
+          alt={alt ?? title}
+          caption={caption}
+        />
+      </div>
 
       <style jsx>{`
         .journal-hero {
@@ -484,6 +488,9 @@ export function JournalHero({
         .journal-hero__top {
           padding-top: var(--space-7);
           padding-bottom: var(--space-7);
+        }
+        .journal-hero__media {
+          position: relative;
         }
         .journal-hero__title {
           margin: 0;

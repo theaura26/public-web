@@ -1,21 +1,14 @@
 'use client'
 
 import { ReactNode } from 'react'
-import { usePathname } from 'next/navigation'
 import { ModeProvider } from '@/components/ModeProvider'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
-/* Routes that mount their own <ArticleNav> in lieu of the global Navbar.
-   Keep this list in sync with pages that import ArticleNav. */
-const ARTICLE_NAV_ROUTES = new Set<string>(['/coffee'])
-
 export default function ClientLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname()
-  const hideGlobalNav = ARTICLE_NAV_ROUTES.has(pathname || '')
   return (
     <ModeProvider>
-      {!hideGlobalNav && <Navbar />}
+      <Navbar />
       <main>{children}</main>
       <Footer />
       {/* Page-level bottom blur vignette — fixed to the viewport bottom,

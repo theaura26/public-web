@@ -84,7 +84,6 @@ export function HeroBanner({
   const wrapRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLDivElement>(null)
   const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
-  const backRef = useRef<HTMLAnchorElement>(null)
 
   // Title is always rendered with mix-blend-difference — the white
   // ink inverts cleanly against any photo (dark text on light areas,
@@ -178,18 +177,6 @@ export function HeroBanner({
           : `translate3d(0, ${-scrollIntoWrap * 0.3}px, 0)`
       }
 
-      // Smart back link colour — back is fixed to the viewport so it
-      // stays accessible the whole way through. Above the fold (while
-      // the banner sits behind the back) it uses bannerInk.topLeft —
-      // pure white or pure black, chosen by luminance of the top-left
-      // corner of the photo. Once past the banner it drops to
-      // var(--text) (dark in day mode, light in night).
-      const back = backRef.current
-      if (back) {
-        const BACK_TOP = 104
-        const overBanner = rect.top <= BACK_TOP && rect.bottom > BACK_TOP
-        back.style.color = overBanner ? bannerInk.topLeft : 'var(--text)'
-      }
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -200,56 +187,53 @@ export function HeroBanner({
       window.removeEventListener('resize', onScroll)
       if (raf) cancelAnimationFrame(raf)
     }
-  }, [bannerInk.topLeft])
+  }, [])
 
-  // Back arrow — fixed to the viewport so it stays accessible across
-  // the entire journal. Colour and mix-blend are toggled each frame by
-  // the scroll tick: difference + white while over the banner photo,
-  // plain var(--text) once the reader has scrolled past the banner
-  // onto the page surface.
+  // Back arrow lives in a small white plate above the banner — same
+  // pattern as <JournalHero>. Not fixed-positioned; scrolls with the
+  // page so it always reads as part of the journal article rather
+  // than as a chrome element bolted onto the nav.
   const backLink = (
-    <Link
-      ref={backRef}
-      href="/"
-      aria-label="Back to home"
-      style={{
-        position: 'fixed',
-        top: 104,
-        left: 'var(--gutter)',
-        zIndex: 60,
-        color: '#ffffff',
-        textDecoration: 'none',
-        fontFamily: 'var(--font-mono)',
-        fontSize: 11,
-        letterSpacing: '1.5px',
-        textTransform: 'uppercase',
-        mixBlendMode: 'normal',
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 8,
-        height: 16,
-        lineHeight: '16px',
-        transition: 'color var(--dur-fast) var(--ease)',
-      }}
-    >
-      <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
-      <span>Back</span>
-    </Link>
+    <div className="section-w" style={{
+      paddingTop: 'calc(var(--nav-h, 56px) + var(--space-7))',
+      paddingBottom: 'var(--space-7)',
+    }}>
+      <Link
+        href="/"
+        aria-label="Back"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 8,
+          color: 'var(--text)',
+          fontFamily: 'var(--font-mono)',
+          fontSize: 11,
+          fontWeight: 400,
+          letterSpacing: '1.5px',
+          textTransform: 'uppercase',
+          textDecoration: 'none',
+        }}
+      >
+        <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
+        <span>Back</span>
+      </Link>
+    </div>
   )
   return (
-    <div
-      ref={wrapRef}
-      style={{
-        position: 'relative',
-        width: '100vw',
-        marginLeft: 'calc(50% - 50vw)',
-        // 200vh wrapper holds the sticky stage in view for ~100vh of
-        // scroll past first paint, giving the blur clear room to play
-        // before the banner releases and the next section enters.
-        height: '200vh',
-      }}
-    >
+    <>
       {backLink}
+      <div
+        ref={wrapRef}
+        style={{
+          position: 'relative',
+          width: '100vw',
+          marginLeft: 'calc(50% - 50vw)',
+          // 200vh wrapper holds the sticky stage in view for ~100vh of
+          // scroll past first paint, giving the blur clear room to play
+          // before the banner releases and the next section enters.
+          height: '200vh',
+        }}
+      >
       <section
         style={{
           position: 'sticky',
@@ -415,7 +399,8 @@ export function HeroBanner({
         `}</style>
       </div>
       </section>
-    </div>
+      </div>
+    </>
   )
 }
 

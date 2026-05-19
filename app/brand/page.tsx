@@ -105,14 +105,8 @@ function HeroBanner() {
   }, [])
 
   return (
-    <div className="human-only" style={{ height: '100vh', position: 'relative', overflow: 'hidden' }}>
-          {useFallback ? (
-            <img
-              src="/aura-hero.jpg"
-              alt="Aura — natural intelligence in motion"
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-          ) : (
+    <div className="human-only" style={{ height: '100vh', position: 'relative', overflow: 'hidden', background: 'var(--bg)' }}>
+          {!useFallback && (
             <VideoReactiveArt
               src="/aura-hero.mp4"
               overlay

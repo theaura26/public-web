@@ -10,10 +10,12 @@ import {
   ScrollHighlight,
   Term,
 } from '@/components/article/Article'
+import ArticleNav from '@/components/ArticleNav'
 
 export default function CoffeePage() {
   return (
     <>
+      <ArticleNav title="Our Coffee Story" backHref="/" />
       <HeroBanner
         currentHref="/coffee"
         title="Our Coffee Story"

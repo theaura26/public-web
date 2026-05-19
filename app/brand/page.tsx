@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Reveal from '@/components/RevealOnScroll'
 import { ScrollHighlight } from '@/components/article/Article'
@@ -28,7 +28,6 @@ const INTELLIGENCES = ['Natural', 'Ancient', 'Human', 'Machine']
 
 function HeroBanner() {
   const wordRef = useRef<HTMLSpanElement>(null)
-  const [useFallback, setUseFallback] = useState(false)
 
   /* Scramble cycle — ScrambleTextPlugin tweens between the four
      intelligences, glyph by glyph. We bypass React state for the word so the
@@ -81,44 +80,19 @@ function HeroBanner() {
     }
   }, [])
 
-  // Detect low-power / reduced-motion / autoplay-blocked → use static image fallback
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) {
-      setUseFallback(true)
-      return
-    }
-    // Probe autoplay capability with a tiny silent video
-    const probe = document.createElement('video')
-    probe.muted = true
-    probe.playsInline = true
-    probe.src = '/aura-hero.mp4'
-    probe.style.position = 'fixed'
-    probe.style.opacity = '0'
-    probe.style.pointerEvents = 'none'
-    probe.style.width = '1px'
-    probe.style.height = '1px'
-    document.body.appendChild(probe)
-    probe.play()
-      .then(() => { probe.pause(); probe.remove() })
-      .catch(() => { setUseFallback(true); probe.remove() })
-  }, [])
-
   return (
     <div className="human-only" style={{ height: '100vh', position: 'relative', overflow: 'hidden', background: 'var(--bg)' }}>
-          {!useFallback && (
-            <VideoReactiveArt
-              src="/aura-hero.mp4"
-              overlay
-              cellSize={8}
-              opacity={1}
-              sparsity={0.38}
-              reactivity={0.14}
-              mouse
-              colors={['#E8421A', '#F07820', '#F5B810', '#8AAEE0', '#D4C020', '#7A9040']}
-              style={{ position: 'absolute', inset: 0 }}
-            />
-          )}
+          <VideoReactiveArt
+            src="/aura-hero.mp4"
+            overlay
+            cellSize={8}
+            opacity={1}
+            sparsity={0.38}
+            reactivity={0.14}
+            mouse
+            colors={['#E8421A', '#F07820', '#F5B810', '#8AAEE0', '#D4C020', '#7A9040']}
+            style={{ position: 'absolute', inset: 0 }}
+          />
 
           {/* Text overlay */}
           <div style={{

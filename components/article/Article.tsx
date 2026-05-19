@@ -485,7 +485,7 @@ export function JournalHero({
           padding-top: var(--nav-h, 56px);
         }
         .journal-hero__top {
-          padding-top: var(--space-7);
+          padding-top: clamp(var(--space-8), 10vh, calc(var(--space-9) + var(--space-7)));
           padding-bottom: var(--space-7);
         }
         .journal-hero__title {

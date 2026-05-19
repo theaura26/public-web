@@ -395,8 +395,7 @@ export default function BrandPage() {
             <div style={{
               marginBottom: 48,
               display: 'flex',
-              justifyContent: 'flex-start',
-              paddingLeft: 'var(--gutter)',
+              justifyContent: 'center',
             }}>
               <img
                 src={logoSrc}
@@ -411,15 +410,16 @@ export default function BrandPage() {
               />
             </div>
           </Reveal>
-          <ScrollHighlight maxWidth={880}>{`Aura is a regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 100 years.`}</ScrollHighlight>
+          <ScrollHighlight maxWidth={880} align="center">{`Aura is a regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 100 years.`}</ScrollHighlight>
           <Reveal>
             <div style={{
               maxWidth: 720,
+              margin: '0 auto',
               display: 'flex',
               flexDirection: 'column',
               gap: 16,
               marginTop: 'var(--space-5)',
-              paddingLeft: 'var(--gutter)',
+              textAlign: 'center',
             }}>
               <p className="p2" style={{ margin: 0 }}>
                 The following pages set out the fundamentals of the Aura

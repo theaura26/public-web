@@ -887,10 +887,12 @@ export function ScrollHighlight({
   children,
   as: As = 'h2',
   maxWidth = 760,
+  align = 'left',
 }: {
   children: string
   as?: 'h1' | 'h2' | 'h3'
   maxWidth?: number
+  align?: 'left' | 'center'
 }) {
   const wordRefs = useRef<(HTMLSpanElement | null)[]>([])
   const lines = children.split(/\n+/).map(line => line.trim()).filter(Boolean)
@@ -929,7 +931,11 @@ export function ScrollHighlight({
   return (
     <section style={{ padding: 'var(--section-gap) 0' }}>
       <div className="section-w">
-        <As style={{ margin: 0, maxWidth, textAlign: 'left' }}>
+        <As style={{
+          margin: align === 'center' ? '0 auto' : 0,
+          maxWidth,
+          textAlign: align,
+        }}>
           {lines.map((line, lineIdx) => {
             const words = line.split(/\s+/).filter(Boolean)
             const isLast = lineIdx === lines.length - 1

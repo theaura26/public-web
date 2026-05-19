@@ -1,5 +1,5 @@
 import {
-  HeroBanner,
+  JournalHero,
   OneCol,
   TwoCol,
   Placeholder,
@@ -14,10 +14,9 @@ import {
 export default function CoffeePage() {
   return (
     <>
-      <HeroBanner
+      <JournalHero
         currentHref="/coffee"
         title="Our Coffee Story"
-        type="Detail · coffee flower buds"
         caption="Coffee flowers — the beginning of every lot"
       />
 

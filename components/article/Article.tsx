@@ -419,6 +419,151 @@ export function HeroBanner({
   )
 }
 
+/* ── JournalHero — stacked editorial opener for journal pages.
+      Title sits above the image on a clean white plate (no overlay,
+      no mix-blend), words justified edge-to-edge across the content
+      rail. A small "← BACK" link sits in its own row above the title.
+      Banner image (or video) renders full-bleed below the title. */
+export function JournalHero({
+  title,
+  src,
+  currentHref,
+  mediaType = 'image',
+  poster,
+  caption,
+  alt,
+  backHref = '/',
+}: {
+  title: string
+  src?: string
+  /** Auto-resolves `src` (and falls back to `alt`) from the matching
+   *  entry in `lib/journals.ts`. Same prop the `<Continue>` footer uses. */
+  currentHref?: string
+  mediaType?: 'image' | 'video'
+  poster?: string
+  /** Optional caption shown bottom-left on the banner image. */
+  caption?: string
+  alt?: string
+  /** Where the back link goes. Defaults to /. */
+  backHref?: string
+}) {
+  if (!src && currentHref) {
+    const journal = ACTIVE_JOURNALS.find(j => j.href === currentHref)
+    if (journal) src = journal.img
+  }
+  const words = title.split(/\s+/).filter(Boolean)
+
+  return (
+    <header className="journal-hero">
+      <div className="section-w journal-hero__top">
+        <Link href={backHref} className="journal-hero__back" aria-label="Back">
+          <span aria-hidden>←</span>
+          <span>Back</span>
+        </Link>
+
+        <h1 className="journal-hero__title">
+          {words.map((w, i) => (
+            <span key={i}>{w}</span>
+          ))}
+        </h1>
+      </div>
+
+      {src && (
+        <figure className="journal-hero__media">
+          {mediaType === 'video' ? (
+            <video
+              muted
+              loop
+              playsInline
+              autoPlay
+              preload="metadata"
+              poster={poster}
+              aria-label={alt ?? title}
+            >
+              <source src={src} type="video/mp4" />
+            </video>
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={src} alt={alt ?? title} />
+          )}
+          {caption && (
+            <figcaption className="label">{caption}</figcaption>
+          )}
+        </figure>
+      )}
+
+      <style jsx>{`
+        .journal-hero {
+          padding-top: var(--nav-h, 56px);
+        }
+        .journal-hero__top {
+          padding-top: var(--space-7);
+          padding-bottom: var(--space-7);
+        }
+        .journal-hero__back {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: var(--text);
+          font-family: var(--font-mono);
+          font-size: 11px;
+          font-weight: 400;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          text-decoration: none;
+          margin-bottom: var(--space-7);
+        }
+        .journal-hero__title {
+          margin: 0;
+          font-family: var(--font-grotesque);
+          font-weight: 600;
+          font-size: clamp(48px, 9vw, 140px);
+          line-height: 0.95;
+          letter-spacing: -0.04em;
+          text-transform: uppercase;
+          color: var(--text);
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          text-align: left;
+          white-space: nowrap;
+        }
+        /* Desktop: single row, words spread edge-to-edge across the rail.
+           Single-word titles stay flush-left to keep the editorial read. */
+        @media (min-width: 1024px) {
+          .journal-hero__title {
+            flex-direction: row;
+            justify-content: ${words.length > 1 ? 'space-between' : 'flex-start'};
+          }
+        }
+        .journal-hero__media {
+          margin: 0;
+          width: 100vw;
+          margin-left: calc(50% - 50vw);
+          position: relative;
+        }
+        .journal-hero__media :global(img),
+        .journal-hero__media :global(video) {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+        .journal-hero__media :global(figcaption) {
+          position: absolute;
+          left: clamp(20px, 4vw, 48px);
+          bottom: clamp(20px, 4vh, 48px);
+          margin: 0;
+          max-width: min(320px, 60vw);
+          color: #ffffff;
+          letter-spacing: 1px;
+          text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
+        }
+      `}</style>
+    </header>
+  )
+}
+
 /* ── ArticleHero — opener with optional 2-col TOC ── */
 export function ArticleHero({
   title,

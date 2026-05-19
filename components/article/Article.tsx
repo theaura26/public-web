@@ -456,8 +456,24 @@ export function JournalHero({
   return (
     <header className="journal-hero">
       <div className="section-w journal-hero__top">
-        <Link href={backHref} className="journal-hero__back" aria-label="Back">
-          <span aria-hidden>←</span>
+        <Link
+          href={backHref}
+          aria-label="Back"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            color: 'var(--text)',
+            fontFamily: 'var(--font-mono)',
+            fontSize: 11,
+            fontWeight: 400,
+            letterSpacing: '1.5px',
+            textTransform: 'uppercase',
+            textDecoration: 'none',
+            marginBottom: 'var(--space-7)',
+          }}
+        >
+          <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
           <span>Back</span>
         </Link>
 
@@ -499,19 +515,6 @@ export function JournalHero({
         .journal-hero__top {
           padding-top: var(--space-7);
           padding-bottom: var(--space-7);
-        }
-        .journal-hero__back {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          color: var(--text);
-          font-family: var(--font-mono);
-          font-size: 11px;
-          font-weight: 400;
-          letter-spacing: 1.5px;
-          text-transform: uppercase;
-          text-decoration: none;
-          margin-bottom: var(--space-7);
         }
         .journal-hero__title {
           margin: 0;

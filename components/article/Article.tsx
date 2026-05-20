@@ -471,13 +471,29 @@ export function JournalHero({
         </h1>
       </div>
 
-      <ExpandingBanner
-        src={src}
-        mediaType={mediaType}
-        poster={poster}
-        alt={alt ?? title}
-        caption={caption}
-      />
+      {src && (
+        <div className="journal-hero__media">
+          {mediaType === 'video' ? (
+            <video
+              muted
+              loop
+              playsInline
+              autoPlay
+              preload="metadata"
+              poster={poster}
+              aria-label={alt ?? title}
+            >
+              <source src={src} type="video/mp4" />
+            </video>
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={src} alt={alt ?? title} />
+          )}
+          {caption && (
+            <p className="label journal-hero__caption">{caption}</p>
+          )}
+        </div>
+      )}
 
       <style jsx>{`
         .journal-hero {
@@ -506,13 +522,42 @@ export function JournalHero({
           text-align: left;
           white-space: nowrap;
         }
-        /* Desktop: single row, words spread edge-to-edge across the rail.
-           Single-word titles stay flush-left to keep the editorial read. */
+        /* Desktop: title sits mid-page, centred horizontally with natural
+           word spacing (like the other journals' overlaid HeroBanner
+           titles), banner full-bleed underneath. */
         @media (min-width: 1024px) {
+          .journal-hero__top {
+            padding-top: clamp(var(--space-9), 20vh, 30vh);
+            padding-bottom: var(--space-7);
+          }
           .journal-hero__title {
             flex-direction: row;
-            justify-content: ${words.length > 1 ? 'space-between' : 'flex-start'};
+            justify-content: center;
+            gap: var(--space-6);
+            align-items: center;
+            text-align: center;
           }
+        }
+        .journal-hero__media {
+          position: relative;
+          width: 100vw;
+          margin-left: calc(50% - 50vw);
+        }
+        .journal-hero__media :global(img),
+        .journal-hero__media :global(video) {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+        .journal-hero__caption {
+          position: absolute;
+          left: clamp(20px, 4vw, 48px);
+          bottom: clamp(20px, 4vh, 48px);
+          margin: 0;
+          max-width: min(320px, 60vw);
+          color: #ffffff;
+          letter-spacing: 1px;
+          text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
         }
       `}</style>
     </header>

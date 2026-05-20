@@ -558,6 +558,17 @@ export function JournalHero({
           height: auto;
           display: block;
         }
+        /* Mobile: tall banner — same vertical proportion as the other
+           journals' overlaid HeroBanner, which fills 100vh on mobile.
+           Object-fit:cover crops the landscape source to the portrait
+           frame so the scene reads at full height. */
+        @media (max-width: 768px) {
+          .journal-hero__media :global(img),
+          .journal-hero__media :global(video) {
+            height: 100vh;
+            object-fit: cover;
+          }
+        }
         .journal-hero__caption {
           position: absolute;
           left: clamp(20px, 4vw, 48px);

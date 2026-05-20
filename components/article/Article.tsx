@@ -619,6 +619,10 @@ export function JournalHero({
           position: relative;
           width: 100vw;
           margin-left: calc(50% - 50vw);
+          /* Clip the scroll-driven blur so its 20px halo doesn't bleed
+             onto the surrounding white plate; the image's blurred
+             edges stay inside the banner frame. */
+          overflow: hidden;
         }
         .journal-hero__caption {
           position: absolute;

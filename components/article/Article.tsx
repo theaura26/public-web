@@ -522,20 +522,29 @@ export function JournalHero({
           text-align: left;
           white-space: nowrap;
         }
-        /* Desktop: title sits mid-page, centred horizontally with natural
-           word spacing (like the other journals' overlaid HeroBanner
-           titles), banner full-bleed underneath. */
+        /* Desktop: title section fills the full viewport above the
+           image so the title centres at exactly 50vh — same vertical
+           landing zone as the overlaid title on HeroBanner journals.
+           We drop the .journal-hero padding-top here so the section
+           starts at y=0; the back link is absolutely positioned and
+           the title centres in the full viewport via flex. Words
+           spread edge-to-edge across the gutter rail. */
         @media (min-width: 1024px) {
+          .journal-hero {
+            padding-top: 0;
+          }
           .journal-hero__top {
-            padding-top: clamp(var(--space-9), 20vh, 30vh);
-            padding-bottom: var(--space-7);
+            min-height: 100vh;
+            padding-top: 0;
+            padding-bottom: 0;
+            display: flex;
+            align-items: center;
           }
           .journal-hero__title {
             flex-direction: row;
-            justify-content: center;
-            gap: var(--space-6);
+            justify-content: ${words.length > 1 ? 'space-between' : 'flex-start'};
             align-items: center;
-            text-align: center;
+            text-align: left;
           }
         }
         .journal-hero__media {

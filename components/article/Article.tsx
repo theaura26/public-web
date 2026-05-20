@@ -512,12 +512,6 @@ export function JournalHero({
             object-fit: cover;
           }
         }
-        @media (min-width: 1024px) {
-          .journal-hero__media-el {
-            height: 35vh;
-            object-fit: cover;
-          }
-        }
       `}</style>
 
       <style jsx>{`
@@ -547,16 +541,17 @@ export function JournalHero({
           text-align: left;
           white-space: nowrap;
         }
-        /* Desktop: title section fills the top 65vh of the viewport
-           so the title centres at ~32vh, then the banner image sits
-           in the bottom 35vh — entire hero (title + image) fits in
-           one viewport. Words spread edge-to-edge across the rail. */
+        /* Desktop: title section fills the full viewport so the title
+           centres at exactly 50vh — same vertical landing zone as
+           the overlaid title on HeroBanner journals. Image renders
+           at its natural full proportion below. Words spread
+           edge-to-edge across the gutter rail. */
         @media (min-width: 1024px) {
           .journal-hero {
             padding-top: 0;
           }
           .journal-hero__top {
-            min-height: 65vh;
+            min-height: 100vh;
             padding-top: 0;
             padding-bottom: 0;
             display: flex;

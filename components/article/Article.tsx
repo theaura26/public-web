@@ -475,6 +475,7 @@ export function JournalHero({
         <div className="journal-hero__media">
           {mediaType === 'video' ? (
             <video
+              className="journal-hero__media-el"
               muted
               loop
               playsInline
@@ -487,13 +488,37 @@ export function JournalHero({
             </video>
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={src} alt={alt ?? title} />
+            <img className="journal-hero__media-el" src={src} alt={alt ?? title} />
           )}
           {caption && (
             <p className="label journal-hero__caption">{caption}</p>
           )}
         </div>
       )}
+
+      {/* Image sizing: styled-jsx's :global(img) selector inside a
+          @media rule wasn't applying scoped correctly, so we use a
+          global style block targeting the explicit
+          .journal-hero__media-el class instead. */}
+      <style jsx global>{`
+        .journal-hero__media-el {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+        @media (max-width: 768px) {
+          .journal-hero__media-el {
+            height: 100vh;
+            object-fit: cover;
+          }
+        }
+        @media (min-width: 1024px) {
+          .journal-hero__media-el {
+            height: 35vh;
+            object-fit: cover;
+          }
+        }
+      `}</style>
 
       <style jsx>{`
         .journal-hero {
@@ -522,19 +547,16 @@ export function JournalHero({
           text-align: left;
           white-space: nowrap;
         }
-        /* Desktop: title section fills the full viewport above the
-           image so the title centres at exactly 50vh — same vertical
-           landing zone as the overlaid title on HeroBanner journals.
-           We drop the .journal-hero padding-top here so the section
-           starts at y=0; the back link is absolutely positioned and
-           the title centres in the full viewport via flex. Words
-           spread edge-to-edge across the gutter rail. */
+        /* Desktop: title section fills the top 65vh of the viewport
+           so the title centres at ~32vh, then the banner image sits
+           in the bottom 35vh — entire hero (title + image) fits in
+           one viewport. Words spread edge-to-edge across the rail. */
         @media (min-width: 1024px) {
           .journal-hero {
             padding-top: 0;
           }
           .journal-hero__top {
-            min-height: 100vh;
+            min-height: 65vh;
             padding-top: 0;
             padding-bottom: 0;
             display: flex;
@@ -551,23 +573,6 @@ export function JournalHero({
           position: relative;
           width: 100vw;
           margin-left: calc(50% - 50vw);
-        }
-        .journal-hero__media :global(img),
-        .journal-hero__media :global(video) {
-          width: 100%;
-          height: auto;
-          display: block;
-        }
-        /* Mobile: tall banner — same vertical proportion as the other
-           journals' overlaid HeroBanner, which fills 100vh on mobile.
-           Object-fit:cover crops the landscape source to the portrait
-           frame so the scene reads at full height. */
-        @media (max-width: 768px) {
-          .journal-hero__media :global(img),
-          .journal-hero__media :global(video) {
-            height: 100vh;
-            object-fit: cover;
-          }
         }
         .journal-hero__caption {
           position: absolute;

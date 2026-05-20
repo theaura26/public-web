@@ -463,7 +463,7 @@ export function JournalHero({
         <span>Back</span>
       </Link>
 
-      <div className="section-w journal-hero__top">
+      <div className="journal-hero__top">
         <h1 className="journal-hero__title">
           {words.map((w, i) => (
             <span key={i}>{w}</span>
@@ -486,7 +486,9 @@ export function JournalHero({
         }
         .journal-hero__top {
           padding-top: clamp(var(--space-8), 10vh, calc(var(--space-9) + var(--space-7)));
-          padding-bottom: var(--space-7);
+          padding-bottom: var(--space-5);
+          padding-left: var(--gutter);
+          padding-right: var(--gutter);
         }
         .journal-hero__title {
           margin: 0;

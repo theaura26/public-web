@@ -436,8 +436,47 @@ export function JournalHero({
   }
   const words = title.split(/\s+/).filter(Boolean)
 
+  // Scroll-driven blur on the banner — clear at first paint, blurs
+  // and scales up to 1.1× as the reader scrolls past the hero. Same
+  // departure-reveal gesture HeroBanner uses, just driven by the
+  // .journal-hero header's bounding rect instead of a sticky wrap.
+  const headerRef = useRef<HTMLElement>(null)
+  const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let raf = 0
+    const tick = () => {
+      raf = 0
+      const header = headerRef.current
+      const m = mediaRef.current
+      if (!header || !m) return
+      const rect = header.getBoundingClientRect()
+      const vh = window.innerHeight
+      // Animation runs across the first 80vh of scroll into the hero.
+      const scrollIntoHeader = Math.max(0, -rect.top)
+      const animDist = vh * 0.8
+      const raw = Math.max(0, Math.min(1, scrollIntoHeader / animDist))
+      const p = reduced
+        ? (raw > 0.05 ? 1 : 0)
+        : raw * raw * raw * (raw * (raw * 6 - 15) + 10)
+      const BLUR_MAX = 20
+      m.style.filter = `blur(${p * BLUR_MAX}px)`
+      m.style.transform = `scale(${1 + 0.1 * p})`
+    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    tick()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [])
+
   return (
-    <header className="journal-hero">
+    <header ref={headerRef} className="journal-hero">
       <Link
         href={backHref}
         aria-label="Back"
@@ -475,6 +514,7 @@ export function JournalHero({
         <div className="journal-hero__media">
           {mediaType === 'video' ? (
             <video
+              ref={mediaRef as React.RefObject<HTMLVideoElement>}
               className="journal-hero__media-el"
               muted
               loop
@@ -483,12 +523,19 @@ export function JournalHero({
               preload="metadata"
               poster={poster}
               aria-label={alt ?? title}
+              style={{ filter: 'blur(0px)', transform: 'scale(1)', willChange: 'filter, transform' }}
             >
               <source src={src} type="video/mp4" />
             </video>
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
-            <img className="journal-hero__media-el" src={src} alt={alt ?? title} />
+            <img
+              ref={mediaRef as React.RefObject<HTMLImageElement>}
+              className="journal-hero__media-el"
+              src={src}
+              alt={alt ?? title}
+              style={{ filter: 'blur(0px)', transform: 'scale(1)', willChange: 'filter, transform' }}
+            />
           )}
           {caption && (
             <p className="label journal-hero__caption">{caption}</p>

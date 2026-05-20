@@ -544,8 +544,9 @@ export function JournalHero({
         /* Desktop: title section fills the full viewport so the title
            centres at exactly 50vh — same vertical landing zone as
            the overlaid title on HeroBanner journals. Image renders
-           at its natural full proportion below. Words spread
-           edge-to-edge across the gutter rail. */
+           at its natural full proportion below, pulled up 300px so
+           the top of the image overlaps the lower half of the title
+           plate. Words spread edge-to-edge across the gutter rail. */
         @media (min-width: 1024px) {
           .journal-hero {
             padding-top: 0;
@@ -562,6 +563,9 @@ export function JournalHero({
             justify-content: ${words.length > 1 ? 'space-between' : 'flex-start'};
             align-items: center;
             text-align: left;
+          }
+          .journal-hero__media {
+            margin-top: -300px;
           }
         }
         .journal-hero__media {

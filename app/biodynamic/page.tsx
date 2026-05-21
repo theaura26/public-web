@@ -16,9 +16,19 @@ export default function BiodynamicPage() {
     <>
       <HeroBanner
         currentHref="/biodynamic"
+        src="/journals/biodynamic/aura-biodynamic.mp4"
+        mediaType="video"
+        poster="/journals/biodynamic/aura-biodynamic.jpg"
         title="Biodynamic"
         type="Detail · cattle in pen"
         caption="The BD engine — 52 Malnad Gidda"
+        alt="The estate working as one organism — biodynamic practice across canopy, herd, and soil"
+      />
+
+      <Placeholder
+        src="/journals/biodynamic/aura-young-calves-1.jpg"
+        alt="A Malnad Gidda calf standing in the morning shade — the next generation of the herd"
+        caption="The next generation — the herd that will run the next hundred years"
       />
 
       <TwoCol heading="This is not a technique. It is a worldview.">
@@ -42,13 +52,6 @@ export default function BiodynamicPage() {
           intelligence.
         </p>
       </TwoCol>
-
-      <Placeholder
-        src="/journals/biodynamic/aura-biodynamic.mp4"
-        mediaType="video"
-        alt="The estate working as one organism — biodynamic practice across canopy, herd, and soil"
-        caption="The estate as one organism — biodynamic, top to bottom"
-      />
 
       <TwoCol id="steiner" heading="The Steiner preparations.">
         <p className="p1">
@@ -240,12 +243,6 @@ export default function BiodynamicPage() {
           system looks like when it runs for decades.
         </p>
       </OneCol>
-
-      <Placeholder
-        src="/journals/biodynamic/aura-young-calves-1.jpg"
-        alt="A Malnad Gidda calf standing in the morning shade — the next generation of the herd"
-        caption="The next generation — the herd that will run the next hundred years"
-      />
 
       <Continue currentHref="/biodynamic" />
     </>

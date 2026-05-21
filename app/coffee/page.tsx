@@ -20,7 +20,7 @@ export default function CoffeePage() {
         caption="Coffee flowers — the beginning of every lot"
       />
 
-      <TwoCol heading="Small is the strategy.">
+      <OneCol heading="Small is the strategy.">
         <p className="p1">
           One estate. 150 acres. One harvest a year. The scale is deliberate
           — so is the patience.
@@ -32,10 +32,10 @@ export default function CoffeePage() {
           the ferment that shaped it. Small enough that every decision is
           made by someone who walks the land.
         </p>
-      </TwoCol>
-
-      <TwoCol heading="Six lots. One harvest. No two cups the same.">
-        <p className="p1">
+        <p className="p1" style={{ marginTop: 'var(--space-7)' }}>
+          Six lots. One harvest. No two cups the same.
+        </p>
+        <p className="p2">
           Arabica grown at 3,600 feet beneath a four-story canopy. Every lot
           is a document of place and method.
         </p>
@@ -45,7 +45,7 @@ export default function CoffeePage() {
           of canopy shade, laterite soil, monsoon rhythm, and the specific
           decisions made during fermentation — down to the hour.
         </p>
-      </TwoCol>
+      </OneCol>
 
       <TwoCol heading="The cup is evidence.">
         <p className="p1">

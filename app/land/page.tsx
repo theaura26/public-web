@@ -89,12 +89,6 @@ export default function LandPage() {
         </p>
       </TwoCol>
 
-      <Placeholder
-        src="/journals/land/aura-canopy-noon-2.jpg"
-        alt="Light filtering through the four-story canopy at noon — second view from a different block"
-        caption="Light through the canopy — noon, a different block"
-      />
-
       <PullQuote>
         The FOREST is not adjacent to the FARM. The FOREST is the FARM.
       </PullQuote>
@@ -205,6 +199,12 @@ export default function LandPage() {
           The forest is the farm.
         </p>
       </OneCol>
+
+      <Placeholder
+        src="/journals/land/aura-canopy-noon-2.jpg"
+        alt="Light filtering through the four-story canopy at noon — a closing view from a different block"
+        caption="Light through the canopy — the forest, closing"
+      />
 
       <Continue currentHref="/land" />
     </>

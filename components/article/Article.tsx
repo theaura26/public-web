@@ -620,9 +620,12 @@ export function JournalHero({
           width: 100vw;
           margin-left: calc(50% - 50vw);
           /* Clip the scroll-driven blur so its 20px halo doesn't bleed
-             onto the surrounding white plate; the image's blurred
-             edges stay inside the banner frame. */
+             onto the surrounding white plate. overflow:hidden alone
+             isn't enough in Chrome (filter creates its own stacking
+             context that can paint past the box); contain:paint locks
+             the paint region to the element's box. */
           overflow: hidden;
+          contain: paint;
         }
         .journal-hero__caption {
           position: absolute;

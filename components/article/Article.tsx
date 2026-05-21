@@ -1275,7 +1275,13 @@ export function Continue({
                 <div className="continue-card__media" aria-hidden>
                   {item.img && (
                     /* eslint-disable-next-line @next/next/no-img-element */
-                    <img className="continue-card__photo" src={item.img} alt="" />
+                    <img
+                      className="continue-card__photo"
+                      src={item.img}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
                   )}
                   {/* Symbol overlay — same hover gesture as the navbar
                       journal tiles: image blurs, this glyph fades in. */}
@@ -1285,6 +1291,8 @@ export function Continue({
                     src={`/aura-symbol-${(i % 3) + 1}.png`}
                     alt=""
                     aria-hidden
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <h3 style={{ margin: 0, marginBottom: 12 }}>{item.label}</h3>

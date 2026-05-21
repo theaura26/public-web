@@ -543,7 +543,11 @@ export default function Navbar() {
                           muted
                           loop
                           playsInline
-                          preload="auto"
+                          /* Slide-out menu is hidden by default — preload nothing
+                             until the user actually opens the menu and the tile
+                             scrolls into view. Was: "auto" (full preload on every
+                             page load, ~10MB of menu video transfer). */
+                          preload="none"
                           poster={a.img}
                           aria-label={a.title}
                         >
@@ -551,7 +555,7 @@ export default function Navbar() {
                         </video>
                       ) : a.img ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img src={a.img} alt={a.title} />
+                        <img src={a.img} alt={a.title} loading="lazy" decoding="async" />
                       ) : null}
                       {/* Hover symbol — one of the three aura emblems
                           (aura-symbol-1/2/3), cycled by tile index. Same
@@ -564,6 +568,8 @@ export default function Navbar() {
                         src={`/aura-symbol-${(i % 3) + 1}.png`}
                         alt=""
                         aria-hidden
+                        loading="lazy"
+                        decoding="async"
                       />
                       {a.comingSoon && (
                         <span className="tile-coming-soon">Coming Soon</span>

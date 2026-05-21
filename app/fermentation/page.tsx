@@ -21,6 +21,12 @@ export default function FermentationPage() {
         caption="Foam lifting and collapsing on a coffee cherry ferment"
       />
 
+      <Placeholder
+        src="/journals/fermentation/aura-coffee-flowers.jpg"
+        alt="White coffee blossom on a Sln.9 branch — the start of every cherry, every lot"
+        caption="Coffee flowers — the beginning of every lot"
+      />
+
       <TwoCol heading="Three fermentation disciplines. One estate.">
         <p className="p1">
           Coffee, pepper, and cow dung. Each one transforms raw material into
@@ -109,12 +115,6 @@ export default function FermentationPage() {
           expression of the cherry.
         </p>
       </TwoCol>
-
-      <Placeholder
-        src="/journals/fermentation/aura-coffee-flowers.jpg"
-        alt="White coffee blossom on a Sln.9 branch — the start of every cherry, every lot"
-        caption="Coffee flowers — the beginning of every lot"
-      />
 
       <TwoCol id="pepper" heading="Pepper fermentation.">
         <p className="p1">

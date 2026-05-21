@@ -45,6 +45,14 @@ export default function RtaPage() {
         INTELLIGENCE is alignment with TIMING.
       </PullQuote>
 
+      <Placeholder
+        src="/journals/rta/aura-dusk-climb.mp4"
+        mediaType="video"
+        poster="/journals/rta/aura-dusk-climb.jpg"
+        alt="Worker climbing an areca palm at dusk against a fading sky — Sampigelkhan Estate"
+        caption="Patience — the right time, not the convenient time"
+      />
+
       <TwoCol id="field" heading="In the field.">
         <p className="p1">
           <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure — is applied at dusk, when the earth is inhaling.
@@ -91,14 +99,6 @@ export default function RtaPage() {
           bags by night. The bean is not forced. It is accompanied.
         </p>
       </TwoCol>
-
-      <Placeholder
-        src="/journals/rta/aura-dusk-climb.mp4"
-        mediaType="video"
-        poster="/journals/rta/aura-dusk-climb.jpg"
-        alt="Worker climbing an areca palm at dusk against a fading sky — Sampigelkhan Estate"
-        caption="Patience — the right time, not the convenient time"
-      />
 
       <TwoCol id="herd" heading="In the herd.">
         <p className="p1">

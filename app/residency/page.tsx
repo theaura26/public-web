@@ -21,7 +21,7 @@ export default function ResidencyPage() {
         caption="A working desk, a window onto the forest"
       />
 
-      <TwoCol heading="An artist residency for natural intelligence.">
+      <OneCol heading="An artist residency for natural intelligence.">
         <p className="p1">
           A working studio inside a living system. The estate is the
           studio. The forest is the studio. The kiln, the wet mill, the
@@ -35,10 +35,10 @@ export default function ResidencyPage() {
           to the season, and to the people who have been listening to
           this place for longer than any of us have been alive.
         </p>
-      </TwoCol>
-
-      <TwoCol heading="Natural intelligence.">
-        <p className="p1">
+        <p className="p1" style={{ marginTop: 'var(--space-7)' }}>
+          Natural intelligence.
+        </p>
+        <p className="p2">
           We treat the estate the way other people treat datasets. Canopy
           density predicts cherry <Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term>. Bee activity forecasts flowering.
           Cattle rotation shapes the next season&apos;s microbiome. Soil
@@ -62,7 +62,7 @@ export default function ResidencyPage() {
           memory. The work that comes out of this residency is the
           attempt to render that intelligence visible.
         </p>
-      </TwoCol>
+      </OneCol>
 
       <TwoCol heading="Connective tissue between disciplines.">
         <p className="p1">

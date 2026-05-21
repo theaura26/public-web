@@ -25,12 +25,6 @@ export default function BiodynamicPage() {
         alt="The estate working as one organism — biodynamic practice across canopy, herd, and soil"
       />
 
-      <Placeholder
-        src="/journals/biodynamic/aura-young-calves-1.jpg"
-        alt="A Malnad Gidda calf standing in the morning shade — the next generation of the herd"
-        caption="The next generation — the herd that will run the next hundred years"
-      />
-
       <TwoCol heading="This is not a technique. It is a worldview.">
         <p className="p1">
           BD 500 through 508. Jeevamrit. Panchgavya. Two ancient farming
@@ -52,6 +46,12 @@ export default function BiodynamicPage() {
           intelligence.
         </p>
       </TwoCol>
+
+      <Placeholder
+        src="/journals/biodynamic/aura-young-calves-1.jpg"
+        alt="A Malnad Gidda calf standing in the morning shade — the next generation of the herd"
+        caption="The next generation — the herd that will run the next hundred years"
+      />
 
       <TwoCol id="steiner" heading="The Steiner preparations.">
         <p className="p1">

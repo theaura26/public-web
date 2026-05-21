@@ -67,18 +67,11 @@ export default function LivingSystemsPage() {
         </p>
       </TwoCol>
 
-      <Placeholder
-        src="/journals/living-systems/aura-canopy.mp4"
-        mediaType="video"
-        poster="/journals/living-systems/aura-canopy.jpg"
-        alt="Looking up into the four-story canopy of silver oak, jackfruit, and fig — the layer that holds every other layer"
-        caption="Looking up — the canopy that holds every layer beneath it"
-      />
-
       <DataGrid cols={4} standalone>
         <DataCard
-          img="/journals/living-systems/aura-canopy.jpg"
-          alt="Looking up through the four-story canopy at Sampigelkhan Estate — silver oak and jackfruit"
+          video="/journals/living-systems/aura-canopy.mp4"
+          poster="/journals/living-systems/aura-canopy.jpg"
+          alt="Looking up through the four-story canopy at Sampigelkhan Estate — silver oak and jackfruit moving in the wind"
           value="01 — Canopy."
         >
           Silver oak, Albizzia, jackfruit, fig, native hardwoods. Target cover
@@ -96,8 +89,9 @@ export default function LivingSystemsPage() {
           weeks.
         </DataCard>
         <DataCard
-          img="/journals/living-systems/aura-primary-crop.jpg"
-          alt="Arabica Sln.9 and Sln.795 coffee growing under the four-story canopy"
+          video="/journals/living-systems/aura-primary-crop.mp4"
+          poster="/journals/living-systems/aura-primary-crop.jpg"
+          alt="Arabica Sln.9 and Sln.795 cherries ripening beneath the four-story canopy"
           value="03 — Primary crop."
         >
           Arabica <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>. Thirty-five acres of tea, in organic
@@ -186,14 +180,6 @@ export default function LivingSystemsPage() {
         </DataGrid>
       </TwoCol>
 
-      <Placeholder
-        src="/journals/living-systems/aura-primary-crop.mp4"
-        mediaType="video"
-        poster="/journals/living-systems/aura-primary-crop.jpg"
-        alt="Arabica cherries ripening beneath the four-story canopy — the primary crop the data describes"
-        caption="The primary crop — Arabica under canopy, the data made visible"
-      />
-
       <PullQuote>
         SOIL HEALTH readings thirty days after cover-crop incorporation predict
         the FLAVOUR PROFILE of the coffee lot that block will produce.
@@ -225,6 +211,12 @@ export default function LivingSystemsPage() {
          Every layer talks to every other layer.
          The forest is the farm.`}
       </ScrollHighlight>
+
+      <Placeholder
+        src="/journals/living-systems/aura-living-systems.jpg"
+        alt="The estate read as one living system — four canopy stories from above"
+        caption="A living system — four stories, one organism"
+      />
 
       <OneCol id="data-store" heading="Where the data lives.">
         <p className="p1">

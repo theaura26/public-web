@@ -116,12 +116,6 @@ export default function FermentationPage() {
         caption="Coffee flowers — the beginning of every lot"
       />
 
-      <Placeholder
-        src="/journals/fermentation/aura-experimental-anaerobic.jpg"
-        alt="Sealed steel tanks for experimental anaerobic ferments — pH and temperature logged hour by hour"
-        caption="Experimental anaerobic — sealed, logged, deliberate"
-      />
-
       <TwoCol id="pepper" heading="Pepper fermentation.">
         <p className="p1">
           Black pepper climbs the areca palms in the mid-canopy. It has its own
@@ -142,11 +136,26 @@ export default function FermentationPage() {
         caption="Malabar pepper on the vine — mid-canopy companion to the areca palm"
       />
 
-      <Placeholder
-        src="/journals/fermentation/aura-water-pepper.jpg"
-        alt="Black peppercorns retting in water — the first stage of pepper fermentation"
-        caption="Water retting — the first stage of pepper fermentation"
-      />
+      <DataGrid cols={2} standalone>
+        <DataCard
+          img="/journals/fermentation/aura-experimental-anaerobic.jpg"
+          alt="Sealed stainless tanks for experimental anaerobic ferments — pH and temperature logged hour by hour"
+          value="Sealed. Logged."
+        >
+          Experimental anaerobic coffee tanks. pH every fifteen minutes,
+          temperature three times daily, Brix start to end. Every lot is a
+          tracked individual, not an average.
+        </DataCard>
+        <DataCard
+          img="/journals/fermentation/aura-water-pepper.jpg"
+          alt="Black peppercorns retting in water — the first stage of pepper fermentation"
+          value="Retted. Released."
+        >
+          Pepper&apos;s first stage. Water softens the pericarp, microbial
+          activity loosens the skin, and the discipline that scheduled it
+          waits on the BD calendar to clear.
+        </DataCard>
+      </DataGrid>
 
       <TwoCol id="dung" heading="Cow dung fermentation.">
         <p className="p1">
@@ -224,6 +233,12 @@ export default function FermentationPage() {
           by hour, season by season.
         </p>
       </OneCol>
+
+      <Placeholder
+        src="/journals/fermentation/aura-fermentation.jpg"
+        alt="The slow work in the dark — fermentation as the estate&apos;s shared discipline"
+        caption="Fermentation — the slow work, in the dark"
+      />
 
       <Continue currentHref="/fermentation" />
     </>

@@ -992,6 +992,8 @@ export function DataCard({
   value,
   children,
   img,
+  video,
+  poster,
   alt,
   type,
 }: {
@@ -999,15 +1001,22 @@ export function DataCard({
   value?: ReactNode
   children?: ReactNode
   /** When set (or when `type` is provided), the card renders as a
-   *  homepage-hero-style tile: 16:9 thumbnail above the heading and body. */
+   *  homepage-hero-style tile: 4:5 thumbnail above the heading and body. */
   img?: string
+  /** Optional 4:5 video. Renders as an autoplaying muted loop in the
+   *  thumbnail slot, with `poster` as the still fallback. Promotes the
+   *  card to tile mode just like `img`. */
+  video?: string
+  /** Still poster for the video. Shown before the video can play and
+   *  on reduced-motion. */
+  poster?: string
   alt?: string
   /** Image-type suggestion shown in the grey placeholder when `img` is
    *  empty — e.g. "Portrait", "Detail", "Landscape". Setting `type`
    *  alone (without `img`) also promotes the card to tile mode. */
   type?: string
 }) {
-  const isTile = !!img || !!type
+  const isTile = !!img || !!video || !!type
   if (isTile) {
     const placeholderLabel = [type, typeof value === 'string' ? value : undefined].filter(Boolean).join(' · ')
     return (
@@ -1025,7 +1034,19 @@ export function DataCard({
             marginBottom: 20,
           }}
         >
-          {img ? (
+          {video ? (
+            <video
+              src={video}
+              poster={poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label={alt ?? (typeof value === 'string' ? value : '')}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          ) : img ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={img}

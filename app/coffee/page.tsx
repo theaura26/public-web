@@ -149,7 +149,8 @@ export default function CoffeePage() {
           distinctly Indian lot.
         </DataCard>
         <DataCard
-          img="/journals/coffee/aura-solera-macaceration.jpg"
+          video="/journals/coffee/aura-solera-macaceration.mp4"
+          poster="/journals/coffee/aura-solera-macaceration.jpg"
           alt="Solera Maceration tanks carrying microbial culture forward across batches"
           value="Lot 005 — Solera Maceration · Flagship."
         >
@@ -193,14 +194,6 @@ export default function CoffeePage() {
           other. Appellation, in microbial form.
         </p>
       </TwoCol>
-
-      <Placeholder
-        src="/journals/coffee/aura-solera-macaceration.mp4"
-        mediaType="video"
-        poster="/journals/coffee/aura-solera-macaceration.jpg"
-        alt="Cherries in a Solera tank — carry-forward from one batch into the next, the microbial mother culture working"
-        caption="Solera Maceration — the mother culture, carried forward"
-      />
 
       <TwoCol id="lab" heading="What we are building.">
         <p className="p1">
@@ -254,6 +247,12 @@ export default function CoffeePage() {
           hand every four hours.
         </p>
       </OneCol>
+
+      <Placeholder
+        src="/journals/coffee/aura-our-coffee-story.jpg"
+        alt="The story carried in a single cup — Aura's coffee, six lots from one harvest"
+        caption="The story carried in a single cup"
+      />
 
       <Continue currentHref="/coffee" />
     </>

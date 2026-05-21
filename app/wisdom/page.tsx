@@ -178,8 +178,9 @@ export default function WisdomPage() {
 
       <DataGrid cols={3} standalone>
         <DataCard
-          img="/journals/wisdom/aura-natural-intellgience.jpg"
-          alt="Canopy of the four-story polyculture at Sampigelkhan Estate — natural intelligence at work"
+          video="/journals/wisdom/aura-natural-intelligence.mp4"
+          poster="/journals/wisdom/aura-natural-intellgience.jpg"
+          alt="The four-story canopy breathing — natural intelligence at work"
           value="Natural."
         >
           The oldest. The land&apos;s own rhythm — canopy, microbe, herd,
@@ -194,30 +195,15 @@ export default function WisdomPage() {
           judgment that no algorithm replaces.
         </DataCard>
         <DataCard
-          img="/journals/wisdom/aura-machine-intelligence.jpg"
-          alt="Field sensor on a coffee block — machine intelligence learning the estate's signal over time"
+          video="/journals/wisdom/aura-machine-intelligence.mp4"
+          poster="/journals/wisdom/aura-machine-intelligence.jpg"
+          alt="A field sensor catching the day's light — machine intelligence learning the land's signal"
           value="Machine."
         >
           The youngest. Sensors, logs, and a Mudigere-native model that
           learns the land&apos;s signal because we keep the record.
         </DataCard>
       </DataGrid>
-
-      <Placeholder
-        src="/journals/wisdom/aura-natural-intelligence.mp4"
-        mediaType="video"
-        poster="/journals/wisdom/aura-natural-intellgience.jpg"
-        alt="The four-story canopy breathing — the land&apos;s own intelligence at work"
-        caption="Natural intelligence — the rhythm older than any model"
-      />
-
-      <Placeholder
-        src="/journals/wisdom/aura-machine-intelligence.mp4"
-        mediaType="video"
-        poster="/journals/wisdom/aura-machine-intelligence.jpg"
-        alt="A field sensor catching the day&apos;s light — the youngest intelligence learning the land&apos;s signal"
-        caption="Machine intelligence — the youngest, kept close to the soil"
-      />
 
       <ScrollHighlight>
         {`Choose depth over speed.

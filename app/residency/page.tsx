@@ -261,6 +261,12 @@ export default function ResidencyPage() {
         </p>
       </OneCol>
 
+      <Placeholder
+        src="/journals/residency/aura-monastic-polymath.jpg"
+        alt="The residency in posture — a quiet worker between Mudigere and Ohara"
+        caption="Monastic polymath — the posture, not the resume"
+      />
+
       <Continue currentHref="/residency" />
     </>
   )

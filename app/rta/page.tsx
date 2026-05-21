@@ -208,6 +208,12 @@ export default function RtaPage() {
         </p>
       </OneCol>
 
+      <Placeholder
+        src="/journals/rta/aura-rta.jpg"
+        alt="Ritual at dusk on the estate — prayer and incense marking the right time, the right action"
+        caption="Ṛta — the order made visible at dusk"
+      />
+
       <Continue currentHref="/rta" />
     </>
   )

@@ -1077,10 +1077,10 @@ export function PullQuote({ children, attribution }: { children: ReactNode; attr
             <blockquote style={{ margin: '0 auto', maxWidth: 880, textAlign: 'center' }}>
               <p
                 style={{
-                  fontFamily: 'var(--font-grotesque)',
-                  fontSize: 'clamp(24px, 3.2vw, 40px)',
-                  lineHeight: 1.2,
-                  letterSpacing: '-0.03em',
+                  fontFamily: 'var(--font-pullquote)',
+                  fontSize: 'clamp(32px, 4.2vw, 56px)',
+                  lineHeight: 1.25,
+                  letterSpacing: '0',
                   color: 'var(--text)',
                   margin: 0,
                   textWrap: 'balance',

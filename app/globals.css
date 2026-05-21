@@ -1,5 +1,29 @@
 @import "tailwindcss";
 
+/* Belmonte Ballpoint (Typeheist) — used for <PullQuote>. The
+   foundry ships two cuts (Cursive + Print) and two web formats
+   per cut (woff2 + woff). woff2 is the modern format every current
+   browser supports; woff is the legacy fallback. */
+@font-face {
+  font-family: 'Belmonte Ballpoint Cursive';
+  src: url('/fonts/BelmonteBallpoint-Cursive.woff2') format('woff2'),
+       url('/fonts/BelmonteBallpoint-Cursive.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Belmonte Ballpoint Print';
+  src: url('/fonts/BelmonteBallpoint-Print.woff2') format('woff2'),
+       url('/fonts/BelmonteBallpoint-Print.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  --font-pullquote: 'Belmonte Ballpoint Cursive', 'Belmonte Ballpoint Print', cursive;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════
    AURA — Design System
    ─────────────────────────────────────────────────────────────────────

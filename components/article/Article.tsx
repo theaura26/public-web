@@ -613,6 +613,15 @@ export function JournalHero({
           }
           .journal-hero__media {
             margin-top: -300px;
+            /* Desktop: cap the banner to the section-w rail so the
+               image matches the title's horizontal column instead of
+               spanning the full viewport. */
+            max-width: var(--max-w);
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: var(--gutter);
+            padding-right: var(--gutter);
+            width: 100%;
           }
         }
         .journal-hero__media {

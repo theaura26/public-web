@@ -138,6 +138,12 @@ export default function RtaPage() {
         </p>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/rta/aura-land.jpg"
+        alt="The land at the hour of decision — Sampigelkhan in the slow light before dusk"
+        caption="The land — the hour the work waits on"
+      />
+
       <PullQuote>
         RIGHT TIME. RIGHT ACTION. The philosophy made TECHNICAL.
       </PullQuote>

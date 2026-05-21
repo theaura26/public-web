@@ -219,6 +219,12 @@ export default function CoffeePage() {
         </p>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/coffee/aura-coffee-grading-2.jpg"
+        alt="Green coffee laid out on a sorting table — second pass of screen grading at the estate lab"
+        caption="Second pass — every defect logged, every screen size recorded"
+      />
+
       <TwoCol heading="By invitation.">
         <p className="p1">
           Aura coffee is not sold by the hundredweight to commodity buyers.

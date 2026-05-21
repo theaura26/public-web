@@ -43,6 +43,14 @@ export default function BiodynamicPage() {
         </p>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/biodynamic/aura-biodynamic.mp4"
+        mediaType="video"
+        poster="/journals/biodynamic/aura-biodynamic.jpg"
+        alt="The estate working as one organism — biodynamic practice across canopy, herd, and soil"
+        caption="The estate as one organism — biodynamic, top to bottom"
+      />
+
       <TwoCol id="steiner" heading="The Steiner preparations.">
         <p className="p1">
           <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure. Cow dung packed into a cow horn, buried over
@@ -138,6 +146,14 @@ export default function BiodynamicPage() {
         </DataGrid>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/biodynamic/aura-bee-video.mp4"
+        mediaType="video"
+        poster="/journals/biodynamic/aura-bee-video.jpg"
+        alt="A honeybee working a flower — pollinators in the closed-loop biology of the estate"
+        caption="Pollinators — the closed loop runs through them too"
+      />
+
       <PullQuote>
         We do not abandon CPP for newer methods. We SCALE WISDOM. We do not
         REPLACE it.
@@ -198,6 +214,12 @@ export default function BiodynamicPage() {
         </DataGrid>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/biodynamic/aura-b500-2.jpg"
+        alt="A second view of BD 500 — the cured horn opened, the dark concentrate inspected before application"
+        caption="BD 500 — inspected, tested, then to the soil at dusk"
+      />
+
       <TwoCol id="onchain" heading="On chain.">
         <p className="p1">
           The BD seasonal cycle — a full year of preparations applied, tested,
@@ -237,6 +259,12 @@ export default function BiodynamicPage() {
           system looks like when it runs for decades.
         </p>
       </OneCol>
+
+      <Placeholder
+        src="/journals/biodynamic/aura-young-calves-1.jpg"
+        alt="A Malnad Gidda calf standing in the morning shade — the next generation of the herd"
+        caption="The next generation — the herd that will run the next hundred years"
+      />
 
       <Continue currentHref="/biodynamic" />
     </>

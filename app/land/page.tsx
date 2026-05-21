@@ -39,6 +39,12 @@ export default function LandPage() {
         </p>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/land/aura-land.jpg"
+        alt="The Sampigelkhan land at scale — 150 acres of polyculture inside a UNESCO biodiversity zone"
+        caption="The land — 150 acres, one organism"
+      />
+
       <TwoCol id="facts" heading="Sampigelkhan.">
         <DataGrid cols={3}>
           <DataCard value="13.1365°N, 75.6403°E">Coordinates.</DataCard>
@@ -82,6 +88,12 @@ export default function LandPage() {
           soil biology season by season.
         </p>
       </TwoCol>
+
+      <Placeholder
+        src="/journals/land/aura-canopy-noon-2.jpg"
+        alt="Light filtering through the four-story canopy at noon — second view from a different block"
+        caption="Light through the canopy — noon, a different block"
+      />
 
       <PullQuote>
         The FOREST is not adjacent to the FARM. The FOREST is the FARM.

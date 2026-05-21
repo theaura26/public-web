@@ -144,6 +144,12 @@ export default function LivingSystemsPage() {
         </p>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/living-systems/aura-cow.jpg"
+        alt="A Malnad Gidda at pasture — indigenous Karnataka breed in the block rotation"
+        caption="A Malnad Gidda at pasture — rotation timed to cherry stage"
+      />
+
       <TwoCol id="data" heading="Nine streams of continuous data.">
         <p className="p1">
           The estate generates nine streams of continuous data. The most valuable
@@ -179,6 +185,14 @@ export default function LivingSystemsPage() {
           </DataCard>
         </DataGrid>
       </TwoCol>
+
+      <Placeholder
+        src="/journals/living-systems/aura-primary-crop.mp4"
+        mediaType="video"
+        poster="/journals/living-systems/aura-primary-crop.jpg"
+        alt="Arabica cherries ripening beneath the four-story canopy — the primary crop the data describes"
+        caption="The primary crop — Arabica under canopy, the data made visible"
+      />
 
       <PullQuote>
         SOIL HEALTH readings thirty days after cover-crop incorporation predict

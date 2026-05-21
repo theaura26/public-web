@@ -203,6 +203,22 @@ export default function WisdomPage() {
         </DataCard>
       </DataGrid>
 
+      <Placeholder
+        src="/journals/wisdom/aura-natural-intelligence.mp4"
+        mediaType="video"
+        poster="/journals/wisdom/aura-natural-intellgience.jpg"
+        alt="The four-story canopy breathing — the land&apos;s own intelligence at work"
+        caption="Natural intelligence — the rhythm older than any model"
+      />
+
+      <Placeholder
+        src="/journals/wisdom/aura-machine-intelligence.mp4"
+        mediaType="video"
+        poster="/journals/wisdom/aura-machine-intelligence.jpg"
+        alt="A field sensor catching the day&apos;s light — the youngest intelligence learning the land&apos;s signal"
+        caption="Machine intelligence — the youngest, kept close to the soil"
+      />
+
       <ScrollHighlight>
         {`Choose depth over speed.
          Care over convenience.

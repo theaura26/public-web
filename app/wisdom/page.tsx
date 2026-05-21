@@ -139,6 +139,12 @@ export default function WisdomPage() {
         </DataGrid>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/wisdom/aura-cow-dung.jpg"
+        alt="Fresh Malnad Gidda dung in the hand — what &lsquo;soil comes first&rsquo; looks like at the source"
+        caption="Soil comes first — at the source, in the hand"
+      />
+
       <TwoCol id="community" heading="On community.">
         <p className="p1">
           Aura is not a company you join. It is a community you are invited
@@ -161,6 +167,12 @@ export default function WisdomPage() {
         </p>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/wisdom/aura-b500.jpg"
+        alt="A cured cow horn cracked open to reveal BD 500 — the slow, communal work made visible"
+        caption="BD 500 — small work, done properly, in the dark"
+      />
+
       <TwoCol id="three-intelligences" heading="Three intelligences.">
         <p className="p1">
           Natural. Human. Machine. The estate is held by all three. Each
@@ -179,7 +191,7 @@ export default function WisdomPage() {
       <DataGrid cols={3} standalone>
         <DataCard
           video="/journals/wisdom/aura-natural-intelligence.mp4"
-          poster="/journals/wisdom/aura-natural-intellgience.jpg"
+          poster="/journals/wisdom/aura-natural-intelligence.jpg"
           alt="The four-story canopy breathing — natural intelligence at work"
           value="Natural."
         >
@@ -204,6 +216,12 @@ export default function WisdomPage() {
           learns the land&apos;s signal because we keep the record.
         </DataCard>
       </DataGrid>
+
+      <Placeholder
+        src="/journals/wisdom/aura-b500-2.jpg"
+        alt="A second view of BD 500 — the moral spine of the estate held in a handful of preparation"
+        caption="The moral spine, held in a handful of preparation"
+      />
 
       <ScrollHighlight>
         {`Choose depth over speed.

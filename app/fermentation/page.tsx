@@ -136,6 +136,26 @@ export default function FermentationPage() {
         caption="Malabar pepper on the vine — mid-canopy companion to the areca palm"
       />
 
+      <TwoCol id="dung" heading="Cow dung fermentation.">
+        <p className="p1">
+          This is the discipline most people do not think of. But at Aura, the
+          fermentation of cow dung into biodynamic preparations is as precise
+          as the fermentation of coffee cherry.
+        </p>
+        <p className="p2">
+          The dung batch that produced the BD preparation is tracked back to
+          the individual animals that contributed to it.
+        </p>
+        <p className="p2">
+          <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure — begins as fresh dung from the estate&rsquo;s
+          52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle, packed into a cow horn, buried over winter.
+          The microbial transformation that occurs underground is a
+          fermentation. When it is exhumed, stirred dynamically for one hour,
+          and applied to soil at dusk, it carries a specific microbial signature
+          shaped by the breed, the season, the temperature, and the duration.
+        </p>
+      </TwoCol>
+
       <DataGrid cols={2} standalone>
         <DataCard
           img="/journals/fermentation/aura-experimental-anaerobic.jpg"
@@ -156,26 +176,6 @@ export default function FermentationPage() {
           waits on the BD calendar to clear.
         </DataCard>
       </DataGrid>
-
-      <TwoCol id="dung" heading="Cow dung fermentation.">
-        <p className="p1">
-          This is the discipline most people do not think of. But at Aura, the
-          fermentation of cow dung into biodynamic preparations is as precise
-          as the fermentation of coffee cherry.
-        </p>
-        <p className="p2">
-          The dung batch that produced the BD preparation is tracked back to
-          the individual animals that contributed to it.
-        </p>
-        <p className="p2">
-          <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure — begins as fresh dung from the estate&rsquo;s
-          52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle, packed into a cow horn, buried over winter.
-          The microbial transformation that occurs underground is a
-          fermentation. When it is exhumed, stirred dynamically for one hour,
-          and applied to soil at dusk, it carries a specific microbial signature
-          shaped by the breed, the season, the temperature, and the duration.
-        </p>
-      </TwoCol>
 
       <TwoCol id="testing" heading="No untested material touches the soil.">
         <p className="p1">

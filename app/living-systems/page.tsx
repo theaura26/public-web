@@ -118,14 +118,6 @@ export default function LivingSystemsPage() {
         caption="Hives — the connective signal across every layer"
       />
 
-      <Placeholder
-        src="/journals/living-systems/aura-cow-eye.mp4"
-        mediaType="video"
-        poster="/journals/living-systems/aura-cow-eye.jpg"
-        alt="Close-up of a Malnad Gidda's eye — the indigenous Karnataka breed at the heart of the soil system"
-        caption="52 Malnad Gidda — biological infrastructure"
-      />
-
       <TwoCol id="herd" heading="The herd is biological infrastructure.">
         <p className="p1">
           Fifty-two Malnad Gidda cattle — an indigenous Karnataka breed adapted
@@ -204,6 +196,14 @@ export default function LivingSystemsPage() {
           measured across decades.
         </p>
       </TwoCol>
+
+      <Placeholder
+        src="/journals/living-systems/aura-cow-eye.mp4"
+        mediaType="video"
+        poster="/journals/living-systems/aura-cow-eye.jpg"
+        alt="Close-up of a Malnad Gidda's eye — the indigenous Karnataka breed reading the land"
+        caption="The eye that reads the signals — Malnad Gidda"
+      />
 
       <ScrollHighlight>
         {`Most farms track a crop.

@@ -151,8 +151,8 @@ export default function LivingSystemsPage() {
       </TwoCol>
 
       <PullQuote>
-        Soil health readings thirty days after cover-crop incorporation predict
-        the flavour profile of the coffee lot that block will produce.
+        SOIL HEALTH readings thirty days after cover-crop incorporation predict
+        the FLAVOUR PROFILE of the coffee lot that block will produce.
       </PullQuote>
 
       <TwoCol id="signals" heading="The signals between.">

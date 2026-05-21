@@ -72,7 +72,7 @@ export default function WisdomPage() {
       </TwoCol>
 
       <PullQuote>
-        Attention is a moral choice.
+        ATTENTION is a MORAL CHOICE.
       </PullQuote>
 
       <TwoCol id="fourfold" heading="The fourfold self-check.">
@@ -179,7 +179,7 @@ export default function WisdomPage() {
       </OneCol>
 
       <PullQuote>
-        Every organisation has values on a wall. Aura has a spine.
+        Every organisation has VALUES on a wall. Aura has a SPINE.
       </PullQuote>
 
       <Continue currentHref="/wisdom" />

@@ -81,7 +81,7 @@ export default function LandPage() {
       </TwoCol>
 
       <PullQuote>
-        The forest is not adjacent to the farm. The forest is the farm.
+        The FOREST is not adjacent to the FARM. The FOREST is the FARM.
       </PullQuote>
 
       <TwoCol id="work" heading="How we work this land.">
@@ -160,7 +160,7 @@ export default function LandPage() {
       </TwoCol>
 
       <PullQuote>
-        Provenance is not a claim. It is the entire value proposition.
+        PROVENANCE is not a claim. It is the entire VALUE PROPOSITION.
       </PullQuote>
 
       <ScrollHighlight>

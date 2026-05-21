@@ -42,7 +42,7 @@ export default function RtaPage() {
       </TwoCol>
 
       <PullQuote>
-        Intelligence is alignment with timing.
+        INTELLIGENCE is alignment with TIMING.
       </PullQuote>
 
       <TwoCol id="field" heading="In the field.">
@@ -128,7 +128,7 @@ export default function RtaPage() {
       </TwoCol>
 
       <PullQuote>
-        Right time. Right action. The philosophy made technical.
+        RIGHT TIME. RIGHT ACTION. The philosophy made TECHNICAL.
       </PullQuote>
 
       <TwoCol id="labs" heading="RTA Labs.">
@@ -171,8 +171,8 @@ export default function RtaPage() {
       </TwoCol>
 
       <PullQuote>
-        We are not optimising for this season. We are optimising for the
-        next hundred.
+        We are not optimising for THIS SEASON. We are optimising for the
+        NEXT HUNDRED.
       </PullQuote>
 
       <ScrollHighlight>

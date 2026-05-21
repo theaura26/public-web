@@ -51,7 +51,7 @@ export default function IdeaPage() {
       />
 
       <PullQuote attribution="Arvind">
-        We start from the earth and work up.
+        We start from the EARTH and work UP.
       </PullQuote>
 
       <TwoCol id="pillars" heading="Sanctuary. Agroculture. Artistry.">
@@ -117,7 +117,7 @@ export default function IdeaPage() {
         </DataGrid>
       </TwoCol>
 
-      <PullQuote>Depth over speed. Generations over quarters.</PullQuote>
+      <PullQuote>DEPTH over speed. GENERATIONS over quarters.</PullQuote>
 
       <TwoCol id="why" heading="Why A Thousand Years">
         <p className="p1">
@@ -172,7 +172,7 @@ export default function IdeaPage() {
       </TwoCol>
 
       <PullQuote attribution="Arvind">
-        If we don&apos;t have a good moral spine, we will sell shit.
+        If we don&apos;t have a good MORAL SPINE, we will SELL SHIT.
       </PullQuote>
 
       <TwoCol id="measure" heading="The Standard, Measured">
@@ -209,7 +209,7 @@ export default function IdeaPage() {
       </TwoCol>
 
       <PullQuote attribution="Arvind">
-        Aura is not built, it is grown.
+        Aura is not BUILT, it is GROWN.
       </PullQuote>
 
       <OneCol heading="The Practice">

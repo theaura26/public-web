@@ -83,8 +83,8 @@ export default function ResidencyPage() {
       </TwoCol>
 
       <PullQuote>
-        Rebel with a cause. Grounded in ancestral knowledge. Packaged
-        with edge.
+        REBEL with a cause. Grounded in ANCESTRAL KNOWLEDGE. Packaged
+        with EDGE.
       </PullQuote>
 
       <TwoCol heading="The work that gets made here.">
@@ -176,8 +176,8 @@ export default function ResidencyPage() {
       </TwoCol>
 
       <PullQuote>
-        We are not building a programme. We are building a residency that
-        will still be recognisable in a hundred years.
+        We are not building a PROGRAMME. We are building a RESIDENCY that
+        will still be recognisable in a HUNDRED YEARS.
       </PullQuote>
 
       <TwoCol heading="Teachers in residence.">

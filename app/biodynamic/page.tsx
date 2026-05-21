@@ -127,8 +127,8 @@ export default function BiodynamicPage() {
       </TwoCol>
 
       <PullQuote>
-        We do not abandon CPP for newer methods. We scale wisdom. We do not
-        replace it.
+        We do not abandon CPP for newer methods. We SCALE WISDOM. We do not
+        REPLACE it.
       </PullQuote>
 
       <TwoCol id="herd" heading="The herd as engine.">

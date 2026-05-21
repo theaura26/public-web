@@ -171,8 +171,8 @@ export default function FermentationPage() {
       </TwoCol>
 
       <PullQuote>
-        The coffee carries the flavour. The pepper carries the spice. The dung
-        carries the biology.
+        The COFFEE carries the FLAVOUR. The PEPPER carries the SPICE. The DUNG
+        carries the BIOLOGY.
       </PullQuote>
 
       <Placeholder
@@ -181,8 +181,8 @@ export default function FermentationPage() {
       />
 
       <PullQuote>
-        Microbial signature is the slowest moat. Decades to build,
-        impossible to copy.
+        MICROBIAL SIGNATURE is the slowest MOAT. DECADES to build,
+        IMPOSSIBLE to copy.
       </PullQuote>
 
       <ScrollHighlight>

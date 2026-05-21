@@ -64,8 +64,8 @@ export default function CoffeePage() {
       </TwoCol>
 
       <PullQuote>
-        We are not building a brand. We are building a coffee that will
-        still be recognisable in a hundred years.
+        We are not building a BRAND. We are building a COFFEE that will
+        still be RECOGNISABLE in a HUNDRED YEARS.
       </PullQuote>
 
       <TwoCol id="rules" heading="The discipline.">
@@ -90,7 +90,7 @@ export default function CoffeePage() {
       </TwoCol>
 
       <PullQuote>
-        The cup is not the product. The cup is proof.
+        The CUP is not the PRODUCT. The CUP is PROOF.
       </PullQuote>
 
       <TwoCol id="lots" heading="The lots.">
@@ -147,7 +147,7 @@ export default function CoffeePage() {
       </DataGrid>
 
       <PullQuote>
-        The choices made by one batch shape every batch that follows.
+        The CHOICES made by one BATCH shape every batch that FOLLOWS.
       </PullQuote>
 
       <Placeholder

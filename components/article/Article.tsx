@@ -611,18 +611,6 @@ export function JournalHero({
             align-items: center;
             text-align: left;
           }
-          .journal-hero__media {
-            margin-top: -300px;
-            /* Desktop: cap the banner to the section-w rail so the
-               image matches the title's horizontal column instead of
-               spanning the full viewport. */
-            max-width: var(--max-w);
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: var(--gutter);
-            padding-right: var(--gutter);
-            width: 100%;
-          }
         }
         .journal-hero__media {
           position: relative;
@@ -635,6 +623,22 @@ export function JournalHero({
              the paint region to the element's box. */
           overflow: hidden;
           contain: paint;
+        }
+        @media (min-width: 1024px) {
+          .journal-hero__media {
+            margin-top: -300px;
+            /* Desktop: cap the banner to the section-w rail so the
+               image matches the title's horizontal column instead of
+               spanning the full viewport. Order matters — this block
+               must come AFTER the base .journal-hero__media rule above
+               so it wins the cascade. */
+            width: 100%;
+            max-width: var(--max-w);
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: var(--gutter);
+            padding-right: var(--gutter);
+          }
         }
         .journal-hero__caption {
           position: absolute;

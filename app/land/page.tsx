@@ -1,5 +1,5 @@
 import {
-  HeroBanner,
+  JournalHero,
   OneCol,
   TwoCol,
   Placeholder,
@@ -14,10 +14,9 @@ import {
 export default function LandPage() {
   return (
     <>
-      <HeroBanner
+      <JournalHero
         currentHref="/land"
         title="The Land"
-        type="Aerial · four-story canopy at altitude"
         caption="Sampigelkhan Estate, 3,600 ft — Western Ghats"
       />
 

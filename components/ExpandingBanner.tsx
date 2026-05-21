@@ -248,6 +248,11 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
               ref={mediaRef as React.RefObject<HTMLImageElement>}
               src={src}
               alt={alt ?? caption ?? ''}
+              /* ExpandingBanner is always a body image, never above the fold —
+                 lazy + async-decode lets the page paint first and the banner
+                 stream in as the reader scrolls toward it. */
+              loading="lazy"
+              decoding="async"
               style={{
                 position: 'absolute',
                 inset: 0,

@@ -2,14 +2,23 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Fermentation — Three Disciplines, One Precision — Aura',
+  title: 'Fermentation',
   description:
-    'Coffee, pepper, cow dung. Six specialty coffee lots. Lot 005 Solera carry-forward. Water-retted and anaerobic pepper. BD 500 horn burial. Bridged to Ohara, where an 800-year fermentation lineage lives in the valley.',
+    'Three fermentation disciplines, one estate. Coffee, pepper, and cow dung — pH every fifteen minutes, temperature three times daily, Brix start to end. Every lot a tracked individual, not an average.',
+  alternates: { canonical: '/fermentation' },
   openGraph: {
-    title: 'Fermentation — Three disciplines, one precision.',
-    description:
-      'Controlled microbial work across coffee, pepper, and cow dung. Time, temperature, pH as instruments.',
     type: 'article',
+    title: 'Fermentation — Aura',
+    description:
+      'Patience made visible. The slow work, in the dark, recorded with integrity.',
+    images: ['/journals/fermentation/aura-fermentation.jpg'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Fermentation — Aura',
+    description:
+      'Patience made visible. The slow work, in the dark, recorded with integrity.',
+    images: ['/journals/fermentation/aura-fermentation.jpg'],
   },
 }
 

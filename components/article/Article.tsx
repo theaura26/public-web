@@ -1044,6 +1044,8 @@ export function DataCard({
             <img
               src={img}
               alt={alt ?? (typeof value === 'string' ? value : '')}
+              loading="lazy"
+              decoding="async"
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
           ) : placeholderLabel ? (

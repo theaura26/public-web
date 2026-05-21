@@ -130,8 +130,8 @@ export default function LandPage() {
 
       <DataGrid cols={2} standalone>
         <DataCard
-          img="/journals/land/aura-mudigere.jpg"
-          alt="Aerial of Sampigelkhan Estate in Mudigere — four-story shade-grown canopy under monsoon cloud"
+          img="/journals/land/aura-mudigere-mountains.jpg"
+          alt="Mudigere mountains rising over the Western Ghats — the valley that holds Sampigelkhan Estate"
           value="Mudigere · Karnataka."
         >
           150 acres, 3,600 ft, laterite soil, UNESCO biodiversity zone. Four-

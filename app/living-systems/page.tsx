@@ -23,23 +23,14 @@ export default function LivingSystemsPage() {
 
       <TwoCol heading="A forest that produces crops. Not a farm that plants trees.">
         <p className="p1">
-          150 acres of four-story polyculture within a UNESCO biodiversity zone,
-          read as a single living dataset.
+          150 acres of four-story polyculture in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>, read as a
+          single living dataset.
         </p>
         <p className="p2">
-          Most agricultural systems isolate variables. Aura studies relationships
-          instead.
-        </p>
-        <p className="p2">
-          The Sampigelkhan Estate sits at 3,600 feet in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term> — 150
-          acres within a UNESCO biodiversity zone. 35,000 trees. 52 indigenous
-          <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle. Beehives, streams, and a four-story agroforestry
-          system that sequesters three to five times more carbon per acre than
-          monoculture coffee.
-        </p>
-        <p className="p2">
-          The estate is not divided by crop. It is divided by block. Because the
-          unit of record is the land, not the product.
+          Most agricultural systems isolate variables. Aura studies
+          relationships instead. The estate is not divided by crop; it is
+          divided by block — because the unit of record is the land, not the
+          product.
         </p>
       </TwoCol>
 
@@ -56,14 +47,14 @@ export default function LivingSystemsPage() {
 
       <TwoCol id="layers" heading="Four stories, one canopy.">
         <p className="p1">
-          The estate operates through four canopy layers. Every layer influences
-          the next.
+          The estate operates through four canopy layers. Every layer
+          influences the next.
         </p>
         <p className="p2">
-          Canopy density predicts coffee cherry <Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term>. Areca health signals
-          pepper yield weeks early. Cattle rotation shapes microbial conditions
-          that later affect fermentation. Bee activity predicts flowering
-          quality.
+          From the silver oak overhead to the cardamom on the floor, each
+          story holds the conditions for the one below it — and reads as a
+          signal for what the next will do. The relationships matter more
+          than the layers themselves.
         </p>
       </TwoCol>
 
@@ -138,8 +129,8 @@ export default function LivingSystemsPage() {
 
       <TwoCol id="data" heading="Nine streams of continuous data.">
         <p className="p1">
-          The estate generates nine streams of continuous data. The most valuable
-          intelligence is not within any single stream. It is between them.
+          The estate generates nine streams of continuous data. Each one is
+          useful; the value is in being able to read them together.
         </p>
         <DataGrid cols={3}>
           <DataCard value="Coffee fermentation.">
@@ -179,8 +170,7 @@ export default function LivingSystemsPage() {
 
       <TwoCol id="signals" heading="The signals between.">
         <p className="p1">
-          The most valuable data is not within any single stream. It is between
-          them.
+          The intelligence lives in the cross-references.
         </p>
         <p className="p2">
           Canopy density predicts coffee cherry Brix. Areca health signals
@@ -190,10 +180,9 @@ export default function LivingSystemsPage() {
           biomass after incorporation predicts fermentation character.
         </p>
         <p className="p2">
-          This is what we mean by a living system. Every layer talks to every
-          other layer. The estate has a heartbeat — short pulses from sensors,
-          medium rhythms from crop lifecycles, long arcs from ecosystem health
-          measured across decades.
+          This is what we mean by a living system. The estate has a heartbeat
+          — short pulses from sensors, medium rhythms from crop lifecycles,
+          long arcs from ecosystem health measured across decades.
         </p>
       </TwoCol>
 

@@ -55,19 +55,11 @@ export default function WisdomPage() {
         </p>
         <p className="p2">
           The side effects become visible slowly: exhausted soil, exhausted
-          attention, exhausted people.
+          attention, exhausted people. By the time the line on the chart
+          turns, the damage is older than the metric.
         </p>
         <p className="p2">
           Aura begins from another premise. Restraint is intelligence.
-        </p>
-        <p className="p2">
-          Distraction is not neutral. It degrades the quality of everything
-          downstream — decisions, designs, soil, fermentation, the taste of the
-          cup.
-        </p>
-        <p className="p2">
-          Before Aura became a regenerative estate system, it became a moral
-          position. Every decision must survive pressure across time.
         </p>
       </TwoCol>
 
@@ -148,11 +140,11 @@ export default function WisdomPage() {
         </p>
         <p className="p2">
           We pre-select for three dimensions: competence, character, and
-          coherence. Character means calm under complexity, intellectual
-          honesty, stewardship instinct, consistency. Coherence means
-          understanding that this is not a company optimising for
-          quarterly returns. It is a living system optimising for
-          centuries.
+          coherence. Competence is the floor — you have to be good at the
+          thing. Character is calm under complexity, intellectual honesty,
+          stewardship instinct, consistency. Coherence is the understanding
+          that this is not a company optimising for quarterly returns; it
+          is a living system optimising for centuries.
         </p>
         <p className="p2">
           We would rather host a twenty-year-old with conviction than a
@@ -171,14 +163,10 @@ export default function WisdomPage() {
         <p className="p1">
           Natural. Human. Machine. The estate is held by all three. Each
           one is a kind of attention; each one has its own time signature.
-          The discipline is to let each do what it does best.
         </p>
         <p className="p2">
-          Natural intelligence is the oldest — the canopy, the herd, the
-          microbial culture, the rain. Human intelligence is the carrier —
-          attention, craft, restraint, judgment. Machine intelligence is
-          the youngest — the sensor, the log, the model that learns the
-          land&apos;s rhythm from the data we keep.
+          The discipline is to let each do what it does best — and to keep
+          them in the right order. Land first, hands second, machines last.
         </p>
       </TwoCol>
 

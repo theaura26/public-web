@@ -76,43 +76,9 @@ export default function FermentationPage() {
           </DataCard>
         </DataGrid>
         <p className="p2">
-          <strong>Anaerobic Natural:</strong> 48 hours sealed. The simplest
-          method, and the one where the cherry&rsquo;s own microbial environment
-          does the work.
-        </p>
-        <p className="p2">
-          <strong>Dry Osmosis:</strong> dried to 45% moisture first, then
-          fermented. Patience before process. The partial drying concentrates
-          sugars and shifts the microbial starting point. The cup carries
-          blueberry, fig, raisin.
-        </p>
-        <p className="p2">
-          <strong>Red Honey:</strong> fermented, pulped, but the mucilage stays
-          on. Five days of thick drying, then 25 thin. The mucilage sugars
-          absorb slowly into the bean. Oxidation turns it red. Named
-          &ldquo;Liquid Gold&rdquo; at its first public tasting.
-        </p>
-        <p className="p2">
-          <strong>Banana Wash:</strong> 24 hours anaerobic, then layered with
-          banana leaves for 48 more. The leaves contribute wild yeasts,
-          enzymes, and a micro-environment that imparts tropical character.
-          Indigenous technique refined with precision controls — pH,
-          temperature, humidity monitored throughout. The most distinctly
-          Indian lot we produce.
-        </p>
-        <p className="p2">
-          <strong>Solera Maceration:</strong> borrowed from sherry production.
-          During the first fermentation phase, actively fermenting cherries
-          are mixed with freshly harvested ones — the Solera carry-forward.
-          The microbial culture of one batch shapes every batch that follows.
-          Alternating fermentation and rest cycles. Day-night drying rhythm.
-          770 kg total. The flagship.
-        </p>
-        <p className="p2">
-          <strong>Solera Wash:</strong> the rarest lot at 620 kg. Highest Brix
-          at 23%. Fermented 24 hours, pulped, soaked three days in water,
-          hand-washed. Everything non-essential removed. The cleanest
-          expression of the cherry.
+          Six methods, one cherry. The full lot-by-lot file — yields, immature
+          counts, drying timelines, cupping notes — lives on the{' '}
+          <a href="/coffee">Our Coffee Story</a> page.
         </p>
       </TwoCol>
 
@@ -138,20 +104,16 @@ export default function FermentationPage() {
 
       <TwoCol id="dung" heading="Cow dung fermentation.">
         <p className="p1">
-          This is the discipline most people do not think of. But at Aura, the
+          This is the discipline most people do not think of. At Aura, the
           fermentation of cow dung into biodynamic preparations is as precise
           as the fermentation of coffee cherry.
-        </p>
-        <p className="p2">
-          The dung batch that produced the BD preparation is tracked back to
-          the individual animals that contributed to it.
         </p>
         <p className="p2">
           <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure — begins as fresh dung from the estate&rsquo;s
           52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle, packed into a cow horn, buried over winter.
           The microbial transformation that occurs underground is a
           fermentation. When it is exhumed, stirred dynamically for one hour,
-          and applied to soil at dusk, it carries a specific microbial signature
+          and applied to soil at dusk, it carries a microbial signature
           shaped by the breed, the season, the temperature, and the duration.
         </p>
       </TwoCol>

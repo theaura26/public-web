@@ -83,8 +83,8 @@ export default function ResidencyPage() {
       </TwoCol>
 
       <PullQuote>
-        REBEL with a cause. Grounded in ANCESTRAL KNOWLEDGE. Packaged
-        with EDGE.
+        The FRICTION between disciplines is the POINT. That is where the
+        work no one else can make GETS MADE.
       </PullQuote>
 
       <TwoCol heading="The work that gets made here.">
@@ -130,8 +130,8 @@ export default function ResidencyPage() {
           </DataCard>
           <DataCard value="Japan · Ohara">
             Refined. Tea. Washi. The intelligence of an eight-hundred-
-            year fermentation lineage in the valley and a third-
-            generation zen garden on the property. Days are quieter,
+            year fermentation lineage in the valley and a thirty-year-
+            old Japanese garden on the property. Days are quieter,
             slower, more deliberate. Japanese is the common tongue.
             Purple shiso grows nowhere else in Japan.
           </DataCard>
@@ -245,8 +245,8 @@ export default function ResidencyPage() {
         {`The land is the original intelligence.
          Listen to it long enough
          that it changes what you make.
-         Ancestral knowledge.
-         Packaged with edge.`}
+         The work is the transcription
+         of that listening.`}
       </ScrollHighlight>
 
       <OneCol id="closing" heading="What the residency is really for.">

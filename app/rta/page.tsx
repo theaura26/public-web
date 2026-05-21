@@ -79,8 +79,8 @@ export default function RtaPage() {
           <DataCard value="Buffer days.">Three per monthly schedule.</DataCard>
         </DataGrid>
         <p className="p2">
-          Three buffer days are built into every monthly spray schedule —
-          because the land does not operate on a spreadsheet timeline.
+          The buffer days are not slack. They are the admission that the land
+          does not operate on a spreadsheet timeline.
         </p>
       </TwoCol>
 
@@ -123,8 +123,8 @@ export default function RtaPage() {
 
       <TwoCol id="restraint" heading="In restraint.">
         <p className="p1">
-          <Rta /> is as much about what you do not do. Restraint before
-          intervention. Patience before process.
+          <Rta /> is as much about what you do not do as what you do. Restraint
+          before intervention. Patience before process.
         </p>
         <p className="p2">
           When the land signals that it is not ready — a soil that has not
@@ -150,15 +150,16 @@ export default function RtaPage() {
 
       <TwoCol id="labs" heading="RTA Labs.">
         <p className="p1">
-          By 2031, Aura will hold five-plus years of four-layer polyculture data
-          — a dataset no one else has, because no one else is recording all
-          four canopy stories simultaneously with biodynamic inputs, cattle
-          rotation, and fermentation outcomes across a single estate.
+          RTA Labs is where the field record becomes intelligence. Not a
+          generic agriculture model — a Mudigere-native model, trained on
+          this land&rsquo;s specific rhythms.
         </p>
         <p className="p2">
-          RTA Labs is where this data becomes intelligence. Not a generic
-          agriculture model. A Mudigere-native model trained on this land&rsquo;s
-          specific rhythms.
+          By 2031 the estate will hold five-plus years of four-layer
+          polyculture data — biodynamic inputs, cattle rotation, fermentation
+          outcomes, canopy health, all logged against the same clock. A
+          dataset no one else can assemble, because no one else is running
+          all four canopy stories on a single piece of land.
         </p>
         <DataGrid cols={3}>
           <DataCard value="BD spray timing.">

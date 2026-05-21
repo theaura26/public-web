@@ -62,53 +62,37 @@ export default function BiodynamicPage() {
           — then applied to soil in the evening, when the earth is inhaling.
         </p>
         <DataGrid cols={2}>
-          <DataCard value="BD 500 — Horn manure.">Soil biology.</DataCard>
+          <DataCard value="BD 500 — Horn manure.">
+            Cow dung buried in a horn over winter. Soil biology, applied at
+            dusk.
+          </DataCard>
           <DataCard value={<><Term tip="Horn silica. Ground quartz buried over summer, sprayed as fine mist for light metabolism.">BD 501</Term> — Horn silica.</>}>
-            Light metabolism. Foliar mist, early morning.
+            Ground quartz buried over summer. Foliar mist at first light.
+            Light metabolism in the leaf.
           </DataCard>
           <DataCard value={<><Term tip="Compost preparations: yarrow, chamomile, nettle, oak bark, dandelion, valerian.">BD 502–507</Term> — Compost preparations.</>}>
-            Yarrow, chamomile, nettle, oak bark, dandelion, valerian.
+            Yarrow, chamomile, nettle, oak bark, dandelion, valerian. Tiny
+            doses, added to the heap to regulate decomposition.
           </DataCard>
           <DataCard value={<><Term tip="Horsetail spray. Silica-rich, used as a fungal preventative through the monsoon.">BD 508</Term> — Horsetail.</>}>
-            Silica-rich spray. Fungal preventative for the monsoon.
+            Silica-rich foliar spray. The fungal preventative for the
+            monsoon-heavy Ghats.
           </DataCard>
         </DataGrid>
-        <p className="p2">
-          <strong>BD 500 — Horn Manure.</strong> Cow dung packed into a cow
-          horn, buried over winter, exhumed in spring. The microbial
-          transformation that occurs underground produces a concentrate of
-          soil-building biology. Stirred dynamically for one hour — creating a
-          vortex, breaking it, reversing — then applied to soil in the
-          evening, when the earth is inhaling.
-        </p>
-        <p className="p2">
-          <strong>BD 501 — Horn Silica.</strong> Ground quartz crystal, packed
-          into a horn, buried over summer. Applied as a fine mist to foliage
-          in early morning. Enhances photosynthesis and light metabolism in
-          the plant.
-        </p>
-        <p className="p2">
-          <strong>BD 502 through 507 — Compost preparations</strong> made from
-          yarrow, chamomile, stinging nettle, oak bark, dandelion, and
-          valerian. Each is added in small quantities to the compost heap,
-          where they regulate decomposition and enrich the final compost with
-          specific mineral and microbial qualities.
-        </p>
-        <p className="p2">
-          <strong>BD 508 — Horsetail.</strong> A silica-rich spray used as a
-          fungal disease preventative, particularly relevant in the
-          monsoon-heavy Western Ghats.
-        </p>
       </TwoCol>
 
       <TwoCol id="vedic" heading="The Vedic system.">
         <p className="p1">
           Alongside the Steiner preparations, the estate prepares and applies a
-          parallel set of inputs rooted in Indian agricultural science.
+          parallel set of inputs rooted in Indian agricultural science —
+          <Term tip="Cow pat pit. Composted dung layered with BD preparations, fermented ninety days.">CPP</Term>,
+          Jeevamrit, Panchgavya, Beejamrit, and older preparations from the
+          Vrikshayurveda lineage.
         </p>
         <p className="p2">
-          Aura does not abandon <Term tip="Cow pat pit. Composted dung layered with BD preparations, fermented ninety days.">CPP</Term> for newer methods. We scale wisdom. We do
-          not replace it.
+          The two systems are not in competition. Each carries a piece of the
+          same underlying observation: feed the soil, not the plant; close the
+          loop; let the cow do most of the work.
         </p>
         <DataGrid cols={3}>
           <DataCard value={<><Term tip="Cow dung, cow urine, jaggery, gram flour, water. Fermented 5–7 days. Soil drench.">Jeevamrit</Term>.</>}>
@@ -231,16 +215,16 @@ export default function BiodynamicPage() {
 
       <OneCol id="closing" heading="The herd is biological infrastructure.">
         <p className="p1">
-          Biodynamic inputs, ecological pest balance, and soil microbiome
-          restoration are not features. They are not selling points. They are
-          evidence of intelligence aligned with nature, not imposed upon it.
+          Biodynamic inputs, ecological pest balance, soil microbiome
+          restoration — these are not features and not selling points. They
+          are evidence of intelligence aligned with nature, not imposed on
+          it.
         </p>
         <p className="p2">
-          The estate&rsquo;s four-story polyculture, fed by biodynamic
-          preparations from indigenous cattle, sequestering four to five times
-          the carbon of monoculture coffee, producing six distinct micro lots
-          of specialty-grade Arabica — this is what a closed-loop operating
-          system looks like when it runs for decades.
+          A four-story polyculture, fed by preparations from indigenous
+          cattle, building soil carbon decade over decade. This is what a
+          closed-loop operating system looks like when it has been running
+          long enough to forget where it started.
         </p>
       </OneCol>
 

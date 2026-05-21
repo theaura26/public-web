@@ -36,8 +36,9 @@ export default function CoffeePage() {
           Six lots. One harvest. No two cups the same.
         </p>
         <p className="p2">
-          Arabica grown at 3,600 feet beneath a four-story canopy. Every lot
-          is a document of place and method.
+          Arabica grown at 3,600 feet in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>, beneath a four-story
+          canopy. Two cultivars — <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>. Every lot is a document
+          of place and method.
         </p>
         <p className="p2">
           Aura is not a coffee company. Coffee is the primary crop, but the
@@ -49,8 +50,8 @@ export default function CoffeePage() {
 
       <TwoCol heading="The cup is evidence.">
         <p className="p1">
-          Coffee is often discussed through flavour notes alone. But flavour is
-          accumulated consequence.
+          Coffee is usually discussed through flavour notes alone. But flavour
+          is accumulated consequence.
         </p>
         <p className="p2">
           Every cup contains decisions made months earlier: canopy management,
@@ -58,8 +59,8 @@ export default function CoffeePage() {
           rhythm, and restraint.
         </p>
         <p className="p2">
-          Aura grows shade-grown Arabica at 3,600 feet beneath a four-story
-          canopy in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>. Two cultivars — <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>.
+          What ends up in the cup is what the land did, what the weather did,
+          and what the team chose not to do.
         </p>
       </TwoCol>
 
@@ -95,16 +96,12 @@ export default function CoffeePage() {
 
       <TwoCol id="lots" heading="The lots.">
         <p className="p1">
-          Six distinct micro lots each harvest. Each is a different processing
-          method applied to the same Arabica cherries from the same land.
+          Six distinct micro lots each harvest. The same cherries, the same
+          land — six different decisions in the wet mill.
         </p>
         <p className="p2">
-          The differences in the cup are the result of fermentation decisions —
-          not terroir alone, but terroir expressed through technique.
-        </p>
-        <p className="p2">
-          These are not targets. They are the climate of the estate, printed
-          into the bean.
+          Terroir alone does not explain the spread between them. Terroir
+          expressed through technique does.
         </p>
       </TwoCol>
 
@@ -135,8 +132,8 @@ export default function CoffeePage() {
         >
           6,715 kg harvest, 880 kg immature, 511 kg floats. Brix 19.25%. 48 hr
           anaerobic, pulped with mucilage on. 5 days thick drying, then 25
-          days thin. Named &ldquo;Liquid Gold&rdquo; by Boojee Mumbai. Notes:
-          honey, caramel, nutty.
+          days thin. Notes: honey, caramel, nutty. Named &ldquo;Liquid Gold&rdquo;
+          at its first public tasting.
         </DataCard>
         <DataCard
           img="/journals/coffee/aura-banana-wash.jpg"
@@ -202,9 +199,9 @@ export default function CoffeePage() {
           per SCA protocol. Every lot is cupped — target 80+ specialty.
         </p>
         <p className="p2">
-          By Year 3: caffeine and polyphenol profiling via colorimeter, <Term tip="SCA-certified coffee grader.">Q-grader</Term>{' '}
-          certification on-site, and a purpose-built 1,200 sq ft lab with a
-          professional cupping room for buyer visits.
+          The next build adds caffeine and polyphenol profiling, on-site <Term tip="SCA-certified coffee grader.">Q-grader</Term>{' '}
+          certification, and a 1,200 sq ft lab with a cupping room for buyers
+          who want to taste the harvest where it grew.
         </p>
         <p className="p2">
           We are not chasing trends. We are documenting what the land produces
@@ -240,11 +237,11 @@ export default function CoffeePage() {
 
       <OneCol id="closing" heading="One harvest. Six trajectories.">
         <p className="p1">
-          The same Sln.9, picked on the same morning from the same block, can
-          become six profoundly different coffees depending on the ferment. We
-          treat the wet mill the way a winemaker treats the cellar: separated
-          lots, controlled oxygen, temperature logs, Brix and pH measured by
-          hand every four hours.
+          The same Sln.9, picked on the same morning from the same block,
+          becomes six different coffees depending on the ferment. We treat
+          the wet mill the way a winemaker treats the cellar: separated lots,
+          controlled oxygen, temperature logs, Brix and pH measured by hand
+          every four hours.
         </p>
       </OneCol>
 

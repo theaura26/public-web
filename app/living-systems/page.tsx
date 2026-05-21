@@ -67,6 +67,14 @@ export default function LivingSystemsPage() {
         </p>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/living-systems/aura-canopy.mp4"
+        mediaType="video"
+        poster="/journals/living-systems/aura-canopy.jpg"
+        alt="Looking up into the four-story canopy of silver oak, jackfruit, and fig — the layer that holds every other layer"
+        caption="Looking up — the canopy that holds every layer beneath it"
+      />
+
       <DataGrid cols={4} standalone>
         <DataCard
           img="/journals/living-systems/aura-canopy.jpg"

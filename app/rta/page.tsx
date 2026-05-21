@@ -113,6 +113,14 @@ export default function RtaPage() {
         </p>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/rta/aura-mudigere.mp4"
+        mediaType="video"
+        poster="/journals/rta/aura-mudigere.jpg"
+        alt="Mudigere valley rolling under monsoon light — the estate's rhythm read across a single day"
+        caption="Mudigere — the valley keeps its own timing"
+      />
+
       <TwoCol id="restraint" heading="In restraint.">
         <p className="p1">
           <Rta /> is as much about what you do not do. Restraint before

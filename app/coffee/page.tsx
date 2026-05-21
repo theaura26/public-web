@@ -194,6 +194,14 @@ export default function CoffeePage() {
         </p>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/coffee/aura-solera-macaceration.mp4"
+        mediaType="video"
+        poster="/journals/coffee/aura-solera-macaceration.jpg"
+        alt="Cherries in a Solera tank — carry-forward from one batch into the next, the microbial mother culture working"
+        caption="Solera Maceration — the mother culture, carried forward"
+      />
+
       <TwoCol id="lab" heading="What we are building.">
         <p className="p1">
           The on-estate lab tests every lot. Brix per zone on harvest day,

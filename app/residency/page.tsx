@@ -181,6 +181,12 @@ export default function ResidencyPage() {
         will still be recognisable in a HUNDRED YEARS.
       </PullQuote>
 
+      <Placeholder
+        src="/journals/residency/aura-monastic-polymath-3.jpg"
+        alt="A practitioner at work in a quiet studio — the residency's posture of attention"
+        caption="Sit close to someone who has been listening to one craft for thirty years."
+      />
+
       <TwoCol heading="Teachers in residence.">
         <p className="p1">
           The teachers are not visiting lecturers. They are people whose

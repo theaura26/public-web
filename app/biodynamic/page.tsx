@@ -91,6 +91,18 @@ export default function BiodynamicPage() {
         </p>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/biodynamic/aura-b500.jpg"
+        alt="BD 500 — horn manure — exhumed in spring, the cow-dung concentrate of soil-building biology"
+        caption="BD 500 — horn manure, the soil-building concentrate"
+      />
+
+      <Placeholder
+        src="/journals/biodynamic/aura-cow-dung.jpg"
+        alt="Fresh Malnad Gidda dung — the raw material for every biodynamic preparation on the estate"
+        caption="Fresh dung — the raw material for every BD preparation"
+      />
+
       <TwoCol id="vedic" heading="The Vedic system.">
         <p className="p1">
           Alongside the Steiner preparations, the estate prepares and applies a

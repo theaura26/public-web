@@ -161,6 +161,48 @@ export default function WisdomPage() {
         </p>
       </TwoCol>
 
+      <TwoCol id="three-intelligences" heading="Three intelligences.">
+        <p className="p1">
+          Natural. Human. Machine. The estate is held by all three. Each
+          one is a kind of attention; each one has its own time signature.
+          The discipline is to let each do what it does best.
+        </p>
+        <p className="p2">
+          Natural intelligence is the oldest — the canopy, the herd, the
+          microbial culture, the rain. Human intelligence is the carrier —
+          attention, craft, restraint, judgment. Machine intelligence is
+          the youngest — the sensor, the log, the model that learns the
+          land&apos;s rhythm from the data we keep.
+        </p>
+      </TwoCol>
+
+      <DataGrid cols={3} standalone>
+        <DataCard
+          img="/journals/wisdom/aura-natural-intellgience.jpg"
+          alt="Canopy of the four-story polyculture at Sampigelkhan Estate — natural intelligence at work"
+          value="Natural."
+        >
+          The oldest. The land&apos;s own rhythm — canopy, microbe, herd,
+          monsoon — read across decades, not quarters.
+        </DataCard>
+        <DataCard
+          img="/journals/wisdom/aura-human-intelligence.jpg"
+          alt="Hands on a clay vessel — human craft, the attention that holds the work"
+          value="Human."
+        >
+          The carrier. Attention as a moral choice. Craft, restraint, and
+          judgment that no algorithm replaces.
+        </DataCard>
+        <DataCard
+          img="/journals/wisdom/aura-machine-intelligence.jpg"
+          alt="Field sensor on a coffee block — machine intelligence learning the estate's signal over time"
+          value="Machine."
+        >
+          The youngest. Sensors, logs, and a Mudigere-native model that
+          learns the land&apos;s signal because we keep the record.
+        </DataCard>
+      </DataGrid>
+
       <ScrollHighlight>
         {`Choose depth over speed.
          Care over convenience.

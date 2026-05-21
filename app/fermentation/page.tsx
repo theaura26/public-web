@@ -116,6 +116,12 @@ export default function FermentationPage() {
         caption="Coffee flowers — the beginning of every lot"
       />
 
+      <Placeholder
+        src="/journals/fermentation/aura-experimental-anaerobic.jpg"
+        alt="Sealed steel tanks for experimental anaerobic ferments — pH and temperature logged hour by hour"
+        caption="Experimental anaerobic — sealed, logged, deliberate"
+      />
+
       <TwoCol id="pepper" heading="Pepper fermentation.">
         <p className="p1">
           Black pepper climbs the areca palms in the mid-canopy. It has its own
@@ -127,6 +133,20 @@ export default function FermentationPage() {
           inputs, and the system must ensure their timing does not conflict.
         </p>
       </TwoCol>
+
+      <Placeholder
+        src="/journals/fermentation/aura-pepper.mp4"
+        mediaType="video"
+        poster="/journals/fermentation/aura-pepper.jpg"
+        alt="Black pepper berries on the vine — Malabar pepper climbing an areca palm in the mid-canopy"
+        caption="Malabar pepper on the vine — mid-canopy companion to the areca palm"
+      />
+
+      <Placeholder
+        src="/journals/fermentation/aura-water-pepper.jpg"
+        alt="Black peppercorns retting in water — the first stage of pepper fermentation"
+        caption="Water retting — the first stage of pepper fermentation"
+      />
 
       <TwoCol id="dung" heading="Cow dung fermentation.">
         <p className="p1">

@@ -1247,10 +1247,12 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
             <p className="label" style={{ color: '#ffffff', margin: 0 }}>{s.region}</p>
             <p className="label" style={{ color: '#ffffff', margin: 0 }}>{s.coords}</p>
           </div>
-          {/* The Explore CTA is the only hit area for the whole panel. */}
+          {/* Explore CTA — the whole panel is now clickable, but the
+              CTA stays as a visible affordance. stopPropagation so we
+              don't double-fire when the user clicks the button. */}
           <button
             type="button"
-            onClick={onExplore}
+            onClick={(e) => { e.stopPropagation(); onExplore?.() }}
             aria-label={`Open ${s.name} details`}
             className="label"
             style={{
@@ -1436,7 +1438,21 @@ function SanctuaryStackPanel({ s, z, onClick }: { s: Sanctuary; z: number; onCli
       <div ref={blurRef} style={{ position: 'absolute', inset: 0, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
       <div
         className="sanctuary-clickable"
-        style={{ position: 'absolute', inset: 0 }}
+        role={clickable ? 'button' : undefined}
+        tabIndex={clickable ? 0 : undefined}
+        aria-label={clickable ? `Open ${s.name} details` : undefined}
+        onClick={clickable ? onClick : undefined}
+        onKeyDown={clickable ? (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            onClick?.()
+          }
+        } : undefined}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          cursor: clickable ? 'pointer' : 'default',
+        }}
       >
         <SanctuaryContent s={s} large onExplore={clickable ? onClick : undefined} />
       </div>

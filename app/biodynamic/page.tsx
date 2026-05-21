@@ -46,7 +46,6 @@ export default function BiodynamicPage() {
       <Placeholder
         src="/journals/biodynamic/aura-biodynamic.mp4"
         mediaType="video"
-        poster="/journals/biodynamic/aura-biodynamic.jpg"
         alt="The estate working as one organism — biodynamic practice across canopy, herd, and soil"
         caption="The estate as one organism — biodynamic, top to bottom"
       />

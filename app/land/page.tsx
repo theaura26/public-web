@@ -206,12 +206,6 @@ export default function LandPage() {
         </p>
       </OneCol>
 
-      <Placeholder
-        src="/journals/land/aura-the-land.jpg"
-        alt="The land at scale — Sampigelkhan held inside the Western Ghats"
-        caption="The land — held inside the Ghats"
-      />
-
       <Continue currentHref="/land" />
     </>
   )

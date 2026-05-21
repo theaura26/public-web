@@ -248,12 +248,6 @@ export default function CoffeePage() {
         </p>
       </OneCol>
 
-      <Placeholder
-        src="/journals/coffee/aura-our-coffee-story.jpg"
-        alt="The story carried in a single cup — Aura's coffee, six lots from one harvest"
-        caption="The story carried in a single cup"
-      />
-
       <Continue currentHref="/coffee" />
     </>
   )

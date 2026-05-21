@@ -212,12 +212,6 @@ export default function LivingSystemsPage() {
          The forest is the farm.`}
       </ScrollHighlight>
 
-      <Placeholder
-        src="/journals/living-systems/aura-living-systems.jpg"
-        alt="The estate read as one living system — four canopy stories from above"
-        caption="A living system — four stories, one organism"
-      />
-
       <OneCol id="data-store" heading="Where the data lives.">
         <p className="p1">
           The granular data — every sensor reading, every field action, every BD

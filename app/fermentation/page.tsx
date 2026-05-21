@@ -234,12 +234,6 @@ export default function FermentationPage() {
         </p>
       </OneCol>
 
-      <Placeholder
-        src="/journals/fermentation/aura-fermentation.jpg"
-        alt="The slow work in the dark — fermentation as the estate&apos;s shared discipline"
-        caption="Fermentation — the slow work, in the dark"
-      />
-
       <Continue currentHref="/fermentation" />
     </>
   )

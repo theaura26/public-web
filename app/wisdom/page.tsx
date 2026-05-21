@@ -113,12 +113,6 @@ export default function WisdomPage() {
         </DataGrid>
       </TwoCol>
 
-      <Placeholder
-        src="/journals/wisdom/aura-moral-spine.jpg"
-        alt="Field hands gathering after work, prayer and incense lit at the estate at dusk"
-        caption="The team after hours — communal."
-      />
-
       <TwoCol id="field" heading="On the field.">
         <p className="p1">
           The spine is not abstract. It lives in six rules, written in English

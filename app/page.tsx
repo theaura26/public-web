@@ -225,55 +225,6 @@ function HeroVideo({ onWatch }: { onWatch: () => void }) {
           >
             Land. Time. Practice.
           </p>
-          <button
-            type="button"
-            onClick={onWatch}
-            aria-label="Enter the ecosystem — watch the Aura film"
-            className="hero-watch"
-            style={{
-              pointerEvents: 'auto',
-              background: 'transparent',
-              border: 'none',
-              padding: 0,
-              color: '#fff',
-              fontFamily: 'var(--font-mono)',
-              fontSize: 11,
-              fontWeight: 400,
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 10,
-              textShadow: '0 1px 6px rgba(0, 0, 0, 0.45)',
-            }}
-          >
-            <span
-              aria-hidden
-              className="hero-watch__dot"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 22,
-                height: 22,
-                borderRadius: '50%',
-                border: '1px solid rgba(255,255,255,0.7)',
-                transition: 'background var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out)',
-              }}
-            >
-              <span
-                style={{
-                  width: 0,
-                  height: 0,
-                  marginLeft: 2,
-                  borderLeft: '5px solid #fff',
-                  borderTop: '3.5px solid transparent',
-                  borderBottom: '3.5px solid transparent',
-                }}
-              />
-            </span>
-            Enter the ecosystem
-          </button>
         </div>
       </div>
       <style jsx>{`

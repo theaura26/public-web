@@ -56,7 +56,10 @@ export default function LandPage() {
       </TwoCol>
 
       <Placeholder
-        type="Looking up · canopy at noon"
+        src="/journals/land/aura-canopy-noon.mp4"
+        mediaType="video"
+        poster="/journals/land/aura-canopy-noon.jpg"
+        alt="Looking up at the four-story canopy at noon — silver oak, Albizzia, jackfruit, fig"
         caption="Four-story canopy — Sampigelkhan Estate"
       />
 
@@ -126,11 +129,19 @@ export default function LandPage() {
       </TwoCol>
 
       <DataGrid cols={2} standalone>
-        <DataCard type="Landscape · Mudigere monsoon canopy" value="Mudigere · Karnataka.">
+        <DataCard
+          img="/journals/land/aura-mudigere.jpg"
+          alt="Aerial of Sampigelkhan Estate in Mudigere — four-story shade-grown canopy under monsoon cloud"
+          value="Mudigere · Karnataka."
+        >
           150 acres, 3,600 ft, laterite soil, UNESCO biodiversity zone. Four-
           story polyculture. 52 Malnad Gidda cattle. The agricultural engine.
         </DataCard>
-        <DataCard type="Landscape · Ohara autumn maple" value="Ohara · Kyoto.">
+        <DataCard
+          img="/journals/land/aura-ohara.jpg"
+          alt="Restored Japanese house in Ohara, Kyoto — autumn maple over a thirty-year-old zen garden"
+          value="Ohara · Kyoto."
+        >
           ~1,200 tsubo, 1,099 ft, 7 °C – 28 °C. Seven buildings. A
           thirty-year-old garden. A teahouse with a hearth. The sanctuary
           counterpart.

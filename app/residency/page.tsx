@@ -108,7 +108,8 @@ export default function ResidencyPage() {
       </TwoCol>
 
       <Placeholder
-        type="Detail · hands on material"
+        src="/journals/residency/aura-monastic-polymath-2.jpg"
+        alt="Hands at work on material in the residency studio — discipline ambiguous, Mudigere or Ohara"
         caption="A maker mid-task. India or Japan ambiguous."
       />
 
@@ -214,7 +215,10 @@ export default function ResidencyPage() {
       </TwoCol>
 
       <Placeholder
-        type="Detail · long tables, lantern light"
+        src="/journals/residency/aura-monastic-polymath-4.mp4"
+        mediaType="video"
+        poster="/journals/residency/aura-monastic-polymath-4.jpg"
+        alt="Long tables at lantern light under the canopy silhouette — the Gathering at Bhoomi Festival"
         caption="The silhouette of the canopy. Slow shutter."
       />
 

@@ -114,7 +114,8 @@ export default function WisdomPage() {
       </TwoCol>
 
       <Placeholder
-        type="Field · workers at dusk"
+        src="/journals/wisdom/aura-moral-spine.jpg"
+        alt="Field hands gathering after work, prayer and incense lit at the estate at dusk"
         caption="The team after hours — communal."
       />
 

@@ -157,7 +157,8 @@ export default function BiodynamicPage() {
       </TwoCol>
 
       <Placeholder
-        type="Portrait · young Gidda calves"
+        src="/journals/biodynamic/aura-young-calves.jpg"
+        alt="Two young Malnad Gidda calves in the pen — indigenous Karnataka breed adapted to the Western Ghats"
         caption="Young Gidda calves — the next generation"
       />
 

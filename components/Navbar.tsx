@@ -31,14 +31,14 @@ type Article = {
 
 const ARTICLES: Article[] = [
   // Active journals — listed first, in the order the user wants them.
-  { href: '/wisdom',         title: 'Moral Spine',                        size: 'lg', img: '/aura-wisdom.jpg' },
-  { href: '/living-systems', title: 'Living Systems',                     size: 'sm', img: '/aura-living-systems.jpg' },
-  { href: '/coffee',         title: 'Our Coffee Story',                   size: 'lg', img: '/aura-coffee.jpg' },
-  { href: '/rta',            title: 'Rta',                                size: 'sm', img: '/aura-rta.jpg' },
-  { href: '/fermentation',   title: 'Fermentation',                       size: 'lg', img: '/aura-fermentation.jpg' },
-  { href: '/land',           title: 'The Land',                           size: 'sm', img: '/aura-land.jpg' },
-  { href: '/biodynamic',     title: 'Biodynamic',                         size: 'lg', img: '/aura-biodynamic.jpg' },
-  { href: '/residency',      title: 'Monastic polymaths. Crazy misfits.', size: 'lg', img: '/aura-residency.jpg' },
+  { href: '/wisdom',         title: 'Moral Spine',                        size: 'lg', img: '/journals/wisdom/aura-moral-spine.jpg' },
+  { href: '/living-systems', title: 'Living Systems',                     size: 'sm', img: '/journals/living-systems/aura-living-systems.jpg' },
+  { href: '/coffee',         title: 'Our Coffee Story',                   size: 'lg', img: '/journals/coffee/aura-our-coffee-story.jpg' },
+  { href: '/rta',            title: 'Rta',                                size: 'sm', img: '/journals/rta/aura-rta.jpg' },
+  { href: '/fermentation',   title: 'Fermentation',                       size: 'lg', img: '/journals/fermentation/aura-fermentation.jpg' },
+  { href: '/land',           title: 'The Land',                           size: 'sm', img: '/journals/land/aura-the-land.jpg' },
+  { href: '/biodynamic',     title: 'Biodynamic',                         size: 'lg', img: '/journals/biodynamic/aura-biodynamic.jpg', video: '/journals/biodynamic/aura-biodynamic.mp4' },
+  { href: '/residency',      title: 'Monastic polymaths. Crazy misfits.', size: 'lg', img: '/journals/residency/aura-monastic-polymath.jpg' },
   // Coming-soon — render at the tail of the feed.
   { href: '/idea',           title: 'The 1000 Year Idea',                 size: 'sm', img: '/aura-idea.jpg',          comingSoon: true },
   { href: '/sanctuary',      title: 'Guests of the mountain.',            size: 'lg', img: '/aura-sanctuary.jpg', video: '/aura-sanctuary.mp4', comingSoon: true },

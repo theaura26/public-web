@@ -109,36 +109,60 @@ export default function CoffeePage() {
       </TwoCol>
 
       <DataGrid cols={3} standalone>
-        <DataCard type="Process · sealed tanks" value="Lot 001 — Anaerobic Natural.">
+        <DataCard
+          img="/journals/coffee/aura-anaerobic-natural.jpg"
+          alt="Sealed stainless-steel ferment tanks — Anaerobic Natural lot at Sampigelkhan Estate"
+          value="Lot 001 — Anaerobic Natural."
+        >
           11,984 kg harvest, 1,151 kg immature removed, 878 kg floats. 48 hr
           sealed ferment. Water <Term tip="Total dissolved solids. Mineral load in the ferment water, in parts per million.">TDS</Term> 29.28 ppm. 22 days drying on raised beds.
           The simplest method — where the cherry&rsquo;s own microbial
           environment does the work.
         </DataCard>
-        <DataCard type="Process · partial dry, then ferment" value="Lot 002 — Dry Osmosis.">
+        <DataCard
+          img="/journals/coffee/aura-dry-osmosis.jpg"
+          alt="Cherries dried to 45% moisture before fermentation — Dry Osmosis lot"
+          value="Lot 002 — Dry Osmosis."
+        >
           8,726 kg harvest, 229 kg immature (lowest ratio, exceptional
           selection), 720 kg floats. <Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term> 19.55%. Dried to 45% moisture, then
           48 hr anaerobic. 25 days drying. Notes: blueberry, fig, raisin.
         </DataCard>
-        <DataCard type="Detail · sticky mucilage on parchment" value="Lot 003 — Red Honey · &ldquo;Liquid Gold&rdquo;.">
+        <DataCard
+          img="/journals/coffee/aura-liquid-gold.jpg"
+          alt="Red Honey lot — sticky mucilage on parchment, named Liquid Gold"
+          value={<>Lot 003 — Red Honey &middot; &ldquo;Liquid Gold&rdquo;.</>}
+        >
           6,715 kg harvest, 880 kg immature, 511 kg floats. Brix 19.25%. 48 hr
           anaerobic, pulped with mucilage on. 5 days thick drying, then 25
           days thin. Named &ldquo;Liquid Gold&rdquo; by Boojee Mumbai. Notes:
           honey, caramel, nutty.
         </DataCard>
-        <DataCard type="Detail · banana leaves layering" value="Lot 004 — Banana Wash.">
+        <DataCard
+          img="/journals/coffee/aura-banana-wash.jpg"
+          alt="Banana leaves layered over fermenting cherries — Banana Wash lot"
+          value="Lot 004 — Banana Wash."
+        >
           8,086 kg harvest, 1,241 kg immature, 673 kg floats. Brix 19.25%. 24 hr
           anaerobic, then pulped and layered with banana leaves for 48 hr more.
           The leaves contribute wild yeasts and a micro-environment. The most
           distinctly Indian lot.
         </DataCard>
-        <DataCard type="Process · solera tanks, transfer lines" value="Lot 005 — Solera Maceration · Flagship.">
+        <DataCard
+          img="/journals/coffee/aura-solera-macaceration.jpg"
+          alt="Solera Maceration tanks carrying microbial culture forward across batches"
+          value="Lot 005 — Solera Maceration · Flagship."
+        >
           770 kg harvest, 179 kg immature, 80 kg floats. Brix 18%. Water TDS
           42 ppm. Three-day initial ferment, 50% carry-forward into freshly
           harvested cherries — the <Term tip="Sherry-making technique: carry a fraction of the previous batch forward as a live mother culture.">Solera</Term> carry-forward. Alternating two-day ferment and rest. Day-night
           drying to 12% moisture. The flagship.
         </DataCard>
-        <DataCard type="Detail · hand-washed beans" value="Lot 006 — Solera Wash · Rarest.">
+        <DataCard
+          img="/journals/coffee/aura-solera-wash.jpg"
+          alt="Hand-washed beans on raised beds — Solera Wash, the rarest lot"
+          value="Lot 006 — Solera Wash · Rarest."
+        >
           620 kg harvest, 146 kg immature, 75 kg floats. Brix 23% — the highest
           of any lot. 24 hr ferment, three-day soak, hand-washed, raised-bed
           dry. Highest sugar, then everything non-essential stripped away.
@@ -151,7 +175,8 @@ export default function CoffeePage() {
       </PullQuote>
 
       <Placeholder
-        type="Process · screen grading"
+        src="/journals/coffee/aura-coffee-grading.jpg"
+        alt="Hands sorting green coffee for screen size and defect — SCA grading protocol on the estate"
         caption="Screen grading — defect analysis per SCA protocol"
       />
 

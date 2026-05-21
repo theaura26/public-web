@@ -93,7 +93,10 @@ export default function RtaPage() {
       </TwoCol>
 
       <Placeholder
-        type="Silhouette · worker climbing tree at dusk"
+        src="/journals/rta/aura-dusk-climb.mp4"
+        mediaType="video"
+        poster="/journals/rta/aura-dusk-climb.jpg"
+        alt="Worker climbing an areca palm at dusk against a fading sky — Sampigelkhan Estate"
         caption="Patience — the right time, not the convenient time"
       />
 

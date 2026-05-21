@@ -68,23 +68,39 @@ export default function LivingSystemsPage() {
       </TwoCol>
 
       <DataGrid cols={4} standalone>
-        <DataCard type="Looking up · canopy" value="01 — Canopy.">
+        <DataCard
+          img="/journals/living-systems/aura-canopy.jpg"
+          alt="Looking up through the four-story canopy at Sampigelkhan Estate — silver oak and jackfruit"
+          value="01 — Canopy."
+        >
           Silver oak, Albizzia, jackfruit, fig, native hardwoods. Target cover
           60–80% per block. Blocks with 65–75% canopy produce measurably higher
           Brix in the coffee beneath them.
         </DataCard>
-        <DataCard type="Mid-canopy · areca with pepper" value="02 — Mid-canopy.">
+        <DataCard
+          img="/journals/living-systems/aura-mid-canopy.jpg"
+          alt="Arecanut palms rising through the shade with black pepper vines climbing them"
+          value="02 — Mid-canopy."
+        >
           Arecanut palms rise through the shade. Black pepper climbs them —
           each areca palm simultaneously a trellis and a companion. If an areca
           column stresses, the pepper vine loses vigour within six to eight
           weeks.
         </DataCard>
-        <DataCard type="Coffee under shade" value="03 — Primary crop.">
+        <DataCard
+          img="/journals/living-systems/aura-primary-crop.jpg"
+          alt="Arabica Sln.9 and Sln.795 coffee growing under the four-story canopy"
+          value="03 — Primary crop."
+        >
           Arabica <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>. Thirty-five acres of tea, in organic
           transition targeting 2027. Every input logged against the transition
           clock. A single prohibited substance resets it.
         </DataCard>
-        <DataCard type="Ground · understorey, hive" value="04 — Understorey.">
+        <DataCard
+          img="/journals/living-systems/aura-understorey.jpg"
+          alt="Cardamom, cover crops and beehives on the forest floor — the understorey layer"
+          value="04 — Understorey."
+        >
           Cardamom, cacao, avocado, cover crops, beehives, chickens. Hives
           connect the flowering seasons across every layer. When activity drops
           during flowering, it predicts lower cherry set four to six weeks
@@ -93,12 +109,18 @@ export default function LivingSystemsPage() {
       </DataGrid>
 
       <Placeholder
-        type="Process · areca harvest"
-        caption="Mid-canopy — areca palm harvest"
+        src="/journals/biodynamic/aura-bee-video.mp4"
+        mediaType="video"
+        poster="/journals/biodynamic/aura-bee-video.jpg"
+        alt="A honeybee working a flower head — the hives that connect the four layers' flowering seasons"
+        caption="Hives — the connective signal across every layer"
       />
 
       <Placeholder
-        type="Portrait · indigenous breed"
+        src="/journals/living-systems/aura-cow-eye.mp4"
+        mediaType="video"
+        poster="/journals/living-systems/aura-cow-eye.jpg"
+        alt="Close-up of a Malnad Gidda's eye — the indigenous Karnataka breed at the heart of the soil system"
         caption="52 Malnad Gidda — biological infrastructure"
       />
 

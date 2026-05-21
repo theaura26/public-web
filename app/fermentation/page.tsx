@@ -111,7 +111,8 @@ export default function FermentationPage() {
       </TwoCol>
 
       <Placeholder
-        type="Detail · coffee flowers in season"
+        src="/journals/fermentation/aura-coffee-flowers.jpg"
+        alt="White coffee blossom on a Sln.9 branch — the start of every cherry, every lot"
         caption="Coffee flowers — the beginning of every lot"
       />
 
@@ -176,7 +177,8 @@ export default function FermentationPage() {
       </PullQuote>
 
       <Placeholder
-        type="Detail · hands cracking a cured horn"
+        src="/journals/fermentation/aura-horn.jpg"
+        alt="A cured cow horn cracked open to reveal BD 500 — biodynamic preparation 500 made from cow dung"
         caption="A gloved hand cracking a cured horn to reveal BD 500"
       />
 

@@ -22,7 +22,7 @@ export default function RtaPage() {
         caption="Ritual timing — the estate at dusk"
       />
 
-      <TwoCol heading="Right time. Right action. Everything else is noise.">
+      <OneCol heading="Right time. Right action. Everything else is noise.">
         <p className="p1">
           A Vedic principle that governs how every decision at Aura is made —
           from when to spray, to when to seal a fermentation tank, to when to
@@ -39,7 +39,7 @@ export default function RtaPage() {
           At Aura, <Rta /> is not a philosophy posted on a wall. It is the
           operating system.
         </p>
-      </TwoCol>
+      </OneCol>
 
       <PullQuote>
         INTELLIGENCE is alignment with TIMING.

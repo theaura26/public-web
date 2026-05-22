@@ -178,7 +178,14 @@ export default function ReasonPage() {
           <Reveal>
             <div className="section-w" style={{ paddingTop: isAgent ? 24 : 'clamp(48px, 8vh, 80px)', paddingBottom: isAgent ? 24 : 'clamp(48px, 8vh, 80px)' }}>
               <div style={{ maxWidth: 640 }}>
-                <h2 style={{ marginBottom: 24 }}>I am not a planter. I am not a biologist. I am not a scientist.</h2>
+                {/* Intentionally three lines: each "I am not…" lands as
+                    its own beat so the rhetorical refusal builds before
+                    the affirmative "I am an entrepreneur" body opens. */}
+                <h2 style={{ marginBottom: 24 }}>
+                  I am not a planter.<br />
+                  I am not a biologist.<br />
+                  I am not a scientist.
+                </h2>
                 <div className="p2" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                   <p>I am an entrepreneur. Born in India. Moved to Singapore twenty-four years ago. Built a career in the world of speed and cities and deals.</p>
                   <p>But my way of unwinding was always the same.</p>

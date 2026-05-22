@@ -1,252 +1,213 @@
-'use client'
-
 import {
-  ArticleHero,
-  Section,
+  HeroBanner,
+  OneCol,
   TwoCol,
-  P,
   Placeholder,
   DataGrid,
   DataCard,
   PullQuote,
-  PullStat,
   Continue,
+  ScrollHighlight,
   Rta,
+  Term,
 } from '@/components/article/Article'
 
 export default function RtaPage() {
   return (
     <>
-      <ArticleHero
-        title={<Rta />}
-        subline="Right time. Right action. The oldest Sanskrit word for the order of things — and the most practical principle on the farm."
-        toc={[
-          { q: 'What is the principle?', href: '#principle' },
-          { q: 'What does fifteen minutes of silence teach?', href: '#raya' },
-          { q: 'How does alignment work?', href: '#method' },
-          { q: 'What are RTA Labs?', href: '#labs' },
-          { q: 'What is effortless action?', href: '#effortless' },
-        ]}
+      <HeroBanner
+        currentHref="/rta"
+        title="Rta"
+        type="Ritual · prayer and incense at dusk"
+        caption="Ritual timing — the estate at dusk"
       />
 
-      <Section id="principle" heading="The Principle">
-        <P>
-          <Rta /> is the cosmic order that keeps the seasons turning, the rivers running, the cow
-          lying down before the monsoon. It is not a rule to be obeyed. It is a grain to be
-          read, and then moved with.
-        </P>
-        <P>
-          Western industry is trained on force — more inputs, more hours, more volume. <Rta />
-          {' '}names the other way. Wait for the moment when the least effort yields the most life.
-          Stir at dusk, not noon. Prune on the waning moon. Press the grape when the sugar is
-          ready, not when the calendar is.
-        </P>
-        <P>
-          Every serious agricultural tradition — Vedic, biodynamic, Shintō, permaculture —
-          converges here. The language differs; the instruction is the same. Alignment, not
-          override.
-        </P>
-      </Section>
-
-      <Placeholder
-        label="Image · BD 500 stirred in copper vessel, dusk"
-        note="Suggested: slow vortex in BD 500 stirring barrel at blue hour, lit by lantern. Motion blur on the stick. 16:9 video ideal."
-      />
-
-      <PullQuote>When timing is right, the action is effortless.</PullQuote>
-
-      <Section id="raya" heading="Fifteen Minutes of Silence">
-        <P>
-          At Raya, a small restaurant in Phuket, the meal begins with fifteen minutes of
-          silence. No menu. No order. No speaking. Guests sit at a long table and the senses
-          start to arrive one at a time — the ice in the glass, the neighbour&apos;s breath,
-          the oil warming in the kitchen, the pepper in the air. Only then does food come.
-        </P>
-        <P>
-          It is a small piece of theatre with a serious point. The palate is not ready when the
-          body is not ready. The body is not ready when the room is moving too fast. Most of the
-          taste of a meal is the pause before it. <Rta /> is a pause before an action, held
-          long enough that the action can land.
-        </P>
-        <P>
-          In Mudigere the pause is dusk, the hour the earth inhales and the foliar spray can be
-          received. In Ohara the pause is the tea at four, the only appointment of a week of
-          silence. In the kitchen the pause is the menu waiting for what came in at dawn. The
-          scale differs. The instruction is the same.
-        </P>
-      </Section>
+      <OneCol heading="Right time. Right action. Everything else is noise.">
+        <p className="p1">
+          A Vedic principle that governs how every decision at Aura is made —
+          from when to spray, to when to seal a fermentation tank, to when to
+          stay still.
+        </p>
+        <p className="p2">
+          <Rta /> is a Sanskrit word. Natural order — the rhythm that governs
+          seasons, tides, germination, decay, and renewal. It predates
+          organised religion. It is observation: the world works on timing,
+          and intelligence is alignment with that timing.
+        </p>
+        <p className="p2">
+          At Aura, <Rta /> is the operating system.
+        </p>
+      </OneCol>
 
       <PullQuote>
-        Timing is a material.
+        INTELLIGENCE is alignment with TIMING.
       </PullQuote>
-
-      <Section heading="Five Moments of RTA">
-        <P>
-          <Rta /> is not abstract. It is the difference between coffee that tastes of its hill and
-          coffee that tastes of nothing in particular. Five concrete cases from the working
-          farm.
-        </P>
-        <DataGrid cols={3}>
-          <DataCard label="Preparation" value="BD 500 · at dusk">
-            Cow-horn manure is stirred for one hour, changing direction every minute, as the
-            light softens. Stirred at noon it is inert. Stirred at dusk it is alive. The
-            microbiology agrees with the clock.
-          </DataCard>
-          <DataCard label="Fermentation" value="Coffee · 36 hours">
-            The anaerobic window closes around 36 hours, sealed at the cool side of the
-            ambient. An hour early, flat. An hour late, vinegar. The cherry decides; the
-            processor listens.
-          </DataCard>
-          <DataCard label="Drying" value="Clear days only">
-            Beans are moved to the patio on clear mornings and withdrawn before the evening
-            humidity rises. We do not dry against the weather. We dry with it, and accept the
-            days we cannot.
-          </DataCard>
-          <DataCard label="Garden" value="Sowing by moon">
-            Root crops on the descending moon, leaf crops on the ascending, flowers and fruits
-            by their own nakshatra. The panchanga is pinned in the field shed alongside the
-            weather radar.
-          </DataCard>
-          <DataCard label="Hospitality" value="Asa · Niwa">
-            In Ōhara the day is cut clean — Asa for morning work and light meals, Niwa for
-            evening table and quiet. Guests eat when the garden is ready, not when the clock
-            demands.
-          </DataCard>
-          <DataCard label="Rest" value="The cow first">
-            The herd dictates the morning. If the Malnad Gidda are not ready, the milking is
-            not ready, and the kitchen waits. <Rta /> begins with the animal, not the schedule.
-          </DataCard>
-        </DataGrid>
-      </Section>
-
-      {/* eyebrow was: "Method" */}
-      <TwoCol id="method" heading="Alignment over force.">
-        <P>
-          Force produces output. Alignment produces quality. The gap between them is invisible
-          in a quarterly report and unmistakable on the tongue, in the nose, under the feet.
-        </P>
-        <P>
-          <Rta /> is therefore an economic principle as much as a spiritual one. It determines which
-          coffee lots we can name, which harvests earn appellation, and which rooms a guest
-          wants to return to. The farm pays its bills on right-timing.
-        </P>
-      </TwoCol>
-
-      <PullStat value="36" label="Hours · anaerobic ferment" sub="Coffee Lot 002, Dry Osmosis" />
-
-      <Section heading="A Vedic list, a working clock.">
-        <P>
-          Every serious agricultural tradition converges on the same instruction, spoken in
-          different tongues. Here is how <Rta /> shows up at Mudigere across a single working
-          week — not as philosophy, as timetable.
-        </P>
-        <DataGrid cols={2}>
-          <DataCard label="Dawn · Herd" value="The cow decides">
-            Milking begins only when the Malnad Gidda are ready. The kitchen receives milk
-            warmed by the animal, not the machine.
-          </DataCard>
-          <DataCard label="Morning · Soil" value="Compost turned">
-            Matka Khad is checked, Jeevamrit batches topped. Microbes have been working through
-            the night. The pile tells us its temperature.
-          </DataCard>
-          <DataCard label="Noon · Rest" value="The body waits">
-            Nothing biologically alive is stirred, sprayed, or planted at noon. The earth is
-            exhaling. We are too.
-          </DataCard>
-          <DataCard label="Dusk · Spray" value="The earth inhales">
-            BD 500, Jeevamrit foliar, buttermilk-coconut-magnesium — applied only when the light
-            softens and the stomata open. An hour early, wasted. An hour late, wasted.
-          </DataCard>
-          <DataCard label="Night · Ferment" value="36-hour window">
-            Coffee cherries begin their anaerobic window. The tank is watched, not managed. The
-            cherry decides. The processor listens.
-          </DataCard>
-          <DataCard label="Waning moon · Prune">
-            Root crops on the descending moon. Leaf crops on the ascending. Flowers and fruit by
-            their own nakshatra. The panchanga hangs in the shed alongside the weather radar.
-          </DataCard>
-        </DataGrid>
-      </Section>
-
-      <Section id="labs" heading="RTA Labs">
-        <P>
-          <Rta /> Labs is the quiet hardware layer that makes natural systems legible. Soil
-          moisture, leaf temperature, tank CO₂, fermentation pH, barn humidity, sky clarity —
-          each signal sampled and surfaced to the person on the ground.
-        </P>
-        <P>
-          The labs do not decide. They translate. The farmer still reads the weather; the sensor
-          confirms, or disagrees, and the conversation produces a better decision than either
-          could alone. This is invisible tech in its exact sense: present where it is useful,
-          absent where it is not.
-        </P>
-        <P>
-          Every reading is provenance. The cherry-to-cup record begins here, in the root zone,
-          on the date and hour the rain arrived. The blockchain is kept downstream; the truth is
-          kept in the dirt.
-        </P>
-        <P>
-          When you walk into the sanctuary, you do not feel tech. That is the test. A sensor
-          that announces itself has failed. A reading that requires a screen to understand is
-          half a reading. <Rta /> Labs is built so the data is surfaced where the hands already
-          are — in the shed, on the wall, in the palm of the field lead who knew before the
-          sensor did.
-        </P>
-      </Section>
 
       <Placeholder
-        label="Image · sensor buried at root zone of coffee plant"
-        note="Suggested: macro shot of a small soil probe nestled in leaf litter beneath a coffee plant; wet soil, early light."
+        src="/journals/rta/aura-dusk-climb.mp4"
+        mediaType="video"
+        poster="/journals/rta/aura-dusk-climb.jpg"
+        alt="Worker climbing an areca palm at dusk against a fading sky — Sampigelkhan Estate"
+        caption="Patience — the right time, not the convenient time"
       />
 
-      <PullQuote attribution="Arvind">
-        Invisible tech. That&apos;s the future for us.
+      <TwoCol id="field" heading="In the field.">
+        <p className="p1">
+          <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure — is applied at dusk, when the earth is inhaling.
+          Evening application allows the preparation to work with the
+          soil&rsquo;s natural absorption cycle.
+        </p>
+        <p className="p2">
+          Every BD application is timestamped to the minute, tagged with the
+          lunar calendar day, the weather at the moment of spraying, the field
+          worker who applied it, the dung batch it came from.
+        </p>
+        <p className="p2">
+          A spray logged at 06:12 carries more integrity than a weekly report
+          written on Friday. The data does not say &ldquo;we sprayed this
+          week.&rdquo; It says &ldquo;<Term tip="Horn silica. Ground quartz buried over summer, sprayed as fine mist for light metabolism.">BD 501</Term> was applied to Block 07 at 06:14 on
+          a waning moon, humidity 78%, by Raju, using dung batch G-03.&rdquo;
+        </p>
+        <DataGrid cols={3}>
+          <DataCard value="Timestamp.">To the minute.</DataCard>
+          <DataCard value="Lunar calendar.">Day and phase.</DataCard>
+          <DataCard value="Weather.">At moment of spray.</DataCard>
+          <DataCard value="Field worker.">Named.</DataCard>
+          <DataCard value="Dung batch.">Source ID.</DataCard>
+          <DataCard value="Buffer days.">Three per monthly schedule.</DataCard>
+        </DataGrid>
+        <p className="p2">
+          The buffer days are not slack. They are the admission that the land
+          does not operate on a spreadsheet timeline.
+        </p>
+      </TwoCol>
+
+      <TwoCol id="fermentation" heading="In fermentation.">
+        <p className="p1">
+          Lot 001 was sealed at 48 hours because the pH reached 4.2. Not
+          because 48 hours was the plan. The cherry told us when.
+        </p>
+        <p className="p2">
+          Lot 005 — the Solera Maceration — alternates between fermentation and
+          rest in two-day cycles. The rhythm is not arbitrary. It follows
+          temperature and microbial activity, reading the process in real time.
+        </p>
+        <p className="p2">
+          Drying follows a day-night rhythm: raised beds by day, breathable
+          bags by night. The bean is not forced. It is accompanied.
+        </p>
+      </TwoCol>
+
+      <TwoCol id="herd" heading="In the herd.">
+        <p className="p1">
+          Fifty-two <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle rotate through blocks timed to coffee
+          cherry development stages. The cattle enrich soil biology for the
+          next season — but only if they are in the right block at the right
+          time.
+        </p>
+        <p className="p2">
+          Too early, and the soil is compacted before root growth. Too late,
+          and the biological window closes.
+        </p>
+      </TwoCol>
+
+      <Placeholder
+        src="/journals/rta/aura-mudigere.mp4"
+        mediaType="video"
+        poster="/journals/rta/aura-mudigere.jpg"
+        alt="Mudigere valley rolling under monsoon light — the estate's rhythm read across a single day"
+        caption="Mudigere — the valley keeps its own timing"
+      />
+
+      <TwoCol id="restraint" heading="In restraint.">
+        <p className="p1">
+          <Rta /> is as much about what you do not do as what you do. Restraint
+          before intervention. Patience before process.
+        </p>
+        <p className="p2">
+          When the land signals that it is not ready — a soil that has not
+          recovered, a canopy that has not leafed out, a preparation that has
+          not matured — the answer is to wait. Not to push.
+        </p>
+        <p className="p2">
+          The seven decision filters that govern every action at Aura all point
+          to the same principle: is this the right time? Can the team execute
+          it simply? Will it age well?
+        </p>
+      </TwoCol>
+
+      <Placeholder
+        src="/journals/rta/aura-land.jpg"
+        alt="The land at the hour of decision — Sampigelkhan in the slow light before dusk"
+        caption="The land decides the hour"
+      />
+
+      <PullQuote>
+        RIGHT TIME. RIGHT ACTION. The philosophy made TECHNICAL.
       </PullQuote>
 
-      <Section id="effortless" heading="The Effortless Action">
-        <P>
-          In Vedic thought the adept is the one whose action is effortless — not because it is
-          easy, but because it is timed. The stone is dropped at the top of the arc. The note
-          is sung on the held breath. The seed is placed into soil that has just been waiting
-          for it.
-        </P>
-        <P>
-          <Rta />, then, is not a mystical add-on to the farm. It is the farm's operating principle,
-          the kitchen's, the studio's, and the residency's. The more we practice it, the less
-          of ourselves we need to put into the work — and the more the work carries itself.
-        </P>
+      <TwoCol id="labs" heading="RTA Labs.">
+        <p className="p1">
+          RTA Labs is where the field record becomes intelligence. Not a
+          generic agriculture model — a Mudigere-native model, trained on
+          this land&rsquo;s specific rhythms.
+        </p>
+        <p className="p2">
+          By 2031 the estate will hold five-plus years of four-layer
+          polyculture data — biodynamic inputs, cattle rotation, fermentation
+          outcomes, canopy health, all logged against the same clock. A
+          dataset no one else can assemble, because no one else is running
+          all four canopy stories on a single piece of land.
+        </p>
         <DataGrid cols={3}>
-          <DataCard label="Farm" value="Read the ground">
-            Soil, canopy, herd, sky.
+          <DataCard value="BD spray timing.">
+            Weather, lunar phase, and soil signals combined.
           </DataCard>
-          <DataCard label="Kitchen" value="Read the harvest">
-            Menu follows what came in at dawn.
+          <DataCard value="Fermentation prediction.">
+            Cup outcome forecast from canopy and soil inputs.
           </DataCard>
-          <DataCard label="Studio" value="Read the maker">
-            Ship when it is done, not when it is due.
+          <DataCard value="Yield forecasting.">
+            Weeks ahead, per block.
+          </DataCard>
+          <DataCard value="Intervention alerts.">
+            Before the problem is visible.
+          </DataCard>
+          <DataCard value="Training data.">
+            5+ years of four-layer polyculture.
+          </DataCard>
+          <DataCard value="Edge first.">
+            On-site, never to the cloud.
           </DataCard>
         </DataGrid>
-      </Section>
+        <p className="p2">
+          The intelligence cannot be replicated anywhere else. It requires the
+          data. The data requires the land. The land requires the practice.
+          The practice requires the patience.
+        </p>
+      </TwoCol>
 
-      <Continue
-        items={[
-          {
-            href: '/biodynamic',
-            label: 'Biodynamic',
-            description: 'BD 500–508, the preparations that live by RTA.',
-          },
-          {
-            href: '/fermentation',
-            label: 'Fermentation',
-            description: 'Lots 001–006. Where timing becomes taste.',
-          },
-          {
-            href: '/artistry',
-            label: 'Labs & Hardware',
-            description: 'The quiet sensors behind the decisions.',
-          },
-        ]}
-      />
+      <PullQuote>
+        We are not optimising for THIS SEASON. We are optimising for the
+        NEXT HUNDRED.
+      </PullQuote>
+
+      <ScrollHighlight>
+        {`Right time.
+         Right action.
+         The land decides when it is ready.
+         Intelligence is alignment with timing.`}
+      </ScrollHighlight>
+
+      <OneCol id="closing" heading="The land decides when it is ready.">
+        <p className="p1">
+          BD application at dusk. Fermentation closed by pH, not by hour. Cattle
+          rotated by cherry stage. Each is the same observation in a different
+          register: the work waits on the land, and the land is right more
+          often than we are.
+        </p>
+      </OneCol>
+
+      <Continue currentHref="/rta" />
     </>
   )
 }

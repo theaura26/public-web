@@ -2,14 +2,23 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Coffee — Six Lots, One Appellation — Aura',
+  title: 'Our Coffee Story',
   description:
-    'One hundred acres of specialty Arabica at 3,600 ft under native shade. Sln.9 and Sln.795, six wine-technique lots — Anaerobic, Appassimento, Red Honey, Banana Wash, Solera Maceration, Solera Wash. Coffee Board certified, Boojee exclusive.',
+    'Six lots, one harvest. The same Arabica Sln.9 and Sln.795 at 3,600 ft under a four-story canopy — six fermentation methods, six cups. Anaerobic Natural, Dry Osmosis, Red Honey, Banana Wash, Solera Maceration, Solera Wash.',
+  alternates: { canonical: '/coffee' },
   openGraph: {
-    title: 'Coffee — Six Lots, One Appellation',
-    description:
-      'Mudigere specialty coffee. 83.5 cupping score on the Appassimento flagship. Where precision meets patience.',
     type: 'article',
+    title: 'Our Coffee Story — Aura',
+    description:
+      'Six lots from one harvest. Terroir expressed through technique.',
+    images: ['/journals/coffee/aura-our-coffee-story.jpg'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Our Coffee Story — Aura',
+    description:
+      'Six lots from one harvest. Terroir expressed through technique.',
+    images: ['/journals/coffee/aura-our-coffee-story.jpg'],
   },
 }
 

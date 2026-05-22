@@ -1,70 +1,718 @@
 'use client'
 
 /* ═══════════════════════════════════════════════════════════════════
-   ARTICLE COMPONENTS — three canonical content blocks
+   JOURNAL KIT — the seven building blocks every journal is made from.
+   Less is more. If a journal needs something not in this list, the
+   journal is wrong, not the kit.
 
-   1. SPLIT  → <Section heading="…">…</Section>
-              two-column: heading left, body right (default)
+   1. <ArticleHero>      Title + TOC opener.
+   2. <OneCol>           Centered single-column block (heading + prose).
+   3. <TwoCol>           Heading left, body right.
+   4. <PullQuote>        Centered grotesque display quote.
+   5. <DataGrid>/<DataCard>  Responsive card grid.
+   6. <Placeholder>      Inline 16:9 hero-banner image block.
+   7. <Continue>         Auto-derived "next active journals" footer.
 
-   2. CENTER → <Section heading="…" align="center">…</Section>
-              heading centered, paragraphs left-aligned inside a 640px block
+   Plus one display utility:
+   · <ScrollHighlight>   Apple-style word-by-word reveal on scroll.
 
-   3. QUOTE  → <PullQuote attribution="…">…</PullQuote>
-              centered grotesque pull-quote, optional attribution
-
-   Anything else (DataGrid, Placeholder, PullStat, Continue, Figure)
-   is a child rendered inside one of these three blocks.
+   And one inline glyph:
+   · <Rta>               Renders "RTA" in DM Sans regardless of context.
 ═══════════════════════════════════════════════════════════════════ */
 
 import Link from 'next/link'
-import { Children, ReactNode, isValidElement, cloneElement, useEffect, useRef } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import Reveal from '@/components/RevealOnScroll'
+import { ExpandingBanner } from '@/components/ExpandingBanner'
+import { ACTIVE_JOURNALS, nextActiveJournals, type Journal } from '@/lib/journals'
 
-/** Strip a single trailing "." from any string leaf in a ReactNode tree. */
-function stripTrailingDot(node: ReactNode): ReactNode {
-  if (typeof node === 'string') return node.replace(/\.$/, '')
-  if (Array.isArray(node)) {
-    const arr = [...node]
-    for (let i = arr.length - 1; i >= 0; i--) {
-      if (arr[i] == null || arr[i] === false) continue
-      arr[i] = stripTrailingDot(arr[i])
-      return arr
-    }
-    return arr
+/* ── HeroBanner — display opener: a static, full-screen banner (100vw ×
+      100vh, no scroll animation) with the page title overlaid as a single
+      line, words justified edge-to-edge between the card rails.
+
+      Drafting state renders a grey card with a small centred `type +
+      caption` hint; once `src` is set, the card holds the photo or video
+      with a 10% black tint overlay (legibility floor) and the caption
+      pinned bottom-left. Title style is chosen *per image*: a hidden
+      canvas samples the loaded image; if it's uniformly dark we use plain
+      white text (reads cleanly against a low-key photo), otherwise we use
+      `mix-blend-mode: difference` (inverts cleanly against varied or
+      light scenes). Same logic drives the back link while it's over the
+      banner; once past the banner the back switches to var(--text). */
+export function HeroBanner({
+  title,
+  src,
+  currentHref,
+  mediaType = 'image',
+  poster,
+  caption,
+  type,
+  alt,
+}: {
+  /** Single-line title. Words spread edge-to-edge inside the banner. */
+  title: string
+  src?: string
+  /** Auto-resolves `src` (and falls back to `alt`) from the matching
+   *  entry in `lib/journals.ts`. Same prop the `<Continue>` footer uses.
+   *  Pass it on every journal page so the hero, the slide-out menu tile,
+   *  and the Continue card all share one image. */
+  currentHref?: string
+  mediaType?: 'image' | 'video'
+  poster?: string
+  /** Caption shown bottom-left on the banner (when `src` is set). */
+  caption?: string
+  /** Image-type suggestion for the banner's drafting state. */
+  type?: string
+  alt?: string
+}) {
+  // If src wasn't passed but currentHref was, derive it from the journal
+  // index — the same thumbnail the navbar and Continue cards use.
+  if (!src && currentHref) {
+    const journal = ACTIVE_JOURNALS.find(j => j.href === currentHref)
+    if (journal) src = journal.img
   }
-  if (isValidElement(node)) {
-    const children = (node.props as { children?: ReactNode }).children
-    if (children != null) {
-      return cloneElement(node, {}, stripTrailingDot(children))
+  const words = title.split(/\s+/).filter(Boolean)
+  const draftingHint = [type, caption].filter(Boolean).join(' · ')
+
+  // Pinned banner with scroll-driven blur clear — same gesture as the
+  // homepage HeroVideo. The outer wrapper is 200vh; the inner stage is
+  // sticky 100vh. As the reader scrolls into the wrapper, the sticky
+  // pins the banner in view; during the first 80vh of that scroll the
+  // image's blur lifts and the 1.1× scale eases to 1. Once the wrapper
+  // exits the sticky range, the banner scrolls away. Title parallaxes
+  // upward at ~30% of scroll-into-wrap so it lingers above the image.
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLDivElement>(null)
+  const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
+
+  // Title is always rendered with mix-blend-difference — the white
+  // ink inverts cleanly against any photo (dark text on light areas,
+  // light text on dark areas). The 10% black tint sits between image
+  // and title as a contrast floor for the mid-tone case.
+
+  // The back arrow and caption use a different treatment: we sample
+  // the image at each element's region (top-left for the back, bottom-
+  // left for the caption) and pick pure white or pure black per
+  // region so each piece reads cleanly without the colour shift that
+  // difference would introduce. SSR default is white — overridden
+  // after the image loads.
+  const [bannerInk, setBannerInk] = useState<{ topLeft: string; bottomLeft: string }>(
+    { topLeft: '#ffffff', bottomLeft: '#ffffff' },
+  )
+  useEffect(() => {
+    if (!src || mediaType !== 'image') return
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      try {
+        const size = 64
+        const canvas = document.createElement('canvas')
+        canvas.width = size
+        canvas.height = size
+        const ctx = canvas.getContext('2d', { willReadFrequently: true })
+        if (!ctx) return
+        ctx.drawImage(img, 0, 0, size, size)
+        const { data } = ctx.getImageData(0, 0, size, size)
+        // Sample a 16×16 patch in the top-left (back link sits there)
+        // and the bottom-left (caption sits there). Account for the
+        // 10% black tint overlay by darkening the sample by 0.9.
+        const sample = (x0: number, y0: number, w: number, h: number) => {
+          let sum = 0
+          for (let y = y0; y < y0 + h; y++) {
+            for (let x = x0; x < x0 + w; x++) {
+              const i = (y * size + x) * 4
+              sum += (0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255
+            }
+          }
+          return (sum / (w * h)) * 0.9
+        }
+        const topL = sample(0, 6, 20, 8)        // ~y 9-22%  / x 0-31%
+        const botL = sample(0, 50, 32, 12)      // ~y 78-97% / x 0-50%
+        // Threshold ~0.5: brighter than that → use black ink, else white.
+        setBannerInk({
+          topLeft: topL > 0.5 ? '#000000' : '#ffffff',
+          bottomLeft: botL > 0.5 ? '#000000' : '#ffffff',
+        })
+      } catch {
+        // CORS or other — leave defaults.
+      }
     }
-  }
-  return node
+    img.src = src
+  }, [src, mediaType])
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let raf = 0
+    const tick = () => {
+      raf = 0
+      const wrap = wrapRef.current
+      const t = titleRef.current
+      const m = mediaRef.current
+      if (!wrap) return
+      const rect = wrap.getBoundingClientRect()
+      const vh = window.innerHeight
+      const scrollIntoWrap = Math.max(0, -rect.top)
+      // Blur clears across the first 80vh of scroll-into-wrap. Smootherstep.
+      const animDist = vh * 0.8
+      const raw = Math.max(0, Math.min(1, scrollIntoWrap / animDist))
+      const p = reduced
+        ? (raw > 0.05 ? 1 : 0)
+        : raw * raw * raw * (raw * (raw * 6 - 15) + 10)
+
+      if (m) {
+        // Clear → blur on scroll. At first paint the image is sharp;
+        // as the reader scrolls into the sticky stage the blur grows
+        // and the image pulls back (1.1× scale) — a departure reveal
+        // rather than an arrival reveal.
+        const BLUR_MAX = 20
+        m.style.filter = `blur(${p * BLUR_MAX}px)`
+        m.style.transform = `scale(${1 + 0.1 * p})`
+      }
+      if (t) {
+        // Title parallax — title is vertically centred and drifts UP
+        // at ~30% of scroll-into-wrap so it rises out of frame as the
+        // image blurs behind it.
+        t.style.transform = reduced
+          ? 'translate3d(0, 0, 0)'
+          : `translate3d(0, ${-scrollIntoWrap * 0.3}px, 0)`
+      }
+
+    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    tick()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  // Back arrow is anchored to the top of the hero — same viewport-Y
+  // position on every journal regardless of hero variant. White ink
+  // with mix-blend-difference inverts the colour cleanly against any
+  // image (dark text on light photos, light text on dark photos).
+  const backLink = (
+    <Link
+      href="/"
+      aria-label="Back"
+      className="hero-banner-back"
+      style={{
+        position: 'absolute',
+        top: 'calc(var(--nav-h, 56px) + var(--space-5))',
+        left: 'var(--gutter)',
+        zIndex: 5,
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 8,
+        color: '#ffffff',
+        fontFamily: 'var(--font-mono)',
+        fontSize: 11,
+        fontWeight: 400,
+        letterSpacing: '1.5px',
+        textTransform: 'uppercase',
+        textDecoration: 'none',
+        mixBlendMode: 'difference',
+      }}
+    >
+      <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
+      <span>Back</span>
+    </Link>
+  )
+  return (
+    <div
+      ref={wrapRef}
+      className="hero-banner-wrap"
+      style={{
+        position: 'relative',
+        width: '100vw',
+        marginLeft: 'calc(50% - 50vw)',
+        // 200vh wrapper holds the sticky stage in view for ~100vh of
+        // scroll past first paint, giving the blur clear room to play
+        // before the banner releases and the next section enters.
+        height: '200vh',
+      }}
+    >
+      {backLink}
+      <section
+        className="hero-banner-stage"
+        style={{
+          position: 'sticky',
+          top: 0,
+          width: '100%',
+          height: '100vh',
+          background: src ? 'var(--bg)' : '#d6d6d6',
+          overflow: 'hidden',
+        }}
+      >
+      {src && mediaType === 'video' && (
+        <video
+          ref={mediaRef as React.RefObject<HTMLVideoElement>}
+          muted
+          loop
+          playsInline
+          autoPlay
+          preload="metadata"
+          poster={poster}
+          aria-label={alt ?? title}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            // Initial blur + scale so the first paint matches the entry
+            // state. JS animates to clear on scroll.
+            filter: 'blur(0px)',
+            transform: 'scale(1)',
+            willChange: 'filter, transform',
+          }}
+        >
+          <source src={src} type="video/mp4" />
+        </video>
+      )}
+      {src && mediaType === 'image' && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          ref={mediaRef as React.RefObject<HTMLImageElement>}
+          src={src}
+          alt={alt ?? title}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            filter: 'blur(0px)',
+            transform: 'scale(1)',
+            willChange: 'filter, transform',
+          }}
+        />
+      )}
+
+      {/* 10% black tint — legibility floor over every banner image. Sits
+          above the photo, below the title/caption. */}
+      {src && (
+        <div
+          aria-hidden
+          className="hero-banner-tint"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.1)',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+        />
+      )}
+
+      {/* Drafting hint — small mono label under the title while `src` is empty. */}
+      {!src && draftingHint && (
+        <div
+          className="hero-banner-drafting"
+          style={{
+            position: 'absolute',
+            left: 'clamp(20px, 4vw, 48px)',
+            bottom: 'clamp(20px, 4vh, 48px)',
+            color: '#5a5a5a',
+            pointerEvents: 'none',
+            zIndex: 2,
+          }}
+        >
+          <div className="label" style={{ opacity: 0.9 }}>{draftingHint}</div>
+        </div>
+      )}
+
+      {/* Caption pinned bottom-left, on top of the photo. Ink colour
+          picks white or black based on the bottom-left luminance of
+          the image, so it stays legible on any banner. */}
+      {caption && src && (
+        <p
+          className="label hero-banner-caption"
+          style={{
+            position: 'absolute',
+            left: 'clamp(20px, 4vw, 48px)',
+            bottom: 'clamp(20px, 4vh, 48px)',
+            margin: 0,
+            maxWidth: 'min(240px, 60vw)',
+            color: bannerInk.bottomLeft,
+            letterSpacing: '1px',
+            lineHeight: 1.5,
+            zIndex: 2,
+            transition: 'color var(--dur-fast) var(--ease)',
+          }}
+        >
+          {caption}
+        </p>
+      )}
+
+      {/* Title overlay — vertically centred white text in mix-blend-
+          difference so the colour inverts against whatever sits behind
+          it. Parallax drifts the title upward at 30% of scroll-into-
+          wrap so it lingers in view as the reader scrolls. */}
+      <div
+        ref={titleRef}
+        className="hero-banner-title-overlay"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 'clamp(20px, 4vw, 48px)',
+          mixBlendMode: 'difference',
+          color: '#ffffff',
+          pointerEvents: 'none',
+          zIndex: 3,
+          willChange: 'transform',
+        }}
+      >
+        <h1 className="hero-banner-title">
+          {words.map((word, i) => (
+            <span key={i}>{word}</span>
+          ))}
+        </h1>
+        <style jsx>{`
+          /* Mobile/tablet: one word per line, centred stack. */
+          .hero-banner-title {
+            margin: 0;
+            font-family: var(--font-grotesque);
+            font-weight: 600;
+            font-size: clamp(48px, 10vw, 128px);
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            color: inherit;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            white-space: nowrap;
+          }
+          /* Desktop: single row. Multi-word titles spread edge-to-edge
+             across the section rail; single-word titles stay centred. */
+          @media (min-width: 1024px) {
+            .hero-banner-title {
+              flex-direction: row;
+              justify-content: ${words.length > 1 ? 'space-between' : 'center'};
+            }
+          }
+        `}</style>
+      </div>
+      </section>
+    </div>
+  )
 }
 
-/* ── Hero — 2-col default (eyebrow+title left, subline or TOC right) ── */
+/* ── JournalHero — stacked editorial opener for journal pages.
+      Title sits above the image on a clean white plate (no overlay,
+      no mix-blend), words justified edge-to-edge across the content
+      rail. A small "← BACK" link sits in its own row above the title.
+      Banner image (or video) renders full-bleed below the title. */
+export function JournalHero({
+  title,
+  src,
+  currentHref,
+  mediaType = 'image',
+  poster,
+  caption,
+  alt,
+  backHref = '/',
+}: {
+  title: string
+  src?: string
+  /** Auto-resolves `src` (and falls back to `alt`) from the matching
+   *  entry in `lib/journals.ts`. Same prop the `<Continue>` footer uses. */
+  currentHref?: string
+  mediaType?: 'image' | 'video'
+  poster?: string
+  /** Optional caption shown bottom-left on the banner image. */
+  caption?: string
+  alt?: string
+  /** Where the back link goes. Defaults to /. */
+  backHref?: string
+}) {
+  if (!src && currentHref) {
+    const journal = ACTIVE_JOURNALS.find(j => j.href === currentHref)
+    if (journal) src = journal.img
+  }
+  const words = title.split(/\s+/).filter(Boolean)
+
+  // Scroll-driven blur on the banner — clear at first paint, blurs
+  // and scales up to 1.1× as the reader scrolls past the hero. Same
+  // departure-reveal gesture HeroBanner uses, just driven by the
+  // .journal-hero header's bounding rect instead of a sticky wrap.
+  const headerRef = useRef<HTMLElement>(null)
+  const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let raf = 0
+    const tick = () => {
+      raf = 0
+      const header = headerRef.current
+      const m = mediaRef.current
+      if (!header || !m) return
+      const rect = header.getBoundingClientRect()
+      const vh = window.innerHeight
+      // Animation runs across the first 80vh of scroll into the hero.
+      const scrollIntoHeader = Math.max(0, -rect.top)
+      const animDist = vh * 0.8
+      const raw = Math.max(0, Math.min(1, scrollIntoHeader / animDist))
+      const p = reduced
+        ? (raw > 0.05 ? 1 : 0)
+        : raw * raw * raw * (raw * (raw * 6 - 15) + 10)
+      const BLUR_MAX = 20
+      m.style.filter = `blur(${p * BLUR_MAX}px)`
+      m.style.transform = `scale(${1 + 0.1 * p})`
+    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    tick()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  return (
+    <header ref={headerRef} className="journal-hero">
+      <Link
+        href={backHref}
+        aria-label="Back"
+        className="hero-banner-back"
+        style={{
+          position: 'absolute',
+          top: 'calc(var(--nav-h, 56px) + var(--space-5))',
+          left: 'var(--gutter)',
+          zIndex: 5,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 8,
+          color: '#ffffff',
+          fontFamily: 'var(--font-mono)',
+          fontSize: 11,
+          fontWeight: 400,
+          letterSpacing: '1.5px',
+          textTransform: 'uppercase',
+          textDecoration: 'none',
+          mixBlendMode: 'difference',
+        }}
+      >
+        <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
+        <span>Back</span>
+      </Link>
+
+      <div className="journal-hero__top">
+        <h1 className="journal-hero__title">
+          {words.map((w, i) => (
+            <span key={i}>{w}</span>
+          ))}
+        </h1>
+      </div>
+
+      {src && (
+        <div className="journal-hero__media">
+          {mediaType === 'video' ? (
+            <video
+              ref={mediaRef as React.RefObject<HTMLVideoElement>}
+              className="journal-hero__media-el"
+              muted
+              loop
+              playsInline
+              autoPlay
+              preload="metadata"
+              poster={poster}
+              aria-label={alt ?? title}
+              style={{ filter: 'blur(0px)', transform: 'scale(1)', willChange: 'filter, transform' }}
+            >
+              <source src={src} type="video/mp4" />
+            </video>
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              ref={mediaRef as React.RefObject<HTMLImageElement>}
+              className="journal-hero__media-el"
+              src={src}
+              alt={alt ?? title}
+              style={{ filter: 'blur(0px)', transform: 'scale(1)', willChange: 'filter, transform' }}
+            />
+          )}
+          {caption && (
+            <p className="label journal-hero__caption">{caption}</p>
+          )}
+        </div>
+      )}
+
+      {/* Image sizing: styled-jsx's :global(img) selector inside a
+          @media rule wasn't applying scoped correctly, so we use a
+          global style block targeting the explicit
+          .journal-hero__media-el class instead. */}
+      <style jsx global>{`
+        .journal-hero__media-el {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+        @media (max-width: 768px) {
+          .journal-hero__media-el {
+            height: 100vh;
+            object-fit: cover;
+          }
+        }
+      `}</style>
+
+      <style jsx>{`
+        .journal-hero {
+          position: relative;
+          padding-top: var(--nav-h, 56px);
+        }
+        .journal-hero__top {
+          padding-top: clamp(var(--space-8), 10vh, calc(var(--space-9) + var(--space-7)));
+          padding-bottom: var(--space-5);
+          padding-left: var(--gutter);
+          padding-right: var(--gutter);
+        }
+        .journal-hero__title {
+          margin: 0;
+          font-family: var(--font-grotesque);
+          font-weight: 600;
+          font-size: clamp(48px, 9vw, 140px);
+          line-height: 0.95;
+          letter-spacing: -0.04em;
+          text-transform: uppercase;
+          color: var(--text);
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          text-align: left;
+          white-space: nowrap;
+        }
+        /* Mobile / tablet bump: title reads 20% larger on every clamp
+           branch (48 → 58, 9vw → 10.8vw, 140 → 168). Desktop (≥1024px)
+           rule below overrides the layout and inherits the base clamp. */
+        @media (max-width: 1023px) {
+          .journal-hero__title {
+            font-size: clamp(58px, 10.8vw, 168px);
+          }
+        }
+        /* Desktop: title section fills the full viewport so the title
+           centres at exactly 50vh — same vertical landing zone as
+           the overlaid title on HeroBanner journals. Image renders
+           at its natural full proportion below, pulled up 300px so
+           the top of the image overlaps the lower half of the title
+           plate. Words spread edge-to-edge across the gutter rail. */
+        @media (min-width: 1024px) {
+          .journal-hero {
+            padding-top: 0;
+          }
+          .journal-hero__top {
+            min-height: 100vh;
+            padding-top: 0;
+            padding-bottom: 0;
+            display: flex;
+            align-items: center;
+          }
+          .journal-hero__title {
+            flex-direction: row;
+            justify-content: ${words.length > 1 ? 'space-between' : 'flex-start'};
+            align-items: center;
+            text-align: left;
+          }
+        }
+        .journal-hero__media {
+          position: relative;
+          width: 100vw;
+          margin-left: calc(50% - 50vw);
+          /* Clip the scroll-driven blur so its 20px halo doesn't bleed
+             onto the surrounding white plate. overflow:hidden alone
+             isn't enough in Chrome (filter creates its own stacking
+             context that can paint past the box); contain:paint locks
+             the paint region to the element's box. */
+          overflow: hidden;
+          contain: paint;
+        }
+        @media (min-width: 1024px) {
+          .journal-hero__media {
+            /* Desktop: full-bleed banner, pulled up 300px so the top of
+               the image overlaps the lower half of the title plate.
+               The base rule (width: 100vw + negative margin-left) keeps
+               the image edge-to-edge of the viewport. */
+            margin-top: -300px;
+          }
+        }
+        .journal-hero__caption {
+          position: absolute;
+          left: clamp(20px, 4vw, 48px);
+          bottom: clamp(20px, 4vh, 48px);
+          margin: 0;
+          max-width: min(320px, 60vw);
+          color: #ffffff;
+          letter-spacing: 1px;
+          text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
+        }
+      `}</style>
+    </header>
+  )
+}
+
+/* ── ArticleHero — opener with optional 2-col TOC ── */
 export function ArticleHero({
-  eyebrow,
   title,
   subline,
   toc,
   media,
   caption,
+  backHref = '/',
 }: {
-  eyebrow?: string
   title: ReactNode
   subline?: ReactNode
-  /** When provided, renders a table-of-contents in the right column instead of the subline. */
   toc?: { q: string; href: string }[]
   media?: { type: 'image' | 'video'; src: string; poster?: string; alt?: string }
   caption?: string
+  /** Where the back link goes. Defaults to /. */
+  backHref?: string
 }) {
   const hasRight = toc?.length || subline
   return (
-    <section style={{ paddingTop: 'clamp(160px, 22vh, 260px)', paddingBottom: 'var(--space-9)' }}>
+    <section style={{ paddingTop: 'clamp(160px, 22vh, 260px)', paddingBottom: 'var(--space-9)', position: 'relative' }}>
+      {/* Back link — same affordance every journal hero carries. In
+          human mode it sits absolute at top-left under the nav; the
+          agent-mode `.hero-banner-back` rule flips it to static so it
+          flows above the title in the markdown view. */}
+      <Link
+        href={backHref}
+        aria-label="Back"
+        className="hero-banner-back"
+        style={{
+          position: 'absolute',
+          top: 'calc(var(--nav-h, 56px) + var(--space-5))',
+          left: 'var(--gutter)',
+          zIndex: 5,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 8,
+          color: 'var(--text)',
+          fontFamily: 'var(--font-mono)',
+          fontSize: 11,
+          fontWeight: 400,
+          letterSpacing: '1.5px',
+          textTransform: 'uppercase',
+          textDecoration: 'none',
+        }}
+      >
+        <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
+        <span>Back</span>
+      </Link>
       <div className="section-w">
         {hasRight ? (
-          <div>
-            {/* eyebrow intentionally not rendered — fold into title copy */}
           <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)', alignItems: 'start' }}>
             <Reveal>
               <h1 style={{ maxWidth: 700, marginTop: 0 }}>{title}</h1>
@@ -75,65 +723,58 @@ export function ArticleHero({
                   <p className="p2" style={{ marginTop: 0, marginBottom: toc?.length ? 32 : 8 }}>{subline}</p>
                 )}
                 {toc?.length ? (
-                <nav aria-label="Contents" className="article-toc">
-                  {toc.map((item) => (
-                    <a key={item.href} href={item.href} className="article-toc__item">
-                      <span>{item.q}</span>
-                      <span className="article-toc__arrow" aria-hidden>↓</span>
-                    </a>
-                  ))}
-                  <style jsx>{`
-                    .article-toc {
-                      display: flex;
-                      flex-direction: column;
-                      gap: 14px;
-                      max-width: 520px;
-                      margin-bottom: 8px;
-                    }
-                    .article-toc__item {
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: baseline;
-                      gap: 16px;
-                      padding: 14px 0;
-                      border-top: 1px solid var(--border);
-                      font-family: var(--font-mono);
-                      font-size: 12px;
-                      font-weight: 400;
-                      letter-spacing: 1px;
-                      text-transform: uppercase;
-                      color: var(--brand-accent);
-                      text-decoration: none;
-                      line-height: 1.5;
-                      transition: opacity var(--dur-fast) var(--ease);
-                    }
-                    .article-toc__item:last-child {
-                      border-bottom: 1px solid var(--border);
-                    }
-                    .article-toc__item:hover {
-                      opacity: 0.7;
-                    }
-                    .article-toc__arrow {
-                      flex-shrink: 0;
-                      font-family: var(--font-mono);
-                    }
-                  `}</style>
-                </nav>
+                  <nav aria-label="Contents" className="article-toc">
+                    {toc.map((item) => (
+                      <a key={item.href} href={item.href} className="article-toc__item">
+                        <span>{item.q}</span>
+                        <span className="article-toc__arrow" aria-hidden>↓</span>
+                      </a>
+                    ))}
+                    <style jsx>{`
+                      .article-toc {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 14px;
+                        max-width: 520px;
+                        margin-bottom: 8px;
+                      }
+                      .article-toc__item {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: baseline;
+                        gap: 16px;
+                        padding: 14px 0;
+                        border-top: 1px solid var(--border);
+                        font-family: var(--font-mono);
+                        font-size: 12px;
+                        font-weight: 400;
+                        letter-spacing: 1px;
+                        text-transform: uppercase;
+                        color: var(--brand-accent);
+                        text-decoration: none;
+                        line-height: 1.5;
+                        transition: opacity var(--dur-fast) var(--ease);
+                      }
+                      .article-toc__item:last-child {
+                        border-bottom: 1px solid var(--border);
+                      }
+                      .article-toc__item:hover { opacity: 0.7; }
+                      .article-toc__arrow { flex-shrink: 0; font-family: var(--font-mono); }
+                    `}</style>
+                  </nav>
                 ) : null}
               </div>
             </Reveal>
           </div>
-          </div>
         ) : (
           <Reveal>
-            {/* eyebrow intentionally not rendered — fold into title copy */}
             <h1 style={{ maxWidth: 900 }}>{title}</h1>
           </Reveal>
         )}
         {media && (
           <Reveal delay={120}>
-            <figure style={{ marginTop: 'clamp(48px, 8vh, 96px)' }}>
-              <div style={{ borderRadius: 'var(--radius-1)', overflow: 'hidden', aspectRatio: '16 / 9' }}>
+            <figure className="article-hero-figure" style={{ marginTop: 'clamp(48px, 8vh, 96px)' }}>
+              <div className="article-hero-media" style={{ borderRadius: 'var(--radius-1)', overflow: 'hidden', aspectRatio: '16 / 9' }}>
                 {media.type === 'video' ? (
                   <video
                     src={media.src}
@@ -147,6 +788,7 @@ export function ArticleHero({
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   />
                 ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
                   <img src={media.src} alt={media.alt || ''} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 )}
               </div>
@@ -159,81 +801,46 @@ export function ArticleHero({
   )
 }
 
-/* ── Section — default layout: heading left, body right (2-col grid) ── */
-export function Section({
+/* ── OneCol — single left-aligned column with a required heading.
+      Sits at the left rail of `.section-w` with a 760px max-width. Every
+      OneCol must declare what it is — orphan prose without a heading is
+      what TwoCol or ScrollHighlight are for, depending on the intent. */
+export function OneCol({
   id,
-  eyebrow,
   heading,
   children,
-  align = '2col',
 }: {
   id?: string
-  eyebrow?: string
-  heading?: ReactNode
+  heading: ReactNode
   children: ReactNode
-  /** '2col' = heading left, body right (default). 'center' = stacked centered. 'full' = full-width body with heading on top. */
-  align?: '2col' | 'center' | 'full'
 }) {
-  if (align === 'center') {
-    /* 1-col center — heading centered, paragraphs left-aligned inside a centered block */
-    return (
-      <section id={id} style={{ padding: 'var(--section-gap) 0' }}>
-        <div className="section-w">
-          <Reveal>
-            <div style={{ maxWidth: 760, margin: '0 auto', textAlign: 'center' }}>
-              {heading && <h2 style={{ marginBottom: 'var(--space-6)' }}>{heading}</h2>}
-            </div>
-            <div className="article-body" style={{ maxWidth: 640, margin: '0 auto', textAlign: 'left' }}>
-              {withLeadParagraph(children)}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-    )
-  }
-
-  if (align === 'full' || !heading) {
-    return (
-      <section id={id} style={{ padding: 'var(--section-gap) 0' }}>
-        <div className="section-w">
-          <Reveal>
-            {heading && <h2 style={{ marginBottom: 'var(--space-6)', maxWidth: 900 }}>{heading}</h2>}
-            <div className="article-body" style={{ maxWidth: 760 }}>{withLeadParagraph(children)}</div>
-          </Reveal>
-        </div>
-      </section>
-    )
-  }
-
-  // default: 2-col — heading left, body right
   return (
-    <section id={id} style={{ padding: 'var(--section-gap) 0' }}>
+    <section id={id} className="one-col" style={{ padding: 'var(--section-gap) 0' }}>
       <div className="section-w">
-        <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)', alignItems: 'start' }}>
-          <Reveal>
-            <div>
-              {/* eyebrow intentionally not rendered — fold into heading copy */}
-              <h2 style={{ maxWidth: 560, marginTop: 0 }}>{heading}</h2>
-            </div>
-          </Reveal>
-          <Reveal delay={80}>
-            <div className="article-body" style={{ marginTop: '-0.2em' }}>{withLeadParagraph(children)}</div>
-          </Reveal>
-        </div>
+        <Reveal>
+          {/* Flush-left within section-w (margin: 0, not 0 auto) so a
+              OneCol's heading + body line up with adjacent
+              ScrollHighlight stanzas (which also sit at section-w's
+              left edge). Previously the OneCol block was centered
+              within section-w, producing a visible indent mismatch
+              between consecutive sections on /rta and elsewhere. */}
+          <div style={{ maxWidth: 760, margin: 0, textAlign: 'left' }}>
+            <h2 style={{ marginTop: 0, marginBottom: 'var(--space-4)' }}>{heading}</h2>
+            <div className="article-body">{children}</div>
+          </div>
+        </Reveal>
       </div>
     </section>
   )
 }
 
-/* ── Two-column section (heading left, body right) ── */
+/* ── TwoCol — heading left, body right ── */
 export function TwoCol({
   id,
-  eyebrow,
   heading,
   children,
 }: {
   id?: string
-  eyebrow?: string
   heading: ReactNode
   children: ReactNode
 }) {
@@ -242,15 +849,10 @@ export function TwoCol({
       <div className="section-w">
         <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)', alignItems: 'start' }}>
           <Reveal>
-            <div>
-              {/* eyebrow intentionally not rendered — fold into heading copy */}
-              <h2 style={{ maxWidth: 560, marginTop: 0 }}>{heading}</h2>
-            </div>
+            <h2 style={{ maxWidth: 560, marginTop: 0 }}>{heading}</h2>
           </Reveal>
           <Reveal delay={80}>
-            <div className="flex flex-col gap-5" style={{ marginTop: '-0.2em' }}>
-              {withLeadParagraph(children)}
-            </div>
+            <div className="article-body" style={{ marginTop: '-0.2em' }}>{children}</div>
           </Reveal>
         </div>
       </div>
@@ -258,134 +860,387 @@ export function TwoCol({
   )
 }
 
-/* ── Ṛta — rendered as RTA in DM Sans regardless of surrounding font ── */
+/* ── Rta — renders "RTA" in DM Sans regardless of surrounding font ── */
 export function Rta() {
   return (
-    <span
-      style={{
-        fontFamily: 'var(--font-sans)',
-        fontWeight: 400,
-        letterSpacing: '0.04em',
-      }}
-    >
+    <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 400, letterSpacing: '0.04em' }}>
       RTA
     </span>
   )
 }
 
-/* ── Paragraph ── */
-export function P({ children, lead }: { children: ReactNode; lead?: boolean }) {
-  return <p className={lead ? 'p1' : 'p2'} style={{ marginTop: '1em' }}>{children}</p>
-}
-
-/** Mark the first <P> child as lead (p1), rest as p2. */
-function withLeadParagraph(children: ReactNode): ReactNode {
-  let leadApplied = false
-  return Children.map(children, (child) => {
-    if (!leadApplied && isValidElement(child) && child.type === P) {
-      leadApplied = true
-      const props = child.props as { lead?: boolean; children?: ReactNode }
-      if (props.lead === undefined) {
-        return cloneElement(child, { lead: true } as Partial<typeof props>)
-      }
+/* ── Term — inline glossary marker for jargon (Sln.9, BD 500, Solera, etc.).
+      Underdotted in body text; on hover a small mono-uppercase tooltip
+      lifts above the term with a 1-line definition. The `title` attribute
+      keeps the explanation accessible without JS (and on touch devices). */
+export function Term({ tip, children }: { tip: string; children: ReactNode }) {
+  // Tap-to-open on touch: clicking the term toggles a data-open
+  // attribute that CSS uses to show the tip. Tapping anywhere else
+  // (or the term again) closes it. Hover and focus still work for
+  // pointer / keyboard users via the sibling :hover/:focus rules.
+  //
+  // Only one tip is open at a time across the whole page — opening a
+  // term broadcasts an 'aura-term:open' CustomEvent that all other
+  // terms listen for and close themselves on.
+  //
+  // On mobile the tip pops out of the term's positioning context and
+  // becomes position:fixed so it can centre on the viewport (CSS sets
+  // left:50%, transform:translateX(-50%); here we set the top from
+  // the term's bounding rect at open time so the pill still sits
+  // above the term rather than mid-screen).
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLSpanElement>(null)
+  const tipRef = useRef<HTMLSpanElement>(null)
+  const id = useRef(Symbol())
+  useEffect(() => {
+    if (!open) return
+    const onDoc = (e: MouseEvent | TouchEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
     }
-    return child
-  })
-}
-
-/* ── Figure: inline image or video with caption ── */
-export function Figure({
-  src,
-  poster,
-  alt,
-  caption,
-  type = 'image',
-  aspect = '16 / 9',
-}: {
-  src: string
-  poster?: string
-  alt: string
-  caption?: string
-  type?: 'image' | 'video'
-  aspect?: string
-}) {
+    const onOtherOpen = (e: Event) => {
+      if ((e as CustomEvent).detail !== id.current) setOpen(false)
+    }
+    // Position the fixed-mode tip above the term. CSS only switches to
+    // fixed at <=768px; on desktop the inline top is ignored because
+    // the rule keeps position:absolute.
+    const term = ref.current
+    const tipEl = tipRef.current
+    if (term && tipEl) {
+      const r = term.getBoundingClientRect()
+      const h = tipEl.offsetHeight || 64
+      tipEl.style.top = `${Math.max(8, r.top - h - 8)}px`
+    }
+    document.addEventListener('click', onDoc)
+    document.addEventListener('touchstart', onDoc, { passive: true })
+    document.addEventListener('aura-term:open', onOtherOpen)
+    return () => {
+      document.removeEventListener('click', onDoc)
+      document.removeEventListener('touchstart', onDoc)
+      document.removeEventListener('aura-term:open', onOtherOpen)
+    }
+  }, [open])
   return (
-    <figure style={{ margin: 'clamp(24px, 4vh, 48px) 0' }}>
-      <div style={{ borderRadius: 'var(--radius-1)', overflow: 'hidden', aspectRatio: aspect }}>
-        {type === 'video' ? (
-          <video
-            src={src}
-            poster={poster}
-            muted
-            loop
-            playsInline
-            autoPlay
-            preload="metadata"
-            aria-label={alt}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          >
-            {poster && <img src={poster} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
-          </video>
-        ) : (
-          <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-        )}
-      </div>
-      {caption && <figcaption className="label" style={{ marginTop: 12 }}>{caption}</figcaption>}
-    </figure>
+    <span
+      ref={ref}
+      className="aura-term"
+      data-tip
+      data-open={open || undefined}
+      tabIndex={0}
+      role="button"
+      aria-label={tip}
+      onClick={e => {
+        e.stopPropagation()
+        setOpen(o => {
+          const next = !o
+          if (next) document.dispatchEvent(new CustomEvent('aura-term:open', { detail: id.current }))
+          return next
+        })
+      }}
+    >
+      {children}
+      <span ref={tipRef} className="aura-term__tip" aria-hidden>{tip}</span>
+    </span>
   )
 }
 
-/* ── FocalImage ──
-   Full-bleed (100vw × 100vh) media block with scroll-driven blur reveal —
-   same gesture as the homepage sanctuary banners but inline in article flow.
-
-   Heavy 16 px blur when the block is entering the viewport from below.
-   Blur lifts smoothly to 0 over the first ~50% of the block's pass through
-   the viewport, so by the time the block is fully on screen it's clear.
-
-   `src` swaps the grey placeholder for an actual image. `label` + `note`
-   sit on top as a caption / annotation. Reusable block — drop anywhere in
-   an article. */
-export function FocalImage({
+/* ── Placeholder — the kit's image moment.
+      Thin wrapper around <ExpandingBanner>, the same scroll-driven
+      blur → clarity → hold component the homepage uses for its hero
+      video moments. Renders an image (default), a video, or — when
+      `src` is empty — a grey drafting card with a centred type +
+      caption label, all sharing the same expanding gesture. */
+export function Placeholder({
   src,
   alt,
-  label,
-  note,
+  type,
+  caption,
+  mediaType = 'image',
+  poster,
 }: {
   src?: string
   alt?: string
-  label?: string
-  note?: string
+  /** Suggestion to the photo editor: "Landscape", "Portrait",
+   *  "Aerial", "Detail", etc. Shown in the centered drafting label. */
+  type?: string
+  /** Caption text. Renders as a small label in the bottom-left of the
+   *  image when `src` is set. */
+  caption?: string
+  /** Defaults to `image`. Pass `video` for an autoplaying loop. */
+  mediaType?: 'image' | 'video'
+  /** Video poster (or fallback still). */
+  poster?: string
 }) {
-  const wrapRef = useRef<HTMLDivElement>(null)
-  const blurRef = useRef<HTMLDivElement>(null)
+  return (
+    <ExpandingBanner
+      src={src}
+      mediaType={mediaType}
+      poster={poster}
+      alt={alt}
+      caption={caption}
+      type={type}
+    />
+  )
+}
+
+/* ── DataGrid / DataCard — responsive cards for stats, filters, tiles.
+      With `img` on a DataCard the card becomes a hero-style tile: 16:9
+      thumbnail on top, then the value (as a heading), then body. Without
+      `img` it stays a thin stat card (top rule, value, body).
+
+      `standalone` wraps the grid in its own section + section-w so the
+      tiles span the full content width. Without it, DataGrid is inline
+      content meant to sit inside a TwoCol body. */
+export function DataGrid({
+  cols = 3,
+  standalone = false,
+  children,
+}: {
+  cols?: 2 | 3 | 4
+  standalone?: boolean
+  children: ReactNode
+}) {
+  const grid = (
+    <div
+      className="data-grid"
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+        gap: 'clamp(24px, 3vw, 48px)',
+        marginTop: standalone ? 0 : 'clamp(24px, 4vh, 40px)',
+      }}
+    >
+      {children}
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .data-grid {
+            grid-template-columns: 1fr !important;
+            /* Stacked tiles on mobile need real breathing room — match
+               the homepage .pillar-grid rhythm. */
+            gap: 56px !important;
+          }
+        }
+      `}</style>
+    </div>
+  )
+  if (!standalone) return grid
+  return (
+    <section style={{ padding: 'var(--section-gap) 0' }}>
+      <div className="section-w">
+        <Reveal>{grid}</Reveal>
+      </div>
+    </section>
+  )
+}
+
+export function DataCard({
+  value,
+  children,
+  img,
+  video,
+  poster,
+  alt,
+  type,
+}: {
+  label?: string
+  value?: ReactNode
+  children?: ReactNode
+  /** When set (or when `type` is provided), the card renders as a
+   *  homepage-hero-style tile: 4:5 thumbnail above the heading and body. */
+  img?: string
+  /** Optional 4:5 video. Renders as an autoplaying muted loop in the
+   *  thumbnail slot, with `poster` as the still fallback. Promotes the
+   *  card to tile mode just like `img`. */
+  video?: string
+  /** Still poster for the video. Shown before the video can play and
+   *  on reduced-motion. */
+  poster?: string
+  alt?: string
+  /** Image-type suggestion shown in the grey placeholder when `img` is
+   *  empty — e.g. "Portrait", "Detail", "Landscape". Setting `type`
+   *  alone (without `img`) also promotes the card to tile mode. */
+  type?: string
+}) {
+  const isTile = !!img || !!video || !!type
+  /* Lazy-play DataCard videos via IntersectionObserver. autoPlay +
+     preload="metadata" was enough to make every off-screen tile
+     buffer ~1-2 MB on page load (a 3-card wisdom grid sitting ~9000
+     px below the fold was still pulling its full mp4 set). The
+     poster bridges the gap until the band scrolls in. */
+  const videoRef = useRef<HTMLVideoElement>(null)
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) v.play().catch(() => {})
+        else v.pause()
+      },
+      { threshold: 0, rootMargin: '100% 0px 100% 0px' }
+    )
+    observer.observe(v)
+    return () => observer.disconnect()
+  }, [video])
+  if (isTile) {
+    const placeholderLabel = [type, typeof value === 'string' ? value : undefined].filter(Boolean).join(' · ')
+    return (
+      <div className="data-card">
+        <div
+          className="data-card__media"
+          style={{
+            position: 'relative',
+            width: '100%',
+            /* Portrait 4:5 — matches the homepage pillar grid so journal
+               tiles share the same proportions as the home hero. */
+            aspectRatio: '4 / 5',
+            background: '#d6d6d6',
+            borderRadius: 'var(--radius-1)',
+            overflow: 'hidden',
+            marginBottom: 20,
+          }}
+        >
+          {video ? (
+            <video
+              ref={videoRef}
+              src={video}
+              poster={poster}
+              muted
+              loop
+              playsInline
+              preload="none"
+              aria-label={alt ?? (typeof value === 'string' ? value : '')}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          ) : img ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={img}
+              alt={alt ?? (typeof value === 'string' ? value : '')}
+              loading="lazy"
+              decoding="async"
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          ) : placeholderLabel ? (
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 16,
+                textAlign: 'center',
+                color: '#5a5a5a',
+              }}
+            >
+              <div className="label" style={{ opacity: 0.9 }}>{placeholderLabel}</div>
+            </div>
+          ) : null}
+        </div>
+        {value && <h3 style={{ margin: 0, marginBottom: 12 }}>{value}</h3>}
+        {children && <div className="p2" style={{ color: 'var(--text-body)' }}>{children}</div>}
+      </div>
+    )
+  }
+  return (
+    <div style={{ borderTop: '1px solid var(--border)', paddingTop: 16 }}>
+      {value && <p className="p1" style={{ margin: 0, marginBottom: 12 }}>{value}</p>}
+      {children && <div className="p2" style={{ color: 'var(--text-body)' }}>{children}</div>}
+    </div>
+  )
+}
+
+/* ── PullQuote — centered grotesque display block.
+      Bracketed top and bottom by full-viewport-width grey rules that
+      ground the centered quote against the prose around it. The rules
+      span 100vw (break out of any .section-w parent) so the quote feels
+      like an editorial beat, not an inline paragraph. */
+export function PullQuote({ children, attribution }: { children: ReactNode; attribution?: string }) {
+  const rule = (
+    <div
+      aria-hidden
+      className="pullquote-rule"
+      style={{
+        width: '100vw',
+        marginLeft: 'calc(50% - 50vw)',
+        height: 1,
+        // Theme-aware so PullQuote rules match every other border in the
+        // kit (TOC, DataCard top-rule, Continue divider, etc.).
+        background: 'var(--border)',
+      }}
+    />
+  )
+  return (
+    <>
+      {rule}
+      <section style={{ padding: 'var(--section-gap) 0' }}>
+        <div className="section-w">
+          <Reveal>
+            <blockquote style={{ margin: '0 auto', maxWidth: 880, textAlign: 'center' }}>
+              <p
+                style={{
+                  fontFamily: 'var(--font-pullquote)',
+                  fontSize: 'clamp(32px, 4.2vw, 56px)',
+                  lineHeight: 1.25,
+                  letterSpacing: '0',
+                  color: 'var(--text)',
+                  margin: 0,
+                  textWrap: 'balance',
+                }}
+              >
+                {children}
+              </p>
+              {attribution && (
+                <cite className="label" style={{ fontStyle: 'normal', marginTop: 32, display: 'block' }}>
+                  — {attribution}
+                </cite>
+              )}
+            </blockquote>
+          </Reveal>
+        </div>
+      </section>
+      {rule}
+    </>
+  )
+}
+
+/* ── ScrollHighlight — Apple-style word-by-word reveal on scroll ──
+      Each word starts at 18% opacity and brightens as it enters the
+      upper ~40vh band of the viewport. Pass a string; newlines split
+      into separate lines so wrapping is predictable. */
+export function ScrollHighlight({
+  children,
+  as: As = 'h2',
+  maxWidth = 760,
+  align = 'left',
+}: {
+  children: string
+  as?: 'h1' | 'h2' | 'h3'
+  maxWidth?: number
+  align?: 'left' | 'center'
+}) {
+  const wordRefs = useRef<(HTMLSpanElement | null)[]>([])
+  const lines = children.split(/\n+/).map(line => line.trim()).filter(Boolean)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      if (blurRef.current) {
-        blurRef.current.style.backdropFilter = 'blur(0)'
-        ;(blurRef.current.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = 'blur(0)'
-      }
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+      wordRefs.current.forEach(s => { if (s) s.style.opacity = '1' })
       return
     }
     let raf = 0
     const onScroll = () => {
       cancelAnimationFrame(raf)
       raf = requestAnimationFrame(() => {
-        const wrap = wrapRef.current
-        const blur = blurRef.current
-        if (!wrap || !blur) return
-        const rect = wrap.getBoundingClientRect()
         const vh = window.innerHeight
-        // Progress: 0 when block's top is at viewport bottom (just entering)
-        //           1 when block's top is at viewport top (fully on screen)
-        const progress = Math.max(0, Math.min(1, 1 - rect.top / vh))
-        // Blur lifts during the first 50% of the pass.
-        const blurLift = Math.min(1, progress / 0.5)
-        const blurVal = (1 - blurLift) * 16
-        blur.style.backdropFilter = `blur(${blurVal}px)`
-        ;(blur.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = `blur(${blurVal}px)`
+        const startY = vh * 0.78
+        const endY = vh * 0.38
+        wordRefs.current.forEach(span => {
+          if (!span) return
+          const y = span.getBoundingClientRect().top
+          const p = Math.max(0, Math.min(1, (startY - y) / (startY - endY)))
+          span.style.opacity = String(0.18 + p * 0.82)
+        })
       })
     }
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -394,231 +1249,149 @@ export function FocalImage({
       window.removeEventListener('scroll', onScroll)
       cancelAnimationFrame(raf)
     }
-  }, [])
+  }, [children])
 
+  let wordIndex = -1
   return (
-    <section
-      ref={wrapRef}
-      style={{
-        position: 'relative',
-        width: '100vw',
-        marginLeft: 'calc(50% - 50vw)',
-        height: '100vh',
-        overflow: 'hidden',
-        /* Empty state surface flows with theme — light card in day mode,
-           dark card in night mode. The image (when present) covers this
-           entirely, so this colour is only visible on placeholder frames. */
-        background: 'var(--bg-card)',
-      }}
-    >
-      {src ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={src}
-          alt={alt ?? label ?? ''}
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-      ) : null}
-      {/* Blur layer — gets lifted by the scroll listener. */}
-      <div
-        ref={blurRef}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-        }}
-      />
-      {/* Caption overlay — sits centred, only renders when label/note provided.
-          With an image the text sits on a photo and stays white; without one
-          it sits on the themed card surface and uses muted body text. */}
-      {(label || note) && (
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 24,
-            textAlign: 'center',
-            color: src ? '#ffffff' : 'var(--text-muted)',
-            pointerEvents: 'none',
-          }}
-        >
-          {label && <div className="label" style={{ marginBottom: 10, opacity: 0.85, color: 'inherit' }}>{label}</div>}
-          {note && <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, maxWidth: 380, lineHeight: 1.5, opacity: 0.7, letterSpacing: 0.2, color: 'inherit' }}>{note}</div>}
-        </div>
-      )}
+    <section style={{ padding: 'var(--section-gap) 0' }}>
+      <div className="section-w">
+        {/* Text is always left-aligned. The `align` prop controls
+            whether the BLOCK is centered (default, matches OneCol on
+            journal pages) or anchored to the section-w gutter (used
+            on the landing where the reveal needs to share a left edge
+            with a full-width sibling like the pillar grid). */}
+        <As style={{
+          margin: align === 'left' ? 0 : '0 auto',
+          maxWidth,
+          textAlign: 'left',
+        }}>
+          {lines.map((line, lineIdx) => {
+            const words = line.split(/\s+/).filter(Boolean)
+            const isLast = lineIdx === lines.length - 1
+            return (
+              <span
+                key={lineIdx}
+                style={{ display: 'block', marginBottom: isLast ? 0 : 'var(--space-6)' }}
+              >
+                {words.map((w, i) => {
+                  wordIndex++
+                  const idx = wordIndex
+                  /* `*chunk*rest` marks a sub-string for the Belmonte
+                     cursive emphasis used in PullQuote. Both forms work:
+                       `*Aura*`         → whole word cursive
+                       `*A*ttention.`   → only the leading "A" cursive
+                     Strip the asterisks and split the word into two
+                     spans so the cursive run renders inline with the
+                     rest of the word. */
+                  const marked = /^\*([^*]+)\*(.*)$/.exec(w)
+                  const cursivePart = marked ? marked[1] : null
+                  const restPart = marked ? marked[2] : null
+                  const cursiveStyle = {
+                    fontFamily: 'var(--font-pullquote)',
+                    fontStyle: 'normal' as const,
+                    fontWeight: 400,
+                  }
+                  return (
+                    <span key={i}>
+                      <span
+                        ref={el => { wordRefs.current[idx] = el }}
+                        style={{
+                          opacity: 0.18,
+                          transition: 'opacity var(--dur-fast) var(--ease)',
+                          willChange: 'opacity',
+                        }}
+                      >
+                        {marked ? (
+                          <>
+                            <span style={cursiveStyle}>{cursivePart}</span>
+                            {restPart}
+                          </>
+                        ) : w}
+                      </span>
+                      {i < words.length - 1 ? ' ' : ''}
+                    </span>
+                  )
+                })}
+              </span>
+            )
+          })}
+        </As>
+      </div>
     </section>
   )
 }
 
-/* ── Placeholder ── thin wrapper around FocalImage for backwards compat.
-   The `aspect` prop is ignored; every placeholder is now full-bleed. */
-export function Placeholder({
-  label,
-  note,
+/* ── Continue — footer cards linking to the next active journals.
+      Pass `currentHref` and the next 3 active journals are derived from
+      lib/journals automatically. The legacy `items` prop is still
+      accepted for explicit overrides. */
+export function Continue({
+  currentHref,
+  count = 3,
+  items,
 }: {
-  label: string
-  aspect?: string  // accepted for back-compat, no longer used
-  note?: string
+  currentHref?: string
+  count?: number
+  items?: { href: string; label: string; description: string; img?: string }[]
 }) {
-  return <FocalImage label={label} note={note} />
-}
+  const resolved: { href: string; label: string; description: string; img?: string }[] =
+    items ?? nextActiveJournals(currentHref, count).map(j => ({
+      href: j.href,
+      label: j.title,
+      description: j.description,
+      img: j.img,
+    }))
 
-/* ── Data grid (cards) ──
-   Renders inline within whatever wrapper provides gutters (Section / TwoCol body).
-   When used standalone at top level, wrap in <Section> first. */
-export function DataGrid({ cols: _cols = 2, children }: { cols?: 2 | 3 | 4; children: ReactNode }) {
-  return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr',
-        gap: 'clamp(24px, 3vw, 40px)',
-        marginTop: 'clamp(24px, 4vh, 40px)',
-      }}
-      className="data-grid"
-    >
-      {children}
-    </div>
-  )
-}
+  if (!resolved.length) return null
 
-export function DataCard({ label: _label, value, children }: { label: string; value?: ReactNode; children?: ReactNode }) {
-  return (
-    <div style={{ borderTop: '1px solid var(--border)', paddingTop: 16 }}>
-      {value && <p className="p1" style={{ margin: 0, marginBottom: 6 }}>{value}</p>}
-      {children && <div className="p2" style={{ color: 'var(--text-body)' }}>{children}</div>}
-    </div>
-  )
-}
-
-/* ── Pull quote (centered block, grotesque display) ── */
-export function PullQuote({ children, attribution }: { children: ReactNode; attribution?: string }) {
-  return (
-    <section style={{ padding: 'var(--section-gap) 0' }}>
-      <div className="section-w">
-        <Reveal>
-          <blockquote style={{ margin: '0 auto', maxWidth: 880, textAlign: 'center' }}>
-            <p
-              style={{
-                fontFamily: 'var(--font-grotesque)',
-                fontSize: 'clamp(24px, 3.2vw, 40px)',
-                lineHeight: 1.2,
-                letterSpacing: '-0.03em',
-                color: 'var(--text)',
-                margin: 0,
-                textWrap: 'balance',
-              }}
-            >
-              {children}
-            </p>
-            {attribution && (
-              <cite className="label" style={{ fontStyle: 'normal', marginTop: 32, display: 'block' }}>
-                — {attribution}
-              </cite>
-            )}
-          </blockquote>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-/* ── Pull stat (centered narrow block, H3 value + label + sub) ── */
-export function PullStat({ value, label, sub, wrap = true }: { value: ReactNode; label: string; sub?: string; wrap?: boolean }) {
-  const inner = (
-    <div style={{ margin: '0 auto', maxWidth: 480, textAlign: 'center' }}>
-      <h2 style={{ margin: 0, marginBottom: 12 }}>{value}</h2>
-      <div className="label">{label}</div>
-      {sub && <p className="p2" style={{ marginTop: 12 }}>{sub}</p>}
-    </div>
-  )
-  if (!wrap) return inner
-  return (
-    <section style={{ padding: 'var(--section-gap) 0' }}>
-      <div className="section-w">
-        <Reveal>{inner}</Reveal>
-      </div>
-    </section>
-  )
-}
-
-/* ── Side by side comparison (A/B columns) ── */
-export function SideBySide({
-  leftTitle,
-  rightTitle,
-  leftChildren,
-  rightChildren,
-}: {
-  leftTitle: string
-  rightTitle: string
-  leftChildren: ReactNode
-  rightChildren: ReactNode
-}) {
-  return (
-    <section style={{ padding: 'var(--section-gap) 0' }}>
-      <div className="section-w">
-        <div
-          className="sidebyside"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 'var(--grid-gap)',
-          }}
-        >
-          <div style={{ borderTop: '1px solid var(--border)', paddingTop: 20 }}>
-            <div className="label" style={{ marginBottom: 12 }}>{leftTitle}</div>
-            <div className="p2" style={{ color: 'var(--text-body)' }}>{leftChildren}</div>
-          </div>
-          <div style={{ borderTop: '1px solid var(--border)', paddingTop: 20 }}>
-            <div className="label" style={{ marginBottom: 12 }}>{rightTitle}</div>
-            <div className="p2" style={{ color: 'var(--text-body)' }}>{rightChildren}</div>
-          </div>
-          <style jsx>{`
-            @media (max-width: 768px) {
-              .sidebyside { grid-template-columns: 1fr !important; }
-            }
-          `}</style>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ── Continue cards (outgoing links at page end) ── */
-export function Continue({ items }: { items: { href: string; label: string; description: string }[] }) {
   return (
     <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
       <div className="section-w">
         <Reveal>
-          <div className="label" style={{ marginBottom: 40 }}>Explore regenerative systems</div>
+          <div className="label" style={{ marginBottom: 40 }}>Continue reading</div>
           <div
             className="continue-grid"
             style={{
               display: 'grid',
-              gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))`,
+              gridTemplateColumns: `repeat(${resolved.length}, minmax(0, 1fr))`,
               gap: 'var(--grid-gap)',
             }}
           >
-            {items.map((item) => (
+            {resolved.map((item, i) => (
               <Link
                 key={item.href}
                 href={item.href}
+                className="continue-card"
                 style={{
                   display: 'block',
                   textDecoration: 'none',
                   color: 'var(--text)',
                   transition: 'transform var(--dur-base) var(--ease)',
                 }}
-                className="continue-card"
               >
-                {/* Placeholder image card — 16:9 grey block above the meta.
-                    Swap for an <img> once each destination has its hero. */}
-                <div className="continue-card__media" aria-hidden />
+                <div className="continue-card__media" aria-hidden>
+                  {item.img && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      className="continue-card__photo"
+                      src={item.img}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                  {/* Symbol overlay — same hover gesture as the navbar
+                      journal tiles: image blurs, this glyph fades in. */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    className="continue-card__symbol"
+                    src={`/aura-symbol-${(i % 3) + 1}.png`}
+                    alt=""
+                    aria-hidden
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
                 <h3 style={{ margin: 0, marginBottom: 12 }}>{item.label}</h3>
                 <div className="p2" style={{ color: 'var(--text-body)' }}>{item.description}</div>
               </Link>
@@ -629,14 +1402,47 @@ export function Continue({ items }: { items: { href: string; label: string; desc
               .continue-grid { grid-template-columns: 1fr !important; }
             }
             .continue-card:hover { transform: translateY(-2px); }
-            .continue-card:hover :global(.continue-card__media) { opacity: 0.85; }
             :global(.continue-card__media) {
+              position: relative;
               width: 100%;
               aspect-ratio: 16 / 9;
               background: #d6d6d6;
               border-radius: var(--radius-1);
+              overflow: hidden;
               margin-bottom: 24px;
-              transition: opacity var(--dur-base) var(--ease);
+            }
+            :global(.continue-card__photo) {
+              position: absolute;
+              inset: 0;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+              transform: scale(1.04);
+              transition: filter var(--dur-base) var(--ease);
+              will-change: filter;
+            }
+            /* Symbol overlay — fades in centered on hover, identical
+               gesture to the navbar journal tiles. */
+            :global(.continue-card__symbol) {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              width: 35%;
+              height: auto;
+              transform: translate(-50%, -50%) scale(0.85);
+              opacity: 0;
+              pointer-events: none;
+              z-index: 10;
+              mix-blend-mode: difference;
+              transition: opacity 0.32s var(--ease-out), transform 0.4s var(--ease-spring);
+            }
+            :global(.continue-card:hover .continue-card__photo) {
+              filter: blur(14px);
+            }
+            :global(.continue-card:hover .continue-card__symbol) {
+              opacity: 1;
+              transform: translate(-50%, -50%) scale(1);
             }
           `}</style>
         </Reveal>
@@ -645,16 +1451,6 @@ export function Continue({ items }: { items: { href: string; label: string; desc
   )
 }
 
-/* ── Couplet (two-line stanza; `local` defaults to English continuation) ── */
-export function Couplet({ en, local, localLang }: { en: string; local?: string; localLang?: 'kn' | 'ja' | 'en' }) {
-  return (
-    <section style={{ padding: '0' }}>
-      <div className="section-w">
-        <div style={{ maxWidth: 760 }}>
-          <p className="p1" style={{ marginBottom: 4 }}>{en}</p>
-          {local && <p className="p2" lang={localLang || 'en'}>{local}</p>}
-        </div>
-      </div>
-    </section>
-  )
-}
+
+export { ACTIVE_JOURNALS, nextActiveJournals }
+export type { Journal }

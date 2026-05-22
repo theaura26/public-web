@@ -1,8 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
 import Reveal from '@/components/RevealOnScroll'
+import { ScrollHighlight } from '@/components/article/Article'
+import { ExpandingBanner } from '@/components/ExpandingBanner'
 import { LogoEmblem } from '@/components/Logo'
 import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun, CloudMoon } from '@phosphor-icons/react'
 import 'plyr/dist/plyr.css'
@@ -146,6 +148,7 @@ function HeroVideo({ onWatch }: { onWatch: () => void }) {
           playsInline
           preload="auto"
           poster="/aura-hero.jpg"
+          aria-label="Aura — opening hero film, the land in rhythm"
           style={{
             position: 'absolute',
             inset: 0,
@@ -218,58 +221,11 @@ function HeroVideo({ onWatch }: { onWatch: () => void }) {
               fontWeight: 400,
               letterSpacing: '1px',
               textTransform: 'uppercase',
+              textShadow: '0 1px 6px rgba(0, 0, 0, 0.45)',
             }}
           >
             Land. Time. Practice.
           </p>
-          <button
-            type="button"
-            onClick={onWatch}
-            aria-label="Enter the ecosystem — watch the Aura film"
-            className="hero-watch"
-            style={{
-              pointerEvents: 'auto',
-              background: 'transparent',
-              border: 'none',
-              padding: 0,
-              color: '#fff',
-              fontFamily: 'var(--font-mono)',
-              fontSize: 11,
-              fontWeight: 400,
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 10,
-            }}
-          >
-            <span
-              aria-hidden
-              className="hero-watch__dot"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 22,
-                height: 22,
-                borderRadius: '50%',
-                border: '1px solid rgba(255,255,255,0.7)',
-                transition: 'background var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out)',
-              }}
-            >
-              <span
-                style={{
-                  width: 0,
-                  height: 0,
-                  marginLeft: 2,
-                  borderLeft: '5px solid #fff',
-                  borderTop: '3.5px solid transparent',
-                  borderBottom: '3.5px solid transparent',
-                }}
-              />
-            </span>
-            Enter the ecosystem
-          </button>
         </div>
       </div>
       <style jsx>{`
@@ -289,417 +245,6 @@ function HeroVideo({ onWatch }: { onWatch: () => void }) {
         }
       `}</style>
     </section>
-  )
-}
-
-/* ═══════════════════════════════════════════
-   EXPANDING VIDEO — 16:9 frame → fullscreen on scroll
-   Matches Brand page HeroBanner interaction.
-   Desktop: 16:9, Mobile: 3:4
-═══════════════════════════════════════════ */
-
-function ExpandingVideo({ src, poster, alt }: { src: string; poster: string; alt: string }) {
-  const wrapRef = useRef<HTMLDivElement>(null)
-  const innerRef = useRef<HTMLDivElement>(null)
-  const cardRef = useRef<HTMLDivElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  // Scroll-driven expansion — follows the site-wide BLUR → CLARITY → HOLD →
-  // SCROLL rhythm (same as the sanctuary stack panels).
-  //
-  //   Phase 0 — BLUR    : card enters as a centred frame with heavy blur
-  //   Phase 1 — CLARITY : as scroll progresses, blur lifts and the card
-  //                       grows to full viewport
-  //   Phase 2 — HOLD    : card stays fullscreen and clear for a beat
-  //   Phase 3 — SCROLL  : sticky releases, card slides up attached to
-  //                       wrapper.bottom, next section enters
-  //
-  // The wrapper height = sticky stage (100vh) + animation distance + hold
-  // distance. After the wrapper exits, the OS section sits right against
-  // it — no internal empty band.
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const matchMobile = window.matchMedia('(max-width: 768px)')
-
-    // Animation tuning. Desktop runs the full scroll-driven 16:9 → fullscreen
-    // expand. Mobile takes a different path: the card is a flat 100vh
-    // banner (same footprint as the Mudigere panel) with a one-shot
-    // entry animation — a quick scale-up + blur-lift fired by an
-    // IntersectionObserver the moment the section enters view. By the
-    // time the user has scrolled into the banner it's already settled.
-    const isMobileMatch = window.matchMedia('(max-width: 768px)').matches
-    if (isMobileMatch) {
-      // Scroll-tied entry animation. As the 100vh wrapper enters the
-      // viewport from below — wrap.top descending from `vh` toward `0` —
-      // we ramp `p` from 0 to 1. The card scales 0.7 → 1 and the video
-      // blur lifts 14 → 0 over that same range. Once wrap.top reaches 0
-      // (section fully aligned to viewport top), `p` is clamped at 1 and
-      // the card stays fullscreen + clear while the wrapper scrolls past.
-      // No sticky zone, no internal whitespace.
-      const wrapEl = wrapRef.current
-      const innerEl = innerRef.current
-      const cardEl = cardRef.current
-      const videoEl = videoRef.current
-      if (!wrapEl || !innerEl || !cardEl) return
-
-      // Layout: card always laid out fullscreen; the transform supplies
-      // the scaled-down entry state.
-      innerEl.style.padding = '0'
-      cardEl.style.aspectRatio = 'auto'
-      cardEl.style.maxWidth = 'none'
-      cardEl.style.width = '100vw'
-      cardEl.style.height = '100vh'
-      cardEl.style.transformOrigin = 'center'
-
-      let raf = 0
-      const tick = () => {
-        raf = 0
-        const wrap = wrapRef.current
-        const card = cardRef.current
-        const video = videoRef.current
-        if (!wrap || !card) return
-
-        const rect = wrap.getBoundingClientRect()
-        const vh = window.innerHeight
-        const raw = Math.max(0, Math.min(1, (vh - rect.top) / vh))
-        // Smootherstep — gentle in/out at both ends.
-        const p = raw * raw * raw * (raw * (raw * 6 - 15) + 10)
-
-        const scale = 0.7 + 0.3 * p
-        card.style.transform = `scale(${scale})`
-
-        if (video) {
-          video.style.filter = `blur(${(1 - p) * 14}px)`
-          video.style.transform = 'scale(1.04)'
-        }
-      }
-      const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
-      window.addEventListener('scroll', onScroll, { passive: true })
-      window.addEventListener('resize', onScroll, { passive: true })
-      tick()
-      return () => {
-        window.removeEventListener('scroll', onScroll)
-        window.removeEventListener('resize', onScroll)
-        if (raf) cancelAnimationFrame(raf)
-      }
-    }
-
-    const ANIMATION_VH = 0.6
-    const HOLD_VH = 0.2
-    const BLUR_MAX = 18       // px — heavier than the sanctuary tint blur
-
-    let ticking = false
-    const onScroll = () => {
-      if (ticking) return
-      ticking = true
-      requestAnimationFrame(() => {
-        ticking = false
-        const wrap = wrapRef.current
-        const inner = innerRef.current
-        const card = cardRef.current
-        const video = videoRef.current
-        if (!wrap || !inner || !card) return
-
-        const vw = window.innerWidth
-        const vh = window.innerHeight
-        const isMobile = matchMobile.matches
-
-        const rect = wrap.getBoundingClientRect()
-        const scrollIntoWrap = -rect.top
-        const animationDist = ANIMATION_VH * vh
-        const raw = Math.max(0, Math.min(1, scrollIntoWrap / animationDist))
-        // Smootherstep — gentle in/out at both ends.
-        const p = prefersReduced
-          ? (raw > 0.5 ? 1 : 0)
-          : raw * raw * raw * (raw * (raw * 6 - 15) + 10)
-
-        const initialNavPad = 56
-        const initialSidePad = isMobile ? 20 : 48
-
-        // Initial card dimensions — a centred frame, smaller than viewport.
-        let initialW: number
-        let initialH: number
-        if (isMobile) {
-          // 3:4 portrait spanning the inner content width.
-          initialW = vw - 2 * initialSidePad
-          initialH = (initialW * 4) / 3
-        } else {
-          // 16:9 frame fit within (vh - nav - bottom buffer) and gutter-padded
-          // width. Constrained by whichever dimension hits the limit first.
-          const availH = vh - initialNavPad - 96
-          const availW = vw - 2 * initialSidePad
-          if ((availH * 16) / 9 <= availW) {
-            initialH = availH
-            initialW = (availH * 16) / 9
-          } else {
-            initialW = availW
-            initialH = (availW * 9) / 16
-          }
-        }
-
-        // Continuous interpolation — no aspect-ratio threshold jump.
-        const cardW = initialW + (vw - initialW) * p
-        const cardH = initialH + (vh - initialH) * p
-        const navPad = initialNavPad * (1 - p)
-        const sidePad = initialSidePad * (1 - p)
-
-        inner.style.padding = `${navPad}px ${sidePad}px 0`
-        card.style.aspectRatio = 'auto'
-        card.style.maxWidth = 'none'
-        card.style.width = `${cardW}px`
-        card.style.height = `${cardH}px`
-
-        // Blur layer — heavy at p=0 (frame entering), zero at p=1 (cleared).
-        if (video) {
-          const blurVal = (1 - p) * BLUR_MAX
-          video.style.filter = `blur(${blurVal}px)`
-          video.style.transform = `scale(${1 + 0.04 * (1 - p)})`
-        }
-        // Keep the HOLD_VH read so the wrapper height stays linked to it.
-        void HOLD_VH
-      })
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll, { passive: true })
-    onScroll()
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-    }
-  }, [])
-
-  // Autoplay when visible
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) video.play().catch(() => {})
-        else video.pause()
-      },
-      { threshold: 0.1 }
-    )
-    observer.observe(video)
-    return () => observer.disconnect()
-  }, [])
-
-  return (
-    <div ref={wrapRef} className="expanding-video-wrap" style={{ position: 'relative', zIndex: 0 }}>
-      <div
-        ref={innerRef}
-        className="expanding-video-inner"
-        style={{
-          position: 'sticky',
-          top: 0,
-          height: '100vh',
-          display: 'flex',
-          /* alignItems is overridden per-mode below (centred on desktop,
-             top-anchored on mobile so the card lands just under the nav
-             instead of mid-screen). */
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '56px 48px 0',
-          boxSizing: 'border-box',
-        }}
-      >
-        <div
-          ref={cardRef}
-          className="expanding-video-card"
-          style={{
-            width: '100%',
-            maxWidth: 'calc((100vh - 56px - 96px) * 16 / 9)',
-            position: 'relative',
-            overflow: 'hidden',
-            borderRadius: 3,
-            background: 'var(--bg)',
-          }}
-        >
-          <video
-            ref={videoRef}
-            muted
-            loop
-            playsInline
-            preload="none"
-            poster={poster}
-            aria-label={alt}
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              display: 'block',
-              /* Slight initial scale prevents the blur from revealing
-                 transparent edges of the video element before the JS
-                 first-tick takes over. JS animates scale to 1 as p → 1. */
-              transform: 'scale(1.04)',
-              willChange: 'filter, transform',
-            }}
-          >
-            <source src={src} type="video/mp4" />
-          </video>
-          {/* Bottom-left label overlay — mono uppercase, sits over the film. */}
-          <p
-            className="label"
-            style={{
-              position: 'absolute',
-              left: 'clamp(20px, 4vw, 48px)',
-              bottom: 'clamp(20px, 4vh, 48px)',
-              margin: 0,
-              maxWidth: 'min(320px, 60vw)',
-              color: '#ffffff',
-              letterSpacing: '1px',
-              lineHeight: 1.5,
-              zIndex: 2,
-            }}
-          >
-            We cultivate environments designed to sharpen thought and restore balance.
-          </p>
-        </div>
-      </div>
-
-      <style jsx>{`
-        /* DESKTOP wrapper MUST stay in sync with JS animation tuning:
-           ANIMATION_VH (60vh) + HOLD_VH (20vh) + sticky stage (100vh) = 180vh.
-           After scroll-into-wrap exceeds the sticky zone, the inner releases
-           and attaches to wrapper.bottom — no internal empty band. */
-        .expanding-video-wrap {
-          height: 180vh;
-        }
-        /* Pre-hydration aspect-ratio so the card has a sensible size before
-           the scroll listener runs. JS overrides to 'auto' on first tick. */
-        .expanding-video-card {
-          aspect-ratio: 16 / 9;
-        }
-        @media (max-width: 768px) {
-          /* MOBILE: flat 100vh banner — same footprint as a Mudigere panel.
-             No sticky scroll-zone, so no whitespace beneath. The entry
-             animation (scale up + blur lift) is driven by the wrapper's
-             viewport position in JS — see the isMobileMatch branch in
-             the ExpandingVideo useEffect. */
-          .expanding-video-wrap {
-            height: 100vh;
-          }
-          .expanding-video-inner {
-            position: static !important;
-            height: 100vh !important;
-            padding: 0 !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-          }
-          .expanding-video-card {
-            aspect-ratio: auto;
-            width: 100% !important;
-            height: 100% !important;
-            max-width: none !important;
-          }
-        }
-      `}</style>
-    </div>
-  )
-}
-
-/* ═══════════════════════════════════════════
-   SCROLL HIGHLIGHT — Apple-style word-by-word reveal
-   Long-form heading where each word starts at a muted opacity and brightens
-   to full as it crosses the upper-third of the viewport. The whole block
-   reads as one flowing h2; the scroll position becomes the reading rhythm.
-═══════════════════════════════════════════ */
-
-function ScrollHighlight({ children, as: As = 'h2', maxWidth = 760 }: {
-  children: string
-  as?: 'h1' | 'h2' | 'h3'
-  maxWidth?: number
-}) {
-  const wordRefs = useRef<(HTMLSpanElement | null)[]>([])
-  // Each newline becomes its own line break. Words inside each line are
-  // wrapped individually so the scroll-highlight runs word-by-word top to
-  // bottom without ever splitting a line across two flows.
-  const lines = children.split(/\n+/).map(line => line.trim()).filter(Boolean)
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) {
-      wordRefs.current.forEach(s => { if (s) s.style.opacity = '1' })
-      return
-    }
-
-    let raf = 0
-    const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        const vh = window.innerHeight
-        // A word starts brightening when its top edge enters the bottom 78%
-        // of the viewport, and reaches full strength once its top is in the
-        // upper 38%. That ~40vh window gives each line a moment of "pulling
-        // forward" without the whole block flashing at once.
-        const startY = vh * 0.78
-        const endY = vh * 0.38
-        wordRefs.current.forEach(span => {
-          if (!span) return
-          const y = span.getBoundingClientRect().top
-          const p = Math.max(0, Math.min(1, (startY - y) / (startY - endY)))
-          // Floor at 0.18 — muted but still legible as a tone setter, never
-          // an invisible state. Top at 1.0 = full var(--text).
-          span.style.opacity = String(0.18 + p * 0.82)
-        })
-      })
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(raf)
-    }
-  }, [children])
-
-  // Flatten lines into a single sequence of words so the scroll handler can
-  // address all spans by a single contiguous index range. Each line gets a
-  // <span style="display:block"> so it always wraps to its own row.
-  let wordIndex = -1
-  return (
-    <As style={{ margin: 0, maxWidth, textAlign: 'left' }}>
-      {lines.map((line, lineIdx) => {
-        const words = line.split(/\s+/).filter(Boolean)
-        const isLast = lineIdx === lines.length - 1
-        return (
-          <span
-            key={lineIdx}
-            style={{
-              display: 'block',
-              // Paragraph-style gap between sentences. The last line never
-              // adds bottom margin so the block ends flush with whatever
-              // follows.
-              marginBottom: isLast ? 0 : 'clamp(28px, 4vh, 56px)',
-            }}
-          >
-            {words.map((w, i) => {
-              wordIndex++
-              const idx = wordIndex
-              return (
-                <span key={i}>
-                  <span
-                    ref={el => { wordRefs.current[idx] = el }}
-                    style={{
-                      opacity: 0.18,
-                      transition: 'opacity var(--dur-fast) var(--ease)',
-                      willChange: 'opacity',
-                    }}
-                  >
-                    {w}
-                  </span>
-                  {i < words.length - 1 ? ' ' : ''}
-                </span>
-              )
-            })}
-          </span>
-        )
-      })}
-    </As>
   )
 }
 
@@ -732,7 +277,7 @@ function PillarVideo({ src, poster, alt }: { src: string; poster: string; alt: s
       width: '100%',
       aspectRatio: '3 / 4',
       overflow: 'hidden',
-      borderRadius: 3,
+      borderRadius: 'var(--radius-1)',
       background: 'var(--bg)',
     }}>
       <video
@@ -1053,14 +598,14 @@ function LocationDataGrid({ location, coords, altitude, tempRange, avgHumidity, 
   const condition = weather ? (weatherLabels[weather.code] ?? 'Unknown') : null
   return (
     <div>
-      <div style={{ marginBottom: 24 }}>
+      <div style={{ marginBottom: 'var(--space-5)' }}>
         <p className="label loc-label" style={{ marginBottom: 6 }}>LOCATION</p>
         <p className="loc-body">{location}</p>
       </div>
 
       {weather && (
         <div style={{ marginBottom: 28 }}>
-          <p className="label loc-label" style={{ marginBottom: 8 }}>WEATHER NOW</p>
+          <p className="label loc-label" style={{ marginBottom: 'var(--space-2)' }}>WEATHER NOW</p>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <WeatherIcon code={weather.code} isDay={weather.isDay} size={20} className="loc-body" />
             <span className="loc-body">{weather.temp}&deg;C &middot; {condition}</span>
@@ -1068,7 +613,7 @@ function LocationDataGrid({ location, coords, altitude, tempRange, avgHumidity, 
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 32px', marginBottom: children ? 32 : 0 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 32px', marginBottom: children ? 'var(--space-6)' : 0 }}>
         <div><p className="label loc-label">COORDINATES</p><p className="loc-body" style={{ marginTop: 2 }}>{coords}</p></div>
         <div><p className="label loc-label">ALTITUDE</p><p className="loc-body" style={{ marginTop: 2 }}>{altitude}</p></div>
         <div><p className="label loc-label">TEMP.</p><p className="loc-body" style={{ marginTop: 2 }}>{weather ? `${weather.temp}°C now · ${tempRange}` : tempRange}</p></div>
@@ -1130,6 +675,7 @@ function AuraVideoModal({ open, onClose }: { open: boolean; onClose: () => void 
           ref={videoCallback}
           playsInline
           preload="auto"
+          aria-label="Aura — Enter the ecosystem film"
         >
           {/* The "Enter the ecosystem" film. Browsers pick the first source
               they can decode — webm preferred on Chrome / Firefox (smaller),
@@ -1199,17 +745,17 @@ function MudigereModal({ open, onClose }: { open: boolean; onClose: () => void }
       <LocationContent>
         <div className="loc-top">
           <div className="loc-pencil-mobile">
-            <img src="/aura-mudigere-pencil.jpg" alt="Pencil illustration of the Mudigere estate" style={{ width: '100%', borderRadius: 3, display: 'block', objectFit: 'cover', aspectRatio: '4 / 5' }} />
+            <img src="/aura-mudigere-pencil.jpg" alt="Pencil illustration of the Mudigere estate" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '4 / 5' }} />
           </div>
           <div>
-            <h2 className="loc-h2" style={{ marginBottom: 24 }}>The Land Remembers.</h2>
-            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>The Land Remembers.</h2>
+            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               <p>Nestled in the mist of the Western Ghats, this estate operates on a timeline dictated by nature rather than urgency, honoring a legacy where the land continues its own story. Through a philosophy of patient stewardship, coffee and pepper are cultivated with deep restraint, allowing the rhythms of wind, soil, and sun to guide every harvest and fermentation.</p>
               <p>This slow, intentional process ensures that every cup serves as a sensory memory of its origin, reflecting a profound respect for the quiet continuity of the ancient landscape.</p>
             </div>
           </div>
           <div className="loc-images-desktop">
-            <img src="/aura-mudigere-pencil.jpg" alt="Pencil illustration of the Mudigere estate" style={{ width: '100%', borderRadius: 3, display: 'block', objectFit: 'cover', aspectRatio: '3 / 4' }} />
+            <img src="/aura-mudigere-pencil.jpg" alt="Pencil illustration of the Mudigere estate" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '3 / 4' }} />
           </div>
         </div>
         <div className="loc-bottom">
@@ -1225,12 +771,12 @@ function MudigereModal({ open, onClose }: { open: boolean; onClose: () => void }
             <img src="/aura-mudigere-map.svg" alt="Map of the Aura Mudigere estate" className="loc-map" style={{ width: '100%', display: 'block' }} />
           </LocationDataGrid>
           <div>
-            <h2 className="loc-h2" style={{ marginBottom: 24 }}>World&rsquo;s Oldest Arabica Region, Rediscovered.</h2>
-            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>World&rsquo;s Oldest Arabica Region, Rediscovered.</h2>
+            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               <p>The Western Ghats are a UNESCO World Heritage biodiversity hotspot — one of the eight most biodiverse regions on earth. Chikmagalur sits within this range at 900&ndash;1100 metres, where altitude, monsoon rainfall, and ancient volcanic soil create conditions for coffee of exceptional complexity.</p>
               <p>Aura&rsquo;s 150&ndash;170 acres are farmed as a four-layer agroforestry system: native shade trees above, pepper vines in the mid-canopy, coffee and tea in the understory, cover crops and soil regeneration plants at ground level.</p>
             </div>
-            <img src="/aura-mudigere-landscape.jpg" alt="Aura Mudigere estate in the Western Ghats" style={{ width: '100%', borderRadius: 3, display: 'block', objectFit: 'cover', aspectRatio: '16 / 10', marginTop: 32 }} />
+            <img src="/aura-mudigere-landscape.jpg" alt="Aura Mudigere estate in the Western Ghats" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '16 / 10', marginTop: 'var(--space-6)' }} />
           </div>
         </div>
       </LocationContent>
@@ -1246,18 +792,18 @@ function OharaModal({ open, onClose }: { open: boolean; onClose: () => void }) {
       <LocationContent>
         <div className="loc-top">
           <div className="loc-pencil-mobile">
-            <img src="/aura-ohara-pencil.jpg" alt="Pencil illustration of Aura Ohara" style={{ width: '100%', borderRadius: 3, display: 'block', objectFit: 'cover', aspectRatio: '4 / 5' }} />
+            <img src="/aura-ohara-pencil.jpg" alt="Pencil illustration of Aura Ohara" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '4 / 5' }} />
           </div>
           <div>
-            <h2 className="loc-h2" style={{ marginBottom: 24 }}>The Valley Listens.</h2>
-            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>The Valley Listens.</h2>
+            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               <p>Nestled in the quiet valley of Ohara, north of Kyoto, this place moves to the rhythm of light, water, and care rather than speed. Surrounded by cedar forests, rivers, and temples, it is shaped by a way of life that honours stillness, craft, and the quiet intelligence of the land.</p>
               <p>Through a philosophy of restoration over construction, Aura in Ohara grows by listening before leading. The home, garden, and teahouse are not remade in haste, but gently renewed through patience, restraint, and deep respect for what already exists.</p>
               <p>This slow, mindful approach allows each space to hold the memory of its setting — reflecting a way of living rooted in calm, renewal, and the richness of everyday ritual.</p>
             </div>
           </div>
           <div className="loc-images-desktop">
-            <img src="/aura-ohara-pencil.jpg" alt="Pencil illustration of Aura Ohara" style={{ width: '100%', borderRadius: 3, display: 'block', objectFit: 'cover', aspectRatio: '3 / 4' }} />
+            <img src="/aura-ohara-pencil.jpg" alt="Pencil illustration of Aura Ohara" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '3 / 4' }} />
           </div>
         </div>
         <div className="loc-bottom">
@@ -1271,12 +817,12 @@ function OharaModal({ open, onClose }: { open: boolean; onClose: () => void }) {
             weather={weather}
           />
           <div>
-            <h2 className="loc-h2" style={{ marginBottom: 24 }}>Kyoto&rsquo;s Quiet Valley, Rediscovered.</h2>
-            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>Kyoto&rsquo;s Quiet Valley, Rediscovered.</h2>
+            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               <p>Ohara is a place of cedar forests, rivers, temples, and hand-tended fields — where farmers still work by hand and artisans move by rhythm, not by clock. It is here that Aura belongs: not to transform the valley, but to listen to it.</p>
               <p>The site is envisioned through the restoration of a 70-year-old home and a 30-year garden, with a teahouse renewed by a Kyoto craftsman and cared for across generations. Rooted in wabi-sabi, Aura Ohara embraces imperfection, continuity, and a rich, mindful life shaped by light, calm, and reflection.</p>
             </div>
-            <img src="/aura-ohara-landscape.jpg" alt="Aura Ohara in the valley of Kyoto" style={{ width: '100%', borderRadius: 3, display: 'block', objectFit: 'cover', aspectRatio: '16 / 10', marginTop: 32 }} />
+            <img src="/aura-ohara-landscape.jpg" alt="Aura Ohara in the valley of Kyoto" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '16 / 10', marginTop: 'var(--space-6)' }} />
           </div>
         </div>
       </LocationContent>
@@ -1294,7 +840,7 @@ function OharaModal({ open, onClose }: { open: boolean; onClose: () => void }) {
 ═══════════════════════════════════════════ */
 function AgentHome() {
   return (
-    <article className="section-w" style={{ paddingTop: 80, paddingBottom: 80 }}>
+    <article className="section-w" style={{ paddingTop: 'var(--space-9)', paddingBottom: 'var(--space-9)' }}>
       {/* Site nav — plain link list so crawlers can reach every route. */}
       <nav className="agent-nav" aria-label="Aura site navigation">
         <p className="label">AURA · theaura.life · agent view</p>
@@ -1592,49 +1138,6 @@ function useBlurReveal() {
   return { wrapRef, blurRef, contentRef }
 }
 
-/* 2-col variant: independent blur layer per image (driven by a single scroll) */
-function useBlurReveal2() {
-  const wrapRef = useRef<HTMLDivElement>(null)
-  const blurLeftRef = useRef<HTMLDivElement>(null)
-  const blurRightRef = useRef<HTMLDivElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    let raf = 0
-    const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        const wrap = wrapRef.current
-        const bL = blurLeftRef.current
-        const bR = blurRightRef.current
-        const content = contentRef.current
-        if (!wrap || !bL || !bR) return
-        const rect = wrap.getBoundingClientRect()
-        const range = wrap.offsetHeight - window.innerHeight
-        if (range <= 0) return
-        const p = Math.max(0, Math.min(1, -rect.top / range))
-        const fadeIn = Math.min(1, p / 0.15)
-        const blurLift = Math.max(0, Math.min(1, (p - 0.7) / 0.3))
-        if (content) content.style.opacity = `${fadeIn}`
-        const blurVal = (1 - blurLift) * 16
-        for (const el of [bL, bR]) {
-          el.style.backdropFilter = `blur(${blurVal}px)`
-          ;(el.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = `blur(${blurVal}px)`
-        }
-      })
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(raf)
-    }
-  }, [])
-
-  return { wrapRef, blurLeftRef, blurRightRef, contentRef }
-}
-
 function SanctuaryBg({ s }: { s: Sanctuary }) {
   /* Sanctuary background tint — flat 12% black, no radial darkening.
      The heading + tagline rely on their text-shadow for contrast against
@@ -1651,16 +1154,43 @@ function SanctuaryBg({ s }: { s: Sanctuary }) {
     />
   )
 
+  /* Sanctuary backdrop videos sit ~2-3 viewports below the fold (after
+     the hero, the HeroVideo 200vh stage, and the residency banner). With
+     preload="auto" + autoPlay all three (Mudigere 6 MB, Ohara 7.6 MB,
+     Munduk 2 MB) fully buffer the moment the page loads — ~16 MB the
+     visitor may never scroll to. Same pattern as PillarVideo:
+     preload="none", no autoPlay attribute, and an IntersectionObserver
+     calls play()/pause() once the band scrolls near the viewport. The
+     poster bgSrc is what readers see during the hand-off, which keeps
+     the panel composed even before the video lands. */
+  const videoRef = useRef<HTMLVideoElement>(null)
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {})
+        else video.pause()
+      },
+      /* rootMargin gives the video ~1 viewport of lead-time so it can
+         start fetching before the user actually arrives at the band. */
+      { threshold: 0, rootMargin: '100% 0px 100% 0px' }
+    )
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [s.bgVideo])
+
   if (s.bgVideo) {
     return (
       <>
         <video
-          autoPlay
+          ref={videoRef}
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           poster={s.bgSrc}
+          aria-label={`${s.name} sanctuary — ambient backdrop`}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         >
           <source src={s.bgVideo} type="video/mp4" />
@@ -1740,16 +1270,18 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
           display: 'flex',
           alignItems: 'flex-end',
           justifyContent: 'space-between',
-          gap: 24,
+          gap: 'var(--space-5)',
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
-            <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: '1px', margin: 0 }}>{s.region}</p>
-            <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: '1px', margin: 0 }}>{s.coords}</p>
+            <p className="label" style={{ color: '#ffffff', margin: 0 }}>{s.region}</p>
+            <p className="label" style={{ color: '#ffffff', margin: 0 }}>{s.coords}</p>
           </div>
-          {/* The Explore CTA is the only hit area for the whole panel. */}
+          {/* Explore CTA — the whole panel is now clickable, but the
+              CTA stays as a visible affordance. stopPropagation so we
+              don't double-fire when the user clicks the button. */}
           <button
             type="button"
-            onClick={onExplore}
+            onClick={(e) => { e.stopPropagation(); onExplore?.() }}
             aria-label={`Open ${s.name} details`}
             className="label"
             style={{
@@ -1757,8 +1289,6 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
               border: 'none',
               padding: 0,
               color: '#ffffff',
-              fontSize: 11,
-              letterSpacing: '1px',
               margin: 0,
               display: 'inline-flex',
               alignItems: 'center',
@@ -1796,11 +1326,11 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
            anchored) because the 2-col panels don't carry an Explore CTA on
            the opposite side. */
         <div style={{ position: 'absolute', bottom: 'clamp(24px, 5vh, 56px)', left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-          <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: '1px', margin: 0 }}>{s.region}</p>
+          <p className="label" style={{ color: '#ffffff', margin: 0 }}>{s.region}</p>
           {s.comingSoon ? (
-            <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: 2, margin: 0 }}>COMING SOON</p>
+            <p className="label" style={{ color: '#ffffff', letterSpacing: 2, margin: 0 }}>COMING SOON</p>
           ) : (
-            <p className="label" style={{ color: '#ffffff', fontSize: 11, letterSpacing: '1px', margin: 0 }}>{s.coords}</p>
+            <p className="label" style={{ color: '#ffffff', margin: 0 }}>{s.coords}</p>
           )}
         </div>
       )}
@@ -1934,10 +1464,29 @@ function SanctuaryStackPanel({ s, z, onClick }: { s: Sanctuary; z: number; onCli
   return (
     <div ref={wrapRef} className="sanctuary-panel" style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', zIndex: z }}>
       <SanctuaryBg s={s} />
-      <div ref={blurRef} style={{ position: 'absolute', inset: 0, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
+      {/* Backdrop-filter blur layer — extended 200px past the panel's
+          left edge so the blur falloff feathers further into the dark
+          margin on the left. The panel itself is `overflow: hidden`,
+          so the visible extension is clipped at the panel boundary;
+          the effect is a softer left edge during scroll-driven lift. */}
+      <div ref={blurRef} style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: -200, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
       <div
         className="sanctuary-clickable"
-        style={{ position: 'absolute', inset: 0 }}
+        role={clickable ? 'button' : undefined}
+        tabIndex={clickable ? 0 : undefined}
+        aria-label={clickable ? `Open ${s.name} details` : undefined}
+        onClick={clickable ? onClick : undefined}
+        onKeyDown={clickable ? (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            onClick?.()
+          }
+        } : undefined}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          cursor: clickable ? 'pointer' : 'default',
+        }}
       >
         <SanctuaryContent s={s} large onExplore={clickable ? onClick : undefined} />
       </div>
@@ -1954,7 +1503,10 @@ function SanctuaryStackPanel2Col({ left, right, z }: { left: Sanctuary; right: S
       <div className="sanctuary-2col-bg" style={{ position: 'absolute', inset: 0, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
         <div style={{ position: 'relative', overflow: 'hidden', marginRight: -1 }}>
           <SanctuaryBg s={left} />
-          <div ref={blurLeftRef} style={{ position: 'absolute', inset: 0, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
+          {/* Same +200px left extension as the single-panel variant
+              above — softens the leftmost column's blur falloff into
+              the dark margin. */}
+          <div ref={blurLeftRef} style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: -200, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
         </div>
         <div style={{ position: 'relative', overflow: 'hidden' }}>
           <SanctuaryBg s={right} />
@@ -2064,14 +1616,13 @@ export default function Home() {
             Total ~1.65s.
           */}
 
-          {/* 1. Top display: A REGENERATIVE COMPANY (justified edge-to-edge).
+          {/* 1. Top display: NATURAL INTELLIGENCE. (justified edge-to-edge).
               Inline `opacity: 0` guards against the global CSS rule not having
               applied yet on first paint — the keyframe animation still drives
               the reveal and `animation-fill-mode: both` holds the final state. */}
           <h1 className="hero-display hero-anim hero-anim--fall" style={{ opacity: 0, animationDuration: '700ms', animationDelay: '0ms' }}>
-            <span>A</span>{' '}
-            <span>REGENERATIVE</span>{' '}
-            <span>COMPANY</span>
+            <span>NATURAL</span>{' '}
+            <span>INTELLIGENCE</span>
           </h1>
 
           {/* Mid row: aura wordmark · think in generations · we combine. */}
@@ -2082,7 +1633,7 @@ export default function Home() {
             </div>
             {/* 4. Think label */}
             <p className="label hero-mid__think hero-anim hero-anim--fade" style={{ opacity: 0, animationDuration: '500ms', animationDelay: '480ms' }}>
-              Nestled in nature, our sanctuary invites leaders, creators, and organisations into inspiration and flow
+              Our studios and sanctuaries invite leaders, creators, and organisations into inspiration and flow
             </p>
             {/* 5. Copy label */}
             <p className="label hero-mid__copy hero-anim hero-anim--fade" style={{ opacity: 0, animationDuration: '500ms', animationDelay: '640ms' }}>
@@ -2484,11 +2035,12 @@ export default function Home() {
           a single statement; each word brightens from muted to full as it
           crosses the upper third of the viewport. */}
       <section className="reason-section" style={{ borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
-        <div className="section-w">
-          <ScrollHighlight>{`The reason is to restore what sustains us.
-Everything here is built to endure.
-Land, hospitality, craft, and technology — one regenerative ecosystem.`}</ScrollHighlight>
-        </div>
+        {/* ScrollHighlight provides its own section-w — wrapping it in
+            another would double the gutter and push the headline 48 px
+            in from the page rhythm. */}
+        <ScrollHighlight align="left">{`Generational Impact.
+The idea suggests that the choices made by a certain generation have long-lasting effects on future generations, either escalating or lessening difficulties.
+The impact can be deep and complex, covering different facets of life, such as culture, economy, technology, and values.`}</ScrollHighlight>
         <style jsx>{`
           /* Reason copy sits directly above the expanding video — the
              card is meant to read as a continuation of the manifesto, so
@@ -2506,37 +2058,65 @@ Land, hospitality, craft, and technology — one regenerative ecosystem.`}</Scro
       </section>
 
       {/* Reason Video — expanding 16:9 → fullscreen */}
-      <ExpandingVideo
+      <ExpandingBanner
         src="/aura-people.mp4"
+        mediaType="video"
         poster="/aura-people.jpg"
         alt="Aura — the people behind the practice"
+        caption="We cultivate environments designed to sharpen thought and restore balance."
       />
 
       {/* Operating System — full section-gap on both ends, matching the
           rhythm of every other top-level section on the page. */}
       <section style={{ padding: 'var(--section-gap) 0', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
+        {/* Logo + headline both anchored to the section-w gutter
+            (left edge) so they share a vertical guideline with the
+            pillar grid below — every block on this section starts at
+            the same X. The ScrollHighlight uses `align="left"` to
+            override the default centered-block behaviour it uses on
+            journal pages (where it must match OneCol). */}
         <div className="section-w">
           <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 'clamp(48px, 7vh, 80px)' }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/aura-os.svg"
-                alt="Aura OS"
-                className="invert-on-light"
-                style={{
-                  display: 'block',
-                  margin: '0 auto',
-                  width: 'clamp(144px, 19.2vw, 256px)',
-                  height: 'auto',
-                }}
-              />
-              <p className="p1" style={{ marginTop: 'var(--space-5)' }}>Ancestral. Natural. Human. Machine Intelligence</p>
-              <p className="p2" style={{ marginTop: 'var(--space-3)', maxWidth: 480, marginLeft: 'auto', marginRight: 'auto' }}>
-                The Aura Operating System brings together land intelligence, human craft, and modern technology into one integrated practice.
-              </p>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/aura-os.svg"
+              alt="Aura OS"
+              className="invert-on-light"
+              style={{
+                display: 'block',
+                /* More breathing room ABOVE the wordmark — the section
+                   above closes with a video; the masthead needs an
+                   establishing pause before it lands. Below, the
+                   wordmark sits closer to "Natural Intelligence." so
+                   the lockup reads as a unit. */
+                marginTop: 'var(--space-9)',
+                marginBottom: 'var(--space-6)',
+                width: 'clamp(144px, 19.2vw, 256px)',
+                height: 'auto',
+              }}
+            />
           </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 stagger pillar-grid" style={{ gap: 'var(--grid-gap)' }}>
+        </div>
+        {/* Operating-system intro — `align="left"` keeps the headline
+            block flush with the pillar grid's left edge. Each line
+            breaks at a sentence so the four principles stack as a
+            stanza. The leading letter of each principle is wrapped in
+            `*A*ttention.` etc. — the Belmonte cursive lifts the first
+            letter so the four lines spell out A·U·R·A down the column. */}
+        <ScrollHighlight maxWidth={720} align="left">{`Natural Intelligence.
+The Aura Operating System brings together land, human craft, and modern technology into one living practice.
+*A*ttention.
+*U*nhurried.
+*R*ooted.
+*A*wake.`}</ScrollHighlight>
+        {/* Pillar grid mirrors ExpandingBanner's starting frame:
+            48 px outer rail, then a 16/9-derived max-width that the
+            inline banners use as their starting size. Without the
+            max-width the grid would extend past the banner's left
+            edge — so the grid's left rail lines up with the banner's
+            top-of-section start rather than the page gutter. */}
+        <div style={{ padding: '0 48px' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 stagger pillar-grid" style={{ gap: 'var(--grid-gap)', maxWidth: 'calc((100vh - 56px - 96px) * 16 / 9)', margin: '0 auto' }}>
             {[
               {
                 title: 'Agroculture',
@@ -2570,11 +2150,11 @@ Land, hospitality, craft, and technology — one regenerative ecosystem.`}</Scro
                     no hover affordance, no cursor pill. */}
                 <div className="pillar-card">
                   <PillarVideo src={card.video} poster={card.poster} alt={card.alt} />
-                  <h3 style={{ marginTop: 24, marginBottom: 12 }}>{card.title}</h3>
+                  <h3 style={{ marginTop: 'var(--space-5)', marginBottom: 'var(--space-3)' }}>{card.title}</h3>
                   {/* Lead reads as a meta caption underneath the title —
                       mono uppercase via the global .label spec, matching
                       every other meta caption on the page. */}
-                  <p className="label" style={{ marginBottom: 16 }}>{card.lead}</p>
+                  <p className="label" style={{ marginBottom: 'var(--space-4)' }}>{card.lead}</p>
                   <p className="p2">{card.desc}</p>
                 </div>
               </Reveal>
@@ -2587,23 +2167,26 @@ Land, hospitality, craft, and technology — one regenerative ecosystem.`}</Scro
           section above. Three-line manifesto that introduces the sanctuary
           stack which follows. */}
       <section className="sanctuary-lede" style={{ borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
-        <div className="section-w">
-          <ScrollHighlight>{`Aura unfolds through sanctuary, land, and practice.
+        <ScrollHighlight align="left">{`Aura unfolds through sanctuary, land, and practice.
 Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm.
 Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
-        </div>
         <style jsx>{`
-          /* Generous padding on both ends — the lede needs proper
-             breathing room between the pillars above and the sanctuary
-             stack below. Top and bottom both use the full section-gap
-             plus an extra clamp so the manifesto reads as a deliberate
-             pause, not a sandwiched caption. */
+          /* Top margin removed — lede now sits right under the pillar
+             grid border. Bottom keeps the breathing room before the
+             sanctuary stack so the manifesto reads as the deliberate
+             pause it wants to be. */
           .sanctuary-lede {
-            padding: calc(var(--section-gap) + clamp(40px, 6vh, 80px)) 0;
+            padding: 0 0 calc(var(--section-gap) + clamp(40px, 6vh, 80px));
+          }
+          /* The ScrollHighlight renders its own <section> with
+             padding: var(--section-gap) 0 — strip the top so the lede
+             starts flush against the pillar grid border. */
+          .sanctuary-lede > :global(section) {
+            padding-top: 0 !important;
           }
           @media (max-width: 768px) {
             .sanctuary-lede {
-              padding: calc(var(--section-gap) + clamp(24px, 4vh, 56px)) 0 !important;
+              padding: 0 0 calc(var(--section-gap) + clamp(24px, 4vh, 56px)) !important;
             }
           }
         `}</style>
@@ -2630,9 +2213,7 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
       {/* Closing line above the footer. Headline reveals word-by-word
           via ScrollHighlight as the section enters the viewport. */}
       <section className="closing-line" style={{ padding: 'var(--section-gap) 0', position: 'relative', zIndex: 1, background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
-        <div className="section-w">
-          <ScrollHighlight>Live, make, and restore in rhythm with the land.</ScrollHighlight>
-        </div>
+        <ScrollHighlight align="left">Live, make, and restore in rhythm with the land.</ScrollHighlight>
       </section>
 
       </div> {/* /.human-only */}

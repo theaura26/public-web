@@ -1,259 +1,258 @@
 import {
-  ArticleHero,
-  Section,
+  HeroBanner,
+  OneCol,
   TwoCol,
-  P,
   Placeholder,
   DataGrid,
   DataCard,
   PullQuote,
-  PullStat,
-  SideBySide,
   Continue,
+  ScrollHighlight,
+  Term,
 } from '@/components/article/Article'
 
 export default function ResidencyPage() {
   return (
     <>
-      <ArticleHero
-        title="Monastic polymaths. Crazy misfits."
-        subline="An embedded residency across two countries (soon three). Two weeks minimum. Pre-selected. Not a programme and not a retreat — a place to do the work you cannot do anywhere else."
-        toc={[
-          { q: 'What are the five formats?', href: '#formats' },
-          { q: 'How are the two expressions different?', href: '#expressions' },
-          { q: 'Who do we invite?', href: '#who' },
-          { q: 'What is the format?', href: '#format' },
-          { q: 'How do I apply?', href: '#apply' },
-        ]}
+      <HeroBanner
+        currentHref="/residency"
+        title="Monastic Polymaths"
+        type="Detail · the working desk at dawn"
+        caption="A working desk, a window onto the forest"
       />
 
-      <Placeholder
-        label="Hero — residency cabin interior at first light"
-        note="A working desk, a window onto the forest, a half-finished piece on the floor. No one in frame."
-      />
+      <OneCol heading="An artist residency for natural intelligence.">
+        <p className="p1">
+          The estate is the studio. Forest, kiln, wet mill, cattle pen,
+          tea garden — all of it.
+        </p>
+        <p className="p2">
+          Artists, makers, scientists, chefs, and quiet thinkers come
+          here to make work that could not be made anywhere else. The
+          work answers to the land, the season, and the people who have
+          read this place longer than any of us have been alive.
+        </p>
+        <p className="p1" style={{ marginTop: 'var(--space-7)' }}>
+          Natural intelligence.
+        </p>
+        <p className="p2">
+          We read the estate the way others read datasets. Canopy
+          density predicts cherry <Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term>. Bee activity forecasts
+          flowering. Cattle rotation shapes next season&apos;s microbiome.
+          Soil biology thirty days after cover-crop predicts the cup.
+        </p>
+        <p className="p2">
+          The land is the original general-purpose intelligence —
+          observed, transmitted, lived. Older than any model on a server.
+          Residents come to listen to it long enough that it changes
+          what they make.
+        </p>
+        <p className="p2">
+          The intelligence of a <Term tip="Centuries-old high-fire stoneware lineage from Shiga Prefecture; rough surface, ash-fly glaze, wood-fired anagama kiln.">Shigaraki</Term> potter who knows which wood
+          the kiln will accept this week. The shepherd who reads the
+          herd&apos;s mood like weather. The soil that has been farmed
+          biodynamically long enough to have a memory. The residency
+          renders that intelligence visible.
+        </p>
+      </OneCol>
 
-      {/* PHILOSOPHY */}
-      {/* eyebrow was: "Philosophy" */}
       <TwoCol heading="Connective tissue between disciplines.">
-        <P>
-          Most residencies put a painter next to a painter and call it community. Aura does the
-          opposite. A coffee fermenter next to a ceramicist. A soil biologist next to a washi
-          papermaker. A designer next to a shepherd. The friction between disciplines is the
-          point. That is where the work that nobody else can make gets made.
-        </P>
-        <P>
-          We call them <em>embedded residencies</em> because you do not arrive at a campus; you
-          arrive inside a living system. You eat from the garden you walked past at dawn. You work
-          with material that was sourced, fermented, or fired on the property. The residency is
-          not the building. The residency is the biosphere.
-        </P>
-        <P>
-          Santosh joined after reading a single one-pager about the &ldquo;monastic polymath&rdquo;
-          archetype. That is the shape of the right applicant. They read one sentence and they
-          know.
-        </P>
+        <p className="p1">
+          Most artist residencies put a painter next to a painter and
+          call it community. Aura does the opposite. A coffee fermenter
+          next to a ceramicist. A soil biologist next to a <Term tip="Hand-made Japanese paper from kozo (paper mulberry) — Ohara studio practising techniques designated Intangible Cultural Property.">Washi</Term> papermaker.
+          A designer next to a shepherd. The friction between disciplines
+          is the point. That is where the work nobody else can make gets
+          made.
+        </p>
+        <p className="p2">
+          We call them <em>embedded residencies</em> because you arrive
+          inside a living system. You eat from the garden you walked past
+          at dawn. You work with material sourced, fermented, or fired on
+          the property. The residency is the biosphere.
+        </p>
       </TwoCol>
 
-      {/* FORMATS */}
-      {/* eyebrow was: "001" */}
-      <Section id="formats" heading="Five Formats">
-        <P>
-          The residency is not one thing. It is five overlapping formats, sharing a kitchen, a
-          kiln, a library, and a shepherd. You can arrive for one and leave touched by all five.
-        </P>
-
-        <DataGrid cols={3}>
-          <DataCard label="Design Residencies" value="2–4 weeks">
-            For designers, architects, and system thinkers. Working briefs drawn from the farm,
-            the sanctuary, the product OS. One-to-one time with Arvind in the first four days.
-          </DataCard>
-          <DataCard label="Craft Workshops" value="5–10 days">
-            Intensives with master practitioners &mdash; Shigaraki ceramics, Washi Kobo paper,
-            Uji tea, Malnad weaving, natural dye. Small cohorts, seasonal.
-          </DataCard>
-          <DataCard label="Gallery" value="Rolling">
-            An exhibition arm for work made on the estate or adjacent to it. Not a retail channel.
-            A frame for the work to be seen.
-          </DataCard>
-          <DataCard label="Gurukul" value="1 teacher · 1 student">
-            The oldest format on earth. Long apprenticeships in a single discipline &mdash;
-            biodynamic, fermentation, pottery, coffee. Months, not weeks.
-          </DataCard>
-          <DataCard label="Labs" value="Project-scoped">
-            Embedded work on product, sensor, world-model, or workflow problems. For the
-            engineers, the researchers, the forward-deployed.
-          </DataCard>
-          <DataCard label="Festivals" value="Annual">
-            The Gathering / Bhoomi Festival &mdash; the one week a year the residency becomes
-            public. Music, fire, food, field walks.
-          </DataCard>
-        </DataGrid>
-      </Section>
-
-      {/* TWO EXPRESSIONS */}
-      {/* eyebrow was: "002" */}
-      <Section id="expressions" heading="Two expressions, one residency.">
-        <P>
-          The same residency is expressed two ways in two countries. A resident might spend the
-          first week in Mudigere and the second in Ohara, or commit the whole stay to one. Each
-          location is raw in its own way.
-        </P>
-
-        <SideBySide
-          leftTitle="India · Mudigere"
-          rightTitle="Japan · Ohara"
-          leftChildren={
-            <>
-              Raw. Monsoon. Soil. Twelve cabins in the canopy &mdash; The Twelve Worlds &mdash;
-              each named for an element of the estate: Hive, Root, Flow, Flame, Bloom, Canopy,
-              Echo, Seed, Mist, Stone, Pulse, Ethereal. Days begin with the herd moving through
-              the morning mist. Work is loud, hot, and generous. Kannada is the common tongue.
-            </>
-          }
-          rightChildren={
-            <>
-              Refined. Tea. Washi. A 90%-restored Japanese house 20 minutes from Kyoto, a natural
-              onsen by the river, a third-generation gen garden on the property, an 800-year
-              fermentation lineage in the valley. Days are quieter, slower, more deliberate.
-              Purple shiso grows nowhere else in Japan. Japanese is the common tongue.
-            </>
-          }
-        />
-
-      </Section>
-
-      <Placeholder
-        label="Craft in progress — hands only"
-        note="A maker mid-task. India or Japan ambiguous. Close crop on hands and material."
-      />
-
-      {/* WHO WE INVITE */}
-      {/* eyebrow was: "003" */}
-      <Section id="who" heading="Who we invite">
-        <P>
-          We pre-select. The selection is not a gate, it is a promise &mdash; to you, to the other
-          residents that week, to the land. Five criteria, drawn from how we actually choose.
-        </P>
-
-        <DataGrid cols={3}>
-          <DataCard label="Curiosity" value="Raw">
-            An appetite that has not been professionalised out of you. You still follow things
-            because they are interesting, not because they are strategic.
-          </DataCard>
-          <DataCard label="Maturity" value="Grown">
-            You can be in a room with people you disagree with and do better work because of it.
-            You hold your own time and your own hygiene.
-          </DataCard>
-          <DataCard label="Output" value="Prolific">
-            You make a lot. Finished or unfinished. The volume is evidence of the practice. We
-            would rather see twenty rough pieces than one polished portfolio.
-          </DataCard>
-          <DataCard label="Judgment" value="Earned">
-            A point of view on taste. You can tell us why something works, not just that it does.
-          </DataCard>
-          <DataCard label="Humility" value="Full of gratitude">
-            You know the land, the shepherd, the cook, and the other residents got you here.
-            &ldquo;Full of gratitude&rdquo; is not a tone. It is a diagnosis.
-          </DataCard>
-          <DataCard label="Spine" value="Moral">
-            A good moral spine. We would rather host a twenty-year-old odd kid with conviction
-            than a forty-year-old name with none.
-          </DataCard>
-        </DataGrid>
-
-      </Section>
-
-      <PullQuote attribution="Arvind">
-        Rebel with a cause. Grounded in ancestral knowledge. Packaged with edge.
+      <PullQuote>
+        The FRICTION between disciplines is the POINT. That is where the
+        work no one else can make GETS MADE.
       </PullQuote>
 
-      {/* FORMAT */}
-      {/* eyebrow was: "004" */}
-      <Section id="format" heading="Format">
-        <P>
-          Two weeks minimum. We have learned that anything shorter is tourism. Arvind is present
-          on the property for the first three to four days of every residency &mdash; in the
-          kitchen, at the field, at the desk. After that, residents work alone, or with the
-          teachers in residence, or with each other.
-        </P>
-        <P>
-          The rhythm is not a schedule. It is a day. You wake when the farm wakes. You eat what
-          the farm ate yesterday. You work until the light goes. You read, walk, or sit. You
-          repeat.
-        </P>
-
-        <DataGrid cols={3}>
-          <DataCard label="Minimum Stay" value="2 weeks">Anything shorter is tourism.</DataCard>
-          <DataCard label="Cohort Size" value="4 – 8">Per location, per window. Small enough to share a table.</DataCard>
-          <DataCard label="Founder Time" value="First 3 – 4 days">Arvind on-property.</DataCard>
-        </DataGrid>
-      </Section>
-
-      <PullStat value="2" label="week minimum" sub="anything shorter is tourism" />
-      <PullStat value="2" label="locations (soon 3)" sub="India · Japan · Indonesia" />
-      <PullStat value="12" label="worlds" sub="Mudigere residency cabins" />
-
-      {/* GATHERING */}
-      {/* eyebrow was: "005" */}
-      <Section heading="The Gathering · Bhoomi Festival">
-        <P>
-          Once a year, the residency opens. Former residents, visiting teachers, neighbours, the
-          shepherd&apos;s family, the coffee cuppers, the ceramicists &mdash; all on the estate
-          for one long week. Field walks in the morning. Workshops through the day. Music, fire,
-          and long tables at night. The Gathering is the residency&apos;s annual culmination and
-          the single best way to meet the people behind it.
-        </P>
-
-      </Section>
+      <TwoCol heading="The work that gets made here.">
+        <p className="p1">
+          A potter who arrives with a portfolio of urban ceramics leaves
+          firing vessels with banana-leaf ash from a wash lot. A composer
+          who comes to listen for a week leaves with a piece scored for
+          eighteen minutes of cricket-and-rain. A chef writing ferment
+          notes ends up cooking a season&apos;s menu around what the
+          cattle ate that month. A designer makes the first Kannada
+          colourway for an Ohara letterpress.
+        </p>
+        <p className="p2">
+          We do not assign briefs. We host the conditions and let the
+          land do the rest of the work. The residency&apos;s output is
+          intentionally varied — books, dishes, instruments, gardens,
+          tools, fragrances, music, films, software, glaze recipes,
+          fermentation calendars — because natural intelligence does not
+          come out in a single medium.
+        </p>
+      </TwoCol>
 
       <Placeholder
-        label="Gathering bonfire — wide, dusk"
-        note="Long tables, lantern light, the silhouette of the canopy. Slow shutter."
+        src="/journals/residency/aura-monastic-polymath-2.jpg"
+        alt="Hands at work on material in the residency studio — discipline ambiguous, Mudigere or Ohara"
+        caption="A maker mid-task. India or Japan ambiguous."
       />
 
-      {/* APPLY */}
-      {/* eyebrow was: "006" */}
-      <Section id="apply" heading="How to apply">
-        <P>
-          There is no form. There is an address.
-        </P>
-        <P>
-          Write to <strong>residency@theaura.life</strong>. Tell us who you are, what you are
-          working on, and why the residency. One page is plenty. Attachments welcome but not
-          required. We answer every note.
-        </P>
+      <TwoCol heading="Two estates. Two old intelligences.">
+        <p className="p1">
+          Mudigere is Vedic. Ohara is Zen. Neither apologises to a
+          Western sustainability narrative. Both operate from <Term tip="Sanskrit. Natural order; the rhythm that governs seasons, tides, germination, decay, and renewal. Predates organised religion.">Ṛta</Term> — right
+          time, right action, natural order. The residency moves between
+          them because the work that begins in one valley is often only
+          complete once it has been read in the other.
+        </p>
+        <DataGrid cols={2}>
+          <DataCard value="India · Mudigere">
+            Raw. Monsoon. Soil. The intelligence of a four-story canopy
+            and fifty-two indigenous cattle. Days begin with the herd
+            moving through the morning mist; work is loud, hot, and
+            generous; Kannada is the common tongue.
+          </DataCard>
+          <DataCard value="Japan · Ohara">
+            Refined. Tea. Washi. The intelligence of an eight-hundred-
+            year fermentation lineage in the valley and a thirty-year-
+            old Japanese garden on the property. Days are quieter,
+            slower, more deliberate. Japanese is the common tongue.
+            Purple shiso grows nowhere else in Japan.
+          </DataCard>
+        </DataGrid>
+      </TwoCol>
 
-      </Section>
+      <TwoCol id="who" heading="The shape of the right applicant.">
+        <p className="p1">
+          We pre-select. The selection is not a gate, it is a promise —
+          to you, to the other residents that week, to the land. Six
+          criteria, drawn from how we actually choose.
+        </p>
+        <DataGrid cols={3}>
+          <DataCard value="Raw curiosity">
+            An appetite that has not been professionalised out of you.
+            You still follow things because they are interesting, not
+            because they are strategic.
+          </DataCard>
+          <DataCard value="Grown maturity">
+            You can be in a room with people you disagree with and do
+            better work because of it. You hold your own time and your
+            own hygiene.
+          </DataCard>
+          <DataCard value="Prolific output">
+            You make a lot. Finished or unfinished. The volume is
+            evidence of the practice. We would rather see twenty rough
+            pieces than one polished portfolio.
+          </DataCard>
+          <DataCard value="Earned judgment">
+            A point of view on taste. You can tell us why something
+            works, not just that it does.
+          </DataCard>
+          <DataCard value="Full of gratitude">
+            You know the land, the shepherd, the cook, and the other
+            residents got you here. &ldquo;Full of gratitude&rdquo; is
+            not a tone. It is a diagnosis.
+          </DataCard>
+          <DataCard value="Moral spine">
+            We would rather host a twenty-year-old odd kid with
+            conviction than a forty-year-old name with none.
+          </DataCard>
+        </DataGrid>
+      </TwoCol>
 
-      <PullQuote attribution="Arvind">
-        We pre-select who can come in. Some people come from food, some from tie-dye, craftsmen.
-        Doesn&apos;t need to be a named artist. You are a world person and this place is for you.
+      <PullQuote>
+        We are not building a PROGRAMME. We are building a RESIDENCY that
+        will still be recognisable in a HUNDRED YEARS.
       </PullQuote>
 
       <Placeholder
-        label="Gurukul circle — late afternoon"
-        note="Small group seated on the veranda, a teacher mid-sentence, hands up."
+        src="/journals/residency/aura-monastic-polymath-3.jpg"
+        alt="A practitioner at work in a quiet studio — the residency's posture of attention"
+        caption="Sit close to someone who has been listening to one craft for thirty years."
       />
 
-      <Continue
-        items={[
-          {
-            href: '/artistry',
-            label: 'Artistry',
-            description: 'Studios, kitchens, code — the work the residency does.',
-          },
-          {
-            href: '/idea',
-            label: 'The 1000 Year Idea',
-            description: 'The frame by which every choice is measured.',
-          },
-          {
-            href: '/sanctuary',
-            label: 'Sanctuary',
-            description: 'Mudigere, Ohara — the two valleys the residency moves between.',
-          },
-        ]}
+      <TwoCol heading="Teachers in residence.">
+        <p className="p1">
+          The teachers are not visiting lecturers. They are people whose
+          practice the estate is built around — a master potter, a
+          biodynamic farmer, a washi papermaker, a coffee cupper, a
+          shepherd, a tea host, a soil scientist. Most have been doing
+          one thing for twenty to forty years.
+        </p>
+        <p className="p2">
+          What we are really asking residents to do is sit close to
+          someone who has been listening to one craft, one material, one
+          living system long enough to know it without speaking. The work
+          is the transcription of that knowing — into objects, recipes,
+          tools, scores, books, software.
+        </p>
+      </TwoCol>
+
+      <TwoCol heading="The Gathering · Bhoomi Festival.">
+        <p className="p1">
+          Once a year, the residency opens. Former residents, visiting
+          teachers, neighbours, the shepherd&apos;s family, the coffee
+          cuppers, the ceramicists — all on the estate for one long week.
+          Field walks in the morning. Workshops through the day. Music,
+          fire, and long tables at night.
+        </p>
+        <p className="p2">
+          The Gathering is the residency&apos;s annual culmination, and
+          the single best way to meet the people behind it. <Term tip="Sanskrit / Kannada for &ldquo;the earth&rdquo;. The annual gathering that opens the residency to former residents, teachers, and neighbours for one week each year.">Bhoomi</Term>
+          means &ldquo;the earth&rdquo; in Sanskrit and Kannada — the
+          name is the brief.
+        </p>
+      </TwoCol>
+
+      <Placeholder
+        src="/journals/residency/aura-monastic-polymath-4.mp4"
+        mediaType="video"
+        poster="/journals/residency/aura-monastic-polymath-4.jpg"
+        alt="Long tables at lantern light under the canopy silhouette — the Gathering at Bhoomi Festival"
+        caption="The silhouette of the canopy. Slow shutter."
       />
+
+      <TwoCol heading="By invitation.">
+        <p className="p1">
+          There is no form. There is an address. Write to
+          {' '}<strong>residency@theaura.life</strong>. Tell us who you
+          are, what you are working on, and why the residency. One page
+          is plenty.
+        </p>
+        <p className="p2">
+          Promise less, deliver more. We do not roadshow. We answer every
+          note.
+        </p>
+      </TwoCol>
+
+      <ScrollHighlight>
+        {`The land is the original intelligence.
+         Listen to it long enough
+         that it changes what you make.
+         The work is the transcription
+         of that listening.`}
+      </ScrollHighlight>
+
+      <OneCol id="closing" heading="What the residency is really for.">
+        <p className="p1">
+          A century from now, very little of what we are calling artificial
+          intelligence today will still be running. The intelligence that
+          will still be running is the one that lives in soil, in craft,
+          in shepherds&apos; vocabulary, in fermentation lineages, in the
+          twenty-page notebooks of artists who spent two months on this
+          estate watching the canopy breathe. The residency exists to put
+          more of that into the world.
+        </p>
+      </OneCol>
+
+      <Continue currentHref="/residency" />
     </>
   )
 }

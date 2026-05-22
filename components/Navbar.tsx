@@ -24,29 +24,35 @@ type Article = {
   img?: string
   /** Optional autoplay loop. /sanctuary is the only one with motion right now. */
   video?: string
+  /** Mark a journal as not-yet-live. Tile renders muted, non-clickable,
+   *  with a "COMING SOON" overlay instead of the title link. */
+  comingSoon?: boolean
 }
 
 const ARTICLES: Article[] = [
-  { href: '/idea',           title: 'The 1000 Year Idea',                 size: 'lg', img: '/aura-idea.jpg' },
-  { href: '/wisdom',         title: 'Moral Spine',                        size: 'sm', img: '/aura-wisdom.jpg' },
-  { href: '/rta',            title: 'Rta',                                size: 'sm', img: '/aura-rta.jpg' },
-  { href: '/sanctuary',      title: 'Guests of the mountain.',            size: 'lg', img: '/aura-sanctuary.jpg', video: '/aura-sanctuary.mp4' },
-  { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg' },
-  { href: '/residency',      title: 'Monastic polymaths. Crazy misfits.', size: 'lg', img: '/aura-residency.jpg' },
-  { href: '/provenance',     title: 'Cherry to cup. On chain.',           size: 'sm', img: '/aura-provenance.jpg' },
-  { href: '/fermentation',   title: 'Three disciplines, one precision.',  size: 'lg', img: '/aura-fermentation.jpg' },
-  { href: '/coffee',         title: 'Six Lots, One Appellation.',         size: 'sm', img: '/aura-coffee.jpg' },
-  { href: '/pepper',         title: 'Malabar black gold.',                size: 'lg', img: '/aura-pepper.jpg' },
-  { href: '/areca',          title: 'The sentinel palm.',                 size: 'sm', img: '/aura-areca.jpg' },
-  { href: '/biodynamic',     title: 'The farm as organism.',              size: 'lg', img: '/aura-biodynamic.jpg' },
-  { href: '/vedic',          title: 'Older than its study.',              size: 'sm', img: '/aura-vedic.jpg' },
-  { href: '/living-systems', title: 'Herd, hive, canopy.',                size: 'lg', img: '/aura-living-systems.jpg' },
-  { href: '/land',           title: 'The land is the lab.',               size: 'sm', img: '/aura-land.jpg' },
+  // Active journals — listed first, in the order the user wants them.
+  { href: '/wisdom',         title: 'Moral Spine',                        size: 'lg', img: '/journals/wisdom/aura-moral-spine.jpg' },
+  { href: '/living-systems', title: 'Living Systems',                     size: 'sm', img: '/journals/living-systems/aura-living-systems.jpg' },
+  { href: '/coffee',         title: 'Our Coffee Story',                   size: 'lg', img: '/journals/coffee/aura-our-coffee-story.jpg' },
+  { href: '/rta',            title: 'Rta',                                size: 'sm', img: '/journals/rta/aura-rta.jpg' },
+  { href: '/fermentation',   title: 'Fermentation',                       size: 'lg', img: '/journals/fermentation/aura-fermentation.jpg' },
+  { href: '/land',           title: 'The Land',                           size: 'sm', img: '/journals/land/aura-the-land.jpg' },
+  { href: '/biodynamic',     title: 'Biodynamic',                         size: 'lg', img: '/journals/biodynamic/aura-biodynamic.jpg', video: '/journals/biodynamic/aura-biodynamic.mp4' },
+  { href: '/residency',      title: 'Monastic polymaths. Crazy misfits.', size: 'lg', img: '/journals/residency/aura-monastic-polymath.jpg' },
+  // Coming-soon — render at the tail of the feed.
+  { href: '/idea',           title: 'The 1000 Year Idea',                 size: 'sm', img: '/aura-idea.jpg',          comingSoon: true },
+  { href: '/sanctuary',      title: 'Guests of the mountain.',            size: 'lg', img: '/aura-sanctuary.jpg', video: '/aura-sanctuary.mp4', comingSoon: true },
+  { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg',      comingSoon: true },
+  { href: '/provenance',     title: 'Cherry to cup. On chain.',           size: 'sm', img: '/aura-provenance.jpg',    comingSoon: true },
+  { href: '/pepper',         title: 'Malabar black gold.',                size: 'lg', img: '/aura-pepper.jpg',        comingSoon: true },
+  { href: '/areca',          title: 'The sentinel palm.',                 size: 'sm', img: '/aura-areca.jpg',         comingSoon: true },
+  { href: '/vedic',          title: 'Older than its study.',              size: 'lg', img: '/aura-vedic.jpg',         comingSoon: true },
 ]
 
 const PRIMARY_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/reason', label: 'The Reason' },
+  { href: '/studios', label: 'Studios' },
   { href: '/brand', label: 'Our Brand' },
   { href: '/contact', label: 'Contact Us' },
 ]
@@ -56,6 +62,16 @@ const INSTAGRAM_URL = 'https://www.instagram.com/theaura.life/'
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [showLogo, setShowLogo] = useState(false)
+  /* Lazy-mount gate for the tile-feed media. Browsers eagerly fetch
+     images and sniff video metadata even inside a `position: fixed`
+     panel parked at `right: -100vw`, because they can't predict when
+     a CSS-positioned element will enter the viewport. Setting
+     `loading="lazy"` + `preload="none"` on the elements is not
+     enough — Chrome still spends ~25-30 MB on Navbar media on every
+     page load. Solution: don't put the heavy children in the DOM
+     until the user actually opens the menu. Stays true thereafter so
+     the feed isn't torn down + reseeded on every reopen. */
+  const [hasOpenedMenu, setHasOpenedMenu] = useState(false)
   const { theme, setTheme, viewMode, setViewMode } = useMode()
   const pathname = usePathname()
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -89,6 +105,11 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [isHome])
+
+  // First open arms the tile-feed permanently. After the user has
+  // opened the menu once, the heavy media is allowed to live in the
+  // DOM so subsequent opens don't need to re-mount + re-fetch.
+  useEffect(() => { if (menuOpen) setHasOpenedMenu(true) }, [menuOpen])
 
   // Close menu on route change
   useEffect(() => { setMenuOpen(false) }, [pathname])
@@ -251,7 +272,13 @@ export default function Navbar() {
       window.removeEventListener('resize', onScroll)
       if (raf) cancelAnimationFrame(raf)
     }
-  }, [menuOpen, viewMode])
+  // hasOpenedMenu is in the dep array so this re-runs once the tiles
+  // actually mount on first open. Without it the first seedScroll
+  // sees a 0-height feed and never seeds — the feed starts at the
+  // top of the first (boundary) cycle and the infinite-scroll
+  // teleport instantly jumps the user a screenful on the first
+  // touch.
+  }, [menuOpen, viewMode, hasOpenedMenu])
 
   const isAgent = viewMode === 'agent'
   const toggleTheme = () => setTheme(theme === 'day' ? 'night' : 'day')
@@ -502,20 +529,31 @@ export default function Navbar() {
         {/* Right — scrollable tile feed. Articles rendered three cycles for
             seamless infinite scroll: the middle cycle is the canonical one,
             and the scroll position teleports between cycles when it crosses
-            the boundary so the feed reads as endless. */}
+            the boundary so the feed reads as endless.
+
+            Agent view skips the infinite-scroll trick (there is no
+            scroll teleport — the feed just stacks as a list) and
+            renders one canonical cycle, otherwise the same journal
+            title repeats 3× in the markdown view. */}
         <section className="menu-right" ref={scrollRef}>
           <div className="tile-feed">
-            {[0, 1, 2].flatMap(cycle =>
+            {hasOpenedMenu && (isAgent ? [0] : [0, 1, 2]).flatMap(cycle =>
               ARTICLES.map((a, i) => {
                 const flatIndex = cycle * ARTICLES.length + i
                 return (
                   <Link
                     href={a.href}
                     key={`${cycle}-${a.href}`}
-                    onClick={() => setMenuOpen(false)}
+                    onClick={(e) => {
+                      if (a.comingSoon) { e.preventDefault(); return }
+                      setMenuOpen(false)
+                    }}
                     ref={(el) => { tileRefs.current[flatIndex] = el }}
                     className="tile"
                     data-size={a.size}
+                    data-coming-soon={a.comingSoon ? 'true' : undefined}
+                    aria-disabled={a.comingSoon ? true : undefined}
+                    tabIndex={a.comingSoon ? -1 : undefined}
                     style={{
                       /* Two-size system: lg = ~470 px max, sm = ~280 px max.
                          All tiles snap to the LEFT edge of the feed column
@@ -532,7 +570,11 @@ export default function Navbar() {
                           muted
                           loop
                           playsInline
-                          preload="auto"
+                          /* Slide-out menu is hidden by default — preload nothing
+                             until the user actually opens the menu and the tile
+                             scrolls into view. Was: "auto" (full preload on every
+                             page load, ~10MB of menu video transfer). */
+                          preload="none"
                           poster={a.img}
                           aria-label={a.title}
                         >
@@ -540,7 +582,7 @@ export default function Navbar() {
                         </video>
                       ) : a.img ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img src={a.img} alt={a.title} />
+                        <img src={a.img} alt={a.title} loading="lazy" decoding="async" />
                       ) : null}
                       {/* Hover symbol — one of the three aura emblems
                           (aura-symbol-1/2/3), cycled by tile index. Same
@@ -553,7 +595,12 @@ export default function Navbar() {
                         src={`/aura-symbol-${(i % 3) + 1}.png`}
                         alt=""
                         aria-hidden
+                        loading="lazy"
+                        decoding="async"
                       />
+                      {a.comingSoon && (
+                        <span className="tile-coming-soon">Coming Soon</span>
+                      )}
                     </div>
                     <p className="tile-title">{a.title}</p>
                   </Link>
@@ -700,6 +747,51 @@ export default function Navbar() {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
           }
+          /* Coming-soon tiles: muted card, no hover effects, label overlay
+             centred on the placeholder. Tile is non-interactive (preventDefault
+             on click + tabIndex -1) so all that's left is the visual treatment. */
+          :global(.tile[data-coming-soon="true"]) {
+            cursor: default;
+            pointer-events: auto;
+          }
+          :global(.tile[data-coming-soon="true"] .tile-img) {
+            opacity: 0.55;
+          }
+          :global(.tile[data-coming-soon="true"] .tile-img img:not(.tile-symbol)),
+          :global(.tile[data-coming-soon="true"] .tile-img video) {
+            filter: grayscale(1) brightness(0.85);
+          }
+          :global(.tile[data-coming-soon="true"]:hover .tile-img) {
+            opacity: 0.55;
+          }
+          :global(.tile[data-coming-soon="true"]:hover .tile-img img:not(.tile-symbol)),
+          :global(.tile[data-coming-soon="true"]:hover .tile-img video) {
+            filter: grayscale(1) brightness(0.85);
+          }
+          :global(.tile[data-coming-soon="true"] .tile-symbol) {
+            display: none;
+          }
+          :global(.tile[data-coming-soon="true"] .tile-title) {
+            opacity: 0.5;
+          }
+          :global(.tile-coming-soon) {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 11;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--contrast-text);
+            white-space: nowrap;
+            pointer-events: none;
+            padding: 6px 10px;
+            background: color-mix(in oklab, var(--contrast-bg) 70%, transparent);
+            border-radius: 2px;
+          }
           /* Matches the global .label style exactly: DM Mono 11px, 1px
              letter-spacing, uppercase. Title and meta labels site-wide now
              share one type role. */
@@ -807,8 +899,13 @@ export default function Navbar() {
              them on this build, but inline survives every time. */
           :global(.tile-feed-vignette) {
             position: fixed;
-            left: 0;
+            /* Anchor to the right edge so the blur only covers the
+               tile-feed column. The icon stack (.menu-utils) sits in
+               the bottom-left of the panel; we don't want the blur to
+               creep underneath the icons and soften their edges. */
+            left: auto;
             right: 0;
+            width: min(720px, 60vw);
             bottom: 0;
             height: 18vh;
             z-index: 101;

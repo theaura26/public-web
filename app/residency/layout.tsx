@@ -2,14 +2,23 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Artist Residency — Aura',
+  title: 'Monastic Polymaths',
   description:
-    'For monastic polymaths. For crazy misfits. Embedded two-week residencies in India and Japan — design, craft, gurukul, labs, gallery.',
+    'An artist residency for natural intelligence. Embedded, invitation-based — across Mudigere (Vedic) and Ohara (Zen). Write to residency@theaura.life.',
+  alternates: { canonical: '/residency' },
   openGraph: {
-    title: 'Artist Residency — Aura',
-    description:
-      'Rebel with a cause, grounded in ancestral knowledge, packaged with edge. Two weeks minimum. Pre-selected. Email residency@theaura.life.',
     type: 'article',
+    title: 'Monastic Polymaths — Aura',
+    description:
+      'The friction between disciplines is the point. That is where the work no one else can make gets made.',
+    images: ['/journals/residency/aura-monastic-polymath.jpg'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Monastic Polymaths — Aura',
+    description:
+      'The friction between disciplines is the point. That is where the work no one else can make gets made.',
+    images: ['/journals/residency/aura-monastic-polymath.jpg'],
   },
 }
 

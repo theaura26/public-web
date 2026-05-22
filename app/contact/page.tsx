@@ -104,11 +104,12 @@ export default function ContactPage() {
       <section style={{ paddingTop: 250, paddingBottom: 80 }}>
         <div className="section-w">
           <Reveal>
-            <h1 style={{ maxWidth: 700 }}>Let&apos;s talk</h1>
+            <h1 style={{ maxWidth: 700 }}>Write to us.</h1>
           </Reveal>
           <Reveal delay={100}>
-            <p className="p2" style={{ maxWidth: 440, marginTop: 32 }}>
-              Whether it&apos;s coffee, collaboration, or just a conversation — we&apos;d love to hear from you.
+            <p className="p2" style={{ maxWidth: 520, marginTop: 32 }}>
+              Whether it&rsquo;s coffee, collaboration, or just a conversation —
+              we&rsquo;d love to hear from you.
             </p>
           </Reveal>
         </div>
@@ -141,10 +142,10 @@ export default function ContactPage() {
               border-bottom-color: var(--text);
             }
             .field-input.has-error {
-              border-bottom-color: #E8421A;
+              border-bottom-color: var(--error);
             }
             .field-input.has-error:focus {
-              border-bottom-color: #E8421A;
+              border-bottom-color: var(--error);
             }
             select.field-input {
               -webkit-appearance: none;
@@ -229,7 +230,7 @@ export default function ContactPage() {
                 </Field>
 
                 {apiError && (
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: '#E8421A' }}>{apiError}</p>
+                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--error)' }}>{apiError}</p>
                 )}
 
                 <button
@@ -328,7 +329,7 @@ function Field({ id, label, error, children }: {
           <p style={{
             fontFamily: 'var(--font-mono)',
             fontSize: 11,
-            color: '#E8421A',
+            color: 'var(--error)',
             marginTop: 2,
             animation: 'field-error-in 0.2s ease-out',
           }}>

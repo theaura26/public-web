@@ -36,9 +36,55 @@ const pixelifySans = Pixelify_Sans({
   display: 'swap',
 })
 
+/* metadataBase makes every page's relative OG/Twitter image URL resolve to
+   the canonical production origin. Without it Next logs warnings AND
+   generates broken OG image URLs in preview deploys. */
 export const metadata: Metadata = {
-  title: 'Aura — The 1000-Year Idea',
-  description: 'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
+  metadataBase: new URL('https://theaura.life'),
+  title: {
+    default: 'Aura — The 1000-Year Idea',
+    template: '%s — Aura',
+  },
+  description:
+    'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital. 150 acres in the Western Ghats; an East-East axis to Ohara, Kyoto.',
+  applicationName: 'Aura',
+  authors: [{ name: 'Aura', url: 'https://theaura.life' }],
+  keywords: [
+    'Aura',
+    'regenerative agriculture',
+    'biodynamic',
+    'Western Ghats',
+    'Mudigere',
+    'Ohara',
+    'specialty coffee',
+    'artist residency',
+    'natural intelligence',
+  ],
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Aura',
+    title: 'Aura — The 1000-Year Idea',
+    description:
+      'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
+    images: ['/og-hello.jpg'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Aura — The 1000-Year Idea',
+    description:
+      'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
+    images: ['/og-hello.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
+  },
+  formatDetection: { telephone: false },
 }
 
 export default function RootLayout({

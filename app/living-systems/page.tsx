@@ -1,321 +1,225 @@
 import {
-  ArticleHero,
-  Section,
+  HeroBanner,
+  OneCol,
   TwoCol,
-  P,
   Placeholder,
   DataGrid,
   DataCard,
   PullQuote,
-  PullStat,
   Continue,
+  ScrollHighlight,
+  Term,
 } from '@/components/article/Article'
 
 export default function LivingSystemsPage() {
   return (
     <>
-      <ArticleHero
-        title="Herd, hive, canopy."
-        subline="A farm is not a field. It is an organism — cattle, bees, birds, dogs, trees, and the human caretakers who know each by name. At Aura, the living systems are the farm. Everything else is scaffolding."
-        toc={[
-          { q: 'What is the herd?', href: '#herd' },
-          { q: 'Which bees work the land?', href: '#bees' },
-          { q: 'Who is the shepherd?', href: '#shepherd' },
-          { q: 'What grows in the nursery?', href: '#nursery' },
-          { q: 'How is the canopy stacked?', href: '#canopy' },
-        ]}
+      <HeroBanner
+        currentHref="/living-systems"
+        title="Living Systems"
+        type="Aerial · four-story canopy"
+        caption="Sampigelkhan Estate — Western Ghats"
       />
 
-      <Placeholder
-        label="Hero — Malnad Gidda herd at dawn, low mist in the canopy"
-        note="Indigenous Karnataka cattle emerging from the areca rows at first light. Shot slow, close to the ground. 16:9."
-      />
-
-      {/* PHILOSOPHY */}
-      {/* eyebrow was: "Philosophy" */}
-      <TwoCol heading="The farm is organism.">
-        <P>
-          Before there were inputs, there were relationships. A cow that feeds on the grass that
-          grows where her dung fell last season. A bee that works the coffee blossom and returns
-          to a hive in the shade of a jackfruit tree. A chicken that turns the leaf litter before
-          a farmhand rakes it. These are not practices. They are the oldest kind of agriculture —
-          the kind where nothing is a line item because everything is a limb.
-        </P>
-        <P>
-          We talk about biodynamic preparations and Vedic inoculants on other pages. Here we talk
-          about the bodies that make them possible. Without the herd there is no dung, no horn, no
-          milk, no CPP. Without the bees there is no cherry set. Without the canopy there is no
-          shade, and without shade there is no microclimate we can call our own.
-        </P>
+      <TwoCol heading="A forest that produces crops. Not a farm that plants trees.">
+        <p className="p1">
+          150 acres of four-story polyculture in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>, read as a
+          single living dataset.
+        </p>
+        <p className="p2">
+          Most agricultural systems isolate variables. Aura studies
+          relationships instead. The estate is not divided by crop; it is
+          divided by block — because the unit of record is the land, not the
+          product.
+        </p>
       </TwoCol>
 
-      {/* THE HERD */}
-      {/* eyebrow was: "001" */}
-      <Section id="herd" heading="The Malnad Gidda Herd">
-        <P>
-          Fifty-two head of Malnad Gidda — the small-bodied indigenous cattle of the Western
-          Ghats. They are the biodynamic engine of the estate. Their dung builds the preparations.
-          Their horns hold the silica and manure that overwinter in the soil. Their milk feeds the
-          Panchgavya. Their hooves do the work a tractor never could, pressing seed into the
-          terrace and breaking the crust after rain.
-        </P>
-        <P>
-          Malnad Gidda are a heritage breed, short in stature, long in memory. They tolerate the
-          monsoon, forage the understory, and calve without intervention. Most of the herd has
-          never met an antibiotic. All of them know the shepherd&apos;s voice before they see him.
-        </P>
-
+      <TwoCol id="estate" heading="The estate, in numbers.">
         <DataGrid cols={3}>
-          <DataCard label="Head Count" value="52">
-            Indigenous Malnad Gidda. Steady growth season by season — calves born without intervention.
+          <DataCard value="150">Acres under care.</DataCard>
+          <DataCard value="3,600 ft">Altitude in the Western Ghats.</DataCard>
+          <DataCard value="35,000">Individual trees.</DataCard>
+          <DataCard value="52">Malnad Gidda cattle, indigenous.</DataCard>
+          <DataCard value="3–5×">Carbon sequestration vs monoculture.</DataCard>
+          <DataCard value="UNESCO">Biodiversity zone.</DataCard>
+        </DataGrid>
+      </TwoCol>
+
+      <TwoCol id="layers" heading="Four stories, one canopy.">
+        <p className="p1">
+          The estate operates through four canopy layers. Every layer
+          influences the next.
+        </p>
+        <p className="p2">
+          From the silver oak overhead to the cardamom on the floor, each
+          story holds the conditions for the one below it — and reads as a
+          signal for what the next will do. The relationships matter more
+          than the layers themselves.
+        </p>
+      </TwoCol>
+
+      <DataGrid cols={4} standalone>
+        <DataCard
+          video="/journals/living-systems/aura-canopy.mp4"
+          poster="/journals/living-systems/aura-canopy.jpg"
+          alt="Looking up through the four-story canopy at Sampigelkhan Estate — silver oak and jackfruit moving in the wind"
+          value="01 — Canopy."
+        >
+          Silver oak, Albizzia, jackfruit, fig, native hardwoods. Target cover
+          60–80% per block. Blocks with 65–75% canopy produce measurably higher
+          Brix in the coffee beneath them.
+        </DataCard>
+        <DataCard
+          img="/journals/living-systems/aura-mid-canopy.jpg"
+          alt="Arecanut palms rising through the shade with black pepper vines climbing them"
+          value="02 — Mid-canopy."
+        >
+          Arecanut palms rise through the shade. Black pepper climbs them —
+          each areca palm simultaneously a trellis and a companion. If an areca
+          column stresses, the pepper vine loses vigour within six to eight
+          weeks.
+        </DataCard>
+        <DataCard
+          video="/journals/living-systems/aura-primary-crop.mp4"
+          poster="/journals/living-systems/aura-primary-crop.jpg"
+          alt="Arabica Sln.9 and Sln.795 cherries ripening beneath the four-story canopy"
+          value="03 — Primary crop."
+        >
+          Arabica <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>. Thirty-five acres of tea, in organic
+          transition targeting 2027. Every input logged against the transition
+          clock. A single prohibited substance resets it.
+        </DataCard>
+        <DataCard
+          img="/journals/living-systems/aura-understorey.jpg"
+          alt="Cardamom, cover crops and beehives on the forest floor — the understorey layer"
+          value="04 — Understorey."
+        >
+          Cardamom, cacao, avocado, cover crops, beehives, chickens. Hives
+          connect the flowering seasons across every layer. When activity drops
+          during flowering, it predicts lower cherry set four to six weeks
+          ahead.
+        </DataCard>
+      </DataGrid>
+
+      <Placeholder
+        src="/journals/biodynamic/aura-bee-video.mp4"
+        mediaType="video"
+        poster="/journals/biodynamic/aura-bee-video.jpg"
+        alt="A honeybee working a flower head — the hives that connect the four layers' flowering seasons"
+        caption="Hives — the connective signal across every layer"
+      />
+
+      <TwoCol id="herd" heading="The herd is biological infrastructure.">
+        <p className="p1">
+          Fifty-two Malnad Gidda cattle — an indigenous Karnataka breed adapted
+          to this altitude, soil, and climate over centuries.
+        </p>
+        <p className="p2">
+          They rotate through blocks timed to coffee cherry development stages.
+          Their dung drives every biodynamic preparation on the estate. They
+          are not assets. They are participants in a biological system.
+        </p>
+      </TwoCol>
+
+      <Placeholder
+        src="/journals/living-systems/aura-cow.jpg"
+        alt="A Malnad Gidda at pasture — indigenous Karnataka breed in the block rotation"
+        caption="A Malnad Gidda at pasture — rotation timed to cherry stage"
+      />
+
+      <TwoCol id="data" heading="Nine streams of continuous data.">
+        <p className="p1">
+          The estate generates nine streams of continuous data. Each one is
+          useful; the value is in being able to read them together.
+        </p>
+        <DataGrid cols={3}>
+          <DataCard value="Coffee fermentation.">
+            pH every 15 min, temperature 3× daily, Brix start to end.
           </DataCard>
-          <DataCard label="Breed Origin" value="Western Ghats">
-            Karnataka heritage stock, ≈900&ndash;1,100 years of continuous lineage.
+          <DataCard value="BD applications.">
+            Crop layer, blocks, lunar day, weather, worker, dung batch.
           </DataCard>
-          <DataCard label="Average Lifespan" value="18–22 yrs">
-            Roughly twice the commercial-dairy average.
+          <DataCard value="Soil health.">
+            pH and moisture at 5 cm and 20 cm, quarterly.
           </DataCard>
-          <DataCard label="Daily Milk" value="1.5–3 L">
-            Low yield, high butterfat. Drunk, cultured, or reserved for Panchgavya.
+          <DataCard value="Carbon & biodiversity.">
+            Multi-story canopy and species count, annual.
           </DataCard>
-          <DataCard label="Dung Volume" value="≈10 kg / head / day">
-            The raw material of BD 500, CPP, and Matka Khad.
+          <DataCard value="Cattle & dung cycle.">
+            Pasture, health, rotation timing per block.
           </DataCard>
-          <DataCard label="Horn Quality" value="Upward, hollow">
-            Required geometry for horn-silica and horn-manure preparations.
+          <DataCard value="Canopy health.">
+            <Term tip="Normalised Difference Vegetation Index. Satellite-derived canopy vitality reading.">NDVI</Term> per block, quarterly.
           </DataCard>
-          <DataCard label="Calves / yr" value="8–12">
-            Natural breeding, seasonal calving, no induced cycles.
+          <DataCard value="Pepper & areca.">
+            Column health, vine density, fermentation.
           </DataCard>
-          <DataCard label="Antibiotic Use" value="0">
-            Ethnoveterinary only — neem, turmeric, cow urine, hot compresses.
+          <DataCard value="Tea transition.">
+            Start date, estimated certification 2027.
           </DataCard>
-          <DataCard label="Role in Soil" value="Primary">
-            Dung, urine, hoof action, grazing pattern &mdash; four functions, one animal.
+          <DataCard value="Understorey & bees.">
+            Hive weight, honey harvest, activity windows.
           </DataCard>
         </DataGrid>
-      </Section>
+      </TwoCol>
 
-      <Placeholder
-        label="Malnad Gidda portrait — full frame, eye-level"
-        note="A single cow, close. Horn profile visible. Late-afternoon light through the areca."
-      />
-
-      {/* THE BEES */}
-      {/* eyebrow was: "002" */}
-      <Section id="bees" heading="The Bees">
-        <P>
-          Three native species work the estate. Apis cerana indica in managed boxes along the
-          shade lines. Apis dorsata — the rock bee — in wild colonies under rock ledges and in the
-          oldest jackfruit. Tetragonula iridipennis, the stingless bee, in small hollow-log hives
-          near the nursery. We manage what can be managed and leave the rest to its own
-          intelligence.
-        </P>
-        <P>
-          The bees are the reason the cherry sets. They are also the clearest signal we have that
-          the farm is working: if the hives are calm and heavy, the canopy is right. If they
-          abandon, we listen.
-        </P>
-
-        <DataGrid cols={3}>
-          <DataCard label="Managed Hives" value="24">
-            Apis cerana indica in Newton and top-bar boxes.
-          </DataCard>
-          <DataCard label="Wild Colonies" value="12+">
-            Apis dorsata under ledges and in the high canopy.
-          </DataCard>
-          <DataCard label="Species" value="3">
-            Cerana · Dorsata · Tetragonula. No European imports.
-          </DataCard>
-          <DataCard label="Pollination Radius" value="~3 km">
-            Full coverage of the 150-acre estate and neighbouring tracts.
-          </DataCard>
-          <DataCard label="Honey Lots / yr" value="6">
-            Single-origin by season and species. Unblended, unheated.
-          </DataCard>
-          <DataCard label="Coffee Set Lift" value="+30–40%">
-            Documented cerana-on-arabica set improvement, estate plots.
-          </DataCard>
-        </DataGrid>
-      </Section>
-
-      <Placeholder
-        label="Bee on coffee flower — macro"
-        note="Apis cerana on white arabica bloom. February, mid-morning. Shallow depth of field."
-      />
-
-      {/* CHICKENS */}
-      {/* eyebrow was: "003" */}
-      <Section heading="The Chickens">
-        <P>
-          A small working flock lives alongside the nursery. They do three things no machine does
-          well: turn the leaf litter, eat the larvae that would otherwise eat the seedlings, and
-          deposit nitrogen exactly where it is needed. They are not a protein strategy. They are a
-          soil tool with feathers.
-        </P>
-
-        <DataGrid cols={3}>
-          <DataCard label="Flock Size" value="40">
-            Kadaknath and native cross. Rotational paddock behind the nursery.
-          </DataCard>
-          <DataCard label="Primary Role" value="Soil turn">
-            Leaf-litter inversion, pest predation, nitrogen deposit.
-          </DataCard>
-          <DataCard label="Eggs" value="120 / wk">
-            Kitchen and shepherd&apos;s households. Not a retail line.
-          </DataCard>
-        </DataGrid>
-      </Section>
-
-      <Placeholder
-        label="Chicken in the understory"
-        note="A single bird scratching through leaf litter at the edge of the coffee block. Late morning."
-      />
-
-      {/* DOG */}
-      {/* eyebrow was: "004" */}
-      <Section heading="The Australian Shepherd">
-        <P>
-          One working dog. Australian Shepherd — the breed that was shaped for exactly this
-          country: high elevation, strong sun, long walks, herd of mixed sizes. She moves the
-          cattle between paddocks, keeps the chickens honest, and knows the property by scent
-          before she knows it by sight. A working dog is not a pet. She is staff.
-        </P>
-      </Section>
-
-      <Placeholder
-        label="Australian Shepherd working the paddock edge"
-        note="Mid-distance, cattle in the background, her attention forward. Dust in the light."
-      />
-
-      {/* THE SHEPHERD */}
-      {/* eyebrow was: "005" */}
-      <Section id="shepherd" heading="The Shepherd">
-        <P>
-          The shepherd is a role before it is a person. He is the one who knows which cow is
-          calving this week, which calf is weak, which hive is about to swarm, which section of
-          fence the Dorsata has claimed this year. He reads the farm the way a reader reads a
-          book they have read every year for forty years &mdash; by remembering the margins.
-        </P>
-        <P>
-          We treat the shepherd as a lineage, not a job title. When the current shepherd retires,
-          his apprentice will already have walked the property for a decade. This is how a
-          thousand-year idea keeps walking.
-        </P>
-      </Section>
-
-      <PullQuote attribution="Aura field note">
-        The farm is an organism. The cow is its heart.
+      <PullQuote>
+        SOIL HEALTH readings thirty days after cover-crop incorporation predict
+        the FLAVOUR PROFILE of the coffee lot that block will produce.
       </PullQuote>
 
-      {/* THE NURSERY */}
-      {/* eyebrow was: "006" */}
-      <Section id="nursery" heading="The Nursery">
-        <P>
-          Everything that will one day grow on the estate first grows here. Four stocks, four
-          purposes. We raise from seed where we can, from cutting where we must, and we treat
-          every sapling with Beejamrit before it ever sees the field.
-        </P>
-
-        <DataGrid cols={2}>
-          <DataCard label="Native Stock" value="60+ species">
-            Western Ghats endemics &mdash; Terminalia, Vateria, Artocarpus, Myristica, Garcinia.
-            For restoration, not ornament.
-          </DataCard>
-          <DataCard label="Food Forest" value="40+ species">
-            Jackfruit, avocado, breadfruit, heritage banana, wild mango, seasonal berry.
-          </DataCard>
-          <DataCard label="Medicinal" value="30+ species">
-            Ashwagandha, Brahmi, Tulsi, Ginger, Turmeric, Neem. Vrikshayurveda stock.
-          </DataCard>
-          <DataCard label="Plantation Stock" value="Arabica · Pepper · Areca">
-            Own-seed arabica lines. Malabar pepper on estate mother-vines. Areca from local nuts.
-          </DataCard>
-        </DataGrid>
-      </Section>
+      <TwoCol id="signals" heading="The signals between.">
+        <p className="p1">
+          The intelligence lives in the cross-references.
+        </p>
+        <p className="p2">
+          Canopy density predicts coffee cherry Brix. Areca health signals
+          pepper yield weeks early. Cattle rotation timing shapes soil biology
+          for the next season. Beehive activity forecasts flowering quality.
+          Dung batch quality determines BD preparation potency. Cover crop
+          biomass after incorporation predicts fermentation character.
+        </p>
+        <p className="p2">
+          This is what we mean by a living system. The estate has a heartbeat
+          — short pulses from sensors, medium rhythms from crop lifecycles,
+          long arcs from ecosystem health measured across decades.
+        </p>
+      </TwoCol>
 
       <Placeholder
-        label="Nursery rows — long lens"
-        note="Compressed perspective down the bamboo shade lines. Polybags in rhythm."
+        src="/journals/living-systems/aura-cow-eye.mp4"
+        mediaType="video"
+        poster="/journals/living-systems/aura-cow-eye.jpg"
+        alt="Close-up of a Malnad Gidda's eye — the indigenous Karnataka breed reading the land"
+        caption="The eye that reads the signals — Malnad Gidda"
       />
 
-      {/* CANOPY */}
-      {/* eyebrow was: "007" */}
-      <Section id="canopy" heading="Five-Layer Canopy Architecture">
-        <P>
-          A forest is not a single ceiling. It is five. We plant, prune, and protect on all five
-          layers at once, so that light, water, and air are rationed the way a forest rations them
-          &mdash; not the way a row crop is rationed by a spreadsheet.
-        </P>
+      <ScrollHighlight>
+        {`Most farms track a crop.
+         Aura tracks an ecosystem.
+         Every layer talks to every other layer.
+         The forest is the farm.`}
+      </ScrollHighlight>
 
-        <DataGrid cols={3}>
-          <DataCard label="Emergent" value="30–45 m">
-            Dipterocarpus, Tetrameles, old jackfruit. The lightning rods and the hornbill routes.
-          </DataCard>
-          <DataCard label="Canopy" value="18–28 m">
-            Silver oak, jackfruit, mango, native figs. The working shade for coffee.
-          </DataCard>
-          <DataCard label="Sub-canopy" value="6–15 m">
-            Areca, coffee mother-trees, citrus, cocoa. Where the pepper climbs.
-          </DataCard>
-          <DataCard label="Shrub" value="1–4 m">
-            Coffee bush, cardamom, curry leaf, medicinal understory.
-          </DataCard>
-          <DataCard label="Ground" value="0–1 m">
-            Legumes, turmeric, ginger, living mulch, the leaf-litter floor.
-          </DataCard>
-          <DataCard label="Principle" value="Stacked, not spaced">
-            No acre of the estate holds fewer than three layers. Most hold five.
-          </DataCard>
-        </DataGrid>
-      </Section>
+      <OneCol id="data-store" heading="Where the data lives.">
+        <p className="p1">
+          The granular data — every sensor reading, every field action, every BD
+          application log — lives in the Farm OS, built on NocoDB, stored in
+          open formats. Readable without any specific software, in plain text
+          and timestamps that outlive any vendor.
+        </p>
+        <p className="p2">
+          The milestones — a coffee lot lifecycle completed, a BD seasonal cycle
+          finished, an annual carbon baseline, an organic certification event —
+          go on-chain. Permanent, public, verifiable.
+        </p>
+        <p className="p2">
+          The system must outlast any technology it is built on. Complexity in
+          the machine. Simplicity in the field.
+        </p>
+      </OneCol>
 
-      <Placeholder
-        label="Canopy diagram — cross-section illustration"
-        note="Hand-drawn cross-section of the five layers, labelled. Paper-and-ink register."
-      />
-
-      <PullStat value="52" label="Malnad Gidda" sub="indigenous cattle, biodynamic engine" />
-      <PullStat value="5" label="canopy layers" sub="emergent to ground floor" />
-      <PullStat value="130+" label="native species" sub="in the restoration nursery" />
-
-      {/* UNESCO */}
-      {/* eyebrow was: "008" */}
-      <Section heading="UNESCO Restoration Commitment">
-        <P>
-          The Western Ghats are a UNESCO World Heritage site and one of the eight hottest
-          biodiversity hotspots on the planet. We hold the estate to that standard. A share of
-          every planting season is reserved for native restoration &mdash; not plantation
-          species, not commercial species, but the endemics that were here before anyone
-          planted coffee in these hills. This is the part of the farm that will never be a
-          product. It is the part that pays the next thousand years.
-        </P>
-      </Section>
-
-      <Placeholder
-        label="Native restoration block"
-        note="Saplings flagged in a cleared understory plot. Monsoon light. Wide."
-      />
-
-      <Continue
-        items={[
-          {
-            href: '/biodynamic',
-            label: 'Biodynamic Practice',
-            description: 'BD 500, CPP, horn silica &mdash; the preparations the herd makes possible.',
-          },
-          {
-            href: '/land',
-            label: 'Regenerative Plantation',
-            description: 'One hundred acres of specialty coffee under this canopy.',
-          },
-          {
-            href: '/sanctuary',
-            label: 'Mudigere',
-            description: 'Bhoomi and Aaranya &mdash; the grounded campus where these systems live.',
-          },
-        ]}
-      />
+      <Continue currentHref="/living-systems" />
     </>
   )
 }

@@ -1,3 +1,14 @@
 info/
 Info/
 *.pdf
+
+# Build artifacts + deps — recreated by the platform build.
+.next
+node_modules
+.git
+.claude
+
+# Oversized source films — exceed Vercel's 100 MB per-file cap.
+# Re-encode or host externally before bundling.
+public/aura-25.mp4
+public/aura-25.webm

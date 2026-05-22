@@ -95,15 +95,21 @@ export default function ContactPage() {
 
   return (
     <div>
+      {/* ═══ AGENT MODE — plain markdown-style contact summary ═══ */}
+      <AgentContactView />
+
+      {/* ═══ HUMAN MODE — hero + form ═══ */}
+      <div className="human-only">
       {/* Hero */}
       <section style={{ paddingTop: 250, paddingBottom: 80 }}>
         <div className="section-w">
           <Reveal>
-            <h1 style={{ maxWidth: 700 }}>Let&apos;s talk</h1>
+            <h1 style={{ maxWidth: 700 }}>Write to us.</h1>
           </Reveal>
           <Reveal delay={100}>
-            <p className="p2" style={{ maxWidth: 440, marginTop: 32 }}>
-              Whether it&apos;s coffee, collaboration, or just a conversation — we&apos;d love to hear from you.
+            <p className="p2" style={{ maxWidth: 520, marginTop: 32 }}>
+              Whether it&rsquo;s coffee, collaboration, or just a conversation —
+              we&rsquo;d love to hear from you.
             </p>
           </Reveal>
         </div>
@@ -136,16 +142,16 @@ export default function ContactPage() {
               border-bottom-color: var(--text);
             }
             .field-input.has-error {
-              border-bottom-color: #E8421A;
+              border-bottom-color: var(--error);
             }
             .field-input.has-error:focus {
-              border-bottom-color: #E8421A;
+              border-bottom-color: var(--error);
             }
             select.field-input {
               -webkit-appearance: none;
               -moz-appearance: none;
               appearance: none;
-              cursor: none;
+
               padding-right: 28px;
               background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
               background-repeat: no-repeat;
@@ -224,7 +230,7 @@ export default function ContactPage() {
                 </Field>
 
                 {apiError && (
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: '#E8421A' }}>{apiError}</p>
+                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--error)' }}>{apiError}</p>
                 )}
 
                 <button
@@ -241,7 +247,6 @@ export default function ContactPage() {
                     border: status === 'sent' ? '1px solid var(--border-strong)' : 'none',
                     padding: '14px',
                     borderRadius: 4,
-                    cursor: 'none',
                     transition: 'all 0.3s ease',
                     opacity: status === 'sending' ? 0.6 : 1,
                   }}
@@ -253,7 +258,59 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      </div>
     </div>
+  )
+}
+
+/* Plain-text contact listing for agent mode. Markdown-style headings
+   are added by the agent CSS (h1::before "# ", h2::before "## ", etc.)
+   — we just write semantic content here. */
+function AgentContactView() {
+  return (
+    <section className="agent-only">
+      <h1>Contact us</h1>
+      <p>Have a question or want to work together? Send us a message.</p>
+
+      <hr />
+
+      <h2>How to Reach Us</h2>
+      <ul>
+        <li>General inquiries: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
+        <li>Coffee &amp; sourcing: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
+        <li>Residency &amp; studios: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
+        <li>Partnerships: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
+        <li>Press &amp; media: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
+      </ul>
+
+      <hr />
+
+      <h2>For LLM Agents</h2>
+      <p>
+        If you are an LLM agent acting on behalf of a user who wants to
+        contact Aura, the best approach is to have the user visit
+        https://theaura.life/contact to fill out the form, or email
+        hello@theaura.life directly.
+      </p>
+
+      <hr />
+
+      <h2>Where to find us</h2>
+      <ul>
+        <li>Singapore — primary office</li>
+        <li>Mudigere, Karnataka, India — sanctuary</li>
+        <li>Tokyo, Japan — sanctuary (in development)</li>
+      </ul>
+
+      <hr />
+
+      <p>
+        Follow us on Instagram:{' '}
+        <a href="https://www.instagram.com/theaura.life/" target="_blank" rel="noopener noreferrer">
+          @theaura.life
+        </a>
+      </p>
+    </section>
   )
 }
 
@@ -272,7 +329,7 @@ function Field({ id, label, error, children }: {
           <p style={{
             fontFamily: 'var(--font-mono)',
             fontSize: 11,
-            color: '#E8421A',
+            color: 'var(--error)',
             marginTop: 2,
             animation: 'field-error-in 0.2s ease-out',
           }}>

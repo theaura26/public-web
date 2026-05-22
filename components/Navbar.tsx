@@ -61,6 +61,16 @@ const INSTAGRAM_URL = 'https://www.instagram.com/theaura.life/'
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [showLogo, setShowLogo] = useState(false)
+  /* Lazy-mount gate for the tile-feed media. Browsers eagerly fetch
+     images and sniff video metadata even inside a `position: fixed`
+     panel parked at `right: -100vw`, because they can't predict when
+     a CSS-positioned element will enter the viewport. Setting
+     `loading="lazy"` + `preload="none"` on the elements is not
+     enough — Chrome still spends ~25-30 MB on Navbar media on every
+     page load. Solution: don't put the heavy children in the DOM
+     until the user actually opens the menu. Stays true thereafter so
+     the feed isn't torn down + reseeded on every reopen. */
+  const [hasOpenedMenu, setHasOpenedMenu] = useState(false)
   const { theme, setTheme, viewMode, setViewMode } = useMode()
   const pathname = usePathname()
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -94,6 +104,11 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [isHome])
+
+  // First open arms the tile-feed permanently. After the user has
+  // opened the menu once, the heavy media is allowed to live in the
+  // DOM so subsequent opens don't need to re-mount + re-fetch.
+  useEffect(() => { if (menuOpen) setHasOpenedMenu(true) }, [menuOpen])
 
   // Close menu on route change
   useEffect(() => { setMenuOpen(false) }, [pathname])
@@ -256,7 +271,13 @@ export default function Navbar() {
       window.removeEventListener('resize', onScroll)
       if (raf) cancelAnimationFrame(raf)
     }
-  }, [menuOpen, viewMode])
+  // hasOpenedMenu is in the dep array so this re-runs once the tiles
+  // actually mount on first open. Without it the first seedScroll
+  // sees a 0-height feed and never seeds — the feed starts at the
+  // top of the first (boundary) cycle and the infinite-scroll
+  // teleport instantly jumps the user a screenful on the first
+  // touch.
+  }, [menuOpen, viewMode, hasOpenedMenu])
 
   const isAgent = viewMode === 'agent'
   const toggleTheme = () => setTheme(theme === 'day' ? 'night' : 'day')
@@ -510,7 +531,7 @@ export default function Navbar() {
             the boundary so the feed reads as endless. */}
         <section className="menu-right" ref={scrollRef}>
           <div className="tile-feed">
-            {[0, 1, 2].flatMap(cycle =>
+            {hasOpenedMenu && [0, 1, 2].flatMap(cycle =>
               ARTICLES.map((a, i) => {
                 const flatIndex = cycle * ARTICLES.length + i
                 return (

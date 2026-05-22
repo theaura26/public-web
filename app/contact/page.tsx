@@ -108,12 +108,8 @@ export default function ContactPage() {
           </Reveal>
           <Reveal delay={100}>
             <p className="p2" style={{ maxWidth: 520, marginTop: 32 }}>
-              Aura is invitation-based. Tell us who you are, what you are
-              working on, and why Aura. One page is plenty.
-            </p>
-            <p className="p2" style={{ maxWidth: 520, marginTop: 16 }}>
-              We promise less and deliver more. We do not roadshow. We
-              answer every note.
+              Whether it&rsquo;s coffee, collaboration, or just a conversation —
+              we&rsquo;d love to hear from you.
             </p>
           </Reveal>
         </div>

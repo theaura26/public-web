@@ -148,6 +148,7 @@ function HeroVideo({ onWatch }: { onWatch: () => void }) {
           playsInline
           preload="auto"
           poster="/aura-hero.jpg"
+          aria-label="Aura — opening hero film, the land in rhythm"
           style={{
             position: 'absolute',
             inset: 0,
@@ -674,6 +675,7 @@ function AuraVideoModal({ open, onClose }: { open: boolean; onClose: () => void 
           ref={videoCallback}
           playsInline
           preload="auto"
+          aria-label="Aura — Enter the ecosystem film"
         >
           {/* The "Enter the ecosystem" film. Browsers pick the first source
               they can decode — webm preferred on Chrome / Firefox (smaller),
@@ -1188,6 +1190,7 @@ function SanctuaryBg({ s }: { s: Sanctuary }) {
           playsInline
           preload="none"
           poster={s.bgSrc}
+          aria-label={`${s.name} sanctuary — ambient backdrop`}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         >
           <source src={s.bgVideo} type="video/mp4" />
@@ -1461,7 +1464,12 @@ function SanctuaryStackPanel({ s, z, onClick }: { s: Sanctuary; z: number; onCli
   return (
     <div ref={wrapRef} className="sanctuary-panel" style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', zIndex: z }}>
       <SanctuaryBg s={s} />
-      <div ref={blurRef} style={{ position: 'absolute', inset: 0, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
+      {/* Backdrop-filter blur layer — extended 200px past the panel's
+          left edge so the blur falloff feathers further into the dark
+          margin on the left. The panel itself is `overflow: hidden`,
+          so the visible extension is clipped at the panel boundary;
+          the effect is a softer left edge during scroll-driven lift. */}
+      <div ref={blurRef} style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: -200, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
       <div
         className="sanctuary-clickable"
         role={clickable ? 'button' : undefined}
@@ -1495,7 +1503,10 @@ function SanctuaryStackPanel2Col({ left, right, z }: { left: Sanctuary; right: S
       <div className="sanctuary-2col-bg" style={{ position: 'absolute', inset: 0, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
         <div style={{ position: 'relative', overflow: 'hidden', marginRight: -1 }}>
           <SanctuaryBg s={left} />
-          <div ref={blurLeftRef} style={{ position: 'absolute', inset: 0, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
+          {/* Same +200px left extension as the single-panel variant
+              above — softens the leftmost column's blur falloff into
+              the dark margin. */}
+          <div ref={blurLeftRef} style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: -200, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
         </div>
         <div style={{ position: 'relative', overflow: 'hidden' }}>
           <SanctuaryBg s={right} />
@@ -1605,14 +1616,13 @@ export default function Home() {
             Total ~1.65s.
           */}
 
-          {/* 1. Top display: A REGENERATIVE COMPANY (justified edge-to-edge).
+          {/* 1. Top display: NATURAL INTELLIGENCE. (justified edge-to-edge).
               Inline `opacity: 0` guards against the global CSS rule not having
               applied yet on first paint — the keyframe animation still drives
               the reveal and `animation-fill-mode: both` holds the final state. */}
           <h1 className="hero-display hero-anim hero-anim--fall" style={{ opacity: 0, animationDuration: '700ms', animationDelay: '0ms' }}>
-            <span>A</span>{' '}
-            <span>REGENERATIVE</span>{' '}
-            <span>COMPANY</span>
+            <span>NATURAL</span>{' '}
+            <span>INTELLIGENCE</span>
           </h1>
 
           {/* Mid row: aura wordmark · think in generations · we combine. */}
@@ -1623,7 +1633,7 @@ export default function Home() {
             </div>
             {/* 4. Think label */}
             <p className="label hero-mid__think hero-anim hero-anim--fade" style={{ opacity: 0, animationDuration: '500ms', animationDelay: '480ms' }}>
-              Nestled in nature, our sanctuary invites leaders, creators, and organisations into inspiration and flow
+              Our studios and sanctuaries invite leaders, creators, and organisations into inspiration and flow
             </p>
             {/* 5. Copy label */}
             <p className="label hero-mid__copy hero-anim hero-anim--fade" style={{ opacity: 0, animationDuration: '500ms', animationDelay: '640ms' }}>
@@ -2025,11 +2035,12 @@ export default function Home() {
           a single statement; each word brightens from muted to full as it
           crosses the upper third of the viewport. */}
       <section className="reason-section" style={{ borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
-        <div className="section-w">
-          <ScrollHighlight>{`Generational Impact.
-The idea suggests that the choices made by one generation can have long-lasting effects on future generations — either escalating or lessening difficulties.
-These impacts can be deep and complex, shaping different facets of life such as culture, economy, technology, and values.`}</ScrollHighlight>
-        </div>
+        {/* ScrollHighlight provides its own section-w — wrapping it in
+            another would double the gutter and push the headline 48 px
+            in from the page rhythm. */}
+        <ScrollHighlight align="left">{`Generational Impact.
+The idea suggests that the choices made by a certain generation have long-lasting effects on future generations, either escalating or lessening difficulties.
+The impact can be deep and complex, covering different facets of life, such as culture, economy, technology, and values.`}</ScrollHighlight>
         <style jsx>{`
           /* Reason copy sits directly above the expanding video — the
              card is meant to read as a continuation of the manifesto, so
@@ -2058,28 +2069,54 @@ These impacts can be deep and complex, shaping different facets of life such as 
       {/* Operating System — full section-gap on both ends, matching the
           rhythm of every other top-level section on the page. */}
       <section style={{ padding: 'var(--section-gap) 0', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
+        {/* Logo + headline both anchored to the section-w gutter
+            (left edge) so they share a vertical guideline with the
+            pillar grid below — every block on this section starts at
+            the same X. The ScrollHighlight uses `align="left"` to
+            override the default centered-block behaviour it uses on
+            journal pages (where it must match OneCol). */}
         <div className="section-w">
           <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 'clamp(48px, 7vh, 80px)' }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/aura-os.svg"
-                alt="Aura OS"
-                className="invert-on-light"
-                style={{
-                  display: 'block',
-                  margin: '0 auto',
-                  width: 'clamp(144px, 19.2vw, 256px)',
-                  height: 'auto',
-                }}
-              />
-              <p className="p1" style={{ marginTop: 'var(--space-5)' }}>Natural Intelligence</p>
-              <p className="p2" style={{ marginTop: 'var(--space-3)', maxWidth: 480, marginLeft: 'auto', marginRight: 'auto' }}>
-                The Aura Operating System brings together land intelligence, human craft, and modern technology into one integrated practice.
-              </p>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/aura-os.svg"
+              alt="Aura OS"
+              className="invert-on-light"
+              style={{
+                display: 'block',
+                /* More breathing room ABOVE the wordmark — the section
+                   above closes with a video; the masthead needs an
+                   establishing pause before it lands. Below, the
+                   wordmark sits closer to "Natural Intelligence." so
+                   the lockup reads as a unit. */
+                marginTop: 'var(--space-9)',
+                marginBottom: 'var(--space-6)',
+                width: 'clamp(144px, 19.2vw, 256px)',
+                height: 'auto',
+              }}
+            />
           </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 stagger pillar-grid" style={{ gap: 'var(--grid-gap)' }}>
+        </div>
+        {/* Operating-system intro — `align="left"` keeps the headline
+            block flush with the pillar grid's left edge. Each line
+            breaks at a sentence so the four principles stack as a
+            stanza. The leading letter of each principle is wrapped in
+            `*A*ttention.` etc. — the Belmonte cursive lifts the first
+            letter so the four lines spell out A·U·R·A down the column. */}
+        <ScrollHighlight maxWidth={720} align="left">{`Natural Intelligence.
+The Aura Operating System brings together land, human craft, and modern technology into one living practice.
+*A*ttention.
+*U*nhurried.
+*R*ooted.
+*A*wake.`}</ScrollHighlight>
+        {/* Pillar grid mirrors ExpandingBanner's starting frame:
+            48 px outer rail, then a 16/9-derived max-width that the
+            inline banners use as their starting size. Without the
+            max-width the grid would extend past the banner's left
+            edge — so the grid's left rail lines up with the banner's
+            top-of-section start rather than the page gutter. */}
+        <div style={{ padding: '0 48px' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 stagger pillar-grid" style={{ gap: 'var(--grid-gap)', maxWidth: 'calc((100vh - 56px - 96px) * 16 / 9)', margin: '0 auto' }}>
             {[
               {
                 title: 'Agroculture',
@@ -2130,23 +2167,26 @@ These impacts can be deep and complex, shaping different facets of life such as 
           section above. Three-line manifesto that introduces the sanctuary
           stack which follows. */}
       <section className="sanctuary-lede" style={{ borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
-        <div className="section-w">
-          <ScrollHighlight>{`Aura unfolds through sanctuary, land, and practice.
+        <ScrollHighlight align="left">{`Aura unfolds through sanctuary, land, and practice.
 Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm.
 Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
-        </div>
         <style jsx>{`
-          /* Generous padding on both ends — the lede needs proper
-             breathing room between the pillars above and the sanctuary
-             stack below. Top and bottom both use the full section-gap
-             plus an extra clamp so the manifesto reads as a deliberate
-             pause, not a sandwiched caption. */
+          /* Top margin removed — lede now sits right under the pillar
+             grid border. Bottom keeps the breathing room before the
+             sanctuary stack so the manifesto reads as the deliberate
+             pause it wants to be. */
           .sanctuary-lede {
-            padding: calc(var(--section-gap) + clamp(40px, 6vh, 80px)) 0;
+            padding: 0 0 calc(var(--section-gap) + clamp(40px, 6vh, 80px));
+          }
+          /* The ScrollHighlight renders its own <section> with
+             padding: var(--section-gap) 0 — strip the top so the lede
+             starts flush against the pillar grid border. */
+          .sanctuary-lede > :global(section) {
+            padding-top: 0 !important;
           }
           @media (max-width: 768px) {
             .sanctuary-lede {
-              padding: calc(var(--section-gap) + clamp(24px, 4vh, 56px)) 0 !important;
+              padding: 0 0 calc(var(--section-gap) + clamp(24px, 4vh, 56px)) !important;
             }
           }
         `}</style>
@@ -2173,9 +2213,7 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
       {/* Closing line above the footer. Headline reveals word-by-word
           via ScrollHighlight as the section enters the viewport. */}
       <section className="closing-line" style={{ padding: 'var(--section-gap) 0', position: 'relative', zIndex: 1, background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
-        <div className="section-w">
-          <ScrollHighlight>Live, make, and restore in rhythm with the land.</ScrollHighlight>
-        </div>
+        <ScrollHighlight align="left">Live, make, and restore in rhythm with the land.</ScrollHighlight>
       </section>
 
       </div> {/* /.human-only */}

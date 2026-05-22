@@ -17,28 +17,27 @@ export default function LandPage() {
       <JournalHero
         currentHref="/land"
         title="The Land"
-        caption="Sampigelkhan Estate, 3,600 ft — Western Ghats"
+        caption="Land sets the brief. We answer."
       />
 
-      <TwoCol heading="Land is not an asset. It is ancestry.">
+      <TwoCol heading="Land is ancestry.">
         <p className="p1">
           Sampigelkhan Estate sits in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term> of Karnataka — red <Term tip="Red, iron-rich, free-draining volcanic soil typical of the Western Ghats.">laterite</Term> soil,
-          monsoon rhythm, and a four-story canopy that has been here longer
-          than any of us.
+          monsoon rhythm, and a four-story canopy older than any of us.
         </p>
         <p className="p2">
-          We do not own this land in any sense that lasts. We are the current
-          stewards of a hundred-year arc. The numbers below describe what is
-          here today; what matters is what we leave for the next gardener.
+          We are stewards of a hundred-year arc. The numbers below describe
+          what is here today; what matters is what we leave for the next
+          gardener.
         </p>
         <p className="p2">
-          This is the land. Everything else follows from it.
+          This is the land. Everything follows from it.
         </p>
       </TwoCol>
 
       <Placeholder
-        src="/journals/land/aura-land.jpg"
-        alt="The Sampigelkhan land at scale — 150 acres of polyculture inside a UNESCO biodiversity zone"
+        src="/journals/land/aura-canopy-noon-2.jpg"
+        alt="Light filtering through the four-story canopy at noon — Sampigelkhan Estate"
         caption="The land — 150 acres, one organism"
       />
 
@@ -167,21 +166,20 @@ export default function LandPage() {
           <DataCard value="35,000">Trees on chain over time.</DataCard>
         </DataGrid>
         <p className="p2">
-          The land is not just a place that grows things. It is a carbon asset,
-          a biodiversity corridor, a water system, a cultural record, and the
-          primary dataset of everything Aura builds.
+          The land is a carbon asset, a biodiversity corridor, a water
+          system, a cultural record, and the primary dataset of everything
+          Aura builds.
         </p>
       </TwoCol>
 
       <PullQuote>
-        PROVENANCE is not a claim. It is the EVIDENCE of relationship.
+        PROVENANCE is the EVIDENCE of relationship.
       </PullQuote>
 
       <ScrollHighlight>
-        {`Land is not an asset.
-         Land is ancestry.
+        {`Land is ancestry.
          I am the first gardener.
-         I will not be the last.
+         There will be a next.
          Provenance is evidence of relationship.`}
       </ScrollHighlight>
 
@@ -196,12 +194,6 @@ export default function LandPage() {
           The forest is the farm.
         </p>
       </OneCol>
-
-      <Placeholder
-        src="/journals/land/aura-canopy-noon-2.jpg"
-        alt="Light filtering through the four-story canopy at noon — a closing view from a different block"
-        caption="Light through the canopy — the forest, closing"
-      />
 
       <Continue currentHref="/land" />
     </>

@@ -17,10 +17,10 @@ export default function WisdomPage() {
         currentHref="/wisdom"
         title="Moral Spine"
         type="Ritual · prayer and incense"
-        caption="Attention as moral choice — Sampigelkhan Estate"
+        caption="Attention. Unhurried. Rooted. Awake."
       />
 
-      <TwoCol heading="The things we will not do.">
+      <OneCol heading="The things we will not do.">
         <p className="p1">
           Aura is not defined by ambition. It is defined by restraint — the
           decisions we make before anyone is watching.
@@ -28,9 +28,9 @@ export default function WisdomPage() {
         <p className="p2">
           Every organisation has values on a wall. Aura has a spine.
         </p>
-      </TwoCol>
+      </OneCol>
 
-      <TwoCol heading="Attention is a moral choice.">
+      <OneCol heading="Attention is a moral choice.">
         <p className="p1">
           It starts with a simple idea: what enters the mind shapes what the
           hands build. Inner disorder creates outer disorder.
@@ -46,7 +46,13 @@ export default function WisdomPage() {
           Before Aura became a regenerative estate system, it became a
           moral position. Every decision must survive pressure across time.
         </p>
-      </TwoCol>
+      </OneCol>
+
+      <Placeholder
+        src="/journals/wisdom/aura-cow-dung.jpg"
+        alt="Fresh Malnad Gidda dung in the hand — what &lsquo;soil comes first&rsquo; looks like at the source"
+        caption="Soil comes first — at the source, in the hand"
+      />
 
       <TwoCol heading="The things we refuse to become.">
         <p className="p1">
@@ -105,6 +111,12 @@ export default function WisdomPage() {
         </DataGrid>
       </TwoCol>
 
+      <Placeholder
+        src="/journals/wisdom/aura-on-the-field.jpg"
+        alt="Aura field team in conversation on a coffee block — the leaders-must-be-on-the-field rule in practice"
+        caption="Leaders on the field — where every rule is tested"
+      />
+
       <TwoCol id="field" heading="On the field.">
         <p className="p1">
           The spine is not abstract. It lives in six rules, written in English
@@ -124,12 +136,6 @@ export default function WisdomPage() {
           <DataCard value="Leaders must be on the field." />
         </DataGrid>
       </TwoCol>
-
-      <Placeholder
-        src="/journals/wisdom/aura-cow-dung.jpg"
-        alt="Fresh Malnad Gidda dung in the hand — what &lsquo;soil comes first&rsquo; looks like at the source"
-        caption="Soil comes first — at the source, in the hand"
-      />
 
       <TwoCol id="community" heading="On community.">
         <p className="p1">

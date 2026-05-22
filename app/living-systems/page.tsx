@@ -18,7 +18,7 @@ export default function LivingSystemsPage() {
         currentHref="/living-systems"
         title="Living Systems"
         type="Aerial · four-story canopy"
-        caption="Sampigelkhan Estate, 3,600 ft — Western Ghats"
+        caption="Sampigelkhan Estate — Western Ghats"
       />
 
       <TwoCol heading="A forest that produces crops. Not a farm that plants trees.">
@@ -205,8 +205,8 @@ export default function LivingSystemsPage() {
         <p className="p1">
           The granular data — every sensor reading, every field action, every BD
           application log — lives in the Farm OS, built on NocoDB, stored in
-          open formats. JSON and CSV. Readable without any specific software.
-          Just text files and timestamps.
+          open formats. Readable without any specific software, in plain text
+          and timestamps that outlive any vendor.
         </p>
         <p className="p2">
           The milestones — a coffee lot lifecycle completed, a BD seasonal cycle

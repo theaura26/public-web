@@ -410,16 +410,20 @@ export default function BrandPage() {
               />
             </div>
           </Reveal>
-          <ScrollHighlight maxWidth={880} align="center">{`Aura is a regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 100 years.`}</ScrollHighlight>
+          <ScrollHighlight maxWidth={880} align="left">{`Attention. Unhurried. Rooted. Awake.
+An intelligence shaped by people, nature, and generations of inherited wisdom.
+Because true progress is not measured by speed alone, but by the legacy we leave behind.
+Not for the next year. But for the next 1,000 years.
+The Aura Life is guided by Natural Intelligence.`}</ScrollHighlight>
           <Reveal>
             <div style={{
               maxWidth: 720,
-              margin: '0 auto',
+              margin: 0,
               display: 'flex',
               flexDirection: 'column',
               gap: 16,
               marginTop: 'var(--space-5)',
-              textAlign: 'center',
+              textAlign: 'left',
             }}>
               <p className="p2" style={{ margin: 0 }}>
                 The following pages set out the fundamentals of the Aura
@@ -439,7 +443,7 @@ export default function BrandPage() {
       </section>
 
       {/* ═══ BRAND GUIDELINES — Pages 1–21 ═══ */}
-      <SlideGrid from={1} to={21} skip={[6, 11, 15, 16, 18, 20, 21]} eagerCount={4} />
+      <SlideGrid from={1} to={21} skip={[6, 11, 15, 16, 17, 18, 19, 20, 21]} eagerCount={4} />
 
       {/* ═══ COPY ═══ */}
       <CopySection
@@ -463,11 +467,11 @@ What will become rare is wisdom.`}
 
       {/* ═══ COPY ═══ */}
       <CopySection
-        headline={`Invent, do not borrow.
+        headline={`Invent our own language.
 Set our own rules.
-Promise less, deliver more.
+Promise less. Deliver more.
 Build for the long memory.
-Make the brand endure.`}
+The brand should endure.`}
       />
 
       {/* ═══ STORIES — Pages 76–94 ═══ */}

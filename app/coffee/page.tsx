@@ -48,7 +48,7 @@ export default function CoffeePage() {
         </p>
       </OneCol>
 
-      <TwoCol heading="The cup is evidence.">
+      <OneCol heading="The cup is evidence.">
         <p className="p1">
           Coffee is usually discussed through flavour notes alone. But flavour
           is accumulated consequence.
@@ -62,7 +62,7 @@ export default function CoffeePage() {
           What ends up in the cup is what the land did, what the weather did,
           and what the team chose not to do.
         </p>
-      </TwoCol>
+      </OneCol>
 
       <PullQuote>
         We are not building a BRAND. We are building a COFFEE that will
@@ -227,7 +227,7 @@ export default function CoffeePage() {
         </p>
       </TwoCol>
 
-      <ScrollHighlight>
+      <ScrollHighlight align="left">
         {`The cup is evidence.
          The cup carries decisions inside it.
          Coffee is agricultural memory made drinkable.

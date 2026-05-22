@@ -21,7 +21,7 @@ export default function FermentationPage() {
         caption="Foam lifting and collapsing on a coffee cherry ferment"
       />
 
-      <TwoCol heading="Three fermentation disciplines. One estate.">
+      <OneCol heading="Three fermentation disciplines. One estate.">
         <p className="p1">
           Coffee, pepper, and cow dung. Each one transforms raw material into
           something the land could not produce alone.
@@ -31,7 +31,7 @@ export default function FermentationPage() {
           where the estate&rsquo;s character becomes audible in flavour — or
           invisible in soil biology.
         </p>
-      </TwoCol>
+      </OneCol>
 
       <Placeholder
         src="/journals/fermentation/aura-coffee-flowers.jpg"

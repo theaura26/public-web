@@ -29,15 +29,13 @@ export default function RtaPage() {
           stay still.
         </p>
         <p className="p2">
-          <Rta /> is a Sanskrit word. It means natural order — the rhythm that
-          governs seasons, tides, germination, decay, and renewal. It predates
-          organised religion. It is not mysticism. It is observation: the world
-          works on timing, and intelligence is alignment with that timing, not
-          control over it.
+          <Rta /> is a Sanskrit word. Natural order — the rhythm that governs
+          seasons, tides, germination, decay, and renewal. It predates
+          organised religion. It is observation: the world works on timing,
+          and intelligence is alignment with that timing.
         </p>
         <p className="p2">
-          At Aura, <Rta /> is not a philosophy posted on a wall. It is the
-          operating system.
+          At Aura, <Rta /> is the operating system.
         </p>
       </OneCol>
 
@@ -141,7 +139,7 @@ export default function RtaPage() {
       <Placeholder
         src="/journals/rta/aura-land.jpg"
         alt="The land at the hour of decision — Sampigelkhan in the slow light before dusk"
-        caption="The land — the hour the work waits on"
+        caption="The land decides the hour"
       />
 
       <PullQuote>

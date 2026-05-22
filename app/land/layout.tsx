@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 export const metadata: Metadata = {
   title: 'The Land',
   description:
-    'Land is not an asset. It is ancestry. 150 acres in the Western Ghats — laterite soil, monsoon rhythm, four-story canopy — in dialogue with a second estate in Ohara, Kyoto.',
+    'Land is ancestry. 150 acres in the Western Ghats — laterite soil, monsoon rhythm, four-story canopy — in dialogue with a second estate in Ohara, Kyoto.',
   alternates: { canonical: '/land' },
   openGraph: {
     type: 'article',

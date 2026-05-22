@@ -23,44 +23,36 @@ export default function ResidencyPage() {
 
       <OneCol heading="An artist residency for natural intelligence.">
         <p className="p1">
-          A working studio inside a living system. The estate is the
-          studio. The forest is the studio. The kiln, the wet mill, the
-          cattle pen, the tea garden, the shepherd&apos;s lunch table —
-          all of it is the studio.
+          The estate is the studio. Forest, kiln, wet mill, cattle pen,
+          tea garden — all of it.
         </p>
         <p className="p2">
-          Artists, makers, scientists, chefs, and quiet thinkers come to
-          Aura not to retreat from the world but to make work that could
-          not have been made anywhere else. The work answers to the land,
-          to the season, and to the people who have been listening to
-          this place for longer than any of us have been alive.
+          Artists, makers, scientists, chefs, and quiet thinkers come
+          here to make work that could not be made anywhere else. The
+          work answers to the land, the season, and the people who have
+          read this place longer than any of us have been alive.
         </p>
         <p className="p1" style={{ marginTop: 'var(--space-7)' }}>
           Natural intelligence.
         </p>
         <p className="p2">
-          We treat the estate the way other people treat datasets. Canopy
-          density predicts cherry <Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term>. Bee activity forecasts flowering.
-          Cattle rotation shapes the next season&apos;s microbiome. Soil
-          biology thirty days after cover-crop incorporation predicts the
-          flavour profile of the coffee lot.
+          We read the estate the way others read datasets. Canopy
+          density predicts cherry <Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term>. Bee activity forecasts
+          flowering. Cattle rotation shapes next season&apos;s microbiome.
+          Soil biology thirty days after cover-crop predicts the cup.
         </p>
         <p className="p2">
           The land is the original general-purpose intelligence —
           observed, transmitted, lived. Older than any model on a server.
-          Our residents come to study it. To work alongside it. To make
-          work that draws from it. Not to extract, not to optimise, not
-          to wrap in marketing — to listen to it long enough that it
-          changes what they make.
+          Residents come to listen to it long enough that it changes
+          what they make.
         </p>
         <p className="p2">
-          This is what we mean by ancestral intelligence. It is the
-          intelligence of a <Term tip="Centuries-old high-fire stoneware lineage from Shiga Prefecture; rough surface, ash-fly glaze, wood-fired anagama kiln.">Shigaraki</Term> potter who knows which wood the kiln
-          will accept this week. The intelligence of a shepherd who reads
-          the herd&apos;s mood like weather. The intelligence of a soil
-          that has been farmed biodynamically long enough to have a
-          memory. The work that comes out of this residency is the
-          attempt to render that intelligence visible.
+          The intelligence of a <Term tip="Centuries-old high-fire stoneware lineage from Shiga Prefecture; rough surface, ash-fly glaze, wood-fired anagama kiln.">Shigaraki</Term> potter who knows which wood
+          the kiln will accept this week. The shepherd who reads the
+          herd&apos;s mood like weather. The soil that has been farmed
+          biodynamically long enough to have a memory. The residency
+          renders that intelligence visible.
         </p>
       </OneCol>
 
@@ -74,11 +66,10 @@ export default function ResidencyPage() {
           made.
         </p>
         <p className="p2">
-          We call them <em>embedded residencies</em> because you do not
-          arrive at a campus; you arrive inside a living system. You eat
-          from the garden you walked past at dawn. You work with material
-          that was sourced, fermented, or fired on the property. The
-          residency is not the building. The residency is the biosphere.
+          We call them <em>embedded residencies</em> because you arrive
+          inside a living system. You eat from the garden you walked past
+          at dawn. You work with material sourced, fermented, or fired on
+          the property. The residency is the biosphere.
         </p>
       </TwoCol>
 

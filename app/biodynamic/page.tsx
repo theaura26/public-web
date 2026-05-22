@@ -21,18 +21,17 @@ export default function BiodynamicPage() {
         poster="/journals/biodynamic/aura-biodynamic.jpg"
         title="Biodynamic"
         type="Detail · cattle in pen"
-        caption="The BD engine — 52 Malnad Gidda"
+        caption="The estate as one living organism"
         alt="The estate working as one organism — biodynamic practice across canopy, herd, and soil"
       />
 
-      <TwoCol heading="This is not a technique. It is a worldview.">
+      <TwoCol heading="Biodynamic is a worldview.">
         <p className="p1">
           BD 500 through 508. Jeevamrit. Panchgavya. Two ancient farming
           intelligences working together on one estate.
         </p>
         <p className="p2">
-          At Aura, biodynamic farming is not a certification to pursue or a
-          label to put on packaging. It is a closed-loop operating system — a
+          At Aura, biodynamic farming is a closed-loop operating system — a
           way of understanding the estate as a single organism where soil,
           plant, animal, and cosmos are connected.
         </p>
@@ -42,8 +41,7 @@ export default function BiodynamicPage() {
           orally transmitted, regionally adapted).
         </p>
         <p className="p2">
-          They are not in conflict. They are two languages describing the same
-          intelligence.
+          Two languages describing the same intelligence.
         </p>
       </TwoCol>
 
@@ -206,10 +204,8 @@ export default function BiodynamicPage() {
       </TwoCol>
 
       <ScrollHighlight>
-        {`This is not a technique.
-         This is a worldview.
+        {`Biodynamic is a worldview.
          The herd is biological infrastructure.
-         We do not farm for yield.
          We farm for the next hundred years.`}
       </ScrollHighlight>
 

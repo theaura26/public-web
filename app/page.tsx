@@ -1152,15 +1152,41 @@ function SanctuaryBg({ s }: { s: Sanctuary }) {
     />
   )
 
+  /* Sanctuary backdrop videos sit ~2-3 viewports below the fold (after
+     the hero, the HeroVideo 200vh stage, and the residency banner). With
+     preload="auto" + autoPlay all three (Mudigere 6 MB, Ohara 7.6 MB,
+     Munduk 2 MB) fully buffer the moment the page loads — ~16 MB the
+     visitor may never scroll to. Same pattern as PillarVideo:
+     preload="none", no autoPlay attribute, and an IntersectionObserver
+     calls play()/pause() once the band scrolls near the viewport. The
+     poster bgSrc is what readers see during the hand-off, which keeps
+     the panel composed even before the video lands. */
+  const videoRef = useRef<HTMLVideoElement>(null)
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {})
+        else video.pause()
+      },
+      /* rootMargin gives the video ~1 viewport of lead-time so it can
+         start fetching before the user actually arrives at the band. */
+      { threshold: 0, rootMargin: '100% 0px 100% 0px' }
+    )
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [s.bgVideo])
+
   if (s.bgVideo) {
     return (
       <>
         <video
-          autoPlay
+          ref={videoRef}
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           poster={s.bgSrc}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         >

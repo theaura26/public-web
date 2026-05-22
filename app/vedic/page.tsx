@@ -1,5 +1,5 @@
 import {
-  ArticleHero,
+  HeroBanner,
   TwoCol,
   OneCol,
   Placeholder,
@@ -12,15 +12,14 @@ import {
 export default function VedicPage() {
   return (
     <>
-      <ArticleHero
+      {/* Modern hero pattern. Subline + 4-question TOC dropped along
+          with the rest of the coming-soon refactor. */}
+      <HeroBanner
         title="Older than its study."
-        subline="A spectrum runs through modern agriculture — light chemical, high chemical, low chemical, no chemical, organic, biodynamic. Vedic farming sits beside all of them. It is older than the rulebook, and it is still correct."
-        toc={[
-          { q: 'Where does it sit?', href: '#where' },
-          { q: 'What is Vrikshayurveda?', href: '#vrikshayurveda' },
-          { q: 'What are the preparations?', href: '#preparations' },
-          { q: 'What is the fungal internet?', href: '#mycorrhizal' },
-        ]}
+        src="/aura-vedic.jpg"
+        mediaType="image"
+        caption="Knowledge older than the institutions that study it"
+        alt="Aura Vedic farming — ancestral agricultural science in practice"
       />
 
       <Placeholder

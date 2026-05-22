@@ -8,7 +8,7 @@
 ═══════════════════════════════════════════ */
 
 import {
-  ArticleHero,
+  JournalHero,
   TwoCol,
   Placeholder,
   DataGrid,
@@ -20,16 +20,14 @@ import {
 export default function ProvenancePage() {
   return (
     <div>
-      <ArticleHero
-        title={<>Cherry to cup. On chain.</>}
-        subline="Every batch of soil prep, every ferment, every drying day, every shipment — signed, timestamped, and verifiable from the Mudigere estate. Native provenance. No paper trail to forge."
-        toc={[
-          { q: 'Why blockchain?', href: '#why-blockchain' },
-          { q: 'What is verified?', href: '#what-verified' },
-          { q: 'What do the sensors do?', href: '#sensors' },
-          { q: 'How does Lot 005 read?', href: '#lot-005' },
-          { q: 'How do buyers engage?', href: '#buyers' },
-        ]}
+      {/* Editorial JournalHero pattern — was ArticleHero with subline
+          + 5-question TOC. Both dropped in the coming-soon refactor. */}
+      <JournalHero
+        title="Cherry to cup. On chain."
+        src="/aura-provenance.jpg"
+        mediaType="image"
+        caption="Native provenance — sensor-verified, timestamped, on chain"
+        alt="Aura provenance — cherry-to-cup verification from the Mudigere estate"
       />
 
       {/* Why Blockchain */}

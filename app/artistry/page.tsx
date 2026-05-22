@@ -1,7 +1,7 @@
 'use client'
 
 import {
-  ArticleHero,
+  HeroBanner,
   OneCol,
   TwoCol,
   Placeholder,
@@ -14,17 +14,17 @@ import {
 export default function ArtistryPage() {
   return (
     <>
-      <ArticleHero
-        title={<>Code meets clay.</>}
-        subline="Artistry is what the people on the land make of it. Studios, residencies, kitchens, labs, gatherings — the work that argues for a different pace through the things it makes."
-        toc={[
-          { q: 'What is artistry here?', href: '#premise' },
-          { q: 'Who is the audience?', href: '#audience' },
-          { q: 'What are the studios?', href: '#studios' },
-          { q: 'What is the residency?', href: '#residency' },
-          { q: 'What are the labs?', href: '#labs' },
-          { q: 'What is the gathering?', href: '#gathering' },
-        ]}
+      {/* Modern hero pattern — was ArticleHero (subline + 6-question
+          TOC + figure). The TOC pattern is retired across coming-soon
+          journals; the body sections (TwoCol/OneCol/DataGrid below)
+          carry their own headings as anchors. */}
+      <HeroBanner
+        title="Code meets clay."
+        src="/aura-artistry.mp4"
+        mediaType="video"
+        poster="/aura-artistry.jpg"
+        caption="Studios, residencies, labs, gatherings — the work of the land"
+        alt="Aura artistry — studios, residency, labs, and the Bhoomi gathering"
       />
 
       <Placeholder

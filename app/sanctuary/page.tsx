@@ -1,5 +1,5 @@
 import {
-  ArticleHero,
+  HeroBanner,
   TwoCol,
   Placeholder,
   DataGrid,
@@ -11,17 +11,17 @@ import {
 export default function SanctuaryPage() {
   return (
     <>
-      <ArticleHero
-        title={<>Guests of the mountain.</>}
-        subline="Aura Sanctuary is the land in rhythm. Two valleys in practice today, two more in planning. Each one a life-system built to outlast its builders."
-        toc={[
-          { q: 'What is the premise?', href: '#premise' },
-          { q: 'What makes a sanctuary?', href: '#guest' },
-          { q: 'How are India and Japan paired?', href: '#duality' },
-          { q: 'What is the operating system?', href: '#os' },
-          { q: 'How is a sanctuary entered?', href: '#rhythm' },
-          { q: 'What sanctuaries are coming?', href: '#coming' },
-        ]}
+      {/* Hero: pinned full-bleed banner matching the modern journal
+          pattern (biodynamic / fermentation / land). Dropped the
+          previous ArticleHero subline + 6-question TOC + figure — the
+          TOC pattern was retired across the kit. */}
+      <HeroBanner
+        title="Guests of the mountain."
+        src="/aura-sanctuary.mp4"
+        mediaType="video"
+        poster="/aura-sanctuary.jpg"
+        caption="The land in rhythm — two valleys in practice, two more in planning"
+        alt="Aura Sanctuary — Mudigere and Ohara, the four-valley sanctuary stack"
       />
 
       <Placeholder
@@ -31,10 +31,10 @@ export default function SanctuaryPage() {
       {/* eyebrow was: "The Premise" */}
       <TwoCol id="premise" heading="Four valleys. One rhythm.">
         <p className="p1">
-          Aura is not a brand laid over a landscape. It is a way of tending land that begins by
-          asking what the land already knows. We start from the earth and work up — soil, water,
-          canopy, cattle, craft, kitchen, code. The buildings come last. The philosophy was
-          there first.
+          Aura is a way of tending land that begins by asking what the land
+          already knows. We start from the earth and work up — soil, water,
+          canopy, cattle, craft, kitchen, code. The buildings come last. The
+          philosophy was there first.
         </p>
         <p className="p2">
           Our first two sanctuaries are already at work. Mudigere, in the Western Ghats of

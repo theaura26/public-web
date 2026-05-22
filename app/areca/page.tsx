@@ -1,5 +1,5 @@
 import {
-  ArticleHero,
+  JournalHero,
   TwoCol,
   Placeholder,
   DataGrid,
@@ -11,15 +11,14 @@ import {
 export default function ArecaPage() {
   return (
     <>
-      <ArticleHero
+      {/* Editorial JournalHero pattern — was ArticleHero with subline
+          + 4-question TOC. Both dropped in the coming-soon refactor. */}
+      <JournalHero
         title="The sentinel palm."
-        subline="Areca catechu — the slender upright palm that holds up the entire estate. Mid-canopy, trellis, companion, and cultural fixture of coastal Karnataka. Everything else grows in its shade."
-        toc={[
-          { q: 'Why areca?', href: '#architecture' },
-          { q: 'How does the canopy stack?', href: '#five-layer' },
-          { q: 'What does it mean culturally?', href: '#culture' },
-          { q: 'How is it processed?', href: '#processing' },
-        ]}
+        src="/aura-areca.jpg"
+        mediaType="image"
+        caption="Areca catechu — the slender upright palm of the mid-canopy"
+        alt="Aura areca — the sentinel palm, mid-canopy of the estate"
       />
 
       <Placeholder

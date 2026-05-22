@@ -1,5 +1,5 @@
 import {
-  ArticleHero,
+  JournalHero,
   TwoCol,
   OneCol,
   Placeholder,
@@ -12,15 +12,15 @@ import {
 export default function PepperPage() {
   return (
     <>
-      <ArticleHero
+      {/* Editorial JournalHero pattern — stacked title + full-bleed
+          image. Was ArticleHero with subline + 4-question TOC; both
+          dropped in the coming-soon refactor. */}
+      <JournalHero
         title="Malabar black gold."
-        subline="Single-estate pepper climbing the areca trunks of the Mudigere estate. Three processing styles, one appellation. The spice that carried the Malabar coast onto every map in Europe — grown now without the empire, and without the shortcuts."
-        toc={[
-          { q: 'What is the terroir?', href: '#terroir' },
-          { q: 'What are the three types?', href: '#processing' },
-          { q: 'How does fermentation work?', href: '#fermentation' },
-          { q: 'What makes the appellation?', href: '#appellation' },
-        ]}
+        src="/aura-pepper.jpg"
+        mediaType="image"
+        caption="Single-estate pepper, three processing styles"
+        alt="Aura pepper — Malabar black gold climbing the areca trunks"
       />
 
       <Placeholder

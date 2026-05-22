@@ -1,7 +1,13 @@
 import type { Metadata } from 'next'
-import { Instrument_Serif, DM_Sans, DM_Mono } from 'next/font/google'
+import { Bricolage_Grotesque, Instrument_Serif, DM_Sans, DM_Mono, Pixelify_Sans } from 'next/font/google'
 import './globals.css'
 import ClientLayout from './client-layout'
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-grotesque',
+  display: 'swap',
+})
 
 const instrumentSerif = Instrument_Serif({
   weight: '400',
@@ -23,39 +29,62 @@ const dmMono = DM_Mono({
   display: 'swap',
 })
 
+/* Reserved for the "Machine" word in the Brand page intelligence cycle. */
+const pixelifySans = Pixelify_Sans({
+  subsets: ['latin'],
+  variable: '--font-pixel',
+  display: 'swap',
+})
+
+/* metadataBase makes every page's relative OG/Twitter image URL resolve to
+   the canonical production origin. Without it Next logs warnings AND
+   generates broken OG image URLs in preview deploys. */
 export const metadata: Metadata = {
   metadataBase: new URL('https://theaura.life'),
   title: {
-    template: '%s | Aura',
-    default: 'Aura.Life — The 1000-Year Idea',
+    default: 'Aura — The 1000-Year Idea',
+    template: '%s — Aura',
   },
-  description: 'A regenerative platform for generational impact.',
+  description:
+    'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital. 150 acres in the Western Ghats; an East-East axis to Ohara, Kyoto.',
+  applicationName: 'Aura',
+  authors: [{ name: 'Aura', url: 'https://theaura.life' }],
+  keywords: [
+    'Aura',
+    'regenerative agriculture',
+    'biodynamic',
+    'Western Ghats',
+    'Mudigere',
+    'Ohara',
+    'specialty coffee',
+    'artist residency',
+    'natural intelligence',
+  ],
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: 'Aura.Life — The 1000-Year Idea',
-    description: 'A regenerative platform for generational impact.',
-    siteName: 'Aura',
     type: 'website',
-    url: 'https://theaura.life',
     locale: 'en_US',
-    images: [{ url: '/og-hello.jpg', width: 1200, height: 630, alt: 'Aura.Life — The 1000-Year Idea' }],
+    siteName: 'Aura',
+    title: 'Aura — The 1000-Year Idea',
+    description:
+      'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
+    images: ['/og-hello.jpg'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Aura.Life — The 1000-Year Idea',
-    description: 'A regenerative platform for generational impact.',
+    title: 'Aura — The 1000-Year Idea',
+    description:
+      'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
     images: ['/og-hello.jpg'],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
   },
-  keywords: ['regenerative agriculture', 'specialty coffee', 'monastic polymath', 'Aura', 'ancestral intelligence', 'Mudigere', 'India'],
-  other: {
-    'geo.region': 'IN-KA',
-    'geo.placename': 'Mudigere',
-    'geo.position': '13.1167;75.6333',
-    'ICBM': '13.1167, 75.6333',
-  },
+  formatDetection: { telephone: false },
 }
 
 export default function RootLayout({
@@ -64,7 +93,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${instrumentSerif.variable} ${dmSans.variable} ${dmMono.variable}`}>
+    <html lang="en" className={`${bricolage.variable} ${instrumentSerif.variable} ${dmSans.variable} ${dmMono.variable} ${pixelifySans.variable}`}>
       <body>
         <ClientLayout>{children}</ClientLayout>
       </body>

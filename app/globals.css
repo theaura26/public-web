@@ -1,102 +1,852 @@
 @import "tailwindcss";
 
-/* ═══════════════════════════════════════════
-   AURA LIFE — Design System
-═══════════════════════════════════════════ */
+/* Belmonte Ballpoint (Typeheist) — used for <PullQuote>. The
+   foundry ships two cuts (Cursive + Print) and two web formats
+   per cut (woff2 + woff). woff2 is the modern format every current
+   browser supports; woff is the legacy fallback. */
+@font-face {
+  font-family: 'Belmonte Ballpoint Cursive';
+  src: url('/fonts/BelmonteBallpoint-Cursive.woff2') format('woff2'),
+       url('/fonts/BelmonteBallpoint-Cursive.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Belmonte Ballpoint Print';
+  src: url('/fonts/BelmonteBallpoint-Print.woff2') format('woff2'),
+       url('/fonts/BelmonteBallpoint-Print.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 :root {
-  --ease: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-out: cubic-bezier(0.0, 0, 0.2, 1);
-  --gutter: clamp(20px, 4vw, 48px);
-  --max-w: 1200px;
-  --section-gap: clamp(80px, 12vh, 140px);
-  --grid-gap: clamp(32px, 5vw, 80px);
-  --col2-gap: clamp(40px, 6vw, 100px);
+  --font-pullquote: 'Belmonte Ballpoint Cursive', 'Belmonte Ballpoint Print', cursive;
 }
 
-/* ── Day (default) ── */
-:root, html [data-theme="day"] {
-  --bg: #f5f5f0;
-  --bg-card: #eaeae5;
-  --nav-bg: rgba(245, 245, 240, 0.7);
+/* ═══════════════════════════════════════════════════════════════════════
+   AURA — Design System
+   ─────────────────────────────────────────────────────────────────────
+   Token reference. Edit values here, never hard-code in components.
+   Every token below has at least one live consumer — anything unused
+   has been removed during the May 2026 audit. If you need a new
+   spacing/radius/z step, add it here first.
+
+   Section order:
+     1.  Brand palette                 --brand-accent, --error
+     2.  Theme — Night (default)       --bg / --text / --border
+     3.  Theme — Day
+     4.  Spacing scale                 --space-2 → --space-9
+     5.  Layout                        --gutter / --max-w / --nav-h /
+                                       --section-gap / --grid-gap
+     6.  Radius                        --radius-1 (cards), --radius-2 (inputs)
+     7.  Z-index                       --z-modal
+     8.  Motion — easings + durations  --ease* / --dur-*
+     9.  Type roles                    h1 / h2 / h3 / .p1 / .p2 / .label
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── 1. Brand palette (immutable across themes) ── */
+  --brand-accent: #E37128;          /* primary action / hover */
+  --error: #E8421A;                 /* form validation, destructive UI */
+
+  /* ── 4. Spacing scale (8px base, 4px micro step) ── */
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 80px;
+
+  /* ── 5. Layout ── */
+  --gutter: clamp(20px, 4vw, 48px);          /* horizontal page padding */
+  --max-w: 1200px;                            /* primary content width */
+  --nav-h: 56px;                              /* fixed navbar height */
+  --section-gap: clamp(80px, 12vh, 140px);    /* between major sections */
+  --grid-gap: clamp(32px, 5vw, 80px);         /* between grid items */
+
+  /* ── 6. Radius ── */
+  --radius-1: 2px;       /* tiles, video frames, cards */
+  --radius-2: 4px;       /* buttons, inputs */
+
+  /* ── 7. Z-index scale ── */
+  --z-modal: 9990;       /* LocationModal */
+
+  /* ── 8. Motion ── */
+  /* Motion: 3-curve system. Discipline > variety — same feel everywhere. */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);            /* Material standard — micro transitions (color, opacity, border) */
+  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);      /* easeOutExpo — hero reveals, panel slides, hover swaps */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);    /* Spring micro-snap — used by navbar tile + Continue card symbol hover */
+
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 450ms;
+  --dur-theme: 400ms;     /* day/night theme cross-fade */
+}
+
+/* ── 2. Theme — Night (default) ──
+   --contrast-* tokens always hold the OPPOSITE theme's values. Surfaces that
+   are intentionally always-inverted (the nav and modals) bind to those tokens
+   so they read as a contrasting strip against the rest of the page. */
+:root, html [data-theme="night"] {
+  --bg: #131719;
+  --bg-card: #1a1d20;
+
+  --text: #ededed;                            /* primary */
+  --text-body: rgba(237, 237, 237, 0.65);     /* secondary */
+  --text-muted: rgba(237, 237, 237, 0.4);     /* meta / labels */
+  --text-dim: rgba(237, 237, 237, 0.25);      /* captions / fine print */
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+
+  --selection: rgba(227, 113, 40, 0.32);      /* brand-accent at 32% */
+
+  /* Inverted surface palette = day values while page is night. */
+  --contrast-bg: #ffffff;
+  --contrast-bg-card: #ffffff;
+  --contrast-text: #1a1a1a;
+  --contrast-text-body: rgba(26, 26, 26, 0.65);
+  --contrast-text-muted: rgba(26, 26, 26, 0.4);
+  --contrast-border: rgba(0, 0, 0, 0.08);
+}
+
+/* ── 3. Theme — Day ── */
+html [data-theme="day"] {
+  --bg: #ffffff;
+  --bg-card: #ffffff;
+
   --text: #1a1a1a;
   --text-body: rgba(26, 26, 26, 0.65);
   --text-muted: rgba(26, 26, 26, 0.4);
   --text-dim: rgba(26, 26, 26, 0.25);
+
   --border: rgba(0, 0, 0, 0.08);
   --border-strong: rgba(0, 0, 0, 0.14);
+
+  --selection: rgba(227, 113, 40, 0.24);
+
+  /* Inverted surface palette = night values while page is day. */
+  --contrast-bg: #131719;
+  --contrast-bg-card: #1a1d20;
+  --contrast-text: #ededed;
+  --contrast-text-body: rgba(237, 237, 237, 0.65);
+  --contrast-text-muted: rgba(237, 237, 237, 0.4);
+  --contrast-border: rgba(255, 255, 255, 0.08);
 }
 
-/* ── Night ── */
-html [data-theme="night"] {
-  --bg: #131719;
-  --bg-card: #1a1d20;
-  --nav-bg: rgba(19, 23, 25, 0.7);
-  --text: #ededed;
-  --text-body: rgba(237, 237, 237, 0.65);
-  --text-muted: rgba(237, 237, 237, 0.4);
-  --text-dim: rgba(237, 237, 237, 0.25);
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.14);
-}
-
-/* Invert the white aura-os SVG when on light theme so it reads as dark */
+/* Invert white SVGs on light theme so they read as dark */
 :root .invert-on-light, html [data-theme="day"] .invert-on-light { filter: invert(1); }
 html [data-theme="night"] .invert-on-light { filter: none; }
-
-
-/* ── Video-beside-text block: reorder video below content on mobile, full column width ── */
-.video-col { order: 0; }
-.content-col { order: 0; }
-.video-media { max-width: 100%; }
-@media (max-width: 767px) {
-  .video-col { order: 2; }
-  .content-col { order: 1; }
+/* Inside always-inverted surfaces (the slide-out hamburger menu and the
+   location modals) the logic flips: the surface is dark in day mode (so
+   a white SVG should NOT invert) and light in night mode (so a white SVG
+   SHOULD invert). The nav bar itself follows the page theme — its SVGs use
+   the page-level rules above, no override needed. */
+html [data-theme="day"] .menu-overlay .invert-on-light,
+html [data-theme="day"] .loc-modal:not([data-bleed="true"]) .invert-on-light {
+  filter: none;
 }
-@media (min-width: 768px) {
-  .video-media { max-width: 80%; }
-}
-
-/* ── Video-beside-text block: reorder video below content on mobile, full column width ── */
-.video-col { order: 0; }
-.content-col { order: 0; }
-.video-media { max-width: 100%; }
-@media (max-width: 767px) {
-  .video-col { order: 2; }
-  .content-col { order: 1; }
-}
-@media (min-width: 768px) {
-  .video-media { max-width: 80%; }
+html [data-theme="night"] .menu-overlay .invert-on-light,
+html [data-theme="night"] .loc-modal:not([data-bleed="true"]) .invert-on-light {
+  filter: invert(1);
 }
 
-/* ── Nav buttons ── */
-.nav-btn { transition: color 0.2s ease; }
-.nav-btn:hover { color: var(--text) !important; }
 
-/* ── Agent Mode ── */
-[data-view="agent"] * { font-family: var(--font-mono) !important; }
-[data-view="agent"] h1 { font-size: 16px !important; font-weight: 400 !important; letter-spacing: 0 !important; line-height: 1.6 !important; }
-[data-view="agent"] h2 { font-size: 16px !important; font-weight: 400 !important; letter-spacing: 0 !important; line-height: 1.6 !important; }
-[data-view="agent"] h3 { font-size: 16px !important; font-weight: 400 !important; line-height: 1.6 !important; }
-[data-view="agent"] .p1, [data-view="agent"] .p2 { font-size: 14px !important; line-height: 1.7 !important; }
-[data-view="agent"] .label { font-size: 11px !important; }
-[data-view="agent"] .section-w { max-width: 720px !important; }
-[data-view="agent"] .grid, [data-view="agent"] .grid-2col { display: flex !important; flex-direction: column !important; gap: 24px !important; }
-[data-view="agent"] .stagger { display: flex !important; flex-direction: column !important; gap: 24px !important; }
-[data-view="agent"] section { padding: 40px 0 !important; }
-[data-view="agent"] .human-only { display: none !important; }
-[data-view="agent"] .field-input { font-family: var(--font-mono) !important; font-size: 14px !important; }
-[data-view="agent"] .agent-only { display: block !important; }
+/* ═══ Agent Mode (machine-readable view) ═══
+   A view-toggle, the same way day/night theme is a toggle.
+
+   - All text in DM Mono at one size (14 px / 1.5).
+   - Left-aligned. No uppercase, letter-spacing, opacity dimming.
+   - Colour palette INVERTED relative to the current theme via
+     contrast-* token rebind. Day → dark agent; night → light agent.
+   - Animations off, decorative media hidden, fullscreen wrappers
+     collapsed so content reads top-to-bottom in document order. */
+
+html [data-view="agent"] {
+  --bg: var(--contrast-bg);
+  --bg-elevated: var(--contrast-bg-card);
+  --bg-card: var(--contrast-bg-card);
+  --nav-bg: var(--contrast-bg);
+  --text: var(--contrast-text);
+  --text-body: var(--contrast-text-body);
+  --text-muted: var(--contrast-text-muted);
+  --text-dim: var(--contrast-text-muted);
+  --border: var(--contrast-border);
+}
+
+/* One font, one size, left-aligned. Every text node gets the same
+   spec. Hierarchy disappears — it's a plain text document. NOTE:
+   `opacity` is NOT forced here — the menu-backdrop and menu-overlay
+   rely on inline `opacity: 0` to stay hidden when the menu is closed.
+   Animation-gated content (.reveal, .hero-anim) gets opacity forced
+   to 1 by a separate rule below. */
+[data-view="agent"],
+[data-view="agent"] *,
+[data-view="agent"] *::before,
+[data-view="agent"] *::after {
+  font-family: var(--font-mono) !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  color: var(--text) !important;
+}
+/* Every readable text node in <main> at full opacity. The home page
+   uses inline `opacity: 0.18 + p*0.82` per word for the scroll-tied
+   "Reason is to restore..." reveal — in agent mode those words stay
+   muted unless we force them visible. */
+[data-view="agent"] main,
+[data-view="agent"] main * {
+  opacity: 1 !important;
+}
+
+/* ── Markdown-style plain text for <main> ──
+   Headings prefixed with #, ##, ###. Hr rendered as `---`. Lists
+   prefixed with `-`. Tight spacing — one line between blocks. No
+   containers, borders, or backgrounds. The page reads like a plain
+   markdown document. Nav + footer keep their own layouts and are
+   not affected by these rules. */
+[data-view="agent"] main section,
+[data-view="agent"] main article,
+[data-view="agent"] main .section-w {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin: 0 !important;
+}
+
+/* Insert a `---` separator before each section/header after the
+   first one — mirrors the homepage agent view's explicit <hr/>
+   between sections so journal pages read with the same rhythm
+   when stripped of their visual chrome. Uses `:not(:first-of-type)`
+   so the rule survives non-section siblings (Placeholders render
+   <div>, PullQuotes are <blockquote>); every section still gets
+   its lead separator regardless of what sits between it and the
+   previous one. */
+[data-view="agent"] main > section:not(:first-of-type)::before,
+[data-view="agent"] main > header:not(:first-of-type)::before,
+[data-view="agent"] main > main > section:not(:first-of-type)::before {
+  content: '---';
+  display: block;
+  margin: 24px 0;
+  color: var(--text);
+}
+[data-view="agent"] main h1,
+[data-view="agent"] main h2,
+[data-view="agent"] main h3,
+[data-view="agent"] main h4,
+[data-view="agent"] main h5,
+[data-view="agent"] main h6 {
+  margin: 16px 0 4px !important;
+}
+[data-view="agent"] main h1::before { content: '# ' !important; }
+[data-view="agent"] main h2::before { content: '## ' !important; }
+[data-view="agent"] main h3::before { content: '### ' !important; }
+[data-view="agent"] main h4::before { content: '#### ' !important; }
+[data-view="agent"] main h5::before { content: '##### ' !important; }
+[data-view="agent"] main h6::before { content: '###### ' !important; }
+[data-view="agent"] main p,
+[data-view="agent"] main .p1,
+[data-view="agent"] main .p2 {
+  margin: 0 0 8px !important;
+}
+[data-view="agent"] main ul,
+[data-view="agent"] main ol {
+  margin: 0 0 8px !important;
+  padding-left: 0 !important;
+  list-style: none !important;
+}
+[data-view="agent"] main li {
+  margin-bottom: 0 !important;
+}
+[data-view="agent"] main li::before {
+  content: '- ' !important;
+}
+[data-view="agent"] main hr {
+  display: block !important;
+  border: 0 !important;
+  height: auto !important;
+  margin: 24px 0 !important;
+  overflow: visible !important;
+  text-align: left !important;
+  color: var(--text) !important;
+}
+[data-view="agent"] main hr::before {
+  content: '---' !important;
+  display: inline !important;
+  color: var(--text) !important;
+}
+
+/* No containers inside <main> — strip backgrounds, borders, shadows,
+   radii, outlines on every descendant. Plain text on the page
+   background. Form inputs keep a thin bottom border so the contact
+   form remains usable. */
+[data-view="agent"] main *:not(input):not(textarea):not(select) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+[data-view="agent"] main input,
+[data-view="agent"] main textarea,
+[data-view="agent"] main select {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--text-muted) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 4px 0 !important;
+}
+
+/* Collapse every multi-column grid down to a single linear column so
+   article pages and pillar grids read top-to-bottom instead of
+   zig-zagging across two columns. Covers Tailwind's `grid-cols-*` as
+   well as the project's bespoke `.grid-2col`, `.sidebyside`,
+   `.continue-grid`, and `.stagger` containers. */
+/* Grid collapse scoped to <main> — nav/footer keep their multi-column
+   layouts (user explicitly asked for columns there). */
+[data-view="agent"] main .grid,
+[data-view="agent"] main .grid-2col,
+[data-view="agent"] main .stagger,
+[data-view="agent"] main .sidebyside,
+[data-view="agent"] main .continue-grid,
+[data-view="agent"] main .pillar-grid,
+[data-view="agent"] main .data-grid,
+[data-view="agent"] main .sanctuary-2col-content,
+[data-view="agent"] main .sanctuary-2col-bg,
+[data-view="agent"] main [class*="grid-cols-"],
+[data-view="agent"] main [class*="md:grid-cols-"] {
+  display: block !important;
+  grid-template-columns: 1fr !important;
+}
+[data-view="agent"] .grid > *,
+[data-view="agent"] .grid-2col > *,
+[data-view="agent"] .sidebyside > *,
+[data-view="agent"] .continue-grid > *,
+[data-view="agent"] .pillar-grid > * {
+  margin-bottom: var(--space-5) !important;
+}
+
+/* One column. Left-aligned. Single 720 px max-width with gutter
+   padding applied ONCE on <main> — every section / .section-w /
+   .article-body inside resets its own padding/max-width so nothing
+   double-indents and every paragraph lines up at the same x. */
+[data-view="agent"] main {
+  max-width: 720px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: var(--gutter) !important;
+  padding-right: var(--gutter) !important;
+  /* Clear the fixed top navbar (56 px tall) so the first heading
+     doesn't render underneath it. */
+  padding-top: 96px !important;
+  padding-bottom: 64px !important;
+}
+[data-view="agent"] main section,
+[data-view="agent"] main .section-w,
+[data-view="agent"] main .article-body,
+[data-view="agent"] main .sanctuary-stack,
+[data-view="agent"] main .expanding-video-wrap,
+[data-view="agent"] main .expanding-video-inner,
+[data-view="agent"] main .expanding-video-card,
+[data-view="agent"] main .hero-section,
+[data-view="agent"] main .hero-section-w {
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Wipe horizontal margins/padding on every descendant inside <main>.
+   Article bodies sometimes use bare <div style="margin-left: 72px">
+   wrappers for indented asides; those break the single-column
+   alignment in agent mode. Headings, paragraphs, lists keep their
+   vertical rhythm from the typography rules above. */
+[data-view="agent"] main * {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* ── Visual chrome stripped, page structure intact. ──
+   Hide all decorative media inside <main> — videos, canvases,
+   journal hero imagery, body imagery — so the agent / crawler /
+   text-only reader sees a clean markdown-shaped document. Nav,
+   footer logo, and any imgs OUTSIDE <main> (e.g. the back-link
+   chevron, footer wordmark) stay so navigation still has its
+   affordances. */
+[data-view="agent"] main img,
+[data-view="agent"] main video,
+[data-view="agent"] main canvas,
+[data-view="agent"] main picture,
+[data-view="agent"] main svg:not(.menu-icon),
+[data-view="agent"] main .expanding-banner-wrap,
+[data-view="agent"] main .expanding-banner-inner,
+[data-view="agent"] main .expanding-banner-card,
+[data-view="agent"] main .journal-hero__media,
+[data-view="agent"] main .hero-tile__media,
+[data-view="agent"] main .pillar-media,
+[data-view="agent"] main .pillar-placeholder,
+[data-view="agent"] main .tile-img,
+[data-view="agent"] main .page-vignette,
+[data-view="agent"] main .hero-tile__symbol,
+[data-view="agent"] main .tile-symbol,
+[data-view="agent"] main .footer-logo-scale,
+/* HeroBanner decorative layers — image tint, caption pinned to bottom-
+   left, drafting hint. The title overlay is handled separately below
+   (it needs to FLOW, not disappear). */
+[data-view="agent"] main .hero-banner-tint,
+[data-view="agent"] main .hero-banner-caption,
+[data-view="agent"] main .hero-banner-drafting,
+/* Continue-card thumbnails — the 16:9 reserved box stays empty after
+   the inner img/video are hidden, otherwise. */
+[data-view="agent"] main .continue-card__media,
+/* ArticleHero media figure — the aspect-ratio wrapper holding the
+   optional hero image/video. */
+[data-view="agent"] main .article-hero-figure,
+[data-view="agent"] main .article-hero-media,
+/* DataCard tile thumbnail — 4:5 reserved box on every tile-mode
+   DataCard. The inner img/video already disappear via the global
+   rule; this hides the grey backing plate too. */
+[data-view="agent"] main .data-card__media,
+/* StudioPillarMedia — 3:4 reserved box on each /studios pillar
+   card (Origin / Engine / Hospitality). */
+[data-view="agent"] main .studio-pillar-media,
+/* PullQuote full-bleed border rules — `width: 100vw` + a centering
+   negative margin gets the margin wiped by the agent-mode
+   `* { margin-left/right: 0 }` reset, leaving a 100vw bar pinned to
+   main's left edge that overflows the viewport by ~328 px on a 720-
+   wide main. Hide them in agent mode — they're decorative rules
+   that don't carry information. */
+[data-view="agent"] main .pullquote-rule,
+/* Nav / menu — keep the menu structure but strip the image boxes
+   so the slide-out reads as a clean text-driven directory. Tile
+   titles survive (they're the navigable text); only the thumbnails
+   and the rotating marquee strip go. */
+[data-view="agent"] .menu-overlay img,
+[data-view="agent"] .menu-overlay video,
+[data-view="agent"] .menu-overlay .tile-img,
+[data-view="agent"] .menu-overlay .tile-feed-vignette,
+[data-view="agent"] .menu-marquee {
+  display: none !important;
+}
+
+/* Menu tile-feed in agent mode — image boxes are gone (above), so
+   tighten the column to read as a clean text list. Drops the 100 px
+   tile-to-tile gap (used to separate large thumbnails) and the inline
+   width caps (52% / 85% / max-width 290px / 470px) so every title
+   sits flush at the column's left edge with a single-line rhythm.
+   Title labels keep their .label spec (mono 11px uppercase). */
+[data-view="agent"] .menu-overlay .tile-feed {
+  gap: 14px !important;
+  max-width: none !important;
+}
+[data-view="agent"] .menu-overlay .tile {
+  width: auto !important;
+  max-width: none !important;
+  display: block !important;
+}
+[data-view="agent"] .menu-overlay .tile-title {
+  margin-top: 0 !important;
+  opacity: 1 !important;
+}
+
+/* Disable every animation + transition site-wide in agent view. */
+[data-view="agent"] *,
+[data-view="agent"] *::before,
+[data-view="agent"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Force-visible anything whose entry animation hid it. The reveal +
+   hero-anim families start at opacity:0 and translateY; without their
+   animation running, they'd stay invisible forever in agent mode. */
+[data-view="agent"] .reveal,
+[data-view="agent"] .hero-anim,
+[data-view="agent"] [class*="hero-anim--"] {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+
+/* ── Term tooltips ──
+   The `<Term>` component renders the tip text as a child span that
+   sits absolute over the term and is gated by opacity. In agent mode
+   `opacity:1` is force-applied to every descendant of <main>, which
+   would otherwise drop the tip text inline as a block, breaking the
+   reading flow. Hide it in agent mode — the same tip text is already
+   on the parent span as `aria-label`, so screen readers and crawlers
+   still see the definition. */
+[data-view="agent"] main .aura-term__tip {
+  display: none !important;
+}
+/* The term itself loses its dotted underline + cursor:help styling
+   via the global `border:0` rule above; that's fine — it reads as a
+   plain word inline. */
+
+/* ── Hero headers ──
+   JournalHero + HeroBanner wrap their title in a flex column that's
+   ≥100vh tall on desktop, so in agent mode the title sits a screen
+   below the navbar and the whole hero reads as a wall of whitespace.
+   Plus the title itself uses `display:flex; justify-content:
+   space-between` to spread words edge-to-edge, which agent mode
+   doesn't strip — each word ends up on its own line on mobile or
+   stretched across the page on desktop. Flatten the lot. */
+/* Collapse the hero wrappers themselves (header, sticky stage, flex
+   columns) to natural flow. `.journal-hero__media` is deliberately
+   excluded — the chrome-hide rule above sets it to `display: none`,
+   and re-listing it here with `display: block` (same specificity,
+   later in the file) silently wins and re-introduces the 100vw
+   full-bleed media box plus its -300px desktop margin-top, which
+   yanks the journal title up into the next section. */
+[data-view="agent"] main .journal-hero,
+[data-view="agent"] main .journal-hero__top,
+[data-view="agent"] main .hero-section,
+[data-view="agent"] main .hero-section-w,
+[data-view="agent"] main .hero-video-wrap,
+[data-view="agent"] main .hero-banner-wrap,
+[data-view="agent"] main .hero-banner-stage {
+  display: block !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+}
+/* HeroBanner outer wrap + sticky stage carry inline 200vh/100vh
+   heights, full-bleed widths, and position:sticky/relative that
+   pin the banner in view. Strip the lot so the title overlay
+   flows naturally into the document. */
+[data-view="agent"] main .hero-banner-wrap,
+[data-view="agent"] main .hero-banner-stage {
+  position: static !important;
+  width: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  background: transparent !important;
+  overflow: visible !important;
+}
+/* HeroBanner title overlay — was position:absolute, inset:0,
+   mix-blend-difference. In agent mode it must read as a plain
+   inline heading at the natural document position. */
+[data-view="agent"] main .hero-banner-title-overlay {
+  position: static !important;
+  inset: auto !important;
+  display: block !important;
+  mix-blend-mode: normal !important;
+  color: var(--text) !important;
+  padding: 0 !important;
+  pointer-events: auto !important;
+  transform: none !important;
+}
+/* HeroBanner back link — same deal: was absolute, mix-blend white.
+   Flow as a plain mono link before the title. */
+[data-view="agent"] main .hero-banner-back {
+  position: static !important;
+  display: inline-block !important;
+  margin-bottom: 16px !important;
+  color: var(--text) !important;
+  mix-blend-mode: normal !important;
+}
+[data-view="agent"] main .journal-hero__title,
+[data-view="agent"] main .hero-banner-title,
+[data-view="agent"] main .hero-display {
+  display: block !important;
+  white-space: normal !important;
+}
+[data-view="agent"] main .journal-hero__title > span,
+[data-view="agent"] main .hero-banner-title > span,
+[data-view="agent"] main .hero-display > span {
+  display: inline !important;
+}
+/* ScrollHighlight (multi-line h1/h2/h3) wraps each line in a span with
+   inline `display: block`. The agent-mode `::before` markdown prefix
+   ('## ', '### ' …) then ends up on a row by itself because the very
+   first child span forces a line break beneath it. Make the FIRST
+   span inline so the prefix joins the opening line; subsequent line
+   spans stay block so the rhythm survives. */
+[data-view="agent"] main h1 > span:first-child,
+[data-view="agent"] main h2 > span:first-child,
+[data-view="agent"] main h3 > span:first-child {
+  display: inline !important;
+}
+/* Add a real space between the per-word spans (the JSX renders them
+   adjacent with no whitespace text node between them). */
+[data-view="agent"] main .journal-hero__title > span:not(:last-child)::after,
+[data-view="agent"] main .hero-banner-title > span:not(:last-child)::after,
+[data-view="agent"] main .hero-display > span:not(:last-child)::after {
+  content: ' ' !important;
+}
+
+/* ── Mode-exclusive blocks ──
+   A few pages (e.g. /brand) keep two parallel renderings of the same
+   content — a rich visual layout for `.human-only` and a plain-text
+   summary for `.agent-only`. Toggle them so each mode sees one or the
+   other, never both. Default state (no data-view attribute) treats
+   `.agent-only` as hidden so it never flashes during hydration. */
 .agent-only { display: none; }
+[data-view="agent"] .agent-only { display: revert; }
+[data-view="agent"] .human-only { display: none !important; }
 
+/* Collapse every fullscreen / sticky-scroll wrapper to natural flow.
+   These elements set 100vh+ heights and position:sticky to drive
+   scroll-driven reveals — meaningless in agent mode. By forcing
+   height:auto and position:static, all their inner content (headings,
+   captions, region labels, etc.) flows naturally into the document. */
+[data-view="agent"] .hero-section,
+[data-view="agent"] .hero-video-wrap,
+[data-view="agent"] .hero-video-wrap > div,
+[data-view="agent"] .expanding-video-wrap,
+[data-view="agent"] .expanding-video-inner,
+[data-view="agent"] .expanding-video-card,
+[data-view="agent"] .sanctuary-stack,
+[data-view="agent"] .sanctuary-panel,
+[data-view="agent"] .sanctuary-2col-panel,
+[data-view="agent"] .sanctuary-2col-bg,
+[data-view="agent"] .sanctuary-2col-content,
+[data-view="agent"] .sanctuary-content,
+[data-view="agent"] .reason-section,
+[data-view="agent"] .sanctuary-lede {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  position: static !important;
+  overflow: visible !important;
+}
+
+/* Drop the 100vh empty spacer divs in the sanctuary stack. */
+[data-view="agent"] .sanctuary-stack__spacer,
+[data-view="agent"] .sanctuary-stack__trailing {
+  display: none !important;
+}
+
+/* Sanctuary panels — flatten the centred flex column to a plain
+   left-aligned block so headings + meta labels line up with the rest
+   of the page text. Inline styles on the children (max-width: 260,
+   alignItems centre, text-align centre, color #ffffff) all reset. */
+[data-view="agent"] .sanctuary-content,
+[data-view="agent"] .sanctuary-clickable,
+[data-view="agent"] .sanctuary-meta {
+  position: static !important;
+  inset: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: block !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
+[data-view="agent"] .sanctuary-content > *,
+[data-view="agent"] .sanctuary-content > * > *,
+[data-view="agent"] .sanctuary-meta > * {
+  position: static !important;
+  inset: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: none !important;
+  text-align: left !important;
+  align-self: stretch !important;
+  justify-self: stretch !important;
+}
+/* Sanctuary white text is set inline (#ffffff); override to readable
+   theme color in agent view. */
+[data-view="agent"] .sanctuary-content,
+[data-view="agent"] .sanctuary-content * {
+  color: var(--text) !important;
+}
+
+/* ExpandingVideo caption is absolute-positioned with bottom/left
+   clamp() values. Flatten to in-flow block in agent mode. */
+[data-view="agent"] .expanding-video-card,
+[data-view="agent"] .expanding-video-card * {
+  position: static !important;
+  inset: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: none !important;
+  text-align: left !important;
+  color: var(--text) !important;
+}
+
+/* Collapse the home page hero's custom grids (hero-section,
+   hero-mid, hero-tiles) to block flow and reset the grid placement
+   on their children, so the hero reads as the same plain paragraph
+   list as every other page. Section-w's 720 px max-width still
+   applies — we don't strip widths from the section wrapper. */
+[data-view="agent"] .hero-section,
+[data-view="agent"] .hero-mid,
+[data-view="agent"] .hero-tiles,
+[data-view="agent"] .hero-tile {
+  display: block !important;
+  grid-template-columns: 1fr !important;
+}
+[data-view="agent"] .hero-section > *,
+[data-view="agent"] .hero-mid > *,
+[data-view="agent"] .hero-tiles > *,
+[data-view="agent"] .hero-tile > * {
+  justify-self: stretch !important;
+  align-self: stretch !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  text-align: left !important;
+  max-width: none !important;
+}
+[data-view="agent"] .hero-tile__media,
+[data-view="agent"] .hero-mid__logo {
+  display: none !important;
+}
+
+/* Navbar simplified: hide the rotating logo SVG (decorative).
+   Hamburger + menu stay reachable so the user can toggle out of
+   agent mode via the robot icon in the slide-out. */
+[data-view="agent"] .aura-nav > a:first-child img { display: none !important; }
+[data-view="agent"] .nav-wordmark { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
+
+/* Footer: simplified, no watermark. */
+[data-view="agent"] footer { background: var(--bg) !important; padding-bottom: var(--space-7) !important; }
+[data-view="agent"] footer > div:last-child { display: none !important; }
+
+/* ── Sanctuary stack decorative layers ──
+   The .sanctuary-stack wrapper carries an inline `background: #0a0a0a`
+   that survives the height-collapse rule above. In agent mode + day
+   theme that would leave dark text against a dark plate, so reset the
+   stack to the theme bg. The panels themselves contain inline-styled
+   <SanctuaryBg> image/colour layers and blur overlays with no class —
+   they'd otherwise expand to fill the collapsed stack and bleed colour
+   behind the readable text. Hide every direct child of a sanctuary
+   panel that isn't part of the readable content flow. */
+[data-view="agent"] .sanctuary-stack {
+  background: var(--bg) !important;
+}
+[data-view="agent"] .sanctuary-panel > *:not(.sanctuary-clickable):not(.sanctuary-content):not(.sanctuary-meta),
+[data-view="agent"] .sanctuary-2col-bg {
+  display: none !important;
+}
+
+/* ── Hero CTA row + caption ──
+   The bottom row of the hero video uses inline `color: '#fff'` for the
+   "Land. Time. Practice." caption and the "Enter the ecosystem" film
+   button so they read over the dark video. In agent mode the video is
+   stripped and the row needs theme-aware colour plus a flat, in-flow
+   layout so the CTAs read as plain text inline with the rest. */
+[data-view="agent"] .hero-cta-row {
+  position: static !important;
+  inset: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: var(--space-2) !important;
+  padding: 0 !important;
+  pointer-events: auto !important;
+}
+[data-view="agent"] .hero-caption,
+[data-view="agent"] .hero-watch {
+  color: var(--text) !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+/* ── Pillar video frames carry a 3:4 aspect-ratio that holds a 700-px
+      empty box once the inner video is display:none in agent mode.
+      Collapse the wrapper entirely so the pillar cards read as title +
+      blurb only. ── */
+[data-view="agent"] .pillar-media {
+  display: none !important;
+}
+
+/* ── Flatten every inline-styled absolutely-positioned descendant of
+      the major fullscreen wrappers. Most of the home page composes
+      its layers with `style="position:absolute; inset:0; ..."` divs
+      (rotating logo overlay, sanctuary background plates, sanctuary
+      2-col bottom-label rows, ExpandingVideo captions, etc.). In
+      agent mode those layers should drop into natural flow instead
+      of stacking on top of each other against a now-collapsed
+      parent. Attribute selector matches React's serialised inline
+      style which is written without spaces ("position:absolute"). ── */
+[data-view="agent"] .hero-section [style*="position:absolute"],
+[data-view="agent"] .hero-video-wrap [style*="position:absolute"],
+[data-view="agent"] .expanding-video-wrap [style*="position:absolute"],
+[data-view="agent"] .sanctuary-stack [style*="position:absolute"],
+[data-view="agent"] .sanctuary-panel [style*="position:absolute"],
+[data-view="agent"] .sanctuary-2col-panel [style*="position:absolute"],
+[data-view="agent"] .sanctuary-content [style*="position:absolute"] {
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  width: auto !important;
+}
+
+/* Agent mode: hide every <img> entirely — the previous dashed alt-text
+   placeholder was visual noise. The wordmark, hero film, brand slide
+   stills, journal thumbnails, etc. all disappear; the alt text is
+   still in the DOM for any accessibility tools that want it, just not
+   rendered as a styled box. Also hide decorative inline SVG logos
+   (hero mid wordmark, footer emblem). The navbar wordmark is kept
+   intentionally — it's the only brand mark for the agent reader. */
+[data-view="agent"] img,
+[data-view="agent"] picture,
+[data-view="agent"] .hero-mid__logo,
+[data-view="agent"] .footer-manifesto-logo {
+  display: none !important;
+}
+
+/* Hero display + mid row use justified flexbox/grid layouts that
+   only make sense on a wide canvas — flatten to plain block flow so
+   each line reads as a normal heading/paragraph in document order. */
+[data-view="agent"] .hero-display,
+[data-view="agent"] .hero-display span,
+[data-view="agent"] .hero-mid,
+[data-view="agent"] .hero-mid__think,
+[data-view="agent"] .hero-mid__copy {
+  display: block !important;
+  text-align: left !important;
+  width: auto !important;
+}
+
+
+/* ═══ Reset + base ═══ */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  font-kerning: normal;
+  /* Horizontal overflow clip lives on the html element, NOT on body.
+     Putting `overflow-x: hidden` on body forces the browser to compute
+     `overflow-y: auto`, which turns body into a scroll container and
+     breaks `position: sticky` on descendants (the sticky tries to pin
+     to body's viewport, but body doesn't actually scroll — the html
+     does). Sticky now resolves cleanly against the document scroller. */
+  overflow-x: hidden;
+}
 
 body {
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.6;
-  overflow-x: hidden;
   scrollbar-width: none;
 }
 
@@ -104,51 +854,23 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  transition: background 0.4s var(--ease), color 0.4s var(--ease);
+  transition: background var(--dur-theme) var(--ease), color var(--dur-theme) var(--ease);
 }
 
 body::-webkit-scrollbar { width: 0; }
 
-::selection { background: rgba(128,128,128,0.3); }
+::selection { background: var(--selection); }
 
-/* ── Custom Cursor ── */
-@media (pointer: fine) {
-  * { cursor: none !important; }
-}
 
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  pointer-events: none;
-  mix-blend-mode: difference;
-  will-change: transform;
-}
+/* Custom cursor system retired — native arrow + browser default hover
+   states (pointer on anchors/buttons) handle everything now. */
 
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 9999px;
-  background: #fff;
-  transition: transform 0.2s var(--ease), opacity 0.2s;
-}
 
-.cursor.hovering .cursor-dot {
-  transform: scale(3);
-  opacity: 0.85;
-  background: #E37128;
-}
-
-@media (pointer: coarse) {
-  .cursor { display: none; }
-}
-
-/* ── Reveal ── */
+/* ═══ Reveal-on-scroll ═══ */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
 }
 
 .reveal.visible {
@@ -156,69 +878,270 @@ body::-webkit-scrollbar { width: 0; }
   transform: translateY(0);
 }
 
-/* ── Stagger ── */
+/* Stagger child reveals */
 .stagger > :nth-child(1) { transition-delay: 0s; }
 .stagger > :nth-child(2) { transition-delay: 0.06s; }
 .stagger > :nth-child(3) { transition-delay: 0.12s; }
 .stagger > :nth-child(4) { transition-delay: 0.18s; }
 .stagger > :nth-child(5) { transition-delay: 0.24s; }
-.stagger > :nth-child(6) { transition-delay: 0.3s; }
+.stagger > :nth-child(6) { transition-delay: 0.30s; }
 
-/* ── Transitions ── */
+
+/* ═══ Default transitions on interactive elements ═══ */
 a, button {
-  transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease), opacity 0.2s var(--ease);
+  transition:
+    color var(--dur-base) var(--ease),
+    background var(--dur-base) var(--ease),
+    border-color var(--dur-base) var(--ease),
+    opacity var(--dur-base) var(--ease),
+    text-decoration-color var(--dur-base) var(--ease);
 }
 
-/* ── Hover underline for .p1 links / clickable .p1 ── */
-.p1 a, a.p1, [role="button"] .p1 {
+/* ═══ Standard pointer cursor on every interactive element ═══
+   Browsers default <a> to pointer but <button> to default arrow. Normalise so
+   anything the user can click shows the mickey-hand pointer on hover. */
+a,
+a[role="button"],
+button,
+[role="button"],
+[role="link"],
+[type="button"],
+[type="submit"],
+[type="reset"],
+summary,
+label[for] {
+  cursor: pointer;
+}
+a:disabled,
+button:disabled,
+[role="button"][aria-disabled="true"],
+[disabled] {
+  cursor: not-allowed;
+}
+
+/* Brand-accent underline on hover for clickable elements */
+a:hover, button:hover, [role="button"]:hover {
   text-decoration: underline;
-  text-decoration-color: transparent;
+  text-decoration-color: var(--brand-accent);
   text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
-  transition: text-decoration-color 0.3s var(--ease);
+  text-decoration-thickness: 1.5px;
 }
 
-.p1 a:hover, a.p1:hover, [role="button"]:hover .p1 {
-  text-decoration-color: #E37128;
+/* Sanctuary banner: hover affordance is the cursor pill (Explore X) — no
+   text underline anywhere inside the clickable region. The parent rule above
+   draws an underline across [role="button"]:hover; this kills it both on the
+   wrapper itself and any nested text node (including the "Explore X"
+   button that sits inside .sanctuary-content / .sanctuary-meta). */
+.sanctuary-clickable,
+.sanctuary-clickable:hover,
+.sanctuary-clickable :is(p, span, h1, h2, button),
+.sanctuary-clickable:hover :is(p, span, h1, h2, button) {
+  text-decoration: none !important;
 }
 
-/* ── Hover underline for .p1 links / clickable .p1 ── */
-.p1 a, a.p1, [role="button"] .p1 {
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
-  transition: text-decoration-color 0.3s var(--ease);
+
+/* ═══════════════════════════════════════════
+   9. TYPE ROLES
+═══════════════════════════════════════════ */
+
+/* H1 — page display */
+h1 {
+  font-family: var(--font-grotesque);
+  font-weight: 400;
+  font-size: clamp(44px, 9vw, 88px);
+  line-height: 1.02;
+  letter-spacing: -0.06em;
+  color: var(--text);
+  text-wrap: balance;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
 }
 
-.p1 a:hover, a.p1:hover, [role="button"]:hover .p1 {
-  text-decoration-color: #E37128;
+/* H2 — section heading */
+h2 {
+  font-family: var(--font-grotesque);
+  font-weight: 400;
+  font-size: clamp(32px, 5.5vw, 60px);
+  line-height: 1.06;
+  letter-spacing: -0.05em;
+  color: var(--text);
+  text-wrap: balance;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
 }
 
-/* ═══ Type System ═══ */
+/* H3 — sub-heading / card title */
+h3 {
+  font-family: var(--font-grotesque);
+  font-weight: 400;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  text-wrap: balance;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+}
 
-/* H1: Instrument Serif, white */
-h1 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(56px, 9vw, 88px); line-height: 1.02; letter-spacing: -2px; color: var(--text); }
+/* P1 — primary body, full-strength text */
+.p1 {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text);
+  font-weight: 400;
+}
 
-/* H2: Instrument Serif, white, bigger */
-h2 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(36px, 5.5vw, 60px); line-height: 1.06; letter-spacing: -1px; color: var(--text); }
+/* P2 — secondary body, slightly muted */
+.p2 {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-body);
+  font-weight: 400;
+}
 
-/* H3: Instrument Serif, white */
-h3 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(24px, 3vw, 32px); line-height: 1.15; color: var(--text); }
+/* Mobile body sizing */
+@media (max-width: 768px) {
+  .p1 { font-size: 15px; line-height: 1.5; }
+  .p2 { font-size: 14px; line-height: 1.5; }
+}
 
-/* P1: DM Sans, white — primary body */
-.p1 { font-family: var(--font-sans); font-size: 17px; line-height: 1.65; color: var(--text); font-weight: 400; }
+/* Label — uppercase mono caption / eyebrow */
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
 
-/* P2: DM Sans, grey — secondary body */
-.p2 { font-family: var(--font-sans); font-size: 16px; line-height: 1.65; color: var(--text-body); font-weight: 400; }
-
-/* Label: DM Mono, grey, uppercase */
-.label { font-family: var(--font-mono); font-size: 11px; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; color: var(--text-body); }
-
-/* No bold for emphasis anywhere */
+/* No bold for emphasis — promote to text-primary instead */
 strong, b { font-weight: 400; color: var(--text); }
 
-/* ── Layout ── */
+/* Hero — the heaviest display style. Used on the homepage manifesto rows
+   ("A REGENERATIVE COMPANY", "FOR GENERATIONAL IMPACT") and the Brand page
+   intelligence cycle hero. Bricolage Grotesque 600 (semibold) — one step
+   lighter than full bold for a more refined display tone. */
+.hero-display {
+  font-family: var(--font-grotesque);
+  font-size: clamp(36px, 6.6vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+  text-transform: uppercase;
+  /* Watermark colour — quietly present, never shouty. Matches the giant
+     aura wordmark watermark in the footer (#F2F2F2 on day, white@55% on
+     night) so both watermark elements read at the same opacity. */
+  color: #F2F2F2;
+  margin: 0;
+  transition: color 0.4s var(--ease-out);
+}
+html [data-theme="day"] .hero-display {
+  color: #F2F2F2;
+}
+html [data-theme="night"] .hero-display {
+  /* Watermark on night — symmetric to day's #F2F2F2 (white minus 5%):
+     a dark grey that sits just above the page bg (#131719) rather
+     than the bright 55%-white the manifesto used to land in. Reads
+     as a quiet etch, not a foreground statement. */
+  color: #1f2428;
+}
+
+/* ── Hero hover swap ─────────────────────────────────────────────────────
+   Hovering either manifesto headline ("A REGENERATIVE COMPANY" or "FOR
+   GENERATIONAL IMPACT") brings it to full theme text colour, and at the
+   same moment pulls the central trio (aura wordmark + the two "Nestled in
+   nature…" / "We combine ancestral wisdom…" metadata lines) back to the
+   same watermark grey the headlines normally sit in. Attention swaps from
+   one layer to the other. Uses :has() so the parent matches when any
+   .hero-display descendant is hovered. */
+.hero-section-w .hero-display,
+.hero-section-w .hero-mid__logo,
+.hero-section-w .hero-mid__think,
+.hero-section-w .hero-mid__copy {
+  transition: color 0.4s var(--ease-out), opacity 0.4s var(--ease-out);
+}
+/* Both headlines light up together when either is hovered — they read as
+   a single statement, so the attention swap moves the whole manifesto, not
+   just the line under the cursor. */
+.hero-section-w:has(.hero-display:hover) .hero-display {
+  color: var(--text) !important;
+}
+.hero-section-w:has(.hero-display:hover) .hero-mid__logo {
+  color: #F2F2F2 !important;
+}
+.hero-section-w:has(.hero-display:hover) .hero-mid__think,
+.hero-section-w:has(.hero-display:hover) .hero-mid__copy {
+  color: #F2F2F2 !important;
+}
+html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__logo,
+html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__think,
+html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__copy {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+
+/* ── Studios hero — editorial display title ─────────────────────────
+   "STUDIOS." stretches edge-to-edge across the section-w rail, in
+   the same uppercase grotesque the journal heroes use. Letters are
+   each in their own span and laid out with `justify-content:
+   space-between` so the word fills the row regardless of letter
+   count. The sr-only `.studios-title__plain` carries the readable
+   text for screen readers and agent mode (which hides the letters
+   and reveals the plain text). */
+.studios-hero {
+  padding: clamp(120px, 18vh, 200px) 0 var(--section-gap);
+}
+.studios-title {
+  margin: 0;
+  font-family: var(--font-grotesque);
+  font-weight: 600;
+  font-size: clamp(56px, 13vw, 200px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.studios-title__letters {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+  white-space: nowrap;
+}
+.studios-title__plain {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+/* Agent mode flips the two: hide the visual letter row, reveal the
+   plain "Studios." text so the markdown reads naturally. The extra
+   `.studios-title` qualifier raises specificity above the generic
+   `h1 > span:first-child` inlining rule used for ScrollHighlight
+   (otherwise that rule wins and the letter row reappears alongside
+   the plain text). */
+[data-view="agent"] main h1.studios-title > .studios-title__letters {
+  display: none !important;
+}
+[data-view="agent"] main h1.studios-title > .studios-title__plain {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+}
+
+/* ═══════════════════════════════════════════
+   LAYOUT HELPERS
+═══════════════════════════════════════════ */
+
+/* Centered content well */
 .section-w {
   max-width: var(--max-w);
   margin: 0 auto;
@@ -226,7 +1149,95 @@ strong, b { font-weight: 400; color: var(--text); }
   width: 100%;
 }
 
-/* Standard 2-col: fixed 50/50 split so right column always aligns */
+/* Two stacked OneCols share the same heading rhythm, so the doubled
+   section-gap between them (each contributes padding-bottom +
+   padding-top of var(--section-gap)) reads as a hard break instead
+   of a continuation. Collapse the gap so consecutive OneCols read as
+   one logical column with a single breath between them. The
+   `!important` is required because OneCol sets `padding` inline on
+   its <section>, which would otherwise win. */
+section.one-col + section.one-col {
+  padding-top: 0 !important;
+}
+
+/* ── Article body — vertical gap between sequential paragraphs so the
+   p1 lead and the p2 body lines breathe. Without this, consecutive
+   <p> blocks inside <TwoCol>/<OneCol> stack with zero space because
+   `.p1` / `.p2` carry their type spec but no margin. */
+.article-body > p + p,
+.article-body > p + div,
+.article-body > div + p,
+.article-body p + p {
+  margin-top: clamp(12px, 1.4vh, 20px) !important;
+}
+
+/* Mobile: trim the section rhythm by ~30% so the journals don't feel
+   over-padded on a narrow viewport. Affects every kit primitive that
+   uses `var(--section-gap)` for its top/bottom padding. */
+@media (max-width: 768px) {
+  :root {
+    --section-gap: clamp(56px, 9vh, 100px);
+  }
+}
+
+/* ── Term — inline glossary marker for jargon. Dotted underline in the
+   running text; a small mono-uppercase tooltip lifts above on hover.
+   Force rebuild key — bumping comment to nudge Turbopack. */
+.aura-term {
+  position: relative;
+  border-bottom: 1px dotted var(--text-muted);
+  cursor: help;
+  text-decoration: none;
+  /* Hide the native browser title tooltip — we render our own. */
+}
+.aura-term__tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  z-index: 30;
+  pointer-events: none;
+  max-width: min(320px, 60vw);
+  width: max-content;
+  padding: 8px 12px;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: left;
+  white-space: normal;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+/* term tooltip — open on hover (pointer), on focus (keyboard), or
+   when [data-open] is set by the JSX tap handler (touch). */
+.aura-term:hover .aura-term__tip,
+.aura-term:focus .aura-term__tip,
+.aura-term[data-open] .aura-term__tip {
+  opacity: 1;
+}
+.aura-term:focus { outline: none; }
+@media (max-width: 768px) {
+  /* Mobile: detach the tooltip from the term's positioning context
+     and pin it to the viewport — fixed position, centred horizontally,
+     with the top set inline by the Term component at open time so the
+     pill still sits just above the tapped word. */
+  .aura-term__tip {
+    position: fixed;
+    left: 50%;
+    bottom: auto;
+    transform: translateX(-50%);
+    max-width: calc(100vw - 32px);
+    z-index: 1000;
+  }
+}
+
+/* Fixed 50/50 two-column at desktop */
 @media (min-width: 768px) {
   .grid-2col {
     display: grid !important;
@@ -235,17 +1246,168 @@ strong, b { font-weight: 400; color: var(--text); }
   }
 }
 
-/* ── Modal ── */
+
+/* ═══════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════ */
 .modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  z-index: 200;
+  z-index: var(--z-modal);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--gutter);
 }
 
+
+/* ═══════════════════════════════════════════
+   HOMEPAGE HERO — kinetic entrance
+═══════════════════════════════════════════ */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-fall {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.hero-anim {
+  opacity: 0;
+  /* `both` applies the from-state during pre-delay AND keeps the to-state
+     after — guards against the one-frame flash some browsers paint between
+     hydration and the first animation tick. */
+  animation-fill-mode: both;
+  /* Sitewide --ease-out (easeOutExpo). Same curve as panel slides + hover
+     swaps — one continuous motion language across the whole site. */
+  animation-timing-function: var(--ease-out);
+  /* Promote to its own compositor layer so opacity/transform don't repaint
+     siblings and cause sub-pixel flicker on first frame. */
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+/* Animations are gated by [data-hero-ready="true"] on the section wrapper.
+   The wrapper sets the flag in a useEffect, so animations never run during
+   SSR or first paint — eliminates the FOUC where the keyframe engine starts
+   before React has finished hydrating. */
+[data-hero-ready="true"] .hero-anim--rise { animation-name: hero-rise; }
+[data-hero-ready="true"] .hero-anim--fall { animation-name: hero-fall; }
+[data-hero-ready="true"] .hero-anim--fade { animation-name: hero-fade; }
+
+/* ═══════════════════════════════════════════
+   MOBILE PERFORMANCE — kill backdrop-filter cost
+   On small screens the dynamic blur effects on the hero video + sanctuary
+   panels are the dominant scroll cost. Disable backdrop-filter entirely
+   below 768px so scroll stays smooth. JS scroll handlers in useStackBlur
+   and HeroVideo also bail out on mobile (see app/page.tsx).
+═══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Belt-and-braces guard against horizontal scroll on small screens. If a
+     descendant ever overruns the viewport (justified headline, sticky
+     panel, fixed nav with overshoot, etc.), the page just clips instead of
+     introducing a horizontal scrollbar.
+
+     html ONLY — putting overflow-x on body forces overflow-y: auto which
+     turns body into a scroll container and breaks `position: sticky` on
+     descendants. The html element clips horizontal overflow on its own. */
+  html {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+  body {
+    max-width: 100vw !important;
+    overflow-x: clip;
+  }
+  /* Belt-and-braces: any direct child of body and any main/article
+     also clip horizontally so a single overflowing descendant can't
+     create a horizontal scrollbar on touch devices. */
+  main, article, body > div {
+    max-width: 100vw;
+    overflow-x: clip;
+  }
+
+  /* Hero CTA — push the "Enter the ecosystem" closer to the bottom edge
+     of the sticky stage so it sits visually lower in the frame on mobile. */
+  .hero-cta-row {
+    bottom: 16px !important;
+  }
+
+  /* Sanctuary single-panel content (Mudigere, Ohara) — center the heading
+     block vertically on mobile so the title lands at the centre of the
+     screen rather than the upper third. The meta + Explore CTA remain
+     absolutely positioned at the bottom. */
+  .sanctuary-content[data-large="true"] {
+    justify-content: center !important;
+    padding-top: var(--gutter) !important;
+    padding-bottom: 96px !important;
+  }
+
+  /* Sanctuary section on mobile: ditch the sticky scroll-stack rhythm and
+     flow each panel naturally one after the other. The sticky overlap
+     pattern (which let Ohara cover Mudigere as you scroll) confused the
+     reading order on phones — easier to read four sequential cards.
+     Order: Mudigere (full) → Ohara (full) → Munduk (half) → Daylesford
+     (half). Spacers and trailing buffer are not needed in a flow layout. */
+  .sanctuary-stack {
+    height: auto !important;
+  }
+  .sanctuary-panel {
+    /* relative (not static) so the absolutely-positioned children
+       (.sanctuary-clickable, blur layer, etc.) keep their positioning
+       context. Without this they fall through to <body> and stretch. */
+    position: relative !important;
+    height: 100vh !important;
+  }
+  .sanctuary-stack__spacer {
+    display: none !important;
+  }
+  .sanctuary-2col-panel {
+    /* relative (not static) — see note on .sanctuary-panel above. The
+       absolute-positioned .sanctuary-2col-bg and .sanctuary-2col-content
+       layers anchor against this panel, not against <body>. */
+    position: relative !important;
+    height: 100vh !important;
+  }
+  .sanctuary-2col-bg,
+  .sanctuary-2col-content {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr 1fr !important;
+  }
+  .sanctuary-stack__trailing {
+    display: none !important;
+  }
+
+  /* Pillar grid (Agroculture / Hospitality / Labs) — extra breathing room
+     between stacked cards on mobile so each pillar reads as its own beat,
+     not a tight stack. */
+  .pillar-grid {
+    row-gap: clamp(56px, 9vh, 96px) !important;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   ACCESSIBILITY — reduced motion
+═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .hero-anim { opacity: 1 !important; transform: none !important; }
+}

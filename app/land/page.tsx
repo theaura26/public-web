@@ -1,183 +1,201 @@
-'use client'
-
-import Reveal from '@/components/RevealOnScroll'
-
-const estateData = [
-  { label: 'Location', value: 'Mudigere' },
-  { label: 'Altitude', value: '3,600 ft' },
-  { label: 'Coffee Area', value: '100 acres' },
-  { label: 'Total Estate', value: '150 acres' },
-  { label: 'Soil', value: 'Laterite' },
-  { label: 'pH', value: '6.0\u20136.5' },
-  { label: 'Herd', value: '52 Gidda' },
-  { label: 'Zone', value: 'UNESCO' },
-]
-
-const rules = [
-  { title: 'Soil Comes First', desc: 'All decisions flow from soil health.' },
-  { title: 'Do Small Work Properly', desc: 'Mastery before scaling.' },
-  { title: 'No Shortcuts', desc: 'Right timing over quick gains.' },
-  { title: 'Quality Before Quantity', desc: 'One excellent lot over five average ones.' },
-  { title: 'Think 10 Years Ahead', desc: 'Every action serves the long game.' },
-  { title: 'Leaders on the Field', desc: 'Authority comes from presence and practice.' },
-]
-
-const crops = [
-  { name: 'Coffee', meta: '100 acres · Arabica S795, Selection 9, Chandragiri', desc: 'Our flagship crop. Six micro lots, six processing methods. Cupped fresh at source. Specialty-grade fermentation.' },
-  { name: 'Pepper', meta: 'Malabar pepper · Shade-grown under native canopy', desc: 'Intercropped with coffee. Biodynamic cultivation. The aromatic backbone of Indian spice tradition.' },
-  { name: 'Areca', meta: 'Traditional intercrop · Economic anchor', desc: 'Grown beneath coffee canopy. Supports biodiversity. Provides income stability and forest structure.' },
-  { name: 'Tea', meta: 'Experimental plots · Future expansion', desc: 'Small-scale trials at 3,600 feet. Testing processing methods and cultivar adaptation.' },
-]
-
-const lots = [
-  { name: 'Anaerobic Natural', process: 'Whole cherry in sealed tank', harvest: '450 kg', brix: '24\u201326', ferm: '72h sealed + 20d dry', notes: ['Berries', 'Wine', 'Stone Fruit'] },
-  { name: 'Dry Osmosis', process: 'Whole cherry dried 25 days', harvest: '380 kg', brix: '28\u201330', ferm: 'Sun + time', notes: ['Chocolate', 'Dried Fruit', 'Caramel'] },
-  { name: 'Red Honey', process: 'Pulped, mucilage intact', harvest: '520 kg', brix: '22\u201324', ferm: '48h wet + 20d dry', notes: ['Florals', 'Honey', 'Citrus'] },
-  { name: 'Banana Wash', process: 'Fermented in banana leaf', harvest: '410 kg', brix: '20\u201322', ferm: '36h + 18d dry', notes: ['Tropical', 'Fruit Punch', 'Bright'] },
-  { name: 'Solera Maceration', process: 'Anaerobic, Solera method', harvest: '480 kg', brix: '25\u201327', ferm: '96h sealed + 22d dry', notes: ['Plum', 'Jasmine', 'Dark Chocolate'] },
-  { name: 'Solera Wash', process: 'Aged in cherry parchment', harvest: '390 kg', brix: '21\u201323', ferm: '60h wet + 21d dry', notes: ['Clean', 'Almond', 'White Tea'] },
-]
+import {
+  JournalHero,
+  OneCol,
+  TwoCol,
+  Placeholder,
+  DataGrid,
+  DataCard,
+  PullQuote,
+  Continue,
+  ScrollHighlight,
+  Term,
+} from '@/components/article/Article'
 
 export default function LandPage() {
   return (
-    <div>
+    <>
+      <JournalHero
+        currentHref="/land"
+        title="The Land"
+        caption="Land sets the brief. We answer."
+      />
 
-      {/* Hero */}
-      <section style={{ paddingTop: 250, paddingBottom: 80 }}>
-        <div className="section-w">
-          <Reveal>
-            <h1 style={{ maxWidth: 'min(800px, 90vw)' }}>Where Forest and Energy Merge</h1>
-          </Reveal>
-          <Reveal delay={100}>
-            <p className="p2" style={{ maxWidth: 440, marginTop: 32 }}>
-              Two ancient farming intelligences. Three fermentation disciplines. Six coffee micro lots. One regenerative vision.
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <TwoCol heading="Land is ancestry.">
+        <p className="p1">
+          Sampigelkhan Estate sits in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term> of Karnataka — red <Term tip="Red, iron-rich, free-draining volcanic soil typical of the Western Ghats.">laterite</Term> soil,
+          monsoon rhythm, and a four-story canopy older than any of us.
+        </p>
+        <p className="p2">
+          We are stewards of a hundred-year arc. The numbers below describe
+          what is here today; what matters is what we leave for the next
+          gardener.
+        </p>
+        <p className="p2">
+          This is the land. Everything follows from it.
+        </p>
+      </TwoCol>
 
-      {/* Philosophy */}
-      <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
-        <div className="section-w">
-          <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)' }}>
-            <Reveal>
-              <div>
-                <h2>Not Organic as a Marketing Badge</h2>
-              </div>
-            </Reveal>
-            <Reveal delay={80}>
-              <div className="flex flex-col gap-5" style={{ paddingTop: 4 }}>
-                <p className="p2">We practice two integrated farming systems: Biodynamic and Vedic. Not competing approaches — complementary intelligence.</p>
-                <p className="p2" style={{ color: 'var(--text-muted)' }}>Stabilize → Rebuild → Optimize → Specialize → Higher-value products. Stage 3, transitioning to Stage 4.</p>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
+      <Placeholder
+        src="/journals/land/aura-canopy-noon-2.jpg"
+        alt="Light filtering through the four-story canopy at noon — Sampigelkhan Estate"
+        caption="The land — 150 acres, one organism"
+      />
 
-      {/* Estate Data */}
-      <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
-        <div className="section-w">
-          <Reveal>
-            <div className="grid grid-cols-2 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)' }}>
-              {/* Left half */}
-              <div className="grid grid-cols-2" style={{ gap: 0 }}>
-                {estateData.slice(0, 4).map((d) => (
-                  <div key={d.label} style={{ padding: '20px 0', borderBottom: '1px solid var(--border)' }}>
-                    <p className="label" style={{ marginBottom: 6 }}>{d.label}</p>
-                    <p className="p1" style={{ fontSize: 18 }}>{d.value}</p>
-                  </div>
-                ))}
-              </div>
-              {/* Right half */}
-              <div className="grid grid-cols-2" style={{ gap: 0 }}>
-                {estateData.slice(4).map((d) => (
-                  <div key={d.label} style={{ padding: '20px 0', borderBottom: '1px solid var(--border)' }}>
-                    <p className="label" style={{ marginBottom: 6 }}>{d.label}</p>
-                    <p className="p1" style={{ fontSize: 18 }}>{d.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <TwoCol id="facts" heading="Sampigelkhan.">
+        <DataGrid cols={3}>
+          <DataCard value="13.1365°N, 75.6403°E">Coordinates.</DataCard>
+          <DataCard value="3,600 ft">Altitude.</DataCard>
+          <DataCard value="Laterite">Soil — red, volcanic, pH 6.0–6.5.</DataCard>
+          <DataCard value="40–100 in / yr">
+            Rainfall, monsoon-driven.
+          </DataCard>
+          <DataCard value="14 – 30 °C">Temperature range.</DataCard>
+          <DataCard value="58%">Humidity.</DataCard>
+          <DataCard value="UNESCO">Biodiversity zone.</DataCard>
+          <DataCard value="150">Acres.</DataCard>
+          <DataCard value="35,000">Trees.</DataCard>
+        </DataGrid>
+      </TwoCol>
 
-      {/* Six Rules */}
-      <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
-        <div className="section-w">
-          <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)' }}>
-            <Reveal>
-              <div>
-                <h2>The Six Rules</h2>
-                <p className="p2" style={{ marginTop: 16 }}>Carved on every work shed. In English and Kannada.</p>
-                <p className="p2" style={{ marginTop: 16 }}>Be on the land. Be fair. Do the work properly.</p>
-              </div>
-            </Reveal>
-            <Reveal delay={80}>
-              <div className="flex flex-col">
-                {rules.map((r) => (
-                  <div key={r.title} style={{ borderBottom: '1px solid var(--border)', padding: '16px 0' }}>
-                    <p className="p1">{r.title}</p>
-                    <p className="p2" style={{ marginTop: 2 }}>{r.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
+      <Placeholder
+        src="/journals/land/aura-canopy-noon.mp4"
+        mediaType="video"
+        poster="/journals/land/aura-canopy-noon.jpg"
+        alt="Looking up at the four-story canopy at noon — silver oak, Albizzia, jackfruit, fig"
+        caption="Four-story canopy — Sampigelkhan Estate"
+      />
 
-      {/* Crops */}
-      <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
-        <div className="section-w">
-          <Reveal>
-            <h2 style={{ marginBottom: 'clamp(48px, 6vh, 80px)' }}>Our Crops</h2>
-          </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 stagger" style={{ gap: 'var(--grid-gap)' }}>
-            {crops.map((c) => (
-              <Reveal key={c.name}>
-                <div style={{ borderTop: '1px solid var(--border)', paddingTop: 20 }}>
-                  <p className="p1" style={{ marginBottom: 6 }}>{c.name}</p>
-                  <p className="label" style={{ marginBottom: 10 }}>{c.meta}</p>
-                  <p className="p2">{c.desc}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TwoCol id="grows" heading="What grows here.">
+        <p className="p1">
+          One hundred acres of shade-grown coffee — Arabica <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>,
+          planted beneath a four-story canopy of silver oak, Albizzia,
+          jackfruit, and native fig. Thirty-five acres of tea, in organic
+          transition targeting 2027.
+        </p>
+        <p className="p2">
+          Black pepper climbing areca palms. Cardamom in the lower shade. Cacao,
+          avocado, and cover crops on the forest floor. Beehives marking the
+          flowering seasons. 35,000 individual trees across the estate.
+        </p>
+        <p className="p2">
+          And 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle — an indigenous breed native to this
+          altitude, rotating through blocks timed to cherry development stages.
+          Their dung drives the biodynamic programme. Their presence shapes the
+          soil biology season by season.
+        </p>
+      </TwoCol>
 
-      {/* Coffee Micro Lots */}
-      <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
-        <div className="section-w">
-          <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)', marginBottom: 'clamp(48px, 6vh, 80px)' }}>
-            <Reveal>
-              <h2>Genetics Are the Instrument. Processing Is the Music.</h2>
-            </Reveal>
-            <Reveal delay={80}>
-              <p className="p2" style={{ paddingTop: 4 }}>Six micro lots from the same harvest, same altitude, same soil. Processed differently. Cupped side-by-side. Each tells a story about time.</p>
-            </Reveal>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 stagger" style={{ gap: 'var(--grid-gap)' }}>
-            {lots.map((lot) => (
-              <Reveal key={lot.name}>
-                <div style={{ borderTop: '1px solid var(--border)', paddingTop: 20 }}>
-                  <p className="p1" style={{ marginBottom: 10 }}>{lot.name}</p>
-                  <div className="p2" style={{ fontSize: 14, lineHeight: 1.8, marginBottom: 14 }}>
-                    {lot.process}<br />{lot.harvest} · Brix {lot.brix}<br />{lot.ferm}
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {lot.notes.map((note) => (
-                      <span key={note} className="label" style={{ padding: '3px 10px', border: '1px solid var(--border)', borderRadius: 16 }}>{note}</span>
-                    ))}
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-    </div>
+      <PullQuote>
+        The FOREST is not adjacent to the FARM. The FOREST is the FARM.
+      </PullQuote>
+
+      <TwoCol id="work" heading="How we work this land.">
+        <p className="p1">
+          The progression is deliberate, and it does not skip steps. There is
+          no phase where we arrive and declare the work done. The land is
+          always in transition. The question is whether the trajectory points
+          toward regeneration or extraction. Ours points toward regeneration.
+        </p>
+        <DataGrid cols={3}>
+          <DataCard value="01 — Stabilise and maintain.">
+            Understand what the land is doing before changing anything.
+          </DataCard>
+          <DataCard value="02 — Discipline and observation.">
+            Report what was done, where, why, what was observed.
+          </DataCard>
+          <DataCard value="03 — Organic transition.">
+            Each block at its own pace, logged against the certification clock.
+          </DataCard>
+          <DataCard value="04 — Biodynamic maturation.">
+            BD 500–508, CPP, Jeevamrit, Panchgavya, Beejamrit.
+          </DataCard>
+          <DataCard value="05 — Ecological products.">
+            Output diversifies as the system deepens.
+          </DataCard>
+        </DataGrid>
+      </TwoCol>
+
+      <TwoCol id="east-east" heading="Mudigere and Ohara.">
+        <p className="p1">
+          Aura is not one estate. It is two. The second sits in Ohara, Kyoto —
+          two properties totalling roughly 1,200 <Term tip="Japanese land measure. About 3.3 m² per tsubo.">tsubo</Term>, with seven existing
+          buildings, a teahouse with a hearth, a thirty-year-old Japanese
+          garden, and a cafe overlooking a river.
+        </p>
+        <p className="p2">
+          Mudigere and Ohara form an East-East axis. Two agrarian cultures —
+          Vedic and Zen — in dialogue. Neither apologises to a Western
+          sustainability narrative. Both operate from <em>Ṛta</em>: right time,
+          right action, natural order.
+        </p>
+      </TwoCol>
+
+      <DataGrid cols={2} standalone>
+        <DataCard
+          img="/journals/land/aura-mudigere-mountains.jpg"
+          alt="Mudigere mountains rising over the Western Ghats — the valley that holds Sampigelkhan Estate"
+          value="Mudigere · Karnataka."
+        >
+          150 acres, 3,600 ft, laterite soil, UNESCO biodiversity zone. Four-
+          story polyculture. 52 Malnad Gidda cattle. The agricultural engine.
+        </DataCard>
+        <DataCard
+          img="/journals/land/aura-ohara.jpg"
+          alt="Restored Japanese house in Ohara, Kyoto — autumn maple over a thirty-year-old zen garden"
+          value="Ohara · Kyoto."
+        >
+          ~1,200 tsubo, 1,099 ft, 7 °C – 28 °C. Seven buildings. A
+          thirty-year-old garden. A teahouse with a hearth. The sanctuary
+          counterpart.
+        </DataCard>
+      </DataGrid>
+
+      <TwoCol id="output" heading="What the land produces.">
+        <p className="p1">
+          Beyond coffee and pepper and tea: carbon. The four-story shade-grown
+          polyculture sequesters an estimated three to five times more carbon
+          per acre than monoculture coffee. With the biodynamic programme
+          building soil carbon, the estimate rises to four to five times
+          baseline.
+        </p>
+        <DataGrid cols={3}>
+          <DataCard value="4–5×">Carbon vs monoculture coffee.</DataCard>
+          <DataCard value="500–1,000 t">CO₂ credit potential per year.</DataCard>
+          <DataCard value="100 acres">Shade-grown coffee.</DataCard>
+          <DataCard value="35 acres">Tea, organic transition 2027.</DataCard>
+          <DataCard value="35,000">Trees on chain over time.</DataCard>
+        </DataGrid>
+        <p className="p2">
+          The land is a carbon asset, a biodiversity corridor, a water
+          system, a cultural record, and the primary dataset of everything
+          Aura builds.
+        </p>
+      </TwoCol>
+
+      <PullQuote>
+        PROVENANCE is the EVIDENCE of relationship.
+      </PullQuote>
+
+      <ScrollHighlight>
+        {`Land is ancestry.
+         I am the first gardener.
+         There will be a next.
+         Provenance is evidence of relationship.`}
+      </ScrollHighlight>
+
+      <OneCol id="closing" heading="The unit of record is the land.">
+        <p className="p1">
+          We do not farm for yield. We farm for the next hundred years.
+          Hornbills nest in the fig hollows. Macaques move through the canopy.
+          Fig wasps pollinate the keystone trees. Civets feed on the pepper
+          and the cherry.
+        </p>
+        <p className="p2">
+          The forest is the farm.
+        </p>
+      </OneCol>
+
+      <Continue currentHref="/land" />
+    </>
   )
 }

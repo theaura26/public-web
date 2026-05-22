@@ -431,8 +431,13 @@ export default function VideoReactiveArt({
       }}
     >
       {!externalVideoRef && src && (
+        // Hidden source video — feeds frames to the canvas only.
+        // aria-hidden so screen readers + the SEO audit don't flag it
+        // as a missing aria-label; it's a data pipe, not media.
         <video
           ref={internalVideoRef}
+          aria-hidden="true"
+          tabIndex={-1}
           style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', width: 0, height: 0 }}
         />
       )}

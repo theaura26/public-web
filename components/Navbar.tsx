@@ -52,6 +52,7 @@ const ARTICLES: Article[] = [
 const PRIMARY_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/reason', label: 'The Reason' },
+  { href: '/studios', label: 'Studios' },
   { href: '/brand', label: 'Our Brand' },
   { href: '/contact', label: 'Contact Us' },
 ]
@@ -528,10 +529,15 @@ export default function Navbar() {
         {/* Right — scrollable tile feed. Articles rendered three cycles for
             seamless infinite scroll: the middle cycle is the canonical one,
             and the scroll position teleports between cycles when it crosses
-            the boundary so the feed reads as endless. */}
+            the boundary so the feed reads as endless.
+
+            Agent view skips the infinite-scroll trick (there is no
+            scroll teleport — the feed just stacks as a list) and
+            renders one canonical cycle, otherwise the same journal
+            title repeats 3× in the markdown view. */}
         <section className="menu-right" ref={scrollRef}>
           <div className="tile-feed">
-            {hasOpenedMenu && [0, 1, 2].flatMap(cycle =>
+            {hasOpenedMenu && (isAgent ? [0] : [0, 1, 2]).flatMap(cycle =>
               ARTICLES.map((a, i) => {
                 const flatIndex = cycle * ARTICLES.length + i
                 return (
@@ -893,8 +899,13 @@ export default function Navbar() {
              them on this build, but inline survives every time. */
           :global(.tile-feed-vignette) {
             position: fixed;
-            left: 0;
+            /* Anchor to the right edge so the blur only covers the
+               tile-feed column. The icon stack (.menu-utils) sits in
+               the bottom-left of the panel; we don't want the blur to
+               creep underneath the icons and soften their edges. */
+            left: auto;
             right: 0;
+            width: min(720px, 60vw);
             bottom: 0;
             height: 18vh;
             z-index: 101;

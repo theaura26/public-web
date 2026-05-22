@@ -197,6 +197,7 @@ export function HeroBanner({
     <Link
       href="/"
       aria-label="Back"
+      className="hero-banner-back"
       style={{
         position: 'absolute',
         top: 'calc(var(--nav-h, 56px) + var(--space-5))',
@@ -222,6 +223,7 @@ export function HeroBanner({
   return (
     <div
       ref={wrapRef}
+      className="hero-banner-wrap"
       style={{
         position: 'relative',
         width: '100vw',
@@ -234,6 +236,7 @@ export function HeroBanner({
     >
       {backLink}
       <section
+        className="hero-banner-stage"
         style={{
           position: 'sticky',
           top: 0,
@@ -295,6 +298,7 @@ export function HeroBanner({
       {src && (
         <div
           aria-hidden
+          className="hero-banner-tint"
           style={{
             position: 'absolute',
             inset: 0,
@@ -308,6 +312,7 @@ export function HeroBanner({
       {/* Drafting hint — small mono label under the title while `src` is empty. */}
       {!src && draftingHint && (
         <div
+          className="hero-banner-drafting"
           style={{
             position: 'absolute',
             left: 'clamp(20px, 4vw, 48px)',
@@ -326,13 +331,13 @@ export function HeroBanner({
           the image, so it stays legible on any banner. */}
       {caption && src && (
         <p
-          className="label"
+          className="label hero-banner-caption"
           style={{
             position: 'absolute',
             left: 'clamp(20px, 4vw, 48px)',
             bottom: 'clamp(20px, 4vh, 48px)',
             margin: 0,
-            maxWidth: 'min(320px, 60vw)',
+            maxWidth: 'min(240px, 60vw)',
             color: bannerInk.bottomLeft,
             letterSpacing: '1px',
             lineHeight: 1.5,
@@ -350,6 +355,7 @@ export function HeroBanner({
           wrap so it lingers in view as the reader scrolls. */}
       <div
         ref={titleRef}
+        className="hero-banner-title-overlay"
         style={{
           position: 'absolute',
           inset: 0,
@@ -480,6 +486,7 @@ export function JournalHero({
       <Link
         href={backHref}
         aria-label="Back"
+        className="hero-banner-back"
         style={{
           position: 'absolute',
           top: 'calc(var(--nav-h, 56px) + var(--space-5))',
@@ -588,6 +595,14 @@ export function JournalHero({
           text-align: left;
           white-space: nowrap;
         }
+        /* Mobile / tablet bump: title reads 20% larger on every clamp
+           branch (48 → 58, 9vw → 10.8vw, 140 → 168). Desktop (≥1024px)
+           rule below overrides the layout and inherits the base clamp. */
+        @media (max-width: 1023px) {
+          .journal-hero__title {
+            font-size: clamp(58px, 10.8vw, 168px);
+          }
+        }
         /* Desktop: title section fills the full viewport so the title
            centres at exactly 50vh — same vertical landing zone as
            the overlaid title on HeroBanner journals. Image renders
@@ -655,16 +670,47 @@ export function ArticleHero({
   toc,
   media,
   caption,
+  backHref = '/',
 }: {
   title: ReactNode
   subline?: ReactNode
   toc?: { q: string; href: string }[]
   media?: { type: 'image' | 'video'; src: string; poster?: string; alt?: string }
   caption?: string
+  /** Where the back link goes. Defaults to /. */
+  backHref?: string
 }) {
   const hasRight = toc?.length || subline
   return (
-    <section style={{ paddingTop: 'clamp(160px, 22vh, 260px)', paddingBottom: 'var(--space-9)' }}>
+    <section style={{ paddingTop: 'clamp(160px, 22vh, 260px)', paddingBottom: 'var(--space-9)', position: 'relative' }}>
+      {/* Back link — same affordance every journal hero carries. In
+          human mode it sits absolute at top-left under the nav; the
+          agent-mode `.hero-banner-back` rule flips it to static so it
+          flows above the title in the markdown view. */}
+      <Link
+        href={backHref}
+        aria-label="Back"
+        className="hero-banner-back"
+        style={{
+          position: 'absolute',
+          top: 'calc(var(--nav-h, 56px) + var(--space-5))',
+          left: 'var(--gutter)',
+          zIndex: 5,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 8,
+          color: 'var(--text)',
+          fontFamily: 'var(--font-mono)',
+          fontSize: 11,
+          fontWeight: 400,
+          letterSpacing: '1.5px',
+          textTransform: 'uppercase',
+          textDecoration: 'none',
+        }}
+      >
+        <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
+        <span>Back</span>
+      </Link>
       <div className="section-w">
         {hasRight ? (
           <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)', alignItems: 'start' }}>
@@ -727,8 +773,8 @@ export function ArticleHero({
         )}
         {media && (
           <Reveal delay={120}>
-            <figure style={{ marginTop: 'clamp(48px, 8vh, 96px)' }}>
-              <div style={{ borderRadius: 'var(--radius-1)', overflow: 'hidden', aspectRatio: '16 / 9' }}>
+            <figure className="article-hero-figure" style={{ marginTop: 'clamp(48px, 8vh, 96px)' }}>
+              <div className="article-hero-media" style={{ borderRadius: 'var(--radius-1)', overflow: 'hidden', aspectRatio: '16 / 9' }}>
                 {media.type === 'video' ? (
                   <video
                     src={media.src}
@@ -769,11 +815,17 @@ export function OneCol({
   children: ReactNode
 }) {
   return (
-    <section id={id} style={{ padding: 'var(--section-gap) 0' }}>
+    <section id={id} className="one-col" style={{ padding: 'var(--section-gap) 0' }}>
       <div className="section-w">
         <Reveal>
-          <div style={{ maxWidth: 760, textAlign: 'left' }}>
-            <h2 style={{ marginTop: 0, marginBottom: 'var(--space-6)' }}>{heading}</h2>
+          {/* Flush-left within section-w (margin: 0, not 0 auto) so a
+              OneCol's heading + body line up with adjacent
+              ScrollHighlight stanzas (which also sit at section-w's
+              left edge). Previously the OneCol block was centered
+              within section-w, producing a visible indent mismatch
+              between consecutive sections on /rta and elsewhere. */}
+          <div style={{ maxWidth: 760, margin: 0, textAlign: 'left' }}>
+            <h2 style={{ marginTop: 0, marginBottom: 'var(--space-4)' }}>{heading}</h2>
             <div className="article-body">{children}</div>
           </div>
         </Reveal>
@@ -873,7 +925,6 @@ export function Term({ tip, children }: { tip: string; children: ReactNode }) {
       className="aura-term"
       data-tip
       data-open={open || undefined}
-      title={tip}
       tabIndex={0}
       role="button"
       aria-label={tip}
@@ -1010,11 +1061,31 @@ export function DataCard({
   type?: string
 }) {
   const isTile = !!img || !!video || !!type
+  /* Lazy-play DataCard videos via IntersectionObserver. autoPlay +
+     preload="metadata" was enough to make every off-screen tile
+     buffer ~1-2 MB on page load (a 3-card wisdom grid sitting ~9000
+     px below the fold was still pulling its full mp4 set). The
+     poster bridges the gap until the band scrolls in. */
+  const videoRef = useRef<HTMLVideoElement>(null)
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) v.play().catch(() => {})
+        else v.pause()
+      },
+      { threshold: 0, rootMargin: '100% 0px 100% 0px' }
+    )
+    observer.observe(v)
+    return () => observer.disconnect()
+  }, [video])
   if (isTile) {
     const placeholderLabel = [type, typeof value === 'string' ? value : undefined].filter(Boolean).join(' · ')
     return (
-      <div>
+      <div className="data-card">
         <div
+          className="data-card__media"
           style={{
             position: 'relative',
             width: '100%',
@@ -1029,13 +1100,13 @@ export function DataCard({
         >
           {video ? (
             <video
+              ref={videoRef}
               src={video}
               poster={poster}
-              autoPlay
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="none"
               aria-label={alt ?? (typeof value === 'string' ? value : '')}
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
@@ -1087,6 +1158,7 @@ export function PullQuote({ children, attribution }: { children: ReactNode; attr
   const rule = (
     <div
       aria-hidden
+      className="pullquote-rule"
       style={{
         width: '100vw',
         marginLeft: 'calc(50% - 50vw)',
@@ -1183,10 +1255,15 @@ export function ScrollHighlight({
   return (
     <section style={{ padding: 'var(--section-gap) 0' }}>
       <div className="section-w">
+        {/* Text is always left-aligned. The `align` prop controls
+            whether the BLOCK is centered (default, matches OneCol on
+            journal pages) or anchored to the section-w gutter (used
+            on the landing where the reveal needs to share a left edge
+            with a full-width sibling like the pillar grid). */}
         <As style={{
-          margin: align === 'center' ? '0 auto' : 0,
+          margin: align === 'left' ? 0 : '0 auto',
           maxWidth,
-          textAlign: align,
+          textAlign: 'left',
         }}>
           {lines.map((line, lineIdx) => {
             const words = line.split(/\s+/).filter(Boolean)
@@ -1199,6 +1276,21 @@ export function ScrollHighlight({
                 {words.map((w, i) => {
                   wordIndex++
                   const idx = wordIndex
+                  /* `*chunk*rest` marks a sub-string for the Belmonte
+                     cursive emphasis used in PullQuote. Both forms work:
+                       `*Aura*`         → whole word cursive
+                       `*A*ttention.`   → only the leading "A" cursive
+                     Strip the asterisks and split the word into two
+                     spans so the cursive run renders inline with the
+                     rest of the word. */
+                  const marked = /^\*([^*]+)\*(.*)$/.exec(w)
+                  const cursivePart = marked ? marked[1] : null
+                  const restPart = marked ? marked[2] : null
+                  const cursiveStyle = {
+                    fontFamily: 'var(--font-pullquote)',
+                    fontStyle: 'normal' as const,
+                    fontWeight: 400,
+                  }
                   return (
                     <span key={i}>
                       <span
@@ -1209,7 +1301,12 @@ export function ScrollHighlight({
                           willChange: 'opacity',
                         }}
                       >
-                        {w}
+                        {marked ? (
+                          <>
+                            <span style={cursiveStyle}>{cursivePart}</span>
+                            {restPart}
+                          </>
+                        ) : w}
                       </span>
                       {i < words.length - 1 ? ' ' : ''}
                     </span>

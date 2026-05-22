@@ -290,7 +290,7 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
                 left: 'clamp(20px, 4vw, 48px)',
                 bottom: 'clamp(20px, 4vh, 48px)',
                 margin: 0,
-                maxWidth: 'min(320px, 60vw)',
+                maxWidth: 'min(220px, 60vw)',
                 color: '#ffffff',
                 letterSpacing: '1px',
                 lineHeight: 1.5,

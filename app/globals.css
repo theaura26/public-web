@@ -219,6 +219,23 @@ html [data-view="agent"] {
   padding-bottom: 0 !important;
   margin: 0 !important;
 }
+
+/* Insert a `---` separator before each section/header after the
+   first one — mirrors the homepage agent view's explicit <hr/>
+   between sections so journal pages read with the same rhythm
+   when stripped of their visual chrome. Uses `:not(:first-of-type)`
+   so the rule survives non-section siblings (Placeholders render
+   <div>, PullQuotes are <blockquote>); every section still gets
+   its lead separator regardless of what sits between it and the
+   previous one. */
+[data-view="agent"] main > section:not(:first-of-type)::before,
+[data-view="agent"] main > header:not(:first-of-type)::before,
+[data-view="agent"] main > main > section:not(:first-of-type)::before {
+  content: '---';
+  display: block;
+  margin: 24px 0;
+  color: var(--text);
+}
 [data-view="agent"] main h1,
 [data-view="agent"] main h2,
 [data-view="agent"] main h3,
@@ -302,6 +319,7 @@ html [data-view="agent"] {
 [data-view="agent"] main .sidebyside,
 [data-view="agent"] main .continue-grid,
 [data-view="agent"] main .pillar-grid,
+[data-view="agent"] main .data-grid,
 [data-view="agent"] main .sanctuary-2col-content,
 [data-view="agent"] main .sanctuary-2col-bg,
 [data-view="agent"] main [class*="grid-cols-"],
@@ -361,17 +379,86 @@ html [data-view="agent"] {
 }
 
 /* ── Visual chrome stripped, page structure intact. ──
-   Hide ONLY decorative media: videos, canvases, vignettes, blur
-   overlays, decorative symbol overlays, the giant footer watermark.
-   Everything else — text, headings, links, sections, the navbar —
-   stays in the DOM and reads as plain mono prose. */
-[data-view="agent"] video,
-[data-view="agent"] canvas,
-[data-view="agent"] .page-vignette,
-[data-view="agent"] .hero-tile__symbol,
-[data-view="agent"] .tile-symbol,
-[data-view="agent"] .footer-logo-scale {
+   Hide all decorative media inside <main> — videos, canvases,
+   journal hero imagery, body imagery — so the agent / crawler /
+   text-only reader sees a clean markdown-shaped document. Nav,
+   footer logo, and any imgs OUTSIDE <main> (e.g. the back-link
+   chevron, footer wordmark) stay so navigation still has its
+   affordances. */
+[data-view="agent"] main img,
+[data-view="agent"] main video,
+[data-view="agent"] main canvas,
+[data-view="agent"] main picture,
+[data-view="agent"] main svg:not(.menu-icon),
+[data-view="agent"] main .expanding-banner-wrap,
+[data-view="agent"] main .expanding-banner-inner,
+[data-view="agent"] main .expanding-banner-card,
+[data-view="agent"] main .journal-hero__media,
+[data-view="agent"] main .hero-tile__media,
+[data-view="agent"] main .pillar-media,
+[data-view="agent"] main .pillar-placeholder,
+[data-view="agent"] main .tile-img,
+[data-view="agent"] main .page-vignette,
+[data-view="agent"] main .hero-tile__symbol,
+[data-view="agent"] main .tile-symbol,
+[data-view="agent"] main .footer-logo-scale,
+/* HeroBanner decorative layers — image tint, caption pinned to bottom-
+   left, drafting hint. The title overlay is handled separately below
+   (it needs to FLOW, not disappear). */
+[data-view="agent"] main .hero-banner-tint,
+[data-view="agent"] main .hero-banner-caption,
+[data-view="agent"] main .hero-banner-drafting,
+/* Continue-card thumbnails — the 16:9 reserved box stays empty after
+   the inner img/video are hidden, otherwise. */
+[data-view="agent"] main .continue-card__media,
+/* ArticleHero media figure — the aspect-ratio wrapper holding the
+   optional hero image/video. */
+[data-view="agent"] main .article-hero-figure,
+[data-view="agent"] main .article-hero-media,
+/* DataCard tile thumbnail — 4:5 reserved box on every tile-mode
+   DataCard. The inner img/video already disappear via the global
+   rule; this hides the grey backing plate too. */
+[data-view="agent"] main .data-card__media,
+/* StudioPillarMedia — 3:4 reserved box on each /studios pillar
+   card (Origin / Engine / Hospitality). */
+[data-view="agent"] main .studio-pillar-media,
+/* PullQuote full-bleed border rules — `width: 100vw` + a centering
+   negative margin gets the margin wiped by the agent-mode
+   `* { margin-left/right: 0 }` reset, leaving a 100vw bar pinned to
+   main's left edge that overflows the viewport by ~328 px on a 720-
+   wide main. Hide them in agent mode — they're decorative rules
+   that don't carry information. */
+[data-view="agent"] main .pullquote-rule,
+/* Nav / menu — keep the menu structure but strip the image boxes
+   so the slide-out reads as a clean text-driven directory. Tile
+   titles survive (they're the navigable text); only the thumbnails
+   and the rotating marquee strip go. */
+[data-view="agent"] .menu-overlay img,
+[data-view="agent"] .menu-overlay video,
+[data-view="agent"] .menu-overlay .tile-img,
+[data-view="agent"] .menu-overlay .tile-feed-vignette,
+[data-view="agent"] .menu-marquee {
   display: none !important;
+}
+
+/* Menu tile-feed in agent mode — image boxes are gone (above), so
+   tighten the column to read as a clean text list. Drops the 100 px
+   tile-to-tile gap (used to separate large thumbnails) and the inline
+   width caps (52% / 85% / max-width 290px / 470px) so every title
+   sits flush at the column's left edge with a single-line rhythm.
+   Title labels keep their .label spec (mono 11px uppercase). */
+[data-view="agent"] .menu-overlay .tile-feed {
+  gap: 14px !important;
+  max-width: none !important;
+}
+[data-view="agent"] .menu-overlay .tile {
+  width: auto !important;
+  max-width: none !important;
+  display: block !important;
+}
+[data-view="agent"] .menu-overlay .tile-title {
+  margin-top: 0 !important;
+  opacity: 1 !important;
 }
 
 /* Disable every animation + transition site-wide in agent view. */
@@ -391,6 +478,113 @@ html [data-view="agent"] {
   opacity: 1 !important;
   transform: none !important;
   visibility: visible !important;
+}
+
+/* ── Term tooltips ──
+   The `<Term>` component renders the tip text as a child span that
+   sits absolute over the term and is gated by opacity. In agent mode
+   `opacity:1` is force-applied to every descendant of <main>, which
+   would otherwise drop the tip text inline as a block, breaking the
+   reading flow. Hide it in agent mode — the same tip text is already
+   on the parent span as `aria-label`, so screen readers and crawlers
+   still see the definition. */
+[data-view="agent"] main .aura-term__tip {
+  display: none !important;
+}
+/* The term itself loses its dotted underline + cursor:help styling
+   via the global `border:0` rule above; that's fine — it reads as a
+   plain word inline. */
+
+/* ── Hero headers ──
+   JournalHero + HeroBanner wrap their title in a flex column that's
+   ≥100vh tall on desktop, so in agent mode the title sits a screen
+   below the navbar and the whole hero reads as a wall of whitespace.
+   Plus the title itself uses `display:flex; justify-content:
+   space-between` to spread words edge-to-edge, which agent mode
+   doesn't strip — each word ends up on its own line on mobile or
+   stretched across the page on desktop. Flatten the lot. */
+/* Collapse the hero wrappers themselves (header, sticky stage, flex
+   columns) to natural flow. `.journal-hero__media` is deliberately
+   excluded — the chrome-hide rule above sets it to `display: none`,
+   and re-listing it here with `display: block` (same specificity,
+   later in the file) silently wins and re-introduces the 100vw
+   full-bleed media box plus its -300px desktop margin-top, which
+   yanks the journal title up into the next section. */
+[data-view="agent"] main .journal-hero,
+[data-view="agent"] main .journal-hero__top,
+[data-view="agent"] main .hero-section,
+[data-view="agent"] main .hero-section-w,
+[data-view="agent"] main .hero-video-wrap,
+[data-view="agent"] main .hero-banner-wrap,
+[data-view="agent"] main .hero-banner-stage {
+  display: block !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+}
+/* HeroBanner outer wrap + sticky stage carry inline 200vh/100vh
+   heights, full-bleed widths, and position:sticky/relative that
+   pin the banner in view. Strip the lot so the title overlay
+   flows naturally into the document. */
+[data-view="agent"] main .hero-banner-wrap,
+[data-view="agent"] main .hero-banner-stage {
+  position: static !important;
+  width: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  background: transparent !important;
+  overflow: visible !important;
+}
+/* HeroBanner title overlay — was position:absolute, inset:0,
+   mix-blend-difference. In agent mode it must read as a plain
+   inline heading at the natural document position. */
+[data-view="agent"] main .hero-banner-title-overlay {
+  position: static !important;
+  inset: auto !important;
+  display: block !important;
+  mix-blend-mode: normal !important;
+  color: var(--text) !important;
+  padding: 0 !important;
+  pointer-events: auto !important;
+  transform: none !important;
+}
+/* HeroBanner back link — same deal: was absolute, mix-blend white.
+   Flow as a plain mono link before the title. */
+[data-view="agent"] main .hero-banner-back {
+  position: static !important;
+  display: inline-block !important;
+  margin-bottom: 16px !important;
+  color: var(--text) !important;
+  mix-blend-mode: normal !important;
+}
+[data-view="agent"] main .journal-hero__title,
+[data-view="agent"] main .hero-banner-title,
+[data-view="agent"] main .hero-display {
+  display: block !important;
+  white-space: normal !important;
+}
+[data-view="agent"] main .journal-hero__title > span,
+[data-view="agent"] main .hero-banner-title > span,
+[data-view="agent"] main .hero-display > span {
+  display: inline !important;
+}
+/* ScrollHighlight (multi-line h1/h2/h3) wraps each line in a span with
+   inline `display: block`. The agent-mode `::before` markdown prefix
+   ('## ', '### ' …) then ends up on a row by itself because the very
+   first child span forces a line break beneath it. Make the FIRST
+   span inline so the prefix joins the opening line; subsequent line
+   spans stay block so the rhythm survives. */
+[data-view="agent"] main h1 > span:first-child,
+[data-view="agent"] main h2 > span:first-child,
+[data-view="agent"] main h3 > span:first-child {
+  display: inline !important;
+}
+/* Add a real space between the per-word spans (the JSX renders them
+   adjacent with no whitespace text node between them). */
+[data-view="agent"] main .journal-hero__title > span:not(:last-child)::after,
+[data-view="agent"] main .hero-banner-title > span:not(:last-child)::after,
+[data-view="agent"] main .hero-display > span:not(:last-child)::after {
+  content: ' ' !important;
 }
 
 /* ── Mode-exclusive blocks ──
@@ -845,7 +1039,11 @@ html [data-theme="day"] .hero-display {
   color: #F2F2F2;
 }
 html [data-theme="night"] .hero-display {
-  color: rgba(255, 255, 255, 0.55);
+  /* Watermark on night — symmetric to day's #F2F2F2 (white minus 5%):
+     a dark grey that sits just above the page bg (#131719) rather
+     than the bright 55%-white the manifesto used to land in. Reads
+     as a quiet etch, not a foreground statement. */
+  color: #1f2428;
 }
 
 /* ── Hero hover swap ─────────────────────────────────────────────────────
@@ -882,6 +1080,63 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
 }
 
 
+/* ── Studios hero — editorial display title ─────────────────────────
+   "STUDIOS." stretches edge-to-edge across the section-w rail, in
+   the same uppercase grotesque the journal heroes use. Letters are
+   each in their own span and laid out with `justify-content:
+   space-between` so the word fills the row regardless of letter
+   count. The sr-only `.studios-title__plain` carries the readable
+   text for screen readers and agent mode (which hides the letters
+   and reveals the plain text). */
+.studios-hero {
+  padding: clamp(120px, 18vh, 200px) 0 var(--section-gap);
+}
+.studios-title {
+  margin: 0;
+  font-family: var(--font-grotesque);
+  font-weight: 600;
+  font-size: clamp(56px, 13vw, 200px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.studios-title__letters {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+  white-space: nowrap;
+}
+.studios-title__plain {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+/* Agent mode flips the two: hide the visual letter row, reveal the
+   plain "Studios." text so the markdown reads naturally. The extra
+   `.studios-title` qualifier raises specificity above the generic
+   `h1 > span:first-child` inlining rule used for ScrollHighlight
+   (otherwise that rule wins and the letter row reappears alongside
+   the plain text). */
+[data-view="agent"] main h1.studios-title > .studios-title__letters {
+  display: none !important;
+}
+[data-view="agent"] main h1.studios-title > .studios-title__plain {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+}
+
 /* ═══════════════════════════════════════════
    LAYOUT HELPERS
 ═══════════════════════════════════════════ */
@@ -892,6 +1147,17 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
   margin: 0 auto;
   padding: 0 var(--gutter);
   width: 100%;
+}
+
+/* Two stacked OneCols share the same heading rhythm, so the doubled
+   section-gap between them (each contributes padding-bottom +
+   padding-top of var(--section-gap)) reads as a hard break instead
+   of a continuation. Collapse the gap so consecutive OneCols read as
+   one logical column with a single breath between them. The
+   `!important` is required because OneCol sets `padding` inline on
+   its <section>, which would otherwise win. */
+section.one-col + section.one-col {
+  padding-top: 0 !important;
 }
 
 /* ── Article body — vertical gap between sequential paragraphs so the

@@ -22,6 +22,9 @@ export default function robots(): MetadataRoute.Robots {
         '/pepper',
         '/areca',
         '/vedic',
+        /* Unlisted briefing page. Reachable only by direct URL —
+           keep it out of search indexes and AI crawlers. */
+        '/mudigere',
       ],
     }],
     sitemap: 'https://theaura.life/sitemap.xml',

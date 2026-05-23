@@ -237,17 +237,20 @@ export default function MudigerePage() {
             Sampigelkhan Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
           </p>
 
-          {/* Download PDF — bottom-right of the banner. Pill chip with
-              a soft backdrop blur + 1px border so it reads as a
-              confident CTA against either layer of the crossfade. */}
+          {/* Download PDF — centered along the bottom of the banner.
+              Pill chip with a soft backdrop blur + 1px border so it
+              reads as a confident CTA against either layer of the
+              crossfade. `left: 50%` + `translateX(-50%)` anchors it
+              to the viewport's horizontal centre. */}
           <a
             href="/mudigere-estate-map.pdf"
             download
             className="label mud-hero__download"
             style={{
               position: 'absolute',
-              right: 'clamp(20px, 4vw, 48px)',
+              left: '50%',
               bottom: 'clamp(20px, 4vh, 48px)',
+              transform: 'translateX(-50%)',
               zIndex: 6,
               display: 'inline-flex',
               alignItems: 'center',
@@ -280,7 +283,9 @@ export default function MudigerePage() {
         .mud-hero__download:hover {
           background: rgba(0, 0, 0, 0.55);
           border-color: #ffffff;
-          transform: translateY(-1px);
+          /* Compose the centring translate with a 1 px lift so the
+             hover doesn't snap off-centre. */
+          transform: translate(-50%, -1px);
         }
         @media (max-width: 900px) {
           /* Reserve ~250 px for the CTA chip on the right so the

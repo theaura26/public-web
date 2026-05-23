@@ -1141,24 +1141,23 @@ strong, b { font-weight: 400; color: var(--text); }
     display: block;
   }
 }
-/* GENERATIONAL IMPACT (.hero-anim--rise) — ALWAYS two stacked
-   lines, every breakpoint, no exceptions. GENERATIONAL on top,
-   IMPACT below. With "FOR" trimmed it would otherwise fit on a
-   single row at desktop widths via the base
-   `display: flex; justify-content: space-between`, which the user
-   does not want — they want a centred watermark stack.
-   `!important` plus the `html` prefix (specificity 0,2,1 / 0,2,2)
-   makes this iron-clad against the styled-jsx scoped rules in
-   app/page.tsx — `.hero-display { display: flex }` at (0,2,0) and
-   `.hero-display :global(span) { display: inline }` at (0,2,1) —
-   no matter the source order or future edits to those files. */
-html .hero-display.hero-anim--rise {
-  display: block !important;
-  text-align: center !important;
-}
-html .hero-display.hero-anim--rise span {
-  display: block !important;
-  width: 100%;
+/* GENERATIONAL IMPACT (.hero-anim--rise) — two stacked lines on
+   mobile + tablet only. Desktop (≥1024px) keeps the base
+   `display: flex; justify-content: space-between` edge-to-edge
+   spread so GENERATIONAL and IMPACT bookend the row.
+   `!important` plus the `html` prefix makes this iron-clad
+   against the styled-jsx scoped rules in app/page.tsx — no future
+   edit there can accidentally re-introduce the single-line layout
+   on mobile or undo the desktop edge-to-edge rhythm. */
+@media (max-width: 1023px) {
+  html .hero-display.hero-anim--rise {
+    display: block !important;
+    text-align: center !important;
+  }
+  html .hero-display.hero-anim--rise span {
+    display: block !important;
+    width: 100%;
+  }
 }
 html [data-theme="day"] .hero-display {
   color: #F2F2F2;
@@ -1510,6 +1509,23 @@ section.one-col + section.one-col {
   .sanctuary-2col-content {
     grid-template-columns: 1fr !important;
     grid-template-rows: 1fr 1fr !important;
+  }
+  /* Kill backdrop-filter on every sanctuary panel on mobile. The
+     JSX hardcodes `backdropFilter: 'blur(16px)'` as the inline
+     starting style, and useStackBlur animates it on scroll — both
+     ship blurred frames until the JS finishes its first pass.
+     On phones we want the photos / videos to read crisply with no
+     scroll-driven motion, so just nuke the property entirely at
+     the CSS layer. `!important` beats the JSX inline style; the
+     attribute selector catches both the `.sanctuary-panel` blur
+     div and the two `.sanctuary-2col-bg` blur divs in the
+     Munduk + Daylesford grid. */
+  .sanctuary-panel [style*="backdrop-filter"],
+  .sanctuary-2col-bg [style*="backdrop-filter"],
+  .sanctuary-panel [style*="backdropFilter"],
+  .sanctuary-2col-bg [style*="backdropFilter"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
   .sanctuary-stack__trailing {
     display: none !important;

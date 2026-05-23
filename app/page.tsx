@@ -1415,14 +1415,16 @@ function useStackBlur(z: number, blurRefs: React.RefObject<HTMLDivElement | null
     // sequentially via the .sanctuary-stack { height: auto } +
     // .sanctuary-panel { position: relative } overrides in
     // globals.css), so the scroll-driven lift effect was no longer
-    // doing meaningful work — just burning frames. Set a static,
-    // light blur once, then bail. The composite cost lands once at
-    // paint time and stays put as the user scrolls.
+    // doing meaningful work — just burning frames. Set blur to 0
+    // (the same end-state the desktop animation lands on once a
+    // panel is fully in view) and bail before registering the
+    // scroll handler. The panel backdrops render clean and crisp,
+    // and there's no per-frame composite cost.
     if (matchMobile.matches) {
       for (const r of blurRefs) {
         if (!r.current) continue
-        r.current.style.backdropFilter = 'blur(8px)'
-        ;(r.current.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = 'blur(8px)'
+        r.current.style.backdropFilter = 'blur(0)'
+        ;(r.current.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = 'blur(0)'
       }
       return
     }

@@ -181,10 +181,12 @@ export default function MudigerePage() {
             }}
           />
 
-          {/* Title overlay — white ink, mix-blend-difference so it
-              inverts cleanly against the dark video AND the light
-              beige map. Uses the existing `.section-w` rail + the
-              `.studios-title` letter-spread typography. */}
+          {/* Title overlay + sub-caption — white ink, mix-blend-
+              difference so they invert cleanly against the dark
+              video AND the light beige map. Title uses the existing
+              `.section-w` rail + `.studios-title` letter-spread
+              typography; the sub-caption sits directly beneath it,
+              centred, in the kit's `.label` token. */}
           <div
             style={{
               position: 'absolute',
@@ -212,30 +214,20 @@ export default function MudigerePage() {
                 </span>
                 <span className="studios-title__plain">Mudigere</span>
               </h1>
+              <p
+                className="label mud-hero__caption"
+                style={{
+                  margin: 'clamp(20px, 3vh, 40px) 0 0',
+                  textAlign: 'center',
+                  color: 'inherit',
+                  letterSpacing: '1px',
+                  lineHeight: 1.5,
+                }}
+              >
+                Sampigelkhan Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
+              </p>
             </div>
           </div>
-
-          {/* Caption — bottom-left, `.label` typography token, also
-              mix-blend-difference so it stays legible whether the
-              backdrop is the dark video or the cream estate plan. */}
-          <p
-            className="label mud-hero__caption"
-            style={{
-              position: 'absolute',
-              left: 'clamp(20px, 4vw, 48px)',
-              bottom: 'clamp(20px, 4vh, 48px)',
-              margin: 0,
-              maxWidth: 'min(560px, 80vw)',
-              color: '#ffffff',
-              mixBlendMode: 'difference',
-              letterSpacing: '1px',
-              lineHeight: 1.5,
-              zIndex: 4,
-              pointerEvents: 'none',
-            }}
-          >
-            Sampigelkhan Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
-          </p>
 
           {/* Download PDF — centered along the bottom of the banner.
               Pill chip with a soft backdrop blur + 1px border so it
@@ -274,11 +266,10 @@ export default function MudigerePage() {
         </div>
       </section>
 
-      {/* Caption + CTA share the bottom rail of the hero, so both
-          shrink on narrower viewports to stay clear of each other.
-          Phone-narrow drops the caption entirely so the title + CTA
-          carry the hero alone (the full subtitle is still in the DOM
-          for agent-mode / screen readers). */}
+      {/* Hover lift on the centred Download chip + a smaller pad on
+          phones so the chip sits inside the gutter. Caption is now
+          stacked under the title (in flow), so it no longer needs the
+          collision-avoidance rules its bottom-left version did. */}
       <style jsx global>{`
         .mud-hero__download:hover {
           background: rgba(0, 0, 0, 0.55);
@@ -287,16 +278,8 @@ export default function MudigerePage() {
              hover doesn't snap off-centre. */
           transform: translate(-50%, -1px);
         }
-        @media (max-width: 900px) {
-          /* Reserve ~250 px for the CTA chip on the right so the
-             caption doesn't extend into its column. */
-          .mud-hero__caption {
-            max-width: calc(100vw - 280px) !important;
-          }
-        }
         @media (max-width: 600px) {
           .mud-hero__caption {
-            max-width: calc(100vw - 220px) !important;
             font-size: 10px !important;
             line-height: 1.45 !important;
           }
@@ -304,13 +287,6 @@ export default function MudigerePage() {
             padding: 10px 14px !important;
             font-size: 10px !important;
             gap: 8px !important;
-          }
-        }
-        @media (max-width: 480px) {
-          /* Phone-narrow: drop the caption so the title + CTA carry
-             the hero alone. */
-          .mud-hero__caption {
-            display: none !important;
           }
         }
       `}</style>

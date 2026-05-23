@@ -569,23 +569,13 @@ export function JournalHero({
         </div>
       )}
 
-      {/* Image sizing: styled-jsx's :global(img) selector inside a
-          @media rule wasn't applying scoped correctly, so we use a
-          global style block targeting the explicit
-          .journal-hero__media-el class instead. */}
-      <style jsx global>{`
-        .journal-hero__media-el {
-          width: 100%;
-          height: auto;
-          display: block;
-        }
-        @media (max-width: 768px) {
-          .journal-hero__media-el {
-            height: 100vh;
-            object-fit: cover;
-          }
-        }
-      `}</style>
+      {/* Image sizing for `.journal-hero__media-el` lives in
+          app/globals.css alongside the other `.journal-hero__media`
+          globals. It used to be a `<style jsx global>` block here,
+          but styled-jsx global blocks only inject when the host
+          component mounts — and the studios page composes the media
+          block by hand, so it never gets these styles. Lifting them
+          out fixes the short-video bug on mobile /studios. */}
 
       <style jsx>{`
         .journal-hero {

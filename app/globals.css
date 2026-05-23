@@ -393,6 +393,23 @@ html [data-view="agent"] {
 .journal-hero__media {
   position: relative;
 }
+/* Media element sizing — full-width on every breakpoint, with a
+   tall full-viewport mobile crop so the hero reads cinematic on
+   phones (where 16/9 lets the video collapse to a sliver). Uses
+   `100svh` (small viewport height) so the height stays stable even
+   while mobile Safari's address bar collapses on scroll — `100vh`
+   overshoots and pushes the caption out of view. */
+.journal-hero__media-el {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media (max-width: 768px) {
+  .journal-hero__media-el {
+    height: 100svh;
+    object-fit: cover;
+  }
+}
 .journal-hero__media::before {
   content: '';
   position: absolute;

@@ -1400,6 +1400,33 @@ function useStackBlur(z: number, blurRefs: React.RefObject<HTMLDivElement | null
     }
     const matchMobile = window.matchMedia('(max-width: 768px)')
 
+    // Mobile: short-circuit out of the scroll handler entirely.
+    //
+    // Animating `backdrop-filter: blur(Npx)` on every scroll frame is
+    // one of the most expensive things you can ask a mobile GPU to
+    // do — every value change forces a re-read of the pixels behind
+    // the layer plus a fresh composite pass. iOS Safari janks badly,
+    // Chrome on Android isn't much better. Combined with four
+    // sanctuary panels each carrying their own animated blur, the
+    // sanctuary-stack section was the slowest scroll region on the
+    // home page on phones.
+    //
+    // Mobile already drops the sticky-stack rhythm (panels flow
+    // sequentially via the .sanctuary-stack { height: auto } +
+    // .sanctuary-panel { position: relative } overrides in
+    // globals.css), so the scroll-driven lift effect was no longer
+    // doing meaningful work — just burning frames. Set a static,
+    // light blur once, then bail. The composite cost lands once at
+    // paint time and stays put as the user scrolls.
+    if (matchMobile.matches) {
+      for (const r of blurRefs) {
+        if (!r.current) continue
+        r.current.style.backdropFilter = 'blur(8px)'
+        ;(r.current.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = 'blur(8px)'
+      }
+      return
+    }
+
     let raf = 0
     const onScroll = () => {
       cancelAnimationFrame(raf)
@@ -1407,32 +1434,17 @@ function useStackBlur(z: number, blurRefs: React.RefObject<HTMLDivElement | null
         const wrap = wrapRef.current
         if (!wrap) return
         const vh = window.innerHeight
-        const isMobile = matchMobile.matches
 
-        let blurLift: number
-        if (isMobile) {
-          // Mobile: each panel is in normal flow (no sticky-stack rhythm).
-          // Compute entry progress per-panel from its own bounding rect —
-          // heavy blur when the panel is below the viewport, lifts to 0
-          // as the panel reaches the upper third of the viewport.
-          //   rect.top = vh   → blurLift 0 (full blur, just entering)
-          //   rect.top = vh*0.2 → blurLift 1 (cleared)
-          const rect = wrap.getBoundingClientRect()
-          const startY = vh
-          const endY = vh * 0.2
-          blurLift = Math.max(0, Math.min(1, (startY - rect.top) / (startY - endY)))
-        } else {
-          // Desktop: sticky-stack rhythm. Panel z's natural stick-start lives
-          // at (z-1) × PANEL_STRIDE_VH × vh into the parent. Blur is heavy
-          // until that point, then lifts over BLUR_LIFT_RANGE × vh.
-          const parent = wrap.parentElement
-          if (!parent) return
-          const parentRect = parent.getBoundingClientRect()
-          const scrollIntoParent = -parentRect.top
-          const stickStart = (z - 1) * PANEL_STRIDE_VH * vh
-          const scrollPastStickStart = scrollIntoParent - stickStart
-          blurLift = Math.max(0, Math.min(1, scrollPastStickStart / (vh * BLUR_LIFT_RANGE)))
-        }
+        // Desktop: sticky-stack rhythm. Panel z's natural stick-start lives
+        // at (z-1) × PANEL_STRIDE_VH × vh into the parent. Blur is heavy
+        // until that point, then lifts over BLUR_LIFT_RANGE × vh.
+        const parent = wrap.parentElement
+        if (!parent) return
+        const parentRect = parent.getBoundingClientRect()
+        const scrollIntoParent = -parentRect.top
+        const stickStart = (z - 1) * PANEL_STRIDE_VH * vh
+        const scrollPastStickStart = scrollIntoParent - stickStart
+        const blurLift = Math.max(0, Math.min(1, scrollPastStickStart / (vh * BLUR_LIFT_RANGE)))
 
         const blurVal = (1 - blurLift) * BLUR_MAX
         for (const r of blurRefs) {

@@ -174,10 +174,32 @@ export default function Navbar() {
     }
 
     // Seed scroll position to the start of the middle (canonical) cycle.
-    // Wait a frame so layout is settled before we read scrollHeight.
+    // Wait a frame so layout is settled before we read DOM offsets.
+    //
+    // Why offsetTop and not `scrollHeight / 3`: the .menu-right scroll
+    // container carries asymmetric padding (76 px top / 100 px bottom
+    // on phones) that lives INSIDE the scrollable area. scrollHeight
+    // folds that 176 px of padding into the total, so dividing by 3
+    // overshoots one cycle's true content height by ~58 px — landing
+    // the seeded position roughly 58 px past the canonical first
+    // tile, which on phones reads as a partial tile bleeding above
+    // the rail's top edge (the "red line" the menu logo + nav links
+    // sit on).
+    //
+    // Instead, measure the cycle height directly: the distance from
+    // cycle 0's first tile to cycle 1's first tile is exactly one
+    // cycle of content, independent of any container padding.
+    const tilesPerCycle = ARTICLES.length
+    const computeCycleH = () => {
+      const firstTile = tiles[0]
+      const middleFirstTile = tiles[tilesPerCycle]
+      if (!firstTile || !middleFirstTile) return 0
+      return middleFirstTile.offsetTop - firstTile.offsetTop
+    }
     let seeded = false
+    let cycleH = 0
     const seedScroll = () => {
-      const cycleH = root.scrollHeight / 3
+      cycleH = computeCycleH()
       if (cycleH > 0) {
         root.scrollTop = cycleH
         seeded = true
@@ -223,7 +245,14 @@ export default function Navbar() {
     const update = () => {
       raf = 0
       if (!seeded) return
-      const cycleH = root.scrollHeight / 3
+      // Re-read on every tick: tile heights can shift as lazy media
+      // resolves (videos swap their poster in, fonts settle), which
+      // changes the per-cycle offset. Using the same offsetTop
+      // measurement here keeps teleport boundaries aligned with the
+      // seed value — otherwise a stale scrollHeight/3 estimate would
+      // teleport to a slightly different position than the seed and
+      // drift the visible top each cycle.
+      cycleH = computeCycleH() || cycleH
       const s = root.scrollTop
 
       // Teleport between cycles so the feed reads infinite. Triggered

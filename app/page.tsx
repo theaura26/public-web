@@ -2185,11 +2185,17 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
              rhythm (section-gap + clamp 40–80) to read as a deliberate
              pause between the pillar grid and the sanctuary stack. */
           .sanctuary-lede {
-            padding: calc(var(--section-gap) + clamp(40px, 6vh, 80px)) 0;
+            padding: 0 0 calc(var(--section-gap) + clamp(40px, 6vh, 80px));
+          }
+          /* The ScrollHighlight renders its own <section> with
+             padding: var(--section-gap) 0 — strip the top so the lede
+             starts flush against the pillar grid border. */
+          .sanctuary-lede > :global(section) {
+            padding-top: 0 !important;
           }
           @media (max-width: 768px) {
             .sanctuary-lede {
-              padding: calc(var(--section-gap) + clamp(24px, 4vh, 56px)) 0 !important;
+              padding: 0 0 calc(var(--section-gap) + clamp(24px, 4vh, 56px)) !important;
             }
           }
         `}</style>

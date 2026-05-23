@@ -1108,7 +1108,10 @@ strong, b { font-weight: 400; color: var(--text); }
    lighter than full bold for a more refined display tone. */
 .hero-display {
   font-family: var(--font-grotesque);
-  font-size: clamp(36px, 6.6vw, 96px);
+  /* Sized one step up from the prior clamp(36, 6.6vw, 96) — the
+     watermark displays (NATURAL INTELLIGENCE, GENERATIONAL IMPACT)
+     wanted a touch more presence on both phones and desktop. */
+  font-size: clamp(40px, 7.4vw, 108px);
   line-height: 0.95;
   letter-spacing: -0.04em;
   font-weight: 600;

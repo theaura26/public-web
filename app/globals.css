@@ -1510,6 +1510,23 @@ section.one-col + section.one-col {
     grid-template-columns: 1fr !important;
     grid-template-rows: 1fr 1fr !important;
   }
+  /* Kill backdrop-filter on every sanctuary panel on mobile. The
+     JSX hardcodes `backdropFilter: 'blur(16px)'` as the inline
+     starting style, and useStackBlur animates it on scroll — both
+     ship blurred frames until the JS finishes its first pass.
+     On phones we want the photos / videos to read crisply with no
+     scroll-driven motion, so just nuke the property entirely at
+     the CSS layer. `!important` beats the JSX inline style; the
+     attribute selector catches both the `.sanctuary-panel` blur
+     div and the two `.sanctuary-2col-bg` blur divs in the
+     Munduk + Daylesford grid. */
+  .sanctuary-panel [style*="backdrop-filter"],
+  .sanctuary-2col-bg [style*="backdrop-filter"],
+  .sanctuary-panel [style*="backdropFilter"],
+  .sanctuary-2col-bg [style*="backdropFilter"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
   .sanctuary-stack__trailing {
     display: none !important;
   }

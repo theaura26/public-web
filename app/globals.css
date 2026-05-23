@@ -393,6 +393,23 @@ html [data-view="agent"] {
 .journal-hero__media {
   position: relative;
 }
+/* Media element sizing — full-width on every breakpoint, with a
+   tall full-viewport mobile crop so the hero reads cinematic on
+   phones (where 16/9 lets the video collapse to a sliver). Uses
+   `100svh` (small viewport height) so the height stays stable even
+   while mobile Safari's address bar collapses on scroll — `100vh`
+   overshoots and pushes the caption out of view. */
+.journal-hero__media-el {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media (max-width: 768px) {
+  .journal-hero__media-el {
+    height: 100svh;
+    object-fit: cover;
+  }
+}
 .journal-hero__media::before {
   content: '';
   position: absolute;
@@ -410,8 +427,16 @@ html [data-view="agent"] {
    pseudo (z-index 1). The JournalHero scoped styled-jsx already sets
    most of this, but the studios page composes the media block by
    hand and uses the class directly — re-state the positioning + ink
-   globally so both paths land in the same place. */
-.journal-hero__caption {
+   globally so both paths land in the same place.
+   Selector is `p.journal-hero__caption` (specificity 0,1,1) instead
+   of just `.journal-hero__caption` (0,1,0) so it beats `.label`
+   defined later in the cascade — `.label` would otherwise paint the
+   caption with `color: var(--text-muted)` (light grey on day mode),
+   killing legibility against the hero video. JournalHero is immune
+   to this because styled-jsx adds a `.jsx-xyz` scoping class that
+   already lifts its scoped rule to (0,2,0); this tag-prefixed
+   global gives the bare-markup path the same edge. */
+p.journal-hero__caption {
   position: absolute;
   left: clamp(20px, 4vw, 48px);
   bottom: clamp(20px, 4vh, 48px);

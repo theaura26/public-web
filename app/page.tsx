@@ -1400,6 +1400,33 @@ function useStackBlur(z: number, blurRefs: React.RefObject<HTMLDivElement | null
     }
     const matchMobile = window.matchMedia('(max-width: 768px)')
 
+    // Mobile: short-circuit out of the scroll handler entirely.
+    //
+    // Animating `backdrop-filter: blur(Npx)` on every scroll frame is
+    // one of the most expensive things you can ask a mobile GPU to
+    // do — every value change forces a re-read of the pixels behind
+    // the layer plus a fresh composite pass. iOS Safari janks badly,
+    // Chrome on Android isn't much better. Combined with four
+    // sanctuary panels each carrying their own animated blur, the
+    // sanctuary-stack section was the slowest scroll region on the
+    // home page on phones.
+    //
+    // Mobile already drops the sticky-stack rhythm (panels flow
+    // sequentially via the .sanctuary-stack { height: auto } +
+    // .sanctuary-panel { position: relative } overrides in
+    // globals.css), so the scroll-driven lift effect was no longer
+    // doing meaningful work — just burning frames. Set a static,
+    // light blur once, then bail. The composite cost lands once at
+    // paint time and stays put as the user scrolls.
+    if (matchMobile.matches) {
+      for (const r of blurRefs) {
+        if (!r.current) continue
+        r.current.style.backdropFilter = 'blur(8px)'
+        ;(r.current.style as { WebkitBackdropFilter?: string }).WebkitBackdropFilter = 'blur(8px)'
+      }
+      return
+    }
+
     let raf = 0
     const onScroll = () => {
       cancelAnimationFrame(raf)
@@ -1407,32 +1434,17 @@ function useStackBlur(z: number, blurRefs: React.RefObject<HTMLDivElement | null
         const wrap = wrapRef.current
         if (!wrap) return
         const vh = window.innerHeight
-        const isMobile = matchMobile.matches
 
-        let blurLift: number
-        if (isMobile) {
-          // Mobile: each panel is in normal flow (no sticky-stack rhythm).
-          // Compute entry progress per-panel from its own bounding rect —
-          // heavy blur when the panel is below the viewport, lifts to 0
-          // as the panel reaches the upper third of the viewport.
-          //   rect.top = vh   → blurLift 0 (full blur, just entering)
-          //   rect.top = vh*0.2 → blurLift 1 (cleared)
-          const rect = wrap.getBoundingClientRect()
-          const startY = vh
-          const endY = vh * 0.2
-          blurLift = Math.max(0, Math.min(1, (startY - rect.top) / (startY - endY)))
-        } else {
-          // Desktop: sticky-stack rhythm. Panel z's natural stick-start lives
-          // at (z-1) × PANEL_STRIDE_VH × vh into the parent. Blur is heavy
-          // until that point, then lifts over BLUR_LIFT_RANGE × vh.
-          const parent = wrap.parentElement
-          if (!parent) return
-          const parentRect = parent.getBoundingClientRect()
-          const scrollIntoParent = -parentRect.top
-          const stickStart = (z - 1) * PANEL_STRIDE_VH * vh
-          const scrollPastStickStart = scrollIntoParent - stickStart
-          blurLift = Math.max(0, Math.min(1, scrollPastStickStart / (vh * BLUR_LIFT_RANGE)))
-        }
+        // Desktop: sticky-stack rhythm. Panel z's natural stick-start lives
+        // at (z-1) × PANEL_STRIDE_VH × vh into the parent. Blur is heavy
+        // until that point, then lifts over BLUR_LIFT_RANGE × vh.
+        const parent = wrap.parentElement
+        if (!parent) return
+        const parentRect = parent.getBoundingClientRect()
+        const scrollIntoParent = -parentRect.top
+        const stickStart = (z - 1) * PANEL_STRIDE_VH * vh
+        const scrollPastStickStart = scrollIntoParent - stickStart
+        const blurLift = Math.max(0, Math.min(1, scrollPastStickStart / (vh * BLUR_LIFT_RANGE)))
 
         const blurVal = (1 - blurLift) * BLUR_MAX
         for (const r of blurRefs) {
@@ -1641,9 +1653,10 @@ export default function Home() {
             </p>
           </div>
 
-          {/* 2. Bottom display: FOR GENERATIONAL IMPACT (justified edge-to-edge) */}
+          {/* 2. Bottom display: GENERATIONAL IMPACT (justified edge-to-edge).
+              "FOR" was trimmed at the user's request — the cleaner two-word
+              cadence reads stronger as a manifesto line. */}
           <h1 className="hero-display hero-anim hero-anim--rise" style={{ opacity: 0, animationDuration: '700ms', animationDelay: '140ms' }}>
-            <span>FOR</span>{' '}
             <span>GENERATIONAL</span>{' '}
             <span>IMPACT</span>
           </h1>
@@ -2177,25 +2190,35 @@ The Aura Operating System brings together land, human craft, and modern technolo
 Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm.
 Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
         <style jsx>{`
-          /* Symmetric breathing room — same padding top and bottom.
-             The previous asymmetric "top: 0" attempt produced visibly
-             inconsistent spacing against the sibling reveal-text
-             stanzas (Generational Impact, Natural Intelligence) which
-             both use ~80px top + 80px bottom. This lede uses a wider
-             rhythm (section-gap + clamp 40–80) to read as a deliberate
-             pause between the pillar grid and the sanctuary stack. */
+          /* Symmetric breathing room — generous padding top and bottom
+             so the lede reads as a deliberate pause between the pillar
+             grid above and the sanctuary stack below. Top padding adds
+             space between the border and the first line of the
+             scroll-highlighted text. */
           .sanctuary-lede {
-            padding: 0 0 calc(var(--section-gap) + clamp(40px, 6vh, 80px));
+            padding: calc(var(--section-gap) + clamp(40px, 6vh, 80px)) 0
+                     calc(var(--section-gap) + clamp(40px, 6vh, 80px));
           }
-          /* The ScrollHighlight renders its own <section> with
-             padding: var(--section-gap) 0 — strip the top so the lede
-             starts flush against the pillar grid border. */
+          /* ScrollHighlight renders its own <section> with
+             padding: var(--section-gap) 0 — strip it so the lede's
+             own padding owns the spacing top + bottom. */
           .sanctuary-lede > :global(section) {
-            padding-top: 0 !important;
+            padding: 0 !important;
+          }
+          /* Bump the heading size on this lede specifically — the
+             ScrollHighlight reads as a quiet manifesto and benefits
+             from extra weight against the generous breathing room.
+             Selector targets the <h2> ScrollHighlight renders inside
+             its own section, scoped to .sanctuary-lede so other
+             ScrollHighlight usages keep their default h2 size. */
+          .sanctuary-lede :global(h2) {
+            font-size: clamp(40px, 7.2vw, 84px);
+            line-height: 1.04;
           }
           @media (max-width: 768px) {
             .sanctuary-lede {
-              padding: 0 0 calc(var(--section-gap) + clamp(24px, 4vh, 56px)) !important;
+              padding: clamp(48px, 8vh, 80px) 0
+                       calc(var(--section-gap) + clamp(24px, 4vh, 56px)) !important;
             }
           }
         `}</style>
@@ -2239,8 +2262,8 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
 function AgentHomeView() {
   return (
     <section className="agent-only">
-      <h1>Aura — The 1000-Year Idea</h1>
-      <p>A regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 100 years.</p>
+      <h1>Aura — Natural Intelligence Company.</h1>
+      <p>We are a team of Monastic Polymaths who combine ancestral wisdom with creative capital to make what the future cannot automate.</p>
       <p>Two ancient farming intelligences. Six coffee micro lots. One regenerative conviction.</p>
       <p>Nestled in nature, our sanctuary invites leaders, creators, and organisations into inspiration and flow.</p>
       <p>We combine ancestral wisdom with creative capital to make what the future cannot automate.</p>

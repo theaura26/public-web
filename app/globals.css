@@ -1108,7 +1108,10 @@ strong, b { font-weight: 400; color: var(--text); }
    lighter than full bold for a more refined display tone. */
 .hero-display {
   font-family: var(--font-grotesque);
-  font-size: clamp(36px, 6.6vw, 96px);
+  /* Sized one step up from the prior clamp(36, 6.6vw, 96) — the
+     watermark displays (NATURAL INTELLIGENCE, GENERATIONAL IMPACT)
+     wanted a touch more presence on both phones and desktop. */
+  font-size: clamp(40px, 7.4vw, 108px);
   line-height: 0.95;
   letter-spacing: -0.04em;
   font-weight: 600;
@@ -1137,6 +1140,25 @@ strong, b { font-weight: 400; color: var(--text); }
   html .hero-display.hero-anim--fall span {
     display: block;
   }
+}
+/* GENERATIONAL IMPACT (.hero-anim--rise) — ALWAYS two stacked
+   lines, every breakpoint, no exceptions. GENERATIONAL on top,
+   IMPACT below. With "FOR" trimmed it would otherwise fit on a
+   single row at desktop widths via the base
+   `display: flex; justify-content: space-between`, which the user
+   does not want — they want a centred watermark stack.
+   `!important` plus the `html` prefix (specificity 0,2,1 / 0,2,2)
+   makes this iron-clad against the styled-jsx scoped rules in
+   app/page.tsx — `.hero-display { display: flex }` at (0,2,0) and
+   `.hero-display :global(span) { display: inline }` at (0,2,1) —
+   no matter the source order or future edits to those files. */
+html .hero-display.hero-anim--rise {
+  display: block !important;
+  text-align: center !important;
+}
+html .hero-display.hero-anim--rise span {
+  display: block !important;
+  width: 100%;
 }
 html [data-theme="day"] .hero-display {
   color: #F2F2F2;

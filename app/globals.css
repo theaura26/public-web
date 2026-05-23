@@ -1141,6 +1141,23 @@ strong, b { font-weight: 400; color: var(--text); }
     display: block;
   }
 }
+/* GENERATIONAL IMPACT (.hero-anim--rise) — always two stacked
+   lines, every breakpoint. With "FOR" trimmed it could fit on a
+   single row at desktop widths, but the user wants it paired
+   vertically (GENERATIONAL above, IMPACT below) to read as a
+   stacked manifesto block. Override the base flex space-between
+   layout to block + block spans, plus a text-align centre so the
+   two words land as a centred watermark stack. `html` prefix
+   bumps specificity to (0,2,2) so this beats the styled-jsx
+   `.hero-display :global(span) { display: inline }` at
+   max-width: 1023, matching the .hero-anim--fall override above. */
+html .hero-display.hero-anim--rise {
+  display: block;
+  text-align: center;
+}
+html .hero-display.hero-anim--rise span {
+  display: block;
+}
 html [data-theme="day"] .hero-display {
   color: #F2F2F2;
 }

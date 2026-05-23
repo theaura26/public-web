@@ -42,11 +42,11 @@ const pixelifySans = Pixelify_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://theaura.life'),
   title: {
-    default: 'Aura — The 1000-Year Idea',
+    default: 'Aura — Natural Intelligence Company.',
     template: '%s — Aura',
   },
   description:
-    'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital. 150 acres in the Western Ghats; an East-East axis to Ohara, Kyoto.',
+    'We are a team of Monastic Polymaths who combine ancestral wisdom with creative capital to make what the future cannot automate.',
   applicationName: 'Aura',
   authors: [{ name: 'Aura', url: 'https://theaura.life' }],
   keywords: [
@@ -67,16 +67,16 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     siteName: 'Aura',
-    title: 'Aura — The 1000-Year Idea',
+    title: 'Aura — Natural Intelligence Company.',
     description:
-      'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
+      'We are a team of Monastic Polymaths who combine ancestral wisdom with creative capital to make what the future cannot automate.',
     images: ['/og-hello.jpg'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Aura — The 1000-Year Idea',
+    title: 'Aura — Natural Intelligence Company.',
     description:
-      'A regenerative ecosystem for monastic polymaths where ancestral intelligence meets creative capital.',
+      'We are a team of Monastic Polymaths who combine ancestral wisdom with creative capital to make what the future cannot automate.',
     images: ['/og-hello.jpg'],
   },
   robots: {

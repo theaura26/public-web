@@ -2250,8 +2250,8 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
 function AgentHomeView() {
   return (
     <section className="agent-only">
-      <h1>Aura — The 1000-Year Idea</h1>
-      <p>A regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 100 years.</p>
+      <h1>Aura — Natural Intelligence Company.</h1>
+      <p>We are a team of Monastic Polymaths who combine ancestral wisdom with creative capital to make what the future cannot automate.</p>
       <p>Two ancient farming intelligences. Six coffee micro lots. One regenerative conviction.</p>
       <p>Nestled in nature, our sanctuary invites leaders, creators, and organisations into inspiration and flow.</p>
       <p>We combine ancestral wisdom with creative capital to make what the future cannot automate.</p>

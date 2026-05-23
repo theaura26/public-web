@@ -309,6 +309,25 @@ export function HeroBanner({
         />
       )}
 
+      {/* Corner vignette — concentrated bottom-left shadow so the caption
+          stays legible over light or busy photography. Soft radial that
+          fades to nothing well before the centre, so the image still
+          breathes. Layered above the tint, below the caption + title. */}
+      {src && caption && (
+        <div
+          aria-hidden
+          className="hero-banner-vignette"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'radial-gradient(ellipse 55% 45% at 0% 100%, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 35%, rgba(0, 0, 0, 0) 75%)',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+        />
+      )}
+
       {/* Drafting hint — small mono label under the title while `src` is empty. */}
       {!src && draftingHint && (
         <div
@@ -550,23 +569,13 @@ export function JournalHero({
         </div>
       )}
 
-      {/* Image sizing: styled-jsx's :global(img) selector inside a
-          @media rule wasn't applying scoped correctly, so we use a
-          global style block targeting the explicit
-          .journal-hero__media-el class instead. */}
-      <style jsx global>{`
-        .journal-hero__media-el {
-          width: 100%;
-          height: auto;
-          display: block;
-        }
-        @media (max-width: 768px) {
-          .journal-hero__media-el {
-            height: 100vh;
-            object-fit: cover;
-          }
-        }
-      `}</style>
+      {/* Image sizing for `.journal-hero__media-el` lives in
+          app/globals.css alongside the other `.journal-hero__media`
+          globals. It used to be a `<style jsx global>` block here,
+          but styled-jsx global blocks only inject when the host
+          component mounts — and the studios page composes the media
+          block by hand, so it never gets these styles. Lifting them
+          out fixes the short-video bug on mobile /studios. */}
 
       <style jsx>{`
         .journal-hero {
@@ -657,6 +666,7 @@ export function JournalHero({
           color: #ffffff;
           letter-spacing: 1px;
           text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
+          z-index: 2;
         }
       `}</style>
     </header>

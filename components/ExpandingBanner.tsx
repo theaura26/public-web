@@ -282,6 +282,23 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
               <div className="label" style={{ opacity: 0.9, maxWidth: 'min(80%, 720px)' }}>{draftingLabel}</div>
             </div>
           )}
+          {/* Corner vignette — soft radial shadow anchored at bottom-left
+              so the white caption stays legible over busy photography
+              without dimming the rest of the image. Painted above the
+              media (and any tint) but below the caption itself. */}
+          {caption && src && (
+            <div
+              aria-hidden
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background:
+                  'radial-gradient(ellipse 55% 45% at 0% 100%, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 35%, rgba(0, 0, 0, 0) 75%)',
+                pointerEvents: 'none',
+                zIndex: 1,
+              }}
+            />
+          )}
           {caption && src && (
             <p
               className="label"

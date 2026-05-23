@@ -1958,10 +1958,10 @@ export default function Home() {
               justify-self: center;
               /* Match the .hero-tile__caption type treatment exactly:
                  DM Mono 11px / 1.5, weight 400, 1px tracking, uppercase.
-                 Kept full-justified on the long block so it reads as a tidy
-                 mono rectangle; the orphan last line centres. */
+                 Full-justified including the last line so it reads as a
+                 tidy mono rectangle edge-to-edge. */
               text-align: justify;
-              text-align-last: center;
+              text-align-last: justify;
               max-width: none;
               font-family: var(--font-mono);
               font-size: 11px;

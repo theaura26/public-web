@@ -309,6 +309,25 @@ export function HeroBanner({
         />
       )}
 
+      {/* Corner vignette — concentrated bottom-left shadow so the caption
+          stays legible over light or busy photography. Soft radial that
+          fades to nothing well before the centre, so the image still
+          breathes. Layered above the tint, below the caption + title. */}
+      {src && caption && (
+        <div
+          aria-hidden
+          className="hero-banner-vignette"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'radial-gradient(ellipse 55% 45% at 0% 100%, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 35%, rgba(0, 0, 0, 0) 75%)',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+        />
+      )}
+
       {/* Drafting hint — small mono label under the title while `src` is empty. */}
       {!src && draftingHint && (
         <div
@@ -657,6 +676,7 @@ export function JournalHero({
           color: #ffffff;
           letter-spacing: 1px;
           text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
+          z-index: 2;
         }
       `}</style>
     </header>

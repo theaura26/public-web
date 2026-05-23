@@ -1035,6 +1035,24 @@ strong, b { font-weight: 400; color: var(--text); }
   margin: 0;
   transition: color 0.4s var(--ease-out);
 }
+/* Mobile: lock 'NATURAL INTELLIGENCE' (top hero-display, .hero-anim--fall)
+   to a consistent 2-line layout — NATURAL on line 1, INTELLIGENCE on
+   line 2 — instead of letting the clamp + viewport width decide.
+   At borderline widths (~400–550px) the title sometimes fit on a single
+   line, which read inconsistently between devices. Force each word to
+   its own block so the rhythm holds. The lower 'FOR GENERATIONAL IMPACT'
+   (.hero-anim--rise) keeps its natural wrap and is intentionally not
+   broken into 3 lines.
+
+   `html` prefix bumps specificity to (0,2,2) so this rule beats the
+   styled-jsx-scoped `.hero-display :global(span) { display: inline }`
+   in app/page.tsx, which fires under @media (max-width: 1023px) at the
+   same (0,2,1) specificity but later source order. */
+@media (max-width: 768px) {
+  html .hero-display.hero-anim--fall span {
+    display: block;
+  }
+}
 html [data-theme="day"] .hero-display {
   color: #F2F2F2;
 }

@@ -90,22 +90,22 @@ const STUDIOS: Studio[] = [
   {
     name: 'Origin',
     lead: 'Story, voice, identity.',
-    body: 'Where a company is from, what it is for, and how it should sound. Naming, narrative, design language, art direction — the work that decides what the rest of the system is allowed to do.',
+    body: 'What a thing is, and what it must always remain. Naming, narrative, design language, art direction — the layer that survives every quarter, every shift, every iteration. Identity built to read the same in four hundred years as it does today.',
     image: '/aura-studios/aura-design.jpg',
     alt: 'Aura Origin studio — story, voice, identity, design language',
   },
   {
     name: 'Engine',
     lead: 'Systems that read the land.',
-    body: 'Sensors, models, and quiet automations that listen before they act. We build interfaces, agents, and data flows that translate signal into decision — the machine in service of attention, not in place of it.',
+    body: 'Sensors, models, agents, and the quiet automation behind them. Crypto-native where it serves, AI-fluent where it helps — but always in service of the deeply human, never in place of it. The machine, made to listen first.',
     image: '/aura-studios/aura-technology.jpg',
     video: '/aura-studios/aura-technology.mp4',
     alt: 'Aura Engine studio — sensors, models, agents, data flows',
   },
   {
     name: 'Hospitality',
-    lead: 'Places, hosting, and the room itself.',
-    body: 'End-to-end sanctuary design — from the soil under the building to the table it ends on. Architecture, kitchen, residency programme, and the operations to keep it running for decades.',
+    lead: 'The room itself.',
+    body: 'Places that hold the right kind of attention. Architecture, kitchen, residency programme, and the operations that keep them running for decades — from the soil under the building to the table it ends on. Built to outlast its builders.',
     image: '/aura-studios/aura-hospitality.jpg',
     alt: 'Aura Hospitality studio — sanctuary, architecture, the room itself',
   },
@@ -141,16 +141,35 @@ export default function StudiosPage() {
       </section>
 
       {/* ── Hero banner ──────────────────────────────────────
-          The studios at work — establishing video, same scroll-
-          driven blur → clarity → hold gesture as the homepage
-          hero moments. */}
-      <Placeholder
-        src="/aura-studios/aura-studios.mp4"
-        poster="/aura-studios/aura-studios.jpg"
-        mediaType="video"
-        alt="Aura studios — natural intelligence at work"
-        caption="Studios — where natural intelligence meets the work"
-      />
+          Editorial banner matching /coffee's JournalHero media —
+          full-bleed video below the title plate, caption pinned
+          bottom-left. Uses the existing global `.journal-hero__media`
+          + `.journal-hero__media-el` + `.journal-hero__caption`
+          CSS so the geometry tracks the rest of the journal kit.
+          The default media block carries a `-300px` desktop margin-
+          top to overlap a `journal-hero__top` of 100vh — here the
+          studios-hero above is much shorter, so we override that
+          back to 0 inline. */}
+      <div
+        className="journal-hero__media"
+        style={{ marginTop: 0 }}
+      >
+        <video
+          className="journal-hero__media-el"
+          muted
+          loop
+          playsInline
+          autoPlay
+          preload="metadata"
+          poster="/aura-studios/aura-studios.jpg"
+          aria-label="Aura studios — natural intelligence at work"
+        >
+          <source src="/aura-studios/aura-studios.mp4" type="video/mp4" />
+        </video>
+        <p className="label journal-hero__caption">
+          Studios — where natural intelligence meets craft
+        </p>
+      </div>
 
       {/* ── Ethos + spirit (merged) ─────────────────────────
           The working method and the people who hold it, read as
@@ -159,9 +178,9 @@ export default function StudiosPage() {
           the three studios that follow. */}
       <ScrollHighlight align="left">{`Natural Intelligence is the way of doing.
 Read the land first, then build.
-Test small ideas at the boundary of nature, technology, and people.
-Monastic polymaths. Crazy misfits.
-Learning from nature. Creating for the future.`}</ScrollHighlight>
+Promise less. Deliver more.
+Build for the next 1,000 years, not the next quarter.
+Monastic polymaths. Crazy misfits.`}</ScrollHighlight>
 
       {/* ── Three studios ────────────────────────────────────
           Pillar grid in the homepage's wider 16/9-derived rail
@@ -170,7 +189,10 @@ Learning from nature. Creating for the future.`}</ScrollHighlight>
           Engine and Hospitality autoplay short loops; Origin is
           a still. */}
       <section style={{ padding: 'var(--section-gap) 0' }}>
-        <div style={{ padding: '0 48px' }}>
+        {/* Outer padding uses var(--gutter) (clamp 20→48) so the
+            three studios align with body text on mobile instead of
+            being indented 48px from a tighter gutter. */}
+        <div style={{ padding: '0 var(--gutter)' }}>
           <div
             className="grid grid-cols-1 md:grid-cols-3 stagger pillar-grid"
             style={{ gap: 'var(--grid-gap)', maxWidth: 'calc((100vh - 56px - 96px) * 16 / 9)', margin: '0 auto' }}
@@ -190,13 +212,12 @@ Learning from nature. Creating for the future.`}</ScrollHighlight>
       </section>
 
       {/* ── In practice ──────────────────────────────────────
-          The four words that anchor the studios' working
-          standard — craft, technology, innovation, impact —
-          stacked as a stanza so each beat lands on its own. */}
+          The three words that anchor the studios' working
+          standard — craft, innovation, impact — stacked as a
+          stanza so each beat lands on its own. */}
       <ScrollHighlight align="left">{`Craft meets technology.
-Innovation in service of value.
-Impact measured in generations, not quarters.
-The website is not the surface. It is the field.`}</ScrollHighlight>
+Innovation in service of value, not novelty.
+Impact measured in centuries, not quarters.`}</ScrollHighlight>
 
       {/* ── Body banner ──────────────────────────────────────
           A held loop before the closing CTA — the space video
@@ -206,7 +227,7 @@ The website is not the surface. It is the field.`}</ScrollHighlight>
         poster="/aura-studios/aura-space.jpg"
         mediaType="video"
         alt="Aura — regenerative studios, the room itself"
-        caption="Regenerative studios"
+        caption="Built to outlast its builders"
       />
 
       {/* ── Invitation ───────────────────────────────────────

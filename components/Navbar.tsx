@@ -634,7 +634,11 @@ export default function Navbar() {
             position: absolute;
             bottom: 60px;
             left: var(--gutter);
-            z-index: 2;
+            /* Sit ABOVE the .tile-feed-vignette (z: 101). On mobile
+               the vignette is full-bleed across the bottom of the
+               viewport; the utility icons need to remain crisp and
+               clickable on top of the blur. */
+            z-index: 102;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -899,13 +903,14 @@ export default function Navbar() {
              them on this build, but inline survives every time. */
           :global(.tile-feed-vignette) {
             position: fixed;
-            /* Anchor to the right edge so the blur only covers the
-               tile-feed column. The icon stack (.menu-utils) sits in
-               the bottom-left of the panel; we don't want the blur to
-               creep underneath the icons and soften their edges. */
+            /* Desktop: extend the vignette wider than the tile-feed
+               column so the soft horizon reads as the full bottom
+               band, not a narrow strip. Anchor right: 0 and let the
+               width carry it leftward; the menu-utils icons sit at
+               z-index 102 above the blur so they stay crisp. */
             left: auto;
             right: 0;
-            width: min(720px, 60vw);
+            width: 820px;
             bottom: 0;
             height: 18vh;
             z-index: 101;
@@ -1005,6 +1010,14 @@ export default function Navbar() {
             :global(.tile-title) {
               margin-top: 12px;
             }
+            /* Tablet: full-bleed bottom band so the blur reads as a
+               single soft horizon. Icons (z-index 102) sit above it
+               and remain crisp. */
+            :global(.tile-feed-vignette) {
+              left: 0;
+              right: 0;
+              width: auto;
+            }
           }
 
           /* Phone — 2-column menu: nav rail on the left, tile feed on the
@@ -1075,6 +1088,15 @@ export default function Navbar() {
               gap: 12px;
             }
             :global(.menu-link) { font-size: 11px !important; }
+            /* Phone: full-bleed bottom band — pull the vignette all
+               the way across so the blur reads as a single soft
+               horizon. The .menu-utils icons (z-index 102) sit above
+               the blur and remain crisp / clickable. */
+            :global(.tile-feed-vignette) {
+              left: 0;
+              right: 0;
+              width: auto;
+            }
           }
 
           /* Smaller navbar wordmark on mobile */

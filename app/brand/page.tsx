@@ -410,15 +410,32 @@ export default function BrandPage() {
               />
             </div>
           </Reveal>
-          <ScrollHighlight maxWidth={880} align="left">{`Attention. Unhurried. Rooted. Awake.
+          {/* `*letter*rest` cursivifies just the leading character of
+              each word (see ScrollHighlight marker docs). The A·U·R·A
+              acrostic on line 1 spells AURA in Belmonte; the rest of
+              the stanza renders in the standard grotesque. */}
+          <ScrollHighlight maxWidth={880} align="left">{`*A*ttention. *U*nhurried. *R*ooted. *A*wake.
 An intelligence shaped by people, nature, and generations of inherited wisdom.
 Because true progress is not measured by speed alone, but by the legacy we leave behind.
 Not for the next year. But for the next 1,000 years.
 The Aura Life is guided by Natural Intelligence.`}</ScrollHighlight>
           <Reveal>
             <div style={{
-              maxWidth: 720,
+              /* Match the ScrollHighlight above on every axis:
+                 - paddingLeft var(--gutter) so the LEFT edge aligns
+                   (ScrollHighlight renders its own nested
+                   <section><div class="section-w"> which adds an
+                   extra gutter of padding on top of the outer page
+                   section-w; this padding mirrors that nesting).
+                 - maxWidth 880 + gutter so the RIGHT edge also lands
+                   at the ScrollHighlight's right edge (since
+                   box-sizing: border-box includes the padding inside
+                   max-width, we add it back so the CONTENT area is
+                   880 px wide — same as the ScrollHighlight). */
+              maxWidth: 'calc(880px + var(--gutter))',
               margin: 0,
+              paddingLeft: 'var(--gutter)',
+              boxSizing: 'border-box',
               display: 'flex',
               flexDirection: 'column',
               gap: 16,

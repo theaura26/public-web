@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Areca — The Sentinel Palm',
   description:
     'Areca catechu as the mid-canopy of the Aura estate. Vertical architecture, five-layer shade system, and the cultural spine of coastal Karnataka.',
+  alternates: { canonical: '/areca' },
   openGraph: {
     title: 'Areca — The Sentinel Palm',
     description:

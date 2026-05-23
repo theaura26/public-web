@@ -18,7 +18,7 @@ export default function LivingSystemsPage() {
         currentHref="/living-systems"
         title="Living Systems"
         type="Aerial · four-story canopy"
-        caption="Sampigelkhan Estate — Western Ghats"
+        caption="Read the land first — relationships over isolated variables"
       />
 
       <TwoCol heading="A forest that produces crops. Not a farm that plants trees.">

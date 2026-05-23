@@ -8,6 +8,14 @@ export const metadata: Metadata = {
   title: 'Sanctuary',
   description:
     'Aura Sanctuary — the land in rhythm. A 1000-year regenerative ecosystem across Mudigere, Ohara, and coming valleys in Munduk and Daylesford.',
+  alternates: { canonical: '/sanctuary' },
+  openGraph: {
+    type: 'article',
+    title: 'Sanctuary — Aura',
+    description: 'The land in rhythm. Mudigere, Ohara, and the valleys coming next.',
+    images: [{ url: '/aura-sanctuary.jpg', width: 1600, height: 900, alt: 'Aura Sanctuary — the land in rhythm' }],
+  },
+  twitter: { card: 'summary_large_image', images: ['/aura-sanctuary.jpg'] },
   ...comingSoonMetadata,
 }
 

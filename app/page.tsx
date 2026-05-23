@@ -1657,7 +1657,7 @@ export default function Home() {
             {[
               { href: '/reason',  l1: 'Aura is not built,',     l2: 'it is grown',     pill: 'The Reason', img: '/aura-grown.jpg',   video: '/aura-grown.mp4', symbol: '/aura-symbol-1.png', alt: 'Aura — patient, grown systems'              },
               { href: '/brand',   l1: 'Rhythm over speed,',     l2: 'depth and width', pill: 'Our Brand',  img: '/aura-depth.jpg',   video: '/aura-depth.mp4', symbol: '/aura-symbol-2.png', alt: 'Aura — rhythm, depth and breadth of practice' },
-              { href: '/contact', l1: 'Get in touch',           l2: 'with Aura',       pill: 'Contact Us', img: '/aura-contact.jpg', video: undefined,         symbol: '/aura-symbol-3.png', alt: 'Aura — people behind the sanctuary'         },
+              { href: '/studios',  l1: 'Regenerative innovation',l2: 'and craft',       pill: 'Studios',    img: '/aura-contact.jpg', video: undefined, symbol: '/aura-symbol-3.png', alt: 'Aura Studios — natural intelligence applied to story, systems, and place' },
             ].map((tile, i) => (
               <Link
                 key={tile.href}
@@ -1958,10 +1958,10 @@ export default function Home() {
               justify-self: center;
               /* Match the .hero-tile__caption type treatment exactly:
                  DM Mono 11px / 1.5, weight 400, 1px tracking, uppercase.
-                 Kept full-justified on the long block so it reads as a tidy
-                 mono rectangle; the orphan last line centres. */
+                 Full-justified including the last line so it reads as a
+                 tidy mono rectangle edge-to-edge. */
               text-align: justify;
-              text-align-last: center;
+              text-align-last: justify;
               max-width: none;
               font-family: var(--font-mono);
               font-size: 11px;
@@ -2114,8 +2114,14 @@ The Aura Operating System brings together land, human craft, and modern technolo
             inline banners use as their starting size. Without the
             max-width the grid would extend past the banner's left
             edge — so the grid's left rail lines up with the banner's
-            top-of-section start rather than the page gutter. */}
-        <div style={{ padding: '0 48px' }}>
+            top-of-section start rather than the page gutter.
+
+            Outer padding tracks `var(--gutter)` (clamp 20→48px) so
+            the grid's left edge aligns with the rest of the page's
+            body text on mobile (20px) instead of indenting 48px in
+            from the gutter, which produced a visible offset against
+            the surrounding reveal-text stanzas. */}
+        <div style={{ padding: '0 var(--gutter)' }}>
           <div className="grid grid-cols-1 md:grid-cols-3 stagger pillar-grid" style={{ gap: 'var(--grid-gap)', maxWidth: 'calc((100vh - 56px - 96px) * 16 / 9)', margin: '0 auto' }}>
             {[
               {
@@ -2127,12 +2133,12 @@ The Aura Operating System brings together land, human craft, and modern technolo
                 alt: 'Aura plantation — coffee, pepper, areca, tea, soil biodiversity',
               },
               {
-                title: 'Hospitality',
-                lead: 'Sanctuaries designed for clarity',
+                title: 'Sanctuary',
+                lead: 'Hospitality designed for clarity',
                 desc: 'Architect-led sanctuaries, slow living experiences, workshops, residencies, and time designed around nature and clarity.',
                 video: '/aura-hospitality.mp4',
                 poster: '/aura-hospitality.jpg',
-                alt: 'Aura hospitality — sanctuary, retreats, slow living',
+                alt: 'Aura sanctuary — hospitality, retreats, slow living',
               },
               {
                 title: 'Labs',
@@ -2171,10 +2177,13 @@ The Aura Operating System brings together land, human craft, and modern technolo
 Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm.
 Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
         <style jsx>{`
-          /* Top margin removed — lede now sits right under the pillar
-             grid border. Bottom keeps the breathing room before the
-             sanctuary stack so the manifesto reads as the deliberate
-             pause it wants to be. */
+          /* Symmetric breathing room — same padding top and bottom.
+             The previous asymmetric "top: 0" attempt produced visibly
+             inconsistent spacing against the sibling reveal-text
+             stanzas (Generational Impact, Natural Intelligence) which
+             both use ~80px top + 80px bottom. This lede uses a wider
+             rhythm (section-gap + clamp 40–80) to read as a deliberate
+             pause between the pillar grid and the sanctuary stack. */
           .sanctuary-lede {
             padding: 0 0 calc(var(--section-gap) + clamp(40px, 6vh, 80px));
           }
@@ -2272,7 +2281,7 @@ function AgentHomeView() {
       <h3>Agroculture — We cultivate regenerative land systems</h3>
       <p>Coffee, pepper, areca, tea, soil, biodiversity, and long-term stewardship — managed through Biodynamic (BD 500-508, CPP, lunar cycles) and Vedic (Jeevamrit, Panchgavya, Beejamrit) agricultural practices. Not competing approaches — complementary intelligence.</p>
 
-      <h3>Hospitality — Sanctuaries designed for clarity</h3>
+      <h3>Sanctuary — Hospitality designed for clarity</h3>
       <p>Architect-led sanctuaries, slow living experiences, workshops, residencies, and time designed around nature and clarity.</p>
 
       <h3>Labs — Studios for regenerative thinking</h3>

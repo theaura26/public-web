@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Pepper — Malabar Black Gold',
   description:
     'Single-estate Malabar black pepper climbing the areca. Black, white, and green — water-retted and experimentally anaerobic. Grown in the Western Ghats biosphere.',
+  alternates: { canonical: '/pepper' },
   openGraph: {
     title: 'Pepper — Malabar Black Gold',
     description:

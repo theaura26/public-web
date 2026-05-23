@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Vedic Farming — Knowledge Older Than The Rulebook',
   description:
     'Vrikshayurveda in practice. Jeevamrit, Panchgavya, Beejamrit, Kunapjal, Matka Khad. Five-cow tonics fermented in clay. The ancestral layer beneath the Steiner layer — older than the word organic.',
+  alternates: { canonical: '/vedic' },
   openGraph: {
     title: 'Vedic Farming — Knowledge older than the institutions that study it.',
     description:

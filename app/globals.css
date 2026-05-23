@@ -378,6 +378,51 @@ html [data-view="agent"] {
   padding-right: 0 !important;
 }
 
+/* ── Journal hero corner vignette ──
+   Every `.journal-hero__media` — whether rendered by the JournalHero
+   React component (/coffee, /rta) or by hand-rolled markup that
+   reuses the class (/studios) — gets a soft radial shadow anchored at
+   the bottom-left, so the pinned caption stays legible over busy
+   photography without darkening the rest of the image. Lives here in
+   globals.css rather than in JournalHero's scoped styled-jsx because
+   the studios page composes the media block directly, outside the
+   component tree, and would otherwise miss the scoped rule. The
+   parent must be positioned for the absolute pseudo-element to anchor;
+   the position:relative declaration here doubles as a safety net for
+   the hand-rolled case. */
+.journal-hero__media {
+  position: relative;
+}
+.journal-hero__media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 55% 45% at 0% 100%,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.35) 35%,
+    rgba(0, 0, 0, 0) 75%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+/* Caption pinned bottom-left of the media block, above the vignette
+   pseudo (z-index 1). The JournalHero scoped styled-jsx already sets
+   most of this, but the studios page composes the media block by
+   hand and uses the class directly — re-state the positioning + ink
+   globally so both paths land in the same place. */
+.journal-hero__caption {
+  position: absolute;
+  left: clamp(20px, 4vw, 48px);
+  bottom: clamp(20px, 4vh, 48px);
+  margin: 0;
+  max-width: min(320px, 60vw);
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
 /* ── Visual chrome stripped, page structure intact. ──
    Hide all decorative media inside <main> — videos, canvases,
    journal hero imagery, body imagery — so the agent / crawler /
@@ -406,6 +451,7 @@ html [data-view="agent"] {
    left, drafting hint. The title overlay is handled separately below
    (it needs to FLOW, not disappear). */
 [data-view="agent"] main .hero-banner-tint,
+[data-view="agent"] main .hero-banner-vignette,
 [data-view="agent"] main .hero-banner-caption,
 [data-view="agent"] main .hero-banner-drafting,
 /* Continue-card thumbnails — the 16:9 reserved box stays empty after
@@ -1034,6 +1080,24 @@ strong, b { font-weight: 400; color: var(--text); }
   color: #F2F2F2;
   margin: 0;
   transition: color 0.4s var(--ease-out);
+}
+/* Mobile: lock 'NATURAL INTELLIGENCE' (top hero-display, .hero-anim--fall)
+   to a consistent 2-line layout — NATURAL on line 1, INTELLIGENCE on
+   line 2 — instead of letting the clamp + viewport width decide.
+   At borderline widths (~400–550px) the title sometimes fit on a single
+   line, which read inconsistently between devices. Force each word to
+   its own block so the rhythm holds. The lower 'FOR GENERATIONAL IMPACT'
+   (.hero-anim--rise) keeps its natural wrap and is intentionally not
+   broken into 3 lines.
+
+   `html` prefix bumps specificity to (0,2,2) so this rule beats the
+   styled-jsx-scoped `.hero-display :global(span) { display: inline }`
+   in app/page.tsx, which fires under @media (max-width: 1023px) at the
+   same (0,2,1) specificity but later source order. */
+@media (max-width: 768px) {
+  html .hero-display.hero-anim--fall span {
+    display: block;
+  }
 }
 html [data-theme="day"] .hero-display {
   color: #F2F2F2;

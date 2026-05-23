@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: 'Artistry — Code meets clay',
   description:
     'Studios, residency, labs, and gatherings. The artistry pillar of Aura — where the work of the land argues for a different pace through what it makes.',
+  alternates: { canonical: '/artistry' },
   openGraph: {
     title: 'Artistry — Code meets clay',
     description:

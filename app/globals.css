@@ -392,6 +392,20 @@ html [data-view="agent"] {
    the hand-rolled case. */
 .journal-hero__media {
   position: relative;
+  /* Full-bleed: 100vw + a negative centring margin pulls the block
+     out of any inherited content gutter so the video sits edge-to-
+     edge of the viewport. JournalHero's scoped styled-jsx sets the
+     same thing, but the studios page composes the media by hand and
+     wouldn't otherwise reach viewport edges. */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  /* The scroll-driven blur effect in JournalHero can paint a ~20 px
+     halo past the box edge; clip it so the surrounding white plate
+     stays clean. `contain: paint` belt-and-braces the same effect
+     in Chrome, where filter creates its own stacking context and
+     overflow:hidden alone leaks. */
+  overflow: hidden;
+  contain: paint;
 }
 /* Media element sizing — full-width on every breakpoint, with a
    tall full-viewport mobile crop so the hero reads cinematic on
@@ -1179,6 +1193,15 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
    and reveals the plain text). */
 .studios-hero {
   padding: clamp(120px, 18vh, 200px) 0 var(--section-gap);
+}
+/* Mobile: compress the title plate so the cloth-video banner below
+   reads as a tall cinematic hero instead of being pushed down by
+   editorial chrome. Matches the visual weight /land's JournalHero
+   gives its media block on phones. */
+@media (max-width: 768px) {
+  .studios-hero {
+    padding: clamp(72px, 10vh, 96px) 0 var(--space-5);
+  }
 }
 .studios-title {
   margin: 0;

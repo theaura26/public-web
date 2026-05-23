@@ -374,30 +374,54 @@ export default function Navbar() {
           <LogoEmblem size={92} />
         </Link>
 
-        {/* Right — 2-line hamburger (centred in the right 10vw rail) */}
-        <button
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen(v => !v)}
-          /* 44×44 hit area meets WCAG 2.5.8 minimum touch target. The visual
-             ink (two 22px bars) sits centred inside the larger pad area. */
-          style={{
-            justifySelf: 'center',
-            background: 'none',
-            border: 'none',
-            width: 44,
-            height: 44,
-            padding: 0,
-            display: 'inline-flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 6,
-          }}
-        >
-          <span style={{ display: 'block', width: 22, height: 1.5, background: 'var(--text)', transition: 'transform var(--dur-base) var(--ease), opacity var(--dur-base) var(--ease)', transform: menuOpen ? 'translateY(3.75px) rotate(45deg)' : 'none' }} />
-          <span style={{ display: 'block', width: 22, height: 1.5, background: 'var(--text)', transition: 'transform var(--dur-base) var(--ease), opacity var(--dur-base) var(--ease)', transform: menuOpen ? 'translateY(-3.75px) rotate(-45deg)' : 'none' }} />
-        </button>
+        {/* Right — hamburger on every page EXCEPT the unlisted /mudigere
+            briefing, which swaps it for a "Get in touch" mailto chip so
+            architects landing there have a single, obvious next step
+            (and the hidden journal menu stays hidden for that audience). */}
+        {pathname === '/mudigere' ? (
+          /* Plain text link — reuses the existing `.label` typography
+             token (DM Mono · 11 px · 1 px tracking · uppercase) so the
+             nav CTA reads as part of the kit, not a bespoke chip. Sits
+             flush at the right gutter edge (margin-right: 0; the right
+             gutter is provided by the nav's own padding on mobile). */
+          <a
+            href="mailto:hello@theaura.life?subject=Mudigere%20estate%20visit"
+            className="no-underline label mudigere-nav-cta"
+            style={{
+              justifySelf: 'end',
+              marginRight: 0,
+              paddingRight: 'var(--gutter)',
+              color: 'var(--text)',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Contact us
+          </a>
+        ) : (
+          <button
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(v => !v)}
+            /* 44×44 hit area meets WCAG 2.5.8 minimum touch target. The visual
+               ink (two 22px bars) sits centred inside the larger pad area. */
+            style={{
+              justifySelf: 'center',
+              background: 'none',
+              border: 'none',
+              width: 44,
+              height: 44,
+              padding: 0,
+              display: 'inline-flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 6,
+            }}
+          >
+            <span style={{ display: 'block', width: 22, height: 1.5, background: 'var(--text)', transition: 'transform var(--dur-base) var(--ease), opacity var(--dur-base) var(--ease)', transform: menuOpen ? 'translateY(3.75px) rotate(45deg)' : 'none' }} />
+            <span style={{ display: 'block', width: 22, height: 1.5, background: 'var(--text)', transition: 'transform var(--dur-base) var(--ease), opacity var(--dur-base) var(--ease)', transform: menuOpen ? 'translateY(-3.75px) rotate(-45deg)' : 'none' }} />
+          </button>
+        )}
       </nav>
 
       {/* Backdrop — page-coloured strip behind the contrast menu overlay.

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useMode } from './ModeProvider'
 import { LogoEmblem } from './Logo'
+import ContactModal from './ContactModal'
 
 /* ── Article tiles for the journal slide-out ──
    Mirrors the sitemap of journal pages exactly. Top-level routes
@@ -61,6 +62,10 @@ const INSTAGRAM_URL = 'https://www.instagram.com/theaura.life/'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  /* Inline contact modal — opened by the /mudigere-estate "Contact
+     us" nav link instead of routing to /contact, so the architect
+     stays on the briefing page while writing. */
+  const [contactOpen, setContactOpen] = useState(false)
   const [showLogo, setShowLogo] = useState(false)
   /* Lazy-mount gate for the tile-feed media. Browsers eagerly fetch
      images and sniff video metadata even inside a `position: fixed`
@@ -380,24 +385,33 @@ export default function Navbar() {
             obvious next step (and the hidden journal menu stays
             hidden for that audience). */}
         {pathname === '/mudigere-estate' ? (
-          /* Plain text link — reuses the existing `.label` typography
-             token (DM Mono · 11 px · 1 px tracking · uppercase) so the
-             nav CTA reads as part of the kit, not a bespoke chip. Sits
-             flush at the right gutter edge (margin-right: 0; the right
-             gutter is provided by the nav's own padding on mobile). */
-          <a
-            href="mailto:hello@theaura.life?subject=Mudigere%20estate%20visit"
-            className="no-underline label mudigere-nav-cta"
+          /* Plain text button — reuses the existing `.label`
+             typography token (DM Mono · 11 px · 1 px tracking ·
+             uppercase) so the nav CTA reads as part of the kit, not
+             a bespoke chip. Sits flush at the right gutter edge.
+             Opens the ContactModal (mounted at the end of the
+             component tree) instead of routing to /contact, so the
+             architect stays on the briefing while writing. */
+          <button
+            type="button"
+            onClick={() => setContactOpen(true)}
+            className="label mudigere-nav-cta"
             style={{
               justifySelf: 'end',
               marginRight: 0,
               paddingRight: 'var(--gutter)',
+              paddingLeft: 0,
+              paddingTop: 0,
+              paddingBottom: 0,
               color: 'var(--text)',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
               whiteSpace: 'nowrap',
             }}
           >
             Contact us
-          </a>
+          </button>
         ) : (
           <button
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -1208,6 +1222,15 @@ export default function Navbar() {
           backdropFilter: 'blur(28px) saturate(1.05)',
           WebkitBackdropFilter: 'blur(28px) saturate(1.05)',
         }}
+      />
+
+      {/* Contact modal — opened by the /mudigere-estate "Contact us"
+          button. Mounted here so it's a sibling of the nav and lives
+          above the page-vignette (z-index 100 vs 40). */}
+      <ContactModal
+        open={contactOpen}
+        onClose={() => setContactOpen(false)}
+        defaultTopic="general"
       />
     </>
   )

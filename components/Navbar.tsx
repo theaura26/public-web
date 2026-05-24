@@ -409,16 +409,14 @@ export default function Navbar() {
             className="label mudigere-nav-cta"
             style={{
               justifySelf: 'end',
-              marginRight: 0,
-              paddingRight: 'var(--gutter)',
-              paddingLeft: 0,
-              paddingTop: 0,
-              paddingBottom: 0,
+              marginRight: 'var(--gutter)',
+              padding: 0,
               color: 'var(--text)',
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
               whiteSpace: 'nowrap',
+              textAlign: 'right',
             }}
           >
             Contact us

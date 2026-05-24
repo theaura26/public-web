@@ -1545,19 +1545,22 @@ export default function Home() {
   const closeFilm = useCallback(() => setFilmOpen(false), [])
   const openFilm = useCallback(() => setFilmOpen(true), [])
 
-  /* Sanctuary modals get a vanity URL: /mudigere or /ohara. We use
-     history.pushState (not Next.js routing) so no real route is fetched —
-     the modal stays mounted on the homepage. On close, push back to /;
-     on the browser back button, popstate closes whichever is open. */
+  /* Sanctuary modals get a vanity URL: /mudigere-estate or /ohara.
+     We use history.pushState (not Next.js routing) so no real route
+     is fetched — the modal stays mounted on the homepage. On close,
+     push back to /; on the browser back button, popstate closes
+     whichever is open. Vanity URL matches the actual page route so
+     refresh-while-open lands on the real estate briefing rather
+     than 404. */
   const openMudigere = useCallback(() => {
     setMudigereOpen(true)
-    if (typeof window !== 'undefined' && window.location.pathname !== '/mudigere') {
-      window.history.pushState({ modal: 'mudigere' }, '', '/mudigere')
+    if (typeof window !== 'undefined' && window.location.pathname !== '/mudigere-estate') {
+      window.history.pushState({ modal: 'mudigere' }, '', '/mudigere-estate')
     }
   }, [])
   const closeMudigere = useCallback(() => {
     setMudigereOpen(false)
-    if (typeof window !== 'undefined' && window.location.pathname === '/mudigere') {
+    if (typeof window !== 'undefined' && window.location.pathname === '/mudigere-estate') {
       window.history.pushState({}, '', '/')
     }
   }, [])

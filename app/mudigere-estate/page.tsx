@@ -25,7 +25,7 @@ import Reveal from '@/components/RevealOnScroll'
    .studios-title, .studios-title__letters, .label) plus a
    scroll handler. */
 
-/* /mudigere — private briefing for architects and landscape designers.
+/* /mudigere-estate — private briefing for architects and landscape designers.
    Built entirely from the journal kit (JournalHero, OneCol, TwoCol,
    Placeholder, DataGrid, DataCard, PullQuote, ScrollHighlight, Term)
    and the kit's typography tokens. No bespoke components. Light mode
@@ -78,7 +78,7 @@ export default function MudigerePage() {
 
   return (
     <>
-      {/* Hide the back link the kit injects by default — /mudigere is
+      {/* Hide the back link the kit injects by default — /mudigere-estate is
           reached by direct invitation, not from another journal, so the
           affordance has nowhere meaningful to return to. One-line CSS
           override; no new component. */}

@@ -771,14 +771,6 @@ export default function MudigerePage() {
         </div>
       </section>
 
-      <Placeholder
-        src="/aura-land.mp4"
-        mediaType="video"
-        poster="/journals/land/aura-the-land.jpg"
-        alt="Mid-morning walk along the upper ridge"
-        caption="The upper ridge — where the architecture probably wants to land"
-      />
-
       <OneCol id="pillars" heading="What we are building toward.">
         <p className="p1">
           A colonial-era plantation — optimised for extraction — being

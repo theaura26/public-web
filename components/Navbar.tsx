@@ -360,18 +360,29 @@ export default function Navbar() {
           )}
         </Link>
 
-        {/* Center — full wordmark slides in past the first fold */}
+        {/* Center — full wordmark slides in past the first fold.
+            Absolutely positioned at viewport centre rather than
+            grid-centred so the wordmark stays on the true horizontal
+            midline even when the left / right grid cells have
+            different content widths (e.g. on /mudigere-estate where
+            the right-side "Contact us" label is wider than the left
+            logo emblem). The translate composes vertical centre +
+            the showLogo entry slide. */}
         <Link
           href="/"
           aria-label="Aura — home"
           className="no-underline nav-wordmark"
           style={{
-            justifySelf: 'center',
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
             color: 'var(--text)',
             display: 'inline-flex',
             alignItems: 'center',
             opacity: showLogo ? 1 : 0,
-            transform: showLogo ? 'translateY(0)' : 'translateY(-12px)',
+            transform: showLogo
+              ? 'translate(-50%, -50%)'
+              : 'translate(-50%, calc(-50% - 12px))',
             transition: 'opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out)',
             pointerEvents: showLogo ? 'auto' : 'none',
           }}

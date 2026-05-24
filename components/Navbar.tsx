@@ -378,7 +378,7 @@ export default function Navbar() {
             briefing, which swaps it for a "Get in touch" mailto chip so
             architects landing there have a single, obvious next step
             (and the hidden journal menu stays hidden for that audience). */}
-        {pathname === '/mudigere' ? (
+        {pathname === '/mudigere-estate' ? (
           /* Plain text link — reuses the existing `.label` typography
              token (DM Mono · 11 px · 1 px tracking · uppercase) so the
              nav CTA reads as part of the kit, not a bespoke chip. Sits

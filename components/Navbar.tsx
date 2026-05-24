@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useMode } from './ModeProvider'
 import { LogoEmblem } from './Logo'
+import ContactModal from './ContactModal'
 
 /* ── Article tiles for the journal slide-out ──
    Mirrors the sitemap of journal pages exactly. Top-level routes
@@ -61,6 +62,10 @@ const INSTAGRAM_URL = 'https://www.instagram.com/theaura.life/'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  /* Inline contact modal — opened by the /mudigere-estate "Contact
+     us" nav link instead of routing to /contact, so the architect
+     stays on the briefing page while writing. */
+  const [contactOpen, setContactOpen] = useState(false)
   const [showLogo, setShowLogo] = useState(false)
   /* Lazy-mount gate for the tile-feed media. Browsers eagerly fetch
      images and sniff video metadata even inside a `position: fixed`
@@ -340,63 +345,132 @@ export default function Navbar() {
           boxShadow: '0 1px 0 0 var(--bg)',
         }}
       >
-        {/* Left — rotating symbol (centred in the 10vw rail) */}
-        <Link href="/" className="no-underline" style={{ color: 'var(--text)', justifySelf: 'center', display: 'inline-flex', alignItems: 'center' }}>
-          {isAgent ? (
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14 }}>~/aura</span>
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src="/aura-animated.svg"
-              alt="Aura"
-              className="invert-on-light"
-              style={{ display: 'block', height: 32, width: 'auto' }}
-            />
-          )}
-        </Link>
+        {/* Left — rotating symbol (centred in the 10vw rail). On
+            /mudigere-estate the architect's briefing is meant to be
+            a closed loop — no clickable home affordance, so the
+            symbol renders as a plain span instead of a Link. */}
+        {pathname === '/mudigere-estate' ? (
+          <span style={{ color: 'var(--text)', justifySelf: 'center', display: 'inline-flex', alignItems: 'center' }} aria-label="Aura">
+            {isAgent ? (
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14 }}>~/aura</span>
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src="/aura-animated.svg"
+                alt="Aura"
+                className="invert-on-light"
+                style={{ display: 'block', height: 32, width: 'auto' }}
+              />
+            )}
+          </span>
+        ) : (
+          <Link href="/" className="no-underline" style={{ color: 'var(--text)', justifySelf: 'center', display: 'inline-flex', alignItems: 'center' }}>
+            {isAgent ? (
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14 }}>~/aura</span>
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src="/aura-animated.svg"
+                alt="Aura"
+                className="invert-on-light"
+                style={{ display: 'block', height: 32, width: 'auto' }}
+              />
+            )}
+          </Link>
+        )}
 
-        {/* Center — full wordmark slides in past the first fold */}
-        <Link
-          href="/"
-          aria-label="Aura — home"
-          className="no-underline nav-wordmark"
-          style={{
-            justifySelf: 'center',
-            color: 'var(--text)',
-            display: 'inline-flex',
-            alignItems: 'center',
-            opacity: showLogo ? 1 : 0,
-            transform: showLogo ? 'translateY(0)' : 'translateY(-12px)',
-            transition: 'opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out)',
-            pointerEvents: showLogo ? 'auto' : 'none',
-          }}
-        >
-          <LogoEmblem size={92} />
-        </Link>
-
-        {/* Right — hamburger on every page EXCEPT the unlisted /mudigere
-            briefing, which swaps it for a "Get in touch" mailto chip so
-            architects landing there have a single, obvious next step
-            (and the hidden journal menu stays hidden for that audience). */}
-        {pathname === '/mudigere' ? (
-          /* Plain text link — reuses the existing `.label` typography
-             token (DM Mono · 11 px · 1 px tracking · uppercase) so the
-             nav CTA reads as part of the kit, not a bespoke chip. Sits
-             flush at the right gutter edge (margin-right: 0; the right
-             gutter is provided by the nav's own padding on mobile). */
-          <a
-            href="mailto:hello@theaura.life?subject=Mudigere%20estate%20visit"
-            className="no-underline label mudigere-nav-cta"
+        {/* Center — full wordmark slides in past the first fold.
+            Absolutely positioned at viewport centre rather than
+            grid-centred so the wordmark stays on the true horizontal
+            midline even when the left / right grid cells have
+            different content widths (e.g. on /mudigere-estate where
+            the right-side "Contact us" label is wider than the left
+            logo emblem). The translate composes vertical centre +
+            the showLogo entry slide. */}
+        {/* On /mudigere-estate the wordmark also drops its link —
+            the architect should have no nav-driven escape from the
+            briefing; the Contact us button is the only exit. */}
+        {pathname === '/mudigere-estate' ? (
+          <span
+            aria-label="Aura"
+            className="nav-wordmark"
             style={{
-              justifySelf: 'end',
-              marginRight: 0,
-              paddingRight: 'var(--gutter)',
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
               color: 'var(--text)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              opacity: showLogo ? 1 : 0,
+              transform: showLogo
+                ? 'translate(-50%, -50%)'
+                : 'translate(-50%, calc(-50% - 12px))',
+              transition: 'opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out)',
+              pointerEvents: 'none',
+            }}
+          >
+            <LogoEmblem size={92} />
+          </span>
+        ) : (
+          <Link
+            href="/"
+            aria-label="Aura — home"
+            className="no-underline nav-wordmark"
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              color: 'var(--text)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              opacity: showLogo ? 1 : 0,
+              transform: showLogo
+                ? 'translate(-50%, -50%)'
+                : 'translate(-50%, calc(-50% - 12px))',
+              transition: 'opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out)',
+              pointerEvents: showLogo ? 'auto' : 'none',
+            }}
+          >
+            <LogoEmblem size={92} />
+          </Link>
+        )}
+
+        {/* Right — hamburger on every page EXCEPT the unlisted
+            /mudigere-estate briefing, which swaps it for a "Contact
+            us" mailto chip so architects landing there have a single,
+            obvious next step (and the hidden journal menu stays
+            hidden for that audience). */}
+        {pathname === '/mudigere-estate' ? (
+          /* Plain text button — reuses the existing `.label`
+             typography token (DM Mono · 11 px · 1 px tracking ·
+             uppercase) so the nav CTA reads as part of the kit, not
+             a bespoke chip. Sits flush at the right gutter edge.
+             Opens the ContactModal (mounted at the end of the
+             component tree) instead of routing to /contact, so the
+             architect stays on the briefing while writing. */
+          <button
+            type="button"
+            onClick={() => setContactOpen(true)}
+            className="label mudigere-nav-cta"
+            style={{
+              /* Pin to col 3 explicitly: the wordmark moved to
+                 `position: absolute` so it no longer occupies col 2,
+                 and a button placed second in the DOM would otherwise
+                 auto-flow into col 2. */
+              gridColumnStart: 3,
+              justifySelf: 'end',
+              marginRight: 'var(--gutter)',
+              padding: 0,
+              color: 'var(--text)',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
               whiteSpace: 'nowrap',
+              textAlign: 'right',
             }}
           >
             Contact us
-          </a>
+          </button>
         ) : (
           <button
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -1207,6 +1281,15 @@ export default function Navbar() {
           backdropFilter: 'blur(28px) saturate(1.05)',
           WebkitBackdropFilter: 'blur(28px) saturate(1.05)',
         }}
+      />
+
+      {/* Contact modal — opened by the /mudigere-estate "Contact us"
+          button. Mounted here so it's a sibling of the nav and lives
+          above the page-vignette (z-index 100 vs 40). */}
+      <ContactModal
+        open={contactOpen}
+        onClose={() => setContactOpen(false)}
+        defaultTopic="general"
       />
     </>
   )

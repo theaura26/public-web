@@ -24,7 +24,7 @@ export default function robots(): MetadataRoute.Robots {
         '/vedic',
         /* Unlisted briefing page. Reachable only by direct URL —
            keep it out of search indexes and AI crawlers. */
-        '/mudigere',
+        '/mudigere-estate',
       ],
     }],
     sitemap: 'https://theaura.life/sitemap.xml',

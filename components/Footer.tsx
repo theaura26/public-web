@@ -48,7 +48,7 @@ export default function Footer() {
           </div>
           <div>
             <p className="label" style={{ marginBottom: 'var(--space-3)' }}>Contact</p>
-            <a href="/contact" className="p1">hello@theaura.life</a>
+            <a href="mailto:hello@theaura.life" className="p1">hello@theaura.life</a>
           </div>
           <div>
             <p className="label" style={{ marginBottom: 'var(--space-3)' }}>Follow us</p>

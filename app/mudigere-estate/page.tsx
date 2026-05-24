@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   OneCol,
   TwoCol,
@@ -25,7 +25,7 @@ import Reveal from '@/components/RevealOnScroll'
    .studios-title, .studios-title__letters, .label) plus a
    scroll handler. */
 
-/* /mudigere — private briefing for architects and landscape designers.
+/* /mudigere-estate — private briefing for architects and landscape designers.
    Built entirely from the journal kit (JournalHero, OneCol, TwoCol,
    Placeholder, DataGrid, DataCard, PullQuote, ScrollHighlight, Term)
    and the kit's typography tokens. No bespoke components. Light mode
@@ -38,6 +38,10 @@ export default function MudigerePage() {
   const heroWrapRef = useRef<HTMLDivElement>(null)
   const heroVideoRef = useRef<HTMLVideoElement>(null)
   const heroMapRef = useRef<HTMLImageElement>(null)
+  /* Inline YouTube walkthrough — starts as a still (panorama
+     poster + play button), swaps to the actual YouTube embed on
+     click. No scroll-driven blur, no autoplay-with-sound. */
+  const [walkthroughPlaying, setWalkthroughPlaying] = useState(false)
 
   /* Scroll-driven crossfade for the hero stage. Wrapper is 200 vh,
      sticky stage is 100 vh — so we have one full viewport of scroll
@@ -78,12 +82,17 @@ export default function MudigerePage() {
 
   return (
     <>
-      {/* Hide the back link the kit injects by default — /mudigere is
+      {/* Hide the back link the kit injects by default — /mudigere-estate is
           reached by direct invitation, not from another journal, so the
           affordance has nowhere meaningful to return to. One-line CSS
           override; no new component. */}
       <style jsx global>{`
         .hero-banner-back { display: none !important; }
+        .mud-walk__play:hover {
+          background: rgba(0, 0, 0, 0.55) !important;
+          border-color: #ffffff !important;
+          transform: translate(-50%, -50%) scale(1.04) !important;
+        }
       `}</style>
 
       {/* ── Hero crossfade ───────────────────────────────────
@@ -181,10 +190,12 @@ export default function MudigerePage() {
             }}
           />
 
-          {/* Title overlay — white ink, mix-blend-difference so it
-              inverts cleanly against the dark video AND the light
-              beige map. Uses the existing `.section-w` rail + the
-              `.studios-title` letter-spread typography. */}
+          {/* Title overlay + sub-caption — white ink, mix-blend-
+              difference so they invert cleanly against the dark
+              video AND the light beige map. Title uses the existing
+              `.section-w` rail + `.studios-title` letter-spread
+              typography; the sub-caption sits directly beneath it,
+              centred, in the kit's `.label` token. */}
           <div
             style={{
               position: 'absolute',
@@ -212,30 +223,20 @@ export default function MudigerePage() {
                 </span>
                 <span className="studios-title__plain">Mudigere</span>
               </h1>
+              <p
+                className="label mud-hero__caption"
+                style={{
+                  margin: 'clamp(20px, 3vh, 40px) 0 0',
+                  textAlign: 'center',
+                  color: 'inherit',
+                  letterSpacing: '1px',
+                  lineHeight: 1.5,
+                }}
+              >
+                Sampigelkhan Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
+              </p>
             </div>
           </div>
-
-          {/* Caption — bottom-left, `.label` typography token, also
-              mix-blend-difference so it stays legible whether the
-              backdrop is the dark video or the cream estate plan. */}
-          <p
-            className="label mud-hero__caption"
-            style={{
-              position: 'absolute',
-              left: 'clamp(20px, 4vw, 48px)',
-              bottom: 'clamp(20px, 4vh, 48px)',
-              margin: 0,
-              maxWidth: 'min(560px, 80vw)',
-              color: '#ffffff',
-              mixBlendMode: 'difference',
-              letterSpacing: '1px',
-              lineHeight: 1.5,
-              zIndex: 4,
-              pointerEvents: 'none',
-            }}
-          >
-            Sampigelkhan Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
-          </p>
 
           {/* Download PDF — centered along the bottom of the banner.
               Pill chip with a soft backdrop blur + 1px border so it
@@ -274,11 +275,10 @@ export default function MudigerePage() {
         </div>
       </section>
 
-      {/* Caption + CTA share the bottom rail of the hero, so both
-          shrink on narrower viewports to stay clear of each other.
-          Phone-narrow drops the caption entirely so the title + CTA
-          carry the hero alone (the full subtitle is still in the DOM
-          for agent-mode / screen readers). */}
+      {/* Hover lift on the centred Download chip + a smaller pad on
+          phones so the chip sits inside the gutter. Caption is now
+          stacked under the title (in flow), so it no longer needs the
+          collision-avoidance rules its bottom-left version did. */}
       <style jsx global>{`
         .mud-hero__download:hover {
           background: rgba(0, 0, 0, 0.55);
@@ -287,16 +287,8 @@ export default function MudigerePage() {
              hover doesn't snap off-centre. */
           transform: translate(-50%, -1px);
         }
-        @media (max-width: 900px) {
-          /* Reserve ~250 px for the CTA chip on the right so the
-             caption doesn't extend into its column. */
-          .mud-hero__caption {
-            max-width: calc(100vw - 280px) !important;
-          }
-        }
         @media (max-width: 600px) {
           .mud-hero__caption {
-            max-width: calc(100vw - 220px) !important;
             font-size: 10px !important;
             line-height: 1.45 !important;
           }
@@ -304,13 +296,6 @@ export default function MudigerePage() {
             padding: 10px 14px !important;
             font-size: 10px !important;
             gap: 8px !important;
-          }
-        }
-        @media (max-width: 480px) {
-          /* Phone-narrow: drop the caption so the title + CTA carry
-             the hero alone. */
-          .mud-hero__caption {
-            display: none !important;
           }
         }
       `}</style>
@@ -355,9 +340,14 @@ export default function MudigerePage() {
                 background: 'var(--bg-elev, #f4f4f4)',
               }}
             >
+              {/* Place-name embed — lets Google's geocoder resolve
+                  the actual estate location rather than a hand-
+                  typed coordinate (the previous pb URL was pinning
+                  slightly off). `?output=embed` is the no-API-key
+                  embed form Google still serves for place queries. */}
               <iframe
-                title="Mudigere Estate — 13.1365° N · 75.6403° E"
-                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d62449.83!2d75.6403!3d13.1365!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDA4JzExLjQiTiA3NcKwMzgnMjUuMSJF!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                title="Sampigelkhan Estate — Mudigere, Karnataka"
+                src="https://maps.google.com/maps?q=Sampigelkhan+Estate+Mudigere+Chikmagalur+Karnataka&z=12&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
@@ -378,10 +368,10 @@ export default function MudigerePage() {
               }}
             >
               <p className="label" style={{ margin: 0 }}>
-                13.1365° N · 75.6403° E · Chikmagalur district, Karnataka
+                Sampigelkhan Estate · Mudigere · Chikmagalur district, Karnataka
               </p>
               <a
-                href="https://www.google.com/maps/search/?api=1&amp;query=13.1365,75.6403"
+                href="https://www.google.com/maps/search/?api=1&amp;query=Sampigelkhan+Estate+Mudigere+Chikmagalur+Karnataka"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="label"
@@ -407,14 +397,94 @@ export default function MudigerePage() {
         </DataGrid>
       </TwoCol>
 
-      {/* Big-image stack — the panorama as its own editorial moment.
-          The hero already carries the aerial video, so the still here
-          earns its own breath. */}
-      <Placeholder
-        src="/journals/land/aura-mudigere-panorama.jpg"
-        alt="Mudigere mountains rising over the Western Ghats — Sampigelkhan Estate"
-        caption="Mudigere · Western Ghats · Karnataka"
-      />
+      {/* Walkthrough — panorama still with a centred play button
+          that swaps in the YouTube embed on click. Plain section-w
+          composition (no ExpandingBanner, no scroll-driven blur) so
+          the still reads sharp and the play affordance is obvious.
+          The .label caption beneath uses the kit's typography. */}
+      <section style={{ padding: 'var(--section-gap) 0' }}>
+        <div className="section-w">
+          <Reveal>
+            <div
+              style={{
+                position: 'relative',
+                width: '100%',
+                aspectRatio: '16 / 9',
+                borderRadius: 'var(--radius-1)',
+                overflow: 'hidden',
+                background: '#000',
+              }}
+            >
+              {walkthroughPlaying ? (
+                <iframe
+                  title="Mudigere Estate — walkthrough"
+                  src="https://www.youtube-nocookie.com/embed/bFTZUfn4D0A?autoplay=1&rel=0&modestbranding=1&playsinline=1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0, display: 'block' }}
+                />
+              ) : (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/journals/land/aura-mudigere-panorama.jpg"
+                    alt="Mudigere mountains rising over the Western Ghats — Sampigelkhan Estate"
+                    loading="lazy"
+                    decoding="async"
+                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                  {/* 18 % tint so the play pill reads as the focal
+                      point of the frame instead of competing with
+                      the mountain silhouette. */}
+                  <div
+                    aria-hidden
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'rgba(0, 0, 0, 0.18)',
+                      pointerEvents: 'none',
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setWalkthroughPlaying(true)}
+                    aria-label="Play the estate walkthrough"
+                    className="mud-walk__play"
+                    style={{
+                      position: 'absolute',
+                      left: '50%',
+                      top: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: 'clamp(72px, 9vw, 104px)',
+                      height: 'clamp(72px, 9vw, 104px)',
+                      borderRadius: '50%',
+                      border: '1px solid rgba(255, 255, 255, 0.85)',
+                      background: 'rgba(0, 0, 0, 0.35)',
+                      backdropFilter: 'blur(8px) saturate(1.1)',
+                      WebkitBackdropFilter: 'blur(8px) saturate(1.1)',
+                      color: '#ffffff',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: 0,
+                      transition:
+                        'background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease)',
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" width={26} height={26} aria-hidden style={{ marginLeft: 4 }}>
+                      <path d="M8 5v14l11-7z" fill="currentColor" />
+                    </svg>
+                  </button>
+                </>
+              )}
+            </div>
+            <p className="label" style={{ marginTop: 'var(--space-4)' }}>
+              The walkthrough · Sampigelkhan Estate
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
       {/* The technical drawing reads better as a downloadable artefact
           than as a heavy-blurred editorial moment — handed off to the
@@ -700,14 +770,6 @@ export default function MudigerePage() {
           </DataGrid>
         </div>
       </section>
-
-      <Placeholder
-        src="/aura-land.mp4"
-        mediaType="video"
-        poster="/journals/land/aura-the-land.jpg"
-        alt="Mid-morning walk along the upper ridge"
-        caption="The upper ridge — where the architecture probably wants to land"
-      />
 
       <OneCol id="pillars" heading="What we are building toward.">
         <p className="p1">

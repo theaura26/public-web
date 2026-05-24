@@ -173,7 +173,9 @@ export default function ContactModal({
           animation: 'contact-modal-rise 0.3s var(--ease)',
         }}
       >
-        {/* Close X */}
+        {/* Close — two-line X, same recipe the navbar / menu-close
+            button uses (22 × 1.5 px lines rotated to form the
+            cross). Matches the kit's existing close gesture. */}
         <button
           type="button"
           aria-label="Close"
@@ -182,20 +184,22 @@ export default function ContactModal({
             position: 'absolute',
             top: 16,
             right: 16,
-            width: 36,
-            height: 36,
+            width: 44,
+            height: 44,
+            padding: 0,
             background: 'transparent',
             border: 'none',
             color: 'var(--text)',
             cursor: 'pointer',
             display: 'inline-flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: 18,
-            lineHeight: 1,
+            gap: 6,
           }}
         >
-          ×
+          <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor', transform: 'translateY(3.75px) rotate(45deg)' }} />
+          <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor', transform: 'translateY(-3.75px) rotate(-45deg)' }} />
         </button>
 
         <h2 id="contact-modal-title" style={{ marginTop: 0, marginBottom: 'var(--space-3)' }}>

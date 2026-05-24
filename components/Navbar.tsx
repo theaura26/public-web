@@ -345,20 +345,39 @@ export default function Navbar() {
           boxShadow: '0 1px 0 0 var(--bg)',
         }}
       >
-        {/* Left — rotating symbol (centred in the 10vw rail) */}
-        <Link href="/" className="no-underline" style={{ color: 'var(--text)', justifySelf: 'center', display: 'inline-flex', alignItems: 'center' }}>
-          {isAgent ? (
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14 }}>~/aura</span>
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src="/aura-animated.svg"
-              alt="Aura"
-              className="invert-on-light"
-              style={{ display: 'block', height: 32, width: 'auto' }}
-            />
-          )}
-        </Link>
+        {/* Left — rotating symbol (centred in the 10vw rail). On
+            /mudigere-estate the architect's briefing is meant to be
+            a closed loop — no clickable home affordance, so the
+            symbol renders as a plain span instead of a Link. */}
+        {pathname === '/mudigere-estate' ? (
+          <span style={{ color: 'var(--text)', justifySelf: 'center', display: 'inline-flex', alignItems: 'center' }} aria-label="Aura">
+            {isAgent ? (
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14 }}>~/aura</span>
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src="/aura-animated.svg"
+                alt="Aura"
+                className="invert-on-light"
+                style={{ display: 'block', height: 32, width: 'auto' }}
+              />
+            )}
+          </span>
+        ) : (
+          <Link href="/" className="no-underline" style={{ color: 'var(--text)', justifySelf: 'center', display: 'inline-flex', alignItems: 'center' }}>
+            {isAgent ? (
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14 }}>~/aura</span>
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src="/aura-animated.svg"
+                alt="Aura"
+                className="invert-on-light"
+                style={{ display: 'block', height: 32, width: 'auto' }}
+              />
+            )}
+          </Link>
+        )}
 
         {/* Center — full wordmark slides in past the first fold.
             Absolutely positioned at viewport centre rather than
@@ -368,27 +387,53 @@ export default function Navbar() {
             the right-side "Contact us" label is wider than the left
             logo emblem). The translate composes vertical centre +
             the showLogo entry slide. */}
-        <Link
-          href="/"
-          aria-label="Aura — home"
-          className="no-underline nav-wordmark"
-          style={{
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            color: 'var(--text)',
-            display: 'inline-flex',
-            alignItems: 'center',
-            opacity: showLogo ? 1 : 0,
-            transform: showLogo
-              ? 'translate(-50%, -50%)'
-              : 'translate(-50%, calc(-50% - 12px))',
-            transition: 'opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out)',
-            pointerEvents: showLogo ? 'auto' : 'none',
-          }}
-        >
-          <LogoEmblem size={92} />
-        </Link>
+        {/* On /mudigere-estate the wordmark also drops its link —
+            the architect should have no nav-driven escape from the
+            briefing; the Contact us button is the only exit. */}
+        {pathname === '/mudigere-estate' ? (
+          <span
+            aria-label="Aura"
+            className="nav-wordmark"
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              color: 'var(--text)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              opacity: showLogo ? 1 : 0,
+              transform: showLogo
+                ? 'translate(-50%, -50%)'
+                : 'translate(-50%, calc(-50% - 12px))',
+              transition: 'opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out)',
+              pointerEvents: 'none',
+            }}
+          >
+            <LogoEmblem size={92} />
+          </span>
+        ) : (
+          <Link
+            href="/"
+            aria-label="Aura — home"
+            className="no-underline nav-wordmark"
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              color: 'var(--text)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              opacity: showLogo ? 1 : 0,
+              transform: showLogo
+                ? 'translate(-50%, -50%)'
+                : 'translate(-50%, calc(-50% - 12px))',
+              transition: 'opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out)',
+              pointerEvents: showLogo ? 'auto' : 'none',
+            }}
+          >
+            <LogoEmblem size={92} />
+          </Link>
+        )}
 
         {/* Right — hamburger on every page EXCEPT the unlisted
             /mudigere-estate briefing, which swaps it for a "Contact

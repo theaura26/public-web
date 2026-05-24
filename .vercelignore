@@ -1,6 +1,9 @@
 info/
 Info/
 *.pdf
+# Re-allow public PDFs (e.g. /mudigere-estate-map.pdf is a published
+# download artefact, not internal brief material).
+!public/*.pdf
 
 # Build artifacts + deps — recreated by the platform build.
 .next

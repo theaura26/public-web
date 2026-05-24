@@ -331,9 +331,14 @@ export default function MudigerePage() {
                 background: 'var(--bg-elev, #f4f4f4)',
               }}
             >
+              {/* Place-name embed — lets Google's geocoder resolve
+                  the actual estate location rather than a hand-
+                  typed coordinate (the previous pb URL was pinning
+                  slightly off). `?output=embed` is the no-API-key
+                  embed form Google still serves for place queries. */}
               <iframe
-                title="Mudigere Estate — 13.1365° N · 75.6403° E"
-                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d62449.83!2d75.6403!3d13.1365!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDA4JzExLjQiTiA3NcKwMzgnMjUuMSJF!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                title="Sampigelkhan Estate — Mudigere, Karnataka"
+                src="https://maps.google.com/maps?q=Sampigelkhan+Estate+Mudigere+Chikmagalur+Karnataka&z=12&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
@@ -354,10 +359,10 @@ export default function MudigerePage() {
               }}
             >
               <p className="label" style={{ margin: 0 }}>
-                13.1365° N · 75.6403° E · Chikmagalur district, Karnataka
+                Sampigelkhan Estate · Mudigere · Chikmagalur district, Karnataka
               </p>
               <a
-                href="https://www.google.com/maps/search/?api=1&amp;query=13.1365,75.6403"
+                href="https://www.google.com/maps/search/?api=1&amp;query=Sampigelkhan+Estate+Mudigere+Chikmagalur+Karnataka"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="label"
@@ -722,6 +727,41 @@ export default function MudigerePage() {
           are adaptive.
         </p>
       </OneCol>
+
+      {/* YouTube walkthrough — the full estate film, embedded so
+          the architect can preview the land before committing to a
+          visit. youtube-nocookie domain so no tracking, click-to-play
+          (no autoplay) so it doesn't fight the rest of the page's
+          ambient motion. Sits inside the .section-w gutter rail and
+          uses the .label caption typography. */}
+      <section style={{ padding: 'var(--section-gap) 0' }}>
+        <div className="section-w">
+          <Reveal>
+            <div
+              style={{
+                width: '100%',
+                aspectRatio: '16 / 9',
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--radius-1)',
+                overflow: 'hidden',
+                background: '#000',
+              }}
+            >
+              <iframe
+                title="Mudigere Estate — walkthrough"
+                src="https://www.youtube-nocookie.com/embed/bFTZUfn4D0A?rel=0&modestbranding=1&playsinline=1"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+                style={{ width: '100%', height: '100%', border: 0, display: 'block' }}
+              />
+            </div>
+            <p className="label" style={{ marginTop: 'var(--space-4)' }}>
+              The walkthrough · roughly 4 minutes
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
       <ScrollHighlight>
         {`The land sets the brief.

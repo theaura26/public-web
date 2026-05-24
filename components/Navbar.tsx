@@ -408,6 +408,11 @@ export default function Navbar() {
             onClick={() => setContactOpen(true)}
             className="label mudigere-nav-cta"
             style={{
+              /* Pin to col 3 explicitly: the wordmark moved to
+                 `position: absolute` so it no longer occupies col 2,
+                 and a button placed second in the DOM would otherwise
+                 auto-flow into col 2. */
+              gridColumnStart: 3,
               justifySelf: 'end',
               marginRight: 'var(--gutter)',
               padding: 0,

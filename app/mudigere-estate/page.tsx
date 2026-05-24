@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   OneCol,
   TwoCol,
@@ -38,6 +38,10 @@ export default function MudigerePage() {
   const heroWrapRef = useRef<HTMLDivElement>(null)
   const heroVideoRef = useRef<HTMLVideoElement>(null)
   const heroMapRef = useRef<HTMLImageElement>(null)
+  /* Inline YouTube walkthrough — starts as a still (panorama
+     poster + play button), swaps to the actual YouTube embed on
+     click. No scroll-driven blur, no autoplay-with-sound. */
+  const [walkthroughPlaying, setWalkthroughPlaying] = useState(false)
 
   /* Scroll-driven crossfade for the hero stage. Wrapper is 200 vh,
      sticky stage is 100 vh — so we have one full viewport of scroll
@@ -84,6 +88,11 @@ export default function MudigerePage() {
           override; no new component. */}
       <style jsx global>{`
         .hero-banner-back { display: none !important; }
+        .mud-walk__play:hover {
+          background: rgba(0, 0, 0, 0.55) !important;
+          border-color: #ffffff !important;
+          transform: translate(-50%, -50%) scale(1.04) !important;
+        }
       `}</style>
 
       {/* ── Hero crossfade ───────────────────────────────────
@@ -388,14 +397,94 @@ export default function MudigerePage() {
         </DataGrid>
       </TwoCol>
 
-      {/* Big-image stack — the panorama as its own editorial moment.
-          The hero already carries the aerial video, so the still here
-          earns its own breath. */}
-      <Placeholder
-        src="/journals/land/aura-mudigere-panorama.jpg"
-        alt="Mudigere mountains rising over the Western Ghats — Sampigelkhan Estate"
-        caption="Mudigere · Western Ghats · Karnataka"
-      />
+      {/* Walkthrough — panorama still with a centred play button
+          that swaps in the YouTube embed on click. Plain section-w
+          composition (no ExpandingBanner, no scroll-driven blur) so
+          the still reads sharp and the play affordance is obvious.
+          The .label caption beneath uses the kit's typography. */}
+      <section style={{ padding: 'var(--section-gap) 0' }}>
+        <div className="section-w">
+          <Reveal>
+            <div
+              style={{
+                position: 'relative',
+                width: '100%',
+                aspectRatio: '16 / 9',
+                borderRadius: 'var(--radius-1)',
+                overflow: 'hidden',
+                background: '#000',
+              }}
+            >
+              {walkthroughPlaying ? (
+                <iframe
+                  title="Mudigere Estate — walkthrough"
+                  src="https://www.youtube-nocookie.com/embed/bFTZUfn4D0A?autoplay=1&rel=0&modestbranding=1&playsinline=1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0, display: 'block' }}
+                />
+              ) : (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/journals/land/aura-mudigere-panorama.jpg"
+                    alt="Mudigere mountains rising over the Western Ghats — Sampigelkhan Estate"
+                    loading="lazy"
+                    decoding="async"
+                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                  {/* 18 % tint so the play pill reads as the focal
+                      point of the frame instead of competing with
+                      the mountain silhouette. */}
+                  <div
+                    aria-hidden
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'rgba(0, 0, 0, 0.18)',
+                      pointerEvents: 'none',
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setWalkthroughPlaying(true)}
+                    aria-label="Play the estate walkthrough"
+                    className="mud-walk__play"
+                    style={{
+                      position: 'absolute',
+                      left: '50%',
+                      top: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: 'clamp(72px, 9vw, 104px)',
+                      height: 'clamp(72px, 9vw, 104px)',
+                      borderRadius: '50%',
+                      border: '1px solid rgba(255, 255, 255, 0.85)',
+                      background: 'rgba(0, 0, 0, 0.35)',
+                      backdropFilter: 'blur(8px) saturate(1.1)',
+                      WebkitBackdropFilter: 'blur(8px) saturate(1.1)',
+                      color: '#ffffff',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: 0,
+                      transition:
+                        'background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease)',
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" width={26} height={26} aria-hidden style={{ marginLeft: 4 }}>
+                      <path d="M8 5v14l11-7z" fill="currentColor" />
+                    </svg>
+                  </button>
+                </>
+              )}
+            </div>
+            <p className="label" style={{ marginTop: 'var(--space-4)' }}>
+              The walkthrough · Sampigelkhan Estate
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
       {/* The technical drawing reads better as a downloadable artefact
           than as a heavy-blurred editorial moment — handed off to the
@@ -727,41 +816,6 @@ export default function MudigerePage() {
           are adaptive.
         </p>
       </OneCol>
-
-      {/* YouTube walkthrough — the full estate film, embedded so
-          the architect can preview the land before committing to a
-          visit. youtube-nocookie domain so no tracking, click-to-play
-          (no autoplay) so it doesn't fight the rest of the page's
-          ambient motion. Sits inside the .section-w gutter rail and
-          uses the .label caption typography. */}
-      <section style={{ padding: 'var(--section-gap) 0' }}>
-        <div className="section-w">
-          <Reveal>
-            <div
-              style={{
-                width: '100%',
-                aspectRatio: '16 / 9',
-                border: '1px solid var(--border)',
-                borderRadius: 'var(--radius-1)',
-                overflow: 'hidden',
-                background: '#000',
-              }}
-            >
-              <iframe
-                title="Mudigere Estate — walkthrough"
-                src="https://www.youtube-nocookie.com/embed/bFTZUfn4D0A?rel=0&modestbranding=1&playsinline=1"
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
-                style={{ width: '100%', height: '100%', border: 0, display: 'block' }}
-              />
-            </div>
-            <p className="label" style={{ marginTop: 'var(--space-4)' }}>
-              The walkthrough · roughly 4 minutes
-            </p>
-          </Reveal>
-        </div>
-      </section>
 
       <ScrollHighlight>
         {`The land sets the brief.

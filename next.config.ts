@@ -1,14 +1,14 @@
 import type { NextConfig } from "next";
-import path from "node:path";
 
 const nextConfig: NextConfig = {
-  /* Pin Turbopack to this project's directory. Without this, Next infers
-     the workspace root from the nearest lockfile and picks the wrong one
-     (~/package-lock.json), throwing a warning on every dev start and
-     potentially confusing the file watcher. */
-  turbopack: {
-    root: path.resolve(__dirname),
-  },
+  /* Note: previous versions pinned `turbopack: { root: path.resolve(__dirname) }`
+     to silence a workspace-root warning during local `next dev`. But
+     `__dirname` is a CommonJS global — undefined in Vercel's ESM
+     module loader — and `path.resolve(undefined)` throws, which is
+     exactly what's been failing every prod deploy since PR #16. The
+     fix lives in PR #13 (and is being re-applied here). If the
+     workspace-root warning returns and starts mattering, swap to
+     ESM-safe `path.dirname(fileURLToPath(import.meta.url))`. */
   /* Hide the floating "N" dev indicator that Next.js renders in the
      bottom-left during `next dev`. It overlaps the navbar/back link and
      adds a backdrop blur that distorts the corner of the layout while

@@ -190,9 +190,10 @@ export function HeroBanner({
   }, [])
 
   // Back arrow is anchored to the top of the hero — same viewport-Y
-  // position on every journal regardless of hero variant. White ink
-  // with mix-blend-difference inverts the colour cleanly against any
-  // image (dark text on light photos, light text on dark photos).
+  // position on every journal regardless of hero variant. Solid white
+  // ink (no mix-blend-difference) so it always reads white instead of
+  // inverting to black on light photos. A subtle text-shadow keeps it
+  // legible against pale highlights.
   const backLink = (
     <Link
       href="/"
@@ -213,7 +214,7 @@ export function HeroBanner({
         letterSpacing: '1.5px',
         textTransform: 'uppercase',
         textDecoration: 'none',
-        mixBlendMode: 'difference',
+        textShadow: '0 1px 8px rgba(0, 0, 0, 0.45)',
       }}
     >
       <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
@@ -345,9 +346,13 @@ export function HeroBanner({
         </div>
       )}
 
-      {/* Caption pinned bottom-left, on top of the photo. Ink colour
-          picks white or black based on the bottom-left luminance of
-          the image, so it stays legible on any banner. */}
+      {/* Caption pinned bottom-left, on top of the photo. Always white —
+          the bottom-left corner vignette (hero-banner-vignette) plus the
+          text-shadow guarantees legibility against pale photo regions
+          without the dynamic ink colour swap that used to flip to black.
+          The bannerInk hook still runs and computes the bottom-left
+          luminance — left in place for any future caller that wants the
+          adaptive variant — but no consumer reads it now. */}
       {caption && src && (
         <p
           className="label hero-banner-caption"
@@ -357,11 +362,11 @@ export function HeroBanner({
             bottom: 'clamp(20px, 4vh, 48px)',
             margin: 0,
             maxWidth: 'min(240px, 60vw)',
-            color: bannerInk.bottomLeft,
+            color: '#ffffff',
             letterSpacing: '1px',
             lineHeight: 1.5,
             zIndex: 2,
-            transition: 'color var(--dur-fast) var(--ease)',
+            textShadow: '0 1px 12px rgba(0, 0, 0, 0.45)',
           }}
         >
           {caption}
@@ -521,7 +526,7 @@ export function JournalHero({
           letterSpacing: '1.5px',
           textTransform: 'uppercase',
           textDecoration: 'none',
-          mixBlendMode: 'difference',
+          textShadow: '0 1px 8px rgba(0, 0, 0, 0.45)',
         }}
       >
         <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>

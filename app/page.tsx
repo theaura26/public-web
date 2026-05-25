@@ -7,7 +7,6 @@ import { ScrollHighlight } from '@/components/article/Article'
 import { ExpandingBanner } from '@/components/ExpandingBanner'
 import { LogoEmblem } from '@/components/Logo'
 import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun, CloudMoon } from '@phosphor-icons/react'
-import 'plyr/dist/plyr.css'
 
 /* ═══════════════════════════════════════════
    LIVE WEATHER — Open-Meteo (free, no key)
@@ -62,7 +61,7 @@ function useWeather(lat: number, lon: number): WeatherData | null {
    300vh wrapper → sticky 100vh stage → scroll controls blur + copy
 ═══════════════════════════════════════════ */
 
-function HeroVideo({ onWatch }: { onWatch: () => void }) {
+function HeroVideo() {
   const wrapRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -623,117 +622,6 @@ function LocationDataGrid({ location, coords, altitude, tempRange, avgHumidity, 
       </div>
       {children}
     </div>
-  )
-}
-
-/* ═══ AURA FILM ═══
-   Full-bleed video modal. Plyr provides a minimalist control bar that
-   auto-hides on idle. Theming overrides Plyr's default blue accent so it
-   reads in the Aura monochrome language. */
-function AuraVideoModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const playerRef = useRef<any>(null)
-
-  // Ref callback fires the moment the <video> element mounts inside the
-  // modal — guaranteed to run after the inner LocationModal has rendered.
-  // A plain useEffect on the parent fires before that child render commits,
-  // so the video ref would still be null.
-  const videoCallback = useCallback((node: HTMLVideoElement | null) => {
-    if (!node) {
-      // Element unmounting — tear down the player.
-      if (playerRef.current) {
-        try { playerRef.current.destroy() } catch {}
-        playerRef.current = null
-      }
-      return
-    }
-    /* Don't try to autoplay with sound — modern browsers block it even
-       after a user gesture once an async boundary (Plyr's dynamic import)
-       separates the click from the play(). Instead the big-play overlay
-       sits centred on the first frame; one tap starts playback with
-       sound, no surprise muting. */
-    let cancelled = false
-    ;(async () => {
-      const PlyrMod = await import('plyr')
-      if (cancelled) return
-      const p = new PlyrMod.default(node, {
-        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'fullscreen'],
-        hideControls: true,
-        autoplay: false,
-        clickToPlay: true,
-        keyboard: { focused: true, global: true },
-        ratio: '16:9',
-        tooltips: { controls: false, seek: true },
-      })
-      playerRef.current = p
-    })()
-  }, [])
-
-  return (
-    <LocationModal open={open} onClose={onClose} label="WATCH" bleed>
-      <div className="aura-film">
-        <video
-          ref={videoCallback}
-          playsInline
-          preload="auto"
-          aria-label="Aura — Enter the ecosystem film"
-        >
-          {/* The "Enter the ecosystem" film. Browsers pick the first source
-              they can decode — webm preferred on Chrome / Firefox (smaller),
-              mp4 fallback for Safari which doesn't support webm. */}
-          <source src="/aura-25.webm" type="video/webm" />
-          <source src="/aura-25.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <style jsx global>{`
-        /* Container fills the bleed area; Plyr handles the 16:9 ratio. */
-        .aura-film { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0; }
-        .aura-film .plyr { width: 100%; max-width: min(100vw, calc(100vh * 16 / 9)); }
-        .aura-film .plyr--video { background: #000; }
-
-        /* Minimalist theme — white accent, no blue, subtle gradient. */
-        .aura-film .plyr {
-          --plyr-color-main: #ffffff;
-          --plyr-video-control-color: #ffffff;
-          --plyr-video-control-color-hover: #ffffff;
-          --plyr-video-control-background-hover: rgba(255, 255, 255, 0.12);
-          --plyr-video-background: #000;
-          --plyr-control-icon-size: 16px;
-          --plyr-control-spacing: 14px;
-          --plyr-font-family: var(--font-mono);
-          --plyr-font-size-time: 12px;
-          --plyr-range-track-height: 2px;
-          --plyr-range-thumb-height: 10px;
-          --plyr-range-thumb-background: #ffffff;
-          --plyr-range-fill-background: #ffffff;
-          --plyr-range-thumb-shadow: none;
-          --plyr-tooltip-background: rgba(0, 0, 0, 0.7);
-          --plyr-tooltip-color: #ffffff;
-          --plyr-video-controls-background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0) 100%);
-        }
-        /* Hide chrome we don't want for a brand film. */
-        .aura-film .plyr__menu,
-        .aura-film .plyr__captions,
-        .aura-film .plyr__poster { display: none; }
-        /* Cursor follows the site convention — hide the system cursor inside the player. */
-        .aura-film .plyr,
-        /* Plyr controls — let the native arrow / pointer show through. */
-        /* Refine the big centered play button. */
-        .aura-film .plyr__control--overlaid {
-          background: rgba(0, 0, 0, 0.35);
-          border: 1px solid rgba(255, 255, 255, 0.7);
-          padding: 22px;
-          backdrop-filter: blur(4px);
-          transition: background var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
-        }
-        .aura-film .plyr__control--overlaid:hover {
-          background: rgba(0, 0, 0, 0.55);
-          border-color: #fff;
-        }
-        .aura-film .plyr__control--overlaid svg { width: 22px; height: 22px; }
-        /* Time text in DM Mono. */
-        .aura-film .plyr__time { font-family: var(--font-mono); letter-spacing: 0.04em; }
-      `}</style>
-    </LocationModal>
   )
 }
 
@@ -1541,9 +1429,6 @@ function SanctuaryStackPanel2Col({ left, right, z }: { left: Sanctuary; right: S
 export default function Home() {
   const [mudigereOpen, setMudigereOpen] = useState(false)
   const [oharaOpen, setOharaOpen] = useState(false)
-  const [filmOpen, setFilmOpen] = useState(false)
-  const closeFilm = useCallback(() => setFilmOpen(false), [])
-  const openFilm = useCallback(() => setFilmOpen(true), [])
 
   /* Sanctuary modals get a vanity URL: /mudigere or /ohara. We use
      history.pushState (not Next.js routing) so no real route is fetched —
@@ -1600,7 +1485,6 @@ export default function Home() {
     <div>
       <MudigereModal open={mudigereOpen} onClose={closeMudigere} />
       <OharaModal open={oharaOpen} onClose={closeOhara} />
-      <AuraVideoModal open={filmOpen} onClose={closeFilm} />
 
       {/* ═══ AGENT MODE — markdown-style plain text ═══ */}
       <AgentHomeView />
@@ -2043,7 +1927,7 @@ export default function Home() {
       </section>
 
       {/* Hero Video — scroll-driven blur reveal */}
-      <HeroVideo onWatch={openFilm} />
+      <HeroVideo />
 
       {/* Reason — one flowing h2 with Apple-style scroll-to-highlight.
           The three former pieces (manifesto · lead · ecosystem line) read as

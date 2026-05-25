@@ -633,14 +633,19 @@ p.journal-hero__caption {
   pointer-events: auto !important;
   transform: none !important;
 }
-/* HeroBanner back link — same deal: was absolute, mix-blend white.
-   Flow as a plain mono link before the title. */
-[data-view="agent"] main .hero-banner-back {
+/* Hero back link, all three variants (HeroBanner, JournalHero,
+   ArticleHero). Each has its own BEM class so the human-mode styles
+   can differ per parent (white-on-photo vs black-on-plate vs theme),
+   but agent mode treats them identically: flow as a plain mono link
+   before the title, no positioning, no shadow, no ink overrides. */
+[data-view="agent"] main .hero-banner__back,
+[data-view="agent"] main .journal-hero__back,
+[data-view="agent"] main .article-hero__back {
   position: static !important;
   display: inline-block !important;
   margin-bottom: 16px !important;
   color: var(--text) !important;
-  mix-blend-mode: normal !important;
+  text-shadow: none !important;
 }
 [data-view="agent"] main .journal-hero__title,
 [data-view="agent"] main .hero-banner-title,

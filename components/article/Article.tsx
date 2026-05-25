@@ -189,16 +189,16 @@ export function HeroBanner({
     }
   }, [])
 
-  // Back arrow is anchored to the top of the hero — same viewport-Y
-  // position on every journal regardless of hero variant. Solid white
-  // ink (no mix-blend-difference) so it always reads white instead of
-  // inverting to black on light photos. A subtle text-shadow keeps it
-  // legible against pale highlights.
+  // HeroBanner back link sits over a FULL-BLEED photo from the
+  // viewport top, so it needs solid white ink + a soft text-shadow
+  // for legibility against pale highlights. Distinct from the
+  // JournalHero variant (`.journal-hero__back`) which sits over a
+  // white title plate and inherits the theme text colour.
   const backLink = (
     <Link
       href="/"
       aria-label="Back"
-      className="hero-banner-back"
+      className="hero-banner__back"
       style={{
         position: 'absolute',
         top: 'calc(var(--nav-h, 56px) + var(--space-5))',
@@ -507,10 +507,17 @@ export function JournalHero({
 
   return (
     <header ref={headerRef} className="journal-hero">
+      {/* JournalHero back link sits on the WHITE title plate above the
+          image (not over the photo itself), so it inherits the theme
+          text colour and carries no shadow. Distinct class from the
+          HeroBanner variant (which sits over imagery and needs white +
+          text-shadow). Spacing matches the nav baseline: 24 px below
+          the 56 px nav, gutter-aligned with the page edge — same as
+          the HeroBanner and ArticleHero variants. */}
       <Link
         href={backHref}
         aria-label="Back"
-        className="hero-banner-back"
+        className="journal-hero__back"
         style={{
           position: 'absolute',
           top: 'calc(var(--nav-h, 56px) + var(--space-5))',
@@ -519,14 +526,13 @@ export function JournalHero({
           display: 'inline-flex',
           alignItems: 'center',
           gap: 8,
-          color: '#ffffff',
+          color: 'var(--text)',
           fontFamily: 'var(--font-mono)',
           fontSize: 11,
           fontWeight: 400,
           letterSpacing: '1.5px',
           textTransform: 'uppercase',
           textDecoration: 'none',
-          textShadow: '0 1px 8px rgba(0, 0, 0, 0.45)',
         }}
       >
         <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
@@ -698,14 +704,15 @@ export function ArticleHero({
   const hasRight = toc?.length || subline
   return (
     <section style={{ paddingTop: 'clamp(160px, 22vh, 260px)', paddingBottom: 'var(--space-9)', position: 'relative' }}>
-      {/* Back link — same affordance every journal hero carries. In
-          human mode it sits absolute at top-left under the nav; the
-          agent-mode `.hero-banner-back` rule flips it to static so it
+      {/* ArticleHero back link sits in a text-only hero (no image,
+          no plate) so it inherits the theme text colour and carries
+          no shadow. In human mode it's absolute at top-left under the
+          nav; the agent-mode rule below flips it to static so it
           flows above the title in the markdown view. */}
       <Link
         href={backHref}
         aria-label="Back"
-        className="hero-banner-back"
+        className="article-hero__back"
         style={{
           position: 'absolute',
           top: 'calc(var(--nav-h, 56px) + var(--space-5))',

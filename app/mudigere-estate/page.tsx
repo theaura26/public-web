@@ -42,6 +42,10 @@ export default function MudigerePage() {
      poster + play button), swaps to the actual YouTube embed on
      click. No scroll-driven blur, no autoplay-with-sound. */
   const [walkthroughPlaying, setWalkthroughPlaying] = useState(false)
+  /* Second YouTube — a longer-form film placed at the foot of the
+     page (between the Design Brief pillars and the ScrollHighlight),
+     same click-to-play pattern as the top walkthrough. */
+  const [filmPlaying, setFilmPlaying] = useState(false)
 
   /* Scroll-driven crossfade for the hero stage. Wrapper is 200 vh,
      sticky stage is 100 vh — so we have one full viewport of scroll
@@ -812,6 +816,92 @@ export default function MudigerePage() {
           are adaptive.
         </p>
       </OneCol>
+
+      {/* Foot-of-page film — second YouTube. Same click-to-play
+          pattern as the top walkthrough: sharp still + centred play
+          pill swaps in the embed (autoplay=1) on click. Poster is
+          YouTube's own maxres thumbnail so the frame matches the
+          actual film content rather than a generic estate still. */}
+      <section style={{ padding: 'var(--section-gap) 0' }}>
+        <div className="section-w">
+          <Reveal>
+            <div
+              style={{
+                position: 'relative',
+                width: '100%',
+                aspectRatio: '16 / 9',
+                borderRadius: 'var(--radius-1)',
+                overflow: 'hidden',
+                background: '#000',
+              }}
+            >
+              {filmPlaying ? (
+                <iframe
+                  title="Mudigere Estate — the film"
+                  src="https://www.youtube-nocookie.com/embed/NA-qtu8JljA?autoplay=1&rel=0&modestbranding=1&playsinline=1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0, display: 'block' }}
+                />
+              ) : (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://img.youtube.com/vi/NA-qtu8JljA/maxresdefault.jpg"
+                    alt="Mudigere Estate — the film"
+                    loading="lazy"
+                    decoding="async"
+                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                  <div
+                    aria-hidden
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'rgba(0, 0, 0, 0.18)',
+                      pointerEvents: 'none',
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setFilmPlaying(true)}
+                    aria-label="Play the estate film"
+                    className="mud-walk__play"
+                    style={{
+                      position: 'absolute',
+                      left: '50%',
+                      top: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: 'clamp(72px, 9vw, 104px)',
+                      height: 'clamp(72px, 9vw, 104px)',
+                      borderRadius: '50%',
+                      border: '1px solid rgba(255, 255, 255, 0.85)',
+                      background: 'rgba(0, 0, 0, 0.35)',
+                      backdropFilter: 'blur(8px) saturate(1.1)',
+                      WebkitBackdropFilter: 'blur(8px) saturate(1.1)',
+                      color: '#ffffff',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: 0,
+                      transition:
+                        'background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease)',
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" width={26} height={26} aria-hidden style={{ marginLeft: 4 }}>
+                      <path d="M8 5v14l11-7z" fill="currentColor" />
+                    </svg>
+                  </button>
+                </>
+              )}
+            </div>
+            <p className="label" style={{ marginTop: 'var(--space-4)' }}>
+              The film · Sampigelkhan Estate
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
       <ScrollHighlight>
         {`The land sets the brief.

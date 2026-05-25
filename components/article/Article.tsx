@@ -21,10 +21,31 @@
 ═══════════════════════════════════════════════════════════════════ */
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import Reveal from '@/components/RevealOnScroll'
 import { ExpandingBanner } from '@/components/ExpandingBanner'
 import { ACTIVE_JOURNALS, nextActiveJournals, type Journal } from '@/lib/journals'
+
+/* ── Shared "← Back" handler used by all three hero variants.
+   The visible <Link> still carries a real `href` (so right-click
+   "open in new tab", screen readers, no-JS fallback all behave),
+   but the onClick swaps in router.back() so the affordance reads
+   as a true browser-back instead of always routing to the kit's
+   default destination. The `href` becomes the fallback for the
+   case where the user direct-loaded the page (history length 1)
+   and pressing Back would otherwise leave them stranded. */
+function useBackOrFallback(fallbackHref: string) {
+  const router = useRouter()
+  return (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      router.back()
+    } else {
+      router.push(fallbackHref)
+    }
+  }
+}
 
 /* ── HeroBanner — display opener: a static, full-screen banner (100vw ×
       100vh, no scroll animation) with the page title overlaid as a single
@@ -189,16 +210,18 @@ export function HeroBanner({
     }
   }, [])
 
-  // Back arrow is anchored to the top of the hero — same viewport-Y
-  // position on every journal regardless of hero variant. Solid white
-  // ink (no mix-blend-difference) so it always reads white instead of
-  // inverting to black on light photos. A subtle text-shadow keeps it
-  // legible against pale highlights.
+  // HeroBanner back link sits over a FULL-BLEED photo from the
+  // viewport top, so it needs solid white ink + a soft text-shadow
+  // for legibility against pale highlights. Distinct from the
+  // JournalHero variant (`.journal-hero__back`) which sits over a
+  // white title plate and inherits the theme text colour.
+  const onBack = useBackOrFallback('/')
   const backLink = (
     <Link
       href="/"
       aria-label="Back"
-      className="hero-banner-back"
+      onClick={onBack}
+      className="hero-banner__back"
       style={{
         position: 'absolute',
         top: 'calc(var(--nav-h, 56px) + var(--space-5))',
@@ -465,6 +488,7 @@ export function JournalHero({
     if (journal) src = journal.img
   }
   const words = title.split(/\s+/).filter(Boolean)
+  const onBack = useBackOrFallback(backHref)
 
   // Scroll-driven blur on the banner — clear at first paint, blurs
   // and scales up to 1.1× as the reader scrolls past the hero. Same
@@ -507,10 +531,18 @@ export function JournalHero({
 
   return (
     <header ref={headerRef} className="journal-hero">
+      {/* JournalHero back link sits on the WHITE title plate above the
+          image (not over the photo itself), so it inherits the theme
+          text colour and carries no shadow. Distinct class from the
+          HeroBanner variant (which sits over imagery and needs white +
+          text-shadow). Spacing matches the nav baseline: 24 px below
+          the 56 px nav, gutter-aligned with the page edge — same as
+          the HeroBanner and ArticleHero variants. */}
       <Link
         href={backHref}
         aria-label="Back"
-        className="hero-banner-back"
+        onClick={onBack}
+        className="journal-hero__back"
         style={{
           position: 'absolute',
           top: 'calc(var(--nav-h, 56px) + var(--space-5))',
@@ -519,14 +551,13 @@ export function JournalHero({
           display: 'inline-flex',
           alignItems: 'center',
           gap: 8,
-          color: '#ffffff',
+          color: 'var(--text)',
           fontFamily: 'var(--font-mono)',
           fontSize: 11,
           fontWeight: 400,
           letterSpacing: '1.5px',
           textTransform: 'uppercase',
           textDecoration: 'none',
-          textShadow: '0 1px 8px rgba(0, 0, 0, 0.45)',
         }}
       >
         <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
@@ -696,16 +727,19 @@ export function ArticleHero({
   backHref?: string
 }) {
   const hasRight = toc?.length || subline
+  const onBack = useBackOrFallback(backHref)
   return (
     <section style={{ paddingTop: 'clamp(160px, 22vh, 260px)', paddingBottom: 'var(--space-9)', position: 'relative' }}>
-      {/* Back link — same affordance every journal hero carries. In
-          human mode it sits absolute at top-left under the nav; the
-          agent-mode `.hero-banner-back` rule flips it to static so it
+      {/* ArticleHero back link sits in a text-only hero (no image,
+          no plate) so it inherits the theme text colour and carries
+          no shadow. In human mode it's absolute at top-left under the
+          nav; the agent-mode rule below flips it to static so it
           flows above the title in the markdown view. */}
       <Link
         href={backHref}
         aria-label="Back"
-        className="hero-banner-back"
+        onClick={onBack}
+        className="article-hero__back"
         style={{
           position: 'absolute',
           top: 'calc(var(--nav-h, 56px) + var(--space-5))',

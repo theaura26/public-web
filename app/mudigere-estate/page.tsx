@@ -84,10 +84,14 @@ export default function MudigerePage() {
     <>
       {/* Hide the back link the kit injects by default — /mudigere-estate is
           reached by direct invitation, not from another journal, so the
-          affordance has nowhere meaningful to return to. One-line CSS
-          override; no new component. */}
+          affordance has nowhere meaningful to return to. Covers all three
+          hero-back variants (`.hero-banner__back`, `.journal-hero__back`,
+          `.article-hero__back`) so the rule survives whichever hero this
+          page composes with. */}
       <style jsx global>{`
-        .hero-banner-back { display: none !important; }
+        .hero-banner__back,
+        .journal-hero__back,
+        .article-hero__back { display: none !important; }
         .mud-walk__play:hover {
           background: rgba(0, 0, 0, 0.55) !important;
           border-color: #ffffff !important;

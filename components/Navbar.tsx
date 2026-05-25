@@ -484,6 +484,16 @@ export default function Navbar() {
             /* 44×44 hit area meets WCAG 2.5.8 minimum touch target. The visual
                ink (two 22px bars) sits centred inside the larger pad area. */
             style={{
+              /* Pin to col 3 explicitly. The center wordmark was moved
+                 to `position: absolute` in the mudigere-estate refactor,
+                 so it no longer occupies grid col 2 — and a button
+                 placed second in the DOM auto-flows into col 2 (the
+                 wide middle) instead of col 3 (the right rail). The
+                 /mudigere-estate Contact-us button already has this
+                 pin; the default hamburger needs it too. Without this
+                 the hamburger renders dead-centre of the viewport on
+                 every non-mudigere page. */
+              gridColumnStart: 3,
               justifySelf: 'center',
               background: 'none',
               border: 'none',

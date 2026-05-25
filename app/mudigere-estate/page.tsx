@@ -347,7 +347,7 @@ export default function MudigerePage() {
                   embed form Google still serves for place queries. */}
               <iframe
                 title="Sampigelkhan Estate — Mudigere, Karnataka"
-                src="https://maps.google.com/maps?q=Sampigelkhan+Estate+Mudigere+Chikmagalur+Karnataka&z=12&output=embed"
+                src="https://maps.google.com/maps?q=13.168594,75.433983&z=15&t=k&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
@@ -368,10 +368,10 @@ export default function MudigerePage() {
               }}
             >
               <p className="label" style={{ margin: 0 }}>
-                Sampigelkhan Estate · Mudigere · Chikmagalur district, Karnataka
+                13.168594° N · 75.433983° E · Chikmagalur district, Karnataka
               </p>
               <a
-                href="https://www.google.com/maps/search/?api=1&amp;query=Sampigelkhan+Estate+Mudigere+Chikmagalur+Karnataka"
+                href="https://www.google.com/maps/search/?api=1&amp;query=13.168594,75.433983"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="label"
@@ -392,7 +392,7 @@ export default function MudigerePage() {
           <DataCard value="14 – 30 °C">Year-round temperature.</DataCard>
           <DataCard value="52">Malnad Gidda cattle.</DataCard>
           <DataCard value="20 acres">Protected forest, eastern boundary.</DataCard>
-          <DataCard value="13.1365° · 75.6403°">Coordinates · N, E.</DataCard>
+          <DataCard value="13.1686° · 75.4340°">Coordinates · N, E.</DataCard>
           <DataCard value="UNESCO">Western Ghats biodiversity hotspot.</DataCard>
         </DataGrid>
       </TwoCol>

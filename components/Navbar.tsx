@@ -114,9 +114,14 @@ export default function Navbar() {
   // First open arms the tile-feed permanently. After the user has
   // opened the menu once, the heavy media is allowed to live in the
   // DOM so subsequent opens don't need to re-mount + re-fetch.
+  // (Disable the setState-in-effect lint here — this is a legit
+  // one-way arming flag, not a cascading render path.)
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { if (menuOpen) setHasOpenedMenu(true) }, [menuOpen])
 
-  // Close menu on route change
+  // Close menu on route change (legit external-state sync — pathname
+  // is the external system, the menu reacts to it).
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setMenuOpen(false) }, [pathname])
 
   // Lock body scroll while menu open

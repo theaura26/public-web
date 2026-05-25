@@ -841,12 +841,25 @@ export default function MudigerePage() {
                 />
               ) : (
                 <>
+                  {/* Poster: try YouTube's maxres thumbnail first
+                      (1280×720, present only on HD-uploaded videos);
+                      fall back to hqdefault (480×360, always present);
+                      final safety net is a local estate still so we
+                      NEVER ship a broken image even if YouTube's CDN
+                      is unreachable. */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="https://img.youtube.com/vi/NA-qtu8JljA/maxresdefault.jpg"
-                    alt="Mudigere Estate — the film"
+                    alt="The estate film — Sampigelkhan Estate, Mudigere"
                     loading="lazy"
                     decoding="async"
+                    onError={(e) => {
+                      const img = e.currentTarget
+                      const hq = 'https://img.youtube.com/vi/NA-qtu8JljA/hqdefault.jpg'
+                      const localFallback = '/journals/land/aura-mudigere-panorama.jpg'
+                      if (img.src.includes('maxresdefault')) img.src = hq
+                      else if (img.src.includes('hqdefault')) img.src = localFallback
+                    }}
                     style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   />
                   <div

@@ -1971,46 +1971,22 @@ The impact can be deep and complex, covering different facets of life, such as c
       {/* Operating System — full section-gap on both ends, matching the
           rhythm of every other top-level section on the page. */}
       <section style={{ padding: 'var(--section-gap) 0', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
-        {/* Logo + headline both anchored to the section-w gutter
-            (left edge) so they share a vertical guideline with the
-            pillar grid below — every block on this section starts at
-            the same X. The ScrollHighlight uses `align="left"` to
-            override the default centered-block behaviour it uses on
-            journal pages (where it must match OneCol). */}
-        <div className="section-w">
-          <Reveal>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/aura-os.svg"
-              alt="Aura OS"
-              className="invert-on-light"
-              style={{
-                display: 'block',
-                /* More breathing room ABOVE the wordmark — the section
-                   above closes with a video; the masthead needs an
-                   establishing pause before it lands. Below, the
-                   wordmark sits closer to "Natural Intelligence." so
-                   the lockup reads as a unit. */
-                marginTop: 'var(--space-9)',
-                marginBottom: 'var(--space-6)',
-                width: 'clamp(144px, 19.2vw, 256px)',
-                height: 'auto',
-              }}
-            />
-          </Reveal>
-        </div>
         {/* Operating-system intro — `align="left"` keeps the headline
             block flush with the pillar grid's left edge. Each line
             breaks at a sentence so the four principles stack as a
-            stanza. The leading letter of each principle is wrapped in
-            `*A*ttention.` etc. — the Belmonte cursive lifts the first
-            letter so the four lines spell out A·U·R·A down the column. */}
+            stanza. The four-principle list still spells out A·U·R·A
+            down the column (first letters), but no special
+            typographic treatment — all four read in the same
+            Bricolage grotesque the rest of the headline uses. The
+            small rock-crystal `/aura-os.svg` masthead that used to
+            sit above this section was removed to keep the lockup
+            tighter — the section title alone leads the block. */}
         <ScrollHighlight maxWidth={720} align="left">{`Natural Intelligence.
 The Aura Operating System brings together land, human craft, and modern technology into one living practice.
-*A*ttention.
-*U*nhurried.
-*R*ooted.
-*A*wake.`}</ScrollHighlight>
+Attention.
+Unhurried.
+Rooted.
+Awake.`}</ScrollHighlight>
         {/* Pillar grid mirrors ExpandingBanner's starting frame:
             48 px outer rail, then a 16/9-derived max-width that the
             inline banners use as their starting size. Without the

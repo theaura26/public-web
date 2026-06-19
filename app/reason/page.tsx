@@ -171,15 +171,14 @@ function BurstIn({ children, style }: { children: ReactNode; style?: CSSProperti
    the Figma box (prevents oversized wordmarks colliding with neighbours). */
 function Art({
   x, y, w, h, fit, pos = 'center', src, alt, anim = 'scale', dir = 'up', delay = 0,
-  priority = false, cls, imgStyle, life, mag,
+  priority = false, cls, imgStyle, life,
 }: {
   x: number; y: number; w: number; h?: number; fit?: 'contain'; pos?: string
   src: string; alt: string; anim?: Anim; dir?: Dir; delay?: number
   priority?: boolean; cls?: string; imgStyle?: CSSProperties
-  /* life = continuous ambient motion; mag = drift slightly toward the cursor.
-     Both render as transform-only wrapper layers that nest under the reveal
-     without fighting it (reveal → mag → life → img). */
-  life?: 'float' | 'breathe' | 'drift' | 'tilt'; mag?: boolean
+  /* life = continuous ambient motion — a transform-only wrapper layer that
+     nests under the reveal without fighting it (reveal → life → img). */
+  life?: 'float' | 'breathe' | 'drift' | 'tilt'
 }) {
   const img: CSSProperties = fit
     ? { width: '100%', height: '100%', objectFit: 'contain', objectPosition: pos, display: 'block', ...imgStyle }
@@ -187,7 +186,6 @@ function Art({
   let node: ReactNode = <img src={src} alt={alt} style={img}
     loading={priority ? 'eager' : 'lazy'} decoding="async" />
   if (life) node = <div className={`r-${life}`}>{node}</div>
-  if (mag) node = <div className="r-mag">{node}</div>
   return (
     <Abs x={x} y={y} w={w} h={fit ? h : undefined} anim={anim} dir={dir} delay={delay} className={cls}>
       {node}
@@ -357,18 +355,18 @@ export default function TheReasonPage() {
             the refusal (0.09) and wordmark (0.16) above it, for depth. r-sway lives on
             the inner div so its rotate doesn't fight the parallax transform. */}
         <div data-parallax="0.05" style={{ position: 'absolute', left: u(84), top: u(740), width: u(1560), height: u(1880) }}>
-          <div className="r-sway r-heroflowers" style={{ height: '100%' }}>
+          <div className="r-sway" style={{ height: '100%' }}>
             <img className="r-svg r-herofade" src={`${A}/aura-flowers-1.webp`} alt="" style={{ height: '100%', objectFit: 'contain', objectPosition: 'center top' }} loading="eager" decoding="async" />
           </div>
         </div>
         {/* THE REASON — letters reveal one by one, left to right (see ReasonWordmark) */}
         <div data-parallax="0.16" style={{ position: 'absolute', left: u(205), top: u(241), width: u(1319) }}>
-          <div className="r-mag"><ReasonWordmark src={`${A}/aura-thereason.svg`} className="r-svg" /></div>
+          <ReasonWordmark src={`${A}/aura-thereason.svg`} className="r-svg" />
         </div>
 
         {/* ── 02 · Opening — I am not (over flowers, slower parallax) ── */}
         <div data-parallax="0.09" style={{ position: 'absolute', left: u(587), top: u(1178), width: u(554) }}>
-          <ScaleIn><img className="r-svg r-iam" src={`${A}/aura-iam.svg`} alt="I am not a planter. I am not a biologist. I am not a scientist." loading="eager" decoding="async" /></ScaleIn>
+          <ScaleIn><img className="r-svg" src={`${A}/aura-iam.svg`} alt="I am not a planter. I am not a biologist. I am not a scientist." loading="eager" decoding="async" /></ScaleIn>
         </div>
 
         {/* ── 03 · Intro — Entrepreneur ── (sits clear below the flowers, centred in the gap above "But my way") */}
@@ -382,7 +380,7 @@ export default function TheReasonPage() {
 
         {/* ── 05 · What kind of world (dark) ── */}
         <T x={522} y={5150} w={685} fs={30} color="#ffffff">I have two boys. Very different from each other. Watching them grow, I stopped thinking in quarters and started thinking in generations.</T>
-        <Art x={332} y={5450} w={1065} src={`${A}/aura-whatkind.svg`} alt="What kind of world are they inheriting?" anim="wipe" mag />
+        <Art x={332} y={5450} w={1065} src={`${A}/aura-whatkind.svg`} alt="What kind of world are they inheriting?" anim="wipe" />
         <Abs x={789} y={5804} w={150} h={150} anim="fade" delay={0.05}>
           <img className="r-rotate" src={`${A}/aura-globe.png`} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} loading="lazy" decoding="async" />
         </Abs>
@@ -398,7 +396,7 @@ export default function TheReasonPage() {
         <T x={1310} y={7178} w={183} fs={30} align="right">Japan gave me the stillness.</T>
 
         {/* ── 07 · No orthodoxy (warm) ── (more breathing room above) */}
-        <Art x={340} y={7810} w={1047} src={`${A}/aura-whenyoucarry.webp`} alt="When you carry no orthodoxy, the land will answer your questions honestly." anim="wipe" mag />
+        <Art x={340} y={7810} w={1047} src={`${A}/aura-whenyoucarry.webp`} alt="When you carry no orthodoxy, the land will answer your questions honestly." anim="wipe" />
         <Art x={745} y={8510} w={238} src={`${A}/aura-symbol-main.svg`} alt="" anim="scale" delay={0.1} life="breathe" />
         <T x={698} y={8830} w={333} fs={30}>It answered mine.</T>
         <T x={698} y={9010} w={333} fs={30}>What is Aura?</T>
@@ -419,7 +417,7 @@ export default function TheReasonPage() {
                 radiating outward, with a gradual opacity fade layered on. */}
             <BurstIn style={{ transformOrigin: 'center 56%' }}>
               <div className="r-tilt" style={{ transformOrigin: 'center 56%' }}>
-                <img className="r-svg r-starburst" src={`${A}/aura-aboutus.png`} alt="A constellation of Aura's disciplines — plantation, biodynamic, coffee, sanctuary, agroculture, artistry, hospitality, design — radiating from one centre." style={{ transform: 'scale(1.3)', transformOrigin: 'center 56%' }} loading="lazy" decoding="async" />
+                <img className="r-svg" src={`${A}/aura-aboutus.png`} alt="A constellation of Aura's disciplines — plantation, biodynamic, coffee, sanctuary, agroculture, artistry, hospitality, design — radiating from one centre." style={{ transform: 'scale(1.3)', transformOrigin: 'center 56%' }} loading="lazy" decoding="async" />
               </div>
             </BurstIn>
           </div>
@@ -427,7 +425,7 @@ export default function TheReasonPage() {
         <Abs x={359} y={9500} w={1009} anim="none">
           <div className="r-para" style={{ ['--para' as string]: '72px' } as CSSProperties}>
             <FadeUp>
-              <img className="r-svg r-whereland" src={`${A}/aura-whereland.svg`} alt="Where land becomes a framework for how to live generationally." style={{ filter: 'drop-shadow(0 2px 16px rgba(240,237,232,0.9))' }} loading="lazy" decoding="async" />
+              <img className="r-svg" src={`${A}/aura-whereland.svg`} alt="Where land becomes a framework for how to live generationally." style={{ filter: 'drop-shadow(0 2px 16px rgba(240,237,232,0.9))' }} loading="lazy" decoding="async" />
             </FadeUp>
           </div>
         </Abs>
@@ -437,17 +435,17 @@ export default function TheReasonPage() {
         <T x={414} y={11100} w={900} fs={50} font="bric" lh={1.15} delay={0.1}>Attention was the original technology. We just stopped using it.</T>
 
         {/* ── 10 · Why now (dark) ── (centred in the uniform black band) */}
-        <Art x={322} y={11760} w={1083} src={`${A}/aura-whynow.svg`} alt="Why now? AI will make intelligence abundant. Wisdom is what runs out." anim="wipe" mag />
+        <Art x={322} y={11760} w={1083} src={`${A}/aura-whynow.svg`} alt="Why now? AI will make intelligence abundant. Wisdom is what runs out." anim="wipe" />
 
         {/* ── 11 · RTA — the rhythm we lost ── */}
-        <Art x={471} y={12977} w={786} src={`${A}/aura-rta.svg`} alt="Ṛta — the rhythm we lost. We were once aligned with the rhythm of things. Aura is an attempt to return." anim="wipe" life="float" mag />
+        <Art x={471} y={12977} w={786} src={`${A}/aura-rta.svg`} alt="Ṛta — the rhythm we lost. We were once aligned with the rhythm of things. Aura is an attempt to return." anim="wipe" life="float" />
 
         {/* ── 12 · Three intelligences ── */}
         <T x={698} y={14130} w={333} fs={30} color="#f3a300">Not faster, but right.</T>
         <T x={559} y={14240} w={610} fs={30} lh={1.45} delay={0.05}>There are three intelligences. Machine. Human. And the oldest one — Natural Intelligence.</T>
 
         {/* ── 13 · Natural Intelligence ── (bigger; consistent gaps above/below) */}
-        <Art x={24} y={14450} w={1680} src={`${A}/aura-frame68.png`} alt="Natural Intelligence" anim="wipe" mag />
+        <Art x={24} y={14450} w={1680} src={`${A}/aura-frame68.png`} alt="Natural Intelligence" anim="wipe" />
         <T x={404} y={15260} w={920} fs={50} font="bric" lh={1.2} delay={0.1}>The land has been computing longer than any machine. We just stopped reading the output.</T>
 
         {/* ── 14 · The Three Pillars ── */}
@@ -466,18 +464,18 @@ export default function TheReasonPage() {
         <T x={484} y={17683} w={760} fs={30} font="hand" delay={0.1}>A rhythm you enter — and leave differently than you arrived.</T>
 
         {/* ── 16 · Six rules ── */}
-        <Art x={341} y={18280} w={1046} src={`${A}/aura-sixrules.webp`} alt="Six rules: 1 Soil comes first. 2 Do small work properly. 3 No shortcuts. 4 Quality before quantity. 5 Think ten years ahead. 6 Leaders must be on the field." anim="wipe" mag />
+        <Art x={341} y={18280} w={1046} src={`${A}/aura-sixrules.webp`} alt="Six rules: 1 Soil comes first. 2 Do small work properly. 3 No shortcuts. 4 Quality before quantity. 5 Think ten years ahead. 6 Leaders must be on the field." anim="wipe" />
 
         {/* ── 17 · Monastic Polymath (dark) ── notes left-aligned to the wordmark;
                top note's bottom sits just above the wordmark top */}
         <T x={314} y={19510} w={320} fs={24} lh={1.45} align="left" font="serif" color="#ffffff" dir="right">The designer who farms. The engineer who meditates. The farmer who reads philosophy.</T>
         <Art x={1255} y={19420} w={160} src={`${A}/aura-fingerprint.svg`} alt="" anim="scale" delay={0.05} life="breathe" />
-        <Art x={314} y={19690} w={1100} src={`${A}/aura-monasticpolymaths.svg`} alt="Monastic Polymath" anim="wipe" mag />
+        <Art x={314} y={19690} w={1100} src={`${A}/aura-monasticpolymaths.svg`} alt="Monastic Polymath" anim="wipe" />
         <T x={314} y={20047} w={320} fs={24} lh={1.45} align="left" font="serif" color="#ffffff">Aura was built for people who never fit one description.</T>
 
         {/* ── 18 · The Balance ── */}
         <Abs x={245} y={20715} w={1217} anim="none">
-          <div className="r-mag"><div className="r-float"><ReasonWordmark src={`${A}/aura-balance.svg`} className="r-svg" ariaLabel="The Balance" /></div></div>
+          <div className="r-float"><ReasonWordmark src={`${A}/aura-balance.svg`} className="r-svg" ariaLabel="The Balance" /></div>
         </Abs>
         <T x={319} y={21280} w={1090} fs={50} font="bric" lh={1.2} delay={0.1}>We build spaces that reward patience. Some things just need to be the way they are. Not optimised. Not scaled. Not disrupted. Just tended — until they become what they were always meant to become.</T>
 

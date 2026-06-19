@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Bricolage_Grotesque, Instrument_Serif, DM_Sans, DM_Mono, Pixelify_Sans } from 'next/font/google'
+import { Bricolage_Grotesque, Instrument_Serif, DM_Sans, DM_Mono, Pixelify_Sans, Mynerve } from 'next/font/google'
 import './globals.css'
 import ClientLayout from './client-layout'
 
@@ -33,6 +33,14 @@ const dmMono = DM_Mono({
 const pixelifySans = Pixelify_Sans({
   subsets: ['latin'],
   variable: '--font-pixel',
+  display: 'swap',
+})
+
+/* Handwritten narration voice — used by /the-reason. */
+const mynerve = Mynerve({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-hand',
   display: 'swap',
 })
 
@@ -93,7 +101,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${instrumentSerif.variable} ${dmSans.variable} ${dmMono.variable} ${pixelifySans.variable}`}>
+    <html lang="en" className={`${bricolage.variable} ${instrumentSerif.variable} ${dmSans.variable} ${dmMono.variable} ${pixelifySans.variable} ${mynerve.variable}`}>
       <body>
         <ClientLayout>{children}</ClientLayout>
       </body>

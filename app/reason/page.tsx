@@ -355,7 +355,7 @@ export default function TheReasonPage() {
             the refusal (0.09) and wordmark (0.16) above it, for depth. r-sway lives on
             the inner div so its rotate doesn't fight the parallax transform. */}
         <div data-parallax="0.05" style={{ position: 'absolute', left: u(84), top: u(740), width: u(1560), height: u(1880) }}>
-          <div className="r-sway" style={{ height: '100%' }}>
+          <div className="r-sway r-heroflowers" style={{ height: '100%' }}>
             <img className="r-svg r-herofade" src={`${A}/aura-flowers-1.webp`} alt="" style={{ height: '100%', objectFit: 'contain', objectPosition: 'center top' }} loading="eager" decoding="async" />
           </div>
         </div>
@@ -366,7 +366,7 @@ export default function TheReasonPage() {
 
         {/* ── 02 · Opening — I am not (over flowers, slower parallax) ── */}
         <div data-parallax="0.09" style={{ position: 'absolute', left: u(587), top: u(1178), width: u(554) }}>
-          <ScaleIn><img className="r-svg" src={`${A}/aura-iam.svg`} alt="I am not a planter. I am not a biologist. I am not a scientist." loading="eager" decoding="async" /></ScaleIn>
+          <ScaleIn><img className="r-svg r-iam" src={`${A}/aura-iam.svg`} alt="I am not a planter. I am not a biologist. I am not a scientist." loading="eager" decoding="async" /></ScaleIn>
         </div>
 
         {/* ── 03 · Intro — Entrepreneur ── (sits clear below the flowers, centred in the gap above "But my way") */}
@@ -417,7 +417,7 @@ export default function TheReasonPage() {
                 radiating outward, with a gradual opacity fade layered on. */}
             <BurstIn style={{ transformOrigin: 'center 56%' }}>
               <div className="r-tilt" style={{ transformOrigin: 'center 56%' }}>
-                <img className="r-svg" src={`${A}/aura-aboutus.png`} alt="A constellation of Aura's disciplines — plantation, biodynamic, coffee, sanctuary, agroculture, artistry, hospitality, design — radiating from one centre." style={{ transform: 'scale(1.3)', transformOrigin: 'center 56%' }} loading="lazy" decoding="async" />
+                <img className="r-svg r-starburst" src={`${A}/aura-aboutus.png`} alt="A constellation of Aura's disciplines — plantation, biodynamic, coffee, sanctuary, agroculture, artistry, hospitality, design — radiating from one centre." style={{ transform: 'scale(1.3)', transformOrigin: 'center 56%' }} loading="lazy" decoding="async" />
               </div>
             </BurstIn>
           </div>
@@ -425,7 +425,7 @@ export default function TheReasonPage() {
         <Abs x={359} y={9500} w={1009} anim="none">
           <div className="r-para" style={{ ['--para' as string]: '72px' } as CSSProperties}>
             <FadeUp>
-              <img className="r-svg" src={`${A}/aura-whereland.svg`} alt="Where land becomes a framework for how to live generationally." style={{ filter: 'drop-shadow(0 2px 16px rgba(240,237,232,0.9))' }} loading="lazy" decoding="async" />
+              <img className="r-svg r-whereland" src={`${A}/aura-whereland.svg`} alt="Where land becomes a framework for how to live generationally." style={{ filter: 'drop-shadow(0 2px 16px rgba(240,237,232,0.9))' }} loading="lazy" decoding="async" />
             </FadeUp>
           </div>
         </Abs>

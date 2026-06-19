@@ -1717,6 +1717,12 @@ body:has(.reason) .page-vignette { display: none !important; }
 @keyframes r-herofadeKf { from { opacity: 0; } to { opacity: 0.96; } }
 .r-herofade { animation: r-herofadeKf 1.4s var(--ease-out) both; }
 @media (prefers-reduced-motion: reduce) { .r-herofade { animation: none; opacity: 0.96; } }
+/* hover the "I am not…" TEXT (not the flowers themselves) → dim the flowers to
+   ~60% (the inner img rests at 0.96 from the fade-in, so 0.625 × 0.96 ≈ 0.6).
+   The dim lives on the sway wrapper so it doesn't fight the fade-in animation. */
+.r-heroflowers { transition: opacity 0.4s ease; }
+.reason-stage:has(.r-iam:hover) .r-heroflowers { opacity: 0.625; }
+
 /* ═══ Ambient life — per-fold continuous motion ═══
    Keeps something alive in every fold. All transform-only on dedicated
    wrapper layers, so they nest cleanly inside the reveal (FadeUp/ScaleIn)
@@ -1735,6 +1741,11 @@ body:has(.reason) .page-vignette { display: none !important; }
 .r-delay-1 { animation-delay: -1.6s; }
 .r-delay-2 { animation-delay: -3.2s; }
 .r-delay-3 { animation-delay: -4.8s; }
+
+/* disciplines starburst — dims to 60% when the "Where land…" TEXT is hovered
+   (not the starburst bg), so the overlay reads cleaner over it. */
+.r-starburst { transition: opacity 0.4s ease; }
+.reason-stage:has(.r-whereland:hover) .r-starburst { opacity: 0.6; }
 
 @media (prefers-reduced-motion: reduce) {
   .r-float, .r-breathe, .r-drift, .r-tilt { animation: none !important; }
@@ -1907,6 +1918,10 @@ html.lenis, html.lenis body { height: auto; }
    ease-in-out over a longer beat, so the constellation truly fades in. */
 .rm-disc.rm-fadein { transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
 .rm-whereland { position: absolute; width: 84%; filter: drop-shadow(0 2px 14px rgba(240,237,232,0.95)); }
+/* hover the overlay text → constellation behind it eases to 70% so the text reads cleaner */
+.rm-disc:has(.rm-whereland:hover) .rm-art { opacity: 0.7; }
+/* hero: hover the "i am not a planter…" SVG → the flowers behind ease to 70% */
+.rm-hero-stack:has(.rm-iam:hover) .rm-hero-flowers { opacity: 0.7; }
 .rm-hero-flowers { transition: opacity 0.3s ease; }
 
 /* pillars */

@@ -1559,3 +1559,388 @@ section.one-col + section.one-col {
   .reveal { opacity: 1; transform: none; }
   .hero-anim { opacity: 1 !important; transform: none !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   /the-reason — art-directed desktop comp (faithful to Figma 4111:3402)
+   ─────────────────────────────────────────────────────────────────────
+   Fixed-canvas technique: the Figma board is 1728px wide. We reproduce it
+   1:1 and scale fluidly with the viewport through ONE unit var, --u (= one
+   design pixel). Every position/size/type value is expressed in --u, so the
+   composition stays pixel-faithful and crisp at any width up to 1728px, then
+   caps and centres. NO day/night mode — palette is fixed and scoped here.
+   Mobile gets a dedicated flow pass later (desktop first).
+   ═══════════════════════════════════════════════════════════════════════ */
+.reason {
+  --r-paper: #ffffff;
+  --r-warm: #f0ede8;
+  --r-ink: #0e0e0c;
+  --r-black: #000000;
+  --r-blue: #2a57e6;
+  --r-red: #e8451c;
+  --r-yellow: #f3a300;
+  --r-green: #1f6b4b;
+  background: var(--r-paper);
+  color: var(--r-ink);
+  position: relative;
+  width: 100%;
+  overflow-x: clip;
+  /* Whole-page background colour is driven by scroll position (see the bg
+     effect in page.tsx); this eases the white ⇄ black ⇄ warm transitions. */
+  transition: background-color 0.6s ease;
+}
+.reason ::selection { background: rgba(42, 87, 230, 0.22); }
+
+/* The scaled stage. --s = realized width (caps at the 1728 design width on
+   wider screens); --u = one design pixel. */
+.reason-stage {
+  --s: min(100vw, 1728px);
+  --u: calc(var(--s) / 1728);
+  position: relative;
+  width: var(--s);
+  height: calc(23035 * var(--u));
+  margin: 0 auto;
+}
+
+/* Font roles — only these three are live text; all display type is SVG. */
+.r-hand  { font-family: var(--font-hand), 'Comic Sans MS', cursive; font-weight: 400; }
+.r-serif { font-family: var(--font-serif), Georgia, serif; font-weight: 400; } /* Instrument Serif — one serif across the page */
+.r-serifLight { font-family: var(--font-serif), Georgia, serif; font-weight: 400; } /* Instrument Serif — light, non-bold */
+.r-bric  { font-family: var(--font-grotesque), system-ui, sans-serif; font-weight: 700; text-transform: uppercase; }
+
+/* "Focus-in" reveal (rendered via anim="wipe" / the WipeIn component, kept the
+   class name to avoid churn): the wordmark rises a touch and sharpens from a
+   soft blur as it scrolls into view — it "comes into focus." Replaced the old
+   left→right clip wipe. Transition lives on .is-in so the hidden state snaps
+   and only the reveal animates. */
+.r-wipe-in { opacity: 0; transform: translateY(18px); filter: blur(8px); }
+.r-wipe-in.is-in {
+  opacity: 1; transform: translateY(0); filter: blur(0);
+  transition: opacity 0.9s var(--ease-out), transform 1.05s var(--ease-out), filter 0.9s var(--ease-out);
+}
+[data-view="agent"] .r-wipe-in { opacity: 1 !important; transform: none !important; filter: none !important; }
+@media (prefers-reduced-motion: reduce) { .r-wipe-in { opacity: 1; transform: none; filter: none; } }
+
+/* Slow continuous rotation (the moon). */
+@keyframes r-rotateKf { to { transform: rotate(360deg); } }
+.r-rotate { will-change: transform; }
+@media (prefers-reduced-motion: no-preference) { .r-rotate { animation: r-rotateKf 48s linear infinite; } }
+
+/* Background blocks. */
+.r-bgwarm  { position: absolute; left: 0; width: 100%; background: var(--r-warm); }
+.r-bgblack { position: absolute; background: var(--r-black); }
+.r-ellipse { position: absolute; background: var(--r-black); border-radius: 50%; }
+
+/* Media. */
+.r-svg   { display: block; width: 100%; height: auto; }
+.r-photo { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* ── Performance ──
+   1) The global bottom vignette uses a fixed backdrop-filter blur that
+      re-rasterises every scroll frame — brutal on a 20k-px page. Drop it
+      while THE REASON is mounted.
+   2) Skip painting off-screen blocks. Stage height is fixed, so collapsing
+      off-screen children never shifts scroll position. */
+body:has(.reason) .page-vignette { display: none !important; }
+.reason-stage > * {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 260px;
+}
+
+/* ── Text-first reveal ──
+   Foreground type is shown immediately; the background visual unveils
+   behind it as the block scrolls through the viewport. Compositor-driven
+   via scroll-timeline (no JS); falls back to simply visible. */
+.r-unveil { opacity: 1; }
+@keyframes r-unveilKf {
+  from { opacity: 0; transform: translateY(calc(24 * var(--u))) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+@supports (animation-timeline: view()) {
+  .r-unveil {
+    opacity: 0;
+    animation: r-unveilKf linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 72%;
+  }
+}
+[data-view="agent"] .r-unveil { opacity: 1 !important; animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .r-unveil { opacity: 1 !important; animation: none !important; } }
+
+/* ── Dark interstitials fade the background to black ──
+   Instead of a hard edge, the black block fades in as the section enters and
+   back out as it leaves, so the page transitions into/out of black on scroll.
+   Compositor-driven via scroll-timeline; solid black where unsupported. */
+@keyframes r-bgfadeKf {
+  0%   { opacity: 0; }
+  18%  { opacity: 1; }
+  82%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+@supports (animation-timeline: view()) {
+  .r-fade {
+    opacity: 0;
+    animation: r-bgfadeKf linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+[data-view="agent"] .r-fade { opacity: 1 !important; animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .r-fade { opacity: 1 !important; animation: none !important; } }
+
+/* ── Line-by-line type reveal (Noomo-style) ──
+   Each wrapped line is clip-masked; its inner rises in with a stagger. */
+.rl { display: block; }
+.rl-line { display: block; overflow: hidden; padding: 0.14em 0; margin: -0.14em 0; }
+.rl-inner {
+  display: block;
+  transform: translateY(115%);
+  opacity: 0;
+  transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform;
+}
+.rl.is-in .rl-inner { transform: none; opacity: 1; }
+.rl, .rl-line, .rl-inner { text-align: inherit; }
+[data-view="agent"] .rl-inner { transform: none !important; opacity: 1 !important; }
+@media (prefers-reduced-motion: reduce) { .rl-inner { transform: none !important; opacity: 1 !important; } }
+
+/* ── Life-like flower sway ── (gentle breeze, anchored at the stem base) */
+@keyframes r-swayKf {
+  0%   { transform: rotate(-1.4deg); }
+  100% { transform: rotate(1.4deg); }
+}
+.r-sway { transform-origin: 50% 100%; will-change: transform; }
+@media (prefers-reduced-motion: no-preference) {
+  .r-sway { animation: r-swayKf 7s ease-in-out infinite alternate; }
+}
+
+/* desktop hero flowers — a one-shot opacity fade on load so the backdrop
+   eases in with the wordmark rather than snapping in fully formed. Opacity
+   only, so it never fights the parallax/sway transforms layered on top. */
+@keyframes r-herofadeKf { from { opacity: 0; } to { opacity: 0.96; } }
+.r-herofade { animation: r-herofadeKf 1.4s var(--ease-out) both; }
+@media (prefers-reduced-motion: reduce) { .r-herofade { animation: none; opacity: 0.96; } }
+/* hover the "I am not…" TEXT (not the flowers themselves) → dim the flowers to
+   ~60% (the inner img rests at 0.96 from the fade-in, so 0.625 × 0.96 ≈ 0.6).
+   The dim lives on the sway wrapper so it doesn't fight the fade-in animation. */
+.r-heroflowers { transition: opacity 0.4s ease; }
+.reason-stage:has(.r-iam:hover) .r-heroflowers { opacity: 0.625; }
+
+/* ═══ Ambient life — per-fold continuous motion ═══
+   Keeps something alive in every fold. All transform-only on dedicated
+   wrapper layers, so they nest cleanly inside the reveal (FadeUp/ScaleIn)
+   and parallax transforms above them. */
+
+/* continuous ambient motions — one gets dropped into each fold */
+@keyframes r-floatKf   { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+@keyframes r-breatheKf { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.025); } }
+@keyframes r-driftKf   { 0% { transform: translate(0,0) rotate(0); } 33% { transform: translate(5px,-4px) rotate(0.4deg); } 66% { transform: translate(-4px,3px) rotate(-0.4deg); } 100% { transform: translate(0,0) rotate(0); } }
+@keyframes r-tiltKf    { 0%, 100% { transform: rotate(-0.8deg); } 50% { transform: rotate(0.8deg); } }
+.r-float   { animation: r-floatKf 6.5s ease-in-out infinite; will-change: transform; }
+.r-breathe { animation: r-breatheKf 5.5s ease-in-out infinite; will-change: transform; }
+.r-drift   { animation: r-driftKf 12s ease-in-out infinite; will-change: transform; }
+.r-tilt    { animation: r-tiltKf 7.5s ease-in-out infinite; transform-origin: 50% 80%; will-change: transform; }
+/* small stagger so neighbours don't pulse in lockstep */
+.r-delay-1 { animation-delay: -1.6s; }
+.r-delay-2 { animation-delay: -3.2s; }
+.r-delay-3 { animation-delay: -4.8s; }
+
+/* disciplines starburst — dims to 60% when the "Where land…" TEXT is hovered
+   (not the starburst bg), so the overlay reads cleaner over it. */
+.r-starburst { transition: opacity 0.4s ease; }
+.reason-stage:has(.r-whereland:hover) .r-starburst { opacity: 0.6; }
+
+@media (prefers-reduced-motion: reduce) {
+  .r-float, .r-breathe, .r-drift, .r-tilt { animation: none !important; }
+}
+
+/* Mid-page parallax via CSS scroll-timeline — position-based, so it works
+   with Lenis (which doesn't emit native scroll events). Travel = ±var(--para)
+   over the element's pass through the viewport; different --para = different
+   speeds for layered depth. */
+@keyframes r-paraKf {
+  from { transform: translate3d(0, var(--para, 50px), 0); }
+  to   { transform: translate3d(0, calc(var(--para, 50px) * -1), 0); }
+}
+.r-para { will-change: transform; }
+@media (prefers-reduced-motion: no-preference) {
+  .r-para { animation: r-paraKf linear both; animation-timeline: view(); animation-range: cover; }
+}
+
+/* ── Lenis smooth scroll (mounted only on /the-reason) ── */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+
+/* ═══ Agent mode + reduced motion: linearise the absolute stage ═══ */
+[data-view="agent"] .reason { background: var(--bg) !important; color: var(--text) !important; }
+[data-view="agent"] .reason-stage {
+  height: auto !important; width: 100% !important;
+  display: flex; flex-direction: column; gap: 18px;
+}
+[data-view="agent"] .reason-stage > * {
+  position: static !important; left: auto !important; top: auto !important;
+  width: 100% !important; height: auto !important;
+  content-visibility: visible !important; contain-intrinsic-size: auto !important;
+}
+[data-view="agent"] .reason-stage .r-bgwarm,
+[data-view="agent"] .reason-stage .r-bgblack,
+[data-view="agent"] .reason-stage .r-ellipse { display: none !important; }
+[data-view="agent"] .reason-stage img { max-width: 360px; height: auto !important; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   /the-reason — MOBILE (single-column flow, <=760px)
+   Desktop absolute comp is hidden; this flow layout follows the Figma
+   mobile proportions (4149:3557). Fluid vw type, stacked sections,
+   full-bleed dark beats.
+   ═══════════════════════════════════════════════════════════════════════ */
+.rm { display: none; }
+@media (max-width: 900px) {
+  .reason-stage { display: none !important; }
+  .rm { display: block; }
+}
+.rm {
+  position: relative;
+  width: 100%;
+  background: #fff;
+  color: #0e0e0c;
+  overflow-x: clip;
+}
+.rm-art { display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto; }
+/* photos crop to a tall portrait banner (same cover-crop as desktop's Photo box) */
+.rm-photo { display: block; width: 100%; height: 100%; object-fit: cover; aspect-ratio: 537 / 690; margin-left: auto; margin-right: auto; }
+.rm-sec {
+  padding: 16vw 7vw;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: 7vw;
+}
+.rm-warm { background: #f0ede8; }
+.rm-dark { background: #000; color: #fff; min-height: 88vh; justify-content: center; }
+.rm-dark .rm-hand, .rm-dark .rm-serif, .rm-dark .rm-serifLight { color: #fff; }
+/* what-kind: the black ground rises as a dome into the paper above it */
+/* dark-curve — wider-than-viewport curved black ground; the curve is gentle
+   (50% radius, 14vw vertical sweep) and the section overflows past the
+   gutters so the arc reads as a long, calm horizon rather than a small dome.
+   sits well below the flower bases (margin-top pushes it down) so the
+   flowers stand clear, with only their stems entering the dark behind. */
+.rm-dark-curve { position: relative; z-index: 2; width: 130vw; max-width: 130vw; margin-left: -15vw; margin-right: -15vw; border-top-left-radius: 50% 14vw; border-top-right-radius: 50% 14vw; margin-top: 10vw; padding-top: 18vw; padding-left: 15vw; padding-right: 15vw; }
+/* what-kind: give the handwriting confession real breathing room before the
+   "what kind of world" wordmark — the pause amplifies the question.
+   RT wraps the <p> in an animation div, so target the wrapper directly */
+.rm-dark-curve > :first-child { margin-bottom: 8vw; }
+/* "what kind of world…" — flows with the section gap; held to ~66% width so
+   the wordmark reads as a quieter beat (smaller) than the full-bleed marks.
+   `.rm-sec >` raises specificity above the section-wide column cap. */
+.rm-sec > .rm-whatkind { max-width: 66%; margin-left: auto; margin-right: auto; }
+
+/* why-now: short single-statement dark section, tighter than the default
+   88vh dark frame — the wordmark sits compact, less black flanking */
+.rm-whynow { min-height: 68vh; }
+
+/* keep content a centered phone-width column on wider (≤760) screens — type is
+   capped with min() so it never balloons past large-phone size */
+.rm-sec > *, .rm-hero > * { max-width: min(100%, 500px); }
+
+/* type — vw fluid up to a phone-size cap */
+/* handwriting — 2-size scale: LARGE (26) default, SMALL (20) for side notes */
+.rm-hand { font-family: var(--font-hand), cursive; font-weight: 400; font-size: min(5.2vw, 26px); line-height: 1.5; max-width: min(88%, 400px); }
+/* short handwriting label (e.g. "What we forgot") — forced to one line, no width cap */
+.rm-handlabel { white-space: nowrap; max-width: none; }
+.rm-hand-sm { font-size: min(4.2vw, 20px); }
+/* small label above a headline — same Bricolage as the headline, just smaller (matches desktop) */
+/* Bricolage — 2-size scale: SMALL (18) for labels/statements, LARGE (28) for headlines */
+.rm-eyebrow { font-family: var(--font-grotesque), sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; font-size: min(4.6vw, 18px); line-height: 1; color: #0e0e0c; }
+.rm-bric { font-family: var(--font-grotesque), sans-serif; font-weight: 700; text-transform: uppercase; font-size: min(6.4vw, 28px); line-height: 1.18; max-width: min(92%, 420px); }
+/* unwinding statement — Bricolage SemiBold uppercase, small tier */
+.rm-statement { font-family: var(--font-grotesque), sans-serif; font-weight: 600; text-transform: uppercase; font-size: min(4.6vw, 18px); line-height: 1.3; letter-spacing: 0.01em; max-width: min(72%, 320px); }
+/* one serif, one size across the page (Instrument Serif @ 24px) */
+.rm-serif { font-family: var(--font-serif), serif; font-weight: 400; font-size: min(5.4vw, 24px); line-height: 1.4; max-width: min(86%, 400px); }
+.rm-serif-sm { font-size: min(5.4vw, 24px); }
+.rm-serifLight { font-family: var(--font-serif), serif; font-weight: 400; font-size: min(5.4vw, 24px); line-height: 1.4; max-width: min(82%, 360px); }
+/* centre the capped text blocks within their (wider) motion wrappers */
+.rm-hand, .rm-eyebrow, .rm-bric, .rm-statement, .rm-serif, .rm-serifLight { margin-left: auto; margin-right: auto; }
+/* balance line breaks — even line lengths, no single-word orphans. text-wrap-style
+   is inherited, so the RevealLines word-spans get balanced during measurement too. */
+.rm-hand, .rm-bric, .rm-statement, .rm-serif, .rm-serifLight, .rm-pillar-body, .rm .rl { text-wrap: balance; }
+.rm .r-green { color: var(--r-green); }
+.rm .r-blue { color: var(--r-blue); }
+
+/* hero */
+.rm-hero { padding: 34vw 5vw 8vw; display: flex; flex-direction: column; align-items: center; text-align: center; overflow: hidden; }
+.rm-wordmark { width: 86%; margin: 0 auto; }
+.rm-hero-stack { position: relative; width: 100%; margin-top: 14vw; } /* breathe between REASON wordmark and the flowers visual */
+.rm-hero-flowers { width: 122%; max-width: none; margin-left: -11%; } /* bleed past both edges (clipped by .rm-hero) */
+.rm-iam { position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%); width: 80%; }
+
+/* unwinding — the stemmed flowers are planted into the black ground below:
+   their stems overlap the dark section's domed top (heads on paper, roots in
+   the black). z-index keeps them painted above the black. */
+.rm-unwind { padding-bottom: 0; }
+/* unwind flowers — oversized (130%); the lower portion of each stem is
+   overlapped by the dark-curve section that follows. z-index 0 sits BELOW
+   the dark block (which is z-index 2) so the black soil paints ON TOP of the
+   stems, cleanly burying their bases. */
+.rm-unwind-flowers { position: relative; z-index: 0; width: 130%; max-width: none; margin-left: -15%; margin-right: -15%; margin-top: 6vw; margin-bottom: -16vw; opacity: 0.95; }
+.rm-unwind-beats { display: flex; flex-direction: column; gap: 9vw; align-items: center; width: 100%; }
+
+/* what-kind */
+.rm-moon { width: min(34vw, 150px); height: auto; }
+/* "That question" sits centred across the rotating globe (like desktop) */
+.rm-globe { position: relative; width: 100%; display: flex; justify-content: center; }
+.rm-globe-text { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.rm-globe-text p { margin: 0; }
+
+/* symbols */
+.rm-symbol { width: min(26vw, 115px); height: auto; }
+.rm-symbol-sm { width: min(21vw, 92px); } /* no-orthodoxy mark — a touch smaller */
+
+/* opacity-only scroll reveal — for elements that already carry a transform
+   (centring, scale, sway, rotate) where the framer FadeUp/ScaleIn transform
+   would fight the existing one. Toggled by useFadeIn() in MobileReason. */
+.rm-fadein { opacity: 0; transition: opacity 0.85s var(--ease-out); }
+.rm-fadein.is-in { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .rm-fadein { opacity: 1; transition: none; } }
+
+/* disciplines map — full-bleed banner sized to match the why-now dark beat
+   (68vh). the constellation cover-fills the tall frame; outer perimeter labels
+   crop at the edges. */
+.rm-disc { position: relative; width: 100vw; max-width: 100vw; margin-left: calc(50% - 50vw); align-self: flex-start; aspect-ratio: 3 / 4; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+/* big, immersive constellation — a tall portrait frame that the square-ish art
+   cover-fills and is zoomed about the content centre (~56% down), so the spokes
+   read large and dominant (matching the reference). The outer side labels crop
+   at the edges; the central burst + vertical labels carry it. */
+.rm-disc .rm-art { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 56%; transform: scale(1.2); transform-origin: center 56%; animation: none; transition: transform 1.2s var(--ease-out), opacity 0.3s ease; }
+/* burst-from-middle entrance — before the disc reveals (is-in via useFadeIn),
+   the constellation is collapsed toward its centre; on reveal it scales out to
+   full, reading as the disciplines radiating from one point. */
+.rm-disc.rm-fadein:not(.is-in) .rm-art { transform: scale(0.34); }
+@media (prefers-reduced-motion: reduce) { .rm-disc.rm-fadein:not(.is-in) .rm-art { transform: scale(1.2); } }
+/* …and a GRADUAL opacity fade to go with the burst — override the shared
+   .rm-fadein ease (easeOutExpo front-loads opacity into a pop) with an even
+   ease-in-out over a longer beat, so the constellation truly fades in. */
+.rm-disc.rm-fadein { transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+.rm-whereland { position: absolute; width: 84%; filter: drop-shadow(0 2px 14px rgba(240,237,232,0.95)); }
+/* hover the overlay text → constellation behind it eases to 70% so the text reads cleaner */
+.rm-disc:has(.rm-whereland:hover) .rm-art { opacity: 0.7; }
+/* hero: hover the "i am not a planter…" SVG → the flowers behind ease to 70% */
+.rm-hero-stack:has(.rm-iam:hover) .rm-hero-flowers { opacity: 0.7; }
+.rm-hero-flowers { transition: opacity 0.3s ease; }
+
+/* pillars */
+.rm-pillar { display: flex; flex-direction: column; align-items: stretch; gap: 3vw; width: 100%; text-align: left; }
+.rm-pillar .rm-photo { aspect-ratio: 553 / 745; } /* match desktop pillar crop */
+.rm-pillar-title { font-family: var(--font-hand), cursive; font-size: min(5.2vw, 26px); } /* hand LARGE */
+.rm-pillar-body { font-family: var(--font-grotesque), sans-serif; font-weight: 400; font-size: min(4.0vw, 16px); line-height: 1.5; } /* bric SMALL — caption body, sits below the hand title */
+
+/* monastic — small fingerprint crown above the notes/wordmark/notes triad;
+   the wordmark gets extra breathing room above and below so the serif notes
+   don't crowd the inline-cut letterforms */
+.rm-fingerprint { display: block; width: min(14vw, 64px); height: auto; margin: 0 auto; opacity: 0.9; }
+.rm-monastic { gap: 10vw; }
+.rm-monastic .rm-monastic-mark { margin-top: 6vw; margin-bottom: 6vw; }
+
+/* balance — give the headline more breathing room from the wordmark SVG */
+.rm-balance .rm-balance-mark { margin-bottom: 7vw; }
+
+/* closing */
+.rm-portrait { max-width: 68%; margin: 0 auto; aspect-ratio: 430 / 506; } /* match desktop closing crop */

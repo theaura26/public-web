@@ -344,14 +344,14 @@ export default function MudigerePage() {
                 background: 'var(--bg-elev, #f4f4f4)',
               }}
             >
-              {/* Place-name embed — lets Google's geocoder resolve
-                  the actual estate location rather than a hand-
-                  typed coordinate (the previous pb URL was pinning
-                  slightly off). `?output=embed` is the no-API-key
-                  embed form Google still serves for place queries. */}
+              {/* Coordinate embed — drops a clean pin at the estate
+                  without Google auto-opening the business info card
+                  (a place-name query matches the "Sampigekhan Estate
+                  stay" listing and pops its card). t=h satellite,
+                  z=14. `?output=embed` is the no-API-key form. */}
               <iframe
                 title="Sampigelkhan Estate — Mudigere, Karnataka"
-                src="https://maps.google.com/maps?q=Sampigelkhan+Estate+Mudigere+Chikmagalur+Karnataka&z=12&output=embed"
+                src="https://maps.google.com/maps?q=13.1365,75.6403&t=h&z=14&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen

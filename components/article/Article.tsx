@@ -1042,10 +1042,14 @@ export function Placeholder({
 export function DataGrid({
   cols = 3,
   standalone = false,
+  tightTop = false,
   children,
 }: {
   cols?: 2 | 3 | 4
   standalone?: boolean
+  /** Drop the section's top padding so the grid sits tight under the prose
+   *  it illustrates (the preceding section already supplies the gap). */
+  tightTop?: boolean
   children: ReactNode
 }) {
   const grid = (
@@ -1073,7 +1077,7 @@ export function DataGrid({
   )
   if (!standalone) return grid
   return (
-    <section style={{ padding: 'var(--section-gap) 0' }}>
+    <section style={{ padding: tightTop ? '0 0 var(--section-gap)' : 'var(--section-gap) 0' }}>
       <div className="section-w">
         <Reveal>{grid}</Reveal>
       </div>

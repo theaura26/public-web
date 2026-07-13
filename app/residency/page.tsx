@@ -58,12 +58,10 @@ export default function ResidencyPage() {
 
       <TwoCol heading="Connective tissue between disciplines.">
         <p className="p1">
-          Most artist residencies put a painter next to a painter and
-          call it community. Aura does the opposite. A coffee fermenter
-          next to a ceramicist. A soil biologist next to a <Term tip="Hand-made Japanese paper from kozo (paper mulberry) — Ohara studio practising techniques designated Intangible Cultural Property.">Washi</Term> papermaker.
-          A designer next to a shepherd. The friction between disciplines
-          is the point. That is where the work nobody else can make gets
-          made.
+          Aura seats a coffee fermenter next to a ceramicist, a soil biologist
+          next to a <Term tip="Hand-made Japanese paper from kozo (paper mulberry) — Ohara studio practising techniques designated Intangible Cultural Property.">Washi</Term> papermaker, a designer next to a shepherd.
+          The friction between disciplines is the point. That is where the work
+          no one else can make gets made.
         </p>
         <p className="p2">
           We call them <em>embedded residencies</em> because you arrive
@@ -89,12 +87,11 @@ export default function ResidencyPage() {
           colourway for an Ohara letterpress.
         </p>
         <p className="p2">
-          We do not assign briefs. We host the conditions and let the
-          land do the rest of the work. The residency&apos;s output is
-          intentionally varied — books, dishes, instruments, gardens,
-          tools, fragrances, music, films, software, glaze recipes,
-          fermentation calendars — because natural intelligence does not
-          come out in a single medium.
+          We host the conditions and let the land do the rest of the work. The
+          residency&apos;s output stays deliberately varied — books, dishes,
+          instruments, gardens, tools, fragrances, music, films, software, glaze
+          recipes, fermentation calendars — because natural intelligence speaks in
+          every medium at once.
         </p>
       </TwoCol>
 
@@ -106,8 +103,8 @@ export default function ResidencyPage() {
 
       <TwoCol heading="Two estates. Two old intelligences.">
         <p className="p1">
-          Mudigere is Vedic. Ohara is Zen. Neither apologises to a
-          Western sustainability narrative. Both operate from <Term tip="Sanskrit. Natural order; the rhythm that governs seasons, tides, germination, decay, and renewal. Predates organised religion.">Ṛta</Term> — right
+          Mudigere is Vedic. Ohara is Zen. Both stand on their own terms, and both
+          operate from <Term tip="Sanskrit. Natural order; the rhythm that governs seasons, tides, germination, decay, and renewal. Predates organised religion.">Ṛta</Term> — right
           time, right action, natural order. The residency moves between
           them because the work that begins in one valley is often only
           complete once it has been read in the other.
@@ -120,19 +117,18 @@ export default function ResidencyPage() {
             generous; Kannada is the common tongue.
           </DataCard>
           <DataCard value="Japan · Ohara">
-            Refined. Tea. Washi. The intelligence of an eight-hundred-
-            year fermentation lineage in the valley and a thirty-year-
-            old Japanese garden on the property. Days are quieter,
-            slower, more deliberate. Japanese is the common tongue.
-            Purple shiso grows nowhere else in Japan.
+            Refined. Tea. Washi. The intelligence of a fermentation lineage
+            generations deep in the valley and a thirty-year-old Japanese garden
+            on the property. Days are quieter, slower, more deliberate. Japanese
+            is the common tongue. The valley is famous for its purple shiso.
           </DataCard>
         </DataGrid>
       </TwoCol>
 
       <TwoCol id="who" heading="The shape of the right applicant.">
         <p className="p1">
-          We pre-select. The selection is not a gate, it is a promise —
-          to you, to the other residents that week, to the land. Six
+          We pre-select. The selection is a promise — to you, to the other
+          residents that week, to the land. Six
           criteria, drawn from how we actually choose.
         </p>
         <DataGrid cols={3}>
@@ -157,8 +153,8 @@ export default function ResidencyPage() {
           </DataCard>
           <DataCard value="Full of gratitude">
             You know the land, the shepherd, the cook, and the other
-            residents got you here. &ldquo;Full of gratitude&rdquo; is
-            not a tone. It is a diagnosis.
+            residents got you here. &ldquo;Full of gratitude&rdquo; is a
+            diagnosis we can read.
           </DataCard>
           <DataCard value="Moral spine">
             We would rather host a twenty-year-old odd kid with
@@ -168,8 +164,8 @@ export default function ResidencyPage() {
       </TwoCol>
 
       <PullQuote>
-        We are not building a PROGRAMME. We are building a RESIDENCY that
-        will still be recognisable in a HUNDRED YEARS.
+        We are building a RESIDENCY that will still be recognisable in a
+        HUNDRED YEARS.
       </PullQuote>
 
       <Placeholder
@@ -180,8 +176,8 @@ export default function ResidencyPage() {
 
       <TwoCol heading="Teachers in residence.">
         <p className="p1">
-          The teachers are not visiting lecturers. They are people whose
-          practice the estate is built around — a master potter, a
+          The teachers are people whose practice the estate is built around — a
+          master potter, a
           biodynamic farmer, a washi papermaker, a coffee cupper, a
           shepherd, a tea host, a soil scientist. Most have been doing
           one thing for twenty to forty years.
@@ -221,14 +217,13 @@ export default function ResidencyPage() {
 
       <TwoCol heading="By invitation.">
         <p className="p1">
-          There is no form. There is an address. Write to
+          The way in is an address. Write to
           {' '}<strong>residency@theaura.life</strong>. Tell us who you
           are, what you are working on, and why the residency. One page
           is plenty.
         </p>
         <p className="p2">
-          Promise less, deliver more. We do not roadshow. We answer every
-          note.
+          Promise less, deliver more. We answer every note.
         </p>
       </TwoCol>
 

@@ -59,6 +59,12 @@ export default function BiodynamicPage() {
           dynamically for one hour — creating a vortex, breaking it, reversing
           — then applied to soil in the evening, when the earth is inhaling.
         </p>
+        <p className="p2">
+          The cosmology around these preparations — the lunar timings, the idea of
+          the earth breathing — is old, and it has never held up in a controlled
+          trial. Aura keeps the preparations for the biology they carry, which is
+          real and measurable, and logs that biology rather than the astrology.
+        </p>
         <DataGrid cols={2}>
           <DataCard value="BD 500 — Horn manure.">
             Cow dung buried in a horn over winter. Soil biology, applied at
@@ -88,9 +94,9 @@ export default function BiodynamicPage() {
           Vrikshayurveda lineage.
         </p>
         <p className="p2">
-          The two systems are not in competition. Each carries a piece of the
-          same underlying observation: feed the soil, not the plant; close the
-          loop; let the cow do most of the work.
+          The two systems reinforce each other. Each carries a piece of the same
+          underlying observation: feed the soil, close the loop, and let the cow
+          do most of the work.
         </p>
         <DataGrid cols={3}>
           <DataCard value={<><Term tip="Cow dung, cow urine, jaggery, gram flour, water. Fermented 5–7 days. Soil drench.">Jeevamrit</Term>.</>}>
@@ -127,15 +133,14 @@ export default function BiodynamicPage() {
       />
 
       <PullQuote>
-        We do not abandon CPP for newer methods. We SCALE WISDOM. We do not
-        REPLACE it.
+        We SCALE WISDOM. We keep what works, and build on it.
       </PullQuote>
 
       <TwoCol id="herd" heading="The herd as engine.">
         <p className="p1">
-          Everything begins with the cattle. The 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> are an
-          indigenous Karnataka breed — not Holsteins, not Jersey crosses. They
-          have grazed at this altitude for centuries. Their gut microbiome is
+          Everything begins with the cattle. The 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> are the
+          small indigenous cattle of these hills, grazing at this altitude for
+          centuries. Their gut microbiome is
           adapted to the estate&rsquo;s grasses and soil. Their dung carries
           microbial characteristics specific to this breed, this land, this
           climate.
@@ -193,13 +198,12 @@ export default function BiodynamicPage() {
           event.
         </p>
         <p className="p2">
-          Organic and biodynamic certification evidence becomes unfakeable: it
-          is cross-referenced against weather data, lunar records, and soil
-          outcomes that cannot be retroactively altered.
+          Organic and biodynamic certification evidence becomes tamper-evident,
+          cross-referenced against weather data, lunar records, and soil outcomes
+          that cannot be retroactively altered.
         </p>
         <p className="p2">
-          This is not certification theatre. This is the practice, recorded
-          with integrity, made permanent.
+          This is the practice, recorded with integrity, made permanent.
         </p>
       </TwoCol>
 
@@ -212,9 +216,8 @@ export default function BiodynamicPage() {
       <OneCol id="closing" heading="The herd is biological infrastructure.">
         <p className="p1">
           Biodynamic inputs, ecological pest balance, soil microbiome
-          restoration — these are not features and not selling points. They
-          are evidence of intelligence aligned with nature, not imposed on
-          it.
+          restoration — together they are the estate learning to work with the
+          land&rsquo;s own intelligence.
         </p>
         <p className="p2">
           A four-story polyculture, fed by preparations from indigenous

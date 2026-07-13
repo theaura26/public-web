@@ -97,7 +97,7 @@ const STUDIOS: Studio[] = [
   {
     name: 'Engine',
     lead: 'Systems that read the land.',
-    body: 'Sensors, models, agents, and the quiet automation behind them. Crypto-native where it serves, AI-fluent where it helps — but always in service of the deeply human, never in place of it. The machine, made to listen first.',
+    body: 'Sensors, models, agents, and the quiet automation behind them. Crypto-native where it serves, AI-fluent where it helps, always in service of the deeply human. A machine made to listen first.',
     image: '/aura-studios/aura-technology.jpg',
     video: '/aura-studios/aura-technology.mp4',
     alt: 'Aura Engine studio — sensors, models, agents, data flows',
@@ -179,7 +179,7 @@ export default function StudiosPage() {
       <ScrollHighlight align="left">{`Natural Intelligence is the way of doing.
 Read the land first, then build.
 Promise less. Deliver more.
-Build for the next 1,000 years, not the next quarter.
+Build for the next 1,000 years.
 Monastic polymaths. Crazy misfits.`}</ScrollHighlight>
 
       {/* ── Three studios ────────────────────────────────────
@@ -216,8 +216,8 @@ Monastic polymaths. Crazy misfits.`}</ScrollHighlight>
           standard — craft, innovation, impact — stacked as a
           stanza so each beat lands on its own. */}
       <ScrollHighlight align="left">{`Craft meets technology.
-Innovation in service of value, not novelty.
-Impact measured in centuries, not quarters.`}</ScrollHighlight>
+Innovation in service of value.
+Impact measured in centuries.`}</ScrollHighlight>
 
       {/* ── Body banner ──────────────────────────────────────
           A held loop before the closing CTA — the space video

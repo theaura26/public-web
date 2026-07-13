@@ -22,8 +22,10 @@ export default function LandPage() {
 
       <TwoCol heading="Land is ancestry.">
         <p className="p1">
-          Sampigelkhan Estate sits in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term> of Karnataka — red <Term tip="Red, iron-rich, free-draining volcanic soil typical of the Western Ghats.">laterite</Term> soil,
-          monsoon rhythm, and a four-story canopy older than any of us.
+          Sampigelkhan Estate sits in the <Term tip="A mountain range down India's west coast — older than the Himalaya, and one of the world's eight 'hottest' biodiversity hotspots, with over 7,000 plant species.">Western Ghats</Term> of Karnataka, on red{' '}
+          <Term tip="Iron- and aluminium-rich soil formed by deep tropical weathering — not a volcanic rock itself, but the long residue of one, the Deccan basalt, broken down over ages of monsoon.">laterite</Term>:
+          soil that is itself the record of a very long weathering, under a monsoon
+          older than agriculture and a four-story canopy older than any of us.
         </p>
         <p className="p2">
           We are stewards of a hundred-year arc. The numbers below describe

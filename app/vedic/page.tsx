@@ -6,46 +6,41 @@ import {
   DataGrid,
   DataCard,
   PullQuote,
+  ScrollHighlight,
   Continue,
+  Term,
 } from '@/components/article/Article'
 
 export default function VedicPage() {
   return (
     <>
-      {/* Modern hero pattern. Subline + 4-question TOC dropped along
-          with the rest of the coming-soon refactor. */}
       <HeroBanner
+        currentHref="/vedic"
         title="Older than its study."
-        src="/aura-vedic.jpg"
-        mediaType="image"
-        caption="Knowledge older than the institutions that study it"
+        type="Detail · ferment"
+        caption="Two soil traditions, one intelligence — Vedic and biodynamic, run side by side at Mudigere"
         alt="Aura Vedic farming — ancestral agricultural science in practice"
       />
 
-      <Placeholder
-        caption="A blue plastic drum of fermenting slurry, bubbles breaking the surface. A wooden paddle resting on the rim. First light, cattle shadows behind."
-      />
-
-      {/* OPENING — SPECTRUM */}
-      {/* eyebrow was: "Where it sits" */}
-      <TwoCol id="where" heading="Older than the word organic.">
+      <TwoCol id="ladder" heading="The ladder it never stood on.">
         <p className="p1">
-          The world of modern farming arranges itself as a ladder. Light chemical at the bottom,
-          high chemical at the scale, low chemical as the apology, no chemical as the aspiration,
-          organic as the badge, biodynamic as the discipline. The ladder is useful, and it is
-          incomplete. Vedic farming does not sit on it. It predates it.
+          Modern farming arranges itself as a ladder. Heavy chemical at the base, low-input as the
+          apology, no-spray as the aspiration, organic as the badge, biodynamic as the discipline at
+          the top. The ladder is useful. It is also incomplete — because the oldest system on this
+          estate does not stand on it at all. It predates the frame.
         </p>
         <p className="p2">
-          Vrikshayurveda — the Ayurveda of trees — is two thousand years old at least. It reads
-          plants the way its sibling text reads human bodies: as beings with digestion, humours,
-          seasons, and specific susceptibilities. Its preparations are not fertilisers. They are
-          microbial inoculants, immunity builders, and digestive aids, made from whatever the
-          household and the cow already produce.
+          At Mudigere we run two traditions at once. European biodynamics — a set of numbered
+          preparations codified about a century ago — and{' '}
+          <Term tip="Sanskrit: vṛkṣa (tree) + āyurveda (science of life). The surviving text is usually dated to the medieval period, though the oral tradition it draws on is older.">Vrikshayurveda</Term>,
+          the Ayurveda of trees, far older than its European cousin and carried by mouth for most of
+          its life. We do not treat them as rivals. They are two languages describing one
+          intelligence: feed the life in the soil, and the soil will feed the plant.
         </p>
         <p className="p2">
-          An uncle in Thailand called himself a tree servant. Not a gardener — a servant. He said
-          he did not plant trees, he observed them, and the tree told him what it wanted. That is
-          the Vedic posture. Observation as method.
+          Neither asks the question industrial agronomy asks first — <em>what does the plant
+          lack?</em> Both ask an older one — <em>what is the soil, and what is it already doing?</em>{' '}
+          Everything on this page follows from which question you start with.
         </p>
       </TwoCol>
 
@@ -53,136 +48,116 @@ export default function VedicPage() {
         I am a tree servant.
       </PullQuote>
 
-      {/* VRIKSHAYURVEDA */}
-      {/* eyebrow was: "Vrikshayurveda" */}
-      <TwoCol id="vrikshayurveda" heading="The parent tradition.">
+      <TwoCol id="posture" heading="Read the body before you treat it.">
         <p className="p1">
-          The Vrikshayurveda names the preparations we still use today and several we are only
-          beginning to re-read. Kunapjal — a fermented brew of fish, sesame cake, honey and milk —
-          appears in texts from the Gupta period. Beejamrit, a seed-dressing slurry, is older than
-          any recorded agricultural manual in the West. Panchgavya, the five-cow tonic, is woven
-          into temple practice as much as into the field. These are not folk remedies. They are
-          engineered, fermented, and measured.
+          The Vrikshayurveda is not a manual of recipes. It is a way of looking. It reads a plant the
+          way its sibling text reads a human body — as a being with digestion, seasons, and specific
+          susceptibilities — and its first instruction never changes: read the plant before you treat
+          it. A leaf that yellows from the tip is one diagnosis; from the edge, another; from the
+          centre, a third. Treat the diagnosis, not the symptom.
         </p>
         <p className="p2">
-          We rejected the NKP rulebook. Nitrogen, phosphorus, potassium is the language of a
-          laboratory in Europe in the 1840s. It is not wrong; it is narrow. The Vedic posture is
-          wider. Feed the microbe. Feed the fungus. Feed the soil&apos;s own memory. The plant will
-          feed itself.
+          Industrial agriculture inherited the <Term tip="Nitrogen, phosphorus, potassium — the three macronutrients isolated by 19th-century agricultural chemistry. Not wrong. Narrow.">NPK</Term> rulebook
+          from nineteenth-century chemistry. It is not wrong; it is narrow. Three letters cannot
+          describe a forest floor. The Vedic posture is wider — feed the microbe, feed the fungus,
+          feed the soil&apos;s own memory, and let the plant feed itself.
+        </p>
+        <p className="p2">
+          An uncle in Thailand called himself a tree servant. Not a gardener — a servant. He said he
+          did not so much plant trees as observe them, and the tree told him what it wanted. That
+          sentence is the whole method. Observation precedes action by weeks, sometimes a season.
+          Action follows the land&apos;s permission, not the calendar&apos;s.
         </p>
       </TwoCol>
 
-      {/* PREPARATIONS GRID */}
-      {/* eyebrow was: "The Preparations" */}
-      <TwoCol id="preparations" heading="Made in the shed.">
+      <ScrollHighlight>
+        {`Read the plant.
+         Then read the soil.
+         Then, maybe, intervene.`}
+      </ScrollHighlight>
+
+      <TwoCol id="cattle" heading="Everything begins with the cattle.">
         <p className="p1">
-          The shed produces a working library of preparations. Each is fermented, measured, and applied to the block that needs it.
+          Not the seed, not the spray — the herd. <strong>Fifty-two</strong>{' '}
+          <Term tip="An indigenous dwarf cattle breed of the Malnad region of Karnataka, adapted to this altitude, soil, and monsoon over centuries. Small-bodied, low-yield, hardy.">Malnad Gidda</Term> —
+          the small indigenous cattle of these hills, bred by the climate itself over centuries. Not
+          Holsteins. Not Jersey crosses. The breed matters because the biology does: their dung and
+          urine are the raw material every preparation on the estate is built from.
         </p>
-        <DataGrid cols={3}>
-          <DataCard value="Jeevamrit · Microbial inoculant">
-            Cow dung, cow urine, jaggery, gram flour, a handful of local forest soil. Fermented
-            anaerobically for 5 – 7 days under shade, stirred twice a day. Applied as a soil
-            drench and foliar spray at 5 % dilution. A litre carries billions of native microbes.
-          </DataCard>
-          <DataCard value="Panchgavya · Five cow products">
-            Dung, urine, milk, curd, ghee — the five products of the cow — fermented together for
-            {` `}7 days with jaggery and banana. A plant tonic; a foliar for
-            flowering and fruit set.
-          </DataCard>
-          <DataCard value="Beejamrit · Seed treatment">
-            Cow dung, cow urine, lime, a pinch of forest soil, water. Seeds are dipped the night
-            before sowing. The slurry colonises the seed coat with protective microbes before it
-            meets the ground.
-          </DataCard>
-          <DataCard value="Buttermilk · Coconut · Magnesium">
-            A technique borrowed from a French biodynamicist — fresh buttermilk, coconut water,
-            jaggery, stirred with a magnesium wire to seed the ferment with trace magnesium. A
-            foliar for leaf-yellowing blocks.
-          </DataCard>
-          <DataCard value="Kunapjal · Vrikshayurveda">
-            The ancient fermented tonic — small river fish, sesame oil-cake, honey, milk, black
-            gram, jaggery. Fermented in a clay pot for 15 days. Used sparingly on
-            exhausted blocks. The smell is real; the response is measurable.
-          </DataCard>
-          <DataCard value="Matka Khad · Pot compost">
-            Clay matka buried in the field, packed with dung, green leaves, and kitchen scraps,
-            sealed and left through the monsoon. Opens as a dense, cured compost with the clay&apos;s
-            own microbial lining baked in.
-          </DataCard>
-          <DataCard value="Neem · Pest deterrent">
-            Neem fermented in cow urine, or neem cake worked into the soil. Creates a smell in such
-            a way that these guys don&apos;t attack, and it doesn&apos;t hurt the plants. The quiet solution
-            before any spray is considered.
-          </DataCard>
-          <DataCard value="Vermicompost · Worm-led">
-            Cow-dung windrows seeded with local epigeic earthworms. Finished in 45 – 60 days.
-            Applied to the nursery and the highest-value blocks.
-          </DataCard>
-          <DataCard value="Small-batch compost · Observation-led">
-            Not one recipe but twenty. Each block reads the compost it needs — leaf-heavy for the
-            coffee, nitrogen-rich for the pepper, mineral-rich for the areca. The shed keeps
-            ledgers, not formulas.
-          </DataCard>
+        <p className="p2">
+          The five products of the cow — dung, urine, milk, curd, ghee — are the entire base pharmacy.
+          The herd is not livestock kept beside the farm; it is the engine inside it, rotated through
+          the blocks on a rhythm timed to how the coffee cherry is developing. You cannot buy Aura&apos;s
+          preparations, and you cannot make them with an imported breed. The engine is native, or it
+          is not the engine.
+        </p>
+        <DataGrid cols={4}>
+          <DataCard value="52">Malnad Gidda — indigenous, dwarf, hardy. The heart of the soil system.</DataCard>
+          <DataCard value="5 products">Dung, urine, milk, curd, ghee — the base of every preparation.</DataCard>
+          <DataCard value="Timed">Herd rotation set to coffee-cherry development, not the calendar.</DataCard>
+          <DataCard value="Native">Not replicable with imported cattle. The breed is the method.</DataCard>
         </DataGrid>
       </TwoCol>
 
       <Placeholder
-        caption="A copper-coloured wire coiled into a clay pot of pale buttermilk, surface bubbled. Tight macro, natural light."
+        type="Portrait · herd"
+        caption="Malnad Gidda under coffee shade — the small indigenous cattle every preparation begins with"
       />
-
-      {/* VEG AND BIOBANK */}
-      {/* eyebrow was: "VEG and Biobank" */}
-      <TwoCol heading="We rejected the NKP rulebook.">
-        <p className="p1">
-          The estate keeps a Vedic Essential Growth (VEG) index and a Biobank — our internal log of
-          every preparation made, every block it was applied to, every microbial read that
-          followed. The blockchain layer under it makes each entry immutable. Over four seasons
-          this becomes the training corpus for a world model grown from this land&apos;s own data, not
-          borrowed from a textbook elsewhere.
-        </p>
-        <p className="p2">
-          This is not fine-tuning. This is growing.
-        </p>
-      </TwoCol>
-
-      <PullQuote attribution="The biodynamic agronomist">
-        Build the land.
-      </PullQuote>
-
-      {/* MYCORRHIZAL NETWORK */}
-      {/* eyebrow was: "Underground intelligence" */}
-      <TwoCol id="mycorrhizal" heading="The fungal internet.">
-        <p className="p1">
-          Under every healthy coffee tree on this estate is a mycorrhizal network — a fungal
-          lattice that moves water, phosphorus, and warning signals between plants across
-          kilometres. Industrial agriculture severs this network every time it tills. Vedic
-          farming feeds it. The Jeevamrit drench is, functionally, a feeding of the fungus. The
-          neem cake is a diplomatic note to the network, not a weapon against it.
-        </p>
-        <p className="p2">
-          When the network is intact, a coffee tree on the ridge knows, within hours, that a tree
-          in the valley has been stressed. It tightens its stomata before the pest arrives. We
-          cannot see this with the eye. The probe reads it. The yield, eventually, confirms it.
-        </p>
-      </TwoCol>
 
       <Placeholder
-        caption="Rows of coffee saplings in black polybags, leaves gleaming with the morning foliar. Mid-shot, shallow depth of field."
+        type="Detail · the five products"
+        caption="Dung, urine, milk, curd, ghee — the estate's base pharmacy, laid out"
       />
 
-      {/* VERMICOMPOSTING */}
-      {/* eyebrow was: "The shed" */}
-      <TwoCol heading="Small-batch compost intelligence.">
+      <TwoCol id="preparations" heading="The preparations, both alphabets.">
         <p className="p1">
-          We do not make compost in one industrial pile. We make it in twenty small piles, each
-          read by the person turning it. Moisture by feel. Heat by hand. Smell as diagnostic. A
-          heap that smells of ammonia is overfed; one that smells of the forest floor is ready.
-          This is craftsmanship, not chemistry — but it is measured, photographed, and logged
-          every week.
+          Two vocabularies share the same shelf. The numbered biodynamic preparations, BD 500 through
+          508, and the Vedic ferments the region has brewed for generations. They are made from the
+          same handful of things — the cow, the compost heap, a few wild herbs — and applied on a
+          calendar most agronomists would not recognise. The estate runs both, and logs each one.
+        </p>
+        <DataGrid cols={3}>
+          <DataCard value="BD 500 · 501">
+            Horn manure and horn silica — dung and ground quartz packed into cow horns, buried a
+            season, then stirred into water for an hour and sprayed. One feeds soil biology; the
+            other, the plant&apos;s reach for light.
+          </DataCard>
+          <DataCard value="BD 502–507">
+            The compost set — yarrow, chamomile, stinging nettle, oak bark, dandelion, valerian.
+            Six herbs that steer how a heap breaks down. Tiny doses; a large effect on the pile.
+          </DataCard>
+          <DataCard value="BD 508">
+            Horsetail — a silica-rich decoction against fungal pressure. In a monsoon that delivers up
+            to a hundred inches a year, this is the preparation the Ghats ask for most.
+          </DataCard>
+          <DataCard value="Jeevamrit">
+            Dung, urine, jaggery, pulse flour, and a handful of undisturbed soil — a microbial
+            inoculant brewed live and drenched into the root zone.
+          </DataCard>
+          <DataCard value="Beejamrit">
+            Dung, urine, lime — a seed dressing. The first thing a seed meets before it meets the
+            ground.
+          </DataCard>
+          <DataCard value="Panchagavya">
+            The five cow products fermented together — a foliar tonic and soil amendment in one.
+          </DataCard>
+        </DataGrid>
+      </TwoCol>
+
+      <TwoCol id="jeevamrit" heading="One preparation, read twice.">
+        <p className="p1">
+          <Term tip="जीवामृत — 'life nectar.' A live microbial inoculant of cow dung, cow urine, jaggery, pulse flour, and a handful of undisturbed soil.">Jeevamrit</Term> sounds
+          like folklore until you read the ingredient list as a microbiologist would. Dung for the
+          microbial load. Urine for the nitrogen. Jaggery to feed the culture. Pulse flour for
+          protein. And a handful of soil from an undisturbed patch — to seed the whole batch with
+          whatever is already thriving next door.
         </p>
         <p className="p2">
-          The vermicomposting beds sit under the areca, shaded and cool. The worms are not
-          imported. They are the ones already in the soil, multiplied.
+          It is brewed until the culture peaks — two or three days in the warm months, up to a week
+          when the air is cool — stirred to keep it breathing, and drenched onto the block within a
+          day, before the population crests and falls. The Vrikshayurveda prescribes that window in
+          the language of auspicious timing. A lab would call it holding a culture at peak viable
+          count. Two vocabularies, one fermentation curve.
         </p>
       </TwoCol>
 
@@ -190,38 +165,105 @@ export default function VedicPage() {
         Feed the microbe, not the plant.
       </PullQuote>
 
+      <TwoCol id="testing" heading="Nothing reaches the soil unproven.">
+        <p className="p1">
+          Faith is not the method; measurement is. Every batch is tested before it touches a block —
+          pH, electrical conductivity, and a live microbial colony count. Compost is read for
+          maturity by temperature, carbon-to-nitrogen ratio, and moisture. The two organisms the
+          estate most wants to see — <Term tip="A beneficial soil fungus used as a biocontrol agent and root symbiont.">Trichoderma</Term> and{' '}
+          <Term tip="A beneficial soil bacterium that helps suppress pathogens and free nutrients for the plant.">Pseudomonas</Term> —
+          are counted for viability, not assumed.
+        </p>
+        <p className="p2">
+          Three spray teams work the estate, and every monthly schedule carries three buffer days for
+          the weather to break a plan the moon set. A batch of dung is traced back to the individual
+          animals that gave it. The soil is re-read ninety days after an application — to see whether
+          the thing that looked right in the pot actually did anything in the ground.
+        </p>
+        <DataGrid cols={4}>
+          <DataCard value="Every batch">pH, EC, and a live colony count before a drop is sprayed.</DataCard>
+          <DataCard value="3 teams">Dedicated spray crews, each block on a known rotation.</DataCard>
+          <DataCard value="3 buffer days">Built into every monthly plan — the weather outranks the calendar.</DataCard>
+          <DataCard value="90 days">The soil re-read after application. Proof, not faith.</DataCard>
+        </DataGrid>
+      </TwoCol>
+
+      <Placeholder
+        type="Detail · preparation"
+        caption="Jeevamrit fermenting in a clay pot — dung, urine, jaggery, pulse flour, and a handful of undisturbed soil"
+      />
+
+      <Placeholder
+        type="Detail · the log"
+        caption="A spray record — block, lunar day, humidity, the worker who sprayed it, the dung batch it came from"
+      />
+
+      <TwoCol id="mycorrhizal" heading="The network the tradition already named.">
+        <p className="p1">
+          Under every healthy coffee tree on this estate is a{' '}
+          <Term tip="From the Greek mykes (fungus) + rhiza (root) — literally 'fungus-root.' A symbiosis between fungal threads and plant roots.">mycorrhizal</Term> network —
+          a fungal lattice threaded through the roots, trading water and phosphorus for the sugars the
+          tree makes in the leaf. Tilling severs it. The Vedic preparations feed it. The drench is, in
+          plain terms, a meal for the fungus; the neem cake is a note to the network, not a weapon
+          against it.
+        </p>
+        <p className="p2">
+          The Vrikshayurveda described something like this in a different language — the land&apos;s
+          &ldquo;breath,&rdquo; soil that &ldquo;converses,&rdquo; trees that &ldquo;remember&rdquo;
+          their neighbours. For a long time we filed that under poetry. Under a microscope, a good
+          deal of it turns out to be observation, written in the only vocabulary its observers had.
+        </p>
+      </TwoCol>
+
+      <TwoCol id="compost" heading="Twenty piles, twenty diagnoses.">
+        <p className="p1">
+          The estate does not make compost in one industrial heap. It makes it in twenty small piles,
+          each read by the person who turns it. Moisture by feel. Heat by hand. Smell as diagnosis — a
+          heap that smells of ammonia is overfed; one that smells of the forest floor is ready. It is
+          craftsmanship, and it is also logged, photographed, and dated every week.
+        </p>
+        <p className="p2">
+          The vermicompost beds sit shaded and cool under the areca. The worms were not imported; they
+          are the ones already in this soil, multiplied. That is the whole Vedic instinct in one
+          decision — use what the land already has, and trust it to know what it needs.
+        </p>
+      </TwoCol>
+
+      <TwoCol id="biobank" heading="The Biobank.">
+        <p className="p1">
+          Every observation, every block it applied to, every microbial read that followed — the
+          estate keeps all of it in a Biobank. Over four seasons that becomes something rare: a
+          training record grown from one valley&apos;s own soil, rather than borrowed from a textbook
+          written for another.
+        </p>
+        <p className="p2">
+          This is not a transcription of the Vrikshayurveda. It is the Vrikshayurveda re-derived from
+          the ground — read against what this herd produces, what this canopy lets through, what this
+          monsoon delivers. A different valley would need a different model. That is not a flaw. It is
+          the entire point, and it is where this journal hands off to <em>Provenance</em>.
+        </p>
+      </TwoCol>
+
+      <PullQuote attribution="Arvind">
+        We scale wisdom. We do not replace it.
+      </PullQuote>
+
       <OneCol heading="Older than the study of it.">
         <p className="p1">
           A PhD agronomist joined us who had never worked with coffee. On her first walk through the
-          estate she said only one sentence: I only want to heal the land. Vedic farming is that
-          sentence, practised daily for two thousand years, still correct, still waiting to be read
-          by a world that forgot how. We are not inventing. We are listening.
+          estate she offered a single sentence: <em>I only want to heal the land.</em> That is the
+          whole practice — still correct, still waiting to be read by a world that got distracted and
+          called the distraction progress.
+        </p>
+        <p className="p2">
+          What the Vrikshayurveda called the land&apos;s breath, and what the moon-timed preparations
+          called the right hour, the estate now also writes down as a signed event — the lunar day and
+          the stir time logged beside the humidity and the hand that did the work. The oldest
+          instrument and the newest, agreeing. That ledger is its own journal: <em>Provenance</em>.
         </p>
       </OneCol>
 
-      <Placeholder
-        caption="A worker with a back-pack sprayer moving between rows of coffee in first light. Long lens, soft atmosphere."
-      />
-
-      <Continue
-        items={[
-          {
-            href: '/biodynamic',
-            label: 'Biodynamic Practice',
-            description: 'The Steiner layer — BD 500 to 508 on the Maria Thun calendar.',
-          },
-          {
-            href: '/living-systems',
-            label: 'Living Systems',
-            description: 'Where the cow, the microbe, and the canopy all meet.',
-          },
-          {
-            href: '/wisdom',
-            label: 'Moral Spine',
-            description: 'Tree servants, hunters, the hundred things we lost.',
-          },
-        ]}
-      />
+      <Continue currentHref="/vedic" />
     </>
   )
 }

@@ -11,16 +11,29 @@ import {
   Continue,
   ScrollHighlight,
   Rta,
+  Term,
 } from '@/components/article/Article'
 
 export default function IdeaPage() {
   return (
     <>
       <HeroBanner
+        currentHref="/idea"
         title="The 1000 Year Idea"
         type="Aerial landscape"
-        caption="150 acres at sunrise, Mudigere"
+        caption="150 acres at sunrise, Mudigere — planted for the year 3026"
       />
+
+      <OneCol heading="A face on a dodecahedron.">
+        <p className="p1">
+          A child drew a dodecahedron with our help and labelled one of its twelve faces
+          &ldquo;our home.&rdquo; She is six. She will be sixteen when the first residency cohorts leave
+          Mudigere for good. She will be thirty-six when the forest at Aaranya has closed its
+          canopy. She will be old when the teahouse in Ohara enters its second century. The
+          thousand-year frame is not abstract. It is the life of the grandchildren we will never
+          meet, and the grandchildren they will never meet.
+        </p>
+      </OneCol>
 
       <TwoCol id="commitment" heading="The Commitment">
         <p className="p1">
@@ -50,9 +63,38 @@ export default function IdeaPage() {
         caption="150 acres at sunrise, Mudigere"
       />
 
+      <Placeholder
+        type="Detail · seedling"
+        caption="A single tree, staked, on the day it was planted"
+      />
+
       <PullQuote attribution="Arvind">
         We start from the EARTH and work UP.
       </PullQuote>
+
+      <TwoCol id="aaranya" heading="Aaranya: the forest that isn't finished yet.">
+        <p className="p1">
+          <Term tip="अरण्य — Sanskrit for 'forest,' with a specific connotation: not wilderness, but a forest deliberately kept apart for retreat, study, and undisturbed growth.">Aaranya</Term> is
+          the twenty-acre native canopy nursery on the estate&apos;s Bhadra-facing boundary —
+          tens of thousands of trees, none of them planted for a harvest. Its whole purpose is to
+          take a century to close, at which point it will have done its one job: extend the
+          reserve&apos;s habitat instead of fencing the estate off from it.
+        </p>
+        <p className="p2">
+          Nobody working here today will see it finished. That is not a flaw in the plan. It is
+          the plan working exactly as designed.
+        </p>
+      </TwoCol>
+
+      <Placeholder
+        type="Aerial · nursery"
+        caption="Aaranya — twenty acres of native canopy, tens of thousands of trees, none of them for harvest"
+      />
+
+      <Placeholder
+        type="Detail · canopy edge"
+        caption="Where Aaranya meets the Bhadra reserve boundary — no fence"
+      />
 
       <TwoCol id="pillars" heading="Sanctuary. Agroculture. Artistry.">
         <p className="p1">
@@ -64,7 +106,7 @@ export default function IdeaPage() {
         <p className="p2">
           Artistry is the signal sent outward — studios, residency, gurukul, labs, festivals —
           the work that argues for a different pace through the things it makes. Each pillar is
-          useless without the others. Together they form an operating system.
+          useless without the others.
         </p>
         <p className="p2">
           A forest is not one species. It is an ecosystem. Every layer holds the others up. Aura
@@ -99,16 +141,18 @@ export default function IdeaPage() {
             thirtieth year than their first. Nothing disposable.
           </DataCard>
           <DataCard value="Can it be run by a small, skilled team?">
-            No dependency on scale. No tower of complexity. If it cannot be maintained by the
-            people who live here, it does not belong here.
+            Not can it scale — can it be kept. If it cannot be maintained by the people who live
+            here, it does not belong here.
           </DataCard>
           <DataCard value="Does it earn the slowness it asks for?">
-            <Rta /> — right time, right action. A good decision at the wrong hour is still a
-            wrong decision. Timing is a material.
+            <Rta /> — the old idea that a thing is right when it sits in alignment with all
+            around it, not just with the clock. A good decision at the wrong hour is still a
+            wrong decision.
           </DataCard>
           <DataCard value="Would we be proud to name every input?">
-            Provenance, cherry-to-cup. Every supplier, every substrate, every line of code. If
-            it cannot be traced, it cannot be trusted.
+            Provenance, cherry-to-cup. We turned down a glaze supplier who wouldn&apos;t name
+            their clay source — cheaper, and untraceable. If an input cannot be named, it cannot
+            be trusted, however good the price.
           </DataCard>
           <DataCard value="Does it make the next hour more alive?">
             The test is the body. A room, a meal, a walk, a silence. If presence drops, the
@@ -139,17 +183,22 @@ export default function IdeaPage() {
           measured by it.
         </p>
         <p className="p2">
-          Three thousand years ago, every civilisation on earth was documenting the relationship
-          between soil and stars, moon and water, season and seed. The Vedas. The Babylonians.
-          The Chinese. The Indigenous Australians across sixty thousand years. They were still.
-          They were observing. They did this without a single screen. We did not lose that
-          knowledge. We got distracted.
+          Long before instruments, many civilisations were already documenting the relationship
+          between soil and stars, moon and water, season and seed — the Vedas, Babylonian sky
+          records, Chinese agricultural calendars, and, longest of all, sixty thousand years of
+          Indigenous Australian land management. They were still. They were observing. They did
+          this without a single screen. We did not lose that knowledge. We got distracted.
         </p>
       </TwoCol>
 
       <Placeholder
         type="Portrait · animal"
         caption="Elder Malnad Gidda cow under coffee shade"
+      />
+
+      <Placeholder
+        type="Detail · lineage"
+        caption="A calf beside its mother — the herd, one generation deep in the frame"
       />
 
       <TwoCol id="spine" heading="The Moral Spine">
@@ -166,20 +215,21 @@ export default function IdeaPage() {
         </p>
         <p className="p2">
           Technology without awareness repeats old patterns in new language. Sensors without
-          wisdom are just data. Computation without conscience is just faster. The world does
-          not need more intelligence. It needs more conscience.
+          wisdom are just data. Computation without conscience is just faster — which is why
+          every filter above asks what a decision does to the land and the people on it before
+          it asks whether the decision is even possible.
         </p>
       </TwoCol>
 
       <PullQuote attribution="Arvind">
-        If we don&apos;t have a good MORAL SPINE, we will SELL SHIT.
+        The world does not need more intelligence. It needs more conscience.
       </PullQuote>
 
       <TwoCol id="measure" heading="The Standard, Measured">
         <p className="p1">
-          The 1000 Year Idea is not a mission statement. It is a method. It is what we consult
-          when the decision is hard, and what we consult when the decision is easy — because
-          easy decisions made casually are how slow erosions begin.
+          Nobody frames a mission statement. This one gets consulted — when the decision is
+          hard, and, more often, when the decision looks easy, because easy decisions made
+          casually are how slow erosions begin.
         </p>
         <p className="p2">
           It is the standard against which the plantation, the residency, the studios, the meal,
@@ -214,14 +264,6 @@ export default function IdeaPage() {
 
       <OneCol heading="The Practice">
         <p className="p1">
-          A child drew a dodecahedron with our help and labelled one of its twelve faces
-          &ldquo;our home.&rdquo; She is six. She will be sixteen when the first residency cohorts leave
-          Mudigere for good. She will be thirty-six when the forest at Aaranya has closed its
-          canopy. She will be old when the teahouse in Ohara enters its second century. The
-          thousand-year frame is not abstract. It is the life of the grandchildren we will never
-          meet, and the grandchildren they will never meet.
-        </p>
-        <p className="p2">
           Begin with the ground. Work upward. Plant the tree whose shade you will not sit in.
           That is the idea. The rest is practice.
         </p>

@@ -672,52 +672,6 @@ function MudigereModal({ open, onClose }: { open: boolean; onClose: () => void }
   )
 }
 
-/* ═══ OHARA ═══ */
-function OharaModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const weather = useWeather(35.1200, 135.8300)
-  return (
-    <LocationModal open={open} onClose={onClose} label="OHARA">
-      <LocationContent>
-        <div className="loc-top">
-          <div className="loc-pencil-mobile">
-            <img src="/aura-ohara-pencil.jpg" alt="Pencil illustration of Aura Ohara" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '4 / 5' }} />
-          </div>
-          <div>
-            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>The Valley Listens.</h2>
-            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-              <p>Nestled in the quiet valley of Ohara, north of Kyoto, this place moves to the rhythm of light, water, and care rather than speed. Surrounded by cedar forests, rivers, and temples, it is shaped by a way of life that honours stillness, craft, and the quiet intelligence of the land.</p>
-              <p>Through a philosophy of restoration over construction, Aura in Ohara grows by listening before leading. The home, garden, and teahouse are not remade in haste, but gently renewed through patience, restraint, and deep respect for what already exists.</p>
-              <p>This slow, mindful approach allows each space to hold the memory of its setting — reflecting a way of living rooted in calm, renewal, and the richness of everyday ritual.</p>
-            </div>
-          </div>
-          <div className="loc-images-desktop">
-            <img src="/aura-ohara-pencil.jpg" alt="Pencil illustration of Aura Ohara" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '3 / 4' }} />
-          </div>
-        </div>
-        <div className="loc-bottom">
-          <LocationDataGrid
-            location="Ohara, Kyoto, Japan."
-            coords="35.1200° N, 135.8300° E"
-            altitude="1,099 FT."
-            tempRange="7–28°C"
-            avgHumidity="64%"
-            avgWind="14 KM/H"
-            weather={weather}
-          />
-          <div>
-            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>Kyoto&rsquo;s Quiet Valley, Rediscovered.</h2>
-            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-              <p>Ohara is a place of cedar forests, rivers, temples, and hand-tended fields — where farmers still work by hand and artisans move by rhythm, not by clock. It is here that Aura belongs: not to transform the valley, but to listen to it.</p>
-              <p>The site is envisioned through the restoration of a 70-year-old home and a 30-year garden, with a teahouse renewed by a Kyoto craftsman and cared for across generations. Rooted in wabi-sabi, Aura Ohara embraces imperfection, continuity, and a rich, mindful life shaped by light, calm, and reflection.</p>
-            </div>
-            <img src="/aura-ohara-landscape.jpg" alt="Aura Ohara in the valley of Kyoto" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '16 / 10', marginTop: 'var(--space-6)' }} />
-          </div>
-        </div>
-      </LocationContent>
-    </LocationModal>
-  )
-}
-
 /* ═══════════════════════════════════════════
    AGENT HOME — plain-text view for crawlers / LLMs / screen readers.
    Activated by viewMode === 'agent' (toggle in the menu). Renders the
@@ -1432,6 +1386,9 @@ export default function Home() {
   const openMudigere = useCallback(() => {
     if (typeof window !== 'undefined') window.location.assign('/mudigere')
   }, [])
+  const openOhara = useCallback(() => {
+    if (typeof window !== 'undefined') window.location.assign('/ohara')
+  }, [])
 
   /* Gate hero entrance animations until after React has mounted client-side.
      Server-rendered HTML has the .hero-anim-- modifier classes but no
@@ -2059,7 +2016,7 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
       <div className="sanctuary-stack" style={{ background: '#0a0a0a', position: 'relative', height: '600vh' }}>
         <SanctuaryStackPanel s={MUDIGERE} z={1} onClick={openMudigere} />
         <div className="sanctuary-stack__spacer" style={{ height: '100vh' }} aria-hidden />
-        <SanctuaryStackPanel s={OHARA_S} z={2} />
+        <SanctuaryStackPanel s={OHARA_S} z={2} onClick={openOhara} />
         <div className="sanctuary-stack__spacer sanctuary-stack__post-ohara" style={{ height: '100vh' }} aria-hidden />
         <SanctuaryStackPanel2Col left={MUNDUK} right={DAYLESFORD} z={3} />
         <div className="sanctuary-stack__trailing" style={{ height: '100vh' }} aria-hidden />
@@ -2195,7 +2152,7 @@ function AgentHomeView() {
         <li><a href="/idea">/idea</a> — The 1000 Year Idea.</li>
         <li><a href="/wisdom">/wisdom</a> — Moral Spine.</li>
         <li><a href="/rta">/rta</a> — Ṛta. Right time. Right action.</li>
-        <li><a href="/artistry">/artistry</a> — Code meets clay.</li>
+        <li><a href="/artistry">/artistry</a> — A space to make.</li>
         <li><a href="/residency">/residency</a> — Monastic polymaths.</li>
         <li><a href="/provenance">/provenance</a> — Cherry to cup, on chain.</li>
         <li><a href="/fermentation">/fermentation</a> — Three disciplines, one precision.</li>

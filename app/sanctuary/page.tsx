@@ -1,106 +1,92 @@
 import {
   HeroBanner,
   TwoCol,
+  OneCol,
   Placeholder,
   DataGrid,
   DataCard,
   PullQuote,
+  ScrollHighlight,
   Continue,
 } from '@/components/article/Article'
 
 export default function SanctuaryPage() {
   return (
     <>
-      {/* Hero: pinned full-bleed banner matching the modern journal
-          pattern (biodynamic / fermentation / land). Dropped the
-          previous ArticleHero subline + 6-question TOC + figure — the
-          TOC pattern was retired across the kit. */}
       <HeroBanner
+        currentHref="/sanctuary"
         title="Guests of the mountain."
         src="/aura-sanctuary.mp4"
         mediaType="video"
         poster="/aura-sanctuary.jpg"
-        caption="The land in rhythm — two valleys in practice, two more in planning"
-        alt="Aura Sanctuary — Mudigere and Ohara, the four-valley sanctuary stack"
+        caption="A network of valleys — two in practice, two more in listening"
+        alt="Aura Sanctuary — the four-valley sanctuary network"
+      />
+
+      <TwoCol id="posture" heading="A sanctuary is a posture, not a property.">
+        <p className="p1">
+          A sanctuary is not a place you go. It is a posture a place takes. It is what happens
+          when a piece of land is tended long enough that it begins to tend the people who stand
+          on it. The two we already run have a journal of their own — the geographies, the
+          coordinates, the year counts on the buildings — and that journal is{' '}
+          <em>The Land</em>. This one is about what the network does.
+        </p>
+        <p className="p2">
+          The Aura sanctuary system is four valleys in two hemispheres, held in one rhythm. Two
+          are in practice. Two are in the patient early conversations of being read. None of them
+          are destinations. All four are postures.
+        </p>
+      </TwoCol>
+
+      <Placeholder
+        type="Aerial · two hemispheres"
+        caption="The four-valley map — Mudigere, Ohara, Munduk, Daylesford"
       />
 
       <Placeholder
-        caption="Wide establishing plate: mist burning off the Western Ghats at dawn, cutting to cedar forest above Ohara. Long, slow, held shots. No people in frame."
+        type="Detail · four soils"
+        caption="Laterite, moss, volcanic basalt, granite — one from each valley, side by side"
       />
-
-      {/* eyebrow was: "The Premise" */}
-      <TwoCol id="premise" heading="Four valleys. One rhythm.">
-        <p className="p1">
-          Aura is a way of tending land that begins by asking what the land
-          already knows. We start from the earth and work up — soil, water,
-          canopy, cattle, craft, kitchen, code. The buildings come last. The
-          philosophy was there first.
-        </p>
-        <p className="p2">
-          Our first two sanctuaries are already at work. Mudigere, in the Western Ghats of
-          Karnataka, is 150 acres of biodynamic plantation, forest, and herd. Ohara, a valley
-          north of Kyoto, is a 70-year-old home, a 30-year-old garden, and a restored teahouse.
-          One is scale; the other is refinement. Together they are one organism with two
-          climates.
-        </p>
-        <p className="p2">
-          Two more valleys are forming — Munduk in the Bali highlands, Daylesford in the cooler
-          south of Australia. Neither has a date. Both are listening exercises. We will know
-          when the land tells us it is ready.
-        </p>
-      </TwoCol>
-      <TwoCol id="guest" heading="Guests of the Mountain">
-        <p className="p1">
-          A sanctuary is not a property. It is a posture. It is what happens when a piece of
-          land is tended long enough that it begins to tend the people who stand on it. The
-          Western Ghats are among the oldest mountains on earth. The cedar above Ohara has seen
-          a thousand winters. To arrive in either valley is to agree to a pace older than the
-          arrival.
-        </p>
-        <p className="p2">
-          In Thailand, a Buddhist nun is rescuing three hundred acres of condemned trees in
-          Kengkacha UNESCO land, one transplant at a time. She does not call it a project. She
-          calls it a debt. Aura is run on the same accounting. The land gave first. We are
-          answering.
-        </p>
-        <p className="p2">
-          The pattern is portable. Any community, anywhere, could grow it in their own soil —
-          the four-pillared rhythm of land, hospitality, craft, and code, tuned to a particular
-          climate and a particular lineage. Aura is one expression of that pattern. Not the only
-          one. Not the last.
-        </p>
-      </TwoCol>
 
       <PullQuote>
         Humans are not owners here — only guests of the mountain.
       </PullQuote>
 
-      {/* eyebrow was: "India · Japan" */}
-      <TwoCol id="duality" heading="The Duality">
+      <TwoCol id="rhythm" heading="One rhythm, four climates.">
         <p className="p1">
-          India gives us scale, monsoon, and cosmological time. Japan gives us restraint, craft, and
-          millimetric care. Aura needs both. The Mudigere forest teaches generosity; the Ohara garden
-          teaches attention. One cannot substitute for the other, and neither is complete alone.
+          A network of sanctuaries is only useful if a rhythm passes between them. Aura&apos;s
+          rhythm is the seasons doing the scheduling. When Mudigere is closed by monsoon, Ohara is
+          turning through its own four seasons undisturbed. When Ohara is buried in snow, Munduk
+          is in its dry-side window. Daylesford balances the southern hemisphere against the rest.
+        </p>
+        <p className="p2">
+          The same posture moves with the rhythm — the same insistence on observation before
+          intervention, the same five-product economy of the cow, the same refusal to do anything
+          on a quarterly schedule. The valleys differ in climate. They are identical in stance.
+        </p>
+      </TwoCol>
+
+      <ScrollHighlight>
+        {`Four valleys.
+         One rhythm.
+         The land tends the people who tend the land.`}
+      </ScrollHighlight>
+
+      <TwoCol id="two-live" heading="The two in practice.">
+        <p className="p1">
+          The first two valleys are doing the early work. They share the operating system but not
+          the temperament. One is the body of patience. The other is the calm of reflection. We
+          need both, and we have written about each in their own journals.
         </p>
         <DataGrid cols={2}>
-          <DataCard value="Mudigere — Karnataka">
-            150 acres of biodynamic plantation at 3,600 feet in the Western Ghats. Coffee, pepper,
-            areca, and a herd of Malnad Gidda cattle. Red laterite soil, 40–100 inches of rainfall a
-            year, a UNESCO biosphere at the door. The body of patience.
+          <DataCard value="The body of patience">
+            The Indian valley. Scale, monsoon, cosmological time. Where the herd, the canopy, and
+            the kitchen do the work the rest of the system rides on. Detail and geography in{' '}
+            <em>The Land</em>.
           </DataCard>
-          <DataCard value="Ohara — Kyoto">
-            A valley of cedar, river, and temple an hour north of Kyoto. A restored 70-year-old
-            home, a 30-year-old garden, a teahouse carried forward by a craftsman and his grandson.
-            Wabi-sabi as foundation. The calm of reflection.
-          </DataCard>
-        </DataGrid>
-
-        <DataGrid cols={2}>
-          <DataCard value="13.1365° N">
-            Mudigere · Western Ghats, Karnataka · 3,600 ft · 150 acres · UNESCO biosphere.
-          </DataCard>
-          <DataCard value="35.2375° N">
-            Ohara · North of Kyoto · 1,099 ft · 70-year home, 30-year garden, restored teahouse.
+          <DataCard value="The calm of reflection">
+            The Japanese valley. Restraint, millimetric care, lineage carried by craftsmen and
+            their grandsons. Detail and geography in <em>The Land</em>.
           </DataCard>
         </DataGrid>
       </TwoCol>
@@ -110,86 +96,103 @@ export default function SanctuaryPage() {
         neither could be alone.
       </PullQuote>
 
-      {/* eyebrow was: "The Operating System" */}
-      <TwoCol id="os" heading="Sanctuary · Agroculture · Artistry">
+      <TwoCol id="shared" heading="What actually travels between them.">
         <p className="p1">
-          Every Aura valley is built on three structural pillars. <strong>Sanctuary</strong> is the
-          land held in rhythm — the stillness, the method, the slow choreography of seasons.{' '}
-          <strong>Agroculture</strong> is what the land produces when treated as an organism rather
-          than a yield: specialty coffee, pepper, native cattle, fermented food, medicine.{' '}
-          <strong>Artistry</strong> is what the people on the land make of it — studios, residencies,
-          kitchens, labs, gatherings.
-        </p>
-        <p className="p2">
-          The three pillars are not separable. The coffee is not coffee without the cattle; the cabin
-          is not a cabin without the canopy; the studio is not a studio without the soil. This is why
-          we call it an ecosystem and not a collection.
-        </p>
-      </TwoCol>
-
-      {/* eyebrow was: "Entry" */}
-      <TwoCol id="rhythm" heading="Not a destination. A rhythm you enter.">
-        <p className="p1">
-          A sanctuary is entered slowly. The first hour is for the body to catch up with the
-          valley. The first day is for the kitchen to read the guest, not the other way round.
-          The first week is for the silence to become interesting rather than loud.
+          Not the crops, not the climate, not even the language. What moves from Mudigere to
+          Ohara — and will move to Munduk and Daylesford when they&apos;re ready — is a small set
+          of working habits, tested wherever they&apos;ve been tried and kept because they held.
         </p>
         <DataGrid cols={3}>
-          <DataCard value="Work · Harvest · Learn">
-            Morning. The day begins when the mist lifts and the soil softens. Apprenticeship in motion.
+          <DataCard value="Observe first">
+            One full season of watching before any structure goes in. No exceptions, no matter
+            how obvious the answer looks on day one.
           </DataCard>
-          <DataCard value="Gather · Savour · Listen">
-            Evening. The day closes around a fire or a table. Not with fatigue — with fullness.
+          <DataCard value="The animal pays its way">
+            Every valley keeps a herd sized to the land, not the ambition — the five-product
+            economy of the cow, or its local equivalent, doing real work in the loop.
           </DataCard>
-          <DataCard value="Pause · Observe · Belong">
-            Any time. The core discipline. The only appointment in a week of silence is tea at four.
+          <DataCard value="Lineage over import">
+            Local craft, local cultivar, local calendar. A practice imported wholesale from
+            another valley is a decoration, not a discipline.
           </DataCard>
         </DataGrid>
-        <p className="p2">
-          The visit is not measured in nights. It is measured in what you carry with you when
-          you leave — a slower pulse, a clearer palate, a week of stillness that keeps paying
-          out for a year.
-        </p>
       </TwoCol>
 
-      {/* eyebrow was: "Coming Sanctuaries" */}
-      <TwoCol id="coming" heading="Munduk · Daylesford">
+      <Placeholder
+        type="Detail · shared practice"
+        caption="The same observation posture, four different soils"
+      />
+
+      <Placeholder
+        type="Portrait · the herd"
+        caption="A herd sized to the land, not the ambition — one valley's version of the five-product economy"
+      />
+
+      <TwoCol id="two-listening" heading="The two in listening.">
         <p className="p1">
           A sanctuary cannot be willed into existence. It has to be earned, twice — once from the
-          people of the valley, and once from the valley itself. We are in the patient early
-          conversations of both.
+          people of the valley, and once from the valley itself. Neither new site has a built
+          structure yet, and neither page pretends otherwise: what follows is what we know from
+          listening, not what we&apos;ve built.
         </p>
         <p className="p2">
-          <strong>Munduk</strong> sits in the volcanic highlands of north Bali — coffee country,
-          cloud forest, waterfalls. It is where Aura&apos;s Indian soil philosophy meets Southeast
-          Asia&apos;s living laboratory of fermentation and ceremony. The land is being read.
+          <strong>Munduk</strong> sits in the volcanic highlands of north Bali, where a sacred
+          lake half a ridge from the working one has banned motorboats for longer than anyone
+          can date. It is where Aura&apos;s Indian soil philosophy meets a community that already
+          drew its own line between use and reverence — before Aura had a name.
         </p>
         <p className="p2">
-          <strong>Daylesford</strong>, in Victoria, Australia, is Aura&apos;s southern counterweight.
-          Cooler climate, mineral springs, a landscape that holds long memory of both Indigenous
-          stewardship and European arrival. A valley to be met slowly, on its own time.
+          <strong>Daylesford</strong>, in Victoria, Australia, is Aura&apos;s southern
+          counterweight — the only valley in the network with a real winter. Its mineral springs
+          have been rising through 450-million-year-old rock since long before the town that
+          protects them existed to notice.
         </p>
       </TwoCol>
 
       <Placeholder
-        caption="Volcanic highlands of north Bali. Terraced coffee gardens at ~1,200 m, cloud forest, waterfalls. Frame: a single wooden gate at the edge of a terrace, no signage."
+        type="Landscape · volcanic"
+        caption="Munduk — volcanic highlands of north Bali, ~1,200 m, cloud forest and terraces"
       />
 
       <Placeholder
-        caption="Cooler southern-hemisphere landscape — old volcanic lakes, eucalypt, wide pasture in Victoria, Australia. Low sun, pale light."
+        type="Landscape · southern hemisphere"
+        caption="Daylesford — old volcanic lakes and pasture in Victoria, Australia"
       />
+
+      <TwoCol id="why-network" heading="Why a network at all.">
+        <p className="p1">
+          One sanctuary is a project. Two is a comparison. Four is a system. The reason to grow
+          the network past two is not scale — it is correction. A practice run only in one
+          climate, on one soil, with one lineage of people, slowly persuades itself it is the
+          practice. Two climates check each other. Four make the practice harder to confuse with
+          its setting.
+        </p>
+        <p className="p2">
+          A valley enters Aura when the land says yes and the lineage says yes — not before.
+          There is no roadmap past Daylesford. There is a posture, repeated across climates,
+          until the land tells us where it would like to be tended next.
+        </p>
+      </TwoCol>
 
       <PullQuote>
         We start from the earth and work up.
       </PullQuote>
 
-      <Continue
-        items={[
-          { href: '/residency', label: 'Residency', description: 'Monastic polymaths. Crazy misfits. Two weeks on the land.' },
-          { href: '/artistry', label: 'Artistry', description: 'The third pillar — studios, residencies, kitchens, code.' },
-          { href: '/idea', label: 'The 1000 Year Idea', description: 'The philosophy that anchors every valley.' },
-        ]}
-      />
+      <OneCol heading="The first season in any new valley.">
+        <p className="p1">
+          A thousand-year practice does not move in quarters. It moves in seasons. The first
+          season in any new valley is the one where we put nothing in. We watch. The compost
+          piles wait. The herd waits. The kiln waits. We learn the water before we ask anything
+          of it.
+        </p>
+        <p className="p2">
+          That is the only entry rite. Everything that follows — the cabins, the kitchen, the
+          studios, the gatherings — earns its place by surviving the first season&apos;s
+          observation. Most ideas do not. The ones that do get to put down a first stone.
+        </p>
+      </OneCol>
+
+      <Continue currentHref="/sanctuary" />
     </>
   )
 }

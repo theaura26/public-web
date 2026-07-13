@@ -21,16 +21,16 @@ export default function LivingSystemsPage() {
         caption="Read the land first — relationships over isolated variables"
       />
 
-      <TwoCol heading="A forest that produces crops. Not a farm that plants trees.">
+      <TwoCol heading="A forest that produces crops.">
         <p className="p1">
           150 acres of four-story polyculture in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>, read as a
           single living dataset.
         </p>
         <p className="p2">
-          Most agricultural systems isolate variables. Aura studies
-          relationships instead. The estate is not divided by crop; it is
-          divided by block — because the unit of record is the land, not the
-          product.
+          Most agricultural systems isolate variables. Aura studies the
+          relationships between them. The estate is organised by block, each one
+          a patch of a single living system, because the unit of record is the
+          land itself.
         </p>
       </TwoCol>
 
@@ -116,8 +116,8 @@ export default function LivingSystemsPage() {
         </p>
         <p className="p2">
           They rotate through blocks timed to coffee cherry development stages.
-          Their dung drives every biodynamic preparation on the estate. They
-          are not assets. They are participants in a biological system.
+          Their dung drives every biodynamic preparation on the estate. They are
+          working members of the biological system, not a line on an inventory.
         </p>
       </TwoCol>
 

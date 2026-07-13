@@ -31,6 +31,16 @@ export default function FermentationPage() {
           where the estate&rsquo;s character becomes audible in flavour — or
           invisible in soil biology.
         </p>
+        <p className="p2">
+          Stripped to its definition, fermentation is only this: desired microbial
+          growth and the enzyme work that comes with it — the oldest technology we
+          have for turning a raw material into something more stable, more
+          digestible, or more delicious. Humans have used it to keep food through
+          winters, to unlock nutrients a body could not otherwise reach, and to
+          make flavours that do not exist in the plant. The estate runs three of
+          these conversations at once. They are not the same conversation, and it
+          is worth being precise about how they differ.
+        </p>
       </OneCol>
 
       <Placeholder
@@ -104,17 +114,21 @@ export default function FermentationPage() {
 
       <TwoCol id="dung" heading="Cow dung fermentation.">
         <p className="p1">
-          This is the discipline most people do not think of. At Aura, the
-          fermentation of cow dung into biodynamic preparations is as precise
-          as the fermentation of coffee cherry.
+          This is the one most people do not picture as fermentation — and
+          strictly, it is something adjacent. Not the food fermentation of the
+          cherry but a microbial decomposition, a composting in miniature. It is no
+          less real for the distinction: metabarcoding of horn manure shows a
+          genuine succession underground, one microbial community giving way to the
+          next as the months pass.
         </p>
         <p className="p2">
-          <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure — begins as fresh dung from the estate&rsquo;s
-          52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle, packed into a cow horn, buried over winter.
-          The microbial transformation that occurs underground is a
-          fermentation. When it is exhumed, stirred dynamically for one hour,
-          and applied to soil at dusk, it carries a microbial signature
-          shaped by the breed, the season, the temperature, and the duration.
+          <Term tip="Horn manure. Cow dung packed in a cow horn, buried over the cool months, then stirred into water and applied to soil.">BD 500</Term> begins as fresh dung from the estate&rsquo;s
+          52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term>, packed into a horn and buried. What the estate
+          can honestly claim is the microbiology: a decomposition shaped by the
+          breed, the season, and the soil it is buried in. What it does not claim
+          is the cosmology — the lunar timing and esoteric framing attached to these
+          preparations, dreamed up a century ago, have never held up in controlled trials. We keep
+          the practice for the biology, not the astrology.
         </p>
       </TwoCol>
 
@@ -174,8 +188,7 @@ export default function FermentationPage() {
       />
 
       <PullQuote>
-        MICROBIAL SIGNATURE is the slowest MOAT. DECADES to build,
-        IMPOSSIBLE to copy.
+        Flavour is not added. It is *cultured* — grown, in the dark, by things too small to see.
       </PullQuote>
 
       <ScrollHighlight>

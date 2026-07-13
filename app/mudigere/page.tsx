@@ -101,7 +101,7 @@ function LiveLandData() {
         </div>
       </div>
 
-      {/* Same Google embed as the /mudigere-estate page. Queried by
+      {/* Same Google embed as the /mudigere page. Queried by
           COORDINATES, not a place name — a name query matches the
           "Sampigekhan Estate stay" listing and auto-opens its business
           card; coordinates just drop a clean pin. t=h satellite, z=14,
@@ -644,7 +644,7 @@ export default function MudigerePage() {
           What the coffee draws on, the animals give back. The{' '}
           <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries. Small, dark, hardy.">Malnad Gidda</Term> — an indigenous breed, bred to this
           altitude — move through the blocks as the rotation; their dung
-          and urine feed the biodynamic preparations (<Term tip="Rudolf Steiner's biodynamic preparations — eight numbered field and compost sprays applied at precise lunar and seasonal timings.">BD 500–508</Term>),
+          and urine feed the biodynamic preparations (<Term tip="The biodynamic preparations — eight numbered field and compost sprays applied at precise lunar and seasonal timings.">BD 500–508</Term>),
           timed to the moon and the season.
         </p>
         <p className="p2">
@@ -711,7 +711,7 @@ export default function MudigerePage() {
           A working estate is a community before it is anything else — the
           hands that read the land, the families that have kept it for
           generations, and the ones who come to stay and learn. What is
-          learned here is written down and given away: Steiner and Vedic
+          learned here is written down and given away: biodynamic and Vedic
           practice, documented and taught, opened to anyone who comes.
         </p>
         <p className="p2">

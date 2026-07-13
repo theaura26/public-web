@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { comingSoonMetadata, guardComingSoon } from '@/lib/coming-soon'
 
 export const metadata: Metadata = {
   /* Title is a bare string — the root layout's title.template
@@ -16,10 +15,8 @@ export const metadata: Metadata = {
     images: [{ url: '/aura-sanctuary.jpg', width: 1600, height: 900, alt: 'Aura Sanctuary — the land in rhythm' }],
   },
   twitter: { card: 'summary_large_image', images: ['/aura-sanctuary.jpg'] },
-  ...comingSoonMetadata,
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  guardComingSoon()
   return children
 }

@@ -36,8 +36,8 @@ export default function BiodynamicPage() {
           plant, animal, and cosmos are connected.
         </p>
         <p className="p2">
-          We practise two systems simultaneously: European biodynamic (Rudolf
-          Steiner, 1924) and Vedic agricultural science (millennia older,
+          We practise two systems simultaneously: European biodynamic and
+          Vedic agricultural science (millennia older,
           orally transmitted, regionally adapted).
         </p>
         <p className="p2">
@@ -51,7 +51,7 @@ export default function BiodynamicPage() {
         caption="The next generation — the herd that will run the next hundred years"
       />
 
-      <TwoCol id="steiner" heading="The Steiner preparations.">
+      <TwoCol id="steiner" heading="The numbered preparations.">
         <p className="p1">
           <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure. Cow dung packed into a cow horn, buried over
           winter, exhumed in spring. The microbial transformation that occurs
@@ -81,7 +81,7 @@ export default function BiodynamicPage() {
 
       <TwoCol id="vedic" heading="The Vedic system.">
         <p className="p1">
-          Alongside the Steiner preparations, the estate prepares and applies a
+          Alongside those numbered preparations, the estate prepares and applies a
           parallel set of inputs rooted in Indian agricultural science —
           <Term tip="Cow pat pit. Composted dung layered with BD preparations, fermented ninety days.">CPP</Term>,
           Jeevamrit, Panchgavya, Beejamrit, and older preparations from the

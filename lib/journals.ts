@@ -57,10 +57,70 @@ export const ACTIVE_JOURNALS: Journal[] = [
     img: '/journals/biodynamic/aura-biodynamic.jpg',
   },
   {
+    href: '/herd',
+    title: 'Ecosystem Engineers',
+    description: 'Not livestock — infrastructure. Why a grazing herd is one of nature’s oldest ecosystem engineers.',
+    img: '/aura-land.jpg',
+  },
+  {
+    href: '/circular',
+    title: 'Circular Intelligence',
+    description: 'Compost is not fertiliser. It is a biological network — nature produces no waste, only relationships.',
+    img: '/aura-mudigere-landscape.jpg',
+  },
+  {
     href: '/residency',
     title: 'Monastic Polymaths',
     description: 'An artist residency for natural intelligence. Embedded, invitation-based.',
     img: '/journals/residency/aura-monastic-polymath.jpg',
+  },
+  {
+    href: '/idea',
+    title: 'The 1000 Year Idea',
+    description: 'A thousand years is the unit. Soil is the substrate. Time is the test.',
+    img: '/aura-idea.jpg',
+  },
+  {
+    href: '/sanctuary',
+    title: 'Sanctuary',
+    description: 'Four valleys, one rhythm. Guests of the mountain, not owners.',
+    img: '/aura-sanctuary.jpg',
+  },
+  {
+    href: '/ohara',
+    title: 'Ohara',
+    description: 'Asa and Niwa. A valley north of Kyoto that keeps its own time.',
+    img: '/aura-ohara.jpg',
+  },
+  {
+    href: '/artistry',
+    title: 'Artistry',
+    description: 'A space to make. Six studios cut from the estate, and what leaves them.',
+    img: '/aura-artistry.jpg',
+  },
+  {
+    href: '/provenance',
+    title: 'Provenance',
+    description: 'Cherry to cup, on chain. Every event signed, every reading verifiable.',
+    img: '/aura-provenance.jpg',
+  },
+  {
+    href: '/pepper',
+    title: 'Malabar Pepper',
+    description: 'Vine on palm. Three drupes from one cultivar, an appellation older than Rome.',
+    img: '/aura-pepper.jpg',
+  },
+  {
+    href: '/areca',
+    title: 'The Sentinel Palm',
+    description: 'Twenty metres of shade. The keystone of the five-layer canopy.',
+    img: '/aura-areca.jpg',
+  },
+  {
+    href: '/vedic',
+    title: 'Vedic Farming',
+    description: 'Older than the word organic. Feed the microbe, not the plant.',
+    img: '/aura-vedic.jpg',
   },
 ]
 

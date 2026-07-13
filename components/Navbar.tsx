@@ -31,7 +31,8 @@ type Article = {
 }
 
 const ARTICLES: Article[] = [
-  // Active journals — listed first, in the order the user wants them.
+  // Active journals — order tracks lib/journals.ts so the slide-out
+  // menu, hero, and "Continue" footer all read from one source.
   { href: '/wisdom',         title: 'Moral Spine',                        size: 'lg', img: '/journals/wisdom/aura-moral-spine.jpg' },
   { href: '/living-systems', title: 'Living Systems',                     size: 'sm', img: '/journals/living-systems/aura-living-systems.jpg' },
   { href: '/coffee',         title: 'Our Coffee Story',                   size: 'lg', img: '/journals/coffee/aura-our-coffee-story.jpg' },
@@ -40,14 +41,14 @@ const ARTICLES: Article[] = [
   { href: '/land',           title: 'The Land',                           size: 'sm', img: '/journals/land/aura-the-land.jpg' },
   { href: '/biodynamic',     title: 'Biodynamic',                         size: 'lg', img: '/journals/biodynamic/aura-biodynamic.jpg', video: '/journals/biodynamic/aura-biodynamic.mp4' },
   { href: '/residency',      title: 'Monastic polymaths. Crazy misfits.', size: 'lg', img: '/journals/residency/aura-monastic-polymath.jpg' },
-  // Coming-soon — render at the tail of the feed.
-  { href: '/idea',           title: 'The 1000 Year Idea',                 size: 'sm', img: '/aura-idea.jpg',          comingSoon: true },
-  { href: '/sanctuary',      title: 'Guests of the mountain.',            size: 'lg', img: '/aura-sanctuary.jpg', video: '/aura-sanctuary.mp4', comingSoon: true },
-  { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg',      comingSoon: true },
-  { href: '/provenance',     title: 'Cherry to cup. On chain.',           size: 'sm', img: '/aura-provenance.jpg',    comingSoon: true },
-  { href: '/pepper',         title: 'Malabar black gold.',                size: 'lg', img: '/aura-pepper.jpg',        comingSoon: true },
-  { href: '/areca',          title: 'The sentinel palm.',                 size: 'sm', img: '/aura-areca.jpg',         comingSoon: true },
-  { href: '/vedic',          title: 'Older than its study.',              size: 'lg', img: '/aura-vedic.jpg',         comingSoon: true },
+  { href: '/idea',           title: 'The 1000 Year Idea',                 size: 'sm', img: '/aura-idea.jpg' },
+  { href: '/mudigere',       title: 'Guests of the mountain.',            size: 'lg', img: '/aura-mudigere.jpg', video: '/aura-mudigere.mp4' },
+  { href: '/ohara',          title: 'Asa. Niwa.',                         size: 'sm', img: '/aura-ohara.jpg', video: '/aura-ohara.mp4' },
+  { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg', video: '/aura-artistry.mp4' },
+  { href: '/provenance',     title: 'Cherry to cup. On chain.',           size: 'sm', img: '/aura-provenance.jpg' },
+  { href: '/pepper',         title: 'Malabar black gold.',                size: 'lg', img: '/aura-pepper.jpg' },
+  { href: '/areca',          title: 'The sentinel palm.',                 size: 'sm', img: '/aura-areca.jpg' },
+  { href: '/vedic',          title: 'Older than its study.',              size: 'lg', img: '/aura-vedic.jpg' },
 ]
 
 const PRIMARY_LINKS = [
@@ -62,7 +63,7 @@ const INSTAGRAM_URL = 'https://www.instagram.com/theaura.life/'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
-  /* Inline contact modal — opened by the /mudigere-estate "Contact
+  /* Inline contact modal — opened by the /mudigere "Contact
      us" nav link instead of routing to /contact, so the architect
      stays on the briefing page while writing. */
   const [contactOpen, setContactOpen] = useState(false)
@@ -351,10 +352,10 @@ export default function Navbar() {
         }}
       >
         {/* Left — rotating symbol (centred in the 10vw rail). On
-            /mudigere-estate the architect's briefing is meant to be
+            /mudigere the architect's briefing is meant to be
             a closed loop — no clickable home affordance, so the
             symbol renders as a plain span instead of a Link. */}
-        {pathname === '/mudigere-estate' ? (
+        {pathname === '/mudigere' ? (
           <span style={{ color: 'var(--text)', justifySelf: 'center', display: 'inline-flex', alignItems: 'center' }} aria-label="Aura">
             {isAgent ? (
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14 }}>~/aura</span>
@@ -388,14 +389,14 @@ export default function Navbar() {
             Absolutely positioned at viewport centre rather than
             grid-centred so the wordmark stays on the true horizontal
             midline even when the left / right grid cells have
-            different content widths (e.g. on /mudigere-estate where
+            different content widths (e.g. on /mudigere where
             the right-side "Contact us" label is wider than the left
             logo emblem). The translate composes vertical centre +
             the showLogo entry slide. */}
-        {/* On /mudigere-estate the wordmark also drops its link —
+        {/* On /mudigere the wordmark also drops its link —
             the architect should have no nav-driven escape from the
             briefing; the Contact us button is the only exit. */}
-        {pathname === '/mudigere-estate' ? (
+        {pathname === '/mudigere' ? (
           <span
             aria-label="Aura"
             className="nav-wordmark"
@@ -441,11 +442,11 @@ export default function Navbar() {
         )}
 
         {/* Right — hamburger on every page EXCEPT the unlisted
-            /mudigere-estate briefing, which swaps it for a "Contact
+            /mudigere briefing, which swaps it for a "Contact
             us" mailto chip so architects landing there have a single,
             obvious next step (and the hidden journal menu stays
             hidden for that audience). */}
-        {pathname === '/mudigere-estate' ? (
+        {pathname === '/mudigere' ? (
           /* Plain text button — reuses the existing `.label`
              typography token (DM Mono · 11 px · 1 px tracking ·
              uppercase) so the nav CTA reads as part of the kit, not
@@ -485,11 +486,11 @@ export default function Navbar() {
                ink (two 22px bars) sits centred inside the larger pad area. */
             style={{
               /* Pin to col 3 explicitly. The center wordmark was moved
-                 to `position: absolute` in the mudigere-estate refactor,
+                 to `position: absolute` in the mudigere refactor,
                  so it no longer occupies grid col 2 — and a button
                  placed second in the DOM auto-flows into col 2 (the
                  wide middle) instead of col 3 (the right rail). The
-                 /mudigere-estate Contact-us button already has this
+                 /mudigere Contact-us button already has this
                  pin; the default hamburger needs it too. Without this
                  the hamburger renders dead-centre of the viewport on
                  every non-mudigere page. */
@@ -1298,7 +1299,7 @@ export default function Navbar() {
         }}
       />
 
-      {/* Contact modal — opened by the /mudigere-estate "Contact us"
+      {/* Contact modal — opened by the /mudigere "Contact us"
           button. Mounted here so it's a sibling of the nav and lives
           above the page-vignette (z-index 100 vs 40). */}
       <ContactModal

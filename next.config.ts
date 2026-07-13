@@ -14,6 +14,14 @@ const nextConfig: NextConfig = {
      adds a backdrop blur that distorts the corner of the layout while
      designing. Production builds never render it. */
   devIndicators: false,
+  /* /mudigere-estate was the original architect's-briefing page;
+     /mudigere superseded it with a richer treatment. One canonical
+     page now — redirect the old URL so any existing links don't 404. */
+  async redirects() {
+    return [
+      { source: '/mudigere-estate', destination: '/mudigere', permanent: false },
+    ]
+  },
 };
 
 export default nextConfig;

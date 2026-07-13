@@ -103,6 +103,13 @@ export default function CoffeePage() {
           Terroir alone does not explain the spread between them. Terroir
           expressed through technique does.
         </p>
+        <p className="p2">
+          A caution against our own romance: in controlled trials, a chosen yeast
+          or a sealed ferment moves a cup by one to three points on the specialty
+          scale — real, and measurable, but not the whole instrument. Altitude and
+          variety set the ceiling. The ferment only decides how much of it the cup
+          reaches.
+        </p>
       </TwoCol>
 
       <DataGrid cols={3} standalone>
@@ -168,6 +175,24 @@ export default function CoffeePage() {
         </DataCard>
       </DataGrid>
 
+      <TwoCol id="microbes" heading="What is actually fermenting.">
+        <p className="p1">
+          Strip the romance and a coffee ferment is a microbial event with a known
+          cast. Wild yeasts — <Term tip="Common wild yeasts on coffee cherry. They ferment the sugars in the mucilage into the alcohols and acids that later become fruity esters in the cup.">Pichia, Hanseniaspora</Term> — and
+          lactic-acid bacteria colonise the sweet mucilage on the bean, secreting
+          enzymes that dissolve it while the pH drops. The alcohols and acids they
+          leave behind are the raw material of the esters a taster later calls
+          &ldquo;fruity.&rdquo; This is well documented. It is not folklore.
+        </p>
+        <p className="p2">
+          It is also double-edged. The same microbes that build fruit build faults
+          when they run too long or too warm — the vinegar sharpness of excess
+          acetic acid, the onion note of butyric. Control is not a marketing word
+          here. It is the line between a flavour and a defect, and it is why every
+          lot is held to a clock and a pH rather than left to chance.
+        </p>
+      </TwoCol>
+
       <PullQuote>
         The CHOICES made by one BATCH shape every batch that FOLLOWS.
       </PullQuote>
@@ -180,15 +205,19 @@ export default function CoffeePage() {
 
       <TwoCol id="solera" heading="Solera carry-forward.">
         <p className="p1">
-          The Solera Maceration borrows from sherry production. During the
-          first fermentation phase, actively fermenting cherries are mixed with
-          freshly harvested ones. The microbial culture of one batch shapes
-          every batch that follows.
+          The Solera Maceration borrows a method from sherry, where it is real and
+          well understood: a living yeast film — the <Term tip="A living biofilm of Saccharomyces yeast kept alive across sherry casks for decades, each young addition feeding the established culture. A documented case of microbial continuity.">flor</Term> — is
+          kept alive across casks for decades, each young barrel feeding the old
+          culture. Aura carries a fraction of an actively fermenting batch forward
+          into freshly harvested cherries, hoping to seed the same continuity.
         </p>
         <p className="p2">
-          Over seasons, the microbial community on this estate becomes a
-          character of its own — a signature that belongs to this land and no
-          other. Appellation, in microbial form.
+          Whether a coffee ferment can actually hold a &ldquo;house culture&rdquo;
+          across seasons the way a sherry cask does is, honestly, not yet proven —
+          coffee ferments are short, and no study has shown a persistent estate
+          strain. It is a promising analogy the estate is testing season by season,
+          not a settled fact. We would rather tell you that than sell you the
+          metaphor.
         </p>
       </TwoCol>
 

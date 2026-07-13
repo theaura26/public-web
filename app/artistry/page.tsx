@@ -8,208 +8,203 @@ import {
   DataGrid,
   DataCard,
   PullQuote,
+  ScrollHighlight,
   Continue,
+  Term,
 } from '@/components/article/Article'
 
 export default function ArtistryPage() {
   return (
     <>
-      {/* Modern hero pattern — was ArticleHero (subline + 6-question
-          TOC + figure). The TOC pattern is retired across coming-soon
-          journals; the body sections (TwoCol/OneCol/DataGrid below)
-          carry their own headings as anchors. */}
       <HeroBanner
-        title="Code meets clay."
+        currentHref="/artistry"
+        title="A space to make."
         src="/aura-artistry.mp4"
         mediaType="video"
         poster="/aura-artistry.jpg"
-        caption="Studios, residencies, labs, gatherings — the work of the land"
-        alt="Aura artistry — studios, residency, labs, and the Bhoomi gathering"
+        caption="Six studios cut from the estate itself — where creators make what only this ground allows"
+        alt="Aura artistry — the studios where creators come to make"
       />
 
       <Placeholder
-        caption="Wide frame of a cedar workbench running through natural light — ceramics on one end, circuitry on the other, a cup of coffee between them. No people visible above the shoulders."
+        type="Detail · workbench"
+        caption="Cedar workbench in natural light — ceramics on one end, circuitry on the other"
       />
 
-      {/* eyebrow was: "The Premise" */}
-      <TwoCol id="premise" heading="The soil is the studio.">
+      <Placeholder
+        type="Detail · glaze"
+        caption="Glaze test tiles, fired from local red laterite oxides"
+      />
+
+      <TwoCol id="premise" heading="The studio is the estate.">
         <p className="p1">
-          Artistry at Aura is not an add-on. It is how the land talks back. Every art form — from
-          ceramics to storytelling, from coffee to code — emerges from the same soil that grows the
-          pepper and shelters the herd. What the plantation produces in food, the studio produces
-          in object, image, software, and sound.
+          A glaze mixed from the same red laterite the coffee grows in, fired in a kiln burning
+          offcuts from the canopy thinning — that cup is the whole idea in one object. The studios
+          are not built beside the plantation. They are cut from it. The land is the raw material,
+          the tool, and the room.
         </p>
         <p className="p2">
-          Two grammars meet on the workbench. The old craft grammar — apprenticeship, repetition,
-          patience of the hand. The new technical grammar — sensors, world models, native systems.
-          They are not rivals. One teaches the other. A potter&apos;s eye trains an algorithm the
-          way a farmer&apos;s ear trains a forecast.
+          What the plantation makes in food, the studios make in object, cloth, letterform, and
+          sound. Same ground, two harvests. A creator who works here works with material sourced,
+          fermented, or fired within a walk of the bench — nothing flown in to finish a piece.
+        </p>
+        <p className="p2">
+          Long hours. Few meetings. No one checking whether the kiln room has Wi-Fi. Who comes to
+          make here, and how, is its own journal — <Term tip="The residency's selection, teachers, and application detail live in the Monastic Polymaths journal.">Monastic Polymaths</Term>. This
+          one is about the space itself, and what leaves it.
         </p>
       </TwoCol>
-
-      <Placeholder
-        caption="Macro, tight, low-light. A spinning clay form on one half of the frame; a breadboard with blinking LEDs on the other. Same bench, same maker."
-      />
 
       <PullQuote>
         Coffee roots and design systems. Code meets clay.
       </PullQuote>
-      <TwoCol id="audience" heading="The Audience">
+
+      <ScrollHighlight>
+        {`Code on Monday.
+         Clay on Tuesday.
+         Coffee on Wednesday.
+         One space, three grammars.`}
+      </ScrollHighlight>
+
+      <TwoCol id="studios" heading="Six rooms to make in.">
         <p className="p1">
-          Aura is not built for everyone. It is built for the monastic polymath — the person who
-          works across disciplines but within a single practice, who is attached to the work and
-          detached from the noise. The archetype is old. The audience is small. Both are fine.
-        </p>
-        <DataGrid cols={2}>
-          <DataCard value="Monastic">
-            Long hours. Early mornings. Few meetings. No theatre. Attention as the first currency,
-            language economy as the second. The Sikh notion of being attached to the work and
-            detached from the reward — the craft ethic of every tradition that outlasted its
-            founder.
-          </DataCard>
-          <DataCard value="Polymath">
-            Code on Monday, clay on Tuesday, coffee on Wednesday, cattle on Thursday. Different
-            grammars, one sentence. Depth before breadth, and then breadth that feeds the depth
-            back. The potter-engineer-farmer-writer is not a collage; she is a coherent
-            discipline.
-          </DataCard>
-        </DataGrid>
-        <p className="p2">
-          Who the work is not for: the audience of scale. Not for P&amp;G. Not for Coke. Not for
-          enterprise marketing teams. Aura is made for people remaking their own practice in
-          public — and for the crazy misfits who are ready to try something honest.
-        </p>
-      </TwoCol>
-      <TwoCol id="studios" heading="Studios">
-        <p className="p1">
-          Every valley has a studio. Every studio has the same rule: the tools in it must be
+          Every valley has its studios, and every one obeys the same rule: the tools in it must be
           serviceable by the hands that live here. No dependency on a supply chain the land cannot
-          feed. No complexity the local apprentice cannot inherit.
+          feed. No complexity the next apprentice cannot inherit.
         </p>
         <DataGrid cols={3}>
           <DataCard value="Ceramics · Mudigere">
-            Wheel, kiln, glazes mixed from local oxides. Vessels for the farm-to-table kitchen.
-            Tiles for the cabins. The earth of the valley made durable.
+            Wheel, kiln, glazes mixed from local oxides. Vessels for the farm-to-table kitchen,
+            tiles for the cabins. The earth of the valley, made durable.
           </DataCard>
           <DataCard value="Textile · Mudigere">
-            Hand-loom, natural dye, indigo vat. The cotton planted between the coffee rows, woven
-            into the linen of the residency.
+            Hand-loom, natural dye, indigo vat. Cotton planted between the coffee rows, woven into
+            the linen of the cabins and the kitchen.
           </DataCard>
           <DataCard value="Joinery · Ohara">
-            Cedar, hinoki, cypress. Joinery in the old Japanese manner, learned from the
-            third-generation carpenter carrying on his father&apos;s garden house.
+            Cedar, hinoki, cypress — joinery in the old Japanese manner, learned from Kenji, the
+            third-generation carpenter carrying on his grandfather&apos;s garden house.
           </DataCard>
           <DataCard value="Field recording · Both">
-            The valley is recorded continuously — monsoon, cicadas, river, bell. Composers and
-            coders draw from the library. A living archive of place.
+            The valley recorded continuously — monsoon, cicadas, river, bell. Composers and coders
+            draw from the library. A living archive of place.
           </DataCard>
           <DataCard value="Typography · Both">
-            A bilingual typography practice — Kannada and Latin in Mudigere, Japanese and Latin in
-            Ohara. Letterforms that honour the ground they set on.
+            A bilingual practice — Kannada and Latin in Mudigere, Japanese and Latin in Ohara.
+            Letterforms that honour the ground they set on.
           </DataCard>
           <DataCard value="Native systems · Both">
-            Code written for this soil and no one else&apos;s. The farm management system, the
-            provenance ledger, the world models. Built on the bench, for the bench.
-          </DataCard>
-        </DataGrid>
-      </TwoCol>
-      <TwoCol id="residency" heading="Residency">
-        <p className="p1">
-          The Aura Residency is the artery of the artistry pillar. Makers — artists, scientists,
-          engineers, farmers, chefs — arrive for one to three weeks, live on the land, and work
-          from the soil outward. No keynote. No deck. No deliverable beyond the truth of what they
-          made.
-        </p>
-        <p className="p2">
-          Mudigere offers the <strong>Twelve Worlds</strong> — twelve cabins named for the layers
-          of a forest: Hive, Root, Flow, Flame, Bloom, Canopy, Echo, Seed, Mist, Stone, Pulse,
-          Ethereal. Ohara offers <strong>Ki no Ie</strong>, the House of Seasons, with shorter
-          two-week formats and a forest table hosted by the founder in the opening days.
-        </p>
-        <DataGrid cols={3}>
-          <DataCard value="Curiosity">
-            Raw, awake, still capable of being changed by a new idea.
-          </DataCard>
-          <DataCard value="Maturity">
-            Accountable. Self-directed. Able to finish what they begin.
-          </DataCard>
-          <DataCard value="Raw output">
-            The power to make — a lot, messy if it must be, but made.
-          </DataCard>
-          <DataCard value="Judgment">
-            Able to tell the good work from the merely clever.
-          </DataCard>
-          <DataCard value="Humility">
-            The right posture toward the land, the craft, and the company.
-          </DataCard>
-          <DataCard value="Moral spine">
-            The non-negotiable. Without it, the other five do not matter.
+            Code is a craft here too — the farm system, the provenance ledger — written for this
+            soil, on the bench, by the person who will keep it running.
           </DataCard>
         </DataGrid>
       </TwoCol>
 
-      <PullQuote attribution="Arvind">
-        Twenty-year-old odd kids can change the destiny.
-      </PullQuote>
-      <TwoCol id="labs" heading="Labs">
-        <p className="p1">
-          Labs &amp; Hardware is the quiet instrumentation layer of Aura — the sensors that make
-          soil legible, the ferment monitors that read the tank, the world model that listens to
-          forty years of a farmer&apos;s eye. Invisible tech. Present where it is useful, absent
-          where it is not.
-        </p>
-        <DataGrid cols={3}>
-          <DataCard value="World model">
-            Custom LLM grown from sensor data and workflow memory. Not fine-tuned. Grown.
-          </DataCard>
-          <DataCard value="SaaS">
-            The software layer for running the world model across five industries — agriculture,
-            insurance, food science, hospitality, financial services.
-          </DataCard>
-          <DataCard value="Playground">
-            The experimental layer. The first twenty-four months. No sales. Only attraction.
-          </DataCard>
-        </DataGrid>
-        <p className="p2">
-          Three layers underneath: blockchain provenance, live sensors, and a persistent machine
-          memory grown from the farm&apos;s own readings. Together they replace the
-          forty-thousand-dollar certification stack with something the land itself can verify,
-          cherry to cup, root to roast.
-        </p>
-      </TwoCol>
+      <Placeholder
+        type="Process · pottery"
+        caption="Clay turned at the wheel, glazes mixed from local oxides — Mudigere ceramics studio"
+      />
 
-      <PullQuote attribution="Arvind">
-        One has read, the other knows.
-      </PullQuote>
-      <TwoCol id="gathering" heading="The Gathering">
+      <Placeholder
+        type="Process · loom"
+        caption="Hand-loom weaving, indigo vat beside it — the Mudigere textile studio"
+      />
+
+      <TwoCol id="conditions" heading="What the space gives a maker.">
         <p className="p1">
-          Every year the residency culminates in <strong>The Gathering</strong> — the Bhoomi
-          Festival at Mudigere, a three-day convening of soil, sound, and light. The work made on
-          the land shows itself back to the land. Farmers, chefs, artists, scientists, and quiet
-          visitors share the same table under the same canopy.
+          Most studios give you four walls and a deadline. This one gives you a whole living system
+          to make inside — a kiln that burns the estate&apos;s own wood, a dye vat heated by the
+          kitchen, a herd, a canopy, a river, and a table of people who have each read one craft
+          for thirty years.
         </p>
         <p className="p2">
-          The festival is not a marketing moment. It is a harvest. The year&apos;s work in coffee,
-          ceramic, type, software, and kitchen is laid out together. Anyone can come. Not everyone
-          will understand. The ones who do will keep coming.
+          The friction between disciplines is the material. A potter next to a fermenter next to
+          the person who wrote the ledger — that is where work nobody else could make gets made.
+          The space does not assign briefs. It sets the conditions and lets the land do the rest.
         </p>
       </TwoCol>
 
       <Placeholder
-        caption="Long low table under coffee and areca canopy, candles in jars, thali plates, guests seated at dusk. Reverent and warm."
+        type="Detail · gathering"
+        caption="Long tables under the canopy — the annual Bhoomi gathering, Mudigere"
       />
 
-      <PullQuote attribution="ಜೀವಂತ ಶಾಂತಿ">
-        Living Peace
-      </PullQuote>
-
-      <Continue
-        items={[
-          { href: '/residency', label: 'Residency', description: 'Monastic polymaths. Crazy misfits. Two to three weeks on the land.' },
-          { href: '/sanctuary', label: 'Sanctuary', description: 'The four valleys the residency moves between.' },
-          { href: '/provenance', label: 'Provenance', description: 'Cherry to cup. On chain. The lab\'s notebook, public.' },
-        ]}
+      <Placeholder
+        type="Portrait · makers"
+        caption="Potter, fermenter, and coder at the same table — no stage, no keynote"
       />
+
+      <TwoCol id="bhoomi" heading="Bhoomi: one week a year, the space opens.">
+        <p className="p1">
+          <Term tip="भूमि — Sanskrit for 'earth' or 'ground.' Also the name of Aura's annual gathering.">Bhoomi</Term> is
+          the one week a year the studios stop being private. Makers, growers, and a small invited
+          circle from outside the valley sit at the same long table — the potter beside the
+          fermenter beside the person who wrote the ledger. No keynote. No stage. Just the bench,
+          open.
+        </p>
+        <p className="p2">
+          What gets made that week doesn&apos;t leave the valley for sale. It leaves as an idea
+          someone takes home and tries on their own ground. That is the entire export model: not
+          the objects, but the posture that produced them.
+        </p>
+      </TwoCol>
+
+      <TwoCol id="outputs" heading="What leaves the space.">
+        <p className="p1">
+          A studio justifies itself by what leaves it. This is the harvest, not the intention.
+        </p>
+        <DataGrid cols={2}>
+          <DataCard value="Vessels &amp; tiles">
+            The cup the residency drinks from, the tile underfoot in the cabins, the platter on the
+            long table at dinner. None of it bought in.
+          </DataCard>
+          <DataCard value="Cloth &amp; thread">
+            Linen, indigo, cotton — woven on a small hand-loom, dyed in a vat that runs on heat from
+            the kitchen. The bedsheets and aprons of the valley.
+          </DataCard>
+          <DataCard value="Cedar joinery">
+            The teahouse hinge, the cabin sliding door, the bench under the verandah. Each piece
+            signed by Kenji and dated.
+          </DataCard>
+          <DataCard value="Letterforms">
+            Type drawn in Mudigere and Ohara, used on the labels of the lots, the menu, the
+            certificate that ships with the bag.
+          </DataCard>
+          <DataCard value="Field libraries">
+            Audio archives, photographic logs, soil-colour swatches. The valley as raw material for
+            the next maker who arrives.
+          </DataCard>
+          <DataCard value="Native software">
+            The ledger, the farm OS. Code made for this valley and inherited by the next apprentice,
+            not licensed to the next buyer.
+          </DataCard>
+        </DataGrid>
+      </TwoCol>
+
+      <Placeholder
+        type="Detail · craft + code"
+        caption="A clay form on one half of the bench, a breadboard on the other. Same maker."
+      />
+
+      <Placeholder
+        type="Detail · Kenji's bench"
+        caption="Joinery tools laid out in the Ohara workshop, cedar shavings underfoot"
+      />
+
+      <OneCol heading="A space you can't ship.">
+        <p className="p1">
+          The studio is fired with wood from the canopy, dyed from the forest floor, floored with
+          tiles pressed from the valley&apos;s own clay. None of it travels — and neither does the
+          space. You cannot export a kiln that burns this estate&apos;s offcuts, or a table of
+          people who have read this land for decades. You can only come and make inside it.
+        </p>
+        <p className="p2">
+          What a creator carries out is the work, and the posture that made it. Who gets to carry it
+          — the makers we invite, and how you write to us — is <em>Monastic Polymaths</em>.
+        </p>
+      </OneCol>
+
+      <Continue currentHref="/artistry" />
     </>
   )
 }

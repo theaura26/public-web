@@ -186,7 +186,7 @@ export default function EcologyPage() {
 
       <TwoCol id="index" heading="One score per block.">
         <p className="p1">
-          No single reading can describe a living system, so Aura combines them. Fifteen monitoring
+          No single reading can describe a living system, so Aura combines them. Fourteen monitoring
           programmes — canopy, woody biomass, forest islands, forest floor, ground vegetation, earthworms,
           respiration, soil structure, roots, decomposers, birds, water infiltration, fungi, and carbon —
           are each standardised and rolled into one composite score for every plantation block: the{' '}
@@ -201,7 +201,7 @@ export default function EcologyPage() {
       </TwoCol>
 
       <SpecTable
-        title="Fifteen programmes → one index"
+        title="Fourteen programmes → one index"
         rows={[
           { label: 'Canopy', value: 'Shade quality' },
           { label: 'Woody biomass', value: 'Biomass retained' },

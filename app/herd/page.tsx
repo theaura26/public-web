@@ -254,7 +254,7 @@ export default function HerdPage() {
         items={[
           { href: '/circular', label: 'Circular Intelligence', description: 'Where the herd’s dung and urine go next — remade by hand into measured fertility, tested before the soil.', img: '/circular/images/aura-shed.jpg' },
           { href: '/ecology', label: 'The Living System', description: 'The whole farm the herd feeds — fungi, worms, roots, and one Ecological Health Index per block.', img: '/aura-mudigere-landscape.jpg' },
-          { href: '/mudigere', label: 'Mudigere', description: 'Sampigelkhan Estate — 150 acres in the Western Ghats, the ground the herd grazes and feeds.', img: '/aura-mudigere.jpg' },
+          { href: '/mudigere', label: 'Mudigere', description: 'Sampigekhan Estate — 150 acres in the Western Ghats, the ground the herd grazes and feeds.', img: '/aura-mudigere.jpg' },
         ]}
       />
     </>

@@ -109,7 +109,7 @@ function LiveLandData() {
           the no-API-key `?output=embed` form. */}
       <div className="land-data__map">
         <iframe
-          title="Sampigelkhan Estate — Mudigere, Karnataka"
+          title="Sampigekhan Estate — Mudigere, Karnataka"
           src="https://maps.google.com/maps?q=13.1365,75.6403&t=h&z=14&output=embed"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
@@ -384,7 +384,7 @@ export default function MudigerePage() {
           className="label mud-hero__caption"
           style={{ position: 'absolute', left: 0, right: 0, bottom: 'clamp(20px, 4vh, 48px)', margin: 0, textAlign: 'center', color: '#ffffff', mixBlendMode: 'difference', letterSpacing: '1px', lineHeight: 1.5, zIndex: 5, pointerEvents: 'none' }}
         >
-          Sampigelkhan Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
+          Sampigekhan Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
         </p>
       </section>
 
@@ -432,22 +432,22 @@ export default function MudigerePage() {
         <ParallaxBanner
           video="/mudigere/aura-estate-top-view.mp4"
           poster="/mudigere/aura-estate-top-view.jpg"
-          alt="The four-story canopy from above — Sampigelkhan, Western Ghats"
+          alt="The four-story canopy from above — Sampigekhan, Western Ghats"
           caption="Noon over the four-story canopy"
         />
         <FilmBanner
           youtubeId="NA-qtu8JljA"
           bgVideo="/mudigere/aura-estate-walkthrough.mp4"
           poster="/mudigere/aura-estate-walkthrough.jpg"
-          alt="The estate on film — Sampigelkhan, Western Ghats"
-          note="Explore Sampigelkhan Estate"
+          alt="The estate on film — Sampigekhan, Western Ghats"
+          note="Explore Sampigekhan Estate"
           caption="The estate, on film"
         />
       </div>
 
       <Movement id="estate" heading={<>A hundred and fifty acres, read as one.</>}>
         <p className="p1">
-          Sampigelkhan lies in Chikmagalur district, forty-five minutes
+          Sampigekhan lies in Chikmagalur district, forty-five minutes
           from town — the last stretch an unpaved ghat road that drops
           through mist into coffee country. Every acre is mapped at
           1:2,500: boundary, contour, water channel, and standing
@@ -475,7 +475,7 @@ export default function MudigerePage() {
               {([
                 ['150 acres', 'Total surveyed area — 20 acres protected, on the Bhadra boundary.', 'land'],
                 ['100 acres', 'Shade-grown Arabica across 6 micro-lots — 4 centuries in cultivation.', 'coffee'],
-                ['35 acres', 'Tea, in organic transition.', 'tea'],
+                ['32 acres', 'Tea, in organic transition.', 'tea'],
                 ['3,000 mm', 'Annual monsoon rainfall.', 'rain'],
                 ['35,000', 'Trees, across four canopy layers.', 'trees'],
                 ['52', 'Malnad Gidda cattle.', 'cows'],
@@ -548,7 +548,7 @@ export default function MudigerePage() {
           <div className="layer-row">
             <p className="p1 layer-row__label">Layer 3 · The understory</p>
             <p className="p2 layer-row__body">
-              A hundred acres of Arabica — <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka.">Sln.9</Term>, <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946.">Sln.795</Term>, <Term tip="A modern Arabica cultivar (Catimor lineage) developed in India, prized for leaf-rust resistance.">Chandragiri</Term> — with thirty-five acres of tea easing into organic.
+              A hundred acres of Arabica — <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka.">Sln.9</Term>, <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946.">Sln.795</Term>, <Term tip="A modern Arabica cultivar (Catimor lineage) developed in India, prized for leaf-rust resistance.">Chandragiri</Term> — with thirty-two acres of tea easing into organic.
             </p>
           </div>
           <div className="layer-row">
@@ -565,7 +565,7 @@ export default function MudigerePage() {
       {/* Two crops banners — divide the forest layers from the coffee. */}
       <ParallaxBanner
         image="/journals/coffee/aura-our-coffee-story.jpg"
-        alt="Six micro lots · Arabica Sln.9 & Sln.795 · Sampigelkhan Estate"
+        alt="Six micro lots · Arabica Sln.9 & Sln.795 · Sampigekhan Estate"
         caption="Six lots, picked dead ripe"
       />
       <ParallaxBanner
@@ -748,7 +748,7 @@ export default function MudigerePage() {
         youtubeId="bFTZUfn4D0A"
         bgVideo="/mudigere/aura-vision.mp4"
         poster="/mudigere/aura-vision.jpg"
-        alt="The estate on film — Sampigelkhan, Western Ghats"
+        alt="The estate on film — Sampigekhan, Western Ghats"
         note="Rebuilt as a living system — the forest of 2125"
         caption="Watch our story"
       />

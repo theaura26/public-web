@@ -204,7 +204,7 @@ export function FilmBanner({ youtubeId, poster, alt = '', caption, note, bgVideo
           <div className="film-banner__frame">
             <iframe
               src={src}
-              title="Sampigelkhan Estate — film"
+              title="Sampigekhan Estate — film"
               allow="autoplay; encrypted-media; picture-in-picture"
               allowFullScreen
             />

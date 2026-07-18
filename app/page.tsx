@@ -796,7 +796,7 @@ function AgentHome() {
           <dt>Coffee</dt><dd>100 acres, Arabica S795 / Selection 9 / Chandragiri, specialty-grade.</dd>
           <dt>Pepper</dt><dd>Malabar, shade-grown under native canopy, biodynamic.</dd>
           <dt>Areca</dt><dd>Traditional intercrop, economic anchor, forest structure.</dd>
-          <dt>Tea</dt><dd>Experimental plots at 3,600 ft, testing cultivar adaptation.</dd>
+          <dt>Tea</dt><dd>A 32-acre tea block at 3,600 ft, in organic transition.</dd>
         </dl>
       </section>
 
@@ -2156,7 +2156,7 @@ function AgentHomeView() {
       <ul>
         <li><a href="/reason">/reason</a> — the founder&rsquo;s story, in 14 chapters.</li>
         <li><a href="/brand">/brand</a> — brand identity, principles, colours, type.</li>
-        <li><a href="/mudigere">/mudigere</a> — Sampigelkhan Estate, the Indian land.</li>
+        <li><a href="/mudigere">/mudigere</a> — Sampigekhan Estate, the Indian land.</li>
         <li><a href="/ohara">/ohara</a> — the Kyoto estate. Asa and Niwa.</li>
         <li><a href="/herd">/herd</a> — Ecosystem Engineers. The herd as biological engine.</li>
         <li><a href="/circular">/circular</a> — Circular Intelligence. CPP and Jeevamrit.</li>

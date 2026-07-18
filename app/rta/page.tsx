@@ -47,7 +47,7 @@ export default function RtaPage() {
         src="/journals/rta/aura-dusk-climb.mp4"
         mediaType="video"
         poster="/journals/rta/aura-dusk-climb.jpg"
-        alt="Worker climbing an areca palm at dusk against a fading sky — Sampigelkhan Estate"
+        alt="Worker climbing an areca palm at dusk against a fading sky — Sampigekhan Estate"
         caption="Patience — the right time, not the convenient time"
       />
 
@@ -138,7 +138,7 @@ export default function RtaPage() {
 
       <Placeholder
         src="/journals/rta/aura-land.jpg"
-        alt="The land at the hour of decision — Sampigelkhan in the slow light before dusk"
+        alt="The land at the hour of decision — Sampigekhan in the slow light before dusk"
         caption="The land decides the hour"
       />
 

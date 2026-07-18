@@ -157,7 +157,7 @@ export default function CircularPage() {
           roughly forty-five minutes a day, breaking up the pulps so it matures evenly. Fourteen pits run
           across the estate in overlapping cycles — around 2,420 kilograms of CPP a year — turned by
           reading, not by timer. The team checks temperature, texture, smell, and colour and turns a pit
-          when the compost signals it is ready. After three to six months the raw mix has become something
+          when the compost signals it is ready. After three months — ninety days — the raw mix has become something
           new: dark, crumbly, earth-smelling.
         </p>
       </TwoCol>
@@ -199,7 +199,7 @@ export default function CircularPage() {
           { label: '02 · Mix', value: 'Stomped smooth, split into 2 kg portions' },
           { label: '03 · Inoculate', value: 'Microbial solution worked in, barrelled' },
           { label: '04 · Ferment', value: 'Stirred 1–2× daily · 3–7 days' },
-          { label: '05 · Mature', value: 'Eggshell, rock dust & BD preps · pit 6–8 weeks' },
+          { label: '05 · Mature', value: 'Eggshell, rock dust & BD preps · pit 90 days' },
           { label: '06 · Ready', value: 'Dark, crumbly, earth-smelling' },
         ]}
       />

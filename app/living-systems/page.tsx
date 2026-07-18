@@ -62,7 +62,7 @@ export default function LivingSystemsPage() {
         <DataCard
           video="/journals/living-systems/aura-canopy.mp4"
           poster="/journals/living-systems/aura-canopy.jpg"
-          alt="Looking up through the four-story canopy at Sampigelkhan Estate — silver oak and jackfruit moving in the wind"
+          alt="Looking up through the four-story canopy at Sampigekhan Estate — silver oak and jackfruit moving in the wind"
           value="01 — Canopy."
         >
           Silver oak, Albizzia, jackfruit, fig, native hardwoods. Target cover
@@ -85,7 +85,7 @@ export default function LivingSystemsPage() {
           alt="Arabica Sln.9 and Sln.795 cherries ripening beneath the four-story canopy"
           value="03 — Primary crop."
         >
-          Arabica <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>. Thirty-five acres of tea, in organic
+          Arabica <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>. Thirty-two acres of tea, in organic
           transition targeting 2027. Every input logged against the transition
           clock. A single prohibited substance resets it.
         </DataCard>

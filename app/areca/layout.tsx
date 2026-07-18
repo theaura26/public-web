@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
-import { comingSoonMetadata, guardComingSoon } from '@/lib/coming-soon'
 
 export const metadata: Metadata = {
   /* Root layout's title.template appends '— Aura'; suffix removed to
@@ -17,10 +16,8 @@ export const metadata: Metadata = {
     images: [{ url: '/aura-areca.jpg', width: 1600, height: 900, alt: 'Aura areca — the sentinel palm, mid-canopy of the estate' }],
   },
   twitter: { card: 'summary_large_image', images: ['/aura-areca.jpg'] },
-  ...comingSoonMetadata,
 }
 
 export default function ArecaLayout({ children }: { children: ReactNode }) {
-  guardComingSoon()
   return children
 }

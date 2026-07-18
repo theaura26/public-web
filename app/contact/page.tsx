@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import Reveal from '@/components/RevealOnScroll'
+import { Continue } from '@/components/article/Article'
 
 const TOPICS: Record<string, string> = {
   coffee: 'Coffee & Sourcing',
@@ -258,6 +259,15 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      <Continue
+        heading="Explore"
+        items={[
+          { href: '/reason', label: 'The Reason', description: 'Why Aura exists — the founder’s letter, grown over generations.', img: '/the-reason/aura-flowers-1.png' },
+          { href: '/studios', label: 'Studios', description: 'The labs and workshops — clay, fibre, wood, sound, type, software.', img: '/aura-studios/aura-studios.jpg' },
+          { href: '/brand', label: 'Our Brand', description: 'The identity and voice — how Aura carries itself.', img: '/aura-hero.jpg' },
+        ]}
+      />
       </div>
     </div>
   )
@@ -299,7 +309,7 @@ function AgentContactView() {
       <ul>
         <li>Singapore — primary office</li>
         <li>Mudigere, Karnataka, India — sanctuary</li>
-        <li>Tokyo, Japan — sanctuary (in development)</li>
+        <li>Ohara, Kyoto Prefecture, Japan — sanctuary</li>
       </ul>
 
       <hr />

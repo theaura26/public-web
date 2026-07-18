@@ -3,7 +3,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Reveal from '@/components/RevealOnScroll'
-import { ScrollHighlight } from '@/components/article/Article'
+import { ScrollHighlight, Continue } from '@/components/article/Article'
 import VideoReactiveArt from '@/components/VideoReactiveArt'
 import { useMode } from '@/components/ModeProvider'
 import gsap from 'gsap'
@@ -303,7 +303,7 @@ function AgentBrandView() {
   return (
     <section className="agent-only">
       <h1>Brand</h1>
-      <p>Aura is a regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 100 years.</p>
+      <p>Aura is a regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 1,000 years.</p>
       <p>The brand identity is built around three intelligences: Natural, Human, and Machine. Design language favours silence over noise, depth over width, memory over trend.</p>
 
       <hr />
@@ -343,7 +343,7 @@ function AgentBrandView() {
       <h2>Three Pillars</h2>
       <ul>
         <li>Sanctuary — Silence, stillness, Japanese garden, forest walks</li>
-        <li>Agroculture — 100 acres coffee, 43 indigenous cattle, native canopy</li>
+        <li>Agroculture — 100 acres coffee, 52 indigenous cattle, native canopy</li>
         <li>Artistry — Studios, workshops, gallery, festivals</li>
       </ul>
 
@@ -498,6 +498,18 @@ The brand should endure.`}
       <CopySection
         headline="The choices made by one generation shape the future that follows."
       />
+
+      {/* ═══ CROSS-LINKS ═══ */}
+      <div className="human-only">
+        <Continue
+          heading="Explore"
+          items={[
+            { href: '/reason', label: 'The Reason', description: 'The belief beneath the brand — the founder’s letter, grown over generations.', img: '/the-reason/aura-flowers-1.png' },
+            { href: '/studios', label: 'Studios', description: 'Where the brand is made real — three studios turning Natural Intelligence into story, systems and place.', img: '/aura-studios/aura-studios.jpg' },
+            { href: '/mudigere', label: 'Mudigere', description: 'The estate the brand answers to — the living system behind every mark.', img: '/aura-mudigere.jpg' },
+          ]}
+        />
+      </div>
 
     </div>
   )

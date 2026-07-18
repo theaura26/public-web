@@ -206,6 +206,20 @@ html [data-view="agent"] {
   opacity: 1 !important;
 }
 
+/* Flatten decorative positioning. Heroes, captions, and pinned wordmarks
+   use inline position:absolute + transform + mix-blend to stack over media;
+   in the plain-text agent view those escape the flow and collide (e.g. a
+   hero caption landing on the weather readout). Force everything in <main>
+   back to static, in-flow, un-blended so the document reads top-to-bottom.
+   !important is required to beat the inline styles the components set. */
+[data-view="agent"] main * {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  mix-blend-mode: normal !important;
+  float: none !important;
+}
+
 /* ── Markdown-style plain text for <main> ──
    Headings prefixed with #, ##, ###. Hr rendered as `---`. Lists
    prefixed with `-`. Tight spacing — one line between blocks. No
@@ -471,12 +485,15 @@ p.journal-hero__caption {
    affordances. */
 [data-view="agent"] main img,
 [data-view="agent"] main video,
+[data-view="agent"] main iframe,
 [data-view="agent"] main canvas,
 [data-view="agent"] main picture,
 [data-view="agent"] main svg:not(.menu-icon),
 [data-view="agent"] main .expanding-banner-wrap,
 [data-view="agent"] main .expanding-banner-inner,
 [data-view="agent"] main .expanding-banner-card,
+[data-view="agent"] main .parallax-banner,
+[data-view="agent"] main .film-banner,
 [data-view="agent"] main .journal-hero__media,
 [data-view="agent"] main .hero-tile__media,
 [data-view="agent"] main .pillar-media,
@@ -1600,7 +1617,7 @@ section.one-col + section.one-col {
 }
 
 /* Font roles — only these three are live text; all display type is SVG. */
-.r-hand  { font-family: var(--font-hand), 'Comic Sans MS', cursive; font-weight: 400; }
+.r-hand  { font-family: var(--font-hand), cursive; font-weight: 400; }
 .r-serif { font-family: var(--font-serif), Georgia, serif; font-weight: 400; } /* Instrument Serif — one serif across the page */
 .r-serifLight { font-family: var(--font-serif), Georgia, serif; font-weight: 400; } /* Instrument Serif — light, non-bold */
 .r-bric  { font-family: var(--font-grotesque), system-ui, sans-serif; font-weight: 700; text-transform: uppercase; }

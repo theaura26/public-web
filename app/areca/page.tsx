@@ -1,101 +1,82 @@
 import {
   JournalHero,
   TwoCol,
+  OneCol,
   Placeholder,
   DataGrid,
   DataCard,
   PullQuote,
+  ScrollHighlight,
   Continue,
+  Term,
 } from '@/components/article/Article'
 
 export default function ArecaPage() {
   return (
     <>
-      {/* Editorial JournalHero pattern — was ArticleHero with subline
-          + 4-question TOC. Both dropped in the coming-soon refactor. */}
       <JournalHero
-        title="The sentinel palm."
-        src="/aura-areca.jpg"
+        currentHref="/areca"
+        title="The Sentinel Palm"
         mediaType="image"
-        caption="Areca catechu — the slender upright palm of the mid-canopy"
+        caption="Aura grows Areca catechu as the mid-canopy at Mudigere — the upright palm that shades the coffee, carries the pepper, and mulches the ground it stands on."
         alt="Aura areca — the sentinel palm, mid-canopy of the estate"
       />
 
       <Placeholder
-        caption="Tall slender trunks receding into mist, pepper vines spiralling around them. Looking straight up. Gentle rain on leaves."
+        type="Portrait · trunks"
+        caption="Looking up the trunks of mature areca — pepper vines spiralling into the mist"
       />
 
-      {/* VERTICAL ARCHITECTURE */}
-      {/* eyebrow was: "Vertical Architecture" */}
-      <TwoCol id="architecture" heading="Twenty metres of shade.">
+      <TwoCol id="architecture" heading="The palm the estate is built on.">
         <p className="p1">
-          An areca palm grows straight. It reaches <strong>15 – 20 m</strong> and commits to a
-          single vertical axis for its entire life. That geometry is what makes the estate work.
-          The palm&apos;s feathered crown lets in just enough light for coffee to photosynthesise but
-          not enough to scorch it. Its trunk is rough enough that a pepper vine can grip without
-          damage. Its fallen fronds compost into a dense fibrous mulch that holds moisture through
-          the dry months.
+          At Mudigere the{' '}
+          <Term tip="Areca catechu — the slender upright palm of coastal South Asia, grown for its nut and, on regenerative estates, as the structural mid-canopy.">areca palm</Term>{' '}
+          is the tree the whole plantation stands on. It grows straight — <strong>15 – 20 m</strong> on a
+          single vertical axis for its entire life — and Aura works it as the estate&apos;s mid-canopy,
+          the layer every other crop hangs off. It never wins a cupping score and never shows up on a
+          menu. It holds up the ones that do.
         </p>
         <p className="p2">
-          We did not plant areca because it is a cash crop. We planted it because no other tree
-          would hold up the system we were trying to build.
+          Aura did not plant areca as a cash crop. We planted it because no other tree holds up the
+          system we were building. The mid-canopy is the load-bearing layer of the plantation — pull it
+          out and the stack comes down. In that layer the palm does three jobs at once.
         </p>
-      </TwoCol>
-
-      <Placeholder
-        caption="Stylised section illustration — five horizontal bands with plant silhouettes. Drawn in warm ink on cream. Labels in English + Kannada."
-      />
-
-      {/* FIVE-LAYER DIAGRAM */}
-      {/* eyebrow was: "Five-Layer Plantation" */}
-      <TwoCol id="five-layer" heading="How the estate stacks.">
-        <p className="p1">
-          A regenerative tropical plantation is not a field; it is a vertical forest. Aura&apos;s
-          canopy is engineered in five layers, each doing different work for the whole.
-        </p>
-
-        <DataGrid cols={2}>
-          <DataCard value={`25 – 35 m · native hardwood`}>
-            Honne, silver oak, jackfruit. The giants. They regulate temperature, host bird life,
-            and anchor the watershed.
+        <DataGrid cols={3}>
+          <DataCard value="Trellis">
+            The living scaffold the pepper vine climbs. No manufactured trellis matches the rough-bark
+            grip of a mature trunk, and none composts back into the soil when its work is done.
           </DataCard>
-          <DataCard value={`15 – 20 m · Areca`}>
-            The sentinel palm. Vertical trellis for pepper, shade for coffee, compost for the
-            floor. The middle that holds everything together.
+          <DataCard value="Shade filter">
+            Dappled light, not direct. The Arabica beneath ripens slower under areca shade — the extra
+            weeks that put the score on the cupping table.
           </DataCard>
-          <DataCard value={`3 – 6 m · Coffee, Cacao, Citrus`}>
-            The productive understory. Arabica at this height flourishes with dappled, not
-            direct, light.
-          </DataCard>
-          <DataCard value={`1 – 3 m · Turmeric, Cardamom, Banana`}>
-            Spice and starch. Also cover and microclimate regulation. What the kitchen and the
-            apothecary draw from.
-          </DataCard>
-          <DataCard value={`0 – 1 m · Legumes, Grasses, Leaf litter`}>
-            Nitrogen-fixers, cover crops, and the steady fall of everything above. The layer that
-            becomes next year&apos;s soil.
-          </DataCard>
-          <DataCard value="Self-regulating">
-            Each layer shelters the one below and feeds the one above. The forest does the work
-            of the fertiliser and the umbrella.
+          <DataCard value="Mulch source">
+            Fallen fronds and leaf sheaths break down into a fibrous mulch that holds moisture, suppresses
+            weeds, and feeds the worm beds below. The tree settles its own ground bill.
           </DataCard>
         </DataGrid>
       </TwoCol>
 
-      {/* CULTURAL SIGNIFICANCE */}
-      {/* eyebrow was: "Culture" */}
-      <TwoCol id="culture" heading="Betel, ritual, welcome.">
+      <ScrollHighlight>
+        {`The tree grows straight
+         so that everything else
+         can afford to bend.`}
+      </ScrollHighlight>
+
+      <TwoCol id="lineage" heading="Karnataka's answer for a thousand years.">
         <p className="p1">
-          Areca is not a neutral tree in Karnataka. Its nut (<em>adike</em> in Kannada) wrapped in
-          betel leaf is offered at weddings, at temples, at the start of a conversation with an
-          elder. The palm shows up in Sangam poetry and on the flags of medieval Tuluva kings. In
-          the coastal and Malnad districts, a household&apos;s areca grove is both a bank account and a
-          family history.
+          Areca is not a neutral tree here. Its nut (<Term tip="Kannada for the areca nut.">adike</Term>{' '}
+          in Kannada), wrapped in a betel leaf, is offered at weddings, at temples, at the start of a
+          conversation with an elder — a small formal gesture older than anyone can date. In the coastal
+          and{' '}
+          <Term tip="The Western Ghats districts of Karnataka, defined by heavy monsoon, evergreen forest, and a long lineage of coffee and areca growing.">Malnad</Term>{' '}
+          districts, a household&apos;s areca grove is at once a bank account and a family record.
         </p>
         <p className="p2">
-          We grow it aware of that lineage. The estate is part of a landscape where areca has been
-          the answer to &ldquo;what shall we plant?&rdquo; for a thousand years. We are not introducing it; we
-          are continuing it.
+          Aura grows it aware of that lineage. For a thousand years areca has been this landscape&apos;s
+          answer to &ldquo;what shall we plant?&rdquo; — we are not introducing it, we are continuing it.
+          That is the estate&apos;s method in one tree: the oldest answer in the district, kept and
+          measured rather than replaced.
         </p>
       </TwoCol>
 
@@ -103,69 +84,60 @@ export default function ArecaPage() {
         Everything else grows in its shade.
       </PullQuote>
 
-      {/* PROCESSING */}
-      {/* eyebrow was: "Processing" */}
-      <TwoCol id="processing" heading="Fresh, dried, value-added.">
+      <Placeholder
+        type="Process · drying yard"
+        caption="A raised bamboo platform in morning light — thousands of nuts turned and raked"
+      />
+
+      <TwoCol id="processing" heading="White, red, nothing wasted.">
         <p className="p1">
-          Three trajectories for the nut after harvest.
+          The nut leaves the palm along one of three paths.
         </p>
         <DataGrid cols={3}>
-          <DataCard value="Chali · unripe">
-            Unripe green nuts, boiled and sun-dried quickly. Higher tannin, firmer bite. The
-            traditional Malnad style, preferred across Karnataka.
+          <DataCard value="Chali · white">
+            Fully ripe nuts, dehusked and sun-dried for weeks on raised platforms. The white areca — the
+            coastal grade.
           </DataCard>
-          <DataCard value="Kempadike · ripe">
-            Fully ripened nuts, sun-dried for{' '}
-            30 – 45 days on raised platforms. Red-brown in colour; softer and
-            sweeter in character. Higher market value.
+          <DataCard value="Kempadike · red">
+            Tender green nuts, boiled and dried to a deep red. Firmer, higher in tannin. The red areca —
+            the Malnad grade, the one this district has always made.
           </DataCard>
-          <DataCard value="Supari, fibre, compost">
-            Processed nut preparations for the kitchen and the apothecary. Husk fibre for rope and
-            board. Fallen leaf sheaths for biodegradable plates. The tree is closed-loop.
+          <DataCard value="Closed loop">
+            Husk fibre for rope and board, leaf sheaths for biodegradable plates. The apothecary and the
+            kitchen take what the market does not. The tree leaves nothing behind.
           </DataCard>
         </DataGrid>
       </TwoCol>
 
-      <Placeholder
-        caption="Wide raised bamboo platform in morning light, thousands of nuts turned and raked. Workers present but not central."
-      />
-
-      <PullQuote>The tree grows straight so that everything else can afford to bend.</PullQuote>
-
-      {/* eyebrow was: "In the system" */}
-      <TwoCol heading="Not a monocrop. A spine.">
+      <TwoCol id="patience" heading="A tree you plant for someone else's coffee.">
         <p className="p1">
-          On some estates areca is the only crop. That is not this estate. Here the palm is a
-          structural element — the keystone of the canopy — and its economics are part of, not
-          separate from, the coffee and pepper economics. When a season is hard on coffee, the
-          areca holds the books. When areca prices fall, the coffee carries. The whole organism is
-          stronger than any of its crops.
+          An areca takes five to seven years to bear its first useful nut, and longer before its trunk
+          roughens enough for a pepper vine to trust. Plant one today and you are planting shade for a
+          block that will not exist for a decade. That is not a complaint. It is the estate&apos;s whole
+          logic written as a planting schedule.
         </p>
         <p className="p2">
-          The sentinel palm is the quiet one. It does not show up on our cupping sheets. It
-          doesn&apos;t win scores. But pull it out and the plantation collapses.
+          A palm Aura plants this year will still be the mid-canopy in the 2050s, holding up coffee that
+          has not been laid out yet. We plant on that horizon on purpose.
         </p>
       </TwoCol>
 
-      <Continue
-        items={[
-          {
-            href: '/pepper',
-            label: 'Pepper',
-            description: 'The vine the areca holds up.',
-          },
-          {
-            href: '/living-systems',
-            label: 'Living Systems',
-            description: 'Canopy, water, cattle, people.',
-          },
-          {
-            href: '/coffee',
-            label: 'Coffee',
-            description: 'What grows beneath the sentinel.',
-          },
-        ]}
-      />
+      <OneCol id="economics" heading="Not a monocrop. A spine.">
+        <p className="p1">
+          On some estates areca is the only crop. Not here. At Aura the palm is the spine of the
+          mid-canopy, and its economics are part of the coffee and the pepper, not separate from them.
+          When a season is hard on coffee, the areca holds the books. When areca prices fall, the coffee
+          carries. The whole organism is sturdier than any single crop in it.
+        </p>
+        <p className="p2">
+          The sentinel palm is the quiet one. It never shows up on a cupping sheet and never wins a
+          score. But pull it out and the plantation comes down. A plantation that leans on one tree is
+          fragile; a plantation held together by one is sturdy — the difference is which way the
+          dependency runs.
+        </p>
+      </OneCol>
+
+      <Continue currentHref="/areca" />
     </>
   )
 }

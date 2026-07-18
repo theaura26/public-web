@@ -5,6 +5,8 @@ import Link from 'next/link'
 import Reveal from '@/components/RevealOnScroll'
 import { ScrollHighlight } from '@/components/article/Article'
 import { ExpandingBanner } from '@/components/ExpandingBanner'
+import { InfiniteArticleSlider } from '@/components/InfiniteArticleSlider'
+import { InvertOnScroll } from '@/components/InvertOnScroll'
 import { LogoEmblem } from '@/components/Logo'
 import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun, CloudMoon } from '@phosphor-icons/react'
 
@@ -662,55 +664,9 @@ function MudigereModal({ open, onClose }: { open: boolean; onClose: () => void }
             <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>World&rsquo;s Oldest Arabica Region, Rediscovered.</h2>
             <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               <p>The Western Ghats are a UNESCO World Heritage biodiversity hotspot — one of the eight most biodiverse regions on earth. Chikmagalur sits within this range at 900&ndash;1100 metres, where altitude, monsoon rainfall, and ancient volcanic soil create conditions for coffee of exceptional complexity.</p>
-              <p>Aura&rsquo;s 150&ndash;170 acres are farmed as a four-layer agroforestry system: native shade trees above, pepper vines in the mid-canopy, coffee and tea in the understory, cover crops and soil regeneration plants at ground level.</p>
+              <p>Aura&rsquo;s 150 acres are farmed as a four-layer agroforestry system: native shade trees above, pepper vines in the mid-canopy, coffee and tea in the understory, cover crops and soil regeneration plants at ground level.</p>
             </div>
             <img src="/aura-mudigere-landscape.jpg" alt="Aura Mudigere estate in the Western Ghats" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '16 / 10', marginTop: 'var(--space-6)' }} />
-          </div>
-        </div>
-      </LocationContent>
-    </LocationModal>
-  )
-}
-
-/* ═══ OHARA ═══ */
-function OharaModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const weather = useWeather(35.1200, 135.8300)
-  return (
-    <LocationModal open={open} onClose={onClose} label="OHARA">
-      <LocationContent>
-        <div className="loc-top">
-          <div className="loc-pencil-mobile">
-            <img src="/aura-ohara-pencil.jpg" alt="Pencil illustration of Aura Ohara" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '4 / 5' }} />
-          </div>
-          <div>
-            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>The Valley Listens.</h2>
-            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-              <p>Nestled in the quiet valley of Ohara, north of Kyoto, this place moves to the rhythm of light, water, and care rather than speed. Surrounded by cedar forests, rivers, and temples, it is shaped by a way of life that honours stillness, craft, and the quiet intelligence of the land.</p>
-              <p>Through a philosophy of restoration over construction, Aura in Ohara grows by listening before leading. The home, garden, and teahouse are not remade in haste, but gently renewed through patience, restraint, and deep respect for what already exists.</p>
-              <p>This slow, mindful approach allows each space to hold the memory of its setting — reflecting a way of living rooted in calm, renewal, and the richness of everyday ritual.</p>
-            </div>
-          </div>
-          <div className="loc-images-desktop">
-            <img src="/aura-ohara-pencil.jpg" alt="Pencil illustration of Aura Ohara" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '3 / 4' }} />
-          </div>
-        </div>
-        <div className="loc-bottom">
-          <LocationDataGrid
-            location="Ohara, Kyoto, Japan."
-            coords="35.1200° N, 135.8300° E"
-            altitude="1,099 FT."
-            tempRange="7–28°C"
-            avgHumidity="64%"
-            avgWind="14 KM/H"
-            weather={weather}
-          />
-          <div>
-            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>Kyoto&rsquo;s Quiet Valley, Rediscovered.</h2>
-            <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-              <p>Ohara is a place of cedar forests, rivers, temples, and hand-tended fields — where farmers still work by hand and artisans move by rhythm, not by clock. It is here that Aura belongs: not to transform the valley, but to listen to it.</p>
-              <p>The site is envisioned through the restoration of a 70-year-old home and a 30-year garden, with a teahouse renewed by a Kyoto craftsman and cared for across generations. Rooted in wabi-sabi, Aura Ohara embraces imperfection, continuity, and a rich, mindful life shaped by light, calm, and reflection.</p>
-            </div>
-            <img src="/aura-ohara-landscape.jpg" alt="Aura Ohara in the valley of Kyoto" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '16 / 10', marginTop: 'var(--space-6)' }} />
           </div>
         </div>
       </LocationContent>
@@ -737,21 +693,12 @@ function AgentHome() {
           <li><a href="/reason">Reason</a></li>
           <li><a href="/brand">Brand</a></li>
           <li><a href="/contact">Contact</a></li>
-          <li><a href="/idea">1000 Year Idea</a></li>
-          <li><a href="/sanctuary">Sanctuary</a></li>
+          <li><a href="/mudigere">Mudigere</a></li>
+          <li><a href="/ohara">Ohara</a></li>
+          <li><a href="/herd">Ecosystem Engineers</a></li>
+          <li><a href="/circular">Circular Intelligence</a></li>
+          <li><a href="/shade">The Light Instrument</a></li>
           <li><a href="/artistry">Artistry</a></li>
-          <li><a href="/residency">Residency</a></li>
-          <li><a href="/provenance">Provenance</a></li>
-          <li><a href="/coffee">Coffee</a></li>
-          <li><a href="/pepper">Pepper</a></li>
-          <li><a href="/areca">Areca</a></li>
-          <li><a href="/biodynamic">Biodynamic</a></li>
-          <li><a href="/vedic">Vedic</a></li>
-          <li><a href="/fermentation">Fermentation</a></li>
-          <li><a href="/living-systems">Living Systems</a></li>
-          <li><a href="/land">Land</a></li>
-          <li><a href="/wisdom">Moral Spine</a></li>
-          <li><a href="/rta">Rta</a></li>
         </ul>
       </nav>
 
@@ -783,7 +730,7 @@ function AgentHome() {
         <h2>Operating system — three pillars</h2>
         <ol>
           <li><strong>Sanctuary</strong> — a living estate in rhythm with the land. Silence, stillness, a 30-year Japanese garden, forest walks, the river from every room.</li>
-          <li><strong>Agroculture</strong> — 100 acres of specialty coffee. 52 indigenous Gidda cattle. Biodynamic (BD 500–508, CPP, lunar cycles) plus Vedic (Jeevamrit, Panchgavya, Beejamrit) farming systems. UNESCO biodiversity zone.</li>
+          <li><strong>Agroculture</strong> — 100 acres of specialty coffee. 52 indigenous Malnad Gidda cattle. Biodynamic (BD 500–508, CPP, lunar cycles) plus Vedic (Jeevamrit, Panchgavya, Beejamrit) farming systems. UNESCO biodiversity zone.</li>
           <li><strong>Artistry</strong> — studios, workshops, gallery, gurukul, labs, festivals. Residencies for founders, designers, artists, and monastic polymaths.</li>
         </ol>
       </section>
@@ -794,7 +741,7 @@ function AgentHome() {
         <h2>Locations</h2>
 
         <h3>Aura Mudigere — active</h3>
-        <p><a href="/sanctuary">Read more</a></p>
+        <p><a href="/mudigere">Read more</a></p>
         <dl>
           <dt>Coordinates</dt><dd>13.1365°N, 75.6403°E</dd>
           <dt>Altitude</dt><dd>3,600 ft (900–1,100 m)</dd>
@@ -802,11 +749,11 @@ function AgentHome() {
           <dt>Soil</dt><dd>Laterite, pH 6.0–6.5</dd>
           <dt>Zone</dt><dd>UNESCO Western Ghats biodiversity hotspot</dd>
           <dt>Climate</dt><dd>14–30°C, humidity 58%, wind 5 km/h</dd>
-          <dt>Herd</dt><dd>52 Gidda cattle (indigenous breed)</dd>
+          <dt>Herd</dt><dd>52 Malnad Gidda cattle (indigenous breed)</dd>
         </dl>
 
         <h3>Aura Ohara — active</h3>
-        <p><a href="/sanctuary">Read more</a></p>
+        <p><a href="/ohara">Read more</a></p>
         <dl>
           <dt>Coordinates</dt><dd>35.1200°N, 135.8300°E</dd>
           <dt>Altitude</dt><dd>1,099 ft</dd>
@@ -825,7 +772,6 @@ function AgentHome() {
 
       <section>
         <h2>Coffee programme</h2>
-        <p><a href="/coffee">Read more</a></p>
         <dl>
           <dt>Varieties</dt><dd>Arabica S795, Selection 9, Chandragiri</dd>
           <dt>Processing</dt><dd>6 micro lots, 6 methods</dd>
@@ -848,9 +794,9 @@ function AgentHome() {
         <h2>Crops</h2>
         <dl>
           <dt>Coffee</dt><dd>100 acres, Arabica S795 / Selection 9 / Chandragiri, specialty-grade.</dd>
-          <dt>Pepper</dt><dd>Malabar, shade-grown under native canopy, biodynamic. <a href="/pepper">More</a></dd>
-          <dt>Areca</dt><dd>Traditional intercrop, economic anchor, forest structure. <a href="/areca">More</a></dd>
-          <dt>Tea</dt><dd>Experimental plots at 3,600 ft, testing cultivar adaptation.</dd>
+          <dt>Pepper</dt><dd>Malabar, shade-grown under native canopy, biodynamic.</dd>
+          <dt>Areca</dt><dd>Traditional intercrop, economic anchor, forest structure.</dd>
+          <dt>Tea</dt><dd>A 32-acre tea block at 3,600 ft, in organic transition.</dd>
         </dl>
       </section>
 
@@ -858,7 +804,7 @@ function AgentHome() {
 
       <section>
         <h2>Farming method</h2>
-        <p><a href="/biodynamic">Biodynamic</a> · <a href="/vedic">Vedic</a> · <a href="/living-systems">Living systems</a> · <a href="/fermentation">Fermentation</a></p>
+        <p><a href="/circular">Circular intelligence</a> · <a href="/herd">The herd</a> · <a href="/shade">Shade</a></p>
         <dl>
           <dt>System 1</dt><dd>Biodynamic — BD 500–508, CPP, lunar cycles.</dd>
           <dt>System 2</dt><dd>Vedic — Jeevamrit, Panchgavya, Beejamrit.</dd>
@@ -873,7 +819,6 @@ function AgentHome() {
 
       <section>
         <h2>Six rules</h2>
-        <p><a href="/wisdom">Moral spine</a> · <a href="/rta">Rta</a></p>
         <ol>
           <li><strong>Soil comes first</strong> — all decisions flow from soil health.</li>
           <li><strong>Do small work properly</strong> — mastery before scaling.</li>
@@ -888,7 +833,7 @@ function AgentHome() {
 
       <section>
         <h2>Residency</h2>
-        <p><a href="/residency">Read more</a> · <a href="/artistry">Artistry</a></p>
+        <p><a href="/artistry">Artistry</a></p>
         <p>Monastic polymaths. Crazy misfits. An embedded residency across two countries (soon three). Two weeks minimum. Pre-selected.</p>
         <ul>
           <li>Design residencies — 2–4 weeks. Working briefs from the farm, sanctuary, product OS.</li>
@@ -905,7 +850,6 @@ function AgentHome() {
 
       <section>
         <h2>Provenance</h2>
-        <p><a href="/provenance">Read more</a></p>
         <p>Cherry to cup, on chain. Three layers — blockchain provenance, live sensors, and a persistent machine memory grown from the farm&rsquo;s own readings. Together they replace the forty-thousand-dollar certification stack with something the land itself can verify.</p>
       </section>
 
@@ -913,7 +857,6 @@ function AgentHome() {
 
       <section>
         <h2>The 1,000-year idea</h2>
-        <p><a href="/idea">Read more</a></p>
         <p>The frame by which every choice is measured. We think in generations.</p>
       </section>
 
@@ -1202,7 +1145,9 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
                 color: '#fff',
               }}
             >
-              +
+              <svg viewBox="0 0 24 24" width={11} height={11} fill="none" aria-hidden>
+                <path d="M5 12h13M12.5 6l6.5 6-6.5 6" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </span>
             Explore {s.name}
           </button>
@@ -1427,49 +1372,13 @@ function SanctuaryStackPanel2Col({ left, right, z }: { left: Sanctuary; right: S
 }
 
 export default function Home() {
-  const [mudigereOpen, setMudigereOpen] = useState(false)
-  const [oharaOpen, setOharaOpen] = useState(false)
-
-  /* Sanctuary modals get a vanity URL: /mudigere-estate or /ohara.
-     We use history.pushState (not Next.js routing) so no real route
-     is fetched — the modal stays mounted on the homepage. On close,
-     push back to /; on the browser back button, popstate closes
-     whichever is open. Vanity URL matches the actual page route so
-     refresh-while-open lands on the real estate briefing rather
-     than 404. */
+  // Sanctuary detail now lives on real pages (/mudigere), so the panels
+  // navigate there directly — the old in-page modal popups are gone.
   const openMudigere = useCallback(() => {
-    setMudigereOpen(true)
-    if (typeof window !== 'undefined' && window.location.pathname !== '/mudigere-estate') {
-      window.history.pushState({ modal: 'mudigere' }, '', '/mudigere-estate')
-    }
-  }, [])
-  const closeMudigere = useCallback(() => {
-    setMudigereOpen(false)
-    if (typeof window !== 'undefined' && window.location.pathname === '/mudigere-estate') {
-      window.history.pushState({}, '', '/')
-    }
+    if (typeof window !== 'undefined') window.location.assign('/mudigere')
   }, [])
   const openOhara = useCallback(() => {
-    setOharaOpen(true)
-    if (typeof window !== 'undefined' && window.location.pathname !== '/ohara') {
-      window.history.pushState({ modal: 'ohara' }, '', '/ohara')
-    }
-  }, [])
-  const closeOhara = useCallback(() => {
-    setOharaOpen(false)
-    if (typeof window !== 'undefined' && window.location.pathname === '/ohara') {
-      window.history.pushState({}, '', '/')
-    }
-  }, [])
-
-  // Back-button closes whichever sanctuary modal is open.
-  useEffect(() => {
-    const onPop = () => {
-      setMudigereOpen(false)
-      setOharaOpen(false)
-    }
-    window.addEventListener('popstate', onPop)
-    return () => window.removeEventListener('popstate', onPop)
+    if (typeof window !== 'undefined') window.location.assign('/ohara')
   }, [])
 
   /* Gate hero entrance animations until after React has mounted client-side.
@@ -1486,9 +1395,6 @@ export default function Home() {
 
   return (
     <div>
-      <MudigereModal open={mudigereOpen} onClose={closeMudigere} />
-      <OharaModal open={oharaOpen} onClose={closeOhara} />
-
       {/* ═══ AGENT MODE — markdown-style plain text ═══ */}
       <AgentHomeView />
 
@@ -1545,10 +1451,12 @@ export default function Home() {
           {/* 2. Bottom display: GENERATIONAL IMPACT (justified edge-to-edge).
               "FOR" was trimmed at the user's request — the cleaner two-word
               cadence reads stronger as a manifesto line. */}
-          <h1 className="hero-display hero-anim hero-anim--rise" style={{ opacity: 0, animationDuration: '700ms', animationDelay: '140ms' }}>
+          {/* Styled identically to the h1 above, but a <p> so the hero has a
+              single primary heading (SEO). "Natural Intelligence." is the h1. */}
+          <p className="hero-display hero-anim hero-anim--rise" style={{ opacity: 0, animationDuration: '700ms', animationDelay: '140ms' }}>
             <span>GENERATIONAL</span>{' '}
             <span>IMPACT</span>
-          </h1>
+          </p>
 
           {/* 6 / 7 / 8. Three CTA tiles — staggered after the mid-row text settles.
               Media slots map to dedicated /public assets:
@@ -1941,8 +1849,15 @@ export default function Home() {
             another would double the gutter and push the headline 48 px
             in from the page rhythm. */}
         <ScrollHighlight align="left">{`Generational Impact.
-The idea suggests that the choices made by a certain generation have long-lasting effects on future generations, either escalating or lessening difficulties.
-The impact can be deep and complex, covering different facets of life, such as culture, economy, technology, and values.`}</ScrollHighlight>
+We create ideas, products and cultures that become regenerative systems.`}</ScrollHighlight>
+
+        {/* The journals, framed by the manifesto above — a left-anchored,
+            horizontally-scrollable row of the estate's editorials, under a
+            small section label (place pages excluded). */}
+        <div style={{ marginTop: 'clamp(28px, 5vh, 64px)' }}>
+          <InfiniteArticleSlider />
+        </div>
+
         <style jsx>{`
           /* Reason copy sits directly above the expanding video — the
              card is meant to read as a continuation of the manifesto, so
@@ -1970,7 +1885,7 @@ The impact can be deep and complex, covering different facets of life, such as c
 
       {/* Operating System — full section-gap on both ends, matching the
           rhythm of every other top-level section on the page. */}
-      <section style={{ padding: 'var(--section-gap) 0', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
+      <InvertOnScroll style={{ padding: 'var(--section-gap) 0', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         {/* Operating-system intro — `align="left"` keeps the headline
             block flush with the pillar grid's left edge. Each line
             breaks at a sentence so the four principles stack as a
@@ -2045,12 +1960,12 @@ Awake.`}</ScrollHighlight>
             ))}
           </div>
         </div>
-      </section>
+      </InvertOnScroll>
 
       {/* Sanctuary lede — same scroll-to-highlight component as the Reason
           section above. Three-line manifesto that introduces the sanctuary
           stack which follows. */}
-      <section className="sanctuary-lede" style={{ borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
+      <section className="sanctuary-lede" style={{ position: 'relative', zIndex: 1, background: 'var(--contrast-bg)' }}>
         <ScrollHighlight align="left">{`Aura unfolds through sanctuary, land, and practice.
 Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm.
 Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
@@ -2061,6 +1976,16 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
              space between the border and the first line of the
              scroll-highlighted text. */
           .sanctuary-lede {
+            /* Keep on dark — this lede bridges the inverted Operating-System
+               section above and the near-black sanctuary stack below, so it
+               holds the contrast palette permanently instead of flashing
+               back to white between two dark beats. */
+            --text: var(--contrast-text);
+            --text-body: var(--contrast-text-body);
+            --text-muted: var(--contrast-text-muted);
+            --text-dim: var(--contrast-text-muted);
+            --border: var(--contrast-border);
+            color: var(--contrast-text);
             padding: calc(var(--section-gap) + clamp(40px, 6vh, 80px)) 0
                      calc(var(--section-gap) + clamp(40px, 6vh, 80px));
           }
@@ -2070,15 +1995,13 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
           .sanctuary-lede > :global(section) {
             padding: 0 !important;
           }
-          /* Bump the heading size on this lede specifically — the
-             ScrollHighlight reads as a quiet manifesto and benefits
-             from extra weight against the generous breathing room.
-             Selector targets the <h2> ScrollHighlight renders inside
-             its own section, scoped to .sanctuary-lede so other
-             ScrollHighlight usages keep their default h2 size. */
+          /* Keep this lede at the default h2 scale — it reads as a
+             quiet manifesto, not a display headline. Scoped to
+             .sanctuary-lede; only the line-height is nudged for the
+             multi-line block, font-size matches the global h2. */
           .sanctuary-lede :global(h2) {
-            font-size: clamp(40px, 7.2vw, 84px);
-            line-height: 1.04;
+            font-size: clamp(32px, 5.5vw, 60px);
+            line-height: 1.1;
           }
           @media (max-width: 768px) {
             .sanctuary-lede {
@@ -2181,7 +2104,7 @@ function AgentHomeView() {
       <p>Aura unfolds through sanctuary, land, and practice. Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm. Places shaped for slower living and deeper restoration.</p>
 
       <h3>Mudigere — Regenerative plantation sanctuary</h3>
-      <p>Karnataka, India · 13.13°N · 75.63°E. 150 acres at 3,600 feet in the Western Ghats. UNESCO biodiversity zone. Coffee, tea, pepper, areca. 43 indigenous cattle. Bees. Native canopy nursery. Forest-to-table kitchen. Coffee festivals.</p>
+      <p>Karnataka, India · 13.13°N · 75.63°E. 150 acres at 3,600 feet in the Western Ghats. UNESCO biodiversity zone. Coffee, tea, pepper, areca. 52 indigenous cattle. Bees. Native canopy nursery. Forest-to-table kitchen. Coffee festivals.</p>
 
       <h3>Ohara — Retreats and slow living in nature</h3>
       <p>Kyoto Prefecture, Japan · 35.13°N · 135.83°E. A quiet valley north of Kyoto. Cedar forests, rivers, temples. A 30-year Japanese garden. Teahouse. Café on the river. Studios. Ki no Ie. Workshops. Gallery. Weekend restaurant. Wellbeing retreat.</p>
@@ -2233,21 +2156,12 @@ function AgentHomeView() {
       <ul>
         <li><a href="/reason">/reason</a> — the founder&rsquo;s story, in 14 chapters.</li>
         <li><a href="/brand">/brand</a> — brand identity, principles, colours, type.</li>
-        <li><a href="/sanctuary">/sanctuary</a> — sanctuary essays and place.</li>
-        <li><a href="/idea">/idea</a> — The 1000 Year Idea.</li>
-        <li><a href="/wisdom">/wisdom</a> — Moral Spine.</li>
-        <li><a href="/rta">/rta</a> — Ṛta. Right time. Right action.</li>
-        <li><a href="/artistry">/artistry</a> — Code meets clay.</li>
-        <li><a href="/residency">/residency</a> — Monastic polymaths.</li>
-        <li><a href="/provenance">/provenance</a> — Cherry to cup, on chain.</li>
-        <li><a href="/fermentation">/fermentation</a> — Three disciplines, one precision.</li>
-        <li><a href="/coffee">/coffee</a> — Six lots, one appellation.</li>
-        <li><a href="/pepper">/pepper</a> — Malabar black gold.</li>
-        <li><a href="/areca">/areca</a> — The sentinel palm.</li>
-        <li><a href="/biodynamic">/biodynamic</a> — The farm as organism.</li>
-        <li><a href="/vedic">/vedic</a> — Older than its study.</li>
-        <li><a href="/living-systems">/living-systems</a> — Herd, hive, canopy.</li>
-        <li><a href="/land">/land</a> — The land is the lab.</li>
+        <li><a href="/mudigere">/mudigere</a> — Sampigekhan Estate, the Indian land.</li>
+        <li><a href="/ohara">/ohara</a> — the Kyoto estate. Asa and Niwa.</li>
+        <li><a href="/herd">/herd</a> — Ecosystem Engineers. The herd as biological engine.</li>
+        <li><a href="/circular">/circular</a> — Circular Intelligence. CPP and Jeevamrit.</li>
+        <li><a href="/shade">/shade</a> — The Light Instrument. Shade whiskering.</li>
+        <li><a href="/artistry">/artistry</a> — A space to make.</li>
         <li><a href="/contact">/contact</a> — Get in touch.</li>
       </ul>
 

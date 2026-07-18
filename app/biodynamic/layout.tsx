@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 export const metadata: Metadata = {
   title: 'Biodynamic',
   description:
-    'Not a technique. A worldview. BD 500–508, Jeevamrit, Panchgavya, Beejamrit — Steiner discipline alongside Vedic agricultural science, with 52 Malnad Gidda cattle as the engine.',
+    'Not a technique. A worldview. BD 500–508, Jeevamrit, Panchgavya, Beejamrit — biodynamic discipline alongside Vedic agricultural science, with 52 Malnad Gidda cattle as the engine.',
   alternates: { canonical: '/biodynamic' },
   openGraph: {
     type: 'article',

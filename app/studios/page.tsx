@@ -1,5 +1,5 @@
 import Reveal from '@/components/RevealOnScroll'
-import { Placeholder, ScrollHighlight } from '@/components/article/Article'
+import { Placeholder, ScrollHighlight, Continue } from '@/components/article/Article'
 import { StudioPillarMedia } from '@/components/StudioPillarMedia'
 
 /* ═══════════════════════════════════════════
@@ -90,14 +90,14 @@ const STUDIOS: Studio[] = [
   {
     name: 'Origin',
     lead: 'Story, voice, identity.',
-    body: 'What a thing is, and what it must always remain. Naming, narrative, design language, art direction — the layer that survives every quarter, every shift, every iteration. Identity built to read the same in four hundred years as it does today.',
+    body: 'What a thing is, and what it must always remain. Naming, narrative, design language, art direction — the layer that survives every quarter, every shift, every iteration. Identity built to read the same in 1,000 years as it does today.',
     image: '/aura-studios/aura-design.jpg',
     alt: 'Aura Origin studio — story, voice, identity, design language',
   },
   {
     name: 'Engine',
     lead: 'Systems that read the land.',
-    body: 'Sensors, models, agents, and the quiet automation behind them. Crypto-native where it serves, AI-fluent where it helps — but always in service of the deeply human, never in place of it. The machine, made to listen first.',
+    body: 'Sensors, models, agents, and the quiet automation behind them. Crypto-native where it serves, AI-fluent where it helps, always in service of the deeply human. A machine made to listen first.',
     image: '/aura-studios/aura-technology.jpg',
     video: '/aura-studios/aura-technology.mp4',
     alt: 'Aura Engine studio — sensors, models, agents, data flows',
@@ -179,7 +179,7 @@ export default function StudiosPage() {
       <ScrollHighlight align="left">{`Natural Intelligence is the way of doing.
 Read the land first, then build.
 Promise less. Deliver more.
-Build for the next 1,000 years, not the next quarter.
+Build for the next 1,000 years.
 Monastic polymaths. Crazy misfits.`}</ScrollHighlight>
 
       {/* ── Three studios ────────────────────────────────────
@@ -216,8 +216,8 @@ Monastic polymaths. Crazy misfits.`}</ScrollHighlight>
           standard — craft, innovation, impact — stacked as a
           stanza so each beat lands on its own. */}
       <ScrollHighlight align="left">{`Craft meets technology.
-Innovation in service of value, not novelty.
-Impact measured in centuries, not quarters.`}</ScrollHighlight>
+Innovation in service of value.
+Impact measured in centuries.`}</ScrollHighlight>
 
       {/* ── Body banner ──────────────────────────────────────
           A held loop before the closing CTA — the space video
@@ -245,6 +245,15 @@ Impact measured in centuries, not quarters.`}</ScrollHighlight>
           </Reveal>
         </div>
       </section>
+
+      <Continue
+        heading="Explore"
+        items={[
+          { href: '/artistry', label: 'Artistry', description: 'The studio and labs at work — making by subtraction, shu-ha-ri at the bench.', img: '/aura-artistry.jpg' },
+          { href: '/reason', label: 'The Reason', description: 'Why any of it exists — the belief that ties land, craft and technology together.', img: '/the-reason/aura-flowers-1.png' },
+          { href: '/brand', label: 'Our Brand', description: 'How the work is carried into the world — the identity and voice of Aura.', img: '/aura-hero.jpg' },
+        ]}
+      />
     </>
   )
 }

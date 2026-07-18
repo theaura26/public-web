@@ -36,8 +36,8 @@ export default function BiodynamicPage() {
           plant, animal, and cosmos are connected.
         </p>
         <p className="p2">
-          We practise two systems simultaneously: European biodynamic (Rudolf
-          Steiner, 1924) and Vedic agricultural science (millennia older,
+          We practise two systems simultaneously: European biodynamic and
+          Vedic agricultural science (millennia older,
           orally transmitted, regionally adapted).
         </p>
         <p className="p2">
@@ -51,13 +51,21 @@ export default function BiodynamicPage() {
         caption="The next generation — the herd that will run the next hundred years"
       />
 
-      <TwoCol id="steiner" heading="The Steiner preparations.">
+      <TwoCol id="steiner" heading="The numbered preparations.">
         <p className="p1">
           <Term tip="Horn manure. Cow dung packed in a cow horn, buried over winter, applied to soil at dusk.">BD 500</Term> — horn manure. Cow dung packed into a cow horn, buried over
           winter, exhumed in spring. The microbial transformation that occurs
           underground produces a concentrate of soil-building biology. Stirred
           dynamically for one hour — creating a vortex, breaking it, reversing
           — then applied to soil in the evening, when the earth is inhaling.
+        </p>
+        <p className="p2">
+          We will say the thing most of the biodynamic world talks around. The
+          lunar charts and the talk of the earth breathing are poetry, and poetry
+          has never survived a controlled trial. We keep these preparations for a
+          harder reason: the biology in them works, we can measure it, and we do.
+          The ritual earns its place by what it grows in the ground. That is the
+          only test we let it take.
         </p>
         <DataGrid cols={2}>
           <DataCard value="BD 500 — Horn manure.">
@@ -81,16 +89,16 @@ export default function BiodynamicPage() {
 
       <TwoCol id="vedic" heading="The Vedic system.">
         <p className="p1">
-          Alongside the Steiner preparations, the estate prepares and applies a
+          Alongside those numbered preparations, the estate prepares and applies a
           parallel set of inputs rooted in Indian agricultural science —
           <Term tip="Cow pat pit. Composted dung layered with BD preparations, fermented ninety days.">CPP</Term>,
           Jeevamrit, Panchgavya, Beejamrit, and older preparations from the
           Vrikshayurveda lineage.
         </p>
         <p className="p2">
-          The two systems are not in competition. Each carries a piece of the
-          same underlying observation: feed the soil, not the plant; close the
-          loop; let the cow do most of the work.
+          The two systems reinforce each other. Each carries a piece of the same
+          underlying observation: feed the soil, close the loop, and let the cow
+          do most of the work.
         </p>
         <DataGrid cols={3}>
           <DataCard value={<><Term tip="Cow dung, cow urine, jaggery, gram flour, water. Fermented 5–7 days. Soil drench.">Jeevamrit</Term>.</>}>
@@ -127,15 +135,14 @@ export default function BiodynamicPage() {
       />
 
       <PullQuote>
-        We do not abandon CPP for newer methods. We SCALE WISDOM. We do not
-        REPLACE it.
+        We SCALE WISDOM. We keep what works, and build on it.
       </PullQuote>
 
       <TwoCol id="herd" heading="The herd as engine.">
         <p className="p1">
-          Everything begins with the cattle. The 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> are an
-          indigenous Karnataka breed — not Holsteins, not Jersey crosses. They
-          have grazed at this altitude for centuries. Their gut microbiome is
+          Everything begins with the cattle. The 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> are the
+          small indigenous cattle of these hills, grazing at this altitude for
+          centuries. Their gut microbiome is
           adapted to the estate&rsquo;s grasses and soil. Their dung carries
           microbial characteristics specific to this breed, this land, this
           climate.
@@ -193,13 +200,12 @@ export default function BiodynamicPage() {
           event.
         </p>
         <p className="p2">
-          Organic and biodynamic certification evidence becomes unfakeable: it
-          is cross-referenced against weather data, lunar records, and soil
-          outcomes that cannot be retroactively altered.
+          Organic and biodynamic certification evidence becomes tamper-evident,
+          cross-referenced against weather data, lunar records, and soil outcomes
+          that cannot be retroactively altered.
         </p>
         <p className="p2">
-          This is not certification theatre. This is the practice, recorded
-          with integrity, made permanent.
+          This is the practice, recorded with integrity, made permanent.
         </p>
       </TwoCol>
 
@@ -211,10 +217,10 @@ export default function BiodynamicPage() {
 
       <OneCol id="closing" heading="The herd is biological infrastructure.">
         <p className="p1">
-          Biodynamic inputs, ecological pest balance, soil microbiome
-          restoration — these are not features and not selling points. They
-          are evidence of intelligence aligned with nature, not imposed on
-          it.
+          Biodynamic inputs, ecological pest balance, a restored soil microbiome —
+          this is the estate working hand in hand with the land&rsquo;s own
+          intelligence. We believe it is the only kind of farming that will still
+          make sense in a hundred years, and we are building as if we are right.
         </p>
         <p className="p2">
           A four-story polyculture, fed by preparations from indigenous

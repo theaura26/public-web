@@ -167,7 +167,7 @@ export default function MudigerePage() {
           <img
             ref={heroMapRef}
             src="/journals/land/aura-mudigere-map.jpg"
-            alt="Sampigelkhan Estate plan — surveyed at 1:2,500. Coffee blocks in green, tea ridge to the north, foot paths threading between."
+            alt="Sampigekhan Estate plan — surveyed at 1:2,500. Coffee blocks in green, tea ridge to the north, foot paths threading between."
             loading="eager"
             decoding="async"
             style={{
@@ -241,7 +241,7 @@ export default function MudigerePage() {
                   lineHeight: 1.5,
                 }}
               >
-                Sampigelkhan Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
+                Sampigekhan Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
               </p>
             </div>
           </div>
@@ -354,7 +354,7 @@ export default function MudigerePage() {
                   slightly off). `?output=embed` is the no-API-key
                   embed form Google still serves for place queries. */}
               <iframe
-                title="Sampigelkhan Estate — Mudigere, Karnataka"
+                title="Sampigekhan Estate — Mudigere, Karnataka"
                 src="https://maps.google.com/maps?q=13.168594,75.433983&z=15&t=k&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -436,7 +436,7 @@ export default function MudigerePage() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/journals/land/aura-mudigere-panorama.jpg"
-                    alt="Mudigere mountains rising over the Western Ghats — Sampigelkhan Estate"
+                    alt="Mudigere mountains rising over the Western Ghats — Sampigekhan Estate"
                     loading="lazy"
                     decoding="async"
                     style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
@@ -488,7 +488,7 @@ export default function MudigerePage() {
               )}
             </div>
             <p className="label" style={{ marginTop: 'var(--space-4)' }}>
-              The walkthrough · Sampigelkhan Estate
+              The walkthrough · Sampigekhan Estate
             </p>
           </Reveal>
         </div>
@@ -563,7 +563,7 @@ export default function MudigerePage() {
         </DataCard>
         <DataCard
           img="/journals/living-systems/aura-mid-canopy.jpg"
-          alt="Mid-canopy at Sampigelkhan — Arecanut and Black Pepper"
+          alt="Mid-canopy at Sampigekhan — Arecanut and Black Pepper"
           value="Mid-canopy."
         >
           Arecanut palms; pepper climbing them.
@@ -587,7 +587,7 @@ export default function MudigerePage() {
             the margins.
           </DataCard>
           <DataCard value="Layer 3 — Coffee &amp; Tea">
-            100 acres Arabica (<Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka.">Sln.9</Term>, <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>, <Term tip="A modern Arabica cultivar (Catimor lineage) developed in India, prized for leaf-rust resistance.">Chandragiri</Term>). 35 acres of tea in
+            100 acres Arabica (<Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka.">Sln.9</Term>, <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>, <Term tip="A modern Arabica cultivar (Catimor lineage) developed in India, prized for leaf-rust resistance.">Chandragiri</Term>). 32 acres of tea in
             organic transition — targeting 2027 certification.
           </DataCard>
           <DataCard value="Layer 4 — Cardamom, Cacao, Medicinal">
@@ -600,8 +600,8 @@ export default function MudigerePage() {
 
       <Placeholder
         src="/journals/coffee/aura-our-coffee-story.jpg"
-        alt="Six micro lots · Arabica Sln.9 &amp; Sln.795 · Sampigelkhan Estate"
-        caption="Six micro lots · Sampigelkhan Estate"
+        alt="Six micro lots · Arabica Sln.9 &amp; Sln.795 · Sampigekhan Estate"
+        caption="Six micro lots · Sampigekhan Estate"
       />
 
       <TwoCol id="coffee" heading="Six micro lots. Six processing methods. One appellation.">
@@ -678,7 +678,7 @@ export default function MudigerePage() {
         <DataCard
           img="/journals/living-systems/aura-cow.jpg"
           alt="Malnad Gidda grazing through the coffee blocks"
-          value="43 cattle, in rotation."
+          value="52 cattle, in rotation."
         >
           Their movement through the coffee IS the rotation. Their dung
           is the input.
@@ -854,7 +854,7 @@ export default function MudigerePage() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="https://img.youtube.com/vi/NA-qtu8JljA/maxresdefault.jpg"
-                    alt="The estate film — Sampigelkhan Estate, Mudigere"
+                    alt="The estate film — Sampigekhan Estate, Mudigere"
                     loading="lazy"
                     decoding="async"
                     onError={(e) => {
@@ -910,7 +910,7 @@ export default function MudigerePage() {
               )}
             </div>
             <p className="label" style={{ marginTop: 'var(--space-4)' }}>
-              The film · Sampigelkhan Estate
+              The film · Sampigekhan Estate
             </p>
           </Reveal>
         </div>
@@ -933,7 +933,7 @@ export default function MudigerePage() {
           <a href="mailto:hello@theaura.life?subject=Mudigere%20estate%20visit">hello@theaura.life</a>.
         </p>
         <p className="label" style={{ marginTop: 'var(--space-7)' }}>
-          Aura · Sampigelkhan Estate · Mudigere · Private briefing
+          Aura · Sampigekhan Estate · Mudigere · Private briefing
         </p>
       </OneCol>
     </>

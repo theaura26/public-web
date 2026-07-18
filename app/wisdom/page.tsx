@@ -22,8 +22,8 @@ export default function WisdomPage() {
 
       <OneCol heading="The things we will not do.">
         <p className="p1">
-          Aura is not defined by ambition. It is defined by restraint — the
-          decisions we make before anyone is watching.
+          Aura is defined by restraint — by the decisions it makes before anyone
+          is watching.
         </p>
         <p className="p2">
           Every organisation has values on a wall. Aura has a spine.
@@ -37,10 +37,10 @@ export default function WisdomPage() {
         </p>
         <p className="p2">
           So we begin with input hygiene — a deliberate care about what we
-          consume, what we amplify, what we allow into the work. This is
-          not productivity advice. It is an ethical position. Distraction
-          is not neutral. It degrades the quality of everything downstream
-          — decisions, designs, soil, fermentation, the taste of the cup.
+          consume, what we amplify, what we allow into the work. This is an
+          ethical position. Distraction degrades the quality of everything
+          downstream — decisions, designs, soil, fermentation, the taste of the
+          cup.
         </p>
         <p className="p2">
           Before Aura became a regenerative estate system, it became a
@@ -119,8 +119,8 @@ export default function WisdomPage() {
 
       <TwoCol id="field" heading="On the field.">
         <p className="p1">
-          The spine is not abstract. It lives in six rules, written in English
-          and Kannada, posted in every farm building.
+          The spine lives in six rules, written in English and Kannada, posted in
+          every farm building.
         </p>
         <p className="p2">
           &ldquo;No shortcuts&rdquo; means: if something is wrong, we speak. No
@@ -139,8 +139,8 @@ export default function WisdomPage() {
 
       <TwoCol id="community" heading="On community.">
         <p className="p1">
-          Aura is not a company you join. It is a community you are invited
-          into. The shepherd, the cook, the coffee cuppers, the residents,
+          Aura is a community you are invited into. The shepherd, the cook, the
+          coffee cuppers, the residents,
           the cattle, the canopy, the children who will inherit this estate
           — they are members. The work belongs to all of them.
         </p>
@@ -149,8 +149,7 @@ export default function WisdomPage() {
           coherence. Competence is the floor — you have to be good at the
           thing. Character is calm under complexity, intellectual honesty,
           stewardship instinct, consistency. Coherence is the understanding
-          that this is not a company optimising for quarterly returns; it
-          is a living system optimising for centuries.
+          that this is a living system, and it optimises for centuries.
         </p>
         <p className="p2">
           We would rather host a twenty-year-old with conviction than a
@@ -224,8 +223,8 @@ export default function WisdomPage() {
           Coherence over fragmentation. Stillness over performance.
         </p>
         <p className="p2">
-          We are not performing regeneration for an audience. We are practising
-          it because it is the only sane way to work with land.
+          We practise regeneration because it is the only sane way to work with
+          land.
         </p>
       </OneCol>
 

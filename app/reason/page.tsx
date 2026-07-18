@@ -8,6 +8,7 @@ import { ReasonWordmark } from '@/components/the-reason/Wordmark'
 import MobileReason from '@/components/the-reason/MobileReason'
 import AgentReason from '@/components/the-reason/AgentReason'
 import { useMode } from '@/components/ModeProvider'
+import { Continue } from '@/components/article/Article'
 
 /* ═══════════════════════════════════════════════════════════════════════
    THE REASON — desktop, coordinate-faithful to Figma node 4111:3402.
@@ -488,6 +489,20 @@ export default function TheReasonPage() {
 
       {/* Mobile single-column layout (shown <=760px; desktop stage hidden there) */}
       <MobileReason />
+
+      {/* Cross-links — where the belief goes next. Sits below both the desktop
+          stage and the mobile layout; the scroll-driven page bg settles to
+          paper here, so the cards read on white. */}
+      <div style={{ background: 'var(--r-paper)', position: 'relative', zIndex: 1 }}>
+        <Continue
+          heading="Explore"
+          items={[
+            { href: '/brand', label: 'Our Brand', description: 'How the belief shows up — the identity, the voice, the way Aura carries itself.', img: '/aura-hero.jpg' },
+            { href: '/studios', label: 'Studios', description: 'Where the thinking is made — Origin, Engine and Hospitality, three studios applying Natural Intelligence to story, systems and place.', img: '/aura-studios/aura-studios.jpg' },
+            { href: '/mudigere', label: 'Mudigere', description: 'Where it is grown — 150 acres in the Western Ghats, tended in decades.', img: '/aura-mudigere.jpg' },
+          ]}
+        />
+      </div>
     </div>
   )
 }

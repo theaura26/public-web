@@ -22,8 +22,10 @@ export default function LandPage() {
 
       <TwoCol heading="Land is ancestry.">
         <p className="p1">
-          Sampigelkhan Estate sits in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term> of Karnataka — red <Term tip="Red, iron-rich, free-draining volcanic soil typical of the Western Ghats.">laterite</Term> soil,
-          monsoon rhythm, and a four-story canopy older than any of us.
+          Sampigekhan Estate sits in the <Term tip="A mountain range down India's west coast — older than the Himalaya, and one of the world's eight 'hottest' biodiversity hotspots, with over 7,000 plant species.">Western Ghats</Term> of Karnataka, on red{' '}
+          <Term tip="Iron- and aluminium-rich soil formed by deep tropical weathering — not a volcanic rock itself, but the long residue of one, the Deccan basalt, broken down over ages of monsoon.">laterite</Term>:
+          soil that is itself the record of a very long weathering, under a monsoon
+          older than agriculture and a four-story canopy older than any of us.
         </p>
         <p className="p2">
           We are stewards of a hundred-year arc. The numbers below describe
@@ -37,11 +39,11 @@ export default function LandPage() {
 
       <Placeholder
         src="/journals/land/aura-canopy-noon-2.jpg"
-        alt="Light filtering through the four-story canopy at noon — Sampigelkhan Estate"
+        alt="Light filtering through the four-story canopy at noon — Sampigekhan Estate"
         caption="The land — 150 acres, one organism"
       />
 
-      <TwoCol id="facts" heading="Sampigelkhan.">
+      <TwoCol id="facts" heading="Sampigekhan.">
         <DataGrid cols={3}>
           <DataCard value="13.1365°N, 75.6403°E">Coordinates.</DataCard>
           <DataCard value="3,600 ft">Altitude.</DataCard>
@@ -62,14 +64,14 @@ export default function LandPage() {
         mediaType="video"
         poster="/journals/land/aura-canopy-noon.jpg"
         alt="Looking up at the four-story canopy at noon — silver oak, Albizzia, jackfruit, fig"
-        caption="Four-story canopy — Sampigelkhan Estate"
+        caption="Four-story canopy — Sampigekhan Estate"
       />
 
       <TwoCol id="grows" heading="What grows here.">
         <p className="p1">
           One hundred acres of shade-grown coffee — Arabica <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>,
           planted beneath a four-story canopy of silver oak, Albizzia,
-          jackfruit, and native fig. Thirty-five acres of tea, in organic
+          jackfruit, and native fig. Thirty-two acres of tea, in organic
           transition targeting 2027.
         </p>
         <p className="p2">
@@ -86,7 +88,7 @@ export default function LandPage() {
       </TwoCol>
 
       <PullQuote>
-        The FOREST is not adjacent to the FARM. The FOREST is the FARM.
+        The FOREST is the FARM. One canopy, one system, one ground.
       </PullQuote>
 
       <TwoCol id="work" heading="How we work this land.">
@@ -117,10 +119,10 @@ export default function LandPage() {
 
       <TwoCol id="east-east" heading="Mudigere and Ohara.">
         <p className="p1">
-          Aura is not one estate. It is two. The second sits in Ohara, Kyoto —
-          two properties totalling roughly 1,200 <Term tip="Japanese land measure. About 3.3 m² per tsubo.">tsubo</Term>, with seven existing
-          buildings, a teahouse with a hearth, a thirty-year-old Japanese
-          garden, and a cafe overlooking a river.
+          Aura works two estates. The first is here at Mudigere; the second
+          sits in Ohara, Kyoto — two properties totalling roughly 1,200 <Term tip="Japanese land measure. About 3.3 m² per tsubo.">tsubo</Term>,
+          with seven existing buildings, a teahouse with a hearth, a
+          thirty-year-old Japanese garden, and a cafe overlooking a river.
         </p>
         <p className="p2">
           Mudigere and Ohara form an East-East axis. Two agrarian cultures —
@@ -133,7 +135,7 @@ export default function LandPage() {
       <DataGrid cols={2} standalone>
         <DataCard
           img="/journals/land/aura-mudigere-mountains.jpg"
-          alt="Mudigere mountains rising over the Western Ghats — the valley that holds Sampigelkhan Estate"
+          alt="Mudigere mountains rising over the Western Ghats — the valley that holds Sampigekhan Estate"
           value="Mudigere · Karnataka."
         >
           150 acres, 3,600 ft, laterite soil, UNESCO biodiversity zone. Four-
@@ -162,7 +164,7 @@ export default function LandPage() {
           <DataCard value="4–5×">Carbon vs monoculture coffee.</DataCard>
           <DataCard value="500–1,000 t">CO₂ credit potential per year.</DataCard>
           <DataCard value="100 acres">Shade-grown coffee.</DataCard>
-          <DataCard value="35 acres">Tea, organic transition 2027.</DataCard>
+          <DataCard value="32 acres">Tea, organic transition 2027.</DataCard>
           <DataCard value="35,000">Trees on chain over time.</DataCard>
         </DataGrid>
         <p className="p2">

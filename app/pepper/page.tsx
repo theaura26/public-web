@@ -6,166 +6,129 @@ import {
   DataGrid,
   DataCard,
   PullQuote,
+  ScrollHighlight,
   Continue,
+  Term,
 } from '@/components/article/Article'
 
 export default function PepperPage() {
   return (
     <>
-      {/* Editorial JournalHero pattern — stacked title + full-bleed
-          image. Was ArticleHero with subline + 4-question TOC; both
-          dropped in the coming-soon refactor. */}
       <JournalHero
-        title="Malabar black gold."
-        src="/aura-pepper.jpg"
+        currentHref="/pepper"
+        title="Malabar Pepper"
         mediaType="image"
-        caption="Single-estate pepper, three processing styles"
-        alt="Aura pepper — Malabar black gold climbing the areca trunks"
+        caption="Aura grows black pepper at Mudigere, trained up the areca palms in the mid-canopy — an old Western Ghats method worked with close attention, picked by hand and processed on the estate into black, white, and green."
+        alt="Aura pepper — Malabar black pepper climbing the areca trunks"
       />
 
-      <Placeholder
-        caption="Dense green drupes cascading down a mature areca trunk, rain-slick bark behind. Shot looking up into the canopy, slight backlight."
-      />
-
-      {/* TERROIR */}
-      {/* eyebrow was: "Terroir" */}
-      <TwoCol id="terroir" heading="Vine on palm.">
+      <TwoCol id="growing" heading="The vine grows up the palm.">
         <p className="p1">
-          Black pepper (<em>Piper nigrum</em>) is a climber. In the Western Ghats it grows the way
-          it has grown for two thousand years — trained up the trunks of shade trees. At Aura, the
-          areca palm is the scaffolding. The vine and the palm have an ancient working agreement:
-          the areca provides vertical architecture and dappled light; the pepper provides leaf
-          litter and a dense root mat that holds the soil on a slope.
+          <Term tip="The black-pepper vine, native to the Western Ghats of southern India. It climbs — in the wild, up the trunk of a living tree rather than a post.">Piper nigrum</Term> is
+          a climber. At Mudigere, Aura trains it up the areca palm — one vine to a trunk — so the pepper
+          rises into the mid-canopy on living wood, the way it has grown in the Western Ghats for
+          centuries. The method is old; the attention Aura pays it is exact.
         </p>
         <p className="p2">
-          Our vines sit at <strong>3,600 ft</strong> on red laterite, the same block as the
-          coffee. Monsoon arrives in June and leaves in September. Flowering follows the first
-          rain. Harvest runs{' '}
-          <strong>December – February</strong>, picked by hand, cluster by cluster.
-        </p>
-        <p className="p2">
-          Malabar pepper is one of the oldest geographical indications in the world — prized for
-          the combination of heat, citrus top-note, and pine-resin depth that comes specifically
-          from the Ghats terroir. We grow inside that appellation and intend to earn it every
-          season.
-        </p>
-        <DataGrid cols={4}>
-          <DataCard value="Karimunda">Malabar heirloom, GI Ghats.</DataCard>
-          <DataCard value="Areca palm">Live-tree climber, 15 – 20 m.</DataCard>
-          <DataCard value="3,600 ft">Elevation on red laterite.</DataCard>
-          <DataCard value="Dec – Feb">By hand, by cluster.</DataCard>
-        </DataGrid>
-      </TwoCol>
-
-      {/* THREE TYPES */}
-      {/* eyebrow was: "Processing" */}
-      <TwoCol
-        id="processing"
-        heading="Three drupes from one vine."
-      >
-        <p className="p1">
-          Black, white, and green pepper are not three plants. They are three decisions made in
-          the first forty-eight hours after harvest. The same berry can take any of three
-          trajectories depending on its ripeness at picking and what happens to it next.
+          The vines sit at <strong>3,600 ft</strong> on the red{' '}
+          <Term tip="Iron- and aluminium-rich red soil weathered in the wet tropics. Free-draining and acidic — the ground the estate's coffee and pepper both root into.">laterite</Term>{' '}
+          the coffee roots into, under the same four-story shade. The monsoon arrives in June and leaves
+          in September. Flowering follows the first rain; the pick runs through the dry months that
+          follow, by hand, cluster by cluster, never stripped.
         </p>
         <DataGrid cols={3}>
-          <DataCard value="Unripe · sun-dried">
-            Picked just before ripeness, blanched briefly and sun-dried on raised beds for{' '}
-            5 – 7 days. The skin wrinkles and darkens. The heat is forward; the
-            aromatics — limonene, pinene, caryophyllene — are at their peak.
+          <DataCard value="Areca palm">The living trellis — one vine to a trunk, in the mid-canopy.</DataCard>
+          <DataCard value="3,600 ft">The coffee&apos;s elevation, the coffee&apos;s laterite, the coffee&apos;s shade.</DataCard>
+          <DataCard value="By hand">Picked cluster by cluster through the dry months, never stripped.</DataCard>
+        </DataGrid>
+      </TwoCol>
+
+      <Placeholder
+        type="Portrait · canopy"
+        caption="Black pepper climbing the rain-slick trunk of a mature areca palm at Mudigere"
+      />
+
+      <TwoCol id="processing" heading="Black, white, and green.">
+        <p className="p1">
+          Black, white, and green pepper come from the same berry. Which one it becomes is decided in the
+          first forty-eight hours after the pick — by how ripe the corn was when it left the vine, and by
+          what Aura does with it next.
+        </p>
+        <DataGrid cols={3}>
+          <DataCard value="Black · sun-dried">
+            Picked just before full ripeness and dried whole in the sun until the skin wrinkles dark
+            around the corn. The heat is forward, the aromatics at their sharpest.
           </DataCard>
-          <DataCard value="Ripe · water-retted">
-            Picked fully ripe, soaked in flowing cool water for{' '}
-            7 – 10 days to soften and ferment off the outer pericarp, then rubbed
-            clean and dried. Heat without top-note. Preferred by chefs who want the bite without
-            the smell.
+          <DataCard value="White · retted">
+            Picked fully ripe and soaked in cool running water until the outer skin lifts away from the
+            pale corn beneath. Heat with the top-note taken off — the pepper for a broth.
           </DataCard>
-          <DataCard value="Unripe · brined / freeze-dried">
-            Picked young and preserved in brine or flash freeze-dried to hold the fresh,
-            grassy, sharply aromatic character of the live drupe. The kitchen pepper.
+          <DataCard value="Green · fresh-kept">
+            Picked young and held in brine or flash-frozen to keep the grassy, live character of the fresh
+            drupe. The pepper closest to the vine.
           </DataCard>
         </DataGrid>
       </TwoCol>
 
       <Placeholder
-        caption="Simple still life on a dark linen cloth. Three identical glass jars, same lighting, same scale. Label-free."
+        type="Process · sun-drying"
+        caption="Drupes on raised bamboo platforms, taking the first sun after the pick"
       />
 
-      {/* FERMENTATION */}
-      {/* eyebrow was: "Fermentation" */}
-      <TwoCol id="fermentation" heading="Water-retting and anaerobic.">
+      <TwoCol id="retting" heading="Retted, not rushed.">
         <p className="p1">
-          Traditional white pepper is made by retting — a controlled microbial fermentation in
-          running water. We run our retting in spring water from the estate catchment, changed
-          daily, at{' '}
-          <strong>18 – 22 °C</strong>. The bacterial population that breaks down
-          the pericarp also introduces volatile esters that traditional dry-process white pepper
-          never develops. The cup — or the grind, rather — is rounder.
+          Pepper is one of the estate&apos;s ferments, alongside the coffee and the cattle dung that feeds
+          them both. Aura{' '}
+          <Term tip="Soaking the ripe berry in water until its outer skin softens and lifts away, leaving the pale corn beneath. The step that makes white pepper.">rets</Term>{' '}
+          its white pepper in spring water from the estate catchment, changed daily and run cooler than
+          river retting — which is what brings it out round in the cup.
         </p>
         <p className="p2">
-          Since <strong>2025</strong> we have been running a small{' '}
-          <strong>anaerobic black pepper</strong> lot as well. Unripe drupes sealed under CO₂ for
-          {' '}<strong>36 hours</strong> before sun-drying. The flavour arrives
-          fruitier, closer to a dried berry than a classic pepper. Experimental. The kind of lot
-          we run when the kitchen is curious.
+          The pepper and the coffee draw on the same biodynamic inputs, so the shed schedules one calendar
+          around the other. One anaerobic lot is still young — a few sealed vessels, watched daily, coming
+          out fruitier than a classic corn. Aura releases it when it earns release, and not before.
         </p>
       </TwoCol>
 
-      {/* APPELLATION */}
-      {/* eyebrow was: "Appellation" */}
-      <TwoCol id="appellation" heading="Place as signature.">
+      <ScrollHighlight>
+        {`Picked by hand.
+         Dried in the sun.
+         Released by the season.`}
+      </ScrollHighlight>
+
+      <TwoCol id="quality" heading="Place as signature.">
         <p className="p1">
-          The Malabar coast has been the world&apos;s pepper source since Roman merchants followed the
-          monsoon winds across the Arabian Sea. What distinguishes the best of it — the
-          citrus-pine-heat triangle — is not the cultivar alone. It is the altitude, the laterite,
-          the shade, and the specific microbiome of this strip of the Ghats.
+          The quality of the pepper is the quality of the ground it grew on. The Ghats terroir gives
+          Malabar its signature — forward heat, a citrus top-note, and a pine-resin depth — and Aura grows
+          toward that mark season by season.
         </p>
         <p className="p2">
-          We label every lot with the block it came from, the month it was harvested, and the
-          single trellis tree it climbed. Provenance is not a story we tell; it is the label on
-          the jar.
+          Every lot is labelled with the block it grew in, the month it was picked, and the palm the vine
+          climbed. That record — kept the same way the coffee&apos;s is — is the whole appellation: the
+          altitude, the laterite, the shade, and the microbiome of one strip of the Ghats, written down so
+          a buyer can read it back.
         </p>
       </TwoCol>
 
-      <PullQuote>The vine remembers every year.</PullQuote>
-
-      <PullQuote attribution="ನೋವಿಲ್ಲದೆ ಬೇಗೆ ಇಲ್ಲ.">
-        Heat without shortcut.
+      <PullQuote>
+        Heat without a *shortcut*.
       </PullQuote>
 
-      {/* BUYERS */}
-      {/* eyebrow was: "Buyers" */}
-      <OneCol heading="Working with us.">
+      <OneCol id="close" heading="The vine outlives the year.">
         <p className="p1">
-          Spice enquiries, single-estate pepper, and chef partnerships:{' '}
-          <a href="mailto:spice@theaura.life">spice@theaura.life</a>
+          A pepper vine crops for decades on the same palm, so Aura works it on a decade&apos;s horizon —
+          feed the soil the vine roots into, hold the shade above it, and let the block deepen season after
+          season. The oldest method in the Ghats, worked with modern measurement: Natural Intelligence,
+          applied to a vine.
         </p>
         <p className="p2">
-          Lots are small and released seasonally. Black, white, green, and the anaerobic
-          experimental when it is worth releasing. We do not blend across estates. Every jar is
-          from this land.
+          Single-estate pepper, small-parcel trade, and chef partnerships:{' '}
+          <a href="mailto:spice@theaura.life">spice@theaura.life</a>. Lots are small and released by the
+          season. Aura does not blend across estates — every jar is from this land.
         </p>
       </OneCol>
 
-      <Continue
-        items={[
-          {
-            href: '/areca',
-            label: 'Areca',
-            description: 'The trellis tree. The sentinel of the estate.',
-          },
-          {
-            href: '/fermentation',
-            label: 'Fermentation',
-            description: 'Water-retting, anaerobic, and the wet mill.',
-          },
-          {
-            href: '/sanctuary',
-            label: 'Mudigere',
-            description: 'The land the vine remembers.',
-          },
-        ]}
-      />
+      <Continue currentHref="/pepper" />
     </>
   )
 }

@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
    Small popup that replicates the /contact page's form — same four
    fields (name · email · topic · message), same validation rules,
    same POST to /api/contact. Used by the Navbar's "Contact us" link
-   on /mudigere-estate so the architect doesn't have to navigate away
+   on /mudigere so the architect doesn't have to navigate away
    from the briefing to send a note.
 
    - Backdrop click closes

@@ -4,210 +4,199 @@ import {
   HeroBanner,
   OneCol,
   TwoCol,
-  Placeholder,
   DataGrid,
   DataCard,
+  SpecTable,
+  Portrait,
   PullQuote,
+  ScrollHighlight,
   Continue,
+  Term,
 } from '@/components/article/Article'
+import { ParallaxBanner } from '@/components/ParallaxBanner'
 
 export default function ArtistryPage() {
   return (
     <>
-      {/* Modern hero pattern — was ArticleHero (subline + 6-question
-          TOC + figure). The TOC pattern is retired across coming-soon
-          journals; the body sections (TwoCol/OneCol/DataGrid below)
-          carry their own headings as anchors. */}
       <HeroBanner
-        title="Code meets clay."
+        currentHref="/artistry"
+        title="Code and Clay"
         src="/aura-artistry.mp4"
         mediaType="video"
         poster="/aura-artistry.jpg"
-        caption="Studios, residencies, labs, gatherings — the work of the land"
-        alt="Aura artistry — studios, residency, labs, and the Bhoomi gathering"
+        caption="Aura runs a studio and a set of labs on the estate, working the fundamentals of design, technology, and AI — each one grounded in a single discipline, subtraction: making by removing, so the work keeps to what the world already does well."
+        alt="Aura artistry — the studio and labs where the fundamentals are worked"
       />
 
-      <Placeholder
-        caption="Wide frame of a cedar workbench running through natural light — ceramics on one end, circuitry on the other, a cup of coffee between them. No people visible above the shoulders."
+      <ParallaxBanner
+        video="/artistry/videos/aura-man-painting-door.mp4"
+        poster="/artistry/images/aura-man-painting-door.jpg"
+        caption="A maker at work — painted by hand, on the estate"
+        alt="A craftsman painting a door by hand on the estate"
       />
 
-      {/* eyebrow was: "The Premise" */}
-      <TwoCol id="premise" heading="The soil is the studio.">
+      <TwoCol id="premise" heading="The studio works the fundamentals.">
         <p className="p1">
-          Artistry at Aura is not an add-on. It is how the land talks back. Every art form — from
-          ceramics to storytelling, from coffee to code — emerges from the same soil that grows the
-          pepper and shelters the herd. What the plantation produces in food, the studio produces
-          in object, image, software, and sound.
+          Aura keeps a studio and a set of labs on the estate, and the work in them is narrow: the
+          fundamentals of design, technology, and AI. Not trends, not tools bought to look current —
+          the underlying things, the ones that hold for decades. A letterform. A joint. A material. A
+          system written to run on this ground.
         </p>
         <p className="p2">
-          Two grammars meet on the workbench. The old craft grammar — apprenticeship, repetition,
-          patience of the hand. The new technical grammar — sensors, world models, native systems.
-          They are not rivals. One teaches the other. A potter&apos;s eye trains an algorithm the
-          way a farmer&apos;s ear trains a forecast.
+          One discipline holds all of it together. We make by subtraction — by removing, not adding,
+          until only what the work needs is left. A cup loses every feature that is not the cup. A
+          piece of software loses every dependency the next hand cannot keep. Subtraction is how we
+          respect the way the world already works, and refuse to talk over it.
         </p>
       </TwoCol>
-
-      <Placeholder
-        caption="Macro, tight, low-light. A spinning clay form on one half of the frame; a breadboard with blinking LEDs on the other. Same bench, same maker."
-      />
 
       <PullQuote>
-        Coffee roots and design systems. Code meets clay.
+        The method is subtraction. What is left has earned its place.
       </PullQuote>
-      <TwoCol id="audience" heading="The Audience">
-        <p className="p1">
-          Aura is not built for everyone. It is built for the monastic polymath — the person who
-          works across disciplines but within a single practice, who is attached to the work and
-          detached from the noise. The archetype is old. The audience is small. Both are fine.
-        </p>
-        <DataGrid cols={2}>
-          <DataCard value="Monastic">
-            Long hours. Early mornings. Few meetings. No theatre. Attention as the first currency,
-            language economy as the second. The Sikh notion of being attached to the work and
-            detached from the reward — the craft ethic of every tradition that outlasted its
-            founder.
-          </DataCard>
-          <DataCard value="Polymath">
-            Code on Monday, clay on Tuesday, coffee on Wednesday, cattle on Thursday. Different
-            grammars, one sentence. Depth before breadth, and then breadth that feeds the depth
-            back. The potter-engineer-farmer-writer is not a collage; she is a coherent
-            discipline.
-          </DataCard>
-        </DataGrid>
-        <p className="p2">
-          Who the work is not for: the audience of scale. Not for P&amp;G. Not for Coke. Not for
-          enterprise marketing teams. Aura is made for people remaking their own practice in
-          public — and for the crazy misfits who are ready to try something honest.
-        </p>
-      </TwoCol>
-      <TwoCol id="studios" heading="Studios">
-        <p className="p1">
-          Every valley has a studio. Every studio has the same rule: the tools in it must be
-          serviceable by the hands that live here. No dependency on a supply chain the land cannot
-          feed. No complexity the local apprentice cannot inherit.
-        </p>
-        <DataGrid cols={3}>
-          <DataCard value="Ceramics · Mudigere">
-            Wheel, kiln, glazes mixed from local oxides. Vessels for the farm-to-table kitchen.
-            Tiles for the cabins. The earth of the valley made durable.
-          </DataCard>
-          <DataCard value="Textile · Mudigere">
-            Hand-loom, natural dye, indigo vat. The cotton planted between the coffee rows, woven
-            into the linen of the residency.
-          </DataCard>
-          <DataCard value="Joinery · Ohara">
-            Cedar, hinoki, cypress. Joinery in the old Japanese manner, learned from the
-            third-generation carpenter carrying on his father&apos;s garden house.
-          </DataCard>
-          <DataCard value="Field recording · Both">
-            The valley is recorded continuously — monsoon, cicadas, river, bell. Composers and
-            coders draw from the library. A living archive of place.
-          </DataCard>
-          <DataCard value="Typography · Both">
-            A bilingual typography practice — Kannada and Latin in Mudigere, Japanese and Latin in
-            Ohara. Letterforms that honour the ground they set on.
-          </DataCard>
-          <DataCard value="Native systems · Both">
-            Code written for this soil and no one else&apos;s. The farm management system, the
-            provenance ledger, the world models. Built on the bench, for the bench.
-          </DataCard>
-        </DataGrid>
-      </TwoCol>
-      <TwoCol id="residency" heading="Residency">
-        <p className="p1">
-          The Aura Residency is the artery of the artistry pillar. Makers — artists, scientists,
-          engineers, farmers, chefs — arrive for one to three weeks, live on the land, and work
-          from the soil outward. No keynote. No deck. No deliverable beyond the truth of what they
-          made.
-        </p>
-        <p className="p2">
-          Mudigere offers the <strong>Twelve Worlds</strong> — twelve cabins named for the layers
-          of a forest: Hive, Root, Flow, Flame, Bloom, Canopy, Echo, Seed, Mist, Stone, Pulse,
-          Ethereal. Ohara offers <strong>Ki no Ie</strong>, the House of Seasons, with shorter
-          two-week formats and a forest table hosted by the founder in the opening days.
-        </p>
-        <DataGrid cols={3}>
-          <DataCard value="Curiosity">
-            Raw, awake, still capable of being changed by a new idea.
-          </DataCard>
-          <DataCard value="Maturity">
-            Accountable. Self-directed. Able to finish what they begin.
-          </DataCard>
-          <DataCard value="Raw output">
-            The power to make — a lot, messy if it must be, but made.
-          </DataCard>
-          <DataCard value="Judgment">
-            Able to tell the good work from the merely clever.
-          </DataCard>
-          <DataCard value="Humility">
-            The right posture toward the land, the craft, and the company.
-          </DataCard>
-          <DataCard value="Moral spine">
-            The non-negotiable. Without it, the other five do not matter.
-          </DataCard>
-        </DataGrid>
-      </TwoCol>
 
-      <PullQuote attribution="Arvind">
-        Twenty-year-old odd kids can change the destiny.
-      </PullQuote>
-      <TwoCol id="labs" heading="Labs">
+      <TwoCol id="making" heading="Making is taking away.">
         <p className="p1">
-          Labs &amp; Hardware is the quiet instrumentation layer of Aura — the sensors that make
-          soil legible, the ferment monitors that read the tank, the world model that listens to
-          forty years of a farmer&apos;s eye. Invisible tech. Present where it is useful, absent
-          where it is not.
+          Most work adds. A brief arrives, features accrue, and the object grows until it ships. Here
+          the movement runs the other way. A maker starts with more than the piece needs and spends
+          the hours removing — the extra glaze, the extra line, the extra clause of code — until what
+          remains could not be cut further without breaking.
         </p>
-        <DataGrid cols={3}>
-          <DataCard value="World model">
-            Custom LLM grown from sensor data and workflow memory. Not fine-tuned. Grown.
-          </DataCard>
-          <DataCard value="SaaS">
-            The software layer for running the world model across five industries — agriculture,
-            insurance, food science, hospitality, financial services.
-          </DataCard>
-          <DataCard value="Playground">
-            The experimental layer. The first twenty-four months. No sales. Only attraction.
-          </DataCard>
-        </DataGrid>
         <p className="p2">
-          Three layers underneath: blockchain provenance, live sensors, and a persistent machine
-          memory grown from the farm&apos;s own readings. Together they replace the
-          forty-thousand-dollar certification stack with something the land itself can verify,
-          cherry to cup, root to roast.
+          The estate teaches this before the studio does. A kiln burns the canopy&apos;s own offcuts
+          and nothing flown in. A dye vat takes its heat from the kitchen. A ledger is written for
+          this soil by the person who will keep it running. Every one of them carries the same
+          lesson: use what is already here, and take away the rest. This is a skill of the present —
+          worked by hand, now, on real material.
         </p>
       </TwoCol>
 
-      <PullQuote attribution="Arvind">
-        One has read, the other knows.
-      </PullQuote>
-      <TwoCol id="gathering" heading="The Gathering">
-        <p className="p1">
-          Every year the residency culminates in <strong>The Gathering</strong> — the Bhoomi
-          Festival at Mudigere, a three-day convening of soil, sound, and light. The work made on
-          the land shows itself back to the land. Farmers, chefs, artists, scientists, and quiet
-          visitors share the same table under the same canopy.
-        </p>
-        <p className="p2">
-          The festival is not a marketing moment. It is a harvest. The year&apos;s work in coffee,
-          ceramic, type, software, and kitchen is laid out together. Anyone can come. Not everyone
-          will understand. The ones who do will keep coming.
-        </p>
-      </TwoCol>
-
-      <Placeholder
-        caption="Long low table under coffee and areca canopy, candles in jars, thali plates, guests seated at dusk. Reverent and warm."
+      <SpecTable
+        title="Six crafts, one estate"
+        rows={[
+          { label: 'Clay', value: 'Ceramic & glaze' },
+          { label: 'Fibre', value: 'Textile & natural dye' },
+          { label: 'Wood', value: 'Joinery & carving' },
+          { label: 'Sound', value: 'Field recording & composition' },
+          { label: 'Type', value: 'Letterform & print' },
+          { label: 'Software', value: 'Tools & systems for this ground' },
+        ]}
       />
 
-      <PullQuote attribution="ಜೀವಂತ ಶಾಂತಿ">
-        Living Peace
-      </PullQuote>
+      <ParallaxBanner
+        video="/artistry/videos/aura-installing-painted-tin.mp4"
+        poster="/artistry/images/aura-installing-painted-tin.jpg"
+        caption="Installing a hand-painted tin — the work going back out into the canopy"
+        alt="A hand-painted tin panel being installed on a tree"
+      />
+
+      <TwoCol id="collaboration" heading="No one here works a single craft.">
+        <p className="p1">
+          The register is monastic and polymathic. Science, technology, craft, and art sit at one
+          bench, and no one here is kept to a single one of them. The potter also keeps the system
+          that records the kiln, and the friction between the two disciplines is the material — work
+          that comes out of it neither could reach alone.
+        </p>
+        <p className="p2">
+          We hold this by an old rule —{' '}
+          <Term tip="守破離 — a Japanese path to mastery in three stages. Shu: keep the form exactly. Ha: adapt it once it lives in the hands. Ri: leave the form behind and work freely, without breaking it.">shu-ha-ri</Term>:
+          preserve the form, adapt it, then transcend it. An apprentice keeps the old way exactly
+          until it lives in the hands. Only then is it theirs to change, and only much later theirs to
+          leave behind. Collaboration is what happens across people standing at different stages of
+          the same climb.
+        </p>
+      </TwoCol>
+
+      <Portrait
+        src="/artistry/images/aura-painted-birdhouse-tree.jpg"
+        ratio="5 / 7"
+        caption="A hand-painted birdhouse in the canopy — made on the estate, for the estate"
+        alt="A hand-painted birdhouse mounted in a tree on the estate"
+      />
+
+      <ScrollHighlight>
+        {`Start with more than you need.
+         Take away what the world already does.
+         Take away what the next hand can't keep.
+         What remains is the work.`}
+      </ScrollHighlight>
+
+      <DataGrid cols={3} standalone>
+        <DataCard value="Shu 守">
+          Preserve the form exactly — the joint, the glaze, the grammar — until the old way lives in
+          the hands and needs no thought.
+        </DataCard>
+        <DataCard value="Ha 破">
+          Adapt it, once the form is in the body: local oxides, this soil&apos;s clay, a system
+          written for this estate and no other.
+        </DataCard>
+        <DataCard value="Ri 離">
+          Transcend it — leave the form behind and work freely, without breaking it. What is made here
+          could not be made anywhere else.
+        </DataCard>
+      </DataGrid>
+
+      <TwoCol id="future" heading="Made for hands not yet here.">
+        <p className="p1">
+          Aura works on a horizon measured in decades, and that sets a plain test for anything we
+          make: build what the future cannot automate. A machine can copy an output. It cannot
+          inherit thirty years of a craft read by hand, or a form that has passed through preserve,
+          adapt, and transcend. We make the second kind on purpose.
+        </p>
+        <p className="p2">
+          The newest tools serve the oldest practice, never the other way round. We measure the soil
+          to run an ancestral grazing rhythm; we write software to carry provenance the land already
+          keeps; we use AI to read what is happening on the ground, not to speak over it. Old
+          knowledge and new instrument, held as one thing — that is what Aura means by Natural
+          Intelligence, worked at the bench.
+        </p>
+      </TwoCol>
+
+      <ParallaxBanner
+        video="/artistry/videos/aura-plantation-canopy-map.mp4"
+        poster="/artistry/images/aura-plantation-canopy-map.jpg"
+        caption="The plantation read from above — the canopy the studio measures before it makes"
+        alt="An aerial canopy map of the plantation"
+      />
+
+      <ParallaxBanner
+        image="/artistry/images/aura-framed-art-gallery-wall.jpg"
+        caption="Work on the wall — botanical studies, framed and hung at Ohara"
+        alt="A gallery wall of framed botanical artwork at Ohara"
+      />
+
+      <DataGrid cols={3} standalone rule>
+        <DataCard img="/artistry/images/aura-painted-frog-tin.jpg" value="Painted by hand">
+          Salvaged tin, painted by hand with the estate&apos;s own fauna — a frog, a flower, a bird read
+          straight from the canopy — then returned to the trees exactly where it was found. Nothing is
+          bought new: the material is already here, and the work simply gives it a second life in the
+          open air.
+        </DataCard>
+        <DataCard img="/artistry/images/aura-woven-fabric-detail.jpg" value="Woven & dyed">
+          Cloth worked on the estate loom and dyed with what the season gives — persimmon, indigo,
+          walnut hull. The weaver keeps the old grammar exactly before a single thread is adapted, so
+          each piece carries the discipline of the form and the freedom that comes after it.
+        </DataCard>
+        <DataCard img="/artistry/images/aura-child-painting-wall.jpg" value="The next hand">
+          A young hand at the wall, learning the craft long before it is formally taught. Everything the
+          studio makes is built for hands not yet here — the real test of the work is whether it can be
+          inherited, thirty years on, and still hold.
+        </DataCard>
+      </DataGrid>
+
+      <OneCol id="close" heading="The oldest method, the newest tools.">
+        <p className="p1">
+          The studio and the labs do one thing: work the fundamentals of design, technology, and AI,
+          and ground every one of them back in subtraction — making by removing, out of respect for a
+          world that already works. What leaves is the work, and the posture that made it. Who comes
+          to make here, and how you write to us, is its own journal — <em>Monastic Polymaths</em>.
+        </p>
+      </OneCol>
 
       <Continue
         items={[
-          { href: '/residency', label: 'Residency', description: 'Monastic polymaths. Crazy misfits. Two to three weeks on the land.' },
-          { href: '/sanctuary', label: 'Sanctuary', description: 'The four valleys the residency moves between.' },
-          { href: '/provenance', label: 'Provenance', description: 'Cherry to cup. On chain. The lab\'s notebook, public.' },
+          { href: '/ohara', label: 'Ohara', description: 'The valley where much of the craft is made — a place north of Kyoto that keeps its own time.', img: '/aura-ohara.jpg' },
+          { href: '/mudigere', label: 'Mudigere', description: 'The estate the studio is built into — 150 acres in the Western Ghats.', img: '/aura-mudigere.jpg' },
+          { href: '/herd', label: 'Ecosystem Engineers', description: 'The living system the making answers to — the herd at the centre of the estate.', img: '/herd/images/aura-relationship2.jpg' },
         ]}
       />
     </>

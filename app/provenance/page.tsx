@@ -1,155 +1,167 @@
 'use client'
 
-/* ═══════════════════════════════════════════
-   PROVENANCE — trade-facing.
-   Blockchain, live sensors, verified events
-   from cherry to cup. Replaces legacy
-   certification (organic / biodynamic / fair trade).
-═══════════════════════════════════════════ */
-
 import {
   JournalHero,
   TwoCol,
+  OneCol,
   Placeholder,
   DataGrid,
   DataCard,
   PullQuote,
+  ScrollHighlight,
   Continue,
+  Term,
 } from '@/components/article/Article'
 
 export default function ProvenancePage() {
   return (
-    <div>
-      {/* Editorial JournalHero pattern — was ArticleHero with subline
-          + 5-question TOC. Both dropped in the coming-soon refactor. */}
+    <>
       <JournalHero
-        title="Cherry to cup. On chain."
-        src="/aura-provenance.jpg"
+        currentHref="/provenance"
+        title="Provenance"
         mediaType="image"
-        caption="Native provenance — sensor-verified, timestamped, on chain"
+        caption="Aura grows coffee and pepper the way they ought to be grown, and writes the practice down as it happens — each event measured in the moment and signed by the hand that did it, so a lot can be read whole, from cherry to cup."
         alt="Aura provenance — cherry-to-cup verification from the Mudigere estate"
       />
 
-      {/* Why Blockchain */}
-      {/* eyebrow was: "Why blockchain" */}
-      <TwoCol
-        id="why-blockchain"
-        heading="Certification is paper."
-      >
-        <p className="p1">Organic, biodynamic, and fair-trade certification together cost roughly $40,000–$50,000 per estate and take about four years to complete. At the end of that, the buyer receives a stamp. Not the thing the stamp is meant to describe.</p>
-        <p className="p2">Aura is building a different instrument. Every operation that matters to a lot — the Jeevamrit batch that drenched the block, the BD 500 horning that fed the pit, the Brix reading the morning the cherries came off, the hours in the ferment, the days in the sun, the weight into the bag — is written on chain at the moment it happens. By the person who did it. Signed.</p>
-        <p className="p2">The buyer does not need a badge. They can read the lot.</p>
+      <TwoCol id="what-we-do" heading="We measure what we make.">
+        <p className="p1">
+          At Mudigere, Aura grows coffee and pepper, and grows them the way they ought to be grown —
+          for the soil, the people, and the cup. That practice is the easy part to claim and the hard
+          part to prove. So we write the estate down: every preparation, every ferment, every drying
+          day, recorded the moment it happens, by the person who did it, and signed.
+        </p>
+        <p className="p2">
+          We keep that record for two readers. The buyer, asked to trust a farm on the other side of
+          the world. And ourselves, because a practice you measure is a practice you can make better.
+          From cherry to cup, a lot carries its own account.
+        </p>
+      </TwoCol>
+
+      <TwoCol id="senses" heading="The senses, kept honest.">
+        <p className="p1">
+          Coffee is judged by the human body — the nose held over a ferment, the tongue on a cupping
+          spoon. Those senses are astonishingly fine and quietly biased at once. A ferment smells right
+          on a good morning. A picker trusts the block that once pleased them. A taster wants the lot to
+          be what they were hoping for.
+        </p>
+        <p className="p2">
+          So we take the measurement while the sense is still forming — the sugar as it falls, the
+          acidity as it rises, the temperature logged through the night. The number does not overrule
+          the palate; it keeps it honest. This is the simplest form of doing right: read the thing as it
+          happens, and write down what you read. The science serves the human hand. It does not sit
+          above it.
+        </p>
+      </TwoCol>
+
+      <TwoCol id="streams" heading="What the land writes down.">
+        <p className="p1">
+          Nothing on the plant is decorative. Nine streams of data run off the estate, each on its own
+          clock — some every fifteen minutes, some once a quarter, some once a year. Together they are
+          the estate&apos;s pulse, printed.
+        </p>
+        <DataGrid cols={3}>
+          <DataCard value="Fermentation">
+            pH every fifteen minutes. Temperature three times a day.{' '}
+            <Term tip="Dissolved sugar in a liquid, read on a refractometer. In a coffee ferment it falls as microbes turn sugar into acid — a direct read on how far the ferment has gone.">Brix</Term>{' '}
+            at start, middle, and end. The most closely watched hours on the estate.
+          </DataCard>
+          <DataCard value="Biodynamic">
+            Every preparation — the crop layer, the blocks, the lunar day, the weather at the moment of
+            spray, the worker who carried it.
+          </DataCard>
+          <DataCard value="Soil">
+            pH and moisture at five and twenty centimetres, read each quarter. Shallow and deep, because
+            they tell different stories.
+          </DataCard>
+          <DataCard value="Canopy">
+            <Term tip="Normalized Difference Vegetation Index — a satellite or drone measure of how much live, photosynthesising leaf a patch of land is carrying.">NDVI</Term> per
+            block, quarterly. The forest&apos;s vigour, measured from above.
+          </DataCard>
+          <DataCard value="Cattle &amp; dung">
+            The herd&apos;s rotation, and each dung batch traced to the animals that gave it — the first
+            link in every preparation.
+          </DataCard>
+          <DataCard value="Understorey">
+            Pepper and areca column health; the bees — hive weight, yield, honey harvest. The ground
+            floor of the polyculture.
+          </DataCard>
+        </DataGrid>
       </TwoCol>
 
       <PullQuote attribution="Arvind">
-        Is this saying you are a more honest business? 100% — because of these technologies.
+        A ledger cannot forget, and it cannot flatter.
       </PullQuote>
 
-      {/* What's verified */}
-      {/* eyebrow was: "What is verified" */}
-      <TwoCol id="what-verified" heading="Six layers on the ledger.">
-        <p className="p1">Nothing about the plant is decorative. Every action that changes flavour, life, or trust gets a signed event. Each one references the block, the worker, the weather, and the lot it belongs to.</p>
-        <DataGrid cols={3}>
-          <DataCard value="Soil Preparation">
-            Jeevamrit batches by volume and age. BD 500 hornings — grams, moon phase, stir time. Panchgavya and CPP log per block.
-          </DataCard>
-          <DataCard value="Fermentation">
-            Lot-level. Cherry Brix at intake, ferment vessel, hours sealed or washed, ambient and mass temperature, pH at decant.
-          </DataCard>
-          <DataCard value="Drying">
-            Days on raised beds. Moisture by sample. Weather every four hours — rain, wind, RH, surface temp.
-          </DataCard>
-          <DataCard value="Milling">
-            Hulling date, screen size, density sort, defect sort pass. Green weight in, green weight out.
-          </DataCard>
-          <DataCard value="Packaging">
-            Bag weight, GrainPro lot, vacuum status, QR generation, warehouse temperature.
-          </DataCard>
-          <DataCard value="Shipping">
-            Carrier, container, chain-of-custody handoffs. Arrival signed by the buyer&rsquo;s cupper.
-          </DataCard>
-        </DataGrid>
+      <TwoCol id="one-record" heading="One record, in full.">
+        <p className="p1">
+          A single biodynamic spray, as the record holds it: <em>BD 501 applied to Block 07 at 06:14,
+          on a waning moon, humidity 78%, by Raju, from dung batch G-03.</em> That row — the minute, the
+          moon, the hand, the source — is the unit the whole system is built to protect.
+        </p>
+        <p className="p2">
+          Complexity sits in the machine; simplicity in the field. Soil probes, ferment-tank loggers,
+          and a weather station at 3,600 feet write their readings on their own; every human act — the
+          stir, the spray, the decant — is signed by name, from the field, by the person doing the work.
+          The machine measures; the person testifies. The record keeps the number next to the hand that
+          knew when to act, because data without judgment is only faster noise.
+        </p>
       </TwoCol>
 
-      {/* Live Sensors */}
-      {/* eyebrow was: "Live sensors" */}
-      <TwoCol
-        id="sensors"
-        heading="Fed by the land."
-      >
-        <p className="p1">Soil probes, ferment-tank loggers, drying-bed hygrometers, and a weather station at 3,600 feet write directly to the ledger. Human events — the stir, the spray, the decant — are signed from the field on a hardened tablet by the person doing the work.</p>
-        <p className="p2">Data without wisdom is just faster noise. So the ledger does not replace the hand. It records it.</p>
+      <Placeholder
+        type="Detail · field tablet"
+        caption="A worker signing a spray event from the field — the human layer the record never replaces"
+      />
+
+      <ScrollHighlight>
+        {`Every event signed.
+         Every reading verifiable.
+         The lot reads itself.`}
+      </ScrollHighlight>
+
+      <TwoCol id="reading" heading="What the buyer reads.">
+        <p className="p1">
+          The QR on every bag opens a single page: the block the cherry came from, the day it was
+          picked, the method it survived, the bed it dried on, the hands that turned it. Everything
+          timestamped. Everything signed. Nothing summarised by a third party.
+        </p>
+        <p className="p2">
+          A buyer who wants to check a claim can drill into the underlying events. A buyer who only wants
+          to brew the coffee can ignore all of it. That is what transparency is here: the page stands
+          complete, whether or not anyone ever opens it.
+        </p>
       </TwoCol>
 
-      <Placeholder caption="Soil · ferment · drying bed · weather. Events streaming to chain." />
+      <Placeholder
+        type="Detail · QR scan"
+        caption="Every 30 kg GrainPro bag — scannable, and drillable down to the field"
+      />
 
-      {/* Example — Lot 005 */}
-      {/* eyebrow was: "Example" */}
-      <TwoCol id="lot-005" heading="Lot 005 — a timeline.">
-        <p className="p1">One lot. Every event written as it happened. What the buyer sees when they scan the bag.</p>
-        <DataGrid cols={2}>
-          <DataCard value="T-180d · Block prep">
-            Jeevamrit drench, 180 L/acre. BD 500 horning stirred 1 hour, new moon. Signed by field lead.
-          </DataCard>
-          <DataCard value="T-7d · Maturity check">
-            Brix sweep, Block 4. Average 25.4. Pick window opens.
-          </DataCard>
-          <DataCard value="Day 0 · Cherry in">
-            480 kg. Brix 25–27. Float-sorted, weighed, lot opened on chain.
-          </DataCard>
-          <DataCard value="Day 0–4 · Solera maceration">
-            96 h sealed. Temp logged every 15 min. Mother-ferment carry-forward from Lot 004.
-          </DataCard>
-          <DataCard value="Day 4–26 · Drying">
-            22 days on raised beds. Moisture 11.2 % at close. Two monsoon events logged and withstood.
-          </DataCard>
-          <DataCard value="Day 60 · Resting, milling, bag">
-            Resting in parchment. Hulled. Green yield logged. QR minted per bag. Buyer can read it all.
-          </DataCard>
-        </DataGrid>
-      </TwoCol>
-
-      <Placeholder caption="Every event signed. Sensor traces overlaid. Drillable from the QR on the bag." />
-
-      {/* Stats */}
       <DataGrid cols={3} standalone>
-        <DataCard value="6">Micro lots · 2026. Same cherry, six methods.</DataCard>
-        <DataCard value="100%">On-chain events. From soil prep to bag.</DataCard>
-        <DataCard value="2026">Ledger live. Every field and sensor event signed since the first lot opened.</DataCard>
+        <DataCard value="15 min">The interval a fermenting lot&apos;s pH is read at, start to finish.</DataCard>
+        <DataCard value="9 streams">Of estate data, each on its own clock — from every quarter-hour to once a year.</DataCard>
+        <DataCard value="3–5×">Estimated carbon held per acre by the four-storey polyculture over monoculture coffee.</DataCard>
       </DataGrid>
 
-      {/* Certifications */}
-      {/* eyebrow was: "Certifications held" */}
-      <TwoCol
-        id="certifications"
-        heading="Fewer badges. More truth."
-      >
-        <p className="p1">We hold the certifications that serve the buyer, and replace the ones that do not with the chain itself.</p>
-        <DataGrid cols={2}>
-          <DataCard value="Registered">
-            Coffee Board of India — Grower &amp; Curer · January 2026.
-          </DataCard>
-          <DataCard value="Cupped, 2026">
-            Specialty Coffee — independent cupping above the specialty threshold across the 2026 lots. Scores
-            available on request.
-          </DataCard>
-        </DataGrid>
-        <p className="p2">Organic, biodynamic, and fair-trade certification are <em>not</em> carried as badges. The practices are carried — BD 500–508, CPP, Jeevamrit, Panchgavya, Beejamrit — and each event is written to chain. The buyer sees the practice, not a sticker over it.</p>
-      </TwoCol>
-
-      {/* Partnerships */}
-      {/* eyebrow was: "Partnerships" */}
-      <TwoCol id="partnerships" heading="Boojee · exclusive Arabica partner.">
-        <p className="p1">Five of the six 2026 lots are committed to Boojee as the exclusive Arabica partner. The sixth stays at Aura for festival cuppings, the lab, and allocation to the residency kitchen.</p>
-        <p className="p2">Trade enquiries for pepper, areca, and forward allocation of future crop years are welcome and handled directly.</p>
-      </TwoCol>
-
-      <Placeholder caption="Scan-to-lot on every 30 kg GrainPro bag." />
-
-      {/* Buyer info */}
-      {/* eyebrow was: "Buyers" */}
-      <TwoCol id="buyers" heading="Buy, ask, or audit.">
-        <p className="p1">Two channels, two crops.</p>
+      <OneCol id="close" heading="The record outlasts the sale.">
+        <p className="p1">
+          Every signed event is held in{' '}
+          <Term tip="Open, human-readable file formats. A CSV is a plain table; JSON is plain structured text. Both open in any text editor, with no proprietary software.">plain JSON and CSV</Term>{' '}
+          that opens in any text editor a decade from now, and its milestones are{' '}
+          <Term tip="A shared, append-only public record. Entries can be added but never edited or deleted, so its history cannot be quietly rewritten.">written to chain</Term> —
+          permanent, public, verifiable. If the database fails, the chain remains; if the chain ages
+          out, the data still reads as plain text. The record is built to outlive the people who wrote
+          it.
+        </p>
+        <p className="p2">
+          That is the horizon Aura works on. A buyer — or their buyer — can still read this lot in ten
+          years. And the transparency runs both ways: the account that shows them what we did shows us,
+          in the same plain detail, where the next lot can be better. A practice you can read is a
+          practice you can improve.
+        </p>
+        <p className="p2">
+          Trade enquiries are handled directly — coffee and pepper both.
+        </p>
         <DataGrid cols={2}>
           <DataCard value="coffee@theaura.life">
             Coffee — lot allocation, cupping scores, forward-contract enquiries, shipping terms.
@@ -158,17 +170,9 @@ export default function ProvenancePage() {
             Pepper &amp; spice — Malabar pepper, shade-grown, biodynamic. Small-parcel trade.
           </DataCard>
         </DataGrid>
-      </TwoCol>
+      </OneCol>
 
-      <PullQuote>Native systems cannot be translated. They are made for you and no one else.</PullQuote>
-
-      <Continue
-        items={[
-          { href: '/coffee', label: 'Coffee', description: 'Six lots, six methods. Same cherry.' },
-          { href: '/fermentation', label: 'Fermentation', description: 'Where the timing on the ledger becomes taste in the cup.' },
-          { href: '/land', label: 'The land', description: 'The lab the ledger reads from.' },
-        ]}
-      />
-    </div>
+      <Continue currentHref="/provenance" />
+    </>
   )
 }

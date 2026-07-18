@@ -14,6 +14,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }))
+  /* Core company pages — the primary nav destinations. Not journals, so
+     they aren't in ACTIVE_JOURNALS, but they are public, indexable, and
+     carry their own metadata. */
+  const pages = ['/reason', '/studios', '/brand', '/contact'].map(href => ({
+    url: `${base}${href}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
   return [
     {
       url: `${base}/`,
@@ -21,6 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 1.0,
     },
+    ...pages,
     ...journals,
   ]
 }

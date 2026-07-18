@@ -19,7 +19,7 @@ export default function RtaPage() {
         currentHref="/rta"
         title="Rta"
         type="Ritual · prayer and incense at dusk"
-        caption="Ritual timing — the estate at dusk"
+        caption="Right time, right action — the Vedic order that runs every decision on the estate"
       />
 
       <OneCol heading="Right time. Right action. Everything else is noise.">
@@ -47,7 +47,7 @@ export default function RtaPage() {
         src="/journals/rta/aura-dusk-climb.mp4"
         mediaType="video"
         poster="/journals/rta/aura-dusk-climb.jpg"
-        alt="Worker climbing an areca palm at dusk against a fading sky — Sampigelkhan Estate"
+        alt="Worker climbing an areca palm at dusk against a fading sky — Sampigekhan Estate"
         caption="Patience — the right time, not the convenient time"
       />
 
@@ -77,24 +77,24 @@ export default function RtaPage() {
           <DataCard value="Buffer days.">Three per monthly schedule.</DataCard>
         </DataGrid>
         <p className="p2">
-          The buffer days are not slack. They are the admission that the land
-          does not operate on a spreadsheet timeline.
+          The buffer days exist because the land keeps its own calendar, and the
+          schedule bends to it.
         </p>
       </TwoCol>
 
       <TwoCol id="fermentation" heading="In fermentation.">
         <p className="p1">
-          Lot 001 was sealed at 48 hours because the pH reached 4.2. Not
-          because 48 hours was the plan. The cherry told us when.
+          Lot 001 sealed at 48 hours because the pH reached 4.2. The cherry set
+          the hour, and we followed it.
         </p>
         <p className="p2">
           Lot 005 — the Solera Maceration — alternates between fermentation and
-          rest in two-day cycles. The rhythm is not arbitrary. It follows
-          temperature and microbial activity, reading the process in real time.
+          rest in two-day cycles, following the temperature and the microbial
+          activity, read in real time.
         </p>
         <p className="p2">
           Drying follows a day-night rhythm: raised beds by day, breathable
-          bags by night. The bean is not forced. It is accompanied.
+          bags by night. The bean dries at its own pace, accompanied through it.
         </p>
       </TwoCol>
 
@@ -121,8 +121,8 @@ export default function RtaPage() {
 
       <TwoCol id="restraint" heading="In restraint.">
         <p className="p1">
-          <Rta /> is as much about what you do not do as what you do. Restraint
-          before intervention. Patience before process.
+          <Rta /> lives as much in the waiting as in the acting. Restraint before
+          intervention. Patience before process.
         </p>
         <p className="p2">
           When the land signals that it is not ready — a soil that has not
@@ -138,7 +138,7 @@ export default function RtaPage() {
 
       <Placeholder
         src="/journals/rta/aura-land.jpg"
-        alt="The land at the hour of decision — Sampigelkhan in the slow light before dusk"
+        alt="The land at the hour of decision — Sampigekhan in the slow light before dusk"
         caption="The land decides the hour"
       />
 
@@ -148,9 +148,8 @@ export default function RtaPage() {
 
       <TwoCol id="labs" heading="RTA Labs.">
         <p className="p1">
-          RTA Labs is where the field record becomes intelligence. Not a
-          generic agriculture model — a Mudigere-native model, trained on
-          this land&rsquo;s specific rhythms.
+          RTA Labs is where the field record becomes intelligence — a
+          Mudigere-native model, trained on this land&rsquo;s specific rhythms.
         </p>
         <p className="p2">
           By 2031 the estate will hold five-plus years of four-layer
@@ -187,8 +186,7 @@ export default function RtaPage() {
       </TwoCol>
 
       <PullQuote>
-        We are not optimising for THIS SEASON. We are optimising for the
-        NEXT HUNDRED.
+        We optimise for the NEXT HUNDRED SEASONS.
       </PullQuote>
 
       <ScrollHighlight>

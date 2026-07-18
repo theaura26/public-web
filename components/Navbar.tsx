@@ -37,11 +37,11 @@ const ARTICLES: Article[] = [
   //
   // ── New editorials + places (reworked here) ──
   { href: '/mudigere',       title: 'Guests of the mountain.',            size: 'lg', img: '/aura-mudigere.jpg', video: '/aura-mudigere.mp4' },
-  { href: '/herd',           title: 'Ecosystem Engineers',                size: 'sm', img: '/herd/images/aura-relationship2.jpg' },
-  { href: '/circular',       title: 'Circular Intelligence',              size: 'sm', img: '/circular/images/aura-shed.jpg' },
-  { href: '/shade',          title: 'The Light Instrument',               size: 'lg', img: '/aura-land.jpg' },
-  { href: '/ecology',        title: 'The Living System',                  size: 'sm', img: '/aura-mudigere-landscape.jpg' },
-  { href: '/ohara',          title: 'Asa. Niwa.',                         size: 'lg', img: '/aura-ohara.jpg', video: '/aura-ohara.mp4' },
+  { href: '/herd',           title: 'Ecosystem Engineers',                size: 'sm', img: '/herd/images/aura-relationship2.jpg', video: '/herd/videos/aura-relationship2.mp4' },
+  { href: '/circular',       title: 'Circular Intelligence',              size: 'sm', img: '/circular/images/aura-shed.jpg', video: '/circular/videos/aura-shed.mp4' },
+  { href: '/shade',          title: 'The Light Instrument',               size: 'lg', img: '/shade/images/aura-tree-canopy-lookup.jpg', video: '/shade/videos/aura-tree-canopy-lookup.mp4' },
+  { href: '/ecology',        title: 'The Living System',                  size: 'sm', img: '/ecology/images/aura-forest-floor-seedling.jpg', video: '/ecology/videos/aura-forest-floor-seedling.mp4' },
+  { href: '/ohara',          title: 'Asa. Niwa.',                         size: 'lg', img: '/ohara/images/aura-header.jpg', video: '/ohara/videos/aura-header.mp4' },
   { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg', video: '/aura-artistry.mp4' },
   // ── Live journals (published on theaura.life) ──
   { href: '/wisdom',         title: 'Moral Spine',                        size: 'lg', img: '/journals/wisdom/aura-moral-spine.jpg' },
@@ -50,7 +50,7 @@ const ARTICLES: Article[] = [
   { href: '/rta',            title: 'Rta',                                size: 'lg', img: '/journals/rta/aura-rta.jpg' },
   { href: '/fermentation',   title: 'Fermentation',                       size: 'sm', img: '/journals/fermentation/aura-fermentation.jpg' },
   { href: '/land',           title: 'The Land',                           size: 'lg', img: '/journals/land/aura-the-land.jpg' },
-  { href: '/biodynamic',     title: 'Biodynamic',                         size: 'sm', img: '/journals/biodynamic/aura-biodynamic.jpg' },
+  { href: '/biodynamic',     title: 'Biodynamic',                         size: 'sm', img: '/journals/biodynamic/aura-biodynamic.jpg', video: '/journals/biodynamic/aura-biodynamic.mp4' },
   { href: '/residency',      title: 'Monastic Polymaths',                 size: 'sm', img: '/journals/residency/aura-monastic-polymath.jpg' },
   // ── Coming soon — not yet published. The journal's own image runs
   //    dimmed + desaturated behind a "COMING SOON" label (mirrors the

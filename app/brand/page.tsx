@@ -343,7 +343,7 @@ function AgentBrandView() {
       <h2>Three Pillars</h2>
       <ul>
         <li>Sanctuary — Silence, stillness, Japanese garden, forest walks</li>
-        <li>Agroculture — 100 acres coffee, 43 indigenous cattle, native canopy</li>
+        <li>Agroculture — 100 acres coffee, 52 indigenous cattle, native canopy</li>
         <li>Artistry — Studios, workshops, gallery, festivals</li>
       </ul>
 
@@ -505,7 +505,7 @@ The brand should endure.`}
           heading="Explore"
           items={[
             { href: '/reason', label: 'The Reason', description: 'The belief beneath the brand — the founder’s letter, grown over generations.', img: '/the-reason/aura-flowers-1.png' },
-            { href: '/studios', label: 'Studios', description: 'Where the brand is made real — six disciplines held as one practice.', img: '/aura-studios/aura-studios.jpg' },
+            { href: '/studios', label: 'Studios', description: 'Where the brand is made real — three studios turning Natural Intelligence into story, systems and place.', img: '/aura-studios/aura-studios.jpg' },
             { href: '/mudigere', label: 'Mudigere', description: 'The estate the brand answers to — the living system behind every mark.', img: '/aura-mudigere.jpg' },
           ]}
         />

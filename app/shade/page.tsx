@@ -48,7 +48,7 @@ export default function ShadePage() {
       <SpecTable
         title="Canopy profile"
         rows={[
-          { label: 'Estate', value: 'Sunkasale, 150 acres' },
+          { label: 'Estate', value: 'Sampigelkhan, 150 acres' },
           { label: 'Canopy layers', value: '4 vertical stories' },
           { label: 'Target coverage', value: '60–80% per block' },
           { label: 'Optimal range', value: '65–75% (highest Brix)' },

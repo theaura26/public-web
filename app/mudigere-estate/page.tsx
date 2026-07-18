@@ -678,7 +678,7 @@ export default function MudigerePage() {
         <DataCard
           img="/journals/living-systems/aura-cow.jpg"
           alt="Malnad Gidda grazing through the coffee blocks"
-          value="43 cattle, in rotation."
+          value="52 cattle, in rotation."
         >
           Their movement through the coffee IS the rotation. Their dung
           is the input.

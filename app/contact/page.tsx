@@ -309,7 +309,7 @@ function AgentContactView() {
       <ul>
         <li>Singapore — primary office</li>
         <li>Mudigere, Karnataka, India — sanctuary</li>
-        <li>Tokyo, Japan — sanctuary (in development)</li>
+        <li>Ohara, Kyoto Prefecture, Japan — sanctuary</li>
       </ul>
 
       <hr />

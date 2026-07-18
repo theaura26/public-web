@@ -110,41 +110,12 @@ function OharaLandData() {
         </div>
       </div>
 
-      <div className="land-data__map">
-        <iframe
-          title="Ohara — Kyoto Prefecture, Japan"
-          src="https://maps.google.com/maps?q=35.1200,135.8300&t=h&z=13&output=embed"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          allowFullScreen
-        />
-      </div>
 
       <style jsx>{`
+        /* Compact orientation panel — location + live weather. (Map embed
+           removed: it leaked into the agent/reader view.) */
         .land-data {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-          gap: clamp(28px, 5vw, 72px);
-          align-items: start;
-        }
-        @media (max-width: 768px) {
-          .land-data { grid-template-columns: 1fr; gap: 32px; }
-        }
-        .land-data__map {
-          position: relative;
-          aspect-ratio: 4 / 3;
-          border: 1px solid var(--border);
-          border-radius: var(--radius-1);
-          overflow: hidden;
-          background: var(--bg-elev, #f4f4f4);
-        }
-        .land-data__map :global(iframe) {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          border: 0;
-          display: block;
+          max-width: 640px;
         }
       `}</style>
     </div>

@@ -102,46 +102,13 @@ function LiveLandData() {
         </div>
       </div>
 
-      {/* Same Google embed as the /mudigere page. Queried by
-          COORDINATES, not a place name — a name query matches the
-          "Sampigekhan Estate stay" listing and auto-opens its business
-          card; coordinates just drop a clean pin. t=h satellite, z=14,
-          the no-API-key `?output=embed` form. */}
-      <div className="land-data__map">
-        <iframe
-          title="Sampigekhan Estate — Mudigere, Karnataka"
-          src="https://maps.google.com/maps?q=13.1365,75.6403&t=h&z=14&output=embed"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          allowFullScreen
-        />
-      </div>
 
       <style jsx>{`
+        /* Compact orientation panel — location + live weather. (The map
+           embed was removed: it broke into the agent/reader view and added
+           little the coordinates don't already give.) */
         .land-data {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-          gap: clamp(28px, 5vw, 72px);
-          align-items: start;
-        }
-        @media (max-width: 768px) {
-          .land-data { grid-template-columns: 1fr; gap: 32px; }
-        }
-        .land-data__map {
-          position: relative;
-          aspect-ratio: 4 / 3;
-          border: 1px solid var(--border);
-          border-radius: var(--radius-1);
-          overflow: hidden;
-          background: var(--bg-elev, #f4f4f4);
-        }
-        .land-data__map :global(iframe) {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          border: 0;
-          display: block;
+          max-width: 640px;
         }
       `}</style>
     </div>

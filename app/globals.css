@@ -206,6 +206,20 @@ html [data-view="agent"] {
   opacity: 1 !important;
 }
 
+/* Flatten decorative positioning. Heroes, captions, and pinned wordmarks
+   use inline position:absolute + transform + mix-blend to stack over media;
+   in the plain-text agent view those escape the flow and collide (e.g. a
+   hero caption landing on the weather readout). Force everything in <main>
+   back to static, in-flow, un-blended so the document reads top-to-bottom.
+   !important is required to beat the inline styles the components set. */
+[data-view="agent"] main * {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  mix-blend-mode: normal !important;
+  float: none !important;
+}
+
 /* ── Markdown-style plain text for <main> ──
    Headings prefixed with #, ##, ###. Hr rendered as `---`. Lists
    prefixed with `-`. Tight spacing — one line between blocks. No
@@ -471,6 +485,7 @@ p.journal-hero__caption {
    affordances. */
 [data-view="agent"] main img,
 [data-view="agent"] main video,
+[data-view="agent"] main iframe,
 [data-view="agent"] main canvas,
 [data-view="agent"] main picture,
 [data-view="agent"] main svg:not(.menu-icon),

@@ -1963,7 +1963,7 @@ Awake.`}</ScrollHighlight>
       {/* Sanctuary lede — same scroll-to-highlight component as the Reason
           section above. Three-line manifesto that introduces the sanctuary
           stack which follows. */}
-      <section className="sanctuary-lede" style={{ borderTop: '1px solid var(--contrast-border)', position: 'relative', zIndex: 1, background: 'var(--contrast-bg)' }}>
+      <section className="sanctuary-lede" style={{ position: 'relative', zIndex: 1, background: 'var(--contrast-bg)' }}>
         <ScrollHighlight align="left">{`Aura unfolds through sanctuary, land, and practice.
 Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm.
 Places shaped for slower living and deeper restoration.`}</ScrollHighlight>

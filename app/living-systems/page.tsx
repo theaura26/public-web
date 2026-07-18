@@ -117,7 +117,8 @@ export default function LivingSystemsPage() {
         <p className="p2">
           They rotate through blocks timed to coffee cherry development stages.
           Their dung drives every biodynamic preparation on the estate. They are
-          working members of the biological system, not a line on an inventory.
+          working members of the biological system — the estate is built around
+          the work they do.
         </p>
       </TwoCol>
 

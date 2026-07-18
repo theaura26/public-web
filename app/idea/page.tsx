@@ -20,252 +20,106 @@ export default function IdeaPage() {
       <HeroBanner
         currentHref="/idea"
         title="The 1000 Year Idea"
-        type="Aerial landscape"
-        caption="150 acres at sunrise, Mudigere — planted for the year 3026"
+        type="Aerial · Mudigere"
+        caption="Aura works on a thousand-year horizon at Mudigere and Ohara — every decision weighed against the generations who inherit it, ancestral knowledge paired with the future of science, on a return measured in centuries."
+        alt="Aura — the thousand-year horizon"
       />
 
-      <OneCol heading="A face on a dodecahedron.">
+      <TwoCol id="horizon" heading="Aura thinks in generations.">
         <p className="p1">
-          A child drew a dodecahedron with our help and labelled one of its twelve faces
-          &ldquo;our home.&rdquo; She is six. She will be sixteen when the first residency cohorts leave
-          Mudigere for good. She will be thirty-six when the forest at Aaranya has closed its
-          canopy. She will be old when the teahouse in Ohara enters its second century. The
-          thousand-year frame is not abstract. It is the life of the grandchildren we will never
-          meet, and the grandchildren they will never meet.
-        </p>
-      </OneCol>
-
-      <TwoCol id="commitment" heading="The Commitment">
-        <p className="p1">
-          A thousand years is not a forecast. It is a discipline. It is the weight we place on
-          every decision before it is made — the pause before we plant, the pause before we
-          build, the pause before we say yes.
+          A thousand years is the horizon Aura decides against — the weight set on every plan
+          before it is made. Most enterprises answer to the quarter. Aura answers to the
+          generation, and the measure is plain: what can still be standing, and still be useful, in
+          the year 3026.
         </p>
         <p className="p2">
-          Most enterprises are measured in quarters. Aura is measured in generations. The
-          question is never what can be finished this year. The question is what can still be
-          standing, still be useful, still be loved, in the year 3026.
-        </p>
-        <p className="p2">
-          This is not nostalgia. It is not a rejection of technology or speed. It is a
-          rearrangement of what comes first. Soil first. Water first. People first. The rest
-          follows or is set aside.
-        </p>
-        <p className="p2">
-          Soil does not compound quarterly. A canopy takes fifty years. A community takes
-          generations. You cannot sprint a forest. The work is arranged to fit those facts, not
-          to resist them.
+          The through-line is singular. Generational impact is the method: the impact Aura wants
+          now — living soil, a closed canopy, work that others can keep — is the same impact that
+          has to hold three centuries out. Aura builds for then in order to matter now.
         </p>
       </TwoCol>
 
       <Placeholder
-        type="Aerial landscape"
-        caption="150 acres at sunrise, Mudigere"
+        type="Aerial · Mudigere"
+        caption="150 acres at sunrise — coffee, pepper, forest, and pasture held as one organism"
       />
 
-      <Placeholder
-        type="Detail · seedling"
-        caption="A single tree, staked, on the day it was planted"
-      />
-
-      <PullQuote attribution="Arvind">
-        We start from the EARTH and work UP.
-      </PullQuote>
-
-      <TwoCol id="aaranya" heading="Aaranya: the forest that isn't finished yet.">
+      <TwoCol id="knowledge" heading="Two kinds of knowledge, one plan.">
         <p className="p1">
-          <Term tip="अरण्य — Sanskrit for 'forest,' with a specific connotation: not wilderness, but a forest deliberately kept apart for retreat, study, and undisturbed growth.">Aaranya</Term> is
-          the twenty-acre native canopy nursery on the estate&apos;s Bhadra-facing boundary —
-          tens of thousands of trees, none of them planted for a harvest. Its whole purpose is to
-          take a century to close, at which point it will have done its one job: extend the
-          reserve&apos;s habitat instead of fencing the estate off from it.
+          Aura works from two bodies of knowledge at once. One is ancestral — the timing a farmer
+          reads in the monsoon, the rhythm of a herd, the long understanding that a thing is right
+          only at the right hour. The other is the future of science — measurement, soil biology,
+          the instruments that show what the older knowledge could only sense.
         </p>
         <p className="p2">
-          Nobody working here today will see it finished. That is not a flaw in the plan. It is
-          the plan working exactly as designed.
+          Neither holds alone. Ancestral practice without measurement hardens into habit; science
+          without the older knowledge only moves faster. Aura runs both, the old way of working and
+          the new, and the pair has a name: Natural Intelligence.
         </p>
       </TwoCol>
 
-      <Placeholder
-        type="Aerial · nursery"
-        caption="Aaranya — twenty acres of native canopy, tens of thousands of trees, none of them for harvest"
-      />
-
-      <Placeholder
-        type="Detail · canopy edge"
-        caption="Where Aaranya meets the Bhadra reserve boundary — no fence"
-      />
-
-      <TwoCol id="pillars" heading="Sanctuary. Agroculture. Artistry.">
+      <TwoCol id="rta" heading="Right time, right action.">
         <p className="p1">
-          Three structures hold the idea up. Sanctuary is the land in rhythm — stillness, method,
-          the places where a life becomes legible again. Agroculture is the living economy —
-          coffee, pepper, areca, the herd, fermented in the soil before it is fermented in the
-          cask.
+          The oldest instrument on the estate is timing.{' '}
+          <Term tip="Right time, right action — the principle that an action is right when it sits in alignment with everything around it, not only with the clock."><Rta /></Term>{' '}
+          holds that an action is right when it aligns with everything around it, not only with the
+          clock. Move the herd at the right hour and the soil builds; move it at the wrong one and
+          the same animals bare the ground.
         </p>
         <p className="p2">
-          Artistry is the signal sent outward — studios, residency, gurukul, labs, festivals —
-          the work that argues for a different pace through the things it makes. Each pillar is
-          useless without the others.
+          This is working knowledge, and the instruments now confirm it season after season. Aura
+          keeps the ancestral sense of time and puts numbers to it — reading the soil, the canopy,
+          and the water, and acting when the land, not the calendar, says to.
+        </p>
+      </TwoCol>
+
+      <PullQuote>The long horizon is the METHOD. The rest answers to it.</PullQuote>
+
+      <TwoCol id="measure" heading="Measured against the horizon.">
+        <p className="p1">
+          Nothing here is framed and forgotten. The claim gets checked — soil carbon and root depth
+          at Mudigere, the canopy closing along the reserve boundary, the water table, the
+          herd&apos;s effect on the ground it works. Aura measures so a thousand-year promise stays
+          honest.
         </p>
         <p className="p2">
-          A forest is not one species. It is an ecosystem. Every layer holds the others up. Aura
-          works the same way. Sanctuary, Agroculture, Artistry — each one makes the others more
-          alive.
+          A number answers to the frame. A campaign, a shortcut in the ferment, a fast yield — each
+          collapses when held against a thousand years. What survives is plain, at Mudigere and at
+          Ohara alike: plant well, build well, teach well, and stay.
         </p>
       </TwoCol>
 
       <ScrollHighlight>
-        {`A thousand years is the unit.
-         Soil is the substrate.
-         Time is the test.`}
+        {`The old knowledge tells us when.
+         The new science tells us why.
+         Aura works on both.
+         The horizon is a thousand years.`}
       </ScrollHighlight>
 
-      <TwoCol id="filters" heading="Seven Decision Filters">
-        <p className="p1">
-          Before a project is approved, it passes through seven questions. If any one is
-          answered poorly, the project is redesigned, deferred, or declined. The filters are not
-          a scoring rubric. They are the minimum a decision must survive.
-        </p>
-        <DataGrid>
-          <DataCard value="Does it enrich the land?">
-            Soil, water, canopy, pollinators, microbiome. A no here ends the conversation. We do
-            not offset. We improve the ground we stand on.
-          </DataCard>
-          <DataCard value="Does it honour the place?">
-            Mudigere is Kannada and Malnad. Ohara is Kyoto and Ōhara. The work speaks the
-            language of the ground it grows on — or it is not the right work.
-          </DataCard>
-          <DataCard value="Will it age into beauty?">
-            Materials that patina. Forms that weather. Spaces that are more interesting in their
-            thirtieth year than their first. Nothing disposable.
-          </DataCard>
-          <DataCard value="Can it be run by a small, skilled team?">
-            Not can it scale — can it be kept. If it cannot be maintained by the people who live
-            here, it does not belong here.
-          </DataCard>
-          <DataCard value="Does it earn the slowness it asks for?">
-            <Rta /> — the old idea that a thing is right when it sits in alignment with all
-            around it, not just with the clock. A good decision at the wrong hour is still a
-            wrong decision.
-          </DataCard>
-          <DataCard value="Would we be proud to name every input?">
-            Provenance, cherry-to-cup. We turned down a glaze supplier who wouldn&apos;t name
-            their clay source — cheaper, and untraceable. If an input cannot be named, it cannot
-            be trusted, however good the price.
-          </DataCard>
-          <DataCard value="Does it make the next hour more alive?">
-            The test is the body. A room, a meal, a walk, a silence. If presence drops, the
-            design is wrong, no matter how clever the idea.
-          </DataCard>
-        </DataGrid>
-      </TwoCol>
-
-      <PullQuote>DEPTH over speed. GENERATIONS over quarters.</PullQuote>
-
-      <TwoCol id="why" heading="Why A Thousand Years">
-        <p className="p1">
-          A thousand years is long enough that almost none of our assumptions survive. Languages
-          change. Markets collapse and reform. Species arrive and leave. The only things that
-          endure that long are living systems that regenerate themselves, and the stories a
-          place tells about how to care for it.
-        </p>
-        <p className="p2">
-          The number is a device. It makes short arguments obvious. A promotional campaign, a
-          trend cycle, a shortcut in the fermentation — each of these collapses when held
-          against a thousand years. What remains is simple: plant well, build well, teach well,
-          and stay.
-        </p>
-        <p className="p2">
-          The plantation already contains trees older than any business plan. The cattle descend
-          from a line older than the state. The rhythm of the southwest monsoon is older than
-          writing. Aura does not invent a long horizon. It inherits one, and agrees to be
-          measured by it.
-        </p>
-        <p className="p2">
-          Long before instruments, many civilisations were already documenting the relationship
-          between soil and stars, moon and water, season and seed — the Vedas, Babylonian sky
-          records, Chinese agricultural calendars, and, longest of all, sixty thousand years of
-          Indigenous Australian land management. They were still. They were observing. They did
-          this without a single screen. We did not lose that knowledge. We got distracted.
-        </p>
-      </TwoCol>
-
       <Placeholder
-        type="Portrait · animal"
-        caption="Elder Malnad Gidda cow under coffee shade"
+        type="Detail · Ohara"
+        caption="The sanctuary at Ohara, outside Kyoto — the same horizon, different ground"
       />
 
-      <Placeholder
-        type="Detail · lineage"
-        caption="A calf beside its mother — the herd, one generation deep in the frame"
-      />
+      <DataGrid cols={3} standalone>
+        <DataCard value="1,000 yr">
+          The horizon Aura measures against — the frame that makes today&apos;s decision clear.
+        </DataCard>
+        <DataCard value="150 acres">
+          Under care at Mudigere — coffee, pepper, areca, forest, and pasture, held as one organism.
+        </DataCard>
+        <DataCard value="3026">
+          The year the work is planted for. Every plan is checked against it before it is made.
+        </DataCard>
+      </DataGrid>
 
-      <TwoCol id="spine" heading="The Moral Spine">
+      <OneCol id="close" heading="Generational impact.">
         <p className="p1">
-          A filter is only as good as the spine it rests on. Without a spine, any filter can be
-          bent. The spine is the sentence we keep coming back to when the spreadsheet disagrees
-          with the soil.
-        </p>
-        <p className="p2">
-          We do not take more than the land can regenerate. We do not build faster than the
-          community can absorb. We do not optimise what was meant to be lived. Every decision —
-          what we plant, what we build, who we hire, what we serve, what we sell — answers to
-          ecology before economics, to time before trend, to presence before performance.
-        </p>
-        <p className="p2">
-          Technology without awareness repeats old patterns in new language. Sensors without
-          wisdom are just data. Computation without conscience is just faster — which is why
-          every filter above asks what a decision does to the land and the people on it before
-          it asks whether the decision is even possible.
-        </p>
-      </TwoCol>
-
-      <PullQuote attribution="Arvind">
-        The world does not need more intelligence. It needs more conscience.
-      </PullQuote>
-
-      <TwoCol id="measure" heading="The Standard, Measured">
-        <p className="p1">
-          Nobody frames a mission statement. This one gets consulted — when the decision is
-          hard, and, more often, when the decision looks easy, because easy decisions made
-          casually are how slow erosions begin.
-        </p>
-        <p className="p2">
-          It is the standard against which the plantation, the residency, the studios, the meal,
-          the silence, and the next hire are measured. It is the reason we say no more often
-          than we say yes. It is the reason the work feels different when it arrives.
-        </p>
-        <DataGrid>
-          <DataCard value="150">
-            Acres under care in Mudigere. Coffee, pepper, areca, forest, pasture — held as one organism.
-          </DataCard>
-          <DataCard value="3,600 ft">
-            Eastern slope of the Western Ghats. Cool nights. Long shade. Slow ripening.
-          </DataCard>
-          <DataCard value="52">
-            Malnad Gidda — indigenous Karnataka cattle. The heart of the soil system.
-          </DataCard>
-          <DataCard value="7">
-            Filters every proposal passes through. None are optional.
-          </DataCard>
-          <DataCard value="3">
-            Pillars — Sanctuary, Agroculture, Artistry. Each one holds the other two up.
-          </DataCard>
-          <DataCard value="1,000 yr">
-            The horizon. The unit of measurement. The frame that makes the next decision clearer.
-          </DataCard>
-        </DataGrid>
-      </TwoCol>
-
-      <PullQuote attribution="Arvind">
-        Aura is not BUILT, it is GROWN.
-      </PullQuote>
-
-      <OneCol heading="The Practice">
-        <p className="p1">
-          Begin with the ground. Work upward. Plant the tree whose shade you will not sit in.
-          That is the idea. The rest is practice.
+          Aura works the long horizon because that is where the deepest impact is made — soil that
+          compounds, a forest that closes, a practice others can keep. We pair the oldest knowledge
+          we have with the newest science we trust, and we hold both to one plan. That is what
+          generational impact looks like: the reason today&apos;s work is worth doing at all. Plant
+          the tree whose shade you will not sit in. The rest is practice.
         </p>
       </OneCol>
 

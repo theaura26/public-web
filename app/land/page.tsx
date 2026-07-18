@@ -88,7 +88,7 @@ export default function LandPage() {
       </TwoCol>
 
       <PullQuote>
-        The FOREST is not adjacent to the FARM. The FOREST is the FARM.
+        The FOREST is the FARM. One canopy, one system, one ground.
       </PullQuote>
 
       <TwoCol id="work" heading="How we work this land.">
@@ -119,10 +119,10 @@ export default function LandPage() {
 
       <TwoCol id="east-east" heading="Mudigere and Ohara.">
         <p className="p1">
-          Aura is not one estate. It is two. The second sits in Ohara, Kyoto —
-          two properties totalling roughly 1,200 <Term tip="Japanese land measure. About 3.3 m² per tsubo.">tsubo</Term>, with seven existing
-          buildings, a teahouse with a hearth, a thirty-year-old Japanese
-          garden, and a cafe overlooking a river.
+          Aura works two estates. The first is here at Mudigere; the second
+          sits in Ohara, Kyoto — two properties totalling roughly 1,200 <Term tip="Japanese land measure. About 3.3 m² per tsubo.">tsubo</Term>,
+          with seven existing buildings, a teahouse with a hearth, a
+          thirty-year-old Japanese garden, and a cafe overlooking a river.
         </p>
         <p className="p2">
           Mudigere and Ohara form an East-East axis. Two agrarian cultures —

@@ -5,6 +5,8 @@ import Link from 'next/link'
 import Reveal from '@/components/RevealOnScroll'
 import { ScrollHighlight } from '@/components/article/Article'
 import { ExpandingBanner } from '@/components/ExpandingBanner'
+import { InfiniteArticleSlider } from '@/components/InfiniteArticleSlider'
+import { InvertOnScroll } from '@/components/InvertOnScroll'
 import { LogoEmblem } from '@/components/Logo'
 import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun, CloudMoon } from '@phosphor-icons/react'
 
@@ -691,21 +693,12 @@ function AgentHome() {
           <li><a href="/reason">Reason</a></li>
           <li><a href="/brand">Brand</a></li>
           <li><a href="/contact">Contact</a></li>
-          <li><a href="/idea">1000 Year Idea</a></li>
-          <li><a href="/sanctuary">Sanctuary</a></li>
+          <li><a href="/mudigere">Mudigere</a></li>
+          <li><a href="/ohara">Ohara</a></li>
+          <li><a href="/herd">Ecosystem Engineers</a></li>
+          <li><a href="/circular">Circular Intelligence</a></li>
+          <li><a href="/shade">The Light Instrument</a></li>
           <li><a href="/artistry">Artistry</a></li>
-          <li><a href="/residency">Residency</a></li>
-          <li><a href="/provenance">Provenance</a></li>
-          <li><a href="/coffee">Coffee</a></li>
-          <li><a href="/pepper">Pepper</a></li>
-          <li><a href="/areca">Areca</a></li>
-          <li><a href="/biodynamic">Biodynamic</a></li>
-          <li><a href="/vedic">Vedic</a></li>
-          <li><a href="/fermentation">Fermentation</a></li>
-          <li><a href="/living-systems">Living Systems</a></li>
-          <li><a href="/land">Land</a></li>
-          <li><a href="/wisdom">Moral Spine</a></li>
-          <li><a href="/rta">Rta</a></li>
         </ul>
       </nav>
 
@@ -748,7 +741,7 @@ function AgentHome() {
         <h2>Locations</h2>
 
         <h3>Aura Mudigere — active</h3>
-        <p><a href="/sanctuary">Read more</a></p>
+        <p><a href="/mudigere">Read more</a></p>
         <dl>
           <dt>Coordinates</dt><dd>13.1365°N, 75.6403°E</dd>
           <dt>Altitude</dt><dd>3,600 ft (900–1,100 m)</dd>
@@ -760,7 +753,7 @@ function AgentHome() {
         </dl>
 
         <h3>Aura Ohara — active</h3>
-        <p><a href="/sanctuary">Read more</a></p>
+        <p><a href="/ohara">Read more</a></p>
         <dl>
           <dt>Coordinates</dt><dd>35.1200°N, 135.8300°E</dd>
           <dt>Altitude</dt><dd>1,099 ft</dd>
@@ -779,7 +772,6 @@ function AgentHome() {
 
       <section>
         <h2>Coffee programme</h2>
-        <p><a href="/coffee">Read more</a></p>
         <dl>
           <dt>Varieties</dt><dd>Arabica S795, Selection 9, Chandragiri</dd>
           <dt>Processing</dt><dd>6 micro lots, 6 methods</dd>
@@ -802,8 +794,8 @@ function AgentHome() {
         <h2>Crops</h2>
         <dl>
           <dt>Coffee</dt><dd>100 acres, Arabica S795 / Selection 9 / Chandragiri, specialty-grade.</dd>
-          <dt>Pepper</dt><dd>Malabar, shade-grown under native canopy, biodynamic. <a href="/pepper">More</a></dd>
-          <dt>Areca</dt><dd>Traditional intercrop, economic anchor, forest structure. <a href="/areca">More</a></dd>
+          <dt>Pepper</dt><dd>Malabar, shade-grown under native canopy, biodynamic.</dd>
+          <dt>Areca</dt><dd>Traditional intercrop, economic anchor, forest structure.</dd>
           <dt>Tea</dt><dd>Experimental plots at 3,600 ft, testing cultivar adaptation.</dd>
         </dl>
       </section>
@@ -812,7 +804,7 @@ function AgentHome() {
 
       <section>
         <h2>Farming method</h2>
-        <p><a href="/biodynamic">Biodynamic</a> · <a href="/vedic">Vedic</a> · <a href="/living-systems">Living systems</a> · <a href="/fermentation">Fermentation</a></p>
+        <p><a href="/circular">Circular intelligence</a> · <a href="/herd">The herd</a> · <a href="/shade">Shade</a></p>
         <dl>
           <dt>System 1</dt><dd>Biodynamic — BD 500–508, CPP, lunar cycles.</dd>
           <dt>System 2</dt><dd>Vedic — Jeevamrit, Panchgavya, Beejamrit.</dd>
@@ -827,7 +819,6 @@ function AgentHome() {
 
       <section>
         <h2>Six rules</h2>
-        <p><a href="/wisdom">Moral spine</a> · <a href="/rta">Rta</a></p>
         <ol>
           <li><strong>Soil comes first</strong> — all decisions flow from soil health.</li>
           <li><strong>Do small work properly</strong> — mastery before scaling.</li>
@@ -842,7 +833,7 @@ function AgentHome() {
 
       <section>
         <h2>Residency</h2>
-        <p><a href="/residency">Read more</a> · <a href="/artistry">Artistry</a></p>
+        <p><a href="/artistry">Artistry</a></p>
         <p>Monastic polymaths. Crazy misfits. An embedded residency across two countries (soon three). Two weeks minimum. Pre-selected.</p>
         <ul>
           <li>Design residencies — 2–4 weeks. Working briefs from the farm, sanctuary, product OS.</li>
@@ -859,7 +850,6 @@ function AgentHome() {
 
       <section>
         <h2>Provenance</h2>
-        <p><a href="/provenance">Read more</a></p>
         <p>Cherry to cup, on chain. Three layers — blockchain provenance, live sensors, and a persistent machine memory grown from the farm&rsquo;s own readings. Together they replace the forty-thousand-dollar certification stack with something the land itself can verify.</p>
       </section>
 
@@ -867,7 +857,6 @@ function AgentHome() {
 
       <section>
         <h2>The 1,000-year idea</h2>
-        <p><a href="/idea">Read more</a></p>
         <p>The frame by which every choice is measured. We think in generations.</p>
       </section>
 
@@ -1156,7 +1145,9 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
                 color: '#fff',
               }}
             >
-              +
+              <svg viewBox="0 0 24 24" width={11} height={11} fill="none" aria-hidden>
+                <path d="M5 12h13M12.5 6l6.5 6-6.5 6" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </span>
             Explore {s.name}
           </button>
@@ -1856,8 +1847,15 @@ export default function Home() {
             another would double the gutter and push the headline 48 px
             in from the page rhythm. */}
         <ScrollHighlight align="left">{`Generational Impact.
-The idea suggests that the choices made by a certain generation have long-lasting effects on future generations, either escalating or lessening difficulties.
-The impact can be deep and complex, covering different facets of life, such as culture, economy, technology, and values.`}</ScrollHighlight>
+We create ideas, products and cultures that become regenerative systems.`}</ScrollHighlight>
+
+        {/* The journals, framed by the manifesto above — a left-anchored,
+            horizontally-scrollable row of the estate's editorials, under a
+            small section label (place pages excluded). */}
+        <div style={{ marginTop: 'clamp(28px, 5vh, 64px)' }}>
+          <InfiniteArticleSlider />
+        </div>
+
         <style jsx>{`
           /* Reason copy sits directly above the expanding video — the
              card is meant to read as a continuation of the manifesto, so
@@ -1885,7 +1883,7 @@ The impact can be deep and complex, covering different facets of life, such as c
 
       {/* Operating System — full section-gap on both ends, matching the
           rhythm of every other top-level section on the page. */}
-      <section style={{ padding: 'var(--section-gap) 0', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
+      <InvertOnScroll style={{ padding: 'var(--section-gap) 0', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         {/* Operating-system intro — `align="left"` keeps the headline
             block flush with the pillar grid's left edge. Each line
             breaks at a sentence so the four principles stack as a
@@ -1960,12 +1958,12 @@ Awake.`}</ScrollHighlight>
             ))}
           </div>
         </div>
-      </section>
+      </InvertOnScroll>
 
       {/* Sanctuary lede — same scroll-to-highlight component as the Reason
           section above. Three-line manifesto that introduces the sanctuary
           stack which follows. */}
-      <section className="sanctuary-lede" style={{ borderTop: '1px solid var(--border)', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
+      <section className="sanctuary-lede" style={{ borderTop: '1px solid var(--contrast-border)', position: 'relative', zIndex: 1, background: 'var(--contrast-bg)' }}>
         <ScrollHighlight align="left">{`Aura unfolds through sanctuary, land, and practice.
 Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm.
 Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
@@ -1976,6 +1974,16 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
              space between the border and the first line of the
              scroll-highlighted text. */
           .sanctuary-lede {
+            /* Keep on dark — this lede bridges the inverted Operating-System
+               section above and the near-black sanctuary stack below, so it
+               holds the contrast palette permanently instead of flashing
+               back to white between two dark beats. */
+            --text: var(--contrast-text);
+            --text-body: var(--contrast-text-body);
+            --text-muted: var(--contrast-text-muted);
+            --text-dim: var(--contrast-text-muted);
+            --border: var(--contrast-border);
+            color: var(--contrast-text);
             padding: calc(var(--section-gap) + clamp(40px, 6vh, 80px)) 0
                      calc(var(--section-gap) + clamp(40px, 6vh, 80px));
           }
@@ -1985,15 +1993,13 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
           .sanctuary-lede > :global(section) {
             padding: 0 !important;
           }
-          /* Bump the heading size on this lede specifically — the
-             ScrollHighlight reads as a quiet manifesto and benefits
-             from extra weight against the generous breathing room.
-             Selector targets the <h2> ScrollHighlight renders inside
-             its own section, scoped to .sanctuary-lede so other
-             ScrollHighlight usages keep their default h2 size. */
+          /* Keep this lede at the default h2 scale — it reads as a
+             quiet manifesto, not a display headline. Scoped to
+             .sanctuary-lede; only the line-height is nudged for the
+             multi-line block, font-size matches the global h2. */
           .sanctuary-lede :global(h2) {
-            font-size: clamp(40px, 7.2vw, 84px);
-            line-height: 1.04;
+            font-size: clamp(32px, 5.5vw, 60px);
+            line-height: 1.1;
           }
           @media (max-width: 768px) {
             .sanctuary-lede {
@@ -2148,21 +2154,12 @@ function AgentHomeView() {
       <ul>
         <li><a href="/reason">/reason</a> — the founder&rsquo;s story, in 14 chapters.</li>
         <li><a href="/brand">/brand</a> — brand identity, principles, colours, type.</li>
-        <li><a href="/sanctuary">/sanctuary</a> — sanctuary essays and place.</li>
-        <li><a href="/idea">/idea</a> — The 1000 Year Idea.</li>
-        <li><a href="/wisdom">/wisdom</a> — Moral Spine.</li>
-        <li><a href="/rta">/rta</a> — Ṛta. Right time. Right action.</li>
+        <li><a href="/mudigere">/mudigere</a> — Sampigelkhan Estate, the Indian land.</li>
+        <li><a href="/ohara">/ohara</a> — the Kyoto estate. Asa and Niwa.</li>
+        <li><a href="/herd">/herd</a> — Ecosystem Engineers. The herd as biological engine.</li>
+        <li><a href="/circular">/circular</a> — Circular Intelligence. CPP and Jeevamrit.</li>
+        <li><a href="/shade">/shade</a> — The Light Instrument. Shade whiskering.</li>
         <li><a href="/artistry">/artistry</a> — A space to make.</li>
-        <li><a href="/residency">/residency</a> — Monastic polymaths.</li>
-        <li><a href="/provenance">/provenance</a> — Cherry to cup, on chain.</li>
-        <li><a href="/fermentation">/fermentation</a> — Three disciplines, one precision.</li>
-        <li><a href="/coffee">/coffee</a> — Six lots, one appellation.</li>
-        <li><a href="/pepper">/pepper</a> — Malabar black gold.</li>
-        <li><a href="/areca">/areca</a> — The sentinel palm.</li>
-        <li><a href="/biodynamic">/biodynamic</a> — The farm as organism.</li>
-        <li><a href="/vedic">/vedic</a> — Older than its study.</li>
-        <li><a href="/living-systems">/living-systems</a> — Herd, hive, canopy.</li>
-        <li><a href="/land">/land</a> — The land is the lab.</li>
         <li><a href="/contact">/contact</a> — Get in touch.</li>
       </ul>
 

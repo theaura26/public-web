@@ -169,26 +169,30 @@ export function FilmBanner({ youtubeId, poster, alt = '', caption, note, bgVideo
       )}
       <div aria-hidden className="film-banner__tint" />
 
+      {/* Whole-block click target — a full-bleed transparent button so a
+          click (or keyboard activation) anywhere on the banner opens the
+          film. The CTA glyph and note above it are visual only. */}
+      <button
+        type="button"
+        className="film-banner__hit"
+        onClick={() => setOpen(true)}
+        aria-label={caption ? `Play the film — ${caption}` : 'Play the film'}
+      />
+
       {/* Optional vision line, pinned bottom-left opposite the CTA — mirrors
           the homepage sanctuary meta row (label left, CTA right). */}
       {note && <span className="label film-banner__note">{note}</span>}
 
-      {/* One CTA — a small circular play glyph + the caption, in the
-          house "+ Explore" style — replaces the big centred play disc
-          and the separate caption. */}
-      <button
-        type="button"
-        className="film-banner__cta"
-        onClick={() => setOpen(true)}
-        aria-label={caption ? `Play the film — ${caption}` : 'Play the film'}
-      >
-        <span aria-hidden className="film-banner__cta-icon">
+      {/* Visual play affordance only — the whole-block hit button behind it
+          handles the click, so this is non-interactive (pointer-events:none). */}
+      <span aria-hidden className="film-banner__cta">
+        <span className="film-banner__cta-icon">
           <svg viewBox="0 0 24 24" width={10} height={10}>
             <path d="M8 5v14l11-7z" fill="currentColor" />
           </svg>
         </span>
         {caption && <span className="label" style={{ color: '#fff' }}>{caption}</span>}
-      </button>
+      </span>
 
       {open && (
         <div className="film-banner__fs" role="dialog" aria-modal="true" aria-label="Film">
@@ -239,11 +243,21 @@ export function FilmBanner({ youtubeId, poster, alt = '', caption, note, bgVideo
            mono-bordered circle + label, gap 10, anchored bottom-right at the
            gutter / clamp(24,5vh,56) inset. Same restraint on hover (just a
            border brighten — no fill), so the interaction reads identically. */
+        .film-banner__hit {
+          position: absolute;
+          inset: 0;
+          z-index: 2;
+          background: transparent;
+          border: 0;
+          padding: 0;
+          margin: 0;
+          cursor: pointer;
+        }
         .film-banner__cta {
           position: absolute;
           right: var(--gutter);
           bottom: clamp(24px, 5vh, 56px);
-          z-index: 2;
+          z-index: 3;
           display: inline-flex;
           align-items: center;
           gap: 10px;
@@ -252,7 +266,7 @@ export function FilmBanner({ youtubeId, poster, alt = '', caption, note, bgVideo
           background: transparent;
           border: 0;
           color: #ffffff;
-          cursor: pointer;
+          pointer-events: none;
         }
         @media (max-width: 768px) {
           .film-banner__cta { bottom: var(--gutter); }
@@ -270,7 +284,7 @@ export function FilmBanner({ youtubeId, poster, alt = '', caption, note, bgVideo
           color: #ffffff;
           transition: border-color var(--dur-fast) var(--ease);
         }
-        .film-banner__cta:hover .film-banner__cta-icon {
+        .film-banner:hover .film-banner__cta-icon {
           border-color: #fff;
         }
         /* Vision line, bottom-left — opposite the bottom-right CTA. Capped
@@ -279,7 +293,7 @@ export function FilmBanner({ youtubeId, poster, alt = '', caption, note, bgVideo
           position: absolute;
           left: var(--gutter);
           bottom: clamp(24px, 5vh, 56px);
-          z-index: 2;
+          z-index: 3;
           max-width: min(48%, 460px);
           color: #ffffff;
           pointer-events: none;

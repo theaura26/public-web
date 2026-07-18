@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -61,6 +61,15 @@ export type ParallaxBannerProps = {
    *  while the final image/video is still being sourced. `caption`
    *  becomes the slot label. */
   placeholder?: boolean
+  /** Aspect ratio of the banner (a CSS aspect-ratio string, e.g. '16 / 9',
+   *  '4 / 5', '1 / 1'). Applied on every breakpoint so the image keeps its
+   *  natural shape instead of being cropped on mobile. Default 16 / 9 —
+   *  set a taller ratio for a portrait image. */
+  ratio?: string
+  /** Caption alignment. Inline chapter banners pin the caption bottom-left
+   *  (default). A top-of-page hero banner can pass 'center' to keep its
+   *  caption centred. */
+  captionAlign?: 'left' | 'center'
 }
 
 export function ParallaxBanner({
@@ -77,11 +86,18 @@ export function ParallaxBanner({
   tint = 0.18,
   blend,
   placeholder = false,
+  ratio = '16 / 9',
+  captionAlign = 'left',
 }: ParallaxBannerProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const mediaRef = useRef<HTMLDivElement>(null)
   const fgRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+  // Adaptive height — once the media loads, measure its true aspect and
+  // size the banner to it so the FULL image shows (no forced 16:9 crop).
+  // `ratio` is only the placeholder shape used until the media loads.
+  const [naturalRatio, setNaturalRatio] = useState<string | null>(null)
+  const pbRatio = naturalRatio ?? ratio
 
   // Autoplay the video only while it's near the viewport — same lazy
   // pattern the rest of the kit uses so off-screen banners don't burn
@@ -103,25 +119,9 @@ export function ParallaxBanner({
     gsap.registerPlugin(ScrollTrigger)
 
     const ctx = gsap.context(() => {
-      // Background parallax — the media layer is 120% tall (see CSS), so
-      // a ±10% drift stays covered. `scrub: true` ties it to scroll
-      // position; `ease: none` keeps it linear with the wheel.
-      if (!reduced && mediaRef.current) {
-        gsap.fromTo(
-          mediaRef.current,
-          { yPercent: -10 },
-          {
-            yPercent: 10,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: wrapRef.current,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: true,
-            },
-          }
-        )
-      }
+      // The media fills the banner at its own aspect ratio (adaptive
+      // height), so the full image is always visible — no scroll-driven
+      // transform on it, which is what used to crop the frame.
 
       // Foreground reveal — one soft rise as the banner enters. Runs even
       // under reduced-motion (it's a fade, not motion sickness territory),
@@ -150,7 +150,7 @@ export function ParallaxBanner({
   // with a mono label so the layout reads true while art is sourced.
   if (placeholder) {
     return (
-      <div className="parallax-banner parallax-banner--ph" aria-roledescription="banner placeholder">
+      <div className="parallax-banner parallax-banner--ph" aria-roledescription="banner placeholder" style={{ ['--pb-ratio']: ratio } as React.CSSProperties}>
         <div className="parallax-banner__ph">
           <span className="parallax-banner__ph-label">{caption ?? 'Banner'}</span>
           <span className="parallax-banner__ph-meta">Media placeholder · 16 : 9</span>
@@ -160,12 +160,9 @@ export function ParallaxBanner({
             position: relative;
             width: 100vw;
             margin-left: calc(50% - 50vw);
-            aspect-ratio: 16 / 9;
+            aspect-ratio: var(--pb-ratio, 16 / 9);
             overflow: hidden;
             background: #e8e5de;
-          }
-          @media (max-width: 768px) {
-            .parallax-banner--ph { aspect-ratio: 4 / 5; }
           }
           .parallax-banner__ph {
             position: absolute;
@@ -204,8 +201,8 @@ export function ParallaxBanner({
   }
 
   return (
-    <div ref={wrapRef} className="parallax-banner" aria-roledescription="banner">
-      {/* Over-sized media layer — 120% tall, GSAP drifts it on scroll. */}
+    <div ref={wrapRef} className="parallax-banner" aria-roledescription="banner" style={{ ['--pb-ratio']: pbRatio } as React.CSSProperties}>
+      {/* Media layer — fills the banner exactly at the image's own aspect. */}
       <div ref={mediaRef} className="parallax-banner__media">
         {video ? (
           <video
@@ -216,12 +213,25 @@ export function ParallaxBanner({
             preload="metadata"
             poster={poster}
             aria-label={alt}
+            onLoadedMetadata={(e) => {
+              const v = e.currentTarget
+              if (v.videoWidth && v.videoHeight) setNaturalRatio(`${v.videoWidth} / ${v.videoHeight}`)
+            }}
           >
             <source src={video} type="video/mp4" />
           </video>
         ) : image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={image} alt={alt} loading="lazy" decoding="async" />
+          <img
+            src={image}
+            alt={alt}
+            loading="lazy"
+            decoding="async"
+            onLoad={(e) => {
+              const im = e.currentTarget
+              if (im.naturalWidth && im.naturalHeight) setNaturalRatio(`${im.naturalWidth} / ${im.naturalHeight}`)
+            }}
+          />
         ) : null}
       </div>
 
@@ -253,28 +263,20 @@ export function ParallaxBanner({
         ) : null}
       </div>
 
-      {caption && <p className="label parallax-banner__caption">{caption}</p>}
+      {caption && <p className="label parallax-banner__caption" data-align={captionAlign}>{caption}</p>}
 
       <style jsx>{`
         .parallax-banner {
           position: relative;
           width: 100vw;
           margin-left: calc(50% - 50vw);
-          aspect-ratio: 16 / 9;
+          aspect-ratio: var(--pb-ratio, 16 / 9);
           overflow: hidden;
           background: #0a0a0a;
         }
-        @media (max-width: 768px) {
-          .parallax-banner {
-            aspect-ratio: 4 / 5;
-          }
-        }
         .parallax-banner__media {
           position: absolute;
-          left: 0;
-          right: 0;
-          top: -10%;
-          height: 120%;
+          inset: 0;
           will-change: transform;
         }
         .parallax-banner__media :global(video),
@@ -311,13 +313,23 @@ export function ParallaxBanner({
         }
         .parallax-banner__caption {
           position: absolute;
-          left: clamp(20px, 4vw, 48px);
+          left: var(--gutter);
+          right: var(--gutter);
           bottom: clamp(20px, 4vh, 48px);
           margin: 0;
           z-index: 3;
+          max-width: min(88vw, 640px);
+          text-align: left;
           color: #fff;
           letter-spacing: 1px;
           text-shadow: 0 1px 12px rgba(0, 0, 0, 0.45);
+        }
+        /* Top-of-page hero banners keep the caption centred. */
+        .parallax-banner__caption[data-align='center'] {
+          left: 50%;
+          right: auto;
+          transform: translateX(-50%);
+          text-align: center;
         }
       `}</style>
     </div>

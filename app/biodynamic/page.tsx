@@ -60,10 +60,12 @@ export default function BiodynamicPage() {
           — then applied to soil in the evening, when the earth is inhaling.
         </p>
         <p className="p2">
-          The cosmology around these preparations — the lunar timings, the idea of
-          the earth breathing — is old, and it has never held up in a controlled
-          trial. Aura keeps the preparations for the biology they carry, which is
-          real and measurable, and logs that biology rather than the astrology.
+          We will say the thing most of the biodynamic world talks around. The
+          lunar charts and the talk of the earth breathing are poetry, and poetry
+          has never survived a controlled trial. We keep these preparations for a
+          harder reason: the biology in them works, we can measure it, and we do.
+          The ritual earns its place by what it grows in the ground. That is the
+          only test we let it take.
         </p>
         <DataGrid cols={2}>
           <DataCard value="BD 500 — Horn manure.">
@@ -215,9 +217,10 @@ export default function BiodynamicPage() {
 
       <OneCol id="closing" heading="The herd is biological infrastructure.">
         <p className="p1">
-          Biodynamic inputs, ecological pest balance, soil microbiome
-          restoration — together they are the estate learning to work with the
-          land&rsquo;s own intelligence.
+          Biodynamic inputs, ecological pest balance, a restored soil microbiome —
+          this is the estate working hand in hand with the land&rsquo;s own
+          intelligence. We believe it is the only kind of farming that will still
+          make sense in a hundred years, and we are building as if we are right.
         </p>
         <p className="p2">
           A four-story polyculture, fed by preparations from indigenous

@@ -13,7 +13,48 @@ export type Journal = {
   img: string
 }
 
+/* The published journal set — the reworked editorials/places plus the
+   journals live on theaura.life. These drive the "Continue" footer and
+   sitemap.xml, each on its own banner (hero) image. Two not-yet-published
+   journals (idea, vedic) show as "coming soon" tiles in the slide-out menu
+   (components/Navbar.tsx) but stay out of Continue and the sitemap. */
 export const ACTIVE_JOURNALS: Journal[] = [
+  {
+    href: '/herd',
+    title: 'Ecosystem Engineers',
+    description: 'Fifty-two Malnad Gidda as the estate’s biological engine — each passported, grazing the ground it feeds.',
+    img: '/herd/images/aura-relationship2.jpg',
+  },
+  {
+    href: '/circular',
+    title: 'Circular Intelligence',
+    description: 'The herd’s dung, remade into measured fertility — hand-turned CPP pits and 154,000 litres of Jeevamrit, tested before the soil.',
+    img: '/circular/images/aura-shed.jpg',
+  },
+  {
+    href: '/shade',
+    title: 'The Light Instrument',
+    description: 'Shade whiskering, measured in lux. An old canopy craft, cut to prescription and validated against its own numbers.',
+    img: '/aura-land.jpg',
+  },
+  {
+    href: '/ecology',
+    title: 'The Living System',
+    description: 'The whole farm, read and measured — dead wood, fungi, worms, and one Ecological Health Index per block.',
+    img: '/aura-mudigere-landscape.jpg',
+  },
+  {
+    href: '/artistry',
+    title: 'Artistry',
+    description: 'A space to make. Six studios cut from the estate, and what leaves them.',
+    img: '/aura-artistry.jpg',
+  },
+  {
+    href: '/ohara',
+    title: 'Ohara',
+    description: 'Asa and Niwa. A valley north of Kyoto that keeps its own time.',
+    img: '/aura-ohara.jpg',
+  },
   {
     href: '/wisdom',
     title: 'Moral Spine',
@@ -47,80 +88,20 @@ export const ACTIVE_JOURNALS: Journal[] = [
   {
     href: '/land',
     title: 'The Land',
-    description: 'Land is not an asset. It is ancestry. Mudigere and Ohara, in dialogue.',
+    description: 'Land carries ancestry, not just acreage. Mudigere and Ohara, in dialogue.',
     img: '/journals/land/aura-the-land.jpg',
   },
   {
     href: '/biodynamic',
     title: 'Biodynamic',
-    description: 'Not a technique. A worldview. BD 500–508, Jeevamrit, Panchgavya — the herd as engine.',
+    description: 'A worldview, worked as method. BD 500–508, Jeevamrit, Panchgavya — the herd as engine.',
     img: '/journals/biodynamic/aura-biodynamic.jpg',
-  },
-  {
-    href: '/herd',
-    title: 'Ecosystem Engineers',
-    description: 'Not livestock — infrastructure. Why a grazing herd is one of nature’s oldest ecosystem engineers.',
-    img: '/aura-land.jpg',
-  },
-  {
-    href: '/circular',
-    title: 'Circular Intelligence',
-    description: 'Compost is not fertiliser. It is a biological network — nature produces no waste, only relationships.',
-    img: '/aura-mudigere-landscape.jpg',
   },
   {
     href: '/residency',
     title: 'Monastic Polymaths',
     description: 'An artist residency for natural intelligence. Embedded, invitation-based.',
     img: '/journals/residency/aura-monastic-polymath.jpg',
-  },
-  {
-    href: '/idea',
-    title: 'The 1000 Year Idea',
-    description: 'A thousand years is the unit. Soil is the substrate. Time is the test.',
-    img: '/aura-idea.jpg',
-  },
-  {
-    href: '/sanctuary',
-    title: 'Sanctuary',
-    description: 'Four valleys, one rhythm. Guests of the mountain, not owners.',
-    img: '/aura-sanctuary.jpg',
-  },
-  {
-    href: '/ohara',
-    title: 'Ohara',
-    description: 'Asa and Niwa. A valley north of Kyoto that keeps its own time.',
-    img: '/aura-ohara.jpg',
-  },
-  {
-    href: '/artistry',
-    title: 'Artistry',
-    description: 'A space to make. Six studios cut from the estate, and what leaves them.',
-    img: '/aura-artistry.jpg',
-  },
-  {
-    href: '/provenance',
-    title: 'Provenance',
-    description: 'Cherry to cup, on chain. Every event signed, every reading verifiable.',
-    img: '/aura-provenance.jpg',
-  },
-  {
-    href: '/pepper',
-    title: 'Malabar Pepper',
-    description: 'Vine on palm. Three drupes from one cultivar, an appellation older than Rome.',
-    img: '/aura-pepper.jpg',
-  },
-  {
-    href: '/areca',
-    title: 'The Sentinel Palm',
-    description: 'Twenty metres of shade. The keystone of the five-layer canopy.',
-    img: '/aura-areca.jpg',
-  },
-  {
-    href: '/vedic',
-    title: 'Vedic Farming',
-    description: 'Older than the word organic. Feed the microbe, not the plant.',
-    img: '/aura-vedic.jpg',
   },
 ]
 

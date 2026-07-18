@@ -2,14 +2,25 @@ import {
   HeroBanner,
   TwoCol,
   OneCol,
-  Placeholder,
   DataGrid,
   DataCard,
+  SpecTable,
   PullQuote,
   ScrollHighlight,
   Continue,
   Term,
 } from '@/components/article/Article'
+import { ParallaxBanner } from '@/components/ParallaxBanner'
+
+/* ═══════════════════════════════════════════════════════════════════
+   ECOSYSTEM ENGINEERS — the cow story, told close to the ground.
+
+   Where Ohara opens on stillness and a white field, the herd opens on
+   a living animal in motion. The page keeps close: grazing, calves,
+   the hands that bathe and dose and tend them, the ID system that
+   reads each animal, and what the herd returns to the soil. Editorial,
+   not light — the care, the record, and the proof of doing.
+═══════════════════════════════════════════════════════════════════ */
 
 export default function HerdPage() {
   return (
@@ -18,303 +29,234 @@ export default function HerdPage() {
         currentHref="/herd"
         title="Ecosystem Engineers"
         type="Detail · the herd"
-        caption="Why a grazing herd — moved, rested, followed by dung and beetle and bird — is one of the oldest ecosystem engineers on Earth"
-        alt="Aura — cattle as ecosystem engineers"
+        src="/herd/videos/aura-relationship2.mp4"
+        mediaType="video"
+        poster="/herd/images/aura-relationship2.jpg"
+        caption="A hand, a mouthful of green, a calf leaning in. Fifty-two Malnad Gidda — the estate's engine — grazed on pesticide-free ground, tended by name, and read animal by animal."
+        alt="A caretaker hand-feeding a Malnad Gidda calf at Mudigere, the herd behind"
       />
 
-      <TwoCol id="reframe" heading="A cow is not what leaves it.">
+      <TwoCol id="reframe" heading="The herd is the estate's engine.">
         <p className="p1">
-          Ask what a cow is for and the answer arrives as a product: milk, meat, leather, a line on
-          a balance sheet. It is the wrong question, and it produces the wrong animal. A cow standing
-          still in a shed is an input. A cow moving across grassland is something older and stranger
-          — a working part of the machinery that built the grassland in the first place.
+          Fifty-two{' '}
+          <Term tip="A small indigenous cattle breed of the Malnad region of Karnataka, adapted to this altitude, soil, and monsoon over centuries. Low-yield, hardy, low-input.">Malnad Gidda</Term>{' '}
+          live and graze at Mudigere, and almost everything the soil is fed begins in their bodies. The
+          compost, the pit, the microbial brew, the sprays that go out over the coffee — trace any of them
+          back and you arrive at dung, urine, or milk from these animals. The herd is the engine the farm
+          runs on — its source, not its sideline.
         </p>
         <p className="p2">
-          This is not sentiment. Ecologists have a precise name for it. An{' '}
-          <Term tip="An organism that shapes habitat for others by physically changing the materials around it. The beaver is the textbook case.">ecosystem engineer</Term>{' '}
-          is any organism that modulates the resources available to other species by causing physical
-          changes in the world around it. The beaver is the textbook case. So, it turns out, is a large
-          grazing herbivore. It does not merely eat the landscape. It rebuilds it.
+          A cow walked across the land on a plan is an{' '}
+          <Term tip="An organism that changes the physical world around it and, in doing so, sets the terms for what else can live there.">ecosystem engineer</Term> —
+          she reshapes the ground she works and sets the terms for everything that grows there. So Aura
+          reads the herd the way it reads the coffee: each animal a working part of the system, its health
+          a daily signal, everything it gives back a measured input.
         </p>
       </TwoCol>
 
-      <Placeholder
-        type="Landscape · the herd, moving"
-        caption="A herd at low density crossing open grassland — movement, not occupation, is the mechanism"
-      />
+      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
+        <ParallaxBanner
+          image="/herd/images/aura-grassland2.jpg"
+          alt="The Malnad Gidda herd grazing under the coffee canopy at Mudigere"
+          caption="Fifty-two, on their own ground"
+        />
+      </div>
 
-      <Placeholder
-        type="Detail · hoofprint"
-        caption="A single print pressing seed and litter into the soil surface"
-      />
-
-      <TwoCol id="coevolution" heading="Grass is built to be eaten.">
+      <TwoCol id="loop" heading="Same land, same system.">
         <p className="p1">
-          Grass invites the animal that eats it. Most plants grow from the tip; cut the tip and you
-          wound the plant. Grasses grow from the base — from{' '}
-          <Term tip="Growing tissue at or below the soil surface. Because the growing point sits low, a grazed blade regrows from the base within days rather than being killed. An adaptation to being eaten — and to fire.">intercalary meristems</Term>{' '}
-          at or below the soil surface — so a grazed blade regrows from ground level within days. This
-          is not an accident. It is an adaptation to being eaten, refined over roughly twenty million
-          years alongside the animals doing the eating.
+          The cattle graze the same 150 acres that grow the coffee, the pepper, and the cardamom — ground
+          kept <strong>pesticide-free and chemical-free</strong> — and they eat what that ground makes:
+          the native grasses, the understory, the cover crops between the coffee rows. Whatever a cow
+          chews here grew from the soil she will feed.
         </p>
         <p className="p2">
-          The animals adapted in turn, evolving{' '}
-          <Term tip="High-crowned, ever-growing teeth that let a grazer withstand a lifetime of chewing abrasive, silica-rich grass and grit.">hypsodont</Term>{' '}
-          teeth to survive a diet of silica-laced grass and grit. Grass and grazer are not so much
-          predator and prey as two halves of a single, slow negotiation. When open grasslands spread
-          across the planet in the late Miocene, they spread with the herds.
+          Then it comes back around. What she takes from a block she returns as dung and urine, carrying
+          the live microbes of a gut shaped by that exact ground. Nothing is bought in, nothing trucked
+          away: grass off the soil, herd off the grass, fertility off the herd, grass again. The cow eats
+          the land, and the land is fed back the cow — a loop with no beginning.
         </p>
       </TwoCol>
 
-      <TwoCol id="lawn" heading="The herd gardens the grass.">
+      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
+        <ParallaxBanner
+          image="/herd/images/aura-gift1.jpg"
+          alt="Grass and grazer at Mudigere — each other's gift"
+          caption="Grass and grazer — each other's gift"
+        />
+      </div>
+
+      <TwoCol id="care" heading="Cared for by hand.">
         <p className="p1">
-          Watch a herd on good ground and a pattern appears. Ecologists studying the Serengeti called it
-          a grazing lawn: a short, dense, leafy sward that the animals graze
-          into existence and then maintain, because grazed grass tillers and stays young. The herd is,
-          functionally, gardening the pasture it depends on.
+          A herd on the fields every day is tended every day — washed and bathed, looked over, dosed when
+          it needs it, treated with{' '}
+          <Term tip="Plant-based sprays — neem, herbal decoctions, and biodynamic preparations — used in place of synthetic veterinary chemicals wherever possible.">organic sprays</Term>{' '}
+          before reaching for a chemical. What touches an animal that grazes a pesticide-free block has to
+          answer to the same rule as the block. And it is a whole household, not a headcount: cows,
+          chickens, and the estate dogs now, goats to come, each known by the people who keep them.
         </p>
         <p className="p2">
-          The engineering is physical. Hooves press seed into soil and trample old growth into surface
-          litter that shades the ground and slows evaporation. Dung and urine redistribute nutrients
-          the animal gathered elsewhere. Done in short, intense bouts followed by long recovery, this
-          builds soil. Done without recovery, it does the opposite.
-        </p>
-        <p className="p2">
-          That last sentence is the whole argument, and it should be said plainly. Continuous, heavy
-          grazing with no rest is one of the most reliable ways to destroy land: it drains root
-          reserves, bares the soil, and hands the topsoil to the wind. The science here is settled.
-          The cow is not a virtue. It is a lever, and a lever moves in two directions.
+          The closeness earns its keep. A caretaker washing a cow at dawn reads a limp, an off feed, a
+          dull coat before any spreadsheet would — and these are working animals in a wild place. One of
+          the herd was set on by a leopard inside the farm, fought it off, and walked back alive. They
+          live a real life on this ground, and the hands around them carry it.
         </p>
       </TwoCol>
+
+      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
+        <ParallaxBanner
+          image="/herd/images/aura-relationship1.jpg"
+          alt="The estate team with the herd at Mudigere"
+          caption="The hands that tend the herd"
+        />
+        <ParallaxBanner
+          image="/herd/images/aura-dung.jpg"
+          alt="Fresh dung collected at dawn — the estate's raw material"
+          caption="Collected fresh at dawn"
+        />
+      </div>
 
       <PullQuote>
-        The cow is not a virtue. It is a *lever* — and a lever moves in two directions.
+        Provenance begins with a COW standing in the same FIELD as the COFFEE.
       </PullQuote>
 
-      <TwoCol id="pat" heading="One pat, a working economy.">
+      <TwoCol id="passport" heading="Every animal, a passport.">
         <p className="p1">
-          Consider a single dung pat. Within it is roughly eighty-five per cent of the phosphorus and
-          potassium the animal ate that day, returned to the ground almost unused, along with billions
-          of gut microbes. It does not sit there long.
+          The yellow tag in a cow&apos;s ear is the visible end of a living passport. Behind it, Aura
+          keeps her health day by day, the milk she gives, the urine collected from her, and, across the
+          herd, the dung produced each morning. It is dense enough to run ahead of trouble — a{' '}
+          <Term tip="Reading the trend in an animal's daily measures — feed, yield, output, behaviour — to flag a health issue before it shows, and to plan the herd's rotation and rest.">predictive read</Term>{' '}
+          on each animal and on the whole herd&apos;s management. GPS tags, ordered and on their way, will
+          add where and how each cow grazes to the same file.
         </p>
         <p className="p2">
-          Within minutes, dung beetles arrive — in African savanna, thousands at a time; one classic
-          account records some sixteen thousand beetles clearing nearly three pounds of dung in under
-          two hours. They bury it, tunnelling it underground where its nutrients feed bacteria and
-          fungi instead of evaporating into the air. In the process they aerate the pat, which
-          suppresses the methane it would otherwise release, disperse seeds, and break the life cycle
-          of pasture flies and parasites.
-        </p>
-        <p className="p2">
-          Someone has put a price on this. Dung beetles are worth an estimated 380 million dollars a
-          year to the United States cattle industry, and 367 million pounds a year to Britain&apos;s —
-          for work no one pays them to do.
+          That record is what makes the estate traceable end to end. A batch of{' '}
+          <Term tip="A living microbial culture fermented from cow dung, urine, jaggery, gram flour, and native soil, applied as a soil drench. Aura brews around 154,000 litres a year.">Jeevamrit</Term>{' '}
+          is tagged to the animals that fed it; the application is tagged to the block; the block&apos;s
+          soil is retested ninety days on. When a lot of coffee is sold, it traces back through soil and
+          preparation to the animals that grazed that ground — animal to preparation to soil to cherry to
+          cup, every link documented.
         </p>
       </TwoCol>
 
-      <Placeholder
-        type="Macro · the pat"
-        caption="A fresh pat within the hour — beetles already tunnelling, burying nutrients before they gas off"
+      <SpecTable
+        title="The passport, per animal"
+        rows={[
+          { label: 'Ear tag', value: 'Yellow ID, one per animal' },
+          { label: 'Health', value: 'Logged day by day' },
+          { label: 'Milk', value: 'Per cow, daily' },
+          { label: 'Urine', value: 'Collected & measured' },
+          { label: 'Dung', value: 'Logged per herd, each morning' },
+          { label: 'GPS grazing', value: 'Tags ordered — where & how each grazes' },
+          { label: 'Traceability', value: 'Animal → preparation → soil → cherry → cup' },
+        ]}
       />
 
-      <Placeholder
-        type="Detail · beetle at work"
-        caption="A dung beetle rolling a brood ball — free nutrient-cycling, valued in the hundreds of millions"
-      />
+      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
+        <ParallaxBanner
+          image="/herd/images/aura-relationship3.jpg"
+          alt="A caretaker with an animal at Mudigere — the people who know the herd"
+          caption="The people who know them"
+        />
+      </div>
 
-      <TwoCol id="invisible" heading="The invisible middle.">
+      <TwoCol id="produce" heading="Nothing wasted, everything measured.">
         <p className="p1">
-          Below the beetle, the cascade continues into organisms too small to see. Bacteria and fungi
-          break the buried dung down; protozoa and nematodes graze the bacteria and excrete
-          plant-available nitrogen — a step ecologists call the microbial loop, responsible for a large
-          share of the nitrogen a pasture releases each year.
+          Every output of the herd is caught and put to work — dung, urine, horns, milk, ghee. From them
+          the estate makes its whole pharmacy of soil biology: Jeevamrit, CPP (Cow Pat Pit), biodynamic
+          compost, buttermilk sprays, and{' '}
+          <Term tip="Horn manure — cow dung packed into a cow horn, buried over the cool months, then stirred into water and applied to the soil. A foundational biodynamic preparation.">BD 500</Term>.
+          Nothing leaves as waste; it leaves as a measured input.
         </p>
         <p className="p2">
-          Fungi do something subtler. <Term tip="A symbiosis between fungal threads and plant roots. The fungus extends the root's reach through the soil and trades phosphorus and water for the plant's carbon. Around 80% of plant species form it.">Mycorrhizal</Term>{' '}
-          fungi thread their filaments through the soil and trade phosphorus and water to plants in
-          exchange for carbon. Along the way they secrete{' '}
-          <Term tip="A sticky protein secreted by mycorrhizal fungi that binds soil particles into water-holding crumbs.">glomalin</Term>,
-          a protein that glues soil into crumbs. Those crumbs hold water: a soil at four per cent
-          organic matter can hold more than twice the available water of one at one per cent.
-          Earthworms extend the plumbing further: an acre&apos;s worms lift seven to eighteen tons of
-          soil to the surface each year, and their burrows turn hard, sealed ground into ground that
-          drinks the rain.
+          And measured is the operative word. Every one of those preparations is tested in the
+          estate&apos;s own lab — microbial counts and a full set of parameters — before a drop of it
+          reaches the soil. What the animal produces, the lab reads; what the lab clears, the ground
+          receives. The full making, testing, and correcting of those preparations is its own story —{' '}
+          <a href="/circular">Circular Intelligence</a>.
         </p>
       </TwoCol>
+
+      <TwoCol id="breed" heading="Why Malnad Gidda.">
+        <p className="p1">
+          The Malnad Gidda is an indigenous Karnataka breed that has grazed these hills for centuries —
+          small-framed, hardy, heat-tolerant, and adapted to the altitude, the monsoon, and the specific
+          grasses of the Western Ghats. Its gut microbiome is shaped by this landscape, not a generic one.
+        </p>
+        <p className="p2">
+          That is why the breed matters: the dung carries the microbiome. Malnad Gidda dung has a
+          microbial composition suited to this soil, co-evolved with it over generations, and a commercial
+          dairy breed cannot replicate it. Aura keeps the line pure and estate-bred, documented in each
+          passport — the herd is a genetic resource as much as an engine, an indigenous breed grown rare
+          in modern Karnataka, kept alive here because the soil asks for it.
+        </p>
+      </TwoCol>
+
+      <SpecTable
+        title="The herd"
+        rows={[
+          { label: 'Head', value: '52 Malnad Gidda' },
+          { label: 'Breed', value: 'Indigenous Karnataka, altitude-adapted' },
+          { label: 'Frame', value: 'Small, hardy, heat-tolerant' },
+          { label: 'Microbiome', value: 'Co-evolved with this soil' },
+          { label: 'Line', value: 'Estate-bred, kept pure' },
+          { label: 'Grazing', value: 'The same 150 acres they feed' },
+        ]}
+      />
+
+      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
+        <ParallaxBanner
+          video="/herd/videos/aura-calf1.mp4"
+          poster="/herd/images/aura-calf1.jpg"
+          alt="A Malnad Gidda calf on the estate — the next generation"
+          caption="The next generation, estate-bred"
+        />
+        <ParallaxBanner
+          image="/herd/images/aura-calf2.jpg"
+          alt="A Malnad Gidda calf — the indigenous line kept pure"
+          caption="An indigenous line, kept pure"
+        />
+      </div>
 
       <ScrollHighlight>
-        {`A cow eats grass.
-         The grass becomes dung.
-         The dung becomes soil.
-         The soil becomes grass.
-         The loop closes in days.`}
+        {`Every animal, a passport.
+         Every litre and kilogram, measured.
+         Every batch, tested before the soil.
+         The herd feeds the land it grazes.
+         The loop has no beginning.`}
       </ScrollHighlight>
 
-      <TwoCol id="riders" heading="What rides with the herd.">
-        <p className="p1">
-          The herd is a moving habitat. Cattle egrets walk beside grazing animals to catch the insects
-          they flush; oxpeckers ride African ungulates and glean their ticks — though the oxpecker&apos;s
-          reputation as a pure helper is contested, since it also feeds on its host&apos;s wounds, and
-          honesty requires the caveat. Beneath the surface, the dung food web feeds the swallows,
-          starlings and bats that hunt the beetles and their larvae.
-        </p>
-        <p className="p2">
-          There is a larger effect. A herd grazing unevenly leaves a mosaic — patches cropped short
-          beside patches left tall — and different grassland birds need different patches. Uniformity
-          is the enemy of diversity; heterogeneity is its engine. One survey of a grazed-and-mown
-          meadow in Transylvania recorded about ninety-eight plant species in ten square metres, a
-          density that out-diversifies rainforest at that scale, sustained by nothing more exotic than
-          animals and a scythe.
-        </p>
-      </TwoCol>
-
-      <Placeholder
-        type="Portrait · egret and herd"
-        caption="A bird working the grass a step ahead of a grazing animal — the herd as moving habitat"
-      />
-
-      <Placeholder
-        type="Landscape · the mosaic"
-        caption="Short-grazed patches beside tall — the heterogeneity that grassland birds depend on"
-      />
-
-      <TwoCol id="pump" heading="The animal that moves mountains, slowly.">
-        <p className="p1">
-          At continental scale the effect becomes almost geological. Large animals carry fertility in
-          their guts and their bodies, moving it uphill and against the gradient that water alone would
-          run down. Model the loss of the Ice-Age megafauna, and the lateral transport of phosphorus
-          across a landscape like Amazonia falls by more than ninety-eight per cent once the giants are
-          gone. Africa is the exception, because Africa kept
-          its giants. The domestic cow is the heir to the mammoth: a nutrient pump that still walks.
-        </p>
-        <p className="p2">
-          Here the argument has to slow down and tell the truth about its limits. It is fashionable to
-          claim that grazing cattle can reverse climate change. They cannot. The widely watched proposal
-          that holistic grazing could return the atmosphere to pre-industrial carbon has been rejected
-          across rangeland and climate science; the carbon arithmetic behind it is off by roughly
-          sevenfold. Soil-carbon gains from good grazing
-          are real, but finite, reversible and slow, and at the global scale livestock remain a net
-          source of greenhouse gas, not a sink. The claim that a fungal network lets trees consciously
-          nurse their young — the &ldquo;wood-wide web&rdquo; — has likewise been shown to outrun its
-          evidence.
-        </p>
-        <p className="p2">
-          None of this unmakes the case. It sharpens it. The cow is not a climate solution, and it is
-          not a miracle. It is infrastructure — and infrastructure is judged by how it is run.
-        </p>
-      </TwoCol>
-
-      <PullQuote>
-        The domestic cow is the heir to the mammoth — a *nutrient pump* that still walks.
-      </PullQuote>
-
-      <TwoCol id="broken" heading="The link is easy to break.">
-        <p className="p1">
-          The cascade is not automatic. Most of a dose of ivermectin, the common cattle dewormer,
-          leaves the animal intact in its dung and stays lethal to insects for weeks; the pat meant to
-          feed the soil food web instead poisons it. In a feedlot the dung never reaches a pasture at
-          all. The engineering only happens when the pieces are allowed to meet.
-        </p>
-        <p className="p2">
-          So the honest statement is narrow and it holds. Well-managed grazing on living ground can
-          build soil, hold water, cycle nutrients and lift local biodiversity. Mismanaged, the same
-          animal does the reverse. The variable is not the cow. It is the choreography.
-        </p>
-      </TwoCol>
-
-      <TwoCol id="stewardship" heading="The intelligence is in the relationship.">
-        <p className="p1">
-          The knowledge of how to run it is old, and it was not written in journals. Plains peoples
-          burned grassland to draw bison onto fresh regrowth, manufacturing the shifting mosaic that
-          grassland birds still depend on — a practice ecologists now call pyric herbivory, having
-          arrived at it a century late. Maasai herders hold wet-season pasture in reserve for the dry;
-          some of their rangelands are more diverse, not less, for being grazed. Across Europe, the
-          richest meadows are the ones grazed and mown for centuries; abandon them and the richness
-          fades.
-        </p>
-        <p className="p2">
-          The pattern across every one of these systems is the same. The animal is not the
-          intelligence. The relationship is — the timing of the move, the length of the rest, the
-          reading of the land — and that relationship has always been tended by people. Remove the
-          herder&apos;s judgment and you are left with either a machine or a weed.
-        </p>
-      </TwoCol>
-
-      <DataGrid cols={4} standalone>
-        <DataCard value="85%">
-          Of the phosphorus and potassium a grazing animal eats, returned to the pasture in dung and
-          urine within a day.
+      <DataGrid cols={3} standalone>
+        <DataCard img="/herd/images/aura-gift2.jpg" value="52">
+          Malnad Gidda at Mudigere — an indigenous breed, and the estate&apos;s biological engine.
         </DataCard>
-        <DataCard value="16,000">
-          Dung beetles recorded clearing nearly three pounds of dung in under two hours on African
-          savanna.
+        <DataCard img="/herd/images/aura-gift3.jpg" value="Daily">
+          Health, milk, and urine logged per cow; dung logged per herd — a living record for every animal.
         </DataCard>
-        <DataCard value="$380M">
-          Estimated yearly value of dung-beetle services to the US cattle industry — £367M in the UK.
-        </DataCard>
-        <DataCard value="&gt;98%">
-          Modelled fall in phosphorus transport across Amazonia after the Ice-Age megafauna vanished.
-        </DataCard>
-        <DataCard value="98 / 10m²">
-          Plant species in one grazed-and-mown Transylvanian meadow — denser than rainforest at that
-          scale.
-        </DataCard>
-        <DataCard value="20M yrs">
-          Roughly how long grasses and grazers have been shaping one another.
-        </DataCard>
-        <DataCard value="×7">
-          Factor by which the popular &ldquo;cattle will reverse the climate&rdquo; carbon claim is
-          overstated.
-        </DataCard>
-        <DataCard value="52">
-          Malnad Gidda on the Mudigere estate — an indigenous breed, the land&apos;s oldest working
-          infrastructure.
+        <DataCard img="/herd/images/aura-grassland1.jpg" value="Lab-tested">
+          Every preparation the herd feeds — Jeevamrit, CPP, BD 500, compost — read in the estate&apos;s
+          own lab before the soil.
         </DataCard>
       </DataGrid>
 
-      <TwoCol id="aura" heading="Why Aura keeps a herd.">
+      <OneCol id="close" heading="The engine is a generational asset.">
         <p className="p1">
-          This is why Aura keeps cattle, and it is not for what leaves them. At Mudigere the herd moves
-          under the coffee canopy and along the forest edge — a system with a name,{' '}
-          <Term tip="The deliberate integration of trees, forage and grazing animals on the same ground. It stores several times the carbon of open pasture and raises the biodiversity of the land it shades.">silvopasture</Term>,
-          that banks several times the carbon of open pasture and raises the biodiversity of the ground
-          it shades. Their dung feeds the estate&apos;s fermentations and preparations; their grazing
-          shapes the understorey; the beetles and worms and fungi that follow them build the soil the
-          coffee roots into.
-        </p>
-        <p className="p2">
-          Fifty-two Malnad Gidda — an indigenous breed bred by this climate over centuries — are not a
-          production line. They are the estate&apos;s oldest working infrastructure. Aura&apos;s wager
-          is that the future is not built by replacing that intelligence with a machine, but by keeping
-          it: by treating the herd as a system to be tended rather than a yield to be maximised. The
-          cow was engineering landscapes for twenty million years before anyone thought to milk one. The
-          work now is mostly to move it at the right time, and otherwise to stay out of its way.
-        </p>
-      </TwoCol>
-
-      <OneCol heading="Not a yield. A relationship.">
-        <p className="p1">
-          There is an older way to name this — a philosophy of reciprocity, in which an economy is built
-          on the quality of its relationships rather than the illusion of self-sufficiency. It is offered
-          here as a lens, not as evidence. A grassland and its herd are each other&apos;s gift: the grass
-          feeds the animal, the animal makes the soil that feeds the grass.
-        </p>
-        <p className="p2">
-          Break the exchange and both diminish. Tend it, and a single cow becomes what it has always
-          quietly been — not livestock, but infrastructure; not a product of the land, but one of the
-          oldest processes by which the land keeps itself intelligent.
+          The herd is the instrument that powers the estate&apos;s most durable asset — living soil, built
+          on what the animals return. And it is held together by hands: the person who bathes a cow at dawn
+          is the one who reads her record, collects her dung, and stirs it into the brew that evening. When
+          the herd is well the preparations are strong, and when the preparations are strong the soil is
+          alive. Aura keeps an indigenous breed on its own ground, cares for it one animal at a time,
+          measures everything it produces, and builds the estate on the fertility it makes — one animal,
+          one season, at a time.
         </p>
       </OneCol>
 
-      <OneCol heading="A note on honesty.">
-        <p className="p2">
-          Where the science is contested — the scale of grazing&apos;s carbon benefit, the
-          &ldquo;wood-wide web,&rdquo; whether grazing raises total plant production — this essay says
-          so in the body, rather than quietly choosing the flattering number.
-        </p>
-      </OneCol>
-
-      <Continue currentHref="/herd" />
+      <Continue
+        items={[
+          { href: '/circular', label: 'Circular Intelligence', description: 'Where the herd’s dung and urine go next — remade by hand into measured fertility, tested before the soil.', img: '/circular/images/aura-shed.jpg' },
+          { href: '/ecology', label: 'The Living System', description: 'The whole farm the herd feeds — fungi, worms, roots, and one Ecological Health Index per block.', img: '/aura-mudigere-landscape.jpg' },
+          { href: '/mudigere', label: 'Mudigere', description: 'Sampigelkhan Estate — 150 acres in the Western Ghats, the ground the herd grazes and feeds.', img: '/aura-mudigere.jpg' },
+        ]}
+      />
     </>
   )
 }

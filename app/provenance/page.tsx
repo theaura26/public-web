@@ -18,58 +18,53 @@ export default function ProvenancePage() {
     <>
       <JournalHero
         currentHref="/provenance"
-        title="Cherry to cup. On chain."
+        title="Provenance"
         mediaType="image"
-        caption="Every event signed at the moment it happened — by the hand that did it"
+        caption="Aura grows coffee and pepper the way they ought to be grown, and writes the practice down as it happens — each event measured in the moment and signed by the hand that did it, so a lot can be read whole, from cherry to cup."
         alt="Aura provenance — cherry-to-cup verification from the Mudigere estate"
       />
 
-      <TwoCol id="why-blockchain" heading="Certification is paper.">
+      <TwoCol id="what-we-do" heading="We measure what we make.">
         <p className="p1">
-          Organic, biodynamic, and fair-trade certification together cost an estate tens of thousands
-          of dollars and years of waiting. At the end of it, the buyer receives a stamp — not the thing
-          the stamp is supposed to describe. The audit happened once, a year ago, and you are asked to
-          trust the memory of it.
+          At Mudigere, Aura grows coffee and pepper, and grows them the way they ought to be grown —
+          for the soil, the people, and the cup. That practice is the easy part to claim and the hard
+          part to prove. So we write the estate down: every preparation, every ferment, every drying
+          day, recorded the moment it happens, by the person who did it, and signed.
         </p>
         <p className="p2">
-          Aura is building a different instrument. The preparations that go into a lot, the ferments it
-          survives, the weather it dries through, the hands that turn it — each is written the moment it
-          happens, by the person who did it, and signed. The buyer does not need a badge. They can read
-          the lot.
+          We keep that record for two readers. The buyer, asked to trust a farm on the other side of
+          the world. And ourselves, because a practice you measure is a practice you can make better.
+          From cherry to cup, a lot carries its own account.
         </p>
       </TwoCol>
 
-      <PullQuote attribution="Arvind">
-        A ledger cannot forget, and it cannot flatter.
-      </PullQuote>
-
-      <TwoCol id="architecture" heading="Two tiers, one truth.">
+      <TwoCol id="senses" heading="The senses, kept honest.">
         <p className="p1">
-          The system has two floors. Downstairs, in the farm&apos;s own database, sits the granular
-          record — every sensor reading, every field action, every preparation — held in{' '}
-          <Term tip="Open, human-readable file formats. A CSV is a plain table; JSON is plain structured text. Both open in any text editor, with no proprietary software.">plain JSON and CSV</Term>,
-          readable in any text editor a decade from now. Upstairs, the milestones go on chain: a lot
-          completed, a biodynamic cycle closed, a season&apos;s carbon baseline set. Permanent. Public.
-          Verifiable.
+          Coffee is judged by the human body — the nose held over a ferment, the tongue on a cupping
+          spoon. Those senses are astonishingly fine and quietly biased at once. A ferment smells right
+          on a good morning. A picker trusts the block that once pleased them. A taster wants the lot to
+          be what they were hoping for.
         </p>
         <p className="p2">
-          The split is deliberate. If the database disappears tomorrow, the chain record remains. If the
-          chain itself becomes obsolete, the data still exports as plain text. Neither floor depends on
-          the other surviving — which is the only way a record meant to outlive its authors actually
-          can.
+          So we take the measurement while the sense is still forming — the sugar as it falls, the
+          acidity as it rises, the temperature logged through the night. The number does not overrule
+          the palate; it keeps it honest. This is the simplest form of doing right: read the thing as it
+          happens, and write down what you read. The science serves the human hand. It does not sit
+          above it.
         </p>
       </TwoCol>
 
       <TwoCol id="streams" heading="What the land writes down.">
         <p className="p1">
-          Nothing about the plant is decorative. Nine streams of data run off the estate, each on its
-          own clock — some every fifteen minutes, some once a quarter, some once a year. Together they
-          are the estate&apos;s heartbeat, printed.
+          Nothing on the plant is decorative. Nine streams of data run off the estate, each on its own
+          clock — some every fifteen minutes, some once a quarter, some once a year. Together they are
+          the estate&apos;s pulse, printed.
         </p>
         <DataGrid cols={3}>
           <DataCard value="Fermentation">
-            pH every fifteen minutes. Temperature three times a day. Brix at start, middle, and end. The
-            most closely watched hours on the estate.
+            pH every fifteen minutes. Temperature three times a day.{' '}
+            <Term tip="Dissolved sugar in a liquid, read on a refractometer. In a coffee ferment it falls as microbes turn sugar into acid — a direct read on how far the ferment has gone.">Brix</Term>{' '}
+            at start, middle, and end. The most closely watched hours on the estate.
           </DataCard>
           <DataCard value="Biodynamic">
             Every preparation — the crop layer, the blocks, the lunar day, the weather at the moment of
@@ -94,42 +89,29 @@ export default function ProvenancePage() {
         </DataGrid>
       </TwoCol>
 
+      <PullQuote attribution="Arvind">
+        A ledger cannot forget, and it cannot flatter.
+      </PullQuote>
+
       <TwoCol id="one-record" heading="One record, in full.">
         <p className="p1">
-          A single biodynamic spray, as the ledger holds it: <em>BD 501 applied to Block 07 at 06:14,
-          on a waning moon, humidity 78%, by Raju, from dung batch G-03.</em> Not &ldquo;sprayed this
-          week.&rdquo; Not &ldquo;applied as scheduled.&rdquo; That row — the minute, the moon, the
-          hand, the source — is the unit the whole system is built to protect.
+          A single biodynamic spray, as the record holds it: <em>BD 501 applied to Block 07 at 06:14,
+          on a waning moon, humidity 78%, by Raju, from dung batch G-03.</em> That row — the minute, the
+          moon, the hand, the source — is the unit the whole system is built to protect.
         </p>
         <p className="p2">
-          A spray logged at 06:14 carries more integrity than a weekly report written on Friday from
-          memory. Complexity in the machine; simplicity in the field. The worker signs one line and
-          moves on. The chain does the remembering.
+          Complexity sits in the machine; simplicity in the field. Soil probes, ferment-tank loggers,
+          and a weather station at 3,600 feet write their readings on their own; every human act — the
+          stir, the spray, the decant — is signed by name, from the field, by the person doing the work.
+          The machine measures; the person testifies. The record keeps the number next to the hand that
+          knew when to act, because data without judgment is only faster noise.
         </p>
       </TwoCol>
 
       <Placeholder
         type="Detail · field tablet"
-        caption="A worker signing a spray event from the field — the human layer the ledger never replaces"
+        caption="A worker signing a spray event from the field — the human layer the record never replaces"
       />
-
-      <Placeholder
-        type="Detail · sensor"
-        caption="A soil probe at 3,600 feet, writing pH and moisture straight to the record"
-      />
-
-      <TwoCol id="sensors" heading="Fed by the land, signed by the hand.">
-        <p className="p1">
-          Soil probes, ferment-tank loggers, drying-bed hygrometers, and a weather station at 3,600
-          feet write to the record on their own. But every human event — the stir, the spray, the
-          decant — is signed from the field, by name, by the person doing the work. The machine
-          measures. The person testifies.
-        </p>
-        <p className="p2">
-          Data without wisdom is only faster noise. So the ledger does not replace the hand that knows
-          when a ferment smells right. It records it, and holds it next to the number.
-        </p>
-      </TwoCol>
 
       <ScrollHighlight>
         {`Every event signed.
@@ -137,96 +119,48 @@ export default function ProvenancePage() {
          The lot reads itself.`}
       </ScrollHighlight>
 
-      <TwoCol id="disputes" heading="What happens when a sensor is wrong.">
-        <p className="p1">
-          Sensors fail. A hygrometer drifts, a probe loses calibration, a tablet drops signal mid-shift.
-          When a reading looks impossible, it is flagged — not silently corrected. The original event
-          stays on the record, timestamped as disputed, beside the field worker&apos;s manual override
-          and the reason for it.
-        </p>
-        <p className="p2">
-          A ledger that quietly edits its own history is not a ledger; it is a story with extra steps.
-          Ours keeps the error in view. Trust comes from what a record does with its mistakes, not from
-          pretending it never had any.
-        </p>
-      </TwoCol>
-
       <TwoCol id="reading" heading="What the buyer reads.">
         <p className="p1">
-          The QR on the bag opens a single page. It shows the block the cherry came from, the day it was
+          The QR on every bag opens a single page: the block the cherry came from, the day it was
           picked, the method it survived, the bed it dried on, the hands that turned it. Everything
           timestamped. Everything signed. Nothing summarised by a third party.
         </p>
         <p className="p2">
-          A buyer who wants to audit a claim can drill into the underlying events. A buyer who only wants
-          to brew the coffee can ignore the chain entirely. The chain&apos;s job is not to be read. It is
-          to be readable.
+          A buyer who wants to check a claim can drill into the underlying events. A buyer who only wants
+          to brew the coffee can ignore all of it. That is what transparency is here: the page stands
+          complete, whether or not anyone ever opens it.
         </p>
       </TwoCol>
 
       <Placeholder
         type="Detail · QR scan"
-        caption="Every 30 kg GrainPro bag — scannable, drillable to the field"
-      />
-
-      <Placeholder
-        type="Detail · buyer view"
-        caption="The page a scanned QR opens — block, date, method, hands, all timestamped"
+        caption="Every 30 kg GrainPro bag — scannable, and drillable down to the field"
       />
 
       <DataGrid cols={3} standalone>
         <DataCard value="15 min">The interval a fermenting lot&apos;s pH is read at, start to finish.</DataCard>
         <DataCard value="9 streams">Of estate data, each on its own clock — from every quarter-hour to once a year.</DataCard>
-        <DataCard value="3–5×">Estimated carbon held per acre by the four-story polyculture versus monoculture coffee.</DataCard>
+        <DataCard value="3–5×">Estimated carbon held per acre by the four-storey polyculture over monoculture coffee.</DataCard>
       </DataGrid>
 
-      <TwoCol id="certifications" heading="Fewer badges. More truth.">
+      <OneCol id="close" heading="The record outlasts the sale.">
         <p className="p1">
-          We hold the certifications that serve the buyer, and replace the ones that do not with the
-          record itself. The estate is registered with the <strong>Coffee Board of India</strong>, and
-          every lot is cupped against the specialty threshold — 80-plus on the SCA scale — with on-site
-          Q-grading planned by the estate&apos;s third year.
+          Every signed event is held in{' '}
+          <Term tip="Open, human-readable file formats. A CSV is a plain table; JSON is plain structured text. Both open in any text editor, with no proprietary software.">plain JSON and CSV</Term>{' '}
+          that opens in any text editor a decade from now, and its milestones are{' '}
+          <Term tip="A shared, append-only public record. Entries can be added but never edited or deleted, so its history cannot be quietly rewritten.">written to chain</Term> —
+          permanent, public, verifiable. If the database fails, the chain remains; if the chain ages
+          out, the data still reads as plain text. The record is built to outlive the people who wrote
+          it.
         </p>
         <p className="p2">
-          Organic, biodynamic, and fair-trade we do <em>not</em> carry as badges. We carry the practice
-          — and write each event to chain. A buyer sees the spray, the stir, the moon, and the hand, not
-          a sticker placed over them. It is not certification theatre. It is the practice, recorded with
-          integrity, made permanent.
-        </p>
-      </TwoCol>
-
-      <TwoCol id="boojee" heading="Loved in Mumbai.">
-        <p className="p1">
-          Lot 003 — <em>Red Honey</em>, pulped with the mucilage left on to oxidise — went onto the bar
-          at <strong>Boojee, Mumbai</strong>, which renamed it <em>Liquid Gold</em>. It was the first lot
-          from Aura to be given a name by someone other than the people who grew it.
+          That is the horizon Aura works on. A buyer — or their buyer — can still read this lot in ten
+          years. And the transparency runs both ways: the account that shows them what we did shows us,
+          in the same plain detail, where the next lot can be better. A practice you can read is a
+          practice you can improve.
         </p>
         <p className="p2">
-          That is the whole loop, closed: a decision made during fermentation at 3,600 feet, traceable on
-          the record, tasted in a glass hundreds of miles away, and named for what it turned out to be.
-          Trade enquiries — coffee, pepper, forward allocation — are handled directly.
-        </p>
-      </TwoCol>
-
-      <PullQuote attribution="Arvind">
-        The unit of record is the land, not the product.
-      </PullQuote>
-
-      <TwoCol id="permanence" heading="The ledger outlasts the sale.">
-        <p className="p1">
-          A certificate expires. A cupping score is one season&apos;s opinion. The record does neither —
-          every signed event from this estate stays queryable for as long as the chain does, whether or
-          not that lot is ever sold again.
-        </p>
-        <p className="p2">
-          That is the actual trade. Not a claim about this year&apos;s cup, but a permanent record a
-          buyer — or their buyer — can still read in ten years.
-        </p>
-      </TwoCol>
-
-      <OneCol heading="Buy, ask, or audit.">
-        <p className="p1">
-          Two channels, two crops.
+          Trade enquiries are handled directly — coffee and pepper both.
         </p>
         <DataGrid cols={2}>
           <DataCard value="coffee@theaura.life">

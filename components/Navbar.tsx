@@ -31,24 +31,34 @@ type Article = {
 }
 
 const ARTICLES: Article[] = [
-  // Active journals — order tracks lib/journals.ts so the slide-out
-  // menu, hero, and "Continue" footer all read from one source.
+  // The complete journal feed, in three runs. Every live tile rides its
+  // journal's own banner image; coming-soon tiles render as plain white
+  // "COMING SOON" placeholders. Mirror any change in lib/journals.ts.
+  //
+  // ── New editorials + places (reworked here) ──
+  { href: '/mudigere',       title: 'Guests of the mountain.',            size: 'lg', img: '/aura-mudigere.jpg', video: '/aura-mudigere.mp4' },
+  { href: '/herd',           title: 'Ecosystem Engineers',                size: 'sm', img: '/herd/images/aura-relationship2.jpg' },
+  { href: '/circular',       title: 'Circular Intelligence',              size: 'sm', img: '/circular/images/aura-shed.jpg' },
+  { href: '/shade',          title: 'The Light Instrument',               size: 'lg', img: '/aura-land.jpg' },
+  { href: '/ecology',        title: 'The Living System',                  size: 'sm', img: '/aura-mudigere-landscape.jpg' },
+  { href: '/ohara',          title: 'Asa. Niwa.',                         size: 'lg', img: '/aura-ohara.jpg', video: '/aura-ohara.mp4' },
+  { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg', video: '/aura-artistry.mp4' },
+  // ── Live journals (published on theaura.life) ──
   { href: '/wisdom',         title: 'Moral Spine',                        size: 'lg', img: '/journals/wisdom/aura-moral-spine.jpg' },
   { href: '/living-systems', title: 'Living Systems',                     size: 'sm', img: '/journals/living-systems/aura-living-systems.jpg' },
-  { href: '/coffee',         title: 'Our Coffee Story',                   size: 'lg', img: '/journals/coffee/aura-our-coffee-story.jpg' },
-  { href: '/rta',            title: 'Rta',                                size: 'sm', img: '/journals/rta/aura-rta.jpg' },
-  { href: '/fermentation',   title: 'Fermentation',                       size: 'lg', img: '/journals/fermentation/aura-fermentation.jpg' },
-  { href: '/land',           title: 'The Land',                           size: 'sm', img: '/journals/land/aura-the-land.jpg' },
-  { href: '/biodynamic',     title: 'Biodynamic',                         size: 'lg', img: '/journals/biodynamic/aura-biodynamic.jpg', video: '/journals/biodynamic/aura-biodynamic.mp4' },
-  { href: '/residency',      title: 'Monastic polymaths. Crazy misfits.', size: 'lg', img: '/journals/residency/aura-monastic-polymath.jpg' },
-  { href: '/idea',           title: 'The 1000 Year Idea',                 size: 'sm', img: '/aura-idea.jpg' },
-  { href: '/mudigere',       title: 'Guests of the mountain.',            size: 'lg', img: '/aura-mudigere.jpg', video: '/aura-mudigere.mp4' },
-  { href: '/ohara',          title: 'Asa. Niwa.',                         size: 'sm', img: '/aura-ohara.jpg', video: '/aura-ohara.mp4' },
-  { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg', video: '/aura-artistry.mp4' },
-  { href: '/provenance',     title: 'Cherry to cup. On chain.',           size: 'sm', img: '/aura-provenance.jpg' },
-  { href: '/pepper',         title: 'Malabar black gold.',                size: 'lg', img: '/aura-pepper.jpg' },
-  { href: '/areca',          title: 'The sentinel palm.',                 size: 'sm', img: '/aura-areca.jpg' },
-  { href: '/vedic',          title: 'Older than its study.',              size: 'lg', img: '/aura-vedic.jpg' },
+  { href: '/coffee',         title: 'Our Coffee Story',                   size: 'sm', img: '/journals/coffee/aura-our-coffee-story.jpg' },
+  { href: '/rta',            title: 'Rta',                                size: 'lg', img: '/journals/rta/aura-rta.jpg' },
+  { href: '/fermentation',   title: 'Fermentation',                       size: 'sm', img: '/journals/fermentation/aura-fermentation.jpg' },
+  { href: '/land',           title: 'The Land',                           size: 'lg', img: '/journals/land/aura-the-land.jpg' },
+  { href: '/biodynamic',     title: 'Biodynamic',                         size: 'sm', img: '/journals/biodynamic/aura-biodynamic.jpg' },
+  { href: '/residency',      title: 'Monastic Polymaths',                 size: 'sm', img: '/journals/residency/aura-monastic-polymath.jpg' },
+  // ── Coming soon — not yet published. The journal's own image runs
+  //    dimmed + desaturated behind a "COMING SOON" label (mirrors the
+  //    live site, not a blank card). ──
+  { href: '/idea',           title: 'The 1000 Year Idea',                 size: 'lg', comingSoon: true, img: '/aura-idea.jpg' },
+  { href: '/vedic',          title: 'Vedic Farming',                      size: 'sm', comingSoon: true, img: '/aura-vedic.jpg' },
+  { href: '/areca',          title: 'The Sentinel Palm',                  size: 'sm', comingSoon: true, img: '/aura-mudigere-landscape.jpg' },
+  { href: '/pepper',         title: 'Malabar Pepper',                     size: 'lg', comingSoon: true, img: '/journals/fermentation/aura-pepper.jpg' },
 ]
 
 const PRIMARY_LINKS = [
@@ -98,6 +108,10 @@ export default function Navbar() {
   //  · Homepage: fades in once scroll passes the first fold (70vh)
   //  · Every other page: always visible
   const isHome = pathname === '/'
+  // /mudigere used to render a stripped "briefing" header — no home links,
+  // and a "Contact us" button in place of the menu. It now uses the standard
+  // header. Set this to `pathname === '/mudigere'` to restore the briefing nav.
+  const isMudigereBriefing = false
   useEffect(() => {
     if (!isHome) {
       setShowLogo(true)
@@ -355,7 +369,7 @@ export default function Navbar() {
             /mudigere the architect's briefing is meant to be
             a closed loop — no clickable home affordance, so the
             symbol renders as a plain span instead of a Link. */}
-        {pathname === '/mudigere' ? (
+        {isMudigereBriefing ? (
           <span style={{ color: 'var(--text)', justifySelf: 'center', display: 'inline-flex', alignItems: 'center' }} aria-label="Aura">
             {isAgent ? (
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14 }}>~/aura</span>
@@ -396,7 +410,7 @@ export default function Navbar() {
         {/* On /mudigere the wordmark also drops its link —
             the architect should have no nav-driven escape from the
             briefing; the Contact us button is the only exit. */}
-        {pathname === '/mudigere' ? (
+        {isMudigereBriefing ? (
           <span
             aria-label="Aura"
             className="nav-wordmark"
@@ -446,7 +460,7 @@ export default function Navbar() {
             us" mailto chip so architects landing there have a single,
             obvious next step (and the hidden journal menu stays
             hidden for that audience). */}
-        {pathname === '/mudigere' ? (
+        {isMudigereBriefing ? (
           /* Plain text button — reuses the existing `.label`
              typography token (DM Mono · 11 px · 1 px tracking ·
              uppercase) so the nav CTA reads as part of the kit, not
@@ -901,6 +915,9 @@ export default function Navbar() {
             cursor: default;
             pointer-events: auto;
           }
+          /* Coming-soon tile — the journal's own image, dimmed and
+             desaturated behind a "COMING SOON" label (mirrors the live
+             site rather than a blank card). */
           :global(.tile[data-coming-soon="true"] .tile-img) {
             opacity: 0.55;
           }

@@ -5,6 +5,7 @@ import {
   DataGrid,
   DataCard,
   ScrollHighlight,
+  Continue,
   Term,
 } from '@/components/article/Article'
 import Reveal from '@/components/RevealOnScroll'
@@ -364,17 +365,17 @@ export default function MudigerePage() {
           <source src="/aura-mudigere.mp4" type="video/mp4" />
         </video>
         <div aria-hidden className="hero-banner-tint" style={{ position: 'absolute', inset: 0, background: 'rgba(0, 0, 0, 0.14)', pointerEvents: 'none', zIndex: 3 }} />
-        {/* Wordmark — replaces the type, parallaxes over the video, and
-            blends with mix-blend-difference so it inverts cleanly on any
-            frame. */}
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', mixBlendMode: 'difference', pointerEvents: 'none', zIndex: 5 }}>
+        {/* Wordmark — replaces the type, parallaxes over the video.
+            Rendered solid white (filter forces white regardless of the
+            SVG's own fill); no mix-blend. */}
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', zIndex: 5 }}>
           <h1 aria-label="Mudigere" style={{ margin: 0 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               ref={heroMarkRef}
               src="/mudigere/aura-mudigere-wordmark.svg"
               alt="Mudigere"
-              style={{ display: 'block', width: 'min(56vw, 680px)', height: 'auto', willChange: 'transform' }}
+              style={{ display: 'block', width: 'min(46vw, 560px)', height: 'auto', willChange: 'transform', filter: 'brightness(0) invert(1)' }}
             />
           </h1>
         </div>
@@ -415,10 +416,10 @@ export default function MudigerePage() {
 
       {/* ═══ 2 · ESTATE ═══ — the banner wall opens the section. An estate
           wordmark is pinned (sticky) and centred over the whole 3-banner
-          stack, blended with mix-blend-difference, while the banners
-          parallax behind it, pinned at the viewport middle. */}
+          stack, rendered solid white, while the banners parallax behind it,
+          pinned at the viewport middle. */}
       <div className="mud-pin-wrap" style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <div style={{ position: 'sticky', top: '50vh', height: 0, zIndex: 4, display: 'flex', justifyContent: 'center', alignItems: 'flex-start', pointerEvents: 'none', mixBlendMode: 'difference' }}>
+        <div style={{ position: 'sticky', top: '50vh', height: 0, zIndex: 4, display: 'flex', justifyContent: 'center', alignItems: 'flex-start', pointerEvents: 'none' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/mudigere/aura-estate-wordmark.png"
@@ -735,12 +736,6 @@ export default function MudigerePage() {
       {/* People banner stack — the family and the residency. */}
       <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
         <ParallaxBanner
-          video="/mudigere/aura-family.mp4"
-          poster="/journals/coffee/aura-coffee-grading.jpg"
-          alt="The families who have kept the estate for generations"
-          caption="The hands that read the land"
-        />
-        <ParallaxBanner
           video="/mudigere/aura-people.mp4"
           poster="/mudigere/aura-people.jpg"
           alt="The residency — those who come to learn"
@@ -766,6 +761,14 @@ export default function MudigerePage() {
          The estate reveals more in a single morning than this page can in a year.
          Coffee at dawn, the canopy at noon, the valley quiet by dusk.`}
       </ScrollHighlight>
+
+      <Continue
+        items={[
+          { href: '/herd', label: 'Ecosystem Engineers', description: 'The estate’s biological engine — fifty-two Malnad Gidda, cared for by hand, each passported.', img: '/herd/images/aura-grassland1.jpg' },
+          { href: '/circular', label: 'Circular Intelligence', description: 'What the herd makes — CPP and Jeevamrit, by hand, tested before the soil.', img: '/circular/images/aura-shed.jpg' },
+          { href: '/shade', label: 'The Light Instrument', description: 'The canopy above the estate — shade whiskering, measured in lux and cut to prescription.', img: '/aura-land.jpg' },
+        ]}
+      />
     </>
   )
 }

@@ -1602,7 +1602,7 @@ section.one-col + section.one-col {
 }
 
 /* Font roles — only these three are live text; all display type is SVG. */
-.r-hand  { font-family: var(--font-hand), 'Comic Sans MS', cursive; font-weight: 400; }
+.r-hand  { font-family: var(--font-hand), cursive; font-weight: 400; }
 .r-serif { font-family: var(--font-serif), Georgia, serif; font-weight: 400; } /* Instrument Serif — one serif across the page */
 .r-serifLight { font-family: var(--font-serif), Georgia, serif; font-weight: 400; } /* Instrument Serif — light, non-bold */
 .r-bric  { font-family: var(--font-grotesque), system-ui, sans-serif; font-weight: 700; text-transform: uppercase; }

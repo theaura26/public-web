@@ -210,40 +210,6 @@ export function HeroBanner({
     }
   }, [])
 
-  // HeroBanner back link sits over a FULL-BLEED photo from the
-  // viewport top, so it needs solid white ink + a soft text-shadow
-  // for legibility against pale highlights. Distinct from the
-  // JournalHero variant (`.journal-hero__back`) which sits over a
-  // white title plate and inherits the theme text colour.
-  const onBack = useBackOrFallback('/')
-  const backLink = (
-    <Link
-      href="/"
-      aria-label="Back"
-      onClick={onBack}
-      className="hero-banner__back"
-      style={{
-        position: 'absolute',
-        top: 'calc(var(--nav-h, 56px) + var(--space-5))',
-        left: 'var(--gutter)',
-        zIndex: 5,
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 8,
-        color: '#ffffff',
-        fontFamily: 'var(--font-mono)',
-        fontSize: 11,
-        fontWeight: 400,
-        letterSpacing: '1.5px',
-        textTransform: 'uppercase',
-        textDecoration: 'none',
-        textShadow: '0 1px 8px rgba(0, 0, 0, 0.45)',
-      }}
-    >
-      <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
-      <span>Back</span>
-    </Link>
-  )
   return (
     <div
       ref={wrapRef}
@@ -258,7 +224,7 @@ export function HeroBanner({
         height: '200vh',
       }}
     >
-      {backLink}
+      {/* Back link removed site-wide — header logo/menu is the only nav. */}
       <section
         className="hero-banner-stage"
         style={{
@@ -381,10 +347,12 @@ export function HeroBanner({
           className="label hero-banner-caption"
           style={{
             position: 'absolute',
-            left: 'clamp(20px, 4vw, 48px)',
+            left: '50%',
+            transform: 'translateX(-50%)',
             bottom: 'clamp(20px, 4vh, 48px)',
             margin: 0,
-            maxWidth: 'min(240px, 60vw)',
+            maxWidth: 'min(680px, 88vw)',
+            textAlign: 'center',
             color: '#ffffff',
             letterSpacing: '1px',
             lineHeight: 1.5,
@@ -419,34 +387,25 @@ export function HeroBanner({
       >
         <h1 className="hero-banner-title">
           {words.map((word, i) => (
-            <span key={i}>{word}</span>
+            <span key={i}>{word}{i < words.length - 1 ? ' ' : ''}</span>
           ))}
         </h1>
         <style jsx>{`
-          /* Mobile/tablet: one word per line, centred stack. */
+          /* One consistent size, centred, wrapping to about two lines —
+             the same treatment on every banner rather than spreading the
+             words edge-to-edge across the rail. */
           .hero-banner-title {
             margin: 0;
             font-family: var(--font-grotesque);
             font-weight: 600;
-            font-size: clamp(48px, 10vw, 128px);
-            line-height: 0.95;
-            letter-spacing: -0.04em;
+            font-size: clamp(48px, 7.2vw, 106px);
+            line-height: 1;
+            letter-spacing: -0.03em;
             text-transform: uppercase;
             color: inherit;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            max-width: min(90vw, 7.5em);
             text-align: center;
-            white-space: nowrap;
-          }
-          /* Desktop: single row. Multi-word titles spread edge-to-edge
-             across the section rail; single-word titles stay centred. */
-          @media (min-width: 1024px) {
-            .hero-banner-title {
-              flex-direction: row;
-              justify-content: ${words.length > 1 ? 'space-between' : 'center'};
-            }
+            text-wrap: balance;
           }
         `}</style>
       </div>
@@ -531,43 +490,11 @@ export function JournalHero({
 
   return (
     <header ref={headerRef} className="journal-hero">
-      {/* JournalHero back link sits on the WHITE title plate above the
-          image (not over the photo itself), so it inherits the theme
-          text colour and carries no shadow. Distinct class from the
-          HeroBanner variant (which sits over imagery and needs white +
-          text-shadow). Spacing matches the nav baseline: 24 px below
-          the 56 px nav, gutter-aligned with the page edge — same as
-          the HeroBanner and ArticleHero variants. */}
-      <Link
-        href={backHref}
-        aria-label="Back"
-        onClick={onBack}
-        className="journal-hero__back"
-        style={{
-          position: 'absolute',
-          top: 'calc(var(--nav-h, 56px) + var(--space-5))',
-          left: 'var(--gutter)',
-          zIndex: 5,
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 8,
-          color: 'var(--text)',
-          fontFamily: 'var(--font-mono)',
-          fontSize: 11,
-          fontWeight: 400,
-          letterSpacing: '1.5px',
-          textTransform: 'uppercase',
-          textDecoration: 'none',
-        }}
-      >
-        <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
-        <span>Back</span>
-      </Link>
-
+      {/* Back link removed site-wide — header logo/menu is the only nav. */}
       <div className="journal-hero__top">
         <h1 className="journal-hero__title">
           {words.map((w, i) => (
-            <span key={i}>{w}</span>
+            <span key={i}>{w}{i < words.length - 1 ? ' ' : ''}</span>
           ))}
         </h1>
       </div>
@@ -624,29 +551,21 @@ export function JournalHero({
           padding-left: var(--gutter);
           padding-right: var(--gutter);
         }
+        /* One consistent size, matching the HeroBanner journals — left
+           aligned (JournalHero's own identity), wrapping to about two
+           lines rather than spreading edge-to-edge across the rail. */
         .journal-hero__title {
           margin: 0;
           font-family: var(--font-grotesque);
           font-weight: 600;
-          font-size: clamp(48px, 9vw, 140px);
-          line-height: 0.95;
-          letter-spacing: -0.04em;
+          font-size: clamp(48px, 7.2vw, 106px);
+          line-height: 1;
+          letter-spacing: -0.03em;
           text-transform: uppercase;
           color: var(--text);
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
+          max-width: min(90vw, 7.5em);
           text-align: left;
-          white-space: nowrap;
-        }
-        /* Mobile / tablet bump: title reads 20% larger on every clamp
-           branch (48 → 58, 9vw → 10.8vw, 140 → 168). Desktop (≥1024px)
-           rule below overrides the layout and inherits the base clamp. */
-        @media (max-width: 1023px) {
-          .journal-hero__title {
-            font-size: clamp(58px, 10.8vw, 168px);
-          }
+          text-wrap: balance;
         }
         /* Desktop: title section fills the full viewport so the title
            centres at exactly 50vh — same vertical landing zone as
@@ -664,12 +583,6 @@ export function JournalHero({
             padding-bottom: 0;
             display: flex;
             align-items: center;
-          }
-          .journal-hero__title {
-            flex-direction: row;
-            justify-content: ${words.length > 1 ? 'space-between' : 'flex-start'};
-            align-items: center;
-            text-align: left;
           }
         }
         .journal-hero__media {
@@ -730,36 +643,7 @@ export function ArticleHero({
   const onBack = useBackOrFallback(backHref)
   return (
     <section style={{ paddingTop: 'clamp(160px, 22vh, 260px)', paddingBottom: 'var(--space-9)', position: 'relative' }}>
-      {/* ArticleHero back link sits in a text-only hero (no image,
-          no plate) so it inherits the theme text colour and carries
-          no shadow. In human mode it's absolute at top-left under the
-          nav; the agent-mode rule below flips it to static so it
-          flows above the title in the markdown view. */}
-      <Link
-        href={backHref}
-        aria-label="Back"
-        onClick={onBack}
-        className="article-hero__back"
-        style={{
-          position: 'absolute',
-          top: 'calc(var(--nav-h, 56px) + var(--space-5))',
-          left: 'var(--gutter)',
-          zIndex: 5,
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 8,
-          color: 'var(--text)',
-          fontFamily: 'var(--font-mono)',
-          fontSize: 11,
-          fontWeight: 400,
-          letterSpacing: '1.5px',
-          textTransform: 'uppercase',
-          textDecoration: 'none',
-        }}
-      >
-        <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>←</span>
-        <span>Back</span>
-      </Link>
+      {/* Back link removed site-wide — header logo/menu is the only nav. */}
       <div className="section-w">
         {hasRight ? (
           <div className="grid grid-cols-1 md:grid-cols-2 grid-2col" style={{ gap: 'var(--grid-gap)', alignItems: 'start' }}>
@@ -1195,10 +1079,207 @@ export function DataCard({
     )
   }
   return (
-    <div style={{ borderTop: '1px solid var(--border)', paddingTop: 16 }}>
+    <div style={{ borderTop: '1.5px solid var(--border-strong)', paddingTop: 16 }}>
       {value && <p className="p1" style={{ margin: 0, marginBottom: 12 }}>{value}</p>}
       {children && <div className="p2" style={{ color: 'var(--text-body)' }}>{children}</div>}
     </div>
+  )
+}
+
+/* ── SpecTable — a bordered "spec sheet": a mono header rule over a
+      column of label → value rows separated by hairlines. For hard,
+      granular data (canopy profiles, illuminance surveys, monitoring
+      indicators, health scales) that should read as a record, not
+      prose. Values sit right, labels left, mono throughout. */
+export function SpecTable({
+  title,
+  rows,
+  note,
+  standalone = true,
+  tightTop = false,
+}: {
+  title?: string
+  rows: { label: ReactNode; value: ReactNode }[]
+  /** Optional mono caption beneath the last row. */
+  note?: string
+  standalone?: boolean
+  tightTop?: boolean
+}) {
+  const card = (
+    <div className="spec">
+      {title && <p className="label spec__title">{title}</p>}
+      <dl className="spec__rows">
+        {rows.map((r, i) => (
+          <div className="spec__row" key={i}>
+            <dt className="spec__label">{r.label}</dt>
+            <dd className="spec__value">{r.value}</dd>
+          </div>
+        ))}
+      </dl>
+      {note && <p className="spec__note">{note}</p>}
+      <style jsx>{`
+        .spec {
+          /* Heavy outline — the record reads as a framed, weighed document. */
+          border: 1.5px solid var(--border-strong);
+          border-radius: var(--radius-1);
+          /* Top padding trimmed ~20% so the title sits tighter to the frame. */
+          padding: clamp(19px, 2.7vw, 42px) clamp(24px, 3.4vw, 52px) clamp(24px, 3.4vw, 52px);
+          background: var(--bg-card);
+        }
+        .spec__title {
+          margin: 0 0 4px;
+          padding-bottom: 22px;
+          /* Brand accent — the record's header carries the orange. */
+          color: var(--brand-accent);
+          /* Heavy rule — anchors the header above the faint dotted rows. */
+          border-bottom: 1.5px solid var(--border-strong);
+        }
+        .spec__rows {
+          margin: 0;
+          padding: 0;
+        }
+        .spec__row {
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          gap: clamp(16px, 4vw, 48px);
+          padding: 20px 0;
+          margin: 0;
+          /* Faint dotted rules — subtle dividers under the heavy header. */
+          border-bottom: 1px dotted var(--border-strong);
+        }
+        .spec__row:last-child {
+          border-bottom: 0;
+          padding-bottom: 4px;
+        }
+        .spec__label {
+          font-family: var(--font-mono);
+          font-size: clamp(13px, 1.15vw, 15px);
+          line-height: 1.45;
+          color: var(--text-body);
+          margin: 0;
+        }
+        .spec__value {
+          font-family: var(--font-mono);
+          font-size: clamp(13px, 1.15vw, 15px);
+          line-height: 1.45;
+          color: var(--text);
+          text-align: right;
+          margin: 0;
+          white-space: nowrap;
+        }
+        .spec__note {
+          font-family: var(--font-mono);
+          font-size: 11px;
+          letter-spacing: 0.5px;
+          color: var(--text-muted);
+          margin: 22px 0 0;
+        }
+        @media (max-width: 560px) {
+          .spec__value {
+            white-space: normal;
+          }
+        }
+      `}</style>
+    </div>
+  )
+  if (!standalone) return card
+  return (
+    <section style={{ padding: tightTop ? '0 0 var(--section-gap)' : 'var(--section-gap) 0' }}>
+      <div className="section-w">
+        <Reveal>{card}</Reveal>
+      </div>
+    </section>
+  )
+}
+
+/* ── Portrait — a CONTAINED tall image (or video), for visuals that are
+      intentionally portrait and should stay that way rather than being
+      cropped into a full-bleed landscape strip. Sits inside the content
+      column at a comfortable width, holds the image's own tall ratio, and
+      carries a bottom-left mono caption. Default ratio 5 / 7. */
+export function Portrait({
+  src,
+  video,
+  poster,
+  alt = '',
+  caption,
+  ratio = '5 / 7',
+  align = 'center',
+}: {
+  src?: string
+  video?: string
+  poster?: string
+  alt?: string
+  caption?: string
+  /** CSS aspect-ratio string matching the image so nothing is cropped. */
+  ratio?: string
+  align?: 'left' | 'center' | 'right'
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    const io = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause() },
+      { threshold: 0, rootMargin: '100% 0px 100% 0px' }
+    )
+    io.observe(v)
+    return () => io.disconnect()
+  }, [video])
+  const justify = align === 'left' ? 'flex-start' : align === 'right' ? 'flex-end' : 'center'
+  return (
+    <section style={{ padding: 'var(--section-gap) 0' }}>
+      <div className="section-w" style={{ display: 'flex', justifyContent: justify }}>
+        <Reveal>
+          <figure className="portrait" style={{ ['--pt-ratio' as string]: ratio }}>
+            <div className="portrait__media">
+              {video ? (
+                <video ref={videoRef} src={video} poster={poster} muted loop playsInline preload="none" aria-label={alt} />
+              ) : src ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={src} alt={alt} loading="lazy" decoding="async" />
+              ) : null}
+              {caption && <figcaption className="label portrait__caption">{caption}</figcaption>}
+            </div>
+            <style jsx>{`
+              .portrait {
+                margin: 0;
+                width: clamp(300px, 46vw, 560px);
+                max-width: 100%;
+              }
+              .portrait__media {
+                position: relative;
+                width: 100%;
+                aspect-ratio: var(--pt-ratio, 5 / 7);
+                overflow: hidden;
+                border-radius: var(--radius-1);
+                background: var(--bg-card);
+              }
+              .portrait__media :global(img),
+              .portrait__media :global(video) {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+              }
+              .portrait__caption {
+                position: absolute;
+                left: clamp(14px, 2vw, 22px);
+                bottom: clamp(14px, 2vw, 22px);
+                right: clamp(14px, 2vw, 22px);
+                margin: 0;
+                color: #fff;
+                text-align: left;
+                text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+              }
+            `}</style>
+          </figure>
+        </Reveal>
+      </div>
+    </section>
   )
 }
 
@@ -1231,8 +1312,8 @@ export function PullQuote({ children, attribution }: { children: ReactNode; attr
             <blockquote style={{ margin: '0 auto', maxWidth: 880, textAlign: 'center' }}>
               <p
                 style={{
-                  fontFamily: 'var(--font-pullquote)',
-                  fontSize: 'clamp(32px, 4.2vw, 56px)',
+                  fontFamily: 'var(--font-hand)',
+                  fontSize: 'clamp(30px, 4vw, 52px)',
                   lineHeight: 1.25,
                   letterSpacing: '0',
                   color: 'var(--text)',
@@ -1340,7 +1421,7 @@ export function ScrollHighlight({
                   const cursivePart = marked ? marked[1] : null
                   const restPart = marked ? marked[2] : null
                   const cursiveStyle = {
-                    fontFamily: 'var(--font-pullquote)',
+                    fontFamily: 'var(--font-grotesque)',
                     fontStyle: 'normal' as const,
                     fontWeight: 400,
                   }
@@ -1401,7 +1482,7 @@ export function Continue({
     <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
       <div className="section-w">
         <Reveal>
-          <div className="label" style={{ marginBottom: 40 }}>Continue reading</div>
+          <div className="label" style={{ marginBottom: 40, color: 'var(--brand-accent)' }}>Continue reading</div>
           <div
             className="continue-grid"
             style={{

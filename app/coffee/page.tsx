@@ -41,10 +41,10 @@ export default function CoffeePage() {
           of place and method.
         </p>
         <p className="p2">
-          Aura is not a coffee company. Coffee is the primary crop, but the
-          estate is the system. The cup that reaches you carries the character
-          of canopy shade, laterite soil, monsoon rhythm, and the specific
-          decisions made during fermentation — down to the hour.
+          Coffee is the primary crop, but the estate is the system. The cup
+          that reaches you carries the character of canopy shade, laterite soil,
+          monsoon rhythm, and the specific decisions made during fermentation —
+          down to the hour.
         </p>
       </OneCol>
 
@@ -65,8 +65,8 @@ export default function CoffeePage() {
       </OneCol>
 
       <PullQuote>
-        We are not building a BRAND. We are building a COFFEE that will
-        still be RECOGNISABLE in a HUNDRED YEARS.
+        We are building a COFFEE that will still be RECOGNISABLE in a
+        HUNDRED YEARS.
       </PullQuote>
 
       <TwoCol id="rules" heading="The discipline.">
@@ -91,7 +91,7 @@ export default function CoffeePage() {
       </TwoCol>
 
       <PullQuote>
-        The CUP is not the PRODUCT. The CUP is PROOF.
+        The CUP is PROOF of the year that made it.
       </PullQuote>
 
       <TwoCol id="lots" heading="The lots.">
@@ -104,11 +104,12 @@ export default function CoffeePage() {
           expressed through technique does.
         </p>
         <p className="p2">
-          A caution against our own romance: in controlled trials, a chosen yeast
-          or a sealed ferment moves a cup by one to three points on the specialty
-          scale — real, and measurable, but not the whole instrument. Altitude and
-          variety set the ceiling. The ferment only decides how much of it the cup
-          reaches.
+          We will be honest about our own romance. A chosen yeast or a sealed
+          ferment moves a cup by a point or three on the specialty scale — real,
+          measurable, and worth chasing. But altitude and variety set the ceiling,
+          and the ferment only decides how much of that ceiling the cup reaches.
+          Anyone who tells you the process alone makes the coffee is skipping the
+          harder half of the story.
         </p>
       </TwoCol>
 
@@ -182,14 +183,14 @@ export default function CoffeePage() {
           lactic-acid bacteria colonise the sweet mucilage on the bean, secreting
           enzymes that dissolve it while the pH drops. The alcohols and acids they
           leave behind are the raw material of the esters a taster later calls
-          &ldquo;fruity.&rdquo; This is well documented. It is not folklore.
+          &ldquo;fruity.&rdquo; We have watched every step of it happen.
         </p>
         <p className="p2">
           It is also double-edged. The same microbes that build fruit build faults
           when they run too long or too warm — the vinegar sharpness of excess
-          acetic acid, the onion note of butyric. Control is not a marketing word
-          here. It is the line between a flavour and a defect, and it is why every
-          lot is held to a clock and a pH rather than left to chance.
+          acetic acid, the onion note of butyric. Control here is the whole game:
+          the line between a flavour and a defect, and the reason every lot is held
+          to a clock and a pH rather than left to chance.
         </p>
       </TwoCol>
 
@@ -212,12 +213,11 @@ export default function CoffeePage() {
           into freshly harvested cherries, hoping to seed the same continuity.
         </p>
         <p className="p2">
-          Whether a coffee ferment can actually hold a &ldquo;house culture&rdquo;
-          across seasons the way a sherry cask does is, honestly, not yet proven —
-          coffee ferments are short, and no study has shown a persistent estate
-          strain. It is a promising analogy the estate is testing season by season,
-          not a settled fact. We would rather tell you that than sell you the
-          metaphor.
+          Can a coffee ferment actually hold a &ldquo;house culture&rdquo; across
+          seasons, the way a sherry cask does? We do not know yet, and we will not
+          pretend otherwise — coffee ferments are short, and no one has shown a
+          strain that lasts from one season into the next. We are testing it, year
+          by year. We would rather tell you that than sell you the metaphor.
         </p>
       </TwoCol>
 
@@ -246,8 +246,7 @@ export default function CoffeePage() {
 
       <TwoCol heading="By invitation.">
         <p className="p1">
-          Aura coffee is not sold by the hundredweight to commodity buyers.
-          It is allocated — by lot, by harvest, by hand — to roasters,
+          Aura coffee is allocated — by lot, by harvest, by hand — to roasters,
           sanctuaries, and cellars that care about provenance.
         </p>
         <p className="p2">

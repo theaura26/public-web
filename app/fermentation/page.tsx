@@ -27,9 +27,9 @@ export default function FermentationPage() {
           something the land could not produce alone.
         </p>
         <p className="p2">
-          Fermentation at Aura is not a step in a process. It is the moment
-          where the estate&rsquo;s character becomes audible in flavour — or
-          invisible in soil biology.
+          Fermentation at Aura is the moment the estate&rsquo;s character
+          becomes audible in flavour — or invisible in soil biology. Every crop
+          the estate values passes through it.
         </p>
         <p className="p2">
           Stripped to its definition, fermentation is only this: desired microbial
@@ -114,21 +114,20 @@ export default function FermentationPage() {
 
       <TwoCol id="dung" heading="Cow dung fermentation.">
         <p className="p1">
-          This is the one most people do not picture as fermentation — and
-          strictly, it is something adjacent. Not the food fermentation of the
-          cherry but a microbial decomposition, a composting in miniature. It is no
-          less real for the distinction: metabarcoding of horn manure shows a
-          genuine succession underground, one microbial community giving way to the
+          This is the one most people never picture as fermentation, and strictly
+          it is a close cousin: a microbial decomposition, a composting in
+          miniature. It earns the name honestly. Metabarcoding of horn manure shows
+          a real succession underground, one microbial community handing off to the
           next as the months pass.
         </p>
         <p className="p2">
           <Term tip="Horn manure. Cow dung packed in a cow horn, buried over the cool months, then stirred into water and applied to soil.">BD 500</Term> begins as fresh dung from the estate&rsquo;s
-          52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term>, packed into a horn and buried. What the estate
-          can honestly claim is the microbiology: a decomposition shaped by the
-          breed, the season, and the soil it is buried in. What it does not claim
-          is the cosmology — the lunar timing and esoteric framing attached to these
-          preparations, dreamed up a century ago, have never held up in controlled trials. We keep
-          the practice for the biology, not the astrology.
+          52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term>, packed into a horn and buried. What we
+          claim for it is the microbiology: a decomposition shaped by the breed, the
+          season, and the soil it lies in. The cosmology around it — the lunar
+          timing, the talk of the earth breathing — is poetry a century old, and
+          poetry has never survived a trial. We keep these preparations for the
+          biology in them, which is real, and we measure it.
         </p>
       </TwoCol>
 
@@ -188,12 +187,12 @@ export default function FermentationPage() {
       />
 
       <PullQuote>
-        Flavour is not added. It is *cultured* — grown, in the dark, by things too small to see.
+        Flavour is CULTURED — grown, in the dark, by things too small to see.
       </PullQuote>
 
       <ScrollHighlight>
-        {`Fermentation is not a process step.
-         Transformation requires patience.
+        {`Fermentation is transformation.
+         It asks only for patience.
          One batch shapes the next.
          The dung carries the biology.
          The cup carries the flavour.`}
@@ -202,10 +201,9 @@ export default function FermentationPage() {
       <OneCol id="closing" heading="Patience made visible.">
         <p className="p1">
           Three disciplines, three timers, one attention. Fermentation at Aura
-          is not a production step. It is how the estate thinks — slowly,
-          microbially, in the dark — and it is how the estate will eventually
-          train a model that remembers what a good ferment smells like, hour
-          by hour, season by season.
+          is how the estate thinks — slowly, microbially, in the dark — and it
+          is how the estate will eventually train a model that remembers what a
+          good ferment smells like, hour by hour, season by season.
         </p>
       </OneCol>
 

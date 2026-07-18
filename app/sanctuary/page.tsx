@@ -15,7 +15,7 @@ export default function SanctuaryPage() {
     <>
       <HeroBanner
         currentHref="/sanctuary"
-        title="Guests of the mountain."
+        title="Sanctuary"
         src="/aura-sanctuary.mp4"
         mediaType="video"
         poster="/aura-sanctuary.jpg"

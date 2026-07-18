@@ -518,15 +518,23 @@ export default function OharaPage() {
         <ParallaxBanner
           image="/ohara/images/aura-fountain.jpg"
           alt="A stone water basin beside the pavilion"
-          caption="The basin, always running"
+          caption="Stillness, kept by running water"
+          crop
+          ratio="2 / 1"
+          objectPosition="center 68%"
         />
       </div>
 
-      <DataGrid cols={2} standalone tightTop>
+      <DataGrid cols={3} standalone rule>
         <DataCard value="One weaver, one thread.">
           The valley&rsquo;s textile atelier still dyes with what grows in it
           — persimmon, indigo, walnut hull. A single scarf can hold
           three seasons&rsquo; worth of gathering before it&rsquo;s finished.
+        </DataCard>
+        <DataCard value="Everything on the table grew nearby.">
+          The kitchen cooks what the valley gives that week — shiso, pickled
+          plum, mountain vegetables gathered that morning. The menu is written
+          by the season, and never the other way round.
         </DataCard>
         <DataCard value="Some weeks, nothing is scheduled.">
           Rest Weeks hold the valley open for artists and founders in residence
@@ -616,7 +624,7 @@ a place to return to, and to hand on.`}</ScrollHighlight>
       <Continue
         items={[
           { href: '/artistry', label: 'Artistry', description: 'The studio and labs — making by subtraction, shu-ha-ri at the bench.', img: '/aura-artistry.jpg' },
-          { href: '/reason', label: 'The Reason', description: 'Why Aura exists — not built but grown, the belief that ties every estate and studio into one system.', img: '/aura-reason.jpg' },
+          { href: '/reason', label: 'The Reason', description: 'Why Aura exists — not built but grown, the belief that ties every estate and studio into one system.', img: '/the-reason/aura-flowers-1.png' },
           { href: '/residency', label: 'Monastic Polymaths', description: 'The residency — makers who live the seasons and work across disciplines, the way a monastery once did.', img: '/journals/residency/aura-monastic-polymath.jpg' },
         ]}
       />

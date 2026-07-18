@@ -154,6 +154,8 @@ export function InfiniteArticleSlider() {
           margin: 0 0 clamp(18px, 2.4vh, 32px);
           padding-left: max(var(--gutter), calc(50vw - var(--max-w) / 2 + var(--gutter)));
           text-align: left;
+          /* Brand accent — matches the orange eyebrows across the journals. */
+          color: var(--brand-accent);
         }
         .ias__scroll {
           overflow-x: auto;

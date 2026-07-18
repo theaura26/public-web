@@ -70,6 +70,13 @@ export type ParallaxBannerProps = {
    *  (default). A top-of-page hero banner can pass 'center' to keep its
    *  caption centred. */
   captionAlign?: 'left' | 'center'
+  /** Hold the given `ratio` as a fixed crop instead of adapting to the
+   *  media's natural aspect. Pair with `objectPosition` to choose which
+   *  slice of the image the shorter frame reveals. */
+  crop?: boolean
+  /** CSS object-position for the media (e.g. 'center 78%'). Only meaningful
+   *  when the frame crops the image — i.e. with `crop`. */
+  objectPosition?: string
 }
 
 export function ParallaxBanner({
@@ -88,6 +95,8 @@ export function ParallaxBanner({
   placeholder = false,
   ratio = '16 / 9',
   captionAlign = 'left',
+  crop = false,
+  objectPosition,
 }: ParallaxBannerProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const mediaRef = useRef<HTMLDivElement>(null)
@@ -97,7 +106,10 @@ export function ParallaxBanner({
   // size the banner to it so the FULL image shows (no forced 16:9 crop).
   // `ratio` is only the placeholder shape used until the media loads.
   const [naturalRatio, setNaturalRatio] = useState<string | null>(null)
-  const pbRatio = naturalRatio ?? ratio
+  // `crop` holds the passed ratio as a fixed frame (ignore the natural aspect)
+  // so `objectPosition` can choose which slice shows; otherwise adapt to the
+  // media's own aspect so the full image is visible.
+  const pbRatio = crop ? ratio : (naturalRatio ?? ratio)
 
   // Autoplay the video only while it's near the viewport — same lazy
   // pattern the rest of the kit uses so off-screen banners don't burn
@@ -213,6 +225,7 @@ export function ParallaxBanner({
             preload="metadata"
             poster={poster}
             aria-label={alt}
+            style={objectPosition ? { objectPosition } : undefined}
             onLoadedMetadata={(e) => {
               const v = e.currentTarget
               if (v.videoWidth && v.videoHeight) setNaturalRatio(`${v.videoWidth} / ${v.videoHeight}`)
@@ -227,6 +240,7 @@ export function ParallaxBanner({
             alt={alt}
             loading="lazy"
             decoding="async"
+            style={objectPosition ? { objectPosition } : undefined}
             onLoad={(e) => {
               const im = e.currentTarget
               if (im.naturalWidth && im.naturalHeight) setNaturalRatio(`${im.naturalWidth} / ${im.naturalHeight}`)

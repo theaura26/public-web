@@ -263,7 +263,7 @@ export default function ContactPage() {
       <Continue
         heading="Explore"
         items={[
-          { href: '/reason', label: 'The Reason', description: 'Why Aura exists — the founder’s letter, grown over generations.', img: '/aura-reason.jpg' },
+          { href: '/reason', label: 'The Reason', description: 'Why Aura exists — the founder’s letter, grown over generations.', img: '/the-reason/aura-flowers-1.png' },
           { href: '/studios', label: 'Studios', description: 'The labs and workshops — clay, fibre, wood, sound, type, software.', img: '/aura-studios/aura-studios.jpg' },
           { href: '/brand', label: 'Our Brand', description: 'The identity and voice — how Aura carries itself.', img: '/aura-hero.jpg' },
         ]}

@@ -250,7 +250,7 @@ Impact measured in centuries.`}</ScrollHighlight>
         heading="Explore"
         items={[
           { href: '/artistry', label: 'Artistry', description: 'The studio and labs at work — making by subtraction, shu-ha-ri at the bench.', img: '/aura-artistry.jpg' },
-          { href: '/reason', label: 'The Reason', description: 'Why any of it exists — the belief that ties land, craft and technology together.', img: '/aura-reason.jpg' },
+          { href: '/reason', label: 'The Reason', description: 'Why any of it exists — the belief that ties land, craft and technology together.', img: '/the-reason/aura-flowers-1.png' },
           { href: '/brand', label: 'Our Brand', description: 'How the work is carried into the world — the identity and voice of Aura.', img: '/aura-hero.jpg' },
         ]}
       />

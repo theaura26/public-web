@@ -20,7 +20,7 @@ export default function ArtistryPage() {
     <>
       <HeroBanner
         currentHref="/artistry"
-        title="Artistry"
+        title="Code and Clay"
         src="/aura-artistry.mp4"
         mediaType="video"
         poster="/aura-artistry.jpg"
@@ -158,33 +158,28 @@ export default function ArtistryPage() {
         alt="An aerial canopy map of the plantation"
       />
 
-      <Portrait
-        src="/artistry/images/aura-framed-art-gallery-wall.jpg"
-        ratio="5 / 7"
+      <ParallaxBanner
+        image="/artistry/images/aura-framed-art-gallery-wall.jpg"
         caption="Work on the wall — botanical studies, framed and hung at Ohara"
         alt="A gallery wall of framed botanical artwork at Ohara"
       />
 
-      <DataGrid cols={3} standalone>
-        <DataCard img="/artistry/images/aura-botanical-leaf-arrangement.jpg" value="Pressed & arranged">
-          The estate&apos;s own leaves and flowers, pressed and composed — a study in what the canopy
-          already makes.
-        </DataCard>
+      <DataGrid cols={3} standalone rule>
         <DataCard img="/artistry/images/aura-painted-frog-tin.jpg" value="Painted by hand">
-          Salvaged tin, painted with the estate&apos;s fauna — a frog, a flower — and returned to the
-          trees as it was found.
+          Salvaged tin, painted by hand with the estate&apos;s own fauna — a frog, a flower, a bird read
+          straight from the canopy — then returned to the trees exactly where it was found. Nothing is
+          bought new: the material is already here, and the work simply gives it a second life in the
+          open air.
         </DataCard>
-        <DataCard img="/artistry/images/aura-printed-tote-bag.jpg" value="Printed & carried">
-          A print pulled from an estate motif onto cloth that leaves the studio and stays in use.
-        </DataCard>
-        <DataCard img="/artistry/images/aura-painted-flower-tin.jpg" value="Painted in bloom">
-          A flower worked into salvaged tin and returned to the trunk it was found on.
-        </DataCard>
-        <DataCard img="/artistry/images/aura-woven-fabric-detail.jpg" value="Woven &amp; dyed">
-          Cloth worked on the estate loom — the grammar kept exactly before a hand adapts it.
+        <DataCard img="/artistry/images/aura-woven-fabric-detail.jpg" value="Woven & dyed">
+          Cloth worked on the estate loom and dyed with what the season gives — persimmon, indigo,
+          walnut hull. The weaver keeps the old grammar exactly before a single thread is adapted, so
+          each piece carries the discipline of the form and the freedom that comes after it.
         </DataCard>
         <DataCard img="/artistry/images/aura-child-painting-wall.jpg" value="The next hand">
-          A young hand at the wall — the craft passed on before it is taught, made for hands not yet here.
+          A young hand at the wall, learning the craft long before it is formally taught. Everything the
+          studio makes is built for hands not yet here — the real test of the work is whether it can be
+          inherited, thirty years on, and still hold.
         </DataCard>
       </DataGrid>
 

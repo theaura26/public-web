@@ -3,7 +3,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Reveal from '@/components/RevealOnScroll'
-import { ScrollHighlight } from '@/components/article/Article'
+import { ScrollHighlight, Continue } from '@/components/article/Article'
 import VideoReactiveArt from '@/components/VideoReactiveArt'
 import { useMode } from '@/components/ModeProvider'
 import gsap from 'gsap'
@@ -498,6 +498,18 @@ The brand should endure.`}
       <CopySection
         headline="The choices made by one generation shape the future that follows."
       />
+
+      {/* ═══ CROSS-LINKS ═══ */}
+      <div className="human-only">
+        <Continue
+          heading="Explore"
+          items={[
+            { href: '/reason', label: 'The Reason', description: 'The belief beneath the brand — the founder’s letter, grown over generations.', img: '/aura-reason.jpg' },
+            { href: '/studios', label: 'Studios', description: 'Where the brand is made real — six disciplines held as one practice.', img: '/aura-studios/aura-studios.jpg' },
+            { href: '/mudigere', label: 'Mudigere', description: 'The estate the brand answers to — the living system behind every mark.', img: '/aura-mudigere.jpg' },
+          ]}
+        />
+      </div>
 
     </div>
   )

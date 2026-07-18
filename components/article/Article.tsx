@@ -1463,10 +1463,14 @@ export function Continue({
   currentHref,
   count = 3,
   items,
+  heading = 'Continue reading',
 }: {
   currentHref?: string
   count?: number
   items?: { href: string; label: string; description: string; img?: string }[]
+  /** Eyebrow above the cards. Defaults to "Continue reading" (journals);
+   *  company pages pass their own, e.g. "Explore". */
+  heading?: string
 }) {
   const resolved: { href: string; label: string; description: string; img?: string }[] =
     items ?? nextActiveJournals(currentHref, count).map(j => ({
@@ -1482,7 +1486,7 @@ export function Continue({
     <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
       <div className="section-w">
         <Reveal>
-          <div className="label" style={{ marginBottom: 40, color: 'var(--brand-accent)' }}>Continue reading</div>
+          <div className="label" style={{ marginBottom: 40, color: 'var(--brand-accent)' }}>{heading}</div>
           <div
             className="continue-grid"
             style={{

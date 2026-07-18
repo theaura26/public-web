@@ -96,8 +96,8 @@ function LiveLandData() {
           <div><p className="label">COORDINATES</p><p style={{ marginTop: 2, color: 'var(--text)' }}>13.1365&deg; N, 75.6403&deg; E</p></div>
           <div><p className="label">ALTITUDE</p><p style={{ marginTop: 2, color: 'var(--text)' }}>3,600 ft.</p></div>
           <div><p className="label">TEMP.</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.temp}°C now · 14–30°C` : '14–30°C'}</p></div>
-          <div><p className="label">HUMIDITY</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.humidity}%` : '70–99%'}</p></div>
-          <div><p className="label">WIND</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.wind} KM/H` : '5–12 KM/H'}</p></div>
+          <div><p className="label">HUMIDITY</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.humidity}%` : '58%'}</p></div>
+          <div><p className="label">WIND</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.wind} KM/H` : '5 KM/H'}</p></div>
           <div><p className="label">AVG. WIND</p><p style={{ marginTop: 2, color: 'var(--text)' }}>5 KM/H</p></div>
         </div>
       </div>

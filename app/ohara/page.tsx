@@ -103,9 +103,9 @@ function OharaLandData() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 32px' }}>
           <div><p className="label">COORDINATES</p><p style={{ marginTop: 2, color: 'var(--text)' }}>35.1200&deg; N, 135.8300&deg; E</p></div>
           <div><p className="label">ALTITUDE</p><p style={{ marginTop: 2, color: 'var(--text)' }}>1,099 ft.</p></div>
-          <div><p className="label">TEMP.</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.temp}°C now · 0–33°C` : '0–33°C'}</p></div>
-          <div><p className="label">HUMIDITY</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.humidity}%` : '50–85%'}</p></div>
-          <div><p className="label">WIND</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.wind} KM/H` : '4–10 KM/H'}</p></div>
+          <div><p className="label">TEMP.</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.temp}°C now · 7–28°C` : '7–28°C'}</p></div>
+          <div><p className="label">HUMIDITY</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.humidity}%` : '64%'}</p></div>
+          <div><p className="label">WIND</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.wind} KM/H` : '14 KM/H'}</p></div>
           <div><p className="label">SEASON</p><p style={{ marginTop: 2, color: 'var(--text)' }}>Four, distinctly</p></div>
         </div>
       </div>

@@ -71,7 +71,7 @@ export default function ArtistryPage() {
       </TwoCol>
 
       <SpecTable
-        title="Six studios, one estate"
+        title="Six crafts, one estate"
         rows={[
           { label: 'Clay', value: 'Ceramic & glaze' },
           { label: 'Fibre', value: 'Textile & natural dye' },

@@ -90,7 +90,7 @@ const STUDIOS: Studio[] = [
   {
     name: 'Origin',
     lead: 'Story, voice, identity.',
-    body: 'What a thing is, and what it must always remain. Naming, narrative, design language, art direction — the layer that survives every quarter, every shift, every iteration. Identity built to read the same in four hundred years as it does today.',
+    body: 'What a thing is, and what it must always remain. Naming, narrative, design language, art direction — the layer that survives every quarter, every shift, every iteration. Identity built to read the same in 1,000 years as it does today.',
     image: '/aura-studios/aura-design.jpg',
     alt: 'Aura Origin studio — story, voice, identity, design language',
   },

@@ -303,7 +303,7 @@ function AgentBrandView() {
   return (
     <section className="agent-only">
       <h1>Brand</h1>
-      <p>Aura is a regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 100 years.</p>
+      <p>Aura is a regenerative ecosystem for monastic polymaths where Ancestral Intelligence and Creative Capital are deployed across 1,000 years.</p>
       <p>The brand identity is built around three intelligences: Natural, Human, and Machine. Design language favours silence over noise, depth over width, memory over trend.</p>
 
       <hr />

@@ -1451,10 +1451,12 @@ export default function Home() {
           {/* 2. Bottom display: GENERATIONAL IMPACT (justified edge-to-edge).
               "FOR" was trimmed at the user's request — the cleaner two-word
               cadence reads stronger as a manifesto line. */}
-          <h1 className="hero-display hero-anim hero-anim--rise" style={{ opacity: 0, animationDuration: '700ms', animationDelay: '140ms' }}>
+          {/* Styled identically to the h1 above, but a <p> so the hero has a
+              single primary heading (SEO). "Natural Intelligence." is the h1. */}
+          <p className="hero-display hero-anim hero-anim--rise" style={{ opacity: 0, animationDuration: '700ms', animationDelay: '140ms' }}>
             <span>GENERATIONAL</span>{' '}
             <span>IMPACT</span>
-          </h1>
+          </p>
 
           {/* 6 / 7 / 8. Three CTA tiles — staggered after the mid-row text settles.
               Media slots map to dedicated /public assets:

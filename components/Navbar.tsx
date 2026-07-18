@@ -59,6 +59,8 @@ const ARTICLES: Article[] = [
   { href: '/vedic',          title: 'Vedic Farming',                      size: 'sm', comingSoon: true, img: '/aura-vedic.jpg' },
   { href: '/areca',          title: 'The Sentinel Palm',                  size: 'sm', comingSoon: true, img: '/aura-mudigere-landscape.jpg' },
   { href: '/pepper',         title: 'Malabar Pepper',                     size: 'lg', comingSoon: true, img: '/journals/fermentation/aura-pepper.jpg' },
+  { href: '/provenance',     title: 'Provenance',                         size: 'sm', comingSoon: true, img: '/aura-provenance.jpg' },
+  { href: '/sanctuary',      title: 'Sanctuary',                          size: 'lg', comingSoon: true, img: '/aura-sanctuary.jpg' },
 ]
 
 const PRIMARY_LINKS = [

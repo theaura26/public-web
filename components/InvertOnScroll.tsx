@@ -29,10 +29,20 @@ export function InvertOnScroll({
     const el = ref.current
     if (!el) return
     const io = new IntersectionObserver(
-      ([entry]) => el.classList.toggle('is-inverted', entry.isIntersecting),
-      // Observe only the centre ~30% band of the viewport, so the flip
-      // happens as the section takes over the screen and reverts as it
-      // leaves — not the instant an edge appears.
+      ([entry]) => {
+        // Latch: the first time the section reaches the centre band it flips
+        // to the contrast palette and STAYS there — it never transitions back
+        // to white. This makes it read as one continuous dark region with the
+        // sanctuary lede + stack that follow, instead of flashing white as it
+        // scrolls out. The transition-in still eases (0.6s); only the revert
+        // is removed.
+        if (entry.isIntersecting) {
+          el.classList.add('is-inverted')
+          io.disconnect()
+        }
+      },
+      // Observe only the centre ~30% band of the viewport, so the flip happens
+      // as the section takes over the screen — not the instant an edge appears.
       { rootMargin: '-35% 0px -35% 0px', threshold: 0 }
     )
     io.observe(el)

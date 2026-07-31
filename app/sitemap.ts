@@ -30,6 +30,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 1.0,
     },
+    /* The estate — a flagship destination, now public and indexable. */
+    {
+      url: `${base}/mudigere`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
     ...pages,
     ...journals,
   ]

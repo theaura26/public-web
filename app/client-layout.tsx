@@ -4,9 +4,11 @@ import { ReactNode } from 'react'
 import { ModeProvider } from '@/components/ModeProvider'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import { Analytics } from './providers'
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
   return (
+    <Analytics>
     <ModeProvider>
       <Navbar />
       <main>{children}</main>
@@ -57,5 +59,6 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
         }
       `}</style>
     </ModeProvider>
+    </Analytics>
   )
 }

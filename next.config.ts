@@ -14,6 +14,18 @@ const nextConfig: NextConfig = {
      adds a backdrop blur that distorts the corner of the layout while
      designing. Production builds never render it. */
   devIndicators: false,
+  /* PostHog reverse proxy — events + assets are served from our own
+     origin under /ingest, so first-party requests dodge ad-blockers
+     (which drop ~a third of third-party analytics traffic). EU endpoints
+     for data residency. The catch-all must sit after the /static rule.
+     `skipTrailingSlashRedirect` stops Next 308-redirecting /ingest paths. */
+  skipTrailingSlashRedirect: true,
+  async rewrites() {
+    return [
+      { source: '/ingest/static/:path*', destination: 'https://eu-assets.i.posthog.com/static/:path*' },
+      { source: '/ingest/:path*', destination: 'https://eu.i.posthog.com/:path*' },
+    ]
+  },
   /* /mudigere-estate was the original architect's-briefing page;
      /mudigere superseded it with a richer treatment. One canonical
      page now — redirect the old URL so any existing links don't 404. */

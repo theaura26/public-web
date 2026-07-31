@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { track } from '@/lib/analytics'
 
 /* ═══════════════════════════════════════════════════════════════════
    FILM BANNER — a full-bleed poster block that opens the film fullscreen.
@@ -175,7 +176,10 @@ export function FilmBanner({ youtubeId, poster, alt = '', caption, note, bgVideo
       <button
         type="button"
         className="film-banner__hit"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true)
+          track('film_play', { film: caption ?? 'film', note })
+        }}
         aria-label={caption ? `Play the film — ${caption}` : 'Play the film'}
       />
 

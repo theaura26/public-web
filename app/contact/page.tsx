@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { track } from '@/lib/analytics'
 import Reveal from '@/components/RevealOnScroll'
 import { Continue } from '@/components/article/Article'
 
@@ -81,6 +82,7 @@ export default function ContactPage() {
       }
 
       setStatus('sent')
+      track('contact_submit', { topic: TOPICS[fields.topic] || fields.topic, source: 'page' })
     } catch (err) {
       setStatus('error')
       setApiError(err instanceof Error ? err.message : 'Something went wrong.')

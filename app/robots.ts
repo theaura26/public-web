@@ -9,11 +9,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: [{
       userAgent: '*',
       allow: '/',
-      disallow: [
-        /* Unlisted briefing page. Reachable only by direct URL —
-           keep it out of search indexes and AI crawlers. */
-        '/mudigere',
-      ],
     }],
     sitemap: 'https://theaura.life/sitemap.xml',
     host: 'https://theaura.life',

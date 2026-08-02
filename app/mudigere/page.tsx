@@ -332,6 +332,10 @@ export default function MudigerePage() {
           <source src="/aura-mudigere.mp4" type="video/mp4" />
         </video>
         <div aria-hidden className="hero-banner-tint" style={{ position: 'absolute', inset: 0, background: 'rgba(0, 0, 0, 0.14)', pointerEvents: 'none', zIndex: 3 }} />
+        {/* Bottom-left vignette — same radial the journal-hero media carries,
+            so the pinned caption stays legible over busy foliage without
+            darkening the frame. */}
+        <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 55% 45% at 0% 100%, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 35%, rgba(0, 0, 0, 0) 75%)', pointerEvents: 'none', zIndex: 4 }} />
         {/* Wordmark — replaces the type, parallaxes over the video.
             Rendered solid white (filter forces white regardless of the
             SVG's own fill); no mix-blend. */}
@@ -349,7 +353,7 @@ export default function MudigerePage() {
         {/* Caption — anchored to the bottom of the banner. */}
         <p
           className="label mud-hero__caption"
-          style={{ position: 'absolute', left: 0, right: 0, bottom: 'clamp(20px, 4vh, 48px)', margin: 0, textAlign: 'center', color: '#ffffff', mixBlendMode: 'difference', letterSpacing: '1px', lineHeight: 1.5, zIndex: 5, pointerEvents: 'none' }}
+          style={{ position: 'absolute', left: 'clamp(20px, 4vw, 48px)', bottom: 'clamp(20px, 4vh, 48px)', margin: 0, maxWidth: 'min(340px, 66vw)', color: '#ffffff', letterSpacing: '1px', lineHeight: 1.5, textShadow: '0 1px 12px rgba(0, 0, 0, 0.4)', zIndex: 5, pointerEvents: 'none' }}
         >
           Sampigekhan Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
         </p>

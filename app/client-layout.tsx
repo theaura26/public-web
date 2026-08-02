@@ -4,11 +4,15 @@ import { ReactNode } from 'react'
 import { ModeProvider } from '@/components/ModeProvider'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import { Analytics } from './providers'
+import { ScrollDepth } from '@/components/ScrollDepth'
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
   return (
+    <Analytics>
     <ModeProvider>
       <Navbar />
+      <ScrollDepth />
       <main>{children}</main>
       <Footer />
       {/* Page-level bottom blur vignette — fixed to the viewport bottom,
@@ -57,5 +61,6 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
         }
       `}</style>
     </ModeProvider>
+    </Analytics>
   )
 }

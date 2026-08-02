@@ -472,6 +472,7 @@ export default function Navbar() {
              architect stays on the briefing while writing. */
           <button
             type="button"
+            data-attr="nav-contact"
             onClick={() => setContactOpen(true)}
             className="label mudigere-nav-cta"
             style={{
@@ -495,6 +496,7 @@ export default function Navbar() {
           </button>
         ) : (
           <button
+            data-attr="nav-menu-toggle"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen(v => !v)}
@@ -615,6 +617,7 @@ export default function Navbar() {
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
                 className="menu-link"
+                data-attr={`menu-link:${link.href}`}
                 data-active={pathname === link.href}
               >
                 {link.label}
@@ -627,6 +630,7 @@ export default function Navbar() {
         <div className="menu-utils">
           <button
             type="button"
+            data-attr="theme-toggle"
             className="menu-util-btn"
             aria-label={theme === 'day' ? 'Switch to night mode' : 'Switch to day mode'}
             onClick={toggleTheme}

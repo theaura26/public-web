@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { track } from '@/lib/analytics'
 
 /* ── ContactModal ────────────────────────────────────────────────
    Small popup that replicates the /contact page's form — same four
@@ -121,6 +122,7 @@ export default function ContactModal({
         throw new Error(data.error || 'Failed to send.')
       }
       setStatus('sent')
+      track('contact_submit', { topic: TOPICS[fields.topic] || fields.topic, source: 'modal' })
     } catch (err) {
       setStatus('error')
       setApiError(err instanceof Error ? err.message : 'Something went wrong.')

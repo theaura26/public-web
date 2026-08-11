@@ -87,11 +87,13 @@
 async function copySig() {
   const sig = document.getElementById('signature');
   const btn = document.getElementById('copy-btn');
-  // Copy the exact live signature, with every image src made absolute so the
-  // logo renders in the recipient's inbox regardless of the source filename.
+  // Copy the exact live signature, rewriting every image src to its absolute
+  // production URL so the logo renders in the recipient's inbox — and so a copy
+  // made from localhost still points at theaura.life, not a broken local path.
+  const ASSET_BASE = 'https://theaura.life/signature/';
   const clone = sig.cloneNode(true);
   clone.querySelectorAll('img').forEach(function (img) {
-    img.setAttribute('src', new URL(img.getAttribute('src'), location.href).href);
+    img.setAttribute('src', new URL(img.getAttribute('src'), ASSET_BASE).href);
   });
   const html = clone.outerHTML;
   const text = 'FULL NAME\nJOB TITLE · +65 0000 0000\nSGP · IND · BTN · JPN\ntheaura.life';

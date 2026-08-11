@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { track } from '@/lib/analytics'
+import { track, identify } from '@/lib/analytics'
 
 /* ── ContactModal ────────────────────────────────────────────────
    Small popup that replicates the /contact page's form — same four
@@ -122,6 +122,13 @@ export default function ContactModal({
         throw new Error(data.error || 'Failed to send.')
       }
       setStatus('sent')
+      // The one place a visitor resolves into a known person on this no-auth
+      // site — identify by the email they just gave us, then attribute the event.
+      identify(fields.email.trim(), {
+        name: fields.name.trim(),
+        email: fields.email.trim(),
+        latest_contact_topic: TOPICS[fields.topic] || fields.topic,
+      })
       track('contact_submit', { topic: TOPICS[fields.topic] || fields.topic, source: 'modal' })
     } catch (err) {
       setStatus('error')
@@ -225,7 +232,7 @@ export default function ContactModal({
               ref={nameRef}
               id="cm-name"
               type="text"
-              className={`cm-input${touched.name && errors.name ? ' has-error' : ''}`}
+              className={`ph-no-capture cm-input${touched.name && errors.name ? ' has-error' : ''}`}
               placeholder="Full name"
               value={fields.name}
               onChange={e => set('name', e.target.value)}
@@ -238,7 +245,7 @@ export default function ContactModal({
             <input
               id="cm-email"
               type="email"
-              className={`cm-input${touched.email && errors.email ? ' has-error' : ''}`}
+              className={`ph-no-capture cm-input${touched.email && errors.email ? ' has-error' : ''}`}
               placeholder="you@example.com"
               value={fields.email}
               onChange={e => set('email', e.target.value)}
@@ -266,7 +273,7 @@ export default function ContactModal({
           <ModalField id="cm-message" label="Message" error={touched.message ? errors.message : undefined}>
             <textarea
               id="cm-message"
-              className={`cm-input${touched.message && errors.message ? ' has-error' : ''}`}
+              className={`ph-no-capture cm-input${touched.message && errors.message ? ' has-error' : ''}`}
               rows={4}
               placeholder="Tell us what you're thinking…"
               value={fields.message}

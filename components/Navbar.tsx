@@ -882,7 +882,7 @@ export default function Navbar() {
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: filter var(--dur-base) var(--ease);
+            transition: filter var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
           }
           /* Hover symbol — vector glyph centred over the photo, hidden
              at rest and revealed on hover. Pure 35 % of the card width
@@ -903,13 +903,18 @@ export default function Navbar() {
             mix-blend-mode: difference;
             transition: opacity 0.32s var(--ease-out), transform 0.4s var(--ease-spring);
           }
-          /* On hover: a clean blur, nothing layered on top. The centre
-             glyph stays hidden (the symbol-over-blur read as a vignette).
-             Link wrapper doesn't get the styled-jsx scope class, so the
-             hover selector chain is global. */
+          /* On hover: blur the photo AND scale it just past the clip, so the
+             blur has no faded edge (that soft light border read as a vignette).
+             The centre glyph fades + scales in over the top. Link wrapper
+             doesn't get the styled-jsx scope class, so the chain is global. */
           :global(.tile:hover .tile-img img:not(.tile-symbol)),
           :global(.tile:hover .tile-img video) {
             filter: blur(14px);
+            transform: scale(1.12);
+          }
+          :global(.tile:hover .tile-img .tile-symbol) {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
           }
           /* Coming-soon tiles: muted card, no hover effects, label overlay
              centred on the placeholder. Tile is non-interactive (preventDefault

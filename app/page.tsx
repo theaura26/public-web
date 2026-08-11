@@ -1639,7 +1639,7 @@ export default function Home() {
                promotion). Slight scale to hide blur-edge soft pixels. */
             will-change: filter;
             transform: scale(1.05);
-            transition: filter var(--dur-fast) var(--ease);
+            transition: filter var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
           }
           /* Symbol overlay — sits above the blurred image and blends in
              difference mode so it reads on any underlying tone. Tile 1
@@ -1658,13 +1658,18 @@ export default function Home() {
             transition: opacity 0.32s var(--ease-out), transform 0.4s var(--ease-spring);
             mix-blend-mode: difference;
           }
-          /* Hover: a clean blur, nothing layered on top. The centre glyph
-             is left hidden (the symbol-over-blur read as a vignette). The
-             Link wrapper (<a class="hero-tile">) never receives the
-             styled-jsx scope class, so the hover selector must be :global(). */
+          /* Hover: blur the photo AND scale it past the clip so the blur has
+             no faded edge (that read as a vignette); the centre glyph fades +
+             scales in over the top. The Link wrapper (<a class="hero-tile">)
+             never gets the styled-jsx scope class, so these must be :global(). */
           :global(.hero-tile:hover) .hero-tile__media :global(img:not(.hero-tile__symbol)),
           :global(.hero-tile:hover) .hero-tile__media :global(video) {
             filter: blur(16px) !important;
+            transform: scale(1.12);
+          }
+          :global(.hero-tile:hover) .hero-tile__media :global(.hero-tile__symbol) {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
           }
           .hero-tile__caption {
             margin: 16px 0 0;

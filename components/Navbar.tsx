@@ -899,16 +899,13 @@ export default function Navbar() {
             mix-blend-mode: difference;
             transition: opacity 0.32s var(--ease-out), transform 0.4s var(--ease-spring);
           }
-          /* On hover: image blurs to 14px, symbol fades + scales up to
-             its resting state. Link wrapper doesn't get the styled-jsx
-             scope class, so the hover selector chain is global. */
+          /* On hover: a clean blur, nothing layered on top. The centre
+             glyph stays hidden (the symbol-over-blur read as a vignette).
+             Link wrapper doesn't get the styled-jsx scope class, so the
+             hover selector chain is global. */
           :global(.tile:hover .tile-img img:not(.tile-symbol)),
           :global(.tile:hover .tile-img video) {
             filter: blur(14px);
-          }
-          :global(.tile:hover .tile-img .tile-symbol) {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
           }
           /* Coming-soon tiles: muted card, no hover effects, label overlay
              centred on the placeholder. Tile is non-interactive (preventDefault

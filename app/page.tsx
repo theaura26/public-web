@@ -1532,6 +1532,17 @@ export default function Home() {
             justify-content: space-between;
             white-space: nowrap;
           }
+          /* NATURAL / INTELLIGENCE (the h1) stacks as two centred lines with
+             tight leading, so it reads as one locked-up headline rather than
+             the edge-to-edge GENERATIONAL IMPACT line. Applies on every
+             breakpoint — higher specificity than the mobile block override
+             below keeps the two words stacked and snug on phones too. */
+          .hero-display.hero-anim--fall {
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.0;
+          }
+          .hero-display.hero-anim--fall :global(span) { display: block; }
 
           /* Same column structure as the tile grid below, so the mid-row text
              aligns with the tile captions vertically. */
@@ -1647,19 +1658,14 @@ export default function Home() {
             transition: opacity 0.32s var(--ease-out), transform 0.4s var(--ease-spring);
             mix-blend-mode: difference;
           }
-          :global(.hero-tile:hover) .hero-tile__media :global(.hero-tile__symbol) {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-          }
-          /* Hover: only the photo / video blurs out — the symbol stays
-             sharp so it sits above the blur clearly. The Link wrapper
-             (<a class="hero-tile">) never receives the styled-jsx scope
-             class, so the hover selector must be marked :global() to match. */
+          /* Hover: a clean blur, nothing layered on top. The centre glyph
+             is left hidden (the symbol-over-blur read as a vignette). The
+             Link wrapper (<a class="hero-tile">) never receives the
+             styled-jsx scope class, so the hover selector must be :global(). */
           :global(.hero-tile:hover) .hero-tile__media :global(img:not(.hero-tile__symbol)),
           :global(.hero-tile:hover) .hero-tile__media :global(video) {
             filter: blur(16px) !important;
           }
-          :global(.hero-tile:hover) .hero-tile__media { opacity: 0.85; }
           .hero-tile__caption {
             margin: 16px 0 0;
             color: var(--text);

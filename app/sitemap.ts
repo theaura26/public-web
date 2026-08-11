@@ -14,10 +14,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }))
-  /* Core company pages — the primary nav destinations. Not journals, so
+  /* Core company + crop pages — primary nav destinations. Not journals, so
      they aren't in ACTIVE_JOURNALS, but they are public, indexable, and
-     carry their own metadata. */
-  const pages = ['/reason', '/studios', '/brand', '/contact'].map(href => ({
+     carry their own metadata + canonical. */
+  const pages = ['/reason', '/studios', '/brand', '/contact', '/sanctuary', '/provenance', '/areca', '/pepper'].map(href => ({
     url: `${base}${href}`,
     lastModified: now,
     changeFrequency: 'monthly' as const,
@@ -30,13 +30,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 1.0,
     },
-    /* The estate — a flagship destination, now public and indexable. */
-    {
-      url: `${base}/mudigere`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
+    /* NOTE: /mudigere is intentionally omitted — its layout sets
+       robots: noindex, so listing it here would be a sitemap/noindex
+       conflict (Search Console: "Submitted URL marked noindex"). If the
+       estate page should be public, remove the noindex in
+       app/mudigere/layout.tsx and re-add it here. */
     ...pages,
     ...journals,
   ]

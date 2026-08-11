@@ -1532,6 +1532,17 @@ export default function Home() {
             justify-content: space-between;
             white-space: nowrap;
           }
+          /* NATURAL / INTELLIGENCE (the h1) stacks as two centred lines with
+             tight leading, so it reads as one locked-up headline rather than
+             the edge-to-edge GENERATIONAL IMPACT line. Applies on every
+             breakpoint — higher specificity than the mobile block override
+             below keeps the two words stacked and snug on phones too. */
+          .hero-display.hero-anim--fall {
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.0;
+          }
+          .hero-display.hero-anim--fall :global(span) { display: block; }
 
           /* Same column structure as the tile grid below, so the mid-row text
              aligns with the tile captions vertically. */
@@ -1628,7 +1639,7 @@ export default function Home() {
                promotion). Slight scale to hide blur-edge soft pixels. */
             will-change: filter;
             transform: scale(1.05);
-            transition: filter var(--dur-fast) var(--ease);
+            transition: filter var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
           }
           /* Symbol overlay — sits above the blurred image and blends in
              difference mode so it reads on any underlying tone. Tile 1
@@ -1647,19 +1658,19 @@ export default function Home() {
             transition: opacity 0.32s var(--ease-out), transform 0.4s var(--ease-spring);
             mix-blend-mode: difference;
           }
+          /* Hover: blur the photo AND scale it past the clip so the blur has
+             no faded edge (that read as a vignette); the centre glyph fades +
+             scales in over the top. The Link wrapper (<a class="hero-tile">)
+             never gets the styled-jsx scope class, so these must be :global(). */
+          :global(.hero-tile:hover) .hero-tile__media :global(img:not(.hero-tile__symbol)),
+          :global(.hero-tile:hover) .hero-tile__media :global(video) {
+            filter: blur(16px) !important;
+            transform: scale(1.12);
+          }
           :global(.hero-tile:hover) .hero-tile__media :global(.hero-tile__symbol) {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
           }
-          /* Hover: only the photo / video blurs out — the symbol stays
-             sharp so it sits above the blur clearly. The Link wrapper
-             (<a class="hero-tile">) never receives the styled-jsx scope
-             class, so the hover selector must be marked :global() to match. */
-          :global(.hero-tile:hover) .hero-tile__media :global(img:not(.hero-tile__symbol)),
-          :global(.hero-tile:hover) .hero-tile__media :global(video) {
-            filter: blur(16px) !important;
-          }
-          :global(.hero-tile:hover) .hero-tile__media { opacity: 0.85; }
           .hero-tile__caption {
             margin: 16px 0 0;
             color: var(--text);

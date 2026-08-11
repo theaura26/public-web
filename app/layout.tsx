@@ -95,6 +95,32 @@ export const metadata: Metadata = {
   formatDetection: { telephone: false },
 }
 
+/* Organization + WebSite structured data — one JSON-LD graph on every page.
+   Gives search + AI crawlers a stable entity for Aura (name, logo, socials)
+   and the site itself, improving knowledge-panel / rich-result eligibility. */
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://theaura.life/#organization',
+      name: 'Aura',
+      url: 'https://theaura.life',
+      logo: 'https://theaura.life/icon.png',
+      description:
+        'We are a team of Monastic Polymaths who combine ancestral wisdom with creative capital to make what the future cannot automate.',
+      sameAs: ['https://www.instagram.com/theaura.life/'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://theaura.life/#website',
+      name: 'Aura',
+      url: 'https://theaura.life',
+      publisher: { '@id': 'https://theaura.life/#organization' },
+    },
+  ],
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -103,6 +129,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${bricolage.variable} ${instrumentSerif.variable} ${dmSans.variable} ${dmMono.variable} ${pixelifySans.variable} ${mynerve.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

@@ -34,6 +34,15 @@ const nextConfig: NextConfig = {
       { source: '/mudigere-estate', destination: '/mudigere', permanent: false },
     ]
   },
+  /* Belt-and-braces on the noindex meta the signature page already carries:
+     an X-Robots-Tag header, so crawlers are told noindex at the HTTP level
+     too. The path is deliberately NOT disallowed in robots.txt — a blocked
+     crawler can't read the noindex, which is what actually keeps it out. */
+  async headers() {
+    return [
+      { source: '/signature/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }] },
+    ]
+  },
 };
 
 export default nextConfig;

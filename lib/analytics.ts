@@ -25,3 +25,13 @@ export function identify(distinctId: string, traits?: Record<string, unknown>) {
   if (!distinctId) return
   posthog.identify(distinctId, traits)
 }
+
+/* Report a caught error to PostHog Error Tracking. `capture_exceptions` already
+   autocaptures unhandled window errors + promise rejections; this is for React
+   render errors caught by an error boundary, which don't reach window.onerror.
+   Guarded on __loaded so it only fires when PostHog is actually initialised. */
+export function captureError(error: unknown, properties?: Record<string, unknown>) {
+  if (typeof window === 'undefined') return
+  if (!(posthog as unknown as { __loaded?: boolean }).__loaded) return
+  posthog.captureException(error, properties)
+}

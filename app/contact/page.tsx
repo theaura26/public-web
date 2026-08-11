@@ -188,7 +188,7 @@ export default function ContactPage() {
                   <input
                     id="name"
                     type="text"
-                    className={`field-input${touched.name && errors.name ? ' has-error' : ''}`}
+                    className={`ph-no-capture field-input${touched.name && errors.name ? ' has-error' : ''}`}
                     placeholder="Full name"
                     value={fields.name}
                     onChange={e => set('name', e.target.value)}
@@ -201,7 +201,7 @@ export default function ContactPage() {
                   <input
                     id="email"
                     type="email"
-                    className={`field-input${touched.email && errors.email ? ' has-error' : ''}`}
+                    className={`ph-no-capture field-input${touched.email && errors.email ? ' has-error' : ''}`}
                     placeholder="you@example.com"
                     value={fields.email}
                     onChange={e => set('email', e.target.value)}
@@ -229,7 +229,7 @@ export default function ContactPage() {
                 <Field id="message" label="Message" error={touched.message ? errors.message : undefined}>
                   <textarea
                     id="message"
-                    className={`field-input${touched.message && errors.message ? ' has-error' : ''}`}
+                    className={`ph-no-capture field-input${touched.message && errors.message ? ' has-error' : ''}`}
                     rows={4}
                     placeholder="Tell us what you're thinking..."
                     value={fields.message}

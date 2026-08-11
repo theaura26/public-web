@@ -232,7 +232,7 @@ export default function ContactModal({
               ref={nameRef}
               id="cm-name"
               type="text"
-              className={`cm-input${touched.name && errors.name ? ' has-error' : ''}`}
+              className={`ph-no-capture cm-input${touched.name && errors.name ? ' has-error' : ''}`}
               placeholder="Full name"
               value={fields.name}
               onChange={e => set('name', e.target.value)}
@@ -245,7 +245,7 @@ export default function ContactModal({
             <input
               id="cm-email"
               type="email"
-              className={`cm-input${touched.email && errors.email ? ' has-error' : ''}`}
+              className={`ph-no-capture cm-input${touched.email && errors.email ? ' has-error' : ''}`}
               placeholder="you@example.com"
               value={fields.email}
               onChange={e => set('email', e.target.value)}
@@ -273,7 +273,7 @@ export default function ContactModal({
           <ModalField id="cm-message" label="Message" error={touched.message ? errors.message : undefined}>
             <textarea
               id="cm-message"
-              className={`cm-input${touched.message && errors.message ? ' has-error' : ''}`}
+              className={`ph-no-capture cm-input${touched.message && errors.message ? ' has-error' : ''}`}
               rows={4}
               placeholder="Tell us what you're thinking…"
               value={fields.message}

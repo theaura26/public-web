@@ -22,8 +22,7 @@
   .card { background:#ffffff; border-radius:14px; padding:36px; margin:0 0 18px; overflow-x:auto; }
   .steps { display:flex; flex-direction:column; gap:14px; margin-top:34px; }
   .step-card { background:#1b1a18; border:1px solid rgba(245,242,236,0.09); border-radius:14px; padding:24px 24px 22px; }
-  .step-head { display:flex; align-items:center; gap:11px; margin:0 0 14px; }
-  .step-icon { width:22px; height:22px; flex:0 0 auto; color:#f5f2ec; display:block; }
+  .step-head { margin:0 0 14px; }
   .step-head h2 { margin:0; font-size:11px; font-family:'DM Mono',monospace; font-weight:400; letter-spacing:2.5px; color:#f5f2ec; }
   .step-card ol { margin:0; padding-left:18px; font-size:13.5px; line-height:1.7; color:#c9c5be; }
   .step-card li { margin:0 0 7px; }
@@ -46,14 +45,13 @@
       <tr><td style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;line-height:19px;font-weight:500;color:#171716;padding:0 0 14px 0;">FULL NAME</td></tr>
       <tr><td style="font-family:'SF Mono',Menlo,Consolas,'Roboto Mono','Courier New',monospace;font-weight:300;font-size:12px;line-height:16px;color:#989898;padding:0 0 14px 0;">JOB TITLE &middot; +65 0000 0000</td></tr>
       <tr><td style="font-family:'SF Mono',Menlo,Consolas,'Roboto Mono','Courier New',monospace;font-weight:300;font-size:10px;line-height:13px;letter-spacing:1.2px;color:#000000;padding:0 0 50px 0;white-space:nowrap;">SGP &middot; IND &middot; BTN &middot; JPN</td></tr>
-      <tr><td style="padding:0;"><a href="https://theaura.life" target="_blank" style="text-decoration:none;border:0;"><img src="aura-logo.png" width="172" height="42" alt="AURA — theaura.life" style="display:block;border:0;width:172px;height:42px;max-width:100%;"></a></td></tr>
+      <tr><td style="padding:0;"><a href="https://theaura.life" target="_blank" style="text-decoration:none;border:0;"><img src="aura-black-logo.gif" width="48" height="48" alt="AURA — theaura.life" style="display:block;border:0;width:48px;height:48px;max-width:100%;"></a></td></tr>
     </table>
   </div>
 
   <div class="steps">
     <div class="step-card">
       <div class="step-head">
-        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
         <h2>GMAIL</h2>
       </div>
       <ol>
@@ -65,7 +63,6 @@
     </div>
     <div class="step-card">
       <div class="step-head">
-        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><ellipse cx="12" cy="12" rx="6.2" ry="7.3"/></svg>
         <h2>OUTLOOK</h2>
       </div>
       <ol>
@@ -76,7 +73,6 @@
     </div>
     <div class="step-card">
       <div class="step-head">
-        <svg class="step-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.36 12.78c.02 2.5 2.19 3.33 2.22 3.34-.02.06-.35 1.19-1.14 2.36-.69 1.02-1.4 2.03-2.52 2.05-1.1.02-1.46-.65-2.72-.65-1.26 0-1.65.63-2.7.67-1.08.04-1.9-1.1-2.6-2.12-1.43-2.06-2.52-5.83-1.05-8.38.73-1.27 2.03-2.07 3.44-2.09 1.06-.02 2.07.72 2.72.72.65 0 1.87-.89 3.15-.76.54.02 2.05.22 3.02 1.64-.08.05-1.8 1.05-1.78 3.15zM14.3 5.36c.58-.7.97-1.68.86-2.66-.83.03-1.84.55-2.44 1.25-.53.62-1 1.61-.88 2.57.93.07 1.87-.47 2.46-1.16z"/></svg>
         <h2>APPLE MAIL</h2>
       </div>
       <ol>
@@ -91,7 +87,7 @@
 async function copySig() {
   const sig = document.getElementById('signature');
   const btn = document.getElementById('copy-btn');
-  const html = sig.outerHTML.replace(/src="aura-logo.png"/, 'src="' + new URL('aura-logo.png', location.href).href + '"');
+  const html = sig.outerHTML.replace(/src="aura-black-logo.gif"/, 'src="' + new URL('aura-black-logo.gif', location.href).href + '"');
   const text = 'FULL NAME\nJOB TITLE · +65 0000 0000\nSGP · IND · BTN · JPN\ntheaura.life';
   try {
     await navigator.clipboard.write([new ClipboardItem({

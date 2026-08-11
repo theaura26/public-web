@@ -12,24 +12,34 @@
 <style>
   body { margin:0; background:#121110; color:#f5f2ec; font-family:'DM Sans','Helvetica Neue',Helvetica,Arial,sans-serif; -webkit-text-size-adjust:100%; }
   .wrap { max-width:680px; margin:0 auto; padding:64px 24px 120px; }
-  .brand { height:34px; filter:invert(0.95); display:block; margin:0 0 56px; }
-  h1 { font-size:15px; font-weight:400; font-family:'DM Mono',monospace; letter-spacing:3px; margin:0 0 6px; }
-  .sub { font-family:'DM Mono',monospace; font-weight:300; font-size:12px; color:#8f8b84; margin:0 0 44px; letter-spacing:1px; }
+  .top { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:0 0 44px; }
+  .brand { width:46px; height:46px; filter:invert(0.95); display:block; }
+  .copy-link { display:inline-flex; align-items:center; gap:8px; background:none; border:0; padding:0; color:#f5f2ec; font-family:'DM Mono',monospace; font-size:12px; letter-spacing:1px; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .copy-link .copy-ico { width:15px; height:15px; flex:0 0 auto; }
+  .copy-link span { border-bottom:1px solid transparent; padding-bottom:1px; transition:border-color .15s ease; }
+  .copy-link:hover span { border-bottom-color:currentColor; }
+  .copy-link.done { color:#8fb996; }
   .card { background:#ffffff; border-radius:14px; padding:36px; margin:0 0 18px; overflow-x:auto; }
-  .btn { display:inline-block; background:#f5f2ec; color:#121110; border:0; border-radius:999px; padding:13px 26px; font-size:12px; font-family:'DM Mono',monospace; letter-spacing:1.5px; cursor:pointer; }
-  .btn.done { background:#8fb996; }
-  .steps { font-size:14px; line-height:1.75; color:#c9c5be; }
-  .steps h2 { font-size:11px; font-family:'DM Mono',monospace; font-weight:400; letter-spacing:2.5px; color:#f5f2ec; margin:40px 0 10px; }
-  .steps ol { margin:0; padding-left:20px; }
-  .steps em { font-style:normal; color:#f5f2ec; }
-  .note { font-family:'DM Mono',monospace; font-weight:300; font-size:11px; color:#8f8b84; margin-top:48px; line-height:1.7; letter-spacing:0.5px; }
+  .steps { display:flex; flex-direction:column; gap:14px; margin-top:34px; }
+  .step-card { background:#1b1a18; border:1px solid rgba(245,242,236,0.09); border-radius:14px; padding:24px 24px 22px; }
+  .step-head { display:flex; align-items:center; gap:11px; margin:0 0 14px; }
+  .step-icon { width:22px; height:22px; flex:0 0 auto; color:#f5f2ec; display:block; }
+  .step-head h2 { margin:0; font-size:11px; font-family:'DM Mono',monospace; font-weight:400; letter-spacing:2.5px; color:#f5f2ec; }
+  .step-card ol { margin:0; padding-left:18px; font-size:13.5px; line-height:1.7; color:#c9c5be; }
+  .step-card li { margin:0 0 7px; }
+  .step-card li:last-child { margin-bottom:0; }
+  .step-card em { font-style:normal; color:#f5f2ec; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <img class="brand" src="aura-logo.png" alt="AURA">
-  <h1>EMAIL SIGNATURE</h1>
-  <p class="sub">COPY &middot; PASTE &middot; PERSONALISE</p>
+  <header class="top">
+    <img class="brand" src="aura-black-logo.gif" alt="AURA">
+    <button class="copy-link" id="copy-btn" onclick="copySig()">
+      <svg class="copy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+      <span id="copy-label">Copy signature</span>
+    </button>
+  </header>
 
   <div class="card" id="sig-card">
     <table id="signature" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;width:auto;max-width:100%;">
@@ -40,29 +50,41 @@
     </table>
   </div>
 
-  <button class="btn" id="copy-btn" onclick="copySig()">COPY SIGNATURE</button>
-
   <div class="steps">
-    <h2>GMAIL</h2>
-    <ol>
-      <li>Copy the signature above.</li>
-      <li>Gmail &rarr; Settings (gear) &rarr; <em>See all settings</em> &rarr; General &rarr; Signature &rarr; <em>Create new</em>.</li>
-      <li>Paste, then edit FULL NAME, JOB TITLE and the phone number to yours.</li>
-      <li>Scroll down, <em>Save changes</em>. Send yourself a test email.</li>
-    </ol>
-    <h2>OUTLOOK</h2>
-    <ol>
-      <li>Copy the signature above.</li>
-      <li>Outlook web: Settings &rarr; Mail &rarr; <em>Compose and reply</em> &rarr; Email signature. Desktop: Settings &rarr; <em>Signatures</em>.</li>
-      <li>Paste, personalise the three placeholder lines, save.</li>
-    </ol>
-    <h2>APPLE MAIL</h2>
-    <ol>
-      <li>Copy, then Mail &rarr; Settings &rarr; Signatures &rarr; +, paste and personalise. Untick <em>"Always match my default message font"</em>.</li>
-    </ol>
+    <div class="step-card">
+      <div class="step-head">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        <h2>GMAIL</h2>
+      </div>
+      <ol>
+        <li>Copy the signature above.</li>
+        <li>Gmail &rarr; Settings (gear) &rarr; <em>See all settings</em> &rarr; General &rarr; Signature &rarr; <em>Create new</em>.</li>
+        <li>Paste, then edit FULL NAME, JOB TITLE and the phone number to yours.</li>
+        <li>Scroll down, <em>Save changes</em>. Send yourself a test email.</li>
+      </ol>
+    </div>
+    <div class="step-card">
+      <div class="step-head">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><ellipse cx="12" cy="12" rx="6.2" ry="7.3"/></svg>
+        <h2>OUTLOOK</h2>
+      </div>
+      <ol>
+        <li>Copy the signature above.</li>
+        <li>Outlook web: Settings &rarr; Mail &rarr; <em>Compose and reply</em> &rarr; Email signature. Desktop: Settings &rarr; <em>Signatures</em>.</li>
+        <li>Paste, personalise the three placeholder lines, save.</li>
+      </ol>
+    </div>
+    <div class="step-card">
+      <div class="step-head">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.36 12.78c.02 2.5 2.19 3.33 2.22 3.34-.02.06-.35 1.19-1.14 2.36-.69 1.02-1.4 2.03-2.52 2.05-1.1.02-1.46-.65-2.72-.65-1.26 0-1.65.63-2.7.67-1.08.04-1.9-1.1-2.6-2.12-1.43-2.06-2.52-5.83-1.05-8.38.73-1.27 2.03-2.07 3.44-2.09 1.06-.02 2.07.72 2.72.72.65 0 1.87-.89 3.15-.76.54.02 2.05.22 3.02 1.64-.08.05-1.8 1.05-1.78 3.15zM14.3 5.36c.58-.7.97-1.68.86-2.66-.83.03-1.84.55-2.44 1.25-.53.62-1 1.61-.88 2.57.93.07 1.87-.47 2.46-1.16z"/></svg>
+        <h2>APPLE MAIL</h2>
+      </div>
+      <ol>
+        <li>Copy, then Mail &rarr; Settings &rarr; Signatures &rarr; +, paste and personalise. Untick <em>&ldquo;Always match my default message font&rdquo;</em>.</li>
+      </ol>
+    </div>
   </div>
 
-  <p class="note">CHANGE ONLY THE NAME, TITLE AND NUMBER.<br>THE LOGO, SPACING AND TERRITORIES STAY &mdash; THE CONSISTENCY IS THE POINT.</p>
 </div>
 
 <script>
@@ -84,9 +106,9 @@ async function copySig() {
     document.execCommand('copy');
     sel.removeAllRanges();
   }
-  btn.textContent = 'COPIED';
+  document.getElementById('copy-label').textContent = 'Copied';
   btn.classList.add('done');
-  setTimeout(() => { btn.textContent = 'COPY SIGNATURE'; btn.classList.remove('done'); }, 2000);
+  setTimeout(() => { document.getElementById('copy-label').textContent = 'Copy signature'; btn.classList.remove('done'); }, 2000);
 }
 </script>
 </body>

@@ -60,6 +60,7 @@ export default function Footer() {
               {[
                 { city: 'SGP', tz: 'Asia/Singapore' },
                 { city: 'IND', tz: 'Asia/Kolkata' },
+                { city: 'BTN', tz: 'Asia/Thimphu' },
                 { city: 'JPN', tz: 'Asia/Tokyo' },
               ].map((loc) => (
                 <div key={loc.city} className="flex flex-col items-center" style={{ gap: 'var(--space-2)' }}>
@@ -94,7 +95,10 @@ export default function Footer() {
       <div
         style={{
           overflow: 'hidden',
-          paddingBottom: '20%',
+          /* The wordmark aspect is 225/710 ≈ 0.317, and this band's height is
+             `paddingBottom` × its width. 0.70 × 0.317 ≈ 0.222 reveals the top
+             70 % of the wordmark, cropping the rest below the fold. */
+          paddingBottom: '22.2%',
           position: 'relative',
           pointerEvents: 'none',
         }}

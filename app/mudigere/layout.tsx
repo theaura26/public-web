@@ -9,11 +9,6 @@ export const metadata: Metadata = {
   description:
     '150 acres at 3,600ft in the Western Ghats. Coffee, tea, cattle, native canopy, and biodiversity.',
   alternates: { canonical: 'https://theaura.life/mudigere' },
-  robots: {
-    index: false,
-    follow: false,
-    googleBot: { index: false, follow: false },
-  },
   openGraph: {
     type: 'article',
     title: 'Mudigere — Aura',

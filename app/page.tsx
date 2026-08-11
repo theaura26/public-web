@@ -1550,6 +1550,9 @@ export default function Home() {
             /* Minimal indent — just enough to nudge the wordmark off the
                column's left edge without losing alignment with the heading. */
             padding-left: 8px;
+            /* The aūra wordmark reads visually low (the macron weights the
+               top), so nudge it up to optically centre it in the row. */
+            margin-top: -4px;
           }
           .hero-mid__logo :global(svg) { width: clamp(96px, 11vw, 132px); height: auto; }
           .hero-mid__think,

@@ -425,7 +425,7 @@ export default function Navbar() {
               alignItems: 'center',
               opacity: showLogo ? 1 : 0,
               transform: showLogo
-                ? 'translate(-50%, -50%)'
+                ? 'translate(-50%, calc(-50% - 2px))'
                 : 'translate(-50%, calc(-50% - 12px))',
               transition: 'opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out)',
               pointerEvents: 'none',
@@ -447,7 +447,7 @@ export default function Navbar() {
               alignItems: 'center',
               opacity: showLogo ? 1 : 0,
               transform: showLogo
-                ? 'translate(-50%, -50%)'
+                ? 'translate(-50%, calc(-50% - 2px))'
                 : 'translate(-50%, calc(-50% - 12px))',
               transition: 'opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out)',
               pointerEvents: showLogo ? 'auto' : 'none',

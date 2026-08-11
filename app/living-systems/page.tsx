@@ -62,7 +62,7 @@ export default function LivingSystemsPage() {
         <DataCard
           video="/journals/living-systems/aura-canopy.mp4"
           poster="/journals/living-systems/aura-canopy.jpg"
-          alt="Looking up through the four-story canopy at Sampigekhan Estate — silver oak and jackfruit moving in the wind"
+          alt="Looking up through the four-story canopy at Aura Estate — silver oak and jackfruit moving in the wind"
           value="01 — Canopy."
         >
           Silver oak, Albizzia, jackfruit, fig, native hardwoods. Target cover

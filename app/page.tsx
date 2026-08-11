@@ -2156,7 +2156,7 @@ function AgentHomeView() {
       <ul>
         <li><a href="/reason">/reason</a> — the founder&rsquo;s story, in 14 chapters.</li>
         <li><a href="/brand">/brand</a> — brand identity, principles, colours, type.</li>
-        <li><a href="/mudigere">/mudigere</a> — Sampigekhan Estate, the Indian land.</li>
+        <li><a href="/mudigere">/mudigere</a> — Aura Estate, the Indian land.</li>
         <li><a href="/ohara">/ohara</a> — the Kyoto estate. Asa and Niwa.</li>
         <li><a href="/herd">/herd</a> — Ecosystem Engineers. The herd as biological engine.</li>
         <li><a href="/circular">/circular</a> — Circular Intelligence. CPP and Jeevamrit.</li>

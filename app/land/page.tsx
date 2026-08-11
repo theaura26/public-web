@@ -22,7 +22,7 @@ export default function LandPage() {
 
       <TwoCol heading="Land is ancestry.">
         <p className="p1">
-          Sampigekhan Estate sits in the <Term tip="A mountain range down India's west coast — older than the Himalaya, and one of the world's eight 'hottest' biodiversity hotspots, with over 7,000 plant species.">Western Ghats</Term> of Karnataka, on red{' '}
+          Aura Estate sits in the <Term tip="A mountain range down India's west coast — older than the Himalaya, and one of the world's eight 'hottest' biodiversity hotspots, with over 7,000 plant species.">Western Ghats</Term> of Karnataka, on red{' '}
           <Term tip="Iron- and aluminium-rich soil formed by deep tropical weathering — not a volcanic rock itself, but the long residue of one, the Deccan basalt, broken down over ages of monsoon.">laterite</Term>:
           soil that is itself the record of a very long weathering, under a monsoon
           older than agriculture and a four-story canopy older than any of us.
@@ -39,11 +39,11 @@ export default function LandPage() {
 
       <Placeholder
         src="/journals/land/aura-canopy-noon-2.jpg"
-        alt="Light filtering through the four-story canopy at noon — Sampigekhan Estate"
+        alt="Light filtering through the four-story canopy at noon — Aura Estate"
         caption="The land — 150 acres, one organism"
       />
 
-      <TwoCol id="facts" heading="Sampigekhan.">
+      <TwoCol id="facts" heading="Aura Estate.">
         <DataGrid cols={3}>
           <DataCard value="13.1365°N, 75.6403°E">Coordinates.</DataCard>
           <DataCard value="3,600 ft">Altitude.</DataCard>
@@ -64,7 +64,7 @@ export default function LandPage() {
         mediaType="video"
         poster="/journals/land/aura-canopy-noon.jpg"
         alt="Looking up at the four-story canopy at noon — silver oak, Albizzia, jackfruit, fig"
-        caption="Four-story canopy — Sampigekhan Estate"
+        caption="Four-story canopy — Aura Estate"
       />
 
       <TwoCol id="grows" heading="What grows here.">
@@ -135,7 +135,7 @@ export default function LandPage() {
       <DataGrid cols={2} standalone>
         <DataCard
           img="/journals/land/aura-mudigere-mountains.jpg"
-          alt="Mudigere mountains rising over the Western Ghats — the valley that holds Sampigekhan Estate"
+          alt="Mudigere mountains rising over the Western Ghats — the valley that holds Aura Estate"
           value="Mudigere · Karnataka."
         >
           150 acres, 3,600 ft, laterite soil, UNESCO biodiversity zone. Four-

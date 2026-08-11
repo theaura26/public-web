@@ -355,7 +355,7 @@ export default function MudigerePage() {
           className="label mud-hero__caption"
           style={{ position: 'absolute', left: 'clamp(20px, 4vw, 48px)', bottom: 'clamp(20px, 4vh, 48px)', margin: 0, maxWidth: 'min(340px, 66vw)', color: '#ffffff', letterSpacing: '1px', lineHeight: 1.5, textShadow: '0 1px 12px rgba(0, 0, 0, 0.4)', zIndex: 5, pointerEvents: 'none' }}
         >
-          Sampigekhan Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
+          Aura Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
         </p>
       </section>
 
@@ -393,7 +393,7 @@ export default function MudigerePage() {
         <div style={{ position: 'sticky', top: '50vh', height: 0, zIndex: 4, display: 'flex', justifyContent: 'center', alignItems: 'flex-start', pointerEvents: 'none' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/mudigere/aura-estate-wordmark.png"
+            src="/mudigere/aura-estate.png"
             alt=""
             aria-hidden
             className="mud-pin-mark"
@@ -403,22 +403,22 @@ export default function MudigerePage() {
         <ParallaxBanner
           video="/mudigere/aura-estate-top-view.mp4"
           poster="/mudigere/aura-estate-top-view.jpg"
-          alt="The four-story canopy from above — Sampigekhan, Western Ghats"
+          alt="The four-story canopy from above — Aura Estate, Western Ghats"
           caption="Noon over the four-story canopy"
         />
         <FilmBanner
           youtubeId="NA-qtu8JljA"
           bgVideo="/mudigere/aura-estate-walkthrough.mp4"
           poster="/mudigere/aura-estate-walkthrough.jpg"
-          alt="The estate on film — Sampigekhan, Western Ghats"
-          note="Explore Sampigekhan Estate"
+          alt="The estate on film — Aura Estate, Western Ghats"
+          note="Explore Aura Estate"
           caption="The estate, on film"
         />
       </div>
 
       <Movement id="estate" heading={<>A hundred and fifty acres, read as one.</>}>
         <p className="p1">
-          Sampigekhan lies in Chikmagalur district, forty-five minutes
+          Aura Estate lies in Chikmagalur district, forty-five minutes
           from town — the last stretch an unpaved ghat road that drops
           through mist into coffee country. Every acre is mapped at
           1:2,500: boundary, contour, water channel, and standing
@@ -536,7 +536,7 @@ export default function MudigerePage() {
       {/* Two crops banners — divide the forest layers from the coffee. */}
       <ParallaxBanner
         image="/journals/coffee/aura-our-coffee-story.jpg"
-        alt="Six micro lots · Arabica Sln.9 & Sln.795 · Sampigekhan Estate"
+        alt="Six micro lots · Arabica Sln.9 & Sln.795 · Aura Estate"
         caption="Six lots, picked dead ripe"
       />
       <ParallaxBanner
@@ -719,7 +719,7 @@ export default function MudigerePage() {
         youtubeId="bFTZUfn4D0A"
         bgVideo="/mudigere/aura-vision.mp4"
         poster="/mudigere/aura-vision.jpg"
-        alt="The estate on film — Sampigekhan, Western Ghats"
+        alt="The estate on film — Aura Estate, Western Ghats"
         note="Rebuilt as a living system — the forest of 2125"
         caption="Watch our story"
       />

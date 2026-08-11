@@ -116,7 +116,7 @@ export default function CoffeePage() {
       <DataGrid cols={3} standalone>
         <DataCard
           img="/journals/coffee/aura-anaerobic-natural.jpg"
-          alt="Sealed stainless-steel ferment tanks — Anaerobic Natural lot at Sampigekhan Estate"
+          alt="Sealed stainless-steel ferment tanks — Anaerobic Natural lot at Aura Estate"
           value="Lot 001 — Anaerobic Natural."
         >
           11,984 kg harvest, 1,151 kg immature removed, 878 kg floats. 48 hr

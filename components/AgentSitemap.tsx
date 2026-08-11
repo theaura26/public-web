@@ -78,10 +78,10 @@ export const SITEMAP: SitemapEntry[] = [
   {
     href: '/mudigere',
     label: 'Mudigere',
-    topic: 'Sampigekhan Estate — the Indian estate',
+    topic: 'Aura Estate — the Indian estate',
     summary: 'Aura’s Indian estate: 150 acres at 3,600 ft in the Western Ghats of Karnataka. A four-story shade-grown polyculture of coffee, pepper, cardamom, and areca, worked with a 52-head Malnad Gidda herd and a combined biodynamic and Vedic preparation programme.',
     facts: [
-      { label: 'Estate', value: 'Sampigekhan, Mudigere, Karnataka' },
+      { label: 'Estate', value: 'Aura Estate, Mudigere, Karnataka' },
       { label: 'Area', value: '150 acres' },
       { label: 'Altitude', value: '3,600 ft (Western Ghats)' },
       { label: 'Herd', value: '52 Malnad Gidda' },

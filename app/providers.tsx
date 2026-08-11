@@ -40,6 +40,15 @@ export function Analytics({ children }: { children: ReactNode }) {
       persistence: 'localStorage+cookie',   // fullest: stable cross-session identity
       person_profiles: 'always',            // profile every visitor (tune to
                                             // 'identified_only' to trim cost)
+      capture_exceptions: true,             // error tracking: autocapture unhandled
+                                            // JS exceptions + promise rejections
+      session_recording: {
+        // Session replay is configured here but only RECORDS once it's also
+        // switched on in the PostHog project (Settings → Session Replay).
+        // maskAllInputs hides every form value (contact name/email/message) so
+        // PII never enters a recording — important on a cookie-tracked EU site.
+        maskAllInputs: true,
+      },
     })
   }, [])
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { track } from '@/lib/analytics'
+import { track, identify } from '@/lib/analytics'
 import Reveal from '@/components/RevealOnScroll'
 import { Continue } from '@/components/article/Article'
 
@@ -82,6 +82,13 @@ export default function ContactPage() {
       }
 
       setStatus('sent')
+      // The one place a visitor resolves into a known person on this no-auth
+      // site — identify by the email they just gave us, then attribute the event.
+      identify(fields.email.trim(), {
+        name: fields.name.trim(),
+        email: fields.email.trim(),
+        latest_contact_topic: TOPICS[fields.topic] || fields.topic,
+      })
       track('contact_submit', { topic: TOPICS[fields.topic] || fields.topic, source: 'page' })
     } catch (err) {
       setStatus('error')

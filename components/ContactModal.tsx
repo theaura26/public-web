@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { track } from '@/lib/analytics'
+import { track, identify } from '@/lib/analytics'
 
 /* ── ContactModal ────────────────────────────────────────────────
    Small popup that replicates the /contact page's form — same four
@@ -122,6 +122,13 @@ export default function ContactModal({
         throw new Error(data.error || 'Failed to send.')
       }
       setStatus('sent')
+      // The one place a visitor resolves into a known person on this no-auth
+      // site — identify by the email they just gave us, then attribute the event.
+      identify(fields.email.trim(), {
+        name: fields.name.trim(),
+        email: fields.email.trim(),
+        latest_contact_topic: TOPICS[fields.topic] || fields.topic,
+      })
       track('contact_submit', { topic: TOPICS[fields.topic] || fields.topic, source: 'modal' })
     } catch (err) {
       setStatus('error')

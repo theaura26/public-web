@@ -431,7 +431,7 @@ export default function Navbar() {
               pointerEvents: 'none',
             }}
           >
-            <LogoEmblem size={92} />
+            <LogoEmblem size={83} />
           </span>
         ) : (
           <Link
@@ -453,7 +453,7 @@ export default function Navbar() {
               pointerEvents: showLogo ? 'auto' : 'none',
             }}
           >
-            <LogoEmblem size={92} />
+            <LogoEmblem size={83} />
           </Link>
         )}
 

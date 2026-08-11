@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { track } from '@/lib/analytics'
 
 /* ═══════════════════════════════════════════════════════════════════
    FILM BANNER — a full-bleed poster block that opens the film fullscreen.
@@ -175,7 +176,10 @@ export function FilmBanner({ youtubeId, poster, alt = '', caption, note, bgVideo
       <button
         type="button"
         className="film-banner__hit"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true)
+          track('film_play', { film: caption ?? 'film', note })
+        }}
         aria-label={caption ? `Play the film — ${caption}` : 'Play the film'}
       />
 
@@ -269,7 +273,8 @@ export function FilmBanner({ youtubeId, poster, alt = '', caption, note, bgVideo
           pointer-events: none;
         }
         @media (max-width: 768px) {
-          .film-banner__cta { bottom: var(--gutter); }
+          .film-banner__cta { bottom: var(--gutter); max-width: 46%; }
+          .film-banner__cta .label { font-size: 10px; letter-spacing: 1.5px; line-height: 1.35; }
         }
         .film-banner__cta-icon {
           flex: 0 0 auto;
@@ -299,7 +304,13 @@ export function FilmBanner({ youtubeId, poster, alt = '', caption, note, bgVideo
           pointer-events: none;
         }
         @media (max-width: 768px) {
-          .film-banner__note { bottom: var(--gutter); max-width: 56%; }
+          .film-banner__note {
+            bottom: var(--gutter);
+            max-width: 40%;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            line-height: 1.35;
+          }
         }
         /* Fullscreen film overlay */
         .film-banner__fs {
@@ -313,10 +324,15 @@ export function FilmBanner({ youtubeId, poster, alt = '', caption, note, bgVideo
           animation: film-fade var(--dur-base) var(--ease-out);
         }
         @keyframes film-fade { from { opacity: 0; } to { opacity: 1; } }
+        /* Centred 16:9 player that fits the viewport — on portrait phones
+           this keeps the video and its control chrome together as one block
+           instead of a small 16:9 band floating in a tall black frame. */
         .film-banner__frame {
           position: relative;
-          width: 100%;
-          height: 100%;
+          width: min(100vw, calc(100svh * 16 / 9));
+          aspect-ratio: 16 / 9;
+          max-width: 100vw;
+          max-height: 100svh;
           overflow: hidden;
         }
         /* Iframe fills the frame exactly — the control bar at the bottom

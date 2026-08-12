@@ -96,9 +96,9 @@ export default function Footer() {
         style={{
           overflow: 'hidden',
           /* The wordmark aspect is 225/710 ≈ 0.317, and this band's height is
-             `paddingBottom` × its width. 0.70 × 0.317 ≈ 0.222 reveals the top
-             70 % of the wordmark, cropping the rest below the fold. */
-          paddingBottom: '22.2%',
+             `paddingBottom` × its width. 0.90 × 0.317 ≈ 0.285 reveals the top
+             90 % of the wordmark, cropping the rest below the fold. */
+          paddingBottom: '28.5%',
           position: 'relative',
           pointerEvents: 'none',
         }}

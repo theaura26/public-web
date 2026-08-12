@@ -30,11 +30,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 1.0,
     },
-    /* NOTE: /mudigere is intentionally omitted — its layout sets
-       robots: noindex, so listing it here would be a sitemap/noindex
-       conflict (Search Console: "Submitted URL marked noindex"). If the
-       estate page should be public, remove the noindex in
-       app/mudigere/layout.tsx and re-add it here. */
+    /* The estate — a flagship destination, public and indexable
+       (app/mudigere/layout.tsx is index:true). /mudigere-estate stays
+       private: it's noindex and deliberately not listed here. */
+    {
+      url: `${base}/mudigere`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
     ...pages,
     ...journals,
   ]

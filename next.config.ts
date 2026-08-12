@@ -26,14 +26,10 @@ const nextConfig: NextConfig = {
       { source: '/ingest/:path*', destination: 'https://eu.i.posthog.com/:path*' },
     ]
   },
-  /* /mudigere-estate was the original architect's-briefing page;
-     /mudigere superseded it with a richer treatment. One canonical
-     page now — redirect the old URL so any existing links don't 404. */
-  async redirects() {
-    return [
-      { source: '/mudigere-estate', destination: '/mudigere', permanent: false },
-    ]
-  },
+  /* No redirect from /mudigere-estate → /mudigere: they are intentionally
+     separate pages for different audiences. /mudigere is the public flagship
+     (indexed, in the sitemap); /mudigere-estate is the architect's briefing,
+     reached by direct URL only (noindex, not in the sitemap). */
   /* Belt-and-braces on the noindex meta the signature page already carries:
      an X-Robots-Tag header, so crawlers are told noindex at the HTTP level
      too. The path is deliberately NOT disallowed in robots.txt — a blocked

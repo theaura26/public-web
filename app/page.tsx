@@ -1532,17 +1532,6 @@ export default function Home() {
             justify-content: space-between;
             white-space: nowrap;
           }
-          /* NATURAL / INTELLIGENCE (the h1) stacks as two centred lines with
-             tight leading, so it reads as one locked-up headline rather than
-             the edge-to-edge GENERATIONAL IMPACT line. Applies on every
-             breakpoint — higher specificity than the mobile block override
-             below keeps the two words stacked and snug on phones too. */
-          .hero-display.hero-anim--fall {
-            flex-direction: column;
-            align-items: center;
-            line-height: 1.0;
-          }
-          .hero-display.hero-anim--fall :global(span) { display: block; }
 
           /* Same column structure as the tile grid below, so the mid-row text
              aligns with the tile captions vertically. */
@@ -1561,6 +1550,9 @@ export default function Home() {
             /* Minimal indent — just enough to nudge the wordmark off the
                column's left edge without losing alignment with the heading. */
             padding-left: 8px;
+            /* The aūra wordmark reads visually low (the macron weights the
+               top), so nudge it up to optically centre it in the row. */
+            margin-top: -4px;
           }
           .hero-mid__logo :global(svg) { width: clamp(96px, 11vw, 132px); height: auto; }
           .hero-mid__think,

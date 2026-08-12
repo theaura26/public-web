@@ -1,19 +1,15 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
-/* The canonical architect's-briefing page. /mudigere-estate was the
-   original version this superseded — it now redirects here
-   (next.config.ts) and its route files are unused. */
+/* /mudigere — the public flagship estate page (indexed, in the sitemap).
+   Intentionally separate from /mudigere-estate, the architect's-briefing
+   page kept for a different audience (noindex, direct URL only). Neither
+   page redirects to the other. */
 export const metadata: Metadata = {
   title: 'Mudigere',
   description:
     '150 acres at 3,600ft in the Western Ghats. Coffee, tea, cattle, native canopy, and biodiversity.',
   alternates: { canonical: 'https://theaura.life/mudigere' },
-  robots: {
-    index: false,
-    follow: false,
-    googleBot: { index: false, follow: false },
-  },
   openGraph: {
     type: 'article',
     title: 'Mudigere — Aura',

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Bricolage_Grotesque, Instrument_Serif, DM_Sans, DM_Mono, Pixelify_Sans, Mynerve } from 'next/font/google'
+import { Bricolage_Grotesque, Instrument_Serif, DM_Mono, Pixelify_Sans, Mynerve } from 'next/font/google'
 import './globals.css'
 import ClientLayout from './client-layout'
 
@@ -13,12 +13,6 @@ const instrumentSerif = Instrument_Serif({
   weight: '400',
   subsets: ['latin'],
   variable: '--font-serif',
-  display: 'swap',
-})
-
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  variable: '--font-sans',
   display: 'swap',
 })
 
@@ -127,7 +121,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${instrumentSerif.variable} ${dmSans.variable} ${dmMono.variable} ${pixelifySans.variable} ${mynerve.variable}`}>
+    <html lang="en" className={`${bricolage.variable} ${instrumentSerif.variable} ${dmMono.variable} ${pixelifySans.variable} ${mynerve.variable}`}>
       <body>
         <script
           type="application/ld+json"

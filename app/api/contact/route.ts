@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
     const { error } = await resend.emails.send({
       from: 'Aura Contact <contact@theaura.life>',
-      to: ['hello@theaura.life', 'poon@theaura.life', 'aman@theaura.life'],
+      to: ['hello@theaura.life', 'poon@theaura.life', 'aman@theaura.life', 'arvind@theaura.life', 'erik@theaura.life'],
       replyTo: email,
       subject: `${topic} — ${name}`,
       text: [

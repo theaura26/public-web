@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Body typeface is Bricolage Grotesque — DM Sans has been retired. The body
+   font variable now aliases the grotesque, so every `var(--font-sans)` usage
+   resolves to Bricolage. DM Mono (--font-mono) remains the technical face. */
+:root { --font-sans: var(--font-grotesque); }
+
 /* Belmonte Ballpoint (Typeheist) — used for <PullQuote>. The
    foundry ships two cuts (Cursive + Print) and two web formats
    per cut (woff2 + woff). woff2 is the modern format every current

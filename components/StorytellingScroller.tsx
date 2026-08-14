@@ -170,7 +170,10 @@ export function StorytellingScroller({
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                /* Defer all backdrop video bytes until a passage activates
+                   (playPassage calls play()); the poster still shows the
+                   frame meanwhile — avoids up to 20 metadata fetches on load. */
+                preload="none"
                 poster={m.poster}
                 aria-label={m.alt}
                 style={m.objectPosition ? { objectPosition: m.objectPosition } : undefined}

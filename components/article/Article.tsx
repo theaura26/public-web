@@ -1156,26 +1156,33 @@ export function SpecTable({
           border-bottom: 0;
           padding-bottom: 4px;
         }
+        /* Row label — LABEL style: DM Mono, uppercase eyebrow (matches .label). */
         .spec__label {
           font-family: var(--font-mono);
-          font-size: clamp(13px, 1.15vw, 15px);
+          font-size: 11px;
+          font-weight: 400;
+          letter-spacing: 1px;
+          text-transform: uppercase;
           line-height: 1.45;
           color: var(--text-body);
           margin: 0;
         }
+        /* Row value — PARA style: Bricolage Grotesque body (maps to .p2 size),
+           full-strength colour so the reading stands out from its label. */
         .spec__value {
-          font-family: var(--font-mono);
-          font-size: clamp(13px, 1.15vw, 15px);
-          line-height: 1.45;
+          font-family: var(--font-sans);
+          font-size: 14px;
+          line-height: 1.6;
           color: var(--text);
           text-align: right;
           margin: 0;
           white-space: nowrap;
         }
+        /* Footnote — CAPTION style: small, muted Bricolage fine print. */
         .spec__note {
-          font-family: var(--font-mono);
-          font-size: 11px;
-          letter-spacing: 0.5px;
+          font-family: var(--font-sans);
+          font-size: 12.5px;
+          line-height: 1.5;
           color: var(--text-muted);
           margin: 22px 0 0;
         }
@@ -1244,8 +1251,8 @@ export function Portrait({
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={src} alt={alt} loading="lazy" decoding="async" />
               ) : null}
-              {caption && <figcaption className="label portrait__caption">{caption}</figcaption>}
             </div>
+            {caption && <figcaption className="label portrait__caption">{caption}</figcaption>}
             <style jsx>{`
               .portrait {
                 margin: 0;
@@ -1269,15 +1276,12 @@ export function Portrait({
                 object-fit: cover;
                 display: block;
               }
+              /* Caption sits BELOW the image (outside the visual), as a muted
+                 mono label — not overlaid on the photo. */
               .portrait__caption {
-                position: absolute;
-                left: clamp(14px, 2vw, 22px);
-                bottom: clamp(14px, 2vw, 22px);
-                right: clamp(14px, 2vw, 22px);
-                margin: 0;
-                color: #fff;
+                margin: clamp(10px, 1.4vw, 16px) 0 0;
+                color: var(--text-muted);
                 text-align: left;
-                text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
               }
             `}</style>
           </figure>

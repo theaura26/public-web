@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import {
   DataGrid,
   DataCard,
@@ -10,7 +10,7 @@ import {
   Term,
 } from '@/components/article/Article'
 import Reveal from '@/components/RevealOnScroll'
-import { ParallaxBanner } from '@/components/ParallaxBanner'
+import { StorytellingScroller } from '@/components/StorytellingScroller'
 import { WordmarkIntro } from '@/components/WordmarkIntro'
 import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun, CloudMoon } from '@phosphor-icons/react'
 
@@ -145,6 +145,51 @@ function Movement({ id, heading, children }: { id?: string; heading: React.React
   )
 }
 
+/* EXPERIMENT (offline): the six image passages, in page order. Each feeds
+   the single sticky crossfade backdrop as its gap scrolls the viewport —
+   image fades, to a solid editorial panel, to a different image fading.
+   `perVh` is vh of scroll per image (bigger = slower / deeper). */
+const OHARA_PASSAGES = [
+  // A · ARRIVAL — into the valley in motion
+  { perVh: 150, caption: 'The valley, from the ridge', media: [
+    { video: '/ohara/videos/aura-header.mp4', poster: '/ohara/images/aura-header.jpg', alt: 'The Ohara valley from the ridge — cedar slopes and the river below', caption: 'The valley, from the ridge' },
+    { video: '/ohara/videos/aura-river.mp4', poster: '/ohara/images/aura-river.jpg', alt: 'The river running through the Ohara valley', caption: 'The river, through the valley' },
+    { video: '/ohara/videos/aura-weather.mp4', poster: '/ohara/images/aura-weather.jpg', alt: 'Mist moving through the Ohara valley', caption: 'Weather, moving through' },
+    { video: '/ohara/videos/aura-gate.mp4', poster: '/ohara/images/aura-gate.jpg', alt: 'The gate at Ohara — stone lanterns and a moss-lined path into the garden', caption: 'The gate, one stone at a time' },
+  ] },
+  // B · RESTORATION — the roofline, the teahouse, the kept mark
+  { perVh: 145, caption: 'Inside the restored teahouse', media: [
+    { image: '/ohara/images/aura-moss.jpg', alt: 'Moss and fallen maple leaves on the restored roofline', caption: 'The restored roofline, kept aging' },
+    { image: '/ohara/images/aura-interior.jpg', alt: "Inside the restored teahouse — the craftsman's repair", caption: 'Inside the teahouse' },
+    { image: '/ohara/images/aura-emblem.jpg', alt: 'A carved emblem kept from the original home', caption: 'A mark kept from the original' },
+  ] },
+  // C · ASA — the morning counter
+  { perVh: 150, caption: 'The morning counter', media: [
+    { image: '/ohara/images/aura-matcha.jpg', alt: 'Matcha whisked at the morning counter', caption: 'The morning counter' },
+    { video: '/ohara/videos/aura-indigo.mp4', poster: '/ohara/images/aura-indigo.jpg', alt: 'Indigo-dyed cloth lifted from the vat to oxidise', caption: 'Indigo, taking colour from the air' },
+  ] },
+  // D · NIWA — the table the valley sets
+  { perVh: 145, caption: 'The fields that feed the table', media: [
+    { image: '/ohara/images/aura-organic.jpg', alt: 'Organic produce gathered from the valley and greenhouse', caption: 'Foraged and grown' },
+    { image: '/ohara/images/aura-bento.jpg', alt: "An obanzai plate built from the valley's produce", caption: 'Written around what arrived' },
+    { image: '/ohara/images/aura-farm.jpg', alt: 'The kitchen garden and terraced fields that feed the table', caption: 'The fields that feed the table' },
+  ] },
+  // E · KI NO IE — the pavilion by the river
+  { perVh: 145, caption: 'Reclaimed cedar, grown in by herbs', media: [
+    { video: '/ohara/videos/aura-flower.mp4', poster: '/ohara/images/aura-flower.jpg', alt: 'Flowers and herbs growing in around the pavilion', caption: 'Grown in by vines and herbs' },
+    { image: '/ohara/images/aura-inside.jpg', alt: 'Reclaimed cedar joinery inside the pavilion', caption: 'Reclaimed cedar, unpainted' },
+    { image: '/ohara/images/aura-fountain.jpg', alt: 'A stone water basin beside the pavilion', caption: 'Stillness, kept by running water', objectPosition: 'center 68%' },
+  ] },
+  // F · SEASONS — the garden, autumn into winter
+  { perVh: 140, caption: 'The garden, autumn into winter', media: [
+    { video: '/ohara/videos/aura-autumn.mp4', poster: '/ohara/images/aura-autumn.jpg', alt: 'Autumn maple over the moss-grown eaves at Ohara', caption: 'The garden, in autumn' },
+    { image: '/ohara/images/aura-autumnleaves.jpg', alt: 'Fallen autumn leaves across the moss at Ohara', caption: 'Autumn, come to the ground' },
+    { video: '/ohara/videos/aura-winter1.mp4', poster: '/ohara/images/aura-winter1.jpg', alt: 'The same corner of the garden under snow', caption: 'The same corner, in winter' },
+    { image: '/ohara/images/aura-winter2.jpg', alt: "Snow settled on the garden's stone and moss", caption: 'Snow on stone and moss' },
+    { video: '/ohara/videos/aura-winter3.mp4', poster: '/ohara/images/aura-winter3.jpg', alt: 'Snow falling through the bare maple at Ohara', caption: 'Snow through the bare maple' },
+  ] },
+]
+
 export default function OharaPage() {
   return (
     <>
@@ -207,45 +252,22 @@ export default function OharaPage() {
         }
       `}</style>
 
-      {/* ═══ 1 · OHARA — a white field; the wordmark writes itself in ═══ */}
+      <StorytellingScroller
+        passages={OHARA_PASSAGES}
+        sections={[
+
+      /* ═══ S0 · OHARA — a white field; the wordmark writes itself in ═══ */
+      <Fragment key="s0">
       <WordmarkIntro
         src="/ohara/aura-ohara-wordmark.svg"
         caption="Ohara valley · north of Kyoto · Kyoto Prefecture, Japan"
         alt="Ohara"
       />
+      </Fragment>,
 
-      {/* ═══ 2 · ARRIVAL ═══ — straight from the wordmark into the valley
-          in motion: the ridge, the river, the weather, the gate. */}
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          video="/ohara/videos/aura-header.mp4"
-          poster="/ohara/images/aura-header.jpg"
-          alt="The Ohara valley from the ridge — cedar slopes and the river below"
-          caption="The valley, from the ridge"
-        />
-        <ParallaxBanner
-          video="/ohara/videos/aura-river.mp4"
-          poster="/ohara/images/aura-river.jpg"
-          alt="The river running through the Ohara valley"
-          caption="The river, through the valley"
-        />
-        <ParallaxBanner
-          video="/ohara/videos/aura-weather.mp4"
-          poster="/ohara/images/aura-weather.jpg"
-          alt="Mist moving through the Ohara valley"
-          caption="Weather, moving through"
-        />
-        <ParallaxBanner
-          video="/ohara/videos/aura-gate.mp4"
-          poster="/ohara/images/aura-gate.jpg"
-          alt="The gate at Ohara — stone lanterns and a moss-lined path into the garden"
-          caption="The gate, one stone at a time"
-        />
-      </div>
-
-      {/* ═══ 3 · ESSENCE ═══ — Preface + Valley of Stillness + Essence
-          of Aura, read as one opening movement. Where Mudigere opens
-          on geology, Ohara opens on philosophy. */}
+      /* ═══ S1 · ESSENCE + VISION — the valley's philosophy, the home renewed
+             by hand. Passage A (arrival) reveals between S0 and S1. ═══ */
+      <Fragment key="s1">
       <Movement heading={<>A valley that keeps its own time.</>}>
         <p className="p1">
           North of Kyoto, in the Ohara valley, Aura keeps a sanctuary — cedar
@@ -307,25 +329,11 @@ export default function OharaPage() {
           </Reveal>
         </div>
       </section>
+      </Fragment>,
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          image="/ohara/images/aura-moss.jpg"
-          alt="Moss and fallen maple leaves on the restored roofline"
-          caption="The restored roofline, kept aging"
-        />
-        <ParallaxBanner
-          image="/ohara/images/aura-interior.jpg"
-          alt="Inside the restored teahouse — the craftsman's repair"
-          caption="Inside the teahouse"
-        />
-        <ParallaxBanner
-          image="/ohara/images/aura-emblem.jpg"
-          alt="A carved emblem kept from the original home"
-          caption="A mark kept from the original"
-        />
-      </div>
-
+      /* ═══ S2 · RENEWAL + RHYTHM + ASA — what renewal looks like, the three
+             rooms, the morning. Passage B (restoration) reveals here. ═══ */
+      <Fragment key="s2">
       <Movement heading={<>What renewal actually looks like.</>}>
         <p className="p1">
           The old roof, re-laid tile by tile with the moss still on it. The
@@ -389,22 +397,11 @@ export default function OharaPage() {
           again, where care applied by hand is its own kind of rigour.
         </p>
       </Movement>
+      </Fragment>,
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          image="/ohara/images/aura-matcha.jpg"
-          alt="Matcha whisked at the morning counter"
-          caption="The morning counter"
-        />
-        <ParallaxBanner
-          video="/ohara/videos/aura-indigo.mp4"
-          poster="/ohara/images/aura-indigo.jpg"
-          alt="Indigo-dyed cloth lifted from the vat to oxidise"
-          caption="Indigo, taking colour from the air"
-        />
-      </div>
-
-      {/* ═══ 7 · NIWA — the evening ═══ */}
+      /* ═══ S3 · NIWA — the evening table, and what the valley gives.
+             Passage C (asa: matcha, indigo) reveals here. ═══ */
+      <Fragment key="s3">
       <Movement id="niwa" heading={<>The table the valley sets.</>}>
         <p className="p1">
           Sixteen seats, Friday through Sunday. Dinner is built from
@@ -431,29 +428,11 @@ export default function OharaPage() {
           between them, and neither should the plate.
         </p>
       </Movement>
+      </Fragment>,
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          image="/ohara/images/aura-organic.jpg"
-          alt="Organic produce gathered from the valley and greenhouse"
-          caption="Foraged and grown"
-        />
-        <ParallaxBanner
-          image="/ohara/images/aura-bento.jpg"
-          alt="An obanzai plate built from the valley's produce"
-          caption="Written around what arrived"
-        />
-        <ParallaxBanner
-          image="/ohara/images/aura-farm.jpg"
-          alt="The kitchen garden and terraced fields that feed the table"
-          caption="The fields that feed the table"
-        />
-      </div>
-
-      {/* ═══ 8 · KI NO IE, RETAIL, WELLBEING ═══ — the spaces and
-          rhythms that hold Asa and Niwa together. Denser movement,
-          mirroring how Mudigere's People & Vision folds residency,
-          community, and phase-one into a single beat. */}
+      /* ═══ S4 · KI NO IE — the pavilion by the river, the room for makers.
+             Passage D (niwa: the table) reveals here. ═══ */
+      <Fragment key="s4">
       <Movement id="ki-no-ie" heading={<>季の家 — a pavilion by the river.</>}>
         <p className="p1">
           <Term tip="季の家 — literally 'house of the seasons.' 季 (ki) is the character used for season-marking words like 季節 (kisetsu, the four seasons themselves).">Ki no Ie</Term>,
@@ -473,29 +452,11 @@ export default function OharaPage() {
           nights, seen now from where it actually stands.
         </p>
       </Movement>
+      </Fragment>,
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          video="/ohara/videos/aura-flower.mp4"
-          poster="/ohara/images/aura-flower.jpg"
-          alt="Flowers and herbs growing in around the pavilion"
-          caption="Grown in by vines and herbs"
-        />
-        <ParallaxBanner
-          image="/ohara/images/aura-inside.jpg"
-          alt="Reclaimed cedar joinery inside the pavilion"
-          caption="Reclaimed cedar, unpainted"
-        />
-        <ParallaxBanner
-          image="/ohara/images/aura-fountain.jpg"
-          alt="A stone water basin beside the pavilion"
-          caption="Stillness, kept by running water"
-          crop
-          ratio="2 / 1"
-          objectPosition="center 68%"
-        />
-      </div>
-
+      /* ═══ S5 · CRAFT + ABOUT AURA — the valley's makers, the brand as a stanza.
+             Passage E (ki no ie: the pavilion) reveals here. ═══ */
+      <Fragment key="s5">
       <DataGrid cols={3} standalone rule>
         <DataCard value="One weaver, one thread.">
           The valley&rsquo;s textile atelier still dyes with what grows in it
@@ -521,41 +482,11 @@ export default function OharaPage() {
 Body. A place built to coexist with nature.
 Soul. A rhythm felt before it is seen.
 Aura builds one living system — design, nature, and human rhythm, together.`}</ScrollHighlight>
+      </Fragment>,
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          video="/ohara/videos/aura-autumn.mp4"
-          poster="/ohara/images/aura-autumn.jpg"
-          alt="Autumn maple over the moss-grown eaves at Ohara"
-          caption="The garden, in autumn"
-        />
-        <ParallaxBanner
-          image="/ohara/images/aura-autumnleaves.jpg"
-          alt="Fallen autumn leaves across the moss at Ohara"
-          caption="Autumn, come to the ground"
-        />
-        <ParallaxBanner
-          video="/ohara/videos/aura-winter1.mp4"
-          poster="/ohara/images/aura-winter1.jpg"
-          alt="The same corner of the garden under snow"
-          caption="The same corner, in winter"
-        />
-        <ParallaxBanner
-          image="/ohara/images/aura-winter2.jpg"
-          alt="Snow settled on the garden's stone and moss"
-          caption="Snow on stone and moss"
-        />
-        <ParallaxBanner
-          video="/ohara/videos/aura-winter3.mp4"
-          poster="/ohara/images/aura-winter3.jpg"
-          alt="Snow falling through the bare maple at Ohara"
-          caption="Snow through the bare maple"
-        />
-      </div>
-
-      {/* ═══ 10 · SHU – HA – RI ═══ — the practical shape of the next
-          three years, closing on fact the way Mudigere closes on
-          spirit: the flip completed. */}
+      /* ═══ S6 · SHU-HA-RI + END — the three-year shape, the closing stanza.
+             Passage F (seasons: autumn into winter) reveals here. ═══ */
+      <Fragment key="s6">
       <Movement id="shu-ha-ri" heading={<>Shu, Ha, Ri — the shape of what comes next.</>}>
         <p className="p1">
           <Term tip="守破離 — a martial-arts and craft principle: first preserve the form exactly, then adapt it, then move beyond needing it as a form at all. Aura reads that third stage as integration — the practice fully absorbed into how the place runs.">Shu-Ha-Ri</Term> —
@@ -597,6 +528,10 @@ a place to return to, and to hand on.`}</ScrollHighlight>
           { href: '/artistry', label: 'Artistry', description: 'The studio and labs — making by subtraction, shu-ha-ri at the bench.', img: '/aura-artistry.jpg' },
           { href: '/reason', label: 'The Reason', description: 'Why Aura exists — not built but grown, the belief that ties every estate and studio into one system.', img: '/the-reason/aura-flowers-1.png' },
           { href: '/residency', label: 'Monastic Polymaths', description: 'The residency — makers who live the seasons and work across disciplines, the way a monastery once did.', img: '/journals/residency/aura-monastic-polymath.jpg' },
+        ]}
+      />
+      </Fragment>,
+
         ]}
       />
     </>

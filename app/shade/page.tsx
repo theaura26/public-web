@@ -11,7 +11,7 @@ import {
   Continue,
   Term,
 } from '@/components/article/Article'
-import { ParallaxBanner } from '@/components/ParallaxBanner'
+import { ExpandingBanner } from '@/components/ExpandingBanner'
 
 export default function ShadePage() {
   return (
@@ -57,8 +57,9 @@ export default function ShadePage() {
         ]}
       />
 
-      <ParallaxBanner
-        video="/shade/videos/aura-misty-mountain-forest.mp4"
+      <ExpandingBanner
+        src="/shade/videos/aura-misty-mountain-forest.mp4"
+        mediaType="video"
         poster="/shade/images/aura-misty-mountain-forest.jpg"
         caption="The Western Ghats canopy — three centuries of shade-grown coffee"
         alt="Mist over the shade canopy of the Western Ghats"
@@ -141,8 +142,9 @@ export default function ShadePage() {
         ]}
       />
 
-      <ParallaxBanner
-        image="/shade/images/aura-dense-forest-interior.jpg"
+      <ExpandingBanner
+        src="/shade/images/aura-dense-forest-interior.jpg"
+        mediaType="image"
         caption="Zone A · dense shade — two-thirds of the direct sun filtered before it reaches the coffee"
         alt="Dense shade under the closed canopy"
       />
@@ -179,8 +181,9 @@ export default function ShadePage() {
         The right cut is in the reading, not the manual.
       </PullQuote>
 
-      <ParallaxBanner
-        image="/shade/images/aura-sunlit-moss-ground.jpg"
+      <ExpandingBanner
+        src="/shade/images/aura-sunlit-moss-ground.jpg"
+        mediaType="image"
         caption="Light reaching the floor — the reading the whole practice is tuned to"
         alt="Sunlight falling through the canopy onto the forest floor"
       />

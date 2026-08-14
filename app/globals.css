@@ -499,6 +499,11 @@ p.journal-hero__caption {
 [data-view="agent"] main .expanding-banner-card,
 [data-view="agent"] main .parallax-banner,
 [data-view="agent"] main .film-banner,
+/* Crossfade scroller — decorative sticky media backdrop, the transparent
+   gap passages, and the pinned wordmark / film-play overlays. */
+[data-view="agent"] main .story2__bg,
+[data-view="agent"] main .story2__gap,
+[data-view="agent"] main .story2__overlay,
 [data-view="agent"] main .journal-hero__media,
 [data-view="agent"] main .hero-tile__media,
 [data-view="agent"] main .pillar-media,
@@ -546,6 +551,70 @@ p.journal-hero__caption {
 [data-view="agent"] .menu-overlay .tile-feed-vignette,
 [data-view="agent"] .menu-marquee {
   display: none !important;
+}
+
+/* Crossfade scroller (StorytellingScroller) — collapse the vh-tall sticky
+   stages so the flattened editorial doesn't sit inside giant empty blocks,
+   and undo the -100dvh backdrop pull so the text isn't dragged off-screen.
+   The backdrop / gaps / overlays are hidden above; the solid editorial
+   panels flow as text. */
+[data-view="agent"] main .story2,
+[data-view="agent"] main .story2__content,
+[data-view="agent"] main .story2__solid {
+  height: auto !important;
+  min-height: 0 !important;
+  margin-top: 0 !important;
+}
+/* WordmarkIntro (Ohara opener) — the SVG mark is decorative; flatten the
+   full-height flex-centred white field so its caption flows at the top left
+   as plain text instead of floating mid-page. */
+[data-view="agent"] main .wordmark-intro {
+  min-height: 0 !important;
+  height: auto !important;
+  display: block !important;
+}
+[data-view="agent"] main .wordmark-intro__mark {
+  display: none !important;
+}
+[data-view="agent"] main .wordmark-intro__caption {
+  text-align: left !important;
+}
+/* Agent/robot mode nav — text only. Keep "AURA" top-left (hide the emblem
+   GRAPHIC, then label the link), and drop the centred aūra wordmark. */
+[data-view="agent"] .aura-nav .nav-wordmark {
+  visibility: hidden !important;
+}
+[data-view="agent"] .aura-nav > a:first-child svg,
+[data-view="agent"] .aura-nav > a:first-child img,
+[data-view="agent"] .aura-nav > span:first-child svg,
+[data-view="agent"] .aura-nav > span:first-child img {
+  display: none !important;
+}
+[data-view="agent"] .aura-nav > a:first-child::before,
+[data-view="agent"] .aura-nav > span:first-child::before {
+  content: 'AURA';
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--text);
+  white-space: nowrap;
+}
+/* …and the hamburger reads as the word "Menu" — hide the two icon lines and
+   label the button, so the text-only nav still exposes the menu, right-rail. */
+[data-view="agent"] .aura-nav button[aria-label*="menu" i] > span {
+  display: none !important;
+}
+[data-view="agent"] .aura-nav button[aria-label*="menu" i] {
+  width: auto !important;
+  height: auto !important;
+}
+[data-view="agent"] .aura-nav button[aria-label*="menu" i]::before {
+  content: 'Menu';
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  white-space: nowrap;
 }
 
 /* Menu tile-feed in agent mode — image boxes are gone (above), so

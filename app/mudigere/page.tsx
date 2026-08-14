@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import {
   DataGrid,
   DataCard,
@@ -9,8 +9,8 @@ import {
   Term,
 } from '@/components/article/Article'
 import Reveal from '@/components/RevealOnScroll'
-import { ParallaxBanner } from '@/components/ParallaxBanner'
-import { FilmBanner } from '@/components/FilmBanner'
+import { StorytellingScroller } from '@/components/StorytellingScroller'
+import { FilmPlay } from '@/components/FilmPlay'
 import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun, CloudMoon } from '@phosphor-icons/react'
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -139,6 +139,49 @@ function Movement({ id, heading, children }: { id?: string; heading: React.React
     </section>
   )
 }
+
+/* EXPERIMENT (offline): the two plain photo banner-stacks — coffee and
+   animals — rebuilt as no-snap crossfades over one sticky backdrop, with the
+   surrounding editorial as the covering white panels. The hero, the pinned
+   estate wordmark, the parallax/film banners, and the diagrams are left
+   untouched (signature moments kept). One caption per block. */
+const MUD_PASSAGES = [
+  { perVh: 150, caption: 'Arabica, ripening in the understory', media: [
+    { image: '/journals/coffee/aura-our-coffee-story.jpg', alt: 'Six micro lots · Arabica Sln.9 & Sln.795 · Aura Estate' },
+    { video: '/mudigere/aura-coffee.mp4', poster: '/mudigere/aura-coffee.jpg', alt: 'Coffee cherries ripening in the understory under native shade' },
+  ] },
+  { perVh: 150, caption: 'Fauna of Mudigere', media: [
+    { video: '/journals/living-systems/aura-cow-eye.mp4', poster: '/journals/living-systems/aura-cow-eye.jpg', alt: 'Close on the eye of a Malnad Gidda — indigenous Karnataka breed' },
+    { video: '/mudigere/aura-animals.mp4', poster: '/mudigere/aura-animals.jpg', alt: 'The fauna of the estate — cattle, native bees, and the living loop' },
+  ] },
+]
+
+/* Estate — the top-view ⇄ walkthrough crossfade, with the pinned AURA ESTATE
+   wordmark centred over it and the "Explore Aura Estate" film kept playable.
+   No block caption (the wordmark is the title). */
+const MUD_ESTATE = [
+  { perVh: 170, media: [
+    { video: '/mudigere/aura-estate-top-view.mp4', poster: '/mudigere/aura-estate-top-view.jpg', alt: 'The four-story canopy from above — Aura Estate, Western Ghats' },
+    { video: '/mudigere/aura-estate-walkthrough.mp4', poster: '/mudigere/aura-estate-walkthrough.jpg', alt: 'The estate on film — Aura Estate, Western Ghats' },
+  ], overlay: (
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/mudigere/aura-estate-wordmark.png" alt="" aria-hidden style={{ width: 'min(72vw, 1040px)', maxWidth: '90vw', height: 'auto', display: 'block' }} />
+      <FilmPlay youtubeId="NA-qtu8JljA" note="Explore Aura Estate" caption="The estate, on film" />
+    </>
+  ) },
+]
+
+/* People & Vision — residency ⇄ closing film crossfade, "Watch our story"
+   kept playable. */
+const MUD_PEOPLE = [
+  { perVh: 160, media: [
+    { video: '/mudigere/aura-people.mp4', poster: '/mudigere/aura-people.jpg', alt: 'The residency — those who come to learn' },
+    { video: '/mudigere/aura-vision.mp4', poster: '/mudigere/aura-vision.jpg', alt: 'The estate on film — the forest of 2125' },
+  ], overlay: (
+    <FilmPlay youtubeId="bFTZUfn4D0A" note="Rebuilt as a living system — the forest of 2125" caption="Watch our story" />
+  ) },
+]
 
 export default function MudigerePage() {
   // Wordmark motion — the hero mark drifts slower than the video; every
@@ -353,7 +396,7 @@ export default function MudigerePage() {
         {/* Caption — anchored to the bottom of the banner. */}
         <p
           className="label mud-hero__caption"
-          style={{ position: 'absolute', left: 'clamp(20px, 4vw, 48px)', bottom: 'clamp(20px, 4vh, 48px)', margin: 0, maxWidth: 'min(340px, 66vw)', color: '#ffffff', letterSpacing: '1px', lineHeight: 1.5, textShadow: '0 1px 12px rgba(0, 0, 0, 0.4)', zIndex: 5, pointerEvents: 'none' }}
+          style={{ position: 'absolute', left: 0, right: 0, bottom: 'clamp(48px, 9vh, 96px)', margin: 0, textAlign: 'center', color: '#ffffff', letterSpacing: '1.5px', lineHeight: 1.5, textShadow: '0 1px 12px rgba(0, 0, 0, 0.4)', zIndex: 5, pointerEvents: 'none' }}
         >
           Aura Estate · 150 acres · 3,600 ft · Western Ghats · Karnataka
         </p>
@@ -389,33 +432,15 @@ export default function MudigerePage() {
           wordmark is pinned (sticky) and centred over the whole 3-banner
           stack, rendered solid white, while the banners parallax behind it,
           pinned at the viewport middle. */}
-      <div className="mud-pin-wrap" style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <div style={{ position: 'sticky', top: '50vh', height: 0, zIndex: 4, display: 'flex', justifyContent: 'center', alignItems: 'flex-start', pointerEvents: 'none' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/mudigere/aura-estate.png"
-            alt=""
-            aria-hidden
-            className="mud-pin-mark"
-            style={{ position: 'relative', top: 0, transform: 'translateY(-50%)', width: 'min(82vw, 1240px)', height: 'auto', willChange: 'transform' }}
-          />
-        </div>
-        <ParallaxBanner
-          video="/mudigere/aura-estate-top-view.mp4"
-          poster="/mudigere/aura-estate-top-view.jpg"
-          alt="The four-story canopy from above — Aura Estate, Western Ghats"
-          caption="Noon over the four-story canopy"
-        />
-        <FilmBanner
-          youtubeId="NA-qtu8JljA"
-          bgVideo="/mudigere/aura-estate-walkthrough.mp4"
-          poster="/mudigere/aura-estate-walkthrough.jpg"
-          alt="The estate on film — Aura Estate, Western Ghats"
-          note="Explore Aura Estate"
-          caption="The estate, on film"
-        />
-      </div>
+      <StorytellingScroller
+        passages={MUD_ESTATE}
+        sections={[
 
+      /* ═══ 2 · ESTATE — the banner wall crossfades; the pinned AURA ESTATE
+             wordmark + the "Explore Aura Estate" film ride over it ═══ */
+      <Fragment key="est0" />,
+
+      <Fragment key="est1">
       <Movement id="estate" heading={<>A hundred and fifty acres, read as one.</>}>
         <p className="p1">
           Aura Estate lies in Chikmagalur district, forty-five minutes
@@ -464,6 +489,10 @@ export default function MudigerePage() {
           </Reveal>
         </div>
       </section>
+      </Fragment>,
+
+        ]}
+      />
 
       {/* ═══ 3 · CROPS ═══ — the pull-quote opens in a banner frame
           (rough placeholder styling, design TBD); the four-layer content
@@ -484,6 +513,12 @@ export default function MudigerePage() {
         </div>
       </section>
 
+      <StorytellingScroller
+        passages={MUD_PASSAGES}
+        sections={[
+
+      /* ═══ M0 · CROPS — the four-layer forest (coffee crossfade after) ═══ */
+      <Fragment key="m0">
       <Movement id="crops" heading={<>A forest, farmed in four layers.</>}>
         <p className="p1">
           Nothing here grows alone. Native shade trees hold the sky; areca
@@ -532,20 +567,10 @@ export default function MudigerePage() {
           </div>
         </div>
       </Movement>
+      </Fragment>,
 
-      {/* Two crops banners — divide the forest layers from the coffee. */}
-      <ParallaxBanner
-        image="/journals/coffee/aura-our-coffee-story.jpg"
-        alt="Six micro lots · Arabica Sln.9 & Sln.795 · Aura Estate"
-        caption="Six lots, picked dead ripe"
-      />
-      <ParallaxBanner
-        video="/mudigere/aura-coffee.mp4"
-        poster="/mudigere/aura-coffee.jpg"
-        alt="Coffee cherries ripening in the understory under native shade"
-        caption="Arabica, ripening in the understory"
-      />
-
+      /* ═══ M1 · PROCESSING — six lots, three ferments (coffee crossfade before) ═══ */
+      <Fragment key="m1">
       <section style={{ padding: 'var(--section-gap) 0' }}>
         <div className="section-w">
           <HeadingBlock heading={<>Six micro lots. Three ferments. One appellation.</>}>
@@ -595,22 +620,10 @@ export default function MudigerePage() {
           never starts from zero.
         </DataCard>
       </DataGrid>
+      </Fragment>,
 
-      {/* ═══ 4 · ANIMALS ═══ — the banner wall opens the section, above
-          the heading; the closed-loop grid reads beneath. */}
-      <ParallaxBanner
-        video="/journals/living-systems/aura-cow-eye.mp4"
-        poster="/journals/living-systems/aura-cow-eye.jpg"
-        alt="Close on the eye of a Malnad Gidda — indigenous Karnataka breed"
-        caption="Malnad Gidda · bred to these hills"
-      />
-      <ParallaxBanner
-        video="/mudigere/aura-animals.mp4"
-        poster="/mudigere/aura-animals.jpg"
-        alt="The fauna of the estate — cattle, native bees, and the living loop"
-        caption="Fauna of Mudigere"
-      />
-
+      /* ═══ M2 · ANIMALS — the closed loop (animals crossfade before) ═══ */
+      <Fragment key="m2">
       <Movement id="animals" heading={<>The closed loop.</>}>
         <p className="p1">
           What the coffee draws on, the animals give back. The{' '}
@@ -675,9 +688,18 @@ export default function MudigerePage() {
           </Reveal>
         </div>
       </section>
+      </Fragment>,
 
-      {/* ═══ 5 · PEOPLE & VISION ═══ — the community and what they are
-          building toward, then the closing banner run. */}
+        ]}
+      />
+
+      <StorytellingScroller
+        passages={MUD_PEOPLE}
+        sections={[
+
+      /* ═══ 5 · PEOPLE & VISION — residency ⇄ closing film crossfade,
+             "Watch our story" kept playable ═══ */
+      <Fragment key="ppl0">
       <Movement heading={<>Monastic polymaths. Crazy misfits.</>}>
         <p className="p1">
           A working estate is a community before it is anything else — the
@@ -703,27 +725,10 @@ export default function MudigerePage() {
           the first drawing, to outlast its builders.
         </p>
       </Movement>
+      </Fragment>,
 
-      {/* People banner stack — the family and the residency. */}
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          video="/mudigere/aura-people.mp4"
-          poster="/mudigere/aura-people.jpg"
-          alt="The residency — those who come to learn"
-          caption="Those who come to stay and learn"
-        />
-      </div>
-
-      {/* ═══ 6 · END ═══ — the closing film, then the invitation. */}
-      <FilmBanner
-        youtubeId="bFTZUfn4D0A"
-        bgVideo="/mudigere/aura-vision.mp4"
-        poster="/mudigere/aura-vision.jpg"
-        alt="The estate on film — Aura Estate, Western Ghats"
-        note="Rebuilt as a living system — the forest of 2125"
-        caption="Watch our story"
-      />
-
+      /* ═══ 6 · END — the closing invitation, over the vision film ═══ */
+      <Fragment key="ppl1">
       <ScrollHighlight>
         {`The land sets the brief.
          The forest is the farm.
@@ -738,6 +743,10 @@ export default function MudigerePage() {
           { href: '/herd', label: 'Ecosystem Engineers', description: 'The estate’s biological engine — fifty-two Malnad Gidda, cared for by hand, each passported.', img: '/herd/images/aura-grassland1.jpg' },
           { href: '/circular', label: 'Circular Intelligence', description: 'What the herd makes — CPP and Jeevamrit, by hand, tested before the soil.', img: '/circular/images/aura-shed.jpg' },
           { href: '/shade', label: 'The Light Instrument', description: 'The canopy above the estate — shade whiskering, measured in lux and cut to prescription.', img: '/aura-land.jpg' },
+        ]}
+      />
+      </Fragment>,
+
         ]}
       />
     </>

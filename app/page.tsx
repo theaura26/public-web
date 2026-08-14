@@ -1515,10 +1515,13 @@ export default function Home() {
             align-items: center;
           }
           .hero-section-w {
-            /* Match the navbar's 10vw rails — content sits inside the same
-               span as the logo and hamburger. 5vw side margin gets us there. */
-            width: calc(100% - 10vw);
-            margin: 0 5vw;
+            /* Line the content up with the navbar's logo + hamburger. The nav
+               centres both marks inside 10vw rails, so the logo's LEFT edge is
+               at 5vw − 16px (the emblem is 32px wide) — NOT at 5vw, which is the
+               mark's centre. Insetting the content by that amount lands its left
+               edge on the logo and its right edge on the hamburger. */
+            width: calc(100% - 10vw + 32px);
+            margin: 0 calc(5vw - 16px);
             padding: 0;
             display: flex;
             flex-direction: column;

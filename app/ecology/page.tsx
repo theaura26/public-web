@@ -11,7 +11,7 @@ import {
   Continue,
   Term,
 } from '@/components/article/Article'
-import { ParallaxBanner } from '@/components/ParallaxBanner'
+import { ExpandingBanner } from '@/components/ExpandingBanner'
 
 /* ═══════════════════════════════════════════════════════════════════
    THE LIVING SYSTEM — the whole-farm ecological monitoring story.
@@ -53,10 +53,11 @@ export default function EcologyPage() {
         </p>
       </TwoCol>
 
-      <ParallaxBanner
-        image="/ecology/images/aura-mossy-tree-hollow.jpg"
-        caption="A mossed hollow in fallen wood — the start of another life, not the end of one"
+      <ExpandingBanner
+        src="/ecology/images/aura-mossy-tree-hollow.jpg"
+        mediaType="image"
         alt="Moss and fungi colonising a hollow in dead wood"
+        caption="A mossed hollow in fallen wood — the start of another life, not the end of one"
       />
 
       <TwoCol id="biomass" heading="Dead wood is food for the forest.">
@@ -91,10 +92,11 @@ export default function EcologyPage() {
         note="Branches cut to 60–90 cm and stacked in the block they came from."
       />
 
-      <ParallaxBanner
-        image="/ecology/images/aura-white-mushrooms-mulch.jpg"
-        caption="Saprophytic fungi fruiting through the mulch — lignin, becoming soil"
+      <ExpandingBanner
+        src="/ecology/images/aura-white-mushrooms-mulch.jpg"
+        mediaType="image"
         alt="A cluster of white mushrooms rising through leaf-litter mulch"
+        caption="Saprophytic fungi fruiting through the mulch — lignin, becoming soil"
       />
 
       <TwoCol id="islands" heading="Forest islands, and the forest floor.">
@@ -130,10 +132,11 @@ export default function EcologyPage() {
         A forest is nourished not only by what it grows, but by what it leaves behind.
       </PullQuote>
 
-      <ParallaxBanner
-        image="/ecology/images/aura-termite-burrow-soil.jpg"
-        caption="The hidden workforce — termites, millipedes, and the fauna that fragment the litter"
+      <ExpandingBanner
+        src="/ecology/images/aura-termite-burrow-soil.jpg"
+        mediaType="image"
         alt="A termite burrow worked into the soil of the forest floor"
+        caption="The hidden workforce — termites, millipedes, and the fauna that fragment the litter"
       />
 
       <TwoCol id="pulse" heading="The soil keeps a pulse.">

@@ -1,5 +1,6 @@
 'use client'
 
+import { Fragment } from 'react'
 import {
   HeroBanner,
   OneCol,
@@ -13,7 +14,15 @@ import {
   Continue,
   Term,
 } from '@/components/article/Article'
-import { ParallaxBanner } from '@/components/ParallaxBanner'
+import { ExpandingBanner } from '@/components/ExpandingBanner'
+import { StorytellingScroller } from '@/components/StorytellingScroller'
+
+const ART_PASSAGES = [
+  { perVh: 150, caption: 'From the canopy to the wall', media: [
+    { video: '/artistry/videos/aura-plantation-canopy-map.mp4', poster: '/artistry/images/aura-plantation-canopy-map.jpg', alt: 'An aerial canopy map of the plantation' },
+    { image: '/artistry/images/aura-framed-art-gallery-wall.jpg', alt: 'A gallery wall of framed botanical artwork at Ohara' },
+  ] },
+]
 
 export default function ArtistryPage() {
   return (
@@ -28,8 +37,9 @@ export default function ArtistryPage() {
         alt="Aura artistry — the studio and labs where the fundamentals are worked"
       />
 
-      <ParallaxBanner
-        video="/artistry/videos/aura-man-painting-door.mp4"
+      <ExpandingBanner
+        src="/artistry/videos/aura-man-painting-door.mp4"
+        mediaType="video"
         poster="/artistry/images/aura-man-painting-door.jpg"
         caption="A maker at work — painted by hand, on the estate"
         alt="A craftsman painting a door by hand on the estate"
@@ -82,8 +92,9 @@ export default function ArtistryPage() {
         ]}
       />
 
-      <ParallaxBanner
-        video="/artistry/videos/aura-installing-painted-tin.mp4"
+      <ExpandingBanner
+        src="/artistry/videos/aura-installing-painted-tin.mp4"
+        mediaType="video"
         poster="/artistry/images/aura-installing-painted-tin.jpg"
         caption="Installing a hand-painted tin — the work going back out into the canopy"
         alt="A hand-painted tin panel being installed on a tree"
@@ -135,6 +146,11 @@ export default function ArtistryPage() {
         </DataCard>
       </DataGrid>
 
+      <StorytellingScroller
+        passages={ART_PASSAGES}
+        sections={[
+
+      <Fragment key="a0">
       <TwoCol id="future" heading="Made for hands not yet here.">
         <p className="p1">
           Aura works on a horizon measured in decades, and that sets a plain test for anything we
@@ -150,20 +166,9 @@ export default function ArtistryPage() {
           Intelligence, worked at the bench.
         </p>
       </TwoCol>
+      </Fragment>,
 
-      <ParallaxBanner
-        video="/artistry/videos/aura-plantation-canopy-map.mp4"
-        poster="/artistry/images/aura-plantation-canopy-map.jpg"
-        caption="The plantation read from above — the canopy the studio measures before it makes"
-        alt="An aerial canopy map of the plantation"
-      />
-
-      <ParallaxBanner
-        image="/artistry/images/aura-framed-art-gallery-wall.jpg"
-        caption="Work on the wall — botanical studies, framed and hung at Ohara"
-        alt="A gallery wall of framed botanical artwork at Ohara"
-      />
-
+      <Fragment key="a1">
       <DataGrid cols={3} standalone rule>
         <DataCard img="/artistry/images/aura-painted-frog-tin.jpg" value="Painted by hand">
           Salvaged tin, painted by hand with the estate&apos;s own fauna — a frog, a flower, a bird read
@@ -197,6 +202,10 @@ export default function ArtistryPage() {
           { href: '/ohara', label: 'Ohara', description: 'The valley where much of the craft is made — a place north of Kyoto that keeps its own time.', img: '/aura-ohara.jpg' },
           { href: '/mudigere', label: 'Mudigere', description: 'The estate the studio is built into — 150 acres in the Western Ghats.', img: '/aura-mudigere.jpg' },
           { href: '/herd', label: 'Ecosystem Engineers', description: 'The living system the making answers to — the herd at the centre of the estate.', img: '/herd/images/aura-relationship2.jpg' },
+        ]}
+      />
+      </Fragment>,
+
         ]}
       />
     </>

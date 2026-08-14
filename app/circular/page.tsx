@@ -1,5 +1,6 @@
 'use client'
 
+import { Fragment } from 'react'
 import {
   HeroBanner,
   TwoCol,
@@ -12,8 +13,8 @@ import {
   Continue,
   Term,
 } from '@/components/article/Article'
-import { ParallaxBanner } from '@/components/ParallaxBanner'
 import { ExpandingBanner } from '@/components/ExpandingBanner'
+import { StorytellingScroller } from '@/components/StorytellingScroller'
 
 /* ═══════════════════════════════════════════════════════════════════
    CIRCULAR INTELLIGENCE — the fertility loop, told as an alchemy.
@@ -24,6 +25,17 @@ import { ExpandingBanner } from '@/components/ExpandingBanner'
    plant's root, and the batch numbers that make it all provable.
    Editorial and exact: the making, the testing, and the proof.
 ═══════════════════════════════════════════════════════════════════ */
+
+const CIRC_PASSAGES = [
+  { perVh: 150, caption: 'Fourteen pits, turned by hand', media: [
+    { image: '/circular/images/aura-cpp.jpg', alt: 'A numbered Cow Pat Pit at Mudigere, turned by hand' },
+    { image: '/circular/images/aura-saltrock.jpg', alt: 'Finely ground basalt dust — the mineral component of CPP' },
+  ] },
+  { perVh: 150, caption: 'The life that builds the soil back', media: [
+    { video: '/circular/videos/aura-microbe.mp4', poster: '/circular/images/aura-microbe.jpg', alt: "Microbial colonies from the estate's soil, under the lens" },
+    { image: '/circular/images/aura-mushroom.jpg', alt: 'Fungi on the estate floor — the organisms that build soil' },
+  ] },
+]
 
 export default function CircularPage() {
   return (
@@ -133,14 +145,18 @@ export default function CircularPage() {
         </div>
       </section>
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          image="/circular/images/aura-dung.jpg"
-          alt="Fresh dung collected at dawn — the estate's raw material"
-          caption="Dung and urine, at dawn"
-        />
-      </div>
+      <ExpandingBanner
+        src="/circular/images/aura-dung.jpg"
+        mediaType="image"
+        alt="Fresh dung collected at dawn — the estate's raw material"
+        caption="Dung and urine, at dawn"
+      />
 
+      <StorytellingScroller
+        passages={CIRC_PASSAGES}
+        sections={[
+
+      <Fragment key="c0">
       <TwoCol id="cpp" heading="CPP: the slow compost.">
         <p className="p1">
           The first product is{' '}
@@ -161,20 +177,9 @@ export default function CircularPage() {
           new: dark, crumbly, earth-smelling.
         </p>
       </TwoCol>
+      </Fragment>,
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          image="/circular/images/aura-cpp.jpg"
-          alt="A numbered Cow Pat Pit at Mudigere, turned by hand"
-          caption="Fourteen pits, turned by hand"
-        />
-        <ParallaxBanner
-          image="/circular/images/aura-saltrock.jpg"
-          alt="Finely ground basalt dust — the mineral component of CPP"
-          caption="Basalt dust — the mineral half"
-        />
-      </div>
-
+      <Fragment key="c1">
       <DataGrid cols={3} standalone>
         <DataCard value="Cow Dung">
           <em>The living culture.</em> Fresh dung from the estate&apos;s Malnad Gidda herd. The breed
@@ -219,13 +224,12 @@ export default function CircularPage() {
         </p>
       </TwoCol>
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          image="/circular/images/aura-biodynamic.jpg"
-          alt="CPP dug in at the root of a coffee plant and covered with mulch"
-          caption="A ball to a root, covered in mulch"
-        />
-      </div>
+      <ExpandingBanner
+        src="/circular/images/aura-biodynamic.jpg"
+        mediaType="image"
+        alt="CPP dug in at the root of a coffee plant and covered with mulch"
+        caption="A ball to a root, covered in mulch"
+      />
 
       <TwoCol id="jeevamrit" heading="Jeevamrit: the living culture.">
         <p className="p1">
@@ -267,14 +271,13 @@ export default function CircularPage() {
         note="The liquid one of the six compost preparations, BD 502–507."
       />
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          video="/circular/videos/aura-valerian.mp4"
-          poster="/circular/images/aura-valerian.jpg"
-          alt="Valerian flowers pressed for BD 507"
-          caption="BD 507 — valerian, pressed and fermented"
-        />
-      </div>
+      <ExpandingBanner
+        src="/circular/videos/aura-valerian.mp4"
+        mediaType="video"
+        poster="/circular/images/aura-valerian.jpg"
+        alt="Valerian flowers pressed for BD 507"
+        caption="BD 507 — valerian, pressed and fermented"
+      />
 
       <PullQuote>
         Made from what the estate already produces — and measured before it feeds a single root.
@@ -314,21 +317,9 @@ export default function CircularPage() {
           { label: 'Soil follow-up', value: 'Block retested 90 days after application' },
         ]}
       />
+      </Fragment>,
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          video="/circular/videos/aura-microbe.mp4"
-          poster="/circular/images/aura-microbe.jpg"
-          alt="Microbial colonies from the estate's soil, under the lens"
-          caption="Counted in every batch"
-        />
-        <ParallaxBanner
-          image="/circular/images/aura-mushroom.jpg"
-          alt="Fungi on the estate floor — the organisms that build soil"
-          caption="The fungi that build the soil back"
-        />
-      </div>
-
+      <Fragment key="c2">
       <TwoCol id="soil" heading="The soil is tested too.">
         <p className="p1">
           Testing does not stop at the barrel. The estate reads the soil itself — its nutrients and its
@@ -369,13 +360,12 @@ export default function CircularPage() {
         </p>
       </TwoCol>
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          image="/circular/images/aura-saturn.jpg"
-          alt="The biodynamic cosmology — planetary timing behind the preparations"
-          caption="Kept for the biology, not the cosmology"
-        />
-      </div>
+      <ExpandingBanner
+        src="/circular/images/aura-saturn.jpg"
+        mediaType="image"
+        alt="The biodynamic cosmology — planetary timing behind the preparations"
+        caption="Kept for the biology, not the cosmology"
+      />
 
       <DataGrid cols={3} standalone>
         <DataCard value="154,000 L">
@@ -407,6 +397,10 @@ export default function CircularPage() {
           { href: '/herd', label: 'Ecosystem Engineers', description: 'Where the raw material comes from — fifty-two Malnad Gidda, the estate’s biological engine, each passported.', img: '/herd/images/aura-relationship2.jpg' },
           { href: '/ecology', label: 'The Living System', description: 'What the fertility feeds — the whole farm measured, and rolled into one Ecological Health Index per block.', img: '/aura-mudigere-landscape.jpg' },
           { href: '/shade', label: 'The Light Instrument', description: 'The canopy above the loop — shade whiskering, measured in lux and cut to prescription.', img: '/aura-land.jpg' },
+        ]}
+      />
+      </Fragment>,
+
         ]}
       />
     </>

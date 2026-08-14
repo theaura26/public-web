@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import {
   HeroBanner,
   TwoCol,
@@ -10,7 +11,8 @@ import {
   Continue,
   Term,
 } from '@/components/article/Article'
-import { ParallaxBanner } from '@/components/ParallaxBanner'
+import { ExpandingBanner } from '@/components/ExpandingBanner'
+import { StorytellingScroller } from '@/components/StorytellingScroller'
 
 /* ═══════════════════════════════════════════════════════════════════
    ECOSYSTEM ENGINEERS — the cow story, told close to the ground.
@@ -21,6 +23,17 @@ import { ParallaxBanner } from '@/components/ParallaxBanner'
    reads each animal, and what the herd returns to the soil. Editorial,
    not light — the care, the record, and the proof of doing.
 ═══════════════════════════════════════════════════════════════════ */
+
+const HERD_PASSAGES = [
+  { perVh: 150, caption: 'The hands that tend the herd', media: [
+    { image: '/herd/images/aura-relationship1.jpg', alt: 'The estate team with the herd at Mudigere' },
+    { image: '/herd/images/aura-dung.jpg', alt: "Fresh dung collected at dawn — the estate's raw material" },
+  ] },
+  { perVh: 150, caption: 'The next generation, kept pure', media: [
+    { video: '/herd/videos/aura-calf1.mp4', poster: '/herd/images/aura-calf1.jpg', alt: 'A Malnad Gidda calf on the estate — the next generation' },
+    { image: '/herd/images/aura-calf2.jpg', alt: 'A Malnad Gidda calf — the indigenous line kept pure' },
+  ] },
+]
 
 export default function HerdPage() {
   return (
@@ -54,13 +67,12 @@ export default function HerdPage() {
         </p>
       </TwoCol>
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          image="/herd/images/aura-grassland2.jpg"
-          alt="The Malnad Gidda herd grazing under the coffee canopy at Mudigere"
-          caption="Fifty-two, on their own ground"
-        />
-      </div>
+      <ExpandingBanner
+        src="/herd/images/aura-grassland2.jpg"
+        mediaType="image"
+        alt="The Malnad Gidda herd grazing under the coffee canopy at Mudigere"
+        caption="Fifty-two, on their own ground"
+      />
 
       <TwoCol id="loop" heading="Same land, same system.">
         <p className="p1">
@@ -77,14 +89,18 @@ export default function HerdPage() {
         </p>
       </TwoCol>
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          image="/herd/images/aura-gift1.jpg"
-          alt="Grass and grazer at Mudigere — each other's gift"
-          caption="Grass and grazer — each other's gift"
-        />
-      </div>
+      <ExpandingBanner
+        src="/herd/images/aura-gift1.jpg"
+        mediaType="image"
+        alt="Grass and grazer at Mudigere — each other's gift"
+        caption="Grass and grazer — each other's gift"
+      />
 
+      <StorytellingScroller
+        passages={HERD_PASSAGES}
+        sections={[
+
+      <Fragment key="h0">
       <TwoCol id="care" heading="Cared for by hand.">
         <p className="p1">
           A herd on the fields every day is tended every day — washed and bathed, looked over, dosed when
@@ -101,20 +117,9 @@ export default function HerdPage() {
           live a real life on this ground, and the hands around them carry it.
         </p>
       </TwoCol>
+      </Fragment>,
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          image="/herd/images/aura-relationship1.jpg"
-          alt="The estate team with the herd at Mudigere"
-          caption="The hands that tend the herd"
-        />
-        <ParallaxBanner
-          image="/herd/images/aura-dung.jpg"
-          alt="Fresh dung collected at dawn — the estate's raw material"
-          caption="Collected fresh at dawn"
-        />
-      </div>
-
+      <Fragment key="h1">
       <PullQuote>
         Provenance begins with a COW standing in the same FIELD as the COFFEE.
       </PullQuote>
@@ -151,13 +156,12 @@ export default function HerdPage() {
         ]}
       />
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          image="/herd/images/aura-relationship3.jpg"
-          alt="A caretaker with an animal at Mudigere — the people who know the herd"
-          caption="The people who know them"
-        />
-      </div>
+      <ExpandingBanner
+        src="/herd/images/aura-relationship3.jpg"
+        mediaType="image"
+        alt="A caretaker with an animal at Mudigere — the people who know the herd"
+        caption="The people who know them"
+      />
 
       <TwoCol id="produce" heading="Nothing wasted, everything measured.">
         <p className="p1">
@@ -202,21 +206,9 @@ export default function HerdPage() {
           { label: 'Grazing', value: 'The same 150 acres they feed' },
         ]}
       />
+      </Fragment>,
 
-      <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
-        <ParallaxBanner
-          video="/herd/videos/aura-calf1.mp4"
-          poster="/herd/images/aura-calf1.jpg"
-          alt="A Malnad Gidda calf on the estate — the next generation"
-          caption="The next generation, estate-bred"
-        />
-        <ParallaxBanner
-          image="/herd/images/aura-calf2.jpg"
-          alt="A Malnad Gidda calf — the indigenous line kept pure"
-          caption="An indigenous line, kept pure"
-        />
-      </div>
-
+      <Fragment key="h2">
       <ScrollHighlight>
         {`Every animal, a passport.
          Every litre and kilogram, measured.
@@ -255,6 +247,10 @@ export default function HerdPage() {
           { href: '/circular', label: 'Circular Intelligence', description: 'Where the herd’s dung and urine go next — remade by hand into measured fertility, tested before the soil.', img: '/circular/images/aura-shed.jpg' },
           { href: '/ecology', label: 'The Living System', description: 'The whole farm the herd feeds — fungi, worms, roots, and one Ecological Health Index per block.', img: '/aura-mudigere-landscape.jpg' },
           { href: '/mudigere', label: 'Mudigere', description: 'Aura Estate — 150 acres in the Western Ghats, the ground the herd grazes and feeds.', img: '/aura-mudigere.jpg' },
+        ]}
+      />
+      </Fragment>,
+
         ]}
       />
     </>

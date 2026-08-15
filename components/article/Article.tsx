@@ -1181,9 +1181,9 @@ export function SpecTable({
         /* Footnote — CAPTION style: small, muted Bricolage fine print. */
         .spec__note {
           font-family: var(--font-sans);
-          font-size: 12.5px;
-          line-height: 1.5;
-          color: var(--text-muted);
+          font-size: 14px;
+          line-height: 1.6;
+          color: var(--text-body);
           margin: 22px 0 0;
         }
         @media (max-width: 560px) {

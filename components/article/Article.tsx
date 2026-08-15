@@ -1165,7 +1165,7 @@ export function SpecTable({
           letter-spacing: 1px;
           text-transform: uppercase;
           line-height: 1.45;
-          color: var(--text);
+          color: var(--text-body);
           margin: 0;
         }
         /* Row value — PARA style: Bricolage Grotesque body (maps to .p2 size),

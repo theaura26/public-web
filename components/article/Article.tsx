@@ -1133,9 +1133,9 @@ export function SpecTable({
         .spec__title {
           margin: 0 0 4px;
           padding-bottom: 22px;
-          /* One label colour across the system — accent is reserved for
-             links and interactive states. */
-          color: var(--text-muted);
+          /* Table headers are clay by design — the record's header carries
+             the accent. Every other label stays --text-muted. */
+          color: var(--brand-accent);
           /* Heavy rule — anchors the header above the faint dotted rows. */
           border-bottom: 1.5px solid var(--border-strong);
         }

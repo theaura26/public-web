@@ -683,7 +683,7 @@ export function ArticleHero({
                         font-weight: 400;
                         letter-spacing: 1px;
                         text-transform: uppercase;
-                        color: var(--brand-accent);
+                        color: var(--text-muted);
                         text-decoration: none;
                         line-height: 1.5;
                         transition: opacity var(--dur-fast) var(--ease);
@@ -1164,7 +1164,7 @@ export function SpecTable({
           letter-spacing: 1px;
           text-transform: uppercase;
           line-height: 1.45;
-          color: var(--text-body);
+          color: var(--text-muted);
           margin: 0;
         }
         /* Row value — PARA style: Bricolage Grotesque body (maps to .p2 size),
@@ -1494,7 +1494,7 @@ export function Continue({
     <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
       <div className="section-w">
         <Reveal>
-          <div className="label" style={{ marginBottom: 40, color: 'var(--brand-accent)' }}>{heading}</div>
+          <div className="label" style={{ marginBottom: 40 }}>{heading}</div>
           <div
             className="continue-grid"
             style={{

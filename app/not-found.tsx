@@ -16,7 +16,7 @@ export default function NotFound() {
       <section style={{ paddingTop: 250, paddingBottom: 80 }}>
         <div className="section-w">
           <Reveal>
-            <p className="label" style={{ marginBottom: 24, color: 'var(--text-body)' }}>404</p>
+            <p className="label" style={{ marginBottom: 24  }}>404</p>
           </Reveal>
           <Reveal delay={60}>
             <h1 style={{ maxWidth: 760 }}>Nothing planted here yet.</h1>
@@ -33,7 +33,7 @@ export default function NotFound() {
       <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
         <div className="section-w">
           <Reveal>
-            <p className="label" style={{ marginBottom: 'clamp(32px, 5vh, 56px)', color: 'var(--text-body)' }}>WHERE TO GO</p>
+            <p className="label" style={{ marginBottom: 'clamp(32px, 5vh, 56px)' }}>WHERE TO GO</p>
           </Reveal>
           <div className="nf-routes">
             {ROUTES.map((r, i) => (

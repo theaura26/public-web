@@ -1133,8 +1133,9 @@ export function SpecTable({
         .spec__title {
           margin: 0 0 4px;
           padding-bottom: 22px;
-          /* Brand accent — the record's header carries the orange. */
-          color: var(--brand-accent);
+          /* One label colour across the system — accent is reserved for
+             links and interactive states. */
+          color: var(--text-muted);
           /* Heavy rule — anchors the header above the faint dotted rows. */
           border-bottom: 1.5px solid var(--border-strong);
         }

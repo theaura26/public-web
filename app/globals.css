@@ -5,28 +5,7 @@
    resolves to Bricolage. DM Mono (--font-mono) remains the technical face. */
 :root { --font-sans: var(--font-grotesque); }
 
-/* Belmonte Ballpoint (Typeheist) — used for <PullQuote>. The
-   foundry ships two cuts (Cursive + Print) and two web formats
-   per cut (woff2 + woff). woff2 is the modern format every current
-   browser supports; woff is the legacy fallback. */
-@font-face {
-  font-family: 'Belmonte Ballpoint Cursive';
-  src: url('/fonts/BelmonteBallpoint-Cursive.woff2') format('woff2'),
-       url('/fonts/BelmonteBallpoint-Cursive.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Belmonte Ballpoint Print';
-  src: url('/fonts/BelmonteBallpoint-Print.woff2') format('woff2'),
-       url('/fonts/BelmonteBallpoint-Print.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 :root {
-  --font-pullquote: 'Belmonte Ballpoint Cursive', 'Belmonte Ballpoint Print', cursive;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -54,6 +33,7 @@
   /* ── 1. Brand palette (immutable across themes) ── */
   --brand-accent: #E37128;          /* primary action / hover */
   --error: #E8421A;                 /* form validation, destructive UI */
+  --success: #1F6B4B;               /* confirmed state — form sent, validation passed */
 
   /* ── 4. Spacing scale (8px base, 4px micro step) ── */
   --space-2: 8px;
@@ -99,10 +79,10 @@
   --bg: #131719;
   --bg-card: #1a1d20;
 
-  --text: #ededed;                            /* primary */
-  --text-body: rgba(237, 237, 237, 0.65);     /* secondary */
-  --text-muted: rgba(237, 237, 237, 0.4);     /* meta / labels */
-  --text-dim: rgba(237, 237, 237, 0.25);      /* captions / fine print */
+  --text: #ffffff;                            /* primary */
+  --text-body: rgba(255, 255, 255, 0.65);     /* secondary */
+  --text-muted: rgba(255, 255, 255, 0.4);     /* meta / labels */
+  --text-dim: rgba(255, 255, 255, 0.25);      /* captions / fine print */
 
   --border: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.14);
@@ -112,9 +92,9 @@
   /* Inverted surface palette = day values while page is night. */
   --contrast-bg: #ffffff;
   --contrast-bg-card: #ffffff;
-  --contrast-text: #1a1a1a;
-  --contrast-text-body: rgba(26, 26, 26, 0.65);
-  --contrast-text-muted: rgba(26, 26, 26, 0.4);
+  --contrast-text: #131719;
+  --contrast-text-body: rgba(19, 23, 25, 0.65);
+  --contrast-text-muted: rgba(19, 23, 25, 0.4);
   --contrast-border: rgba(0, 0, 0, 0.08);
 }
 
@@ -123,10 +103,10 @@ html [data-theme="day"] {
   --bg: #ffffff;
   --bg-card: #ffffff;
 
-  --text: #1a1a1a;
-  --text-body: rgba(26, 26, 26, 0.65);
-  --text-muted: rgba(26, 26, 26, 0.4);
-  --text-dim: rgba(26, 26, 26, 0.25);
+  --text: #131719;
+  --text-body: rgba(19, 23, 25, 0.65);
+  --text-muted: rgba(19, 23, 25, 0.4);
+  --text-dim: rgba(19, 23, 25, 0.25);
 
   --border: rgba(0, 0, 0, 0.08);
   --border-strong: rgba(0, 0, 0, 0.14);
@@ -136,9 +116,9 @@ html [data-theme="day"] {
   /* Inverted surface palette = night values while page is day. */
   --contrast-bg: #131719;
   --contrast-bg-card: #1a1d20;
-  --contrast-text: #ededed;
-  --contrast-text-body: rgba(237, 237, 237, 0.65);
-  --contrast-text-muted: rgba(237, 237, 237, 0.4);
+  --contrast-text: #ffffff;
+  --contrast-text-body: rgba(255, 255, 255, 0.65);
+  --contrast-text-muted: rgba(255, 255, 255, 0.4);
   --contrast-border: rgba(255, 255, 255, 0.08);
 }
 
@@ -262,6 +242,12 @@ html [data-view="agent"] {
 [data-view="agent"] main h5,
 [data-view="agent"] main h6 {
   margin: 16px 0 4px !important;
+}
+/* Robot view stays sentence case — the uppercase/semibold H1 is a visual
+   treatment, and shouting the markdown makes it worse to parse. */
+[data-view="agent"] main h1 {
+  text-transform: none !important;
+  font-weight: 400 !important;
 }
 [data-view="agent"] main h1::before { content: '# ' !important; }
 [data-view="agent"] main h2::before { content: '## ' !important; }
@@ -1128,7 +1114,8 @@ a:hover, button:hover, [role="button"]:hover {
 /* H1 — page display */
 h1 {
   font-family: var(--font-grotesque);
-  font-weight: 400;
+  font-weight: 600;
+  text-transform: uppercase;
   font-size: clamp(44px, 9vw, 88px);
   line-height: 1.02;
   letter-spacing: -0.06em;
@@ -1192,7 +1179,7 @@ h3 {
   font-weight: 400;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-body);
 }
 
 /* No bold for emphasis — promote to text-primary instead */

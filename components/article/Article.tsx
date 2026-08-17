@@ -683,7 +683,7 @@ export function ArticleHero({
                         font-weight: 400;
                         letter-spacing: 1px;
                         text-transform: uppercase;
-                        color: var(--brand-accent);
+                        color: var(--text-muted);
                         text-decoration: none;
                         line-height: 1.5;
                         transition: opacity var(--dur-fast) var(--ease);
@@ -1133,7 +1133,8 @@ export function SpecTable({
         .spec__title {
           margin: 0 0 4px;
           padding-bottom: 22px;
-          /* Brand accent — the record's header carries the orange. */
+          /* Table headers are clay by design — the record's header carries
+             the accent. Every other label stays --text-muted. */
           color: var(--brand-accent);
           /* Heavy rule — anchors the header above the faint dotted rows. */
           border-bottom: 1.5px solid var(--border-strong);
@@ -1181,9 +1182,9 @@ export function SpecTable({
         /* Footnote — CAPTION style: small, muted Bricolage fine print. */
         .spec__note {
           font-family: var(--font-sans);
-          font-size: 12.5px;
-          line-height: 1.5;
-          color: var(--text-muted);
+          font-size: 14px;
+          line-height: 1.6;
+          color: var(--text-body);
           margin: 22px 0 0;
         }
         @media (max-width: 560px) {
@@ -1494,7 +1495,7 @@ export function Continue({
     <section style={{ padding: 'var(--section-gap) 0', borderTop: '1px solid var(--border)' }}>
       <div className="section-w">
         <Reveal>
-          <div className="label" style={{ marginBottom: 40, color: 'var(--brand-accent)' }}>{heading}</div>
+          <div className="label" style={{ marginBottom: 40 }}>{heading}</div>
           <div
             className="continue-grid"
             style={{

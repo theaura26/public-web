@@ -75,7 +75,7 @@ export function FilmBanner({ youtubeId, poster, alt = '', caption, note, bgVideo
       <div className="film-banner film-banner--ph" role="group" aria-label={caption || 'Film placeholder'}>
         <div className="film-banner__ph">
           <span aria-hidden className="film-banner__ph-play">
-            <svg viewBox="0 0 24 24" width={26} height={26}>
+            <svg viewBox="0 0 24 24" width={24} height={24}>
               <path d="M8 5v14l11-7z" fill="currentColor" />
             </svg>
           </span>

@@ -480,7 +480,7 @@ export default function MudigerePage() {
                         'background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease)',
                     }}
                   >
-                    <svg viewBox="0 0 24 24" width={26} height={26} aria-hidden style={{ marginLeft: 4 }}>
+                    <svg viewBox="0 0 24 24" width={24} height={24} aria-hidden style={{ marginLeft: 4 }}>
                       <path d="M8 5v14l11-7z" fill="currentColor" />
                     </svg>
                   </button>
@@ -902,7 +902,7 @@ export default function MudigerePage() {
                         'background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease)',
                     }}
                   >
-                    <svg viewBox="0 0 24 24" width={26} height={26} aria-hidden style={{ marginLeft: 4 }}>
+                    <svg viewBox="0 0 24 24" width={24} height={24} aria-hidden style={{ marginLeft: 4 }}>
                       <path d="M8 5v14l11-7z" fill="currentColor" />
                     </svg>
                   </button>

@@ -146,11 +146,11 @@ function Movement({ id, heading, children }: { id?: string; heading: React.React
    estate wordmark, the parallax/film banners, and the diagrams are left
    untouched (signature moments kept). One caption per block. */
 const MUD_PASSAGES = [
-  { perVh: 150, caption: 'Arabica, ripening in the understory', media: [
+  { caption: 'Arabica, ripening in the understory', media: [
     { image: '/journals/coffee/aura-our-coffee-story.jpg', alt: 'Six micro lots · Arabica Sln.9 & Sln.795 · Aura Estate' },
     { video: '/mudigere/aura-coffee.mp4', poster: '/mudigere/aura-coffee.jpg', alt: 'Coffee cherries ripening in the understory under native shade' },
   ] },
-  { perVh: 150, caption: 'Fauna of Mudigere', media: [
+  { caption: 'Fauna of Mudigere', media: [
     { video: '/journals/living-systems/aura-cow-eye.mp4', poster: '/journals/living-systems/aura-cow-eye.jpg', alt: 'Close on the eye of a Malnad Gidda — indigenous Karnataka breed' },
     { video: '/mudigere/aura-animals.mp4', poster: '/mudigere/aura-animals.jpg', alt: 'The fauna of the estate — cattle, native bees, and the living loop' },
   ] },
@@ -160,7 +160,7 @@ const MUD_PASSAGES = [
    wordmark centred over it and the "Explore Aura Estate" film kept playable.
    No block caption (the wordmark is the title). */
 const MUD_ESTATE = [
-  { perVh: 170, media: [
+  { media: [
     { video: '/mudigere/aura-estate-top-view.mp4', poster: '/mudigere/aura-estate-top-view.jpg', alt: 'The four-story canopy from above — Aura Estate, Western Ghats' },
     { video: '/mudigere/aura-estate-walkthrough.mp4', poster: '/mudigere/aura-estate-walkthrough.jpg', alt: 'The estate on film — Aura Estate, Western Ghats' },
   ], overlay: (
@@ -175,7 +175,7 @@ const MUD_ESTATE = [
 /* People & Vision — residency ⇄ closing film crossfade, "Watch our story"
    kept playable. */
 const MUD_PEOPLE = [
-  { perVh: 160, media: [
+  { media: [
     { video: '/mudigere/aura-people.mp4', poster: '/mudigere/aura-people.jpg', alt: 'The residency — those who come to learn' },
     { video: '/mudigere/aura-vision.mp4', poster: '/mudigere/aura-vision.jpg', alt: 'The estate on film — the forest of 2125' },
   ], overlay: (

@@ -7,7 +7,7 @@ import { Continue } from '@/components/article/Article'
 
 const TOPICS: Record<string, string> = {
   coffee: 'Coffee & Sourcing',
-  residency: 'Residency & Studios',
+  residency: 'Residency & Atelier',
   partnerships: 'Partnerships',
   events: 'Festivals & Events',
   press: 'Press & Media',
@@ -273,7 +273,7 @@ export default function ContactPage() {
         heading="Explore"
         items={[
           { href: '/reason', label: 'The Reason', description: 'Why Aura exists — the founder’s letter, grown over generations.', img: '/the-reason/aura-flowers-1.png' },
-          { href: '/studios', label: 'Studios', description: 'The labs and workshops — clay, fibre, wood, sound, type, software.', img: '/aura-studios/aura-studios.jpg' },
+          { href: '/atelier', label: 'Atelier', description: 'The labs and workshops — clay, fibre, wood, sound, type, software.', img: '/aura-studios/aura-studios.jpg' },
           { href: '/brand', label: 'Our Brand', description: 'The identity and voice — how Aura carries itself.', img: '/aura-hero.jpg' },
         ]}
       />
@@ -297,7 +297,7 @@ function AgentContactView() {
       <ul>
         <li>General inquiries: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
         <li>Coffee &amp; sourcing: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
-        <li>Residency &amp; studios: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
+        <li>Residency &amp; atelier: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
         <li>Partnerships: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
         <li>Press &amp; media: <a href="mailto:hello@theaura.life">hello@theaura.life</a></li>
       </ul>

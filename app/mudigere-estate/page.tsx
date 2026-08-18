@@ -22,7 +22,7 @@ import Reveal from '@/components/RevealOnScroll'
    MUDIGERE title (mix-blend-difference) holds against both.
    No new module-level component is added — this is just markup
    composed from the existing global classes (.section-w,
-   .studios-title, .studios-title__letters, .label) plus a
+   .atelier-title, .atelier-title__letters, .label) plus a
    scroll handler. */
 
 /* /mudigere-estate — private briefing for architects and landscape designers.
@@ -201,7 +201,7 @@ export default function MudigerePage() {
           {/* Title overlay + sub-caption — white ink, mix-blend-
               difference so they invert cleanly against the dark
               video AND the light beige map. Title uses the existing
-              `.section-w` rail + `.studios-title` letter-spread
+              `.section-w` rail + `.atelier-title` letter-spread
               typography; the sub-caption sits directly beneath it,
               centred, in the kit's `.label` token. */}
           <div
@@ -218,8 +218,8 @@ export default function MudigerePage() {
             }}
           >
             <div className="section-w" style={{ width: '100%' }}>
-              <h1 className="studios-title" aria-label="Mudigere" style={{ color: 'inherit' }}>
-                <span className="studios-title__letters" aria-hidden>
+              <h1 className="atelier-title" aria-label="Mudigere" style={{ color: 'inherit' }}>
+                <span className="atelier-title__letters" aria-hidden>
                   <span>M</span>
                   <span>U</span>
                   <span>D</span>
@@ -229,7 +229,7 @@ export default function MudigerePage() {
                   <span>R</span>
                   <span>E</span>
                 </span>
-                <span className="studios-title__plain">Mudigere</span>
+                <span className="atelier-title__plain">Mudigere</span>
               </h1>
               <p
                 className="label mud-hero__caption"

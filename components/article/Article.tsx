@@ -538,7 +538,7 @@ export function JournalHero({
           but styled-jsx global blocks only inject when the host
           component mounts — and the studios page composes the media
           block by hand, so it never gets these styles. Lifting them
-          out fixes the short-video bug on mobile /studios. */}
+          out fixes the short-video bug on mobile /atelier. */}
 
       <style jsx>{`
         .journal-hero {

@@ -25,11 +25,11 @@ import { StorytellingScroller } from '@/components/StorytellingScroller'
 ═══════════════════════════════════════════════════════════════════ */
 
 const HERD_PASSAGES = [
-  { perVh: 150, caption: 'The hands that tend the herd', media: [
+  { caption: 'The hands that tend the herd', media: [
     { image: '/herd/images/aura-relationship1.jpg', alt: 'The estate team with the herd at Mudigere' },
     { image: '/herd/images/aura-dung.jpg', alt: "Fresh dung collected at dawn — the estate's raw material" },
   ] },
-  { perVh: 150, caption: 'The next generation, kept pure', media: [
+  { caption: 'The next generation, kept pure', media: [
     { video: '/herd/videos/aura-calf1.mp4', poster: '/herd/images/aura-calf1.jpg', alt: 'A Malnad Gidda calf on the estate — the next generation' },
     { image: '/herd/images/aura-calf2.jpg', alt: 'A Malnad Gidda calf — the indigenous line kept pure' },
   ] },

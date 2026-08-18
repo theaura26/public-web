@@ -66,7 +66,7 @@ const ARTICLES: Article[] = [
 const PRIMARY_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/reason', label: 'The Reason' },
-  { href: '/studios', label: 'Studios' },
+  { href: '/atelier', label: 'Atelier' },
   { href: '/brand', label: 'Our Brand' },
   { href: '/contact', label: 'Contact Us' },
 ]

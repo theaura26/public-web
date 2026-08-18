@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 
-/* StudioPillarMedia — 3:4 media tile for the /studios pillar grid.
+/* StudioPillarMedia — 3:4 media tile for the /atelier pillar grid.
    Renders an autoplaying muted loop when `video` is provided (paused
    while offscreen via IntersectionObserver, same gesture the homepage
    pillars use). Falls back to a plain still image otherwise. */

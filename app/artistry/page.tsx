@@ -18,7 +18,7 @@ import { ExpandingBanner } from '@/components/ExpandingBanner'
 import { StorytellingScroller } from '@/components/StorytellingScroller'
 
 const ART_PASSAGES = [
-  { perVh: 150, caption: 'From the canopy to the wall', media: [
+  { caption: 'From the canopy to the wall', media: [
     { video: '/artistry/videos/aura-plantation-canopy-map.mp4', poster: '/artistry/images/aura-plantation-canopy-map.jpg', alt: 'An aerial canopy map of the plantation' },
     { image: '/artistry/images/aura-framed-art-gallery-wall.jpg', alt: 'A gallery wall of framed botanical artwork at Ohara' },
   ] },

@@ -386,11 +386,11 @@ html [data-view="agent"] {
 /* ── Journal hero corner vignette ──
    Every `.journal-hero__media` — whether rendered by the JournalHero
    React component (/coffee, /rta) or by hand-rolled markup that
-   reuses the class (/studios) — gets a soft radial shadow anchored at
+   reuses the class (/atelier) — gets a soft radial shadow anchored at
    the bottom-left, so the pinned caption stays legible over busy
    photography without darkening the rest of the image. Lives here in
    globals.css rather than in JournalHero's scoped styled-jsx because
-   the studios page composes the media block directly, outside the
+   the atelier page composes the media block directly, outside the
    component tree, and would otherwise miss the scoped rule. The
    parent must be positioned for the absolute pseudo-element to anchor;
    the position:relative declaration here doubles as a safety net for
@@ -400,7 +400,7 @@ html [data-view="agent"] {
   /* Full-bleed: 100vw + a negative centring margin pulls the block
      out of any inherited content gutter so the video sits edge-to-
      edge of the viewport. JournalHero's scoped styled-jsx sets the
-     same thing, but the studios page composes the media by hand and
+     same thing, but the atelier page composes the media by hand and
      wouldn't otherwise reach viewport edges. */
   width: 100vw;
   margin-left: calc(50% - 50vw);
@@ -444,7 +444,7 @@ html [data-view="agent"] {
 }
 /* Caption pinned bottom-left of the media block, above the vignette
    pseudo (z-index 1). The JournalHero scoped styled-jsx already sets
-   most of this, but the studios page composes the media block by
+   most of this, but the atelier page composes the media block by
    hand and uses the class directly — re-state the positioning + ink
    globally so both paths land in the same place.
    Selector is `p.journal-hero__caption` (specificity 0,1,1) instead
@@ -483,12 +483,9 @@ p.journal-hero__caption {
 [data-view="agent"] main .expanding-banner-wrap,
 [data-view="agent"] main .expanding-banner-inner,
 [data-view="agent"] main .expanding-banner-card,
-[data-view="agent"] main .parallax-banner,
-[data-view="agent"] main .film-banner,
-/* Crossfade scroller — decorative sticky media backdrop, the transparent
-   gap passages, and the pinned wordmark / film-play overlays. */
-[data-view="agent"] main .story2__bg,
-[data-view="agent"] main .story2__gap,
+/* Crossfade scroller — the runs of decorative full-bleed banners and the
+   wordmark / film-play overlay held over the length of a run. */
+[data-view="agent"] main .story2__run,
 [data-view="agent"] main .story2__overlay,
 [data-view="agent"] main .journal-hero__media,
 [data-view="agent"] main .hero-tile__media,
@@ -517,7 +514,7 @@ p.journal-hero__caption {
    DataCard. The inner img/video already disappear via the global
    rule; this hides the grey backing plate too. */
 [data-view="agent"] main .data-card__media,
-/* StudioPillarMedia — 3:4 reserved box on each /studios pillar
+/* StudioPillarMedia — 3:4 reserved box on each /atelier pillar
    card (Origin / Engine / Hospitality). */
 [data-view="agent"] main .studio-pillar-media,
 /* PullQuote full-bleed border rules — `width: 100vw` + a centering
@@ -539,13 +536,10 @@ p.journal-hero__caption {
   display: none !important;
 }
 
-/* Crossfade scroller (StorytellingScroller) — collapse the vh-tall sticky
-   stages so the flattened editorial doesn't sit inside giant empty blocks,
-   and undo the -100dvh backdrop pull so the text isn't dragged off-screen.
-   The backdrop / gaps / overlays are hidden above; the solid editorial
-   panels flow as text. */
+/* Crossfade scroller (StorytellingScroller) — the banner runs are hidden
+   above; collapse the wrappers so the flattened editorial reads as
+   continuous text rather than sitting inside viewport-tall blocks. */
 [data-view="agent"] main .story2,
-[data-view="agent"] main .story2__content,
 [data-view="agent"] main .story2__solid {
   height: auto !important;
   min-height: 0 !important;
@@ -1287,18 +1281,18 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
 }
 
 
-/* ── Studios hero — editorial display title ─────────────────────────
-   "STUDIOS." stretches edge-to-edge across the section-w rail, in
+/* ── Atelier hero — editorial display title ─────────────────────────
+   "ATELIER" stretches edge-to-edge across the section-w rail, in
    the same uppercase grotesque the journal heroes use. Letters are
    each in their own span and laid out with `justify-content:
    space-between` so the word fills the row regardless of letter
-   count. The sr-only `.studios-title__plain` carries the readable
+   count. The sr-only `.atelier-title__plain` carries the readable
    text for screen readers and agent mode (which hides the letters
    and reveals the plain text). */
-.studios-hero {
+.atelier-hero {
   padding: clamp(120px, 18vh, 200px) 0 var(--section-gap);
 }
-.studios-title {
+.atelier-title {
   margin: 0;
   font-family: var(--font-grotesque);
   font-weight: 600;
@@ -1308,14 +1302,14 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
   text-transform: uppercase;
   color: var(--text);
 }
-.studios-title__letters {
+.atelier-title__letters {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   width: 100%;
   white-space: nowrap;
 }
-.studios-title__plain {
+.atelier-title__plain {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -1327,15 +1321,15 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
   border: 0;
 }
 /* Agent mode flips the two: hide the visual letter row, reveal the
-   plain "Studios." text so the markdown reads naturally. The extra
-   `.studios-title` qualifier raises specificity above the generic
+   plain "Atelier" text so the markdown reads naturally. The extra
+   `.atelier-title` qualifier raises specificity above the generic
    `h1 > span:first-child` inlining rule used for ScrollHighlight
    (otherwise that rule wins and the letter row reappears alongside
    the plain text). */
-[data-view="agent"] main h1.studios-title > .studios-title__letters {
+[data-view="agent"] main h1.atelier-title > .atelier-title__letters {
   display: none !important;
 }
-[data-view="agent"] main h1.studios-title > .studios-title__plain {
+[data-view="agent"] main h1.atelier-title > .atelier-title__plain {
   position: static !important;
   width: auto !important;
   height: auto !important;

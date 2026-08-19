@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
      adds a backdrop blur that distorts the corner of the layout while
      designing. Production builds never render it. */
   devIndicators: false,
+  /* Next 16 only honours qualities declared here — anything else is
+     ignored with a warning at request time. /brand's slide deck asks for
+     78, so declare it alongside the 75 default rather than let ~90 images
+     silently fall back. */
+  images: { qualities: [75, 78] },
   /* PostHog reverse proxy — events + assets are served from our own
      origin under /ingest, so first-party requests dodge ad-blockers
      (which drop ~a third of third-party analytics traffic). EU endpoints
@@ -24,6 +29,14 @@ const nextConfig: NextConfig = {
     return [
       { source: '/ingest/static/:path*', destination: 'https://eu-assets.i.posthog.com/static/:path*' },
       { source: '/ingest/:path*', destination: 'https://eu.i.posthog.com/:path*' },
+    ]
+  },
+  /* /studios was renamed to /atelier. A permanent redirect keeps the old
+     URL alive for anything already indexed or linked, and passes the
+     ranking signals across rather than serving a 404. */
+  async redirects() {
+    return [
+      { source: '/studios', destination: '/atelier', permanent: true },
     ]
   },
   /* No redirect from /mudigere-estate → /mudigere: they are intentionally

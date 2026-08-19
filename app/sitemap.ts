@@ -17,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   /* Core company + crop pages — primary nav destinations. Not journals, so
      they aren't in ACTIVE_JOURNALS, but they are public, indexable, and
      carry their own metadata + canonical. */
-  const pages = ['/reason', '/studios', '/brand', '/contact', '/sanctuary', '/provenance', '/areca', '/pepper'].map(href => ({
+  const pages = ['/reason', '/atelier', '/brand', '/contact', '/sanctuary', '/provenance', '/areca', '/pepper'].map(href => ({
     url: `${base}${href}`,
     lastModified: now,
     changeFrequency: 'monthly' as const,

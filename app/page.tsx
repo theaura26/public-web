@@ -1467,7 +1467,7 @@ export default function Home() {
             {[
               { href: '/reason',  l1: 'Aura is not built,',     l2: 'it is grown',     pill: 'The Reason', img: '/aura-grown.jpg',   video: '/aura-grown.mp4', symbol: '/aura-symbol-1.png', alt: 'Aura — patient, grown systems'              },
               { href: '/brand',   l1: 'Rhythm over speed,',     l2: 'depth and width', pill: 'Our Brand',  img: '/aura-depth.jpg',   video: '/aura-depth.mp4', symbol: '/aura-symbol-2.png', alt: 'Aura — rhythm, depth and breadth of practice' },
-              { href: '/studios',  l1: 'Regenerative innovation',l2: 'and craft',       pill: 'Studios',    img: '/aura-contact.jpg', video: undefined, symbol: '/aura-symbol-3.png', alt: 'Aura Studios — natural intelligence applied to story, systems, and place' },
+              { href: '/atelier',  l1: 'Regenerative innovation',l2: 'and craft',       pill: 'Atelier',    img: '/aura-contact.jpg', video: undefined, symbol: '/aura-symbol-3.png', alt: 'Aura Atelier — natural intelligence applied to story, systems, and place' },
             ].map((tile, i) => (
               <Link
                 key={tile.href}

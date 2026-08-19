@@ -35,7 +35,7 @@ export const metadata = {
      metadata.title.template ('%s — Aura') wraps it. Set title to
      'Studios' so the rendered <title> becomes 'Studios — Aura' —
      repeating 'Aura' here would produce 'Studios — Aura — Aura'. */
-  title: 'Studios',
+  title: 'Atelier',
   description:
     'Origin, Engine, Hospitality. Three studios applying Natural Intelligence to story, systems, and place — built on regenerative land in Mudigere, Karnataka and Ohara, Kyoto. For monastic polymaths and crazy misfits.',
   keywords: [
@@ -51,12 +51,12 @@ export const metadata = {
     'sensors and agents',
     'hospitality design',
   ],
-  alternates: { canonical: '/studios' },
+  alternates: { canonical: '/atelier' },
   openGraph: {
     type: 'website',
-    url: 'https://theaura.life/studios',
+    url: 'https://theaura.life/atelier',
     siteName: 'Aura',
-    title: 'Studios — Aura',
+    title: 'Atelier — Aura',
     description:
       'Origin, Engine, Hospitality. Three studios applying Natural Intelligence to story, systems, and place. The future cannot automate what is deeply human.',
     images: [
@@ -70,7 +70,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Studios — Aura',
+    title: 'Atelier — Aura',
     description:
       'Three studios applying Natural Intelligence to story, systems, and place. The future cannot automate what is deeply human.',
     images: ['/aura-studios/aura-studios.jpg'],
@@ -118,23 +118,23 @@ export default function StudiosPage() {
           STUDIOS. set in the same editorial display rhythm as
           the journal heroes — uppercase grotesque, letters
           spread edge-to-edge. The visible letter-spans carry
-          the visual weight; the sr-only `.studios-title__plain`
+          the visual weight; the sr-only `.atelier-title__plain`
           carries the readable text for screen readers and
           agent mode (which swaps the two via CSS). */}
-      <section className="studios-hero">
+      <section className="atelier-hero">
         <div className="section-w">
           <Reveal>
-            <h1 className="studios-title" aria-label="Studios">
-              <span className="studios-title__letters" aria-hidden>
-                <span>S</span>
+            <h1 className="atelier-title" aria-label="Atelier">
+              <span className="atelier-title__letters" aria-hidden>
+                <span>A</span>
                 <span>T</span>
-                <span>U</span>
-                <span>D</span>
+                <span>E</span>
+                <span>L</span>
                 <span>I</span>
-                <span>O</span>
-                <span>S</span>
+                <span>E</span>
+                <span>R</span>
               </span>
-              <span className="studios-title__plain">Studios</span>
+              <span className="atelier-title__plain">Atelier</span>
             </h1>
           </Reveal>
         </div>
@@ -148,7 +148,7 @@ export default function StudiosPage() {
           CSS so the geometry tracks the rest of the journal kit.
           The default media block carries a `-300px` desktop margin-
           top to overlap a `journal-hero__top` of 100vh — here the
-          studios-hero above is much shorter, so we override that
+          atelier-hero above is much shorter, so we override that
           back to 0 inline. */}
       <div
         className="journal-hero__media"

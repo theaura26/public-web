@@ -148,40 +148,40 @@ function Movement({ id, heading, children }: { id?: string; heading: React.React
 /* EXPERIMENT (offline): the six image passages, in page order. Each feeds
    the single sticky crossfade backdrop as its gap scrolls the viewport —
    image fades, to a solid editorial panel, to a different image fading.
-   `perVh` is vh of scroll per image (bigger = slower / deeper). */
+   Scroll depth is derived: one viewport of scroll per frame. */
 const OHARA_PASSAGES = [
   // A · ARRIVAL — into the valley in motion
-  { perVh: 150, caption: 'The valley, from the ridge', media: [
+  { caption: 'The valley, from the ridge', media: [
     { video: '/ohara/videos/aura-header.mp4', poster: '/ohara/images/aura-header.jpg', alt: 'The Ohara valley from the ridge — cedar slopes and the river below', caption: 'The valley, from the ridge' },
     { video: '/ohara/videos/aura-river.mp4', poster: '/ohara/images/aura-river.jpg', alt: 'The river running through the Ohara valley', caption: 'The river, through the valley' },
     { video: '/ohara/videos/aura-weather.mp4', poster: '/ohara/images/aura-weather.jpg', alt: 'Mist moving through the Ohara valley', caption: 'Weather, moving through' },
     { video: '/ohara/videos/aura-gate.mp4', poster: '/ohara/images/aura-gate.jpg', alt: 'The gate at Ohara — stone lanterns and a moss-lined path into the garden', caption: 'The gate, one stone at a time' },
   ] },
   // B · RESTORATION — the roofline, the teahouse, the kept mark
-  { perVh: 145, caption: 'Inside the restored teahouse', media: [
+  { caption: 'Inside the restored teahouse', media: [
     { image: '/ohara/images/aura-moss.jpg', alt: 'Moss and fallen maple leaves on the restored roofline', caption: 'The restored roofline, kept aging' },
     { image: '/ohara/images/aura-interior.jpg', alt: "Inside the restored teahouse — the craftsman's repair", caption: 'Inside the teahouse' },
     { image: '/ohara/images/aura-emblem.jpg', alt: 'A carved emblem kept from the original home', caption: 'A mark kept from the original' },
   ] },
   // C · ASA — the morning counter
-  { perVh: 150, caption: 'The morning counter', media: [
+  { caption: 'The morning counter', media: [
     { image: '/ohara/images/aura-matcha.jpg', alt: 'Matcha whisked at the morning counter', caption: 'The morning counter' },
     { video: '/ohara/videos/aura-indigo.mp4', poster: '/ohara/images/aura-indigo.jpg', alt: 'Indigo-dyed cloth lifted from the vat to oxidise', caption: 'Indigo, taking colour from the air' },
   ] },
   // D · NIWA — the table the valley sets
-  { perVh: 145, caption: 'The fields that feed the table', media: [
+  { caption: 'The fields that feed the table', media: [
     { image: '/ohara/images/aura-organic.jpg', alt: 'Organic produce gathered from the valley and greenhouse', caption: 'Foraged and grown' },
     { image: '/ohara/images/aura-bento.jpg', alt: "An obanzai plate built from the valley's produce", caption: 'Written around what arrived' },
     { image: '/ohara/images/aura-farm.jpg', alt: 'The kitchen garden and terraced fields that feed the table', caption: 'The fields that feed the table' },
   ] },
   // E · KI NO IE — the pavilion by the river
-  { perVh: 145, caption: 'Reclaimed cedar, grown in by herbs', media: [
+  { caption: 'Reclaimed cedar, grown in by herbs', media: [
     { video: '/ohara/videos/aura-flower.mp4', poster: '/ohara/images/aura-flower.jpg', alt: 'Flowers and herbs growing in around the pavilion', caption: 'Grown in by vines and herbs' },
     { image: '/ohara/images/aura-inside.jpg', alt: 'Reclaimed cedar joinery inside the pavilion', caption: 'Reclaimed cedar, unpainted' },
     { image: '/ohara/images/aura-fountain.jpg', alt: 'A stone water basin beside the pavilion', caption: 'Stillness, kept by running water', objectPosition: 'center 68%' },
   ] },
   // F · SEASONS — the garden, autumn into winter
-  { perVh: 140, caption: 'The garden, autumn into winter', media: [
+  { caption: 'The garden, autumn into winter', media: [
     { video: '/ohara/videos/aura-autumn.mp4', poster: '/ohara/images/aura-autumn.jpg', alt: 'Autumn maple over the moss-grown eaves at Ohara', caption: 'The garden, in autumn' },
     { image: '/ohara/images/aura-autumnleaves.jpg', alt: 'Fallen autumn leaves across the moss at Ohara', caption: 'Autumn, come to the ground' },
     { video: '/ohara/videos/aura-winter1.mp4', poster: '/ohara/images/aura-winter1.jpg', alt: 'The same corner of the garden under snow', caption: 'The same corner, in winter' },

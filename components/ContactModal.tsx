@@ -21,7 +21,7 @@ import { track, identify } from '@/lib/analytics'
 
 const TOPICS: Record<string, string> = {
   coffee: 'Coffee & Sourcing',
-  residency: 'Residency & Studios',
+  residency: 'Residency & Atelier',
   partnerships: 'Partnerships',
   events: 'Festivals & Events',
   press: 'Press & Media',

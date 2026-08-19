@@ -27,11 +27,11 @@ import { StorytellingScroller } from '@/components/StorytellingScroller'
 ═══════════════════════════════════════════════════════════════════ */
 
 const CIRC_PASSAGES = [
-  { perVh: 150, caption: 'Fourteen pits, turned by hand', media: [
+  { caption: 'Fourteen pits, turned by hand', media: [
     { image: '/circular/images/aura-cpp.jpg', alt: 'A numbered Cow Pat Pit at Mudigere, turned by hand' },
     { image: '/circular/images/aura-saltrock.jpg', alt: 'Finely ground basalt dust — the mineral component of CPP' },
   ] },
-  { perVh: 150, caption: 'The life that builds the soil back', media: [
+  { caption: 'The life that builds the soil back', media: [
     { video: '/circular/videos/aura-microbe.mp4', poster: '/circular/images/aura-microbe.jpg', alt: "Microbial colonies from the estate's soil, under the lens" },
     { image: '/circular/images/aura-mushroom.jpg', alt: 'Fungi on the estate floor — the organisms that build soil' },
   ] },

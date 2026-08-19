@@ -483,11 +483,9 @@ p.journal-hero__caption {
 [data-view="agent"] main .expanding-banner-wrap,
 [data-view="agent"] main .expanding-banner-inner,
 [data-view="agent"] main .expanding-banner-card,
-[data-view="agent"] main .parallax-banner,
-[data-view="agent"] main .film-banner,
-/* Crossfade scroller — decorative sticky media backdrop, the transparent
-   gap passages, and the pinned wordmark / film-play overlays. */
-[data-view="agent"] main .story2__banner,
+/* Crossfade scroller — the runs of decorative full-bleed banners and the
+   wordmark / film-play overlay held over the length of a run. */
+[data-view="agent"] main .story2__run,
 [data-view="agent"] main .story2__overlay,
 [data-view="agent"] main .journal-hero__media,
 [data-view="agent"] main .hero-tile__media,
@@ -538,9 +536,9 @@ p.journal-hero__caption {
   display: none !important;
 }
 
-/* Crossfade scroller (StorytellingScroller) — the banners are hidden above;
-   collapse the wrappers so the flattened editorial reads as continuous text
-   rather than sitting inside viewport-tall blocks. */
+/* Crossfade scroller (StorytellingScroller) — the banner runs are hidden
+   above; collapse the wrappers so the flattened editorial reads as
+   continuous text rather than sitting inside viewport-tall blocks. */
 [data-view="agent"] main .story2,
 [data-view="agent"] main .story2__solid {
   height: auto !important;

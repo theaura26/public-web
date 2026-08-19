@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react'
 import { track } from '@/lib/analytics'
 
 /* ═══════════════════════════════════════════════════════════════════
-   FILM PLAY — the FilmBanner's play affordance + fullscreen player,
+   FILM PLAY — the play affordance + fullscreen player,
    without the banner background. Made to overlay a crossfade passage
    (StorytellingScroller): a bottom-right "▶ caption" control and an
    optional bottom-left note, that open the YouTube film in the same
-   fixed fullscreen viewer FilmBanner uses (youtube-nocookie, chrome
+   fixed fullscreen viewer (youtube-nocookie, chrome
    stripped back, closed with ✕ or Escape).
 
    It fills its parent (absolute inset:0) but is click-through except for
@@ -88,7 +88,7 @@ export function FilmPlay({
           pointer-events: none; /* click-through except the CTA */
           z-index: 3;
         }
-        /* Bottom-right CTA — mirrors FilmBanner's exactly. */
+        /* Bottom-right CTA. */
         .film-play__cta {
           position: absolute;
           right: var(--gutter);
@@ -135,7 +135,7 @@ export function FilmPlay({
         @media (max-width: 768px) {
           .film-play__note { bottom: var(--gutter); max-width: 40%; font-size: 10px; letter-spacing: 1.5px; line-height: 1.35; }
         }
-        /* Fullscreen film overlay — identical to FilmBanner. */
+        /* Fullscreen film overlay. */
         .film-play__fs {
           position: fixed;
           inset: 0;

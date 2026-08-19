@@ -184,44 +184,22 @@ const MUD_PEOPLE = [
 ]
 
 export default function MudigerePage() {
-  // Wordmark motion — the hero mark drifts slower than the video; every
-  // pinned stack-overlay (.mud-pin-mark) fades IN as its first banner's
-  // middle reaches the viewport centre, stays pinned (mix-blend-difference)
-  // over its stack with a gentle drift, then fades OUT as its last banner's
-  // middle reaches the centre. rAF, no re-render.
+  // Hero wordmark drift — the mark travels slower than the video behind it.
+  // The per-frame `.mud-pin-mark` pass that used to live here is gone: it
+  // hand-rolled a mark pinned over a stack of banners, and StorytellingScroller
+  // holds its overlay for the length of a run now, so the markup it queried no
+  // longer exists. It was running a document-wide querySelectorAll on every
+  // scroll frame and finding nothing.
   const heroMarkRef = useRef<HTMLImageElement>(null)
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let raf = 0
     const update = () => {
       raf = 0
-      const vh = window.innerHeight
       const hero = heroMarkRef.current
-      if (hero) {
-        const y = Math.min(window.scrollY, vh)
-        hero.style.transform = `translateY(${(y * 0.28).toFixed(1)}px)`
-      }
-      // Queried fresh each frame so render timing can't leave it stale.
-      document.querySelectorAll<HTMLElement>('.mud-pin-mark').forEach((m) => {
-        const wrap = m.closest<HTMLElement>('.mud-pin-wrap')
-        if (!wrap) return
-        const r = wrap.getBoundingClientRect()
-        // Gentle parallax accent only — the mark stays clearly pinned at the
-        // viewport centre; this just gives it a little life.
-        const raw = (r.top + r.height / 2 - vh / 2) * 0.04
-        const drift = Math.max(-24, Math.min(24, raw)).toFixed(1)
-        m.style.transform = `translateY(calc(-50% + ${drift}px))`
-        // Fade IN when the first banner's middle hits the viewport centre,
-        // hold while pinned, fade OUT when the last banner's middle hits it.
-        const banners = Array.from(wrap.children).filter((c) => c !== m.parentElement) as HTMLElement[]
-        const bH = banners[0]?.offsetHeight || r.height
-        const firstMid = r.top + bH / 2
-        const lastMid = r.bottom - bH / 2
-        const FB = 200 // fade band, px
-        const fadeIn = Math.min(1, Math.max(0, (vh / 2 + FB - firstMid) / FB))
-        const fadeOut = Math.min(1, Math.max(0, (lastMid - (vh / 2 - FB)) / FB))
-        m.style.opacity = Math.min(fadeIn, fadeOut).toFixed(3)
-      })
+      if (!hero) return
+      const y = Math.min(window.scrollY, window.innerHeight)
+      hero.style.transform = `translateY(${(y * 0.28).toFixed(1)}px)`
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }
     window.addEventListener('scroll', onScroll, { passive: true })

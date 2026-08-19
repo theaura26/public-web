@@ -6,13 +6,18 @@ import { useEffect, useRef } from 'react'
    EXPANDING BANNER — scroll-driven blur → clarity reveal.
 
    The same component the homepage uses for its hero-video moments.
-   Lives in a 180vh wrapper with a sticky 100vh stage:
+   Lives in a 160vh wrapper with a sticky 100vh stage:
 
      Phase 0 — BLUR    : the card enters as a centred frame with heavy blur
      Phase 1 — CLARITY : as scroll progresses, blur lifts and the card
                          grows to fill 100vw × 100vh
-     Phase 2 — HOLD    : card stays full-screen and clear for a beat
-     Phase 3 — SCROLL  : sticky releases, the next section enters
+     Phase 2 — SCROLL  : sticky releases the instant the card is clear,
+                         and the next section enters
+
+   The stage is pinned for exactly as long as the reveal takes — 60vh of
+   scroll, 60vh of pin. It used to be 80vh, so the last 20vh held the
+   finished card still while the reader kept scrolling, which is what
+   reads as stuck.
 
    Accepts either a video (`type="video"`, `src` is .mp4) or an image
    (`type="image"`, `src` is a still). With no `src` the card renders as
@@ -97,7 +102,6 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
     }
 
     const ANIMATION_VH = 0.6
-    const HOLD_VH = 0.2
     const BLUR_MAX = 18
 
     let ticking = false
@@ -160,7 +164,6 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
           media.style.filter = `blur(${blurVal}px)`
           media.style.transform = `scale(${1 + 0.04 * (1 - p)})`
         }
-        void HOLD_VH
       })
     }
 
@@ -343,7 +346,9 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
 
       <style jsx>{`
         .expanding-banner-wrap {
-          height: 180vh;
+          /* 100vh stage + 60vh of reveal. Pinned span == animation
+             distance, so the card is never held after it lands. */
+          height: 160vh;
         }
         .expanding-banner-card {
           aspect-ratio: 16 / 9;

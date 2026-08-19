@@ -5,25 +5,27 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 /* ═══════════════════════════════════════════════════════════════════
-   STORYTELLING SCROLLER — full-bleed banners that dissolve as they pass.
+   STORYTELLING SCROLLER — banners that dissolve into one another.
 
-   A passage is a full-bleed block whose scroll height is set by how many
-   frames it holds: ONE VIEWPORT PER FRAME. Inside it, a viewport-tall
-   stage holds the frames stacked, and stays put while the block travels,
-   dissolving from one frame to the next scrubbed 1:1 with scroll.
+   A passage is a full-bleed block one viewport tall PER FRAME. Inside
+   it a viewport-tall stage holds the frames stacked in the same box and
+   stays put while the block travels, so the imagery is held in place
+   long enough to actually change — and so anything laid over it (the
+   AURA ESTATE wordmark, a film CTA) stays centred over the whole run
+   rather than scrolling away with the first frame.
 
-   The stage holding still is not the same as the page holding still. An
-   earlier version pinned a single backdrop for the WHOLE page and parked
-   the reader in tall gaps where nothing changed between dissolves — that
-   read as stuck. Here every pixel of scroll inside a banner is moving the
-   dissolve forward, and the banner releases the moment its frames are
-   spent. A three-frame passage gets three screens of scroll; a one-frame
-   passage is a plain viewport-tall banner and never holds at all.
+   The change is a cross-dissolve THROUGH BLACK, which is what the dark
+   ground is for. Across each frame's screen of scroll the outgoing
+   frame falls away while the incoming one comes up, and the two cross
+   at about a quarter each — so you never see a ghosted double exposure,
+   you see one image sink into the dark and the next rise out of it.
+   Both tweens run the full width of the slice, so there is no moment
+   where the scroll is moving and the picture is not.
 
    prefers-reduced-motion: one viewport, first frame only, no motion.
 ═══════════════════════════════════════════════════════════════════ */
 
-/** A single crossfade media layer — one image, or one video with a poster. */
+/** A single dissolve frame — one image, or one video with a poster. */
 export type CrossfadeLayer = {
   video?: string
   image?: string
@@ -36,9 +38,9 @@ export type CrossfadeLayer = {
 
 export type StoryPassage = {
   media: CrossfadeLayer[]
-  /** One caption for the whole block. Falls back to the first image's caption. */
+  /** One caption for the whole run. Falls back to the first frame's. */
   caption?: string
-  /** Optional content centred over the banner — a wordmark, a <FilmPlay>. */
+  /** Content centred over the run and held there for its whole length. */
   overlay?: ReactNode
 }
 
@@ -51,7 +53,7 @@ export function StorytellingScroller({
   sections: React.ReactNode[]
 }) {
   const rootRef = useRef<HTMLDivElement>(null)
-  const bannerEls = useRef<(HTMLDivElement | null)[]>([])
+  const runEls = useRef<(HTMLDivElement | null)[]>([])
   const layerEls = useRef<(HTMLDivElement | null)[][]>([])
   const videoEls = useRef<(HTMLVideoElement | null)[][]>([])
   const [reduced, setReduced] = useState(false)
@@ -69,19 +71,19 @@ export function StorytellingScroller({
 
     const ctx = gsap.context(() => {
       passages.forEach((p, pi) => {
-        const banner = bannerEls.current[pi]
+        const run = runEls.current[pi]
         const layers = (layerEls.current[pi] || []).filter(Boolean) as HTMLDivElement[]
-        if (!banner || layers.length === 0) return
+        if (!run || layers.length === 0) return
 
         gsap.set(layers, { autoAlpha: 0 })
         gsap.set(layers[0], { autoAlpha: 1 })
 
-        // Only decode video while the banner is anywhere near the viewport —
-        // and only spend a trigger on passages that actually carry video.
+        // Only decode video while the run is anywhere near the viewport —
+        // and only spend a trigger on runs that actually carry video.
         const vids = (videoEls.current[pi] || []).filter(Boolean) as HTMLVideoElement[]
         if (vids.length) {
           ScrollTrigger.create({
-            trigger: banner,
+            trigger: run,
             start: 'top bottom+=25%',
             end: 'bottom top-=25%',
             onToggle: self =>
@@ -94,27 +96,26 @@ export function StorytellingScroller({
 
         if (layers.length < 2) return
 
-        // Dissolve across exactly the span where the stage is held — from the
-        // banner's top meeting the top of the screen to its bottom meeting the
-        // bottom. That span is (frames - 1) viewports, so every frame gets one
-        // full screen of scroll to itself, however many frames a passage holds.
+        // Scrub across exactly the span the stage is held for: from the
+        // run's top meeting the top of the screen to its bottom meeting the
+        // bottom. That span is (frames - 1) viewports, so each dissolve gets
+        // one full screen of scroll.
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: banner,
+            trigger: run,
             start: 'top top',
             end: 'bottom bottom',
             scrub: true,          // 1:1 with scroll — no lag, no settle
             invalidateOnRefresh: true,
           },
         })
-        // A steep ease, not a linear one. Linear spends most of its range near
-        // 50/50, so two frames are visible at once for most of the scroll —
-        // that's what reads as seeing double. power3.inOut keeps each frame
-        // clean for the bulk of its screen and passes through the blend
-        // quickly. It buys back what the old per-image holds gave us, without
-        // parking the scroll to do it.
         for (let k = 1; k < layers.length; k++) {
-          tl.to(layers[k], { autoAlpha: 1, ease: 'power3.inOut', duration: 1 })
+          // Both run the whole slice, crossing at ~0.25 each. power1.out on
+          // the way down and power1.in on the way up is what puts the dip in
+          // the middle: the pair never sums to a legible double image, and
+          // the dark ground carries the moment between them.
+          tl.to(layers[k - 1], { autoAlpha: 0, ease: 'power1.out', duration: 1 }, k - 1)
+          tl.to(layers[k],     { autoAlpha: 1, ease: 'power1.in',  duration: 1 }, k - 1)
         }
       })
     }, rootRef)
@@ -135,8 +136,8 @@ export function StorytellingScroller({
             if (!videoEls.current[si]) videoEls.current[si] = []
             return (
               <div
-                ref={el => { bannerEls.current[si] = el }}
-                className="story2__banner"
+                ref={el => { runEls.current[si] = el }}
+                className="story2__run"
                 /* One viewport of scroll per frame. */
                 style={{ ['--story-h']: p.media.length } as React.CSSProperties}
               >
@@ -174,10 +175,11 @@ export function StorytellingScroller({
         .story2 { position: relative; }
         .story2__solid { position: relative; background: var(--bg); }
 
-        /* Full-bleed block in the flow. Its height is one viewport per frame,
-           so a passage with more images is given more scroll to spend.
+        /* Full-bleed block, one viewport tall per frame — that is the run's
+           scroll depth. Dark all the way through: this is what shows between
+           two frames as one dissolves into the other.
            NB: no overflow here — clipping would break the sticky stage. */
-        .story2__banner {
+        .story2__run {
           position: relative;
           width: 100vw;
           margin-left: calc(50% - 50vw);
@@ -185,13 +187,15 @@ export function StorytellingScroller({
           height: calc(var(--story-h, 1) * 100dvh);
           background: #0a0a0a;
         }
-        /* The frames, held to the screen for the length of the block. */
+        /* The frames and anything laid over them, held to the screen for the
+           length of the run. */
         .story2__stage {
           position: sticky;
           top: 0;
           height: 100vh;
           height: 100dvh;
           overflow: hidden;
+          background: #0a0a0a;
         }
         .story2__layer { position: absolute; inset: 0; }
         /* Pre-hydration the stack is opaque and the last frame would win.
@@ -221,8 +225,8 @@ export function StorytellingScroller({
           pointer-events: none;
         }
 
-        /* Reduced motion / no JS: one viewport, first frame only, no crossfade. */
-        .story2--reduced .story2__banner {
+        /* Reduced motion / no JS: one viewport, first frame only, no dissolve. */
+        .story2--reduced .story2__run {
           height: 100vh;
           height: 100dvh;
         }

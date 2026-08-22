@@ -13,9 +13,16 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrambleTextPlugin)
 }
 
-const BRAND_COLORS = [
-  '#CA4926', '#DD7C37', '#E4B239', '#E1ADA2',
-  '#A5B6C8', '#B6B050', '#7A7C5C', '#FFFFFF',
+/* The live palette. An earlier eight-hue set named after the coffee
+   fermentations (Dry Osmosis, Red Honey, Banana Wash, Solera …) was removed
+   from globals.css; the names survive as content, the tokens do not. Keep
+   this list to what `globals.css` actually declares. */
+const BRAND_COLORS: [string, string][] = [
+  ['#131719', 'Ink'],
+  ['#FFFFFF', 'Paper'],
+  ['#E37128', 'Clay — brand accent'],
+  ['#E8421A', 'Signal — error / destructive'],
+  ['#1F6B4B', 'Success — confirmed state'],
 ]
 
 /* ═══════════════════════════════════════════
@@ -322,9 +329,9 @@ function AgentBrandView() {
 
       <h2>Brand Colours</h2>
       <ul>
-        {BRAND_COLORS.map((c, i) => (
-          <li key={i}>
-            {c} — {['Dry Osmosis', 'Red Honey', 'Banana Wash', 'Solera Maceration', 'Solera Wash', 'Grappa', 'Volcanic', 'Appassimento'][i]}
+        {BRAND_COLORS.map(([hex, name]) => (
+          <li key={hex}>
+            {hex} — {name}
           </li>
         ))}
       </ul>
@@ -333,9 +340,10 @@ function AgentBrandView() {
 
       <h2>Typography</h2>
       <ul>
-        <li>Display — Instrument Serif, 400</li>
-        <li>Body — DM Sans, 400</li>
+        <li>Display — Bricolage Grotesque, 600, uppercase</li>
+        <li>Body — Bricolage Grotesque, 400</li>
         <li>Mono — DM Mono, 400</li>
+        <li>Pull quote — Mynerve, 400</li>
       </ul>
 
       <hr />
@@ -412,7 +420,7 @@ export default function BrandPage() {
           </Reveal>
           {/* `*letter*rest` cursivifies just the leading character of
               each word (see ScrollHighlight marker docs). The A·U·R·A
-              acrostic on line 1 spells AURA in Belmonte; the rest of
+              acrostic on line 1 spells AURA in the hand face; the rest of
               the stanza renders in the standard grotesque. */}
           <ScrollHighlight maxWidth={880} align="left">{`*A*ttention. *U*nhurried. *R*ooted. *A*wake.
 An intelligence shaped by people, nature, and generations of inherited wisdom.

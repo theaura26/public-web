@@ -6,12 +6,6 @@ import Reveal from '@/components/RevealOnScroll'
 import { ScrollHighlight, Continue } from '@/components/article/Article'
 import VideoReactiveArt from '@/components/VideoReactiveArt'
 import { useMode } from '@/components/ModeProvider'
-import gsap from 'gsap'
-import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrambleTextPlugin)
-}
 
 /* The live palette. An earlier eight-hue set named after the coffee
    fermentations (Dry Osmosis, Red Honey, Banana Wash, Solera …) was removed
@@ -31,61 +25,7 @@ const BRAND_COLORS: [string, string][] = [
    Mobile: 3:4 → fullscreen on scroll
 ═══════════════════════════════════════════ */
 
-const INTELLIGENCES = ['Natural', 'Ancient', 'Human', 'Machine']
-
 function HeroBanner() {
-  const wordRef = useRef<HTMLSpanElement>(null)
-
-  /* Scramble cycle — ScrambleTextPlugin tweens between the four
-     intelligences, glyph by glyph. We bypass React state for the word so the
-     plugin owns the DOM text during the scramble; only the font swap (Pixelify
-     for "Machine") is applied directly to the element style at tween start. */
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout> | null = null
-    let i = 0
-
-    const applyFont = (word: string) => {
-      const el = wordRef.current
-      if (!el) return
-      el.style.fontFamily =
-        word === 'Machine' ? 'var(--font-pixel), var(--font-grotesque)' : 'inherit'
-    }
-
-    if (wordRef.current) {
-      wordRef.current.textContent = INTELLIGENCES[0]
-      applyFont(INTELLIGENCES[0])
-    }
-
-    const cycle = () => {
-      if (!wordRef.current) return
-      i = (i + 1) % INTELLIGENCES.length
-      const next = INTELLIGENCES[i]
-      applyFont(next)
-      gsap.to(wordRef.current, {
-        duration: 1.1,
-        scrambleText: {
-          text: next,
-          /* Scramble through organic / botanical unicode glyphs instead of
-             random alphanumerics — visually echoes the vector-shape
-             vocabulary used by the reactive-art canvas behind the text:
-             florals, asterisks, dots, rings. The intermediate frames now
-             read as the same family of marks as the background scatter,
-             not random Latin letters. */
-          chars: '✦✺❋❀✿✻✼❁●◯◉◍✧✷✸',
-          speed: 0.5,
-          revealDelay: 0.2,
-        },
-        ease: 'none',
-      })
-      timer = setTimeout(cycle, 2800)
-    }
-    timer = setTimeout(cycle, 2800)
-
-    return () => {
-      if (timer) clearTimeout(timer)
-      if (wordRef.current) gsap.killTweensOf(wordRef.current)
-    }
-  }, [])
 
   return (
     <div className="human-only" style={{ height: '100vh', position: 'relative', overflow: 'hidden', background: 'var(--bg)' }}>
@@ -112,23 +52,15 @@ function HeroBanner() {
             zIndex: 2,
             pointerEvents: 'none',
           }}>
-            <h1 style={{
-              fontFamily: 'var(--font-grotesque)',
-              fontSize: 'clamp(52px, 11vw, 140px)',
-              fontWeight: 400,
-              color: 'var(--text)',
-              letterSpacing: '-0.035em',
-              lineHeight: 1.0,
-              textAlign: 'center',
-            }}>
-              <span
-                ref={wordRef}
-                style={{ display: 'inline-block' }}
-              >
-                {INTELLIGENCES[0]}
-              </span>
-              <br />
-              Intelligence
+            {/* The designed lockup, not type. Two artworks — the mark is
+                near-black for day and near-white for night — swapped by
+                `[data-theme]` in globals.css. Painted as a background rather
+                than two <img> tags so only the active theme's file is ever
+                fetched. The sr-only text carries the heading for screen
+                readers. */}
+            <h1 className="ni-lockup">
+              <span className="ni-lockup__mark" aria-hidden />
+              <span className="ni-lockup__text">Natural Intelligence</span>
             </h1>
           </div>
     </div>

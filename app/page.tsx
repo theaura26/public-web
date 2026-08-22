@@ -1079,12 +1079,14 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
           margin: 0,
           marginBottom: 20,
           color: '#ffffff',
-          fontWeight: 400,
+          /* Match the type scale: h1 is 600, h2 is 400. A flat 400 here
+             was overriding h1's weight on the large panels. */
+          fontWeight: large ? 600 : 400,
           textShadow: '0 2px 24px rgba(0, 0, 0, 0.35)',
         }}>
           {s.name}
         </Heading>
-        <p className="p2" style={{ color: '#ffffff', margin: 0, maxWidth: 'min(260px, 80vw)', textShadow: '0 1px 12px rgba(0, 0, 0, 0.4)' }}>{s.tagline}</p>
+        <p className="p1" style={{ color: '#ffffff', margin: 0, maxWidth: 'min(260px, 80vw)', textShadow: '0 1px 12px rgba(0, 0, 0, 0.4)' }}>{s.tagline}</p>
       </div>
 
       {/* Bottom-anchored meta. For large (Mudigere/Ohara): region/coords pinned
@@ -1940,8 +1942,8 @@ Awake.`}</ScrollHighlight>
                 alt: 'Aura sanctuary — hospitality, retreats, slow living',
               },
               {
-                title: 'Labs',
-                lead: 'Studios for regenerative thinking',
+                title: 'Atelier',
+                lead: 'Spaces for regenerative thinking',
                 desc: 'Small-group residencies, experiments, and learning experiences spanning AI, systems thinking, creativity, wellbeing, and craft.',
                 video: '/aura-labs.mp4',
                 poster: '/aura-labs.jpg',
@@ -1960,7 +1962,7 @@ Awake.`}</ScrollHighlight>
                       mono uppercase via the global .label spec, matching
                       every other meta caption on the page. */}
                   <p className="label" style={{ marginBottom: 'var(--space-4)' }}>{card.lead}</p>
-                  <p className="p2">{card.desc}</p>
+                  <p className="p1">{card.desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -2101,8 +2103,8 @@ function AgentHomeView() {
       <h3>Sanctuary — Hospitality designed for clarity</h3>
       <p>Architect-led sanctuaries, slow living experiences, workshops, residencies, and time designed around nature and clarity.</p>
 
-      <h3>Labs — Studios for regenerative thinking</h3>
-      <p>Small-group residencies, experiments, and learning experiences spanning AI, systems thinking, creativity, wellbeing, and craft. Studios, workshops, gallery, gurukul, festivals — the connective tissue.</p>
+      <h3>Atelier — Spaces for regenerative thinking</h3>
+      <p>Small-group residencies, experiments, and learning experiences spanning AI, systems thinking, creativity, wellbeing, and craft. Ateliers, workshops, gallery, gurukul, festivals — the connective tissue.</p>
 
       <hr />
 

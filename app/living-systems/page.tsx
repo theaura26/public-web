@@ -26,7 +26,7 @@ export default function LivingSystemsPage() {
           150 acres of four-story polyculture in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>, read as a
           single living dataset.
         </p>
-        <p className="p2">
+        <p className="p1">
           Most agricultural systems isolate variables. Aura studies the
           relationships between them. The estate is organised by block, each one
           a patch of a single living system, because the unit of record is the
@@ -50,7 +50,7 @@ export default function LivingSystemsPage() {
           The estate operates through four canopy layers. Every layer
           influences the next.
         </p>
-        <p className="p2">
+        <p className="p1">
           From the silver oak overhead to the cardamom on the floor, each
           story holds the conditions for the one below it — and reads as a
           signal for what the next will do. The relationships matter more
@@ -114,7 +114,7 @@ export default function LivingSystemsPage() {
           Fifty-two Malnad Gidda cattle — an indigenous Karnataka breed adapted
           to this altitude, soil, and climate over centuries.
         </p>
-        <p className="p2">
+        <p className="p1">
           They rotate through blocks timed to coffee cherry development stages.
           Their dung drives every biodynamic preparation on the estate. They are
           working members of the biological system — the estate is built around
@@ -173,14 +173,14 @@ export default function LivingSystemsPage() {
         <p className="p1">
           The intelligence lives in the cross-references.
         </p>
-        <p className="p2">
+        <p className="p1">
           Canopy density predicts coffee cherry Brix. Areca health signals
           pepper yield weeks early. Cattle rotation timing shapes soil biology
           for the next season. Beehive activity forecasts flowering quality.
           Dung batch quality determines BD preparation potency. Cover crop
           biomass after incorporation predicts fermentation character.
         </p>
-        <p className="p2">
+        <p className="p1">
           This is what we mean by a living system. The estate has a heartbeat
           — short pulses from sensors, medium rhythms from crop lifecycles,
           long arcs from ecosystem health measured across decades.
@@ -209,12 +209,12 @@ export default function LivingSystemsPage() {
           open formats. Readable without any specific software, in plain text
           and timestamps that outlive any vendor.
         </p>
-        <p className="p2">
+        <p className="p1">
           The milestones — a coffee lot lifecycle completed, a BD seasonal cycle
           finished, an annual carbon baseline, an organic certification event —
           go on-chain. Permanent, public, verifiable.
         </p>
-        <p className="p2">
+        <p className="p1">
           The system must outlast any technology it is built on. Complexity in
           the machine. Simplicity in the field.
         </p>

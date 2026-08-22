@@ -30,7 +30,7 @@ export default function ResidencyPage() {
           noise of the world off, and give them an environment built for focus.
           What comes out is the truest work they can make.
         </p>
-        <p className="p2">
+        <p className="p1">
           Monastic is the operative word. A monk keeps one practice, one place,
           one long horizon, and works without an audience. That is the posture
           the residency asks for — full attention, unhurried, on a problem
@@ -52,7 +52,7 @@ export default function ResidencyPage() {
           past at dawn, and the work answers to the season and the people who
           have read this place longer than any of us have been alive.
         </p>
-        <p className="p2">
+        <p className="p1">
           The thinking here is a kind of reading. Aura reads the estate the way
           others read datasets: canopy density predicts cherry{' '}
           <Term tip="Refractometer reading of dissolved sugars in a cherry or wort, given as a percentage.">Brix</Term>,
@@ -76,7 +76,7 @@ export default function ResidencyPage() {
           is calm and reflection, the slow close of the day. Craft practised at
           that pace is craft done well, and the sanctuary is built to hold it.
         </p>
-        <p className="p2">
+        <p className="p1">
           The teachers are the people the estate is built around — a Shigaraki
           potter, a{' '}
           <Term tip="Hand-made Japanese paper from kozo (paper mulberry); the Ohara studio works techniques designated Intangible Cultural Property.">Washi</Term>{' '}
@@ -102,7 +102,7 @@ export default function ResidencyPage() {
           one, and the residency is engineered for that crossing to happen
           daily.
         </p>
-        <p className="p2">
+        <p className="p1">
           The output stays deliberately varied — books, instruments, glaze
           recipes, fermentation calendars, films, software — because a true
           solution can take any form. And it is aimed: at business, at founders,
@@ -129,7 +129,7 @@ export default function ResidencyPage() {
           <Term tip="Sanskrit. Natural order — the rhythm that governs seasons, tides, germination, decay, and renewal.">Ṛta</Term>:
           right time, right action.
         </p>
-        <p className="p2">
+        <p className="p1">
           Aura moves residents between them because work that begins in one
           valley is often only finished once it has been read in the other. The
           estate is the studio: forest, kiln, wet mill, cattle pen, tea garden,

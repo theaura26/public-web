@@ -36,7 +36,7 @@ export default function ArecaPage() {
           the layer every other crop hangs off. It never wins a cupping score and never shows up on a
           menu. It holds up the ones that do.
         </p>
-        <p className="p2">
+        <p className="p1">
           Aura did not plant areca as a cash crop. We planted it because no other tree holds up the
           system we were building. The mid-canopy is the load-bearing layer of the plantation — pull it
           out and the stack comes down. In that layer the palm does three jobs at once.
@@ -72,7 +72,7 @@ export default function ArecaPage() {
           <Term tip="The Western Ghats districts of Karnataka, defined by heavy monsoon, evergreen forest, and a long lineage of coffee and areca growing.">Malnad</Term>{' '}
           districts, a household&apos;s areca grove is at once a bank account and a family record.
         </p>
-        <p className="p2">
+        <p className="p1">
           Aura grows it aware of that lineage. For a thousand years areca has been this landscape&apos;s
           answer to &ldquo;what shall we plant?&rdquo; — we are not introducing it, we are continuing it.
           That is the estate&apos;s method in one tree: the oldest answer in the district, kept and
@@ -116,7 +116,7 @@ export default function ArecaPage() {
           block that will not exist for a decade. That is not a complaint. It is the estate&apos;s whole
           logic written as a planting schedule.
         </p>
-        <p className="p2">
+        <p className="p1">
           A palm Aura plants this year will still be the mid-canopy in the 2050s, holding up coffee that
           has not been laid out yet. We plant on that horizon on purpose.
         </p>
@@ -129,7 +129,7 @@ export default function ArecaPage() {
           When a season is hard on coffee, the areca holds the books. When areca prices fall, the coffee
           carries. The whole organism is sturdier than any single crop in it.
         </p>
-        <p className="p2">
+        <p className="p1">
           The sentinel palm is the quiet one. It never shows up on a cupping sheet and never wins a
           score. But pull it out and the plantation comes down. A plantation that leans on one tree is
           fragile; a plantation held together by one is sturdy — the difference is which way the

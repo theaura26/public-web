@@ -27,12 +27,12 @@ export default function LandPage() {
           soil that is itself the record of a very long weathering, under a monsoon
           older than agriculture and a four-story canopy older than any of us.
         </p>
-        <p className="p2">
+        <p className="p1">
           We are stewards of a hundred-year arc. The numbers below describe
           what is here today; what matters is what we leave for the next
           gardener.
         </p>
-        <p className="p2">
+        <p className="p1">
           This is the land. Everything follows from it.
         </p>
       </TwoCol>
@@ -74,12 +74,12 @@ export default function LandPage() {
           jackfruit, and native fig. Thirty-two acres of tea, in organic
           transition targeting 2027.
         </p>
-        <p className="p2">
+        <p className="p1">
           Black pepper climbing areca palms. Cardamom in the lower shade. Cacao,
           avocado, and cover crops on the forest floor. Beehives marking the
           flowering seasons. 35,000 individual trees across the estate.
         </p>
-        <p className="p2">
+        <p className="p1">
           And 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle — an indigenous breed native to this
           altitude, rotating through blocks timed to cherry development stages.
           Their dung drives the biodynamic programme. Their presence shapes the
@@ -124,7 +124,7 @@ export default function LandPage() {
           with seven existing buildings, a teahouse with a hearth, a
           thirty-year-old Japanese garden, and a cafe overlooking a river.
         </p>
-        <p className="p2">
+        <p className="p1">
           Mudigere and Ohara form an East-East axis. Two agrarian cultures —
           Vedic and Zen — in dialogue. Neither apologises to a Western
           sustainability narrative. Both operate from <em>Ṛta</em>: right time,
@@ -167,7 +167,7 @@ export default function LandPage() {
           <DataCard value="32 acres">Tea, organic transition 2027.</DataCard>
           <DataCard value="35,000">Trees on chain over time.</DataCard>
         </DataGrid>
-        <p className="p2">
+        <p className="p1">
           The land is a carbon asset, a biodiversity corridor, a water
           system, a cultural record, and the primary dataset of everything
           Aura builds.
@@ -192,7 +192,7 @@ export default function LandPage() {
           Fig wasps pollinate the keystone trees. Civets feed on the pepper
           and the cherry.
         </p>
-        <p className="p2">
+        <p className="p1">
           The forest is the farm.
         </p>
       </OneCol>

@@ -275,7 +275,7 @@ export default function OharaPage() {
           artisans who keep rhythm over the clock. We restore before we build,
           and learn the land before we lead it.
         </p>
-        <p className="p2">
+        <p className="p1">
           <Term tip="朝 — read chō in compounds like 朝食 (breakfast) and 朝食会 (a working breakfast); asa alone is the everyday word for morning.">Asa</Term> is
           light and renewal. <Term tip="庭 — read tei in compounds like 家庭 (household) and 校庭 (schoolyard); niwa alone is the everyday word for garden or yard.">Niwa</Term> is
           calm and reflection. Together they hold{' '}
@@ -299,7 +299,7 @@ export default function OharaPage() {
           garden thirty years in the making. The teahouse was restored by a
           Kyoto craftsman; its garden is tended now by his grandson.
         </p>
-        <p className="p2">
+        <p className="p1">
           <Term tip="侘び寂び — beauty in the imperfect and the impermanent. The foundation Ohara is restored on, not designed around.">Wabi-sabi</Term> is
           the foundation: imperfection held as truth. Nothing here is remade in
           a hurry. Each repair is an act of care, made in turn to be cared for.
@@ -321,7 +321,7 @@ export default function OharaPage() {
                   <img src={`/ohara/images/aura-${thumb}.jpg`} alt="" aria-hidden loading="lazy" decoding="async" className="stat-card__thumb" />
                   <div className="stat-card__text">
                     <p className="p1" style={{ margin: '0 0 8px' }}>{value}</p>
-                    <div className="p2" style={{ color: 'var(--text-body)' }}>{label}</div>
+                    <div className="p1" style={{ color: 'var(--text-body)' }}>{label}</div>
                   </div>
                 </div>
               ))}
@@ -357,7 +357,7 @@ export default function OharaPage() {
               across the day — morning light, evening calm, and the terrace
               between them — each with its own pace and its own work.
             </p>
-            <p className="p2">
+            <p className="p1">
               The three are one valley, read at three different hours — the
               same ground doing different work as the light moves across it.
             </p>
@@ -389,7 +389,7 @@ export default function OharaPage() {
           to sixteen. The morning is unhurried by design — a counter to lean
           on, and time to make something by hand.
         </p>
-        <p className="p2">
+        <p className="p1">
           Workshops run alongside it: fermentation, pottery, indigo dyeing,
           and{' '}
           <Term tip="金継ぎ — the Japanese craft of repairing broken pottery with lacquer dusted in gold, making the repair itself the beautiful part.">kintsugi</Term>. Ohara
@@ -411,7 +411,7 @@ export default function OharaPage() {
           the everyday, seasonal cooking of the city just south. Nothing is
           flown in to finish a dish; the plate is written around what arrived.
         </p>
-        <p className="p2">
+        <p className="p1">
           What the season gives in excess, the kitchen ferments — miso, koji,
           pickles, sake. Fermentation is old craft kept as daily practice: it
           carries a summer harvest into winter, and it slows the way people eat
@@ -443,7 +443,7 @@ export default function OharaPage() {
           frame by night, and the quiet a resident artist needs to work a
           season through.
         </p>
-        <p className="p2">
+        <p className="p1">
           The retail counter carries living objects from Ohara's artisans —
           ceramics, linen, wood, incense, tea — each piece carrying the
           maker&rsquo;s name and the season it was made. Its terrace is the same{' '}
@@ -508,7 +508,7 @@ Aura builds one living system — design, nature, and human rhythm, together.`}<
                 <div key={value} className="stat-card" style={{ borderTop: '1px solid var(--border)', paddingTop: 16 }}>
                   <div className="stat-card__text">
                     <p className="p1" style={{ margin: '0 0 8px' }}>{value}</p>
-                    <div className="p2" style={{ color: 'var(--text-body)' }}>{label}</div>
+                    <div className="p1" style={{ color: 'var(--text-body)' }}>{label}</div>
                   </div>
                 </div>
               ))}

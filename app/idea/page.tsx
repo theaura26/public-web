@@ -32,7 +32,7 @@ export default function IdeaPage() {
           generation, and the measure is plain: what can still be standing, and still be useful, in
           the year 3026.
         </p>
-        <p className="p2">
+        <p className="p1">
           The through-line is singular. Generational impact is the method: the impact Aura wants
           now — living soil, a closed canopy, work that others can keep — is the same impact that
           has to hold three centuries out. Aura builds for then in order to matter now.
@@ -51,7 +51,7 @@ export default function IdeaPage() {
           only at the right hour. The other is the future of science — measurement, soil biology,
           the instruments that show what the older knowledge could only sense.
         </p>
-        <p className="p2">
+        <p className="p1">
           Neither holds alone. Ancestral practice without measurement hardens into habit; science
           without the older knowledge only moves faster. Aura runs both, the old way of working and
           the new, and the pair has a name: Natural Intelligence.
@@ -66,7 +66,7 @@ export default function IdeaPage() {
           clock. Move the herd at the right hour and the soil builds; move it at the wrong one and
           the same animals bare the ground.
         </p>
-        <p className="p2">
+        <p className="p1">
           This is working knowledge, and the instruments now confirm it season after season. Aura
           keeps the ancestral sense of time and puts numbers to it — reading the soil, the canopy,
           and the water, and acting when the land, not the calendar, says to.
@@ -82,7 +82,7 @@ export default function IdeaPage() {
           herd&apos;s effect on the ground it works. Aura measures so a thousand-year promise stays
           honest.
         </p>
-        <p className="p2">
+        <p className="p1">
           A number answers to the frame. A campaign, a shortcut in the ferment, a fast yield — each
           collapses when held against a thousand years. What survives is plain, at Mudigere and at
           Ohara alike: plant well, build well, teach well, and stay.

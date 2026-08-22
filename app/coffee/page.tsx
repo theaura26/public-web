@@ -25,7 +25,7 @@ export default function CoffeePage() {
           One estate. 150 acres. One harvest a year. The scale is deliberate
           — so is the patience.
         </p>
-        <p className="p2">
+        <p className="p1">
           We are not pursuing volume, category leadership, or distribution
           at scale. We are building a coffee that answers for itself —
           traceable to the morning it was picked, the canopy it grew under,
@@ -35,12 +35,12 @@ export default function CoffeePage() {
         <p className="p1" style={{ marginTop: 'var(--space-7)' }}>
           Six lots. One harvest. No two cups the same.
         </p>
-        <p className="p2">
+        <p className="p1">
           Arabica grown at 3,600 feet in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>, beneath a four-story
           canopy. Two cultivars — <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>. Every lot is a document
           of place and method.
         </p>
-        <p className="p2">
+        <p className="p1">
           Coffee is the primary crop, but the estate is the system. The cup
           that reaches you carries the character of canopy shade, laterite soil,
           monsoon rhythm, and the specific decisions made during fermentation —
@@ -53,12 +53,12 @@ export default function CoffeePage() {
           Coffee is usually discussed through flavour notes alone. But flavour
           is accumulated consequence.
         </p>
-        <p className="p2">
+        <p className="p1">
           Every cup contains decisions made months earlier: canopy management,
           microbial health, rainfall timing, fermentation discipline, drying
           rhythm, and restraint.
         </p>
-        <p className="p2">
+        <p className="p1">
           What ends up in the cup is what the land did, what the weather did,
           and what the team chose not to do.
         </p>
@@ -99,11 +99,11 @@ export default function CoffeePage() {
           Six distinct micro lots each harvest. The same cherries, the same
           land — six different decisions in the wet mill.
         </p>
-        <p className="p2">
+        <p className="p1">
           Terroir alone does not explain the spread between them. Terroir
           expressed through technique does.
         </p>
-        <p className="p2">
+        <p className="p1">
           We will be honest about our own romance. A chosen yeast or a sealed
           ferment moves a cup by a point or three on the specialty scale — real,
           measurable, and worth chasing. But altitude and variety set the ceiling,
@@ -185,7 +185,7 @@ export default function CoffeePage() {
           leave behind are the raw material of the esters a taster later calls
           &ldquo;fruity.&rdquo; We have watched every step of it happen.
         </p>
-        <p className="p2">
+        <p className="p1">
           It is also double-edged. The same microbes that build fruit build faults
           when they run too long or too warm — the vinegar sharpness of excess
           acetic acid, the onion note of butyric. Control here is the whole game:
@@ -212,7 +212,7 @@ export default function CoffeePage() {
           culture. Aura carries a fraction of an actively fermenting batch forward
           into freshly harvested cherries, hoping to seed the same continuity.
         </p>
-        <p className="p2">
+        <p className="p1">
           Can a coffee ferment actually hold a &ldquo;house culture&rdquo; across
           seasons, the way a sherry cask does? We do not know yet, and we will not
           pretend otherwise — coffee ferments are short, and no one has shown a
@@ -227,12 +227,12 @@ export default function CoffeePage() {
           moisture tracking through drying, screen grading and defect analysis
           per SCA protocol. Every lot is cupped — target 80+ specialty.
         </p>
-        <p className="p2">
+        <p className="p1">
           The next build adds caffeine and polyphenol profiling, on-site <Term tip="SCA-certified coffee grader.">Q-grader</Term>{' '}
           certification, and a 1,200 sq ft lab with a cupping room for buyers
           who want to taste the harvest where it grew.
         </p>
-        <p className="p2">
+        <p className="p1">
           We are not chasing trends. We are documenting what the land produces
           when you pay attention.
         </p>
@@ -249,7 +249,7 @@ export default function CoffeePage() {
           Aura coffee is allocated — by lot, by harvest, by hand — to roasters,
           sanctuaries, and cellars that care about provenance.
         </p>
-        <p className="p2">
+        <p className="p1">
           Promise less, deliver more. We do not roadshow. If the cup
           interests you, the estate is open.
         </p>

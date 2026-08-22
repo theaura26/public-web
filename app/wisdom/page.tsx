@@ -25,7 +25,7 @@ export default function WisdomPage() {
           Aura is defined by restraint — by the decisions it makes before anyone
           is watching.
         </p>
-        <p className="p2">
+        <p className="p1">
           Every organisation has values on a wall. Aura has a spine.
         </p>
       </OneCol>
@@ -35,14 +35,14 @@ export default function WisdomPage() {
           It starts with a simple idea: what enters the mind shapes what the
           hands build. Inner disorder creates outer disorder.
         </p>
-        <p className="p2">
+        <p className="p1">
           So we begin with input hygiene — a deliberate care about what we
           consume, what we amplify, what we allow into the work. This is an
           ethical position. Distraction degrades the quality of everything
           downstream — decisions, designs, soil, fermentation, the taste of the
           cup.
         </p>
-        <p className="p2">
+        <p className="p1">
           Before Aura became a regenerative estate system, it became a
           moral position. Every decision must survive pressure across time.
         </p>
@@ -59,12 +59,12 @@ export default function WisdomPage() {
           Modern systems reward extraction. More speed. More output. More
           stimulation. More optimisation detached from consequence.
         </p>
-        <p className="p2">
+        <p className="p1">
           The side effects become visible slowly: exhausted soil, exhausted
           attention, exhausted people. By the time the line on the chart
           turns, the damage is older than the metric.
         </p>
-        <p className="p2">
+        <p className="p1">
           Aura begins from another premise. Restraint is intelligence.
         </p>
       </TwoCol>
@@ -78,7 +78,7 @@ export default function WisdomPage() {
           Before any decision at Aura, a quiet test runs. It comes from Vedic
           observation, and it is older than management theory.
         </p>
-        <p className="p2">
+        <p className="p1">
           The third and fourth lines are where character lives. Restraint and
           cultivation. The things no one sees. The decisions that shape the next
           thirty years of soil.
@@ -97,7 +97,7 @@ export default function WisdomPage() {
           partnership, a building plan — passes through seven filters before it
           moves. If any answer is no, the work does not ship.
         </p>
-        <p className="p2">
+        <p className="p1">
           What does this train the system to become over time?
         </p>
         <DataGrid cols={2}>
@@ -122,7 +122,7 @@ export default function WisdomPage() {
           The spine lives in six rules, written in English and Kannada, posted in
           every farm building.
         </p>
-        <p className="p2">
+        <p className="p1">
           &ldquo;No shortcuts&rdquo; means: if something is wrong, we speak. No
           hiding mistakes. Clean work. Honest work. No complaint-blame-excuse
           culture. Absolute personal responsibility.
@@ -144,14 +144,14 @@ export default function WisdomPage() {
           the cattle, the canopy, the children who will inherit this estate
           — they are members. The work belongs to all of them.
         </p>
-        <p className="p2">
+        <p className="p1">
           We pre-select for three dimensions: competence, character, and
           coherence. Competence is the floor — you have to be good at the
           thing. Character is calm under complexity, intellectual honesty,
           stewardship instinct, consistency. Coherence is the understanding
           that this is a living system, and it optimises for centuries.
         </p>
-        <p className="p2">
+        <p className="p1">
           We would rather host a twenty-year-old with conviction than a
           forty-year-old name with none. We invite you to bring something
           to the table. The community will know the difference.
@@ -169,7 +169,7 @@ export default function WisdomPage() {
           Natural. Human. Machine. The estate is held by all three. Each
           one is a kind of attention; each one has its own time signature.
         </p>
-        <p className="p2">
+        <p className="p1">
           The discipline is to let each do what it does best — and to keep
           them in the right order. Land first, hands second, machines last.
         </p>
@@ -222,7 +222,7 @@ export default function WisdomPage() {
         <p className="p1">
           Coherence over fragmentation. Stillness over performance.
         </p>
-        <p className="p2">
+        <p className="p1">
           We practise regeneration because it is the only sane way to work with
           land.
         </p>

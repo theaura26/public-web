@@ -52,7 +52,7 @@ export default function ArtistryPage() {
           the underlying things, the ones that hold for decades. A letterform. A joint. A material. A
           system written to run on this ground.
         </p>
-        <p className="p2">
+        <p className="p1">
           One discipline holds all of it together. We make by subtraction — by removing, not adding,
           until only what the work needs is left. A cup loses every feature that is not the cup. A
           piece of software loses every dependency the next hand cannot keep. Subtraction is how we
@@ -71,7 +71,7 @@ export default function ArtistryPage() {
           the hours removing — the extra glaze, the extra line, the extra clause of code — until what
           remains could not be cut further without breaking.
         </p>
-        <p className="p2">
+        <p className="p1">
           The estate teaches this before the studio does. A kiln burns the canopy&apos;s own offcuts
           and nothing flown in. A dye vat takes its heat from the kitchen. A ledger is written for
           this soil by the person who will keep it running. Every one of them carries the same
@@ -107,7 +107,7 @@ export default function ArtistryPage() {
           that records the kiln, and the friction between the two disciplines is the material — work
           that comes out of it neither could reach alone.
         </p>
-        <p className="p2">
+        <p className="p1">
           We hold this by an old rule —{' '}
           <Term tip="守破離 — a Japanese path to mastery in three stages. Shu: keep the form exactly. Ha: adapt it once it lives in the hands. Ri: leave the form behind and work freely, without breaking it.">shu-ha-ri</Term>:
           preserve the form, adapt it, then transcend it. An apprentice keeps the old way exactly
@@ -158,7 +158,7 @@ export default function ArtistryPage() {
           inherit thirty years of a craft read by hand, or a form that has passed through preserve,
           adapt, and transcend. We make the second kind on purpose.
         </p>
-        <p className="p2">
+        <p className="p1">
           The newest tools serve the oldest practice, never the other way round. We measure the soil
           to run an ancestral grazing rhythm; we write software to carry provenance the land already
           keeps; we use AI to read what is happening on the ground, not to speak over it. Old

@@ -58,7 +58,7 @@ export default function HerdPage() {
           back and you arrive at dung, urine, or milk from these animals. The herd is the engine the farm
           runs on — its source, not its sideline.
         </p>
-        <p className="p2">
+        <p className="p1">
           A cow walked across the land on a plan is an{' '}
           <Term tip="An organism that changes the physical world around it and, in doing so, sets the terms for what else can live there.">ecosystem engineer</Term> —
           she reshapes the ground she works and sets the terms for everything that grows there. So Aura
@@ -81,7 +81,7 @@ export default function HerdPage() {
           the native grasses, the understory, the cover crops between the coffee rows. Whatever a cow
           chews here grew from the soil she will feed.
         </p>
-        <p className="p2">
+        <p className="p1">
           Then it comes back around. What she takes from a block she returns as dung and urine, carrying
           the live microbes of a gut shaped by that exact ground. Nothing is bought in, nothing trucked
           away: grass off the soil, herd off the grass, fertility off the herd, grass again. The cow eats
@@ -110,7 +110,7 @@ export default function HerdPage() {
           answer to the same rule as the block. And it is a whole household, not a headcount: cows,
           chickens, and the estate dogs now, goats to come, each known by the people who keep them.
         </p>
-        <p className="p2">
+        <p className="p1">
           The closeness earns its keep. A caretaker washing a cow at dawn reads a limp, an off feed, a
           dull coat before any spreadsheet would — and these are working animals in a wild place. One of
           the herd was set on by a leopard inside the farm, fought it off, and walked back alive. They
@@ -133,7 +133,7 @@ export default function HerdPage() {
           on each animal and on the whole herd&apos;s management. GPS tags, ordered and on their way, will
           add where and how each cow grazes to the same file.
         </p>
-        <p className="p2">
+        <p className="p1">
           That record is what makes the estate traceable end to end. A batch of{' '}
           <Term tip="A living microbial culture fermented from cow dung, urine, jaggery, gram flour, and native soil, applied as a soil drench. Aura brews around 154,000 litres a year.">Jeevamrit</Term>{' '}
           is tagged to the animals that fed it; the application is tagged to the block; the block&apos;s
@@ -171,7 +171,7 @@ export default function HerdPage() {
           <Term tip="Horn manure — cow dung packed into a cow horn, buried over the cool months, then stirred into water and applied to the soil. A foundational biodynamic preparation.">BD 500</Term>.
           Nothing leaves as waste; it leaves as a measured input.
         </p>
-        <p className="p2">
+        <p className="p1">
           And measured is the operative word. Every one of those preparations is tested in the
           estate&apos;s own lab — microbial counts and a full set of parameters — before a drop of it
           reaches the soil. What the animal produces, the lab reads; what the lab clears, the ground
@@ -186,7 +186,7 @@ export default function HerdPage() {
           small-framed, hardy, heat-tolerant, and adapted to the altitude, the monsoon, and the specific
           grasses of the Western Ghats. Its gut microbiome is shaped by this landscape, not a generic one.
         </p>
-        <p className="p2">
+        <p className="p1">
           That is why the breed matters: the dung carries the microbiome. Malnad Gidda dung has a
           microbial composition suited to this soil, co-evolved with it over generations, and a commercial
           dairy breed cannot replicate it. Aura keeps the line pure and estate-bred, documented in each

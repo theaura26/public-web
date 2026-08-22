@@ -26,12 +26,12 @@ export default function FermentationPage() {
           Coffee, pepper, and cow dung. Each one transforms raw material into
           something the land could not produce alone.
         </p>
-        <p className="p2">
+        <p className="p1">
           Fermentation at Aura is the moment the estate&rsquo;s character
           becomes audible in flavour — or invisible in soil biology. Every crop
           the estate values passes through it.
         </p>
-        <p className="p2">
+        <p className="p1">
           Stripped to its definition, fermentation is only this: desired microbial
           growth and the enzyme work that comes with it — the oldest technology we
           have for turning a raw material into something more stable, more
@@ -54,7 +54,7 @@ export default function FermentationPage() {
           Six distinct methods applied to the same Arabica cherry. The
           differences you taste are decisions, not accidents.
         </p>
-        <p className="p2">
+        <p className="p1">
           Every lot is tracked: pH every 15 minutes, temperature three times
           daily, <Term tip="Refractometer reading of dissolved sugars in the cherry or wort, expressed as a percentage.">Brix</Term> at start, mid, and end. The data does not average across
           the harvest. It follows each lot as an individual.
@@ -85,7 +85,7 @@ export default function FermentationPage() {
             The cleanest expression of the cherry.
           </DataCard>
         </DataGrid>
-        <p className="p2">
+        <p className="p1">
           Six methods, one cherry. The full lot-by-lot file — yields, immature
           counts, drying timelines, cupping notes — lives on the{' '}
           <a href="/coffee">Our Coffee Story</a> page.
@@ -98,7 +98,7 @@ export default function FermentationPage() {
           fermentation tradition — water retting and controlled fermentation
           tracked separately from coffee.
         </p>
-        <p className="p2">
+        <p className="p1">
           The scheduling matters: pepper and coffee fermentation share BD
           inputs, and the system must ensure their timing does not conflict.
         </p>
@@ -120,7 +120,7 @@ export default function FermentationPage() {
           a real succession underground, one microbial community handing off to the
           next as the months pass.
         </p>
-        <p className="p2">
+        <p className="p1">
           <Term tip="Horn manure. Cow dung packed in a cow horn, buried over the cool months, then stirred into water and applied to soil.">BD 500</Term> begins as fresh dung from the estate&rsquo;s
           52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term>, packed into a horn and buried. What we
           claim for it is the microbiology: a decomposition shaped by the breed, the

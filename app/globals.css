@@ -1281,6 +1281,50 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
 }
 
 
+/* ── Natural Intelligence lockup (/brand hero) ──────────────────────
+   The hero heading is a designed artwork, not type. Two files: the mark is
+   near-black for the day theme and near-white for night. Painted as a
+   background rather than two <img> tags, because an <img> inside a hidden
+   element is still fetched — this way only the active theme's file is ever
+   downloaded. WebP with a PNG fallback for older engines: the plain
+   `url()` line lands first, `image-set()` overrides it where supported. */
+.ni-lockup {
+  margin: 0;
+  text-align: center;
+}
+.ni-lockup__mark {
+  display: block;
+  width: min(78vw, 1100px);
+  aspect-ratio: 1600 / 516;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url('/aura-ni-light.png');
+  background-image: image-set(
+    url('/aura-ni-light.webp') type('image/webp'),
+    url('/aura-ni-light.png') type('image/png')
+  );
+}
+[data-theme="night"] .ni-lockup__mark {
+  background-image: url('/aura-ni-dark.png');
+  background-image: image-set(
+    url('/aura-ni-dark.webp') type('image/webp'),
+    url('/aura-ni-dark.png') type('image/png')
+  );
+}
+/* Heading text for screen readers; the artwork carries it visually. */
+.ni-lockup__text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ── Atelier hero — editorial display title ─────────────────────────
    "ATELIER" stretches edge-to-edge across the section-w rail, in
    the same uppercase grotesque the journal heroes use. Letters are

@@ -152,9 +152,7 @@ html [data-theme="night"] .loc-modal:not([data-bleed="true"]) .invert-on-light {
 
 html [data-view="agent"] {
   --bg: var(--contrast-bg);
-  --bg-elevated: var(--contrast-bg-card);
   --bg-card: var(--contrast-bg-card);
-  --nav-bg: var(--contrast-bg);
   --text: var(--contrast-text);
   --text-body: var(--contrast-text-body);
   --text-muted: var(--contrast-text-muted);

@@ -1,5 +1,9 @@
 # Aura — Design System
 
+> **Verified against the code on 2026-08-19.** Where this guide and `app/globals.css`
+> disagreed, the CSS won and this file was corrected. Retired items are struck through
+> rather than deleted so the history stays legible.
+
 The single source of truth lives in [`app/globals.css`](app/globals.css). Everything below is a usage guide. Edit token values in `globals.css`, never hard-code in components.
 
 ---
@@ -11,15 +15,21 @@ Always-on, theme-independent.
 | Token | Hex | Use |
 |---|---|---|
 | `--brand-accent` | `#E37128` | hover underline, custom-cursor accent, primary action |
-| `--brand-dry-osmosis` | `#CA4926` | computational art palette |
-| `--brand-red-honey` | `#DD7C37` | computational art palette |
-| `--brand-banana-wash` | `#E4B239` | computational art palette |
-| `--brand-solera-maceration` | `#E1ADA2` | computational art palette |
-| `--brand-solera-wash` | `#A5B6C8` | computational art palette |
-| `--brand-grappa` | `#B6B050` | computational art palette |
-| `--brand-volcanic` | `#7A7C5C` | computational art palette |
-| `--brand-appassimento` | `#FFFFFF` | reserved bright |
+> **Retired.** The seven fermentation-named hues below were removed from `globals.css`.
+> The names survive as content (lot names, image filenames); the tokens do not. They are
+> listed here for history only — do not reintroduce them, and do not use them for data
+> visualisation (they fail four of six accessibility checks).
+
+| ~~`--brand-dry-osmosis`~~ | `#CA4926` | retired |
+| ~~`--brand-red-honey`~~ | `#DD7C37` | retired |
+| ~~`--brand-banana-wash`~~ | `#E4B239` | retired |
+| ~~`--brand-solera-maceration`~~ | `#E1ADA2` | retired |
+| ~~`--brand-solera-wash`~~ | `#A5B6C8` | retired |
+| ~~`--brand-grappa`~~ | `#B6B050` | retired |
+| ~~`--brand-volcanic`~~ | `#7A7C5C` | retired |
+| ~~`--brand-appassimento`~~ | `#FFFFFF` | retired |
 | `--error` | `#E8421A` | form error states |
+| `--success` | `#1F6B4B` | confirmed state — form sent, validation passed |
 
 ## 2. Surfaces & text (themed)
 
@@ -28,9 +38,7 @@ Switch via `data-theme="day" | "night"` on `<html>`.
 | Token | Day | Night | Use |
 |---|---|---|---|
 | `--bg` | `#ffffff` | `#131719` | page background |
-| `--bg-elevated` | `#ffffff` | `#1a1d20` | nav, modals, panels above bg |
 | `--bg-card` | `#ffffff` | `#1a1d20` | card surfaces |
-| `--nav-bg` | `rgba(255,255,255,0.7)` | `rgba(19,23,25,0.92)` | translucent nav backdrop |
 | `--text` | `#1a1a1a` | `#ededed` | primary copy |
 | `--text-body` | `0.65 alpha` | `0.65 alpha` | secondary copy (.p2) |
 | `--text-muted` | `0.4 alpha` | `0.4 alpha` | meta / labels |
@@ -81,15 +89,12 @@ Switch via `data-theme="day" | "night"` on `<html>`.
 | `--radius-2` | 4 | buttons, form inputs |
 | `--radius-pill` | 9999 | cursor dot, pills, avatars |
 
-## 6. Z-index scale
+## 6. Z-index
 
-| Token | Value | Layer |
-|---|---|---|
-| `--z-content` | 1 | normal flow content |
-| `--z-overlay` | 30 | menu backdrop, computational art bg |
-| `--z-nav` | 50 | navbar, hamburger panel |
-| `--z-modal` | 9990 | LocationModal full-screen |
-| `--z-cursor` | 9999 | custom cursor (always on top) |
+Only one z token actually exists in the code: `--z-modal: 9990` (full-screen modals).
+The rest of the scale that used to be documented here — `--z-content`, `--z-overlay`,
+`--z-nav`, `--z-cursor` — was never present in `globals.css`; those layers are set with
+literal z-index values at their use sites.
 
 ## 7. Motion
 
@@ -121,15 +126,15 @@ Reveal-on-scroll uses 600ms with `--ease-out`.
 
 ## 8. Type system
 
-Three families, four roles. All headings use Bricolage Grotesque (display-friendly geometric grotesque), body uses DM Sans, mono uses DM Mono.
+Three families, four roles. Headings **and body** use Bricolage Grotesque — `--font-sans` is an alias of `--font-grotesque` (DM Sans was retired in #49). Mono is DM Mono. Pull quotes and handwriting use Mynerve (`--font-hand`).
 
 | Role | Font | Size | Tracking | Line-height | Use |
 |---|---|---|---|---|---|
-| `h1` | grotesque | `clamp(56,9vw,88)` | `-0.05em` | 1.02 | page display |
+| `h1` | grotesque | `clamp(44,9vw,88)` | `-0.06em` | 1.02 | page display, **weight 600, uppercase** |
 | `h2` | grotesque | `clamp(36,5.5vw,60)` | `-0.04em` | 1.06 | section heading |
 | `h3` | grotesque | `clamp(24,3vw,32)` | `-0.03em` | 1.15 | sub-heading / card title |
-| `.p1` | sans | 17px | normal | 1.65 | primary body |
-| `.p2` | sans | 16px | normal | 1.65 | secondary body |
+| `.p1` | sans | 16px | normal | 1.55 | primary body |
+| `.p2` | sans | 14px | normal | 1.6 | secondary body, `--text-body` |
 | `.label` | mono | 11px | 1px (UC) | normal | uppercase eyebrow / meta |
 
 Globally enabled features: `kern`, `liga`, `calt`, `ss01` (Bricolage's stylistic alternates).
@@ -151,7 +156,7 @@ Use sparingly — almost everything should work in both modes.
 
 ## 10. Day / night
 
-Default is night. Toggle keys `d` (night) and `l` (day) are wired in `Navbar.tsx`. `[data-theme="day"|"night"]` is applied to `<html>` and CSS variables flip atomically with a `--dur-theme` cross-fade.
+Default is **day** (`ModeProvider` initialises `theme: 'day'`, `viewMode: 'human'`); localStorage overrides after mount. Toggle keys `d` (night) and `l` (day) are wired in `Navbar.tsx`. `[data-theme="day"|"night"]` is applied to `<html>` and CSS variables flip atomically with a `--dur-theme` cross-fade.
 
 `.invert-on-light` flips white SVG assets dark when day is active, leaving them untouched at night.
 

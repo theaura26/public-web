@@ -442,13 +442,13 @@ The Aura Life is guided by Natural Intelligence.`}</ScrollHighlight>
               marginTop: 'var(--space-5)',
               textAlign: 'left',
             }}>
-              <p className="p2" style={{ margin: 0 }}>
+              <p className="p1" style={{ margin: 0 }}>
                 The following pages set out the fundamentals of the Aura
                 brand identity. It demonstrates how the brand assets work
                 together to create a consistent and coherent brand across
                 all touch points.
               </p>
-              <p className="p2" style={{ margin: 0 }}>
+              <p className="p1" style={{ margin: 0 }}>
                 They cover both the practical aspects of how to use our
                 design elements, and the more intangible aspects such as
                 what Aura represents, our values and how you should

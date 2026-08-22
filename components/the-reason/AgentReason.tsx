@@ -29,7 +29,7 @@ function Chapter({ title, children }: { title: string; children: ReactNode }) {
       <div className="section-w" style={{ paddingTop: 24, paddingBottom: 24, borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 640 }}>
           <h2 style={{ marginBottom: 24 }}>{title}</h2>
-          <div className="p2" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="p1" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {children}
           </div>
         </div>
@@ -61,7 +61,7 @@ export default function AgentReason() {
               I am not a biologist.<br />
               I am not a scientist.
             </h2>
-            <div className="p2" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div className="p1" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               <p>I am an entrepreneur. Born in India. Moved to Singapore twenty-four years ago. Built a career in the world of speed and cities and deals.</p>
               <p>But my way of unwinding was always the same.</p>
               <p>Building gardens. Setting flower arrangements. Creating spaces where people could sit together. Connecting friends over food and conversation that lasted until nobody noticed the time.</p>
@@ -174,7 +174,7 @@ export default function AgentReason() {
         <hr />
         <div className="section-w" style={{ paddingTop: 24, paddingBottom: 40, borderTop: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 640 }}>
-            <div className="p2" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div className="p1" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               <p><W>Aura is not built, it is grown.</W></p>
               <p>I am the first gardener.<br />I will not be the last.</p>
             </div>

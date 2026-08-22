@@ -653,7 +653,7 @@ export function ArticleHero({
             <Reveal delay={80}>
               <div style={{ maxWidth: 520 }}>
                 {subline && (
-                  <p className="p2" style={{ marginTop: 0, marginBottom: toc?.length ? 32 : 8 }}>{subline}</p>
+                  <p className="p1" style={{ marginTop: 0, marginBottom: toc?.length ? 32 : 8 }}>{subline}</p>
                 )}
                 {toc?.length ? (
                   <nav aria-label="Contents" className="article-toc">
@@ -1078,14 +1078,14 @@ export function DataCard({
           ) : null}
         </div>
         {value && <h3 style={{ margin: 0, marginBottom: 12 }}>{value}</h3>}
-        {children && <div className="p2" style={{ color: 'var(--text-body)' }}>{children}</div>}
+        {children && <div className="p1" style={{ color: 'var(--text-body)' }}>{children}</div>}
       </div>
     )
   }
   return (
     <div style={{ borderTop: '1.5px solid var(--border-strong)', paddingTop: 16 }}>
       {value && <p className="p1" style={{ margin: 0, marginBottom: 12 }}>{value}</p>}
-      {children && <div className="p2" style={{ color: 'var(--text-body)' }}>{children}</div>}
+      {children && <div className="p1" style={{ color: 'var(--text-body)' }}>{children}</div>}
     </div>
   )
 }
@@ -1540,7 +1540,7 @@ export function Continue({
                   />
                 </div>
                 <h3 style={{ margin: 0, marginBottom: 12 }}>{item.label}</h3>
-                <div className="p2" style={{ color: 'var(--text-body)' }}>{item.description}</div>
+                <div className="p1" style={{ color: 'var(--text-body)' }}>{item.description}</div>
               </Link>
             ))}
           </div>

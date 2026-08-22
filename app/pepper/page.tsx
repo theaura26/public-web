@@ -29,7 +29,7 @@ export default function PepperPage() {
           rises into the mid-canopy on living wood, the way it has grown in the Western Ghats for
           centuries. The method is old; the attention Aura pays it is exact.
         </p>
-        <p className="p2">
+        <p className="p1">
           The vines sit at <strong>3,600 ft</strong> on the red{' '}
           <Term tip="Iron- and aluminium-rich red soil weathered in the wet tropics. Free-draining and acidic — the ground the estate's coffee and pepper both root into.">laterite</Term>{' '}
           the coffee roots into, under the same four-story shade. The monsoon arrives in June and leaves
@@ -83,7 +83,7 @@ export default function PepperPage() {
           its white pepper in spring water from the estate catchment, changed daily and run cooler than
           river retting — which is what brings it out round in the cup.
         </p>
-        <p className="p2">
+        <p className="p1">
           The pepper and the coffee draw on the same biodynamic inputs, so the shed schedules one calendar
           around the other. One anaerobic lot is still young — a few sealed vessels, watched daily, coming
           out fruitier than a classic corn. Aura releases it when it earns release, and not before.
@@ -102,7 +102,7 @@ export default function PepperPage() {
           Malabar its signature — forward heat, a citrus top-note, and a pine-resin depth — and Aura grows
           toward that mark season by season.
         </p>
-        <p className="p2">
+        <p className="p1">
           Every lot is labelled with the block it grew in, the month it was picked, and the palm the vine
           climbed. That record — kept the same way the coffee&apos;s is — is the whole appellation: the
           altitude, the laterite, the shade, and the microbiome of one strip of the Ghats, written down so
@@ -121,7 +121,7 @@ export default function PepperPage() {
           season. The oldest method in the Ghats, worked with modern measurement: Natural Intelligence,
           applied to a vine.
         </p>
-        <p className="p2">
+        <p className="p1">
           Single-estate pepper, small-parcel trade, and chef partnerships:{' '}
           <a href="mailto:spice@theaura.life">spice@theaura.life</a>. Lots are small and released by the
           season. Aura does not blend across estates — every jar is from this land.

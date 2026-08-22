@@ -58,7 +58,7 @@ export default function CircularPage() {
           urine, most concentrated at dawn, is measured into the same system. This is the estate&apos;s
           most valuable raw material, and not a gram of it is left to waste.
         </p>
-        <p className="p2">
+        <p className="p1">
           From that single input Aura runs a closed loop. The grasses feed the herd; the herd feeds the
           preparations; the preparations feed the soil; the soil grows the grasses and the coffee. Nothing
           is bought in and nothing leaks out — the work is turning the animal&apos;s output back into
@@ -106,7 +106,7 @@ export default function CircularPage() {
               </g>
             </svg>
           </figure>
-          <p className="p2 loop-diagram__cap">
+          <p className="p1 loop-diagram__cap">
             Grass feeds the herd. The herd feeds the preparations. The preparations feed the soil. The
             soil grows the grass. Nothing enters the loop, and nothing leaves it — the estate&apos;s
             fertility is made entirely from what it already produces.
@@ -168,7 +168,7 @@ export default function CircularPage() {
           are worked in and the mix is layered into a shallow earthen pit, dug into the ground and left
           unlined at the bottom so the estate&apos;s own soil organisms migrate up and inoculate it.
         </p>
-        <p className="p2">
+        <p className="p1">
           Every pit carries a number, and every pit is worked by hand: the dung is mixed and stirred
           roughly forty-five minutes a day, breaking up the pulps so it matures evenly. Fourteen pits run
           across the estate in overlapping cycles — around 2,420 kilograms of CPP a year — turned by
@@ -216,7 +216,7 @@ export default function CircularPage() {
           coffee plant&apos;s roots and covered with mulch, so it holds its moisture and seeps its biology
           slowly down into the root zone — a slow compost feeding one plant at a time.
         </p>
-        <p className="p2">
+        <p className="p1">
           And it is placed against a record. The estate carries an ID for individual plants as well as
           animals, so the ball dug in at a given plant is logged to that plant — which pit it came from,
           when it went in. A preparation that took months to make is delivered by the handful, to a known
@@ -240,7 +240,7 @@ export default function CircularPage() {
           purpose — <em>jeeva</em>, life; <em>amrit</em>, nectar. It feeds the soil, not the plant — a
           culture poured into the ground as a drench that floods the root zone with living microbes.
         </p>
-        <p className="p2">
+        <p className="p1">
           It is the highest-volume preparation on the estate — around 154,000 litres a year — and its
           daily stir is the rhythm of the estate itself, not a task on a schedule. Each barrel is
           stirred about forty-five minutes a day, one direction then the other, building a vortex and
@@ -296,7 +296,7 @@ export default function CircularPage() {
           <Term tip="Soil bacteria that fix nitrogen and dissolve phosphate, supporting root development.">Pseudomonas</Term>{' '}
           — alongside the sensory reads the team trusts: smell, colour, and surface activity.
         </p>
-        <p className="p2">
+        <p className="p1">
           If a batch comes back wrong, it does not go on the soil. It is corrected or held. When a
           reading drifts — a pH too low, a count too thin — Dr. Arun, the estate&apos;s scientist, sets
           the fix: hold it longer, add this much water, feed in this much Jeevamrit. The failed batch
@@ -328,7 +328,7 @@ export default function CircularPage() {
           batch that fed it: did the microbes take, did the organic carbon rise, did the ground move
           toward its target.
         </p>
-        <p className="p2">
+        <p className="p1">
           So two circles turn together. The fertility cycle — dung to pit to brew to soil — and the
           testing cycle — pre-batch to post-batch to soil to next batch — feed each other, season after
           season. Over time that is what turns a fertility programme into a way of learning the land, and
@@ -351,7 +351,7 @@ export default function CircularPage() {
           kilograms of CPP a year, alongside biodynamic compost, buttermilk sprays, and the horn
           preparations — all of it sourced from fifty-two cattle grazing the same 150 acres as the coffee.
         </p>
-        <p className="p2">
+        <p className="p1">
           The work is narrow and constant: collect at dawn, brew and compost by hand, number and test
           every batch, place it to a known root, and read the soil it leaves behind. Ancestral practice —
           the pit, the brew, the daily stir — run with modern measurement. That pairing is what Aura calls

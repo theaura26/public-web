@@ -31,7 +31,7 @@ export default function ProvenancePage() {
           part to prove. So we write the estate down: every preparation, every ferment, every drying
           day, recorded the moment it happens, by the person who did it, and signed.
         </p>
-        <p className="p2">
+        <p className="p1">
           We keep that record for two readers. The buyer, asked to trust a farm on the other side of
           the world. And ourselves, because a practice you measure is a practice you can make better.
           From cherry to cup, a lot carries its own account.
@@ -45,7 +45,7 @@ export default function ProvenancePage() {
           on a good morning. A picker trusts the block that once pleased them. A taster wants the lot to
           be what they were hoping for.
         </p>
-        <p className="p2">
+        <p className="p1">
           So we take the measurement while the sense is still forming — the sugar as it falls, the
           acidity as it rises, the temperature logged through the night. The number does not overrule
           the palate; it keeps it honest. This is the simplest form of doing right: read the thing as it
@@ -99,7 +99,7 @@ export default function ProvenancePage() {
           on a waning moon, humidity 78%, by Raju, from dung batch G-03.</em> That row — the minute, the
           moon, the hand, the source — is the unit the whole system is built to protect.
         </p>
-        <p className="p2">
+        <p className="p1">
           Complexity sits in the machine; simplicity in the field. Soil probes, ferment-tank loggers,
           and a weather station at 3,600 feet write their readings on their own; every human act — the
           stir, the spray, the decant — is signed by name, from the field, by the person doing the work.
@@ -125,7 +125,7 @@ export default function ProvenancePage() {
           picked, the method it survived, the bed it dried on, the hands that turned it. Everything
           timestamped. Everything signed. Nothing summarised by a third party.
         </p>
-        <p className="p2">
+        <p className="p1">
           A buyer who wants to check a claim can drill into the underlying events. A buyer who only wants
           to brew the coffee can ignore all of it. That is what transparency is here: the page stands
           complete, whether or not anyone ever opens it.
@@ -153,13 +153,13 @@ export default function ProvenancePage() {
           out, the data still reads as plain text. The record is built to outlive the people who wrote
           it.
         </p>
-        <p className="p2">
+        <p className="p1">
           That is the horizon Aura works on. A buyer — or their buyer — can still read this lot in ten
           years. And the transparency runs both ways: the account that shows them what we did shows us,
           in the same plain detail, where the next lot can be better. A practice you can read is a
           practice you can improve.
         </p>
-        <p className="p2">
+        <p className="p1">
           Trade enquiries are handled directly — coffee and pepper both.
         </p>
         <DataGrid cols={2}>

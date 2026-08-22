@@ -1084,7 +1084,7 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
         }}>
           {s.name}
         </Heading>
-        <p className="p2" style={{ color: '#ffffff', margin: 0, maxWidth: 'min(260px, 80vw)', textShadow: '0 1px 12px rgba(0, 0, 0, 0.4)' }}>{s.tagline}</p>
+        <p className="p1" style={{ color: '#ffffff', margin: 0, maxWidth: 'min(260px, 80vw)', textShadow: '0 1px 12px rgba(0, 0, 0, 0.4)' }}>{s.tagline}</p>
       </div>
 
       {/* Bottom-anchored meta. For large (Mudigere/Ohara): region/coords pinned
@@ -1960,7 +1960,7 @@ Awake.`}</ScrollHighlight>
                       mono uppercase via the global .label spec, matching
                       every other meta caption on the page. */}
                   <p className="label" style={{ marginBottom: 'var(--space-4)' }}>{card.lead}</p>
-                  <p className="p2">{card.desc}</p>
+                  <p className="p1">{card.desc}</p>
                 </div>
               </Reveal>
             ))}

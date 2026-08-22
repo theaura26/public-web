@@ -30,17 +30,17 @@ export default function BiodynamicPage() {
           BD 500 through 508. Jeevamrit. Panchgavya. Two ancient farming
           intelligences working together on one estate.
         </p>
-        <p className="p2">
+        <p className="p1">
           At Aura, biodynamic farming is a closed-loop operating system — a
           way of understanding the estate as a single organism where soil,
           plant, animal, and cosmos are connected.
         </p>
-        <p className="p2">
+        <p className="p1">
           We practise two systems simultaneously: European biodynamic and
           Vedic agricultural science (millennia older,
           orally transmitted, regionally adapted).
         </p>
-        <p className="p2">
+        <p className="p1">
           Two languages describing the same intelligence.
         </p>
       </TwoCol>
@@ -59,7 +59,7 @@ export default function BiodynamicPage() {
           dynamically for one hour — creating a vortex, breaking it, reversing
           — then applied to soil in the evening, when the earth is inhaling.
         </p>
-        <p className="p2">
+        <p className="p1">
           We will say the thing most of the biodynamic world talks around. The
           lunar charts and the talk of the earth breathing are poetry, and poetry
           has never survived a controlled trial. We keep these preparations for a
@@ -95,7 +95,7 @@ export default function BiodynamicPage() {
           Jeevamrit, Panchgavya, Beejamrit, and older preparations from the
           Vrikshayurveda lineage.
         </p>
-        <p className="p2">
+        <p className="p1">
           The two systems reinforce each other. Each carries a piece of the same
           underlying observation: feed the soil, close the loop, and let the cow
           do most of the work.
@@ -147,7 +147,7 @@ export default function BiodynamicPage() {
           microbial characteristics specific to this breed, this land, this
           climate.
         </p>
-        <p className="p2">
+        <p className="p1">
           The dung drives BD 500, CPP, Jeevamrit, Panchgavya, and compost
           activation. The system tracks which animals contributed to which
           preparation batch. Ninety days after application, soil biology
@@ -155,7 +155,7 @@ export default function BiodynamicPage() {
           results — pH, EC, microbial colony counts, <Term tip="Soil-borne fungus that suppresses plant pathogens.">Trichoderma</Term> viability,
           <Term tip="Soil bacteria that fix nitrogen and dissolve phosphate.">Pseudomonas</Term> counts.
         </p>
-        <p className="p2">
+        <p className="p1">
           The cattle rotate through blocks timed to coffee cherry development
           stages. At the right time, their presence enriches soil biology for
           the next season. At the wrong time, it compacts the ground. Timing
@@ -199,12 +199,12 @@ export default function BiodynamicPage() {
           and recorded — is sealed on the blockchain as a permanent, verifiable
           event.
         </p>
-        <p className="p2">
+        <p className="p1">
           Organic and biodynamic certification evidence becomes tamper-evident,
           cross-referenced against weather data, lunar records, and soil outcomes
           that cannot be retroactively altered.
         </p>
-        <p className="p2">
+        <p className="p1">
           This is the practice, recorded with integrity, made permanent.
         </p>
       </TwoCol>
@@ -222,7 +222,7 @@ export default function BiodynamicPage() {
           intelligence. We believe it is the only kind of farming that will still
           make sense in a hundred years, and we are building as if we are right.
         </p>
-        <p className="p2">
+        <p className="p1">
           A four-story polyculture, fed by preparations from indigenous
           cattle, building soil carbon decade over decade. This is what a
           closed-loop operating system looks like when it has been running

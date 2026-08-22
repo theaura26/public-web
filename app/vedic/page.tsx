@@ -31,7 +31,7 @@ export default function VedicPage() {
           preparations codified about a century ago. Two languages describing one intelligence: feed
           the life in the soil, and the soil feeds the plant.
         </p>
-        <p className="p2">
+        <p className="p1">
           Industrial agronomy asks what the plant lacks, then adds it. The older traditions ask what
           the soil is and what it is already doing. Everything Aura does with this ground follows
           from starting with the second question.
@@ -50,7 +50,7 @@ export default function VedicPage() {
           yellows from the tip is one diagnosis; from the edge, another. Treat the diagnosis, not the
           symptom.
         </p>
-        <p className="p2">
+        <p className="p1">
           Industrial agriculture inherited the{' '}
           <Term tip="Nitrogen, phosphorus, potassium — the three macronutrients isolated by nineteenth-century agricultural chemistry. Not wrong. Narrow.">NPK</Term>{' '}
           rulebook from nineteenth-century chemistry. It is not wrong; it is narrow — three letters
@@ -76,7 +76,7 @@ export default function VedicPage() {
           material of the soil work. The herd is not livestock kept beside the farm; it is the engine
           inside it.
         </p>
-        <p className="p2">
+        <p className="p1">
           You cannot make these preparations with an imported breed, and you cannot buy them. The
           herd is rotated through the blocks on a rhythm timed to how the coffee cherry is
           developing, and the ground it grazes is the ground the coffee roots into. The herd builds
@@ -98,7 +98,7 @@ export default function VedicPage() {
           is already thriving nearby. It is a live culture, brewed to its peak and drenched onto the
           block within a day, before the population crests and falls.
         </p>
-        <p className="p2">
+        <p className="p1">
           The Vedic ferments and the biodynamic preparations share the same shelf and the same
           handful of materials — the cow, the compost heap, a few wild herbs. The Vrikshayurveda
           prescribes the brewing window in the language of auspicious timing; a lab would call it
@@ -119,7 +119,7 @@ export default function VedicPage() {
           that gave it, and the soil is re-read ninety days after an application — to see whether what
           looked right in the pot did anything in the ground.
         </p>
-        <p className="p2">
+        <p className="p1">
           This is what Aura means by Natural Intelligence: the oldest knowledge we have, held to the
           newest measurement we trust. What the Vrikshayurveda called the land&apos;s breath, and what
           the moon-timed preparations called the right hour, the estate now also writes down as a
@@ -148,7 +148,7 @@ export default function VedicPage() {
           soil, grown from the ground rather than borrowed from a textbook written for another. A
           different valley would need a different record. That is not a flaw; it is the point.
         </p>
-        <p className="p2">
+        <p className="p1">
           This is a generational instrument. The knowledge is old and the measurement is ours, and
           together they build the estate&apos;s most durable asset: living soil, on a horizon measured
           in decades. Where the practice becomes a ledger, this journal hands off to{' '}

@@ -203,7 +203,7 @@ Monastic polymaths. Crazy misfits.`}</ScrollHighlight>
                   <StudioPillarMedia image={s.image} video={s.video} alt={s.alt} />
                   <h3 style={{ marginTop: 'var(--space-5)', marginBottom: 'var(--space-3)' }}>{s.name}</h3>
                   <p className="label" style={{ marginBottom: 'var(--space-4)' }}>{s.lead}</p>
-                  <p className="p2">{s.body}</p>
+                  <p className="p1">{s.body}</p>
                 </div>
               </Reveal>
             ))}

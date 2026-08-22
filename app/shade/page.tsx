@@ -35,7 +35,7 @@ export default function ShadePage() {
           carries the biodiversity that makes this one of the world&apos;s recognised hotspots. Aura works
           that canopy as an instrument — the layer that decides how much sun reaches the coffee below.
         </p>
-        <p className="p2">
+        <p className="p1">
           The tuning is a practice called{' '}
           <Term tip="The selective removal of branches from shade trees to regulate light reaching the coffee, while preserving each tree's natural architecture. Lighter and more precise than lopping or pollarding.">shade whiskering</Term>:
           the selective removal of branches to regulate the light without felling the tree or breaking
@@ -74,7 +74,7 @@ export default function ShadePage() {
           reading the light that falls through. A ground layer of pepper, cardamom, ginger, and cover
           crops protects the soil.
         </p>
-        <p className="p2">
+        <p className="p1">
           The stories are coupled. Prune the emergent layer too hard and the canopy below floods with
           light; the areca palms stress, and within six to eight weeks the pepper vines climbing them lose
           vigour. The intervention window is roughly three weeks. Every cut in the top layer ripples
@@ -100,7 +100,7 @@ export default function ShadePage() {
           unevenly, and distorts the crown of a tree that will stand for another fifty years — leaving
           some coffee scorched and some starved of light within the same block.
         </p>
-        <p className="p2">
+        <p className="p1">
           In the 2026 pre-monsoon season, Aura rebuilt the practice around measurement. Before a branch
           came down, the light was quantified; the cutting followed a prescription written from that data;
           the result was checked against it afterwards. The guiding order was plain, and it governed every
@@ -122,7 +122,7 @@ export default function ShadePage() {
           <Term tip="Central Coffee Research Institute — India's national coffee research body, in Karnataka. Sets agronomic standards for the region's estates.">CCRI</Term>:
           fifty to seventy thousand lux for Arabica, seventy to ninety thousand for the hardier Robusta.
         </p>
-        <p className="p2">
+        <p className="p1">
           To catch how much the canopy varies within a single acre, Aura built a five-cluster method. Each
           acre was divided into five clusters, and ten readings taken at random inside each — fifty
           observations an acre, resolved into five cluster averages. The readings map each block into
@@ -168,7 +168,7 @@ export default function ShadePage() {
           eighty acres, worked in the May–June window before the south-west monsoon closed the canopy in
           for the year. A team of eleven tree loppers and ten branch choppers carried it out.
         </p>
-        <p className="p2">
+        <p className="p1">
           What separates whiskering from lopping is where the judgement sits. Every significant cut was
           directed by a supervisor against the prescription, weighed for branch orientation, crown
           symmetry, the tree&apos;s centre of gravity, and its stability through the storms ahead. The
@@ -197,7 +197,7 @@ export default function ShadePage() {
           <Term tip="Allelopathy — the release of compounds that suppress the growth of nearby plants. Silver Oak litter is kept separate so it breaks down on its own terms.">allelopathic</Term>,
           so it composts on its own terms rather than checking the growth around it.
         </p>
-        <p className="p2">
+        <p className="p1">
           The trees are tended too. A fresh cut is an open wound and a way in for wood-decaying fungi, so
           every major cut is sealed with a paste of{' '}
           <Term tip="Cow Pat Preparation — a fermented, microbially rich compost made from the herd's dung, used across the estate's biodynamic work. Here, mixed with turmeric into a wound dressing.">cow pat preparation</Term>{' '}
@@ -221,7 +221,7 @@ export default function ShadePage() {
           every quarter. Whiskering is where that knowledge meets the tree — the annual decision that sets
           the light for the whole season beneath it.
         </p>
-        <p className="p2">
+        <p className="p1">
           What Aura added is the loop that makes it repeatable: baseline reading, block-wise prescription,
           selective cutting, biomass returned, wounds dressed, and a post-operation survey to confirm the
           targets were hit and the coffee was not over-exposed. An old regional craft, run on measurement

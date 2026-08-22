@@ -214,7 +214,7 @@ export default function ContactModal({
         <h2 id="contact-modal-title" style={{ marginTop: 0, marginBottom: 'var(--space-3)' }}>
           Write to us.
         </h2>
-        <p className="p2" style={{ marginBottom: 'var(--space-6)' }}>
+        <p className="p1" style={{ marginBottom: 'var(--space-6)' }}>
           A note about the estate, a partnership, or a visit. We&rsquo;ll
           come back to you.
         </p>

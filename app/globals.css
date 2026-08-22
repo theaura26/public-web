@@ -1149,7 +1149,9 @@ h3 {
   font-weight: 400;
 }
 
-/* P2 — secondary body, slightly muted */
+/* P2 — secondary body, slightly muted. RESERVED: body copy across the site
+   is .p1 now (16px, full ink). Keep .p2 for the special cases where smaller,
+   quieter type is deliberate — not as the default body style. */
 .p2 {
   font-family: var(--font-sans);
   font-size: 14px;

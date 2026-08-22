@@ -31,7 +31,7 @@ export default function SanctuaryPage() {
           coordinates, the year counts on the buildings — and that journal is{' '}
           <em>The Land</em>. This one is about what the network does.
         </p>
-        <p className="p2">
+        <p className="p1">
           The Aura sanctuary system is four valleys in two hemispheres, held in one rhythm. Two
           are in practice. Two are in the patient early conversations of being read. None of them
           are destinations. All four are postures.
@@ -59,7 +59,7 @@ export default function SanctuaryPage() {
           turning through its own four seasons undisturbed. When Ohara is buried in snow, Munduk
           is in its dry-side window. Daylesford balances the southern hemisphere against the rest.
         </p>
-        <p className="p2">
+        <p className="p1">
           The same posture moves with the rhythm — the same insistence on observation before
           intervention, the same five-product economy of the cow, the same refusal to do anything
           on a quarterly schedule. The valleys differ in climate. They are identical in stance.
@@ -135,13 +135,13 @@ export default function SanctuaryPage() {
           structure yet, and neither page pretends otherwise: what follows is what we know from
           listening, not what we&apos;ve built.
         </p>
-        <p className="p2">
+        <p className="p1">
           <strong>Munduk</strong> sits in the volcanic highlands of north Bali, where a sacred
           lake half a ridge from the working one has banned motorboats for longer than anyone
           can date. It is where Aura&apos;s Indian soil philosophy meets a community that already
           drew its own line between use and reverence — before Aura had a name.
         </p>
-        <p className="p2">
+        <p className="p1">
           <strong>Daylesford</strong>, in Victoria, Australia, is Aura&apos;s southern
           counterweight — the only valley in the network with a real winter. Its mineral springs
           have been rising through 450-million-year-old rock since long before the town that
@@ -167,7 +167,7 @@ export default function SanctuaryPage() {
           practice. Two climates check each other. Four make the practice harder to confuse with
           its setting.
         </p>
-        <p className="p2">
+        <p className="p1">
           A valley enters Aura when the land says yes and the lineage says yes — not before.
           There is no roadmap past Daylesford. There is a posture, repeated across climates,
           until the land tells us where it would like to be tended next.
@@ -185,7 +185,7 @@ export default function SanctuaryPage() {
           piles wait. The herd waits. The kiln waits. We learn the water before we ask anything
           of it.
         </p>
-        <p className="p2">
+        <p className="p1">
           That is the only entry rite. Everything that follows — the cabins, the kitchen, the
           studios, the gatherings — earns its place by surviving the first season&apos;s
           observation. Most ideas do not. The ones that do get to put down a first stone.

@@ -322,7 +322,7 @@ export default function MudigerePage() {
           (4 hrs) — the last stretch is through ghat roads that
           descend into mist and coffee country.
         </p>
-        <p className="p2">
+        <p className="p1">
           The estate shares its eastern boundary with the <Term tip="Tiger reserve in the Western Ghats of Karnataka. Core habitat for tiger, leopard, gaur, and dhole.">Bhadra Wildlife Reserve</Term> buffer zone — 20 acres of protected forest are part of the estate.
           Leopard, gaur, Malabar giant squirrel, Malabar pied
           hornbill, and king cobra are recorded on the land. The farm
@@ -513,7 +513,7 @@ export default function MudigerePage() {
           water channels, and the placement of every existing structure
           — at the scale a builder needs.
         </p>
-        <p className="p2">
+        <p className="p1">
           <a href="/mudigere-estate-map.pdf" target="_blank" rel="noopener" download>Download the plan as PDF</a>{' '}
           (1 sheet · 750 KB). Best read printed and laid flat.
         </p>
@@ -535,7 +535,7 @@ export default function MudigerePage() {
           forest, where altitude, rainfall, and red <Term tip="Red, iron-rich, free-draining volcanic soil typical of the Western Ghats. pH 6.0–6.5.">laterite</Term> soil
           create conditions of exceptional biological density.
         </p>
-        <p className="p2">
+        <p className="p1">
           Soil pH 6.0–6.5 over granite, alive with mycorrhizal networks.
           Excellent drainage. Strong thermal mass. This is not farming
           despite the climate — it is farming because of it.
@@ -611,7 +611,7 @@ export default function MudigerePage() {
           acids into complexity. Three fermentation disciplines: Red
           Honey, <Term tip="Sherry-making technique: carry a fraction of the previous batch forward as a live mother culture.">Solera Maceration</Term> (the flagship), and 25-day natural.
         </p>
-        <p className="p2">
+        <p className="p1">
           3–7 day micro-fermentation windows. 25 days minimum drying.
           Each lot finds its own clock. Cupped fresh at source.
           Specialty-grade. Blocks with 65–75% canopy coverage produce
@@ -664,7 +664,7 @@ export default function MudigerePage() {
           over the past 12–16 months alongside Vedic practices — guide
           every soil intervention.
         </p>
-        <p className="p2">
+        <p className="p1">
           Bee activity is read as a predictive signal: when colonies
           drop during flowering, it forecasts lower cherry set 4–6 weeks
           ahead. The nursery programme actively reintroduces native
@@ -803,13 +803,13 @@ export default function MudigerePage() {
             impose.
           </DataCard>
         </DataGrid>
-        <p className="p2">
+        <p className="p1">
           <strong>Phase 1.</strong> Water reservoirs and a 5-acre
           biophilic pilot. Fix the hydrology first — improve water
           retention and everything else follows. The 5-acre pilot is
           the proof of concept for the master plan.
         </p>
-        <p className="p2">
+        <p className="p1">
           <strong>Master planning.</strong> Define a core structural
           armature — a spine for the land — before developing floating
           scenario options. The armature is permanent; the scenarios
@@ -927,7 +927,7 @@ export default function MudigerePage() {
           Come stand on the land before drawing a single line. The land
           will tell you more than this page can.
         </p>
-        <p className="p2">
+        <p className="p1">
           Three days is enough; a week is better. We can arrange the
           visit, the room, and the walk.{' '}
           <a href="mailto:hello@theaura.life?subject=Mudigere%20estate%20visit">hello@theaura.life</a>.

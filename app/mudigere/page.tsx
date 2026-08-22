@@ -388,7 +388,7 @@ export default function MudigerePage() {
           <Term tip="Mountain range along India's west coast. A UNESCO World Heritage site and one of the world's eight 'hottest hotspots' of biological diversity. Older than the Himalayas.">Western Ghats</Term>, a range older than the Himalayas
           and among the eight most biodiverse places on Earth.
         </p>
-        <p className="p2">
+        <p className="p1">
           Aura farms 150 acres of it at 3,600 feet, on red{' '}
           <Term tip="Red, iron-rich, free-draining volcanic soil typical of the Western Ghats. pH 6.0–6.5, over granite, alive with mycorrhizal networks.">laterite</Term> under a canopy that has never been
           cleared. The work bends toward <em>Ṛta</em> — the old idea that
@@ -427,7 +427,7 @@ export default function MudigerePage() {
           1:2,500: boundary, contour, water channel, and standing
           structure, set down to scale before a single new line is drawn.
         </p>
-        <p className="p2">
+        <p className="p1">
           Its eastern edge runs hard against the <Term tip="Tiger reserve in the Western Ghats of Karnataka. Core habitat for tiger, leopard, gaur, and dhole.">Bhadra Wildlife Reserve</Term>
           {' '}buffer, and twenty acres of unbroken forest fall inside the
           estate itself. Leopard and gaur move through it; Malabar giant
@@ -459,7 +459,7 @@ export default function MudigerePage() {
                   <img src={`/mudigere/aura-thumb-${thumb}.jpg`} alt="" aria-hidden loading="lazy" decoding="async" className="stat-card__thumb" />
                   <div className="stat-card__text">
                     <p className="p1" style={{ margin: '0 0 8px' }}>{value}</p>
-                    <div className="p2" style={{ color: 'var(--text-body)' }}>{label}</div>
+                    <div className="p1" style={{ color: 'var(--text-body)' }}>{label}</div>
                   </div>
                 </div>
               ))}
@@ -505,7 +505,7 @@ export default function MudigerePage() {
           Each layer shelters the one beneath it, and the whole behaves
           like a forest that happens to yield a harvest.
         </p>
-        <p className="p2">
+        <p className="p1">
           Blocks with 65–75% canopy coverage measurably outperform the
           rest — proof, on the land&rsquo;s own terms, that the shade is
           not a compromise but the point. The canopy pays past the cup, too:
@@ -516,7 +516,7 @@ export default function MudigerePage() {
         <div style={{ marginTop: 'var(--space-6)' }}>
           <div className="layer-row">
             <p className="p1 layer-row__label">Layer 1 · The canopy</p>
-            <p className="p2 layer-row__body">
+            <p className="p1 layer-row__body">
               Silver oak, albizzia, jackfruit, fig, and rosewood hold the sky
               at 15–25 m — 60–80% cover, the shade the whole system grows
               beneath.
@@ -524,20 +524,20 @@ export default function MudigerePage() {
           </div>
           <div className="layer-row">
             <p className="p1 layer-row__label">Layer 2 · The middle air</p>
-            <p className="p2 layer-row__body">
+            <p className="p1 layer-row__body">
               Areca palms run in ranks, each one a living trellis for black
               pepper. Avocado fills the margins.
             </p>
           </div>
           <div className="layer-row">
             <p className="p1 layer-row__label">Layer 3 · The understory</p>
-            <p className="p2 layer-row__body">
+            <p className="p1 layer-row__body">
               A hundred acres of Arabica — <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka.">Sln.9</Term>, <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946.">Sln.795</Term>, <Term tip="A modern Arabica cultivar (Catimor lineage) developed in India, prized for leaf-rust resistance.">Chandragiri</Term> — with thirty-two acres of tea easing into organic.
             </p>
           </div>
           <div className="layer-row">
             <p className="p1 layer-row__label">Layer 4 · The floor</p>
-            <p className="p2 layer-row__body">
+            <p className="p1 layer-row__body">
               Cardamom, cacao, and medicinals carpet the ground; cover crops,
               vermicompost, and recovering honeybee colonies — no chemical
               input.
@@ -559,7 +559,7 @@ export default function MudigerePage() {
               Red Honey, <Term tip="Sherry-making technique: carry a fraction of the previous batch forward as a live mother culture.">Solera Maceration</Term> (the flagship), and a
               25-day natural.
             </p>
-            <p className="p2">
+            <p className="p1">
               Only fully ripe cherries, 95% minimum. Short micro-ferment
               windows, twenty-five days of drying, each lot on its own
               clock — cupped fresh at source, specialty-grade. The wet mill
@@ -610,7 +610,7 @@ export default function MudigerePage() {
           and urine feed the biodynamic preparations (<Term tip="The biodynamic preparations — eight numbered field and compost sprays applied at precise lunar and seasonal timings.">BD 500–508</Term>),
           timed to the moon and the season.
         </p>
-        <p className="p2">
+        <p className="p1">
           The bees keep the ledger: when colonies thin during flowering,
           the cherry set drops four to six weeks on. A 12-acre nursery
           raises native species for the canopy of the next century; orchid
@@ -686,14 +686,14 @@ export default function MudigerePage() {
           learned here is written down and given away: biodynamic and Vedic
           practice, documented and taught, opened to anyone who comes.
         </p>
-        <p className="p2">
+        <p className="p1">
           Together they are turning a colonial-era plantation, built for
           extraction, into a living system — one that grows its structures
           around the landscape rather than through it. An artist residency, a
           research laboratory, sanctuary spaces: built to be lived in, not
           only worked.
         </p>
-        <p className="p2">
+        <p className="p1">
           Phase one fixes the hydrology — reservoirs that catch three thousand
           millimetres of monsoon and return it to the watershed below, and a
           five-acre biophilic pilot, the proof of concept for everything that

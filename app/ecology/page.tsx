@@ -45,7 +45,7 @@ export default function EcologyPage() {
           spread or how many rows were weeded, but what the ground and the canopy are actually doing in
           response.
         </p>
-        <p className="p2">
+        <p className="p1">
           That is the shift — from recording activities to reading ecological outcomes. Above ground, the
           canopy is mapped in light and pruned to prescription. Below ground, the soil is read for its
           breath, its worms, its fungi, and its roots. Each is a separate monitoring programme with its
@@ -68,7 +68,7 @@ export default function EcologyPage() {
           from: cut to sixty-to-ninety-centimetre lengths and stacked to break down where it lies, food
           for the fungi rather than waste to be removed.
         </p>
-        <p className="p2">
+        <p className="p1">
           Wood is mostly lignin, and almost nothing can break lignin down except{' '}
           <Term tip="Wood-rotting fungi that carry the rare enzymes needed to break down lignin. Their hyphae penetrate dead wood and convert it, slowly, into humus.">saprophytic fungi</Term>.
           As they work, the estate reads the decay: a{' '}
@@ -109,7 +109,7 @@ export default function EcologyPage() {
           and then left completely alone. No turning, no watering: a microbial sanctuary that colonises
           itself and slowly seeds the soil around it.
         </p>
-        <p className="p2">
+        <p className="p1">
           Across the rest of the ground, the estate keeps a forest floor. Prunings, leaves, and weeds are
           returned as a two-to-five-centimetre mulch over bare soil — the skin of the ecosystem, holding
           moisture, moderating temperature, and feeding the fungi and earthworms beneath. Bare soil is
@@ -150,7 +150,7 @@ export default function EcologyPage() {
           <Term tip="Three functional groups — epigeic (surface litter), endogeic (topsoil), and anecic (deep vertical burrowers). Together they aerate, mix, and build the soil.">surface-dwellers to deep-burrowers</Term>,
           a rising population is one of the clearest signs the ground is healing.
         </p>
-        <p className="p2">
+        <p className="p1">
           Deeper still, the estate reads the roots — the{' '}
           <Term tip="The biologically active zone around a root, where the plant trades carbon-rich exudates with fungi and bacteria.">rhizosphere</Term>{' '}
           and its{' '}
@@ -195,7 +195,7 @@ export default function EcologyPage() {
           are each standardised and rolled into one composite score for every plantation block: the{' '}
           <Term tip="A 0–100 composite score per block that integrates every ecological monitoring programme. Bands run from Restoration Priority (below 40) to Excellent (90+).">Ecological Health Index</Term>.
         </p>
-        <p className="p2">
+        <p className="p1">
           The index is read by block and by band — restoration priority, degraded, regenerating, healthy,
           excellent — so the estate can compare one stretch of ground against another, watch a block climb
           season by season, and send the next intervention exactly where the numbers say it is needed. It

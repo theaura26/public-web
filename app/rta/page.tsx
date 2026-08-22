@@ -28,13 +28,13 @@ export default function RtaPage() {
           from when to spray, to when to seal a fermentation tank, to when to
           stay still.
         </p>
-        <p className="p2">
+        <p className="p1">
           <Rta /> is a Sanskrit word. Natural order — the rhythm that governs
           seasons, tides, germination, decay, and renewal. It predates
           organised religion. It is observation: the world works on timing,
           and intelligence is alignment with that timing.
         </p>
-        <p className="p2">
+        <p className="p1">
           At Aura, <Rta /> is the operating system.
         </p>
       </OneCol>
@@ -57,12 +57,12 @@ export default function RtaPage() {
           Evening application allows the preparation to work with the
           soil&rsquo;s natural absorption cycle.
         </p>
-        <p className="p2">
+        <p className="p1">
           Every BD application is timestamped to the minute, tagged with the
           lunar calendar day, the weather at the moment of spraying, the field
           worker who applied it, the dung batch it came from.
         </p>
-        <p className="p2">
+        <p className="p1">
           A spray logged at 06:12 carries more integrity than a weekly report
           written on Friday. The data does not say &ldquo;we sprayed this
           week.&rdquo; It says &ldquo;<Term tip="Horn silica. Ground quartz buried over summer, sprayed as fine mist for light metabolism.">BD 501</Term> was applied to Block 07 at 06:14 on
@@ -76,7 +76,7 @@ export default function RtaPage() {
           <DataCard value="Dung batch.">Source ID.</DataCard>
           <DataCard value="Buffer days.">Three per monthly schedule.</DataCard>
         </DataGrid>
-        <p className="p2">
+        <p className="p1">
           The buffer days exist because the land keeps its own calendar, and the
           schedule bends to it.
         </p>
@@ -87,12 +87,12 @@ export default function RtaPage() {
           Lot 001 sealed at 48 hours because the pH reached 4.2. The cherry set
           the hour, and we followed it.
         </p>
-        <p className="p2">
+        <p className="p1">
           Lot 005 — the Solera Maceration — alternates between fermentation and
           rest in two-day cycles, following the temperature and the microbial
           activity, read in real time.
         </p>
-        <p className="p2">
+        <p className="p1">
           Drying follows a day-night rhythm: raised beds by day, breathable
           bags by night. The bean dries at its own pace, accompanied through it.
         </p>
@@ -105,7 +105,7 @@ export default function RtaPage() {
           next season — but only if they are in the right block at the right
           time.
         </p>
-        <p className="p2">
+        <p className="p1">
           Too early, and the soil is compacted before root growth. Too late,
           and the biological window closes.
         </p>
@@ -124,12 +124,12 @@ export default function RtaPage() {
           <Rta /> lives as much in the waiting as in the acting. Restraint before
           intervention. Patience before process.
         </p>
-        <p className="p2">
+        <p className="p1">
           When the land signals that it is not ready — a soil that has not
           recovered, a canopy that has not leafed out, a preparation that has
           not matured — the answer is to wait. Not to push.
         </p>
-        <p className="p2">
+        <p className="p1">
           The seven decision filters that govern every action at Aura all point
           to the same principle: is this the right time? Can the team execute
           it simply? Will it age well?
@@ -151,7 +151,7 @@ export default function RtaPage() {
           RTA Labs is where the field record becomes intelligence — a
           Mudigere-native model, trained on this land&rsquo;s specific rhythms.
         </p>
-        <p className="p2">
+        <p className="p1">
           By 2031 the estate will hold five-plus years of four-layer
           polyculture data — biodynamic inputs, cattle rotation, fermentation
           outcomes, canopy health, all logged against the same clock. A
@@ -178,7 +178,7 @@ export default function RtaPage() {
             On-site, never to the cloud.
           </DataCard>
         </DataGrid>
-        <p className="p2">
+        <p className="p1">
           The intelligence cannot be replicated anywhere else. It requires the
           data. The data requires the land. The land requires the practice.
           The practice requires the patience.

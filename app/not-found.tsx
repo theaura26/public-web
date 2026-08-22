@@ -22,7 +22,7 @@ export default function NotFound() {
             <h1 style={{ maxWidth: 760 }}>Nothing planted here yet.</h1>
           </Reveal>
           <Reveal delay={140}>
-            <p className="p2" style={{ maxWidth: 480, marginTop: 32 }}>
+            <p className="p1" style={{ maxWidth: 480, marginTop: 32 }}>
               What you were looking for is not at this address. The land is still in the same place — walk back into it.
             </p>
           </Reveal>
@@ -43,7 +43,7 @@ export default function NotFound() {
                     <p className="p1 nf-route__label">{r.label}</p>
                     <span aria-hidden className="nf-route__arrow">→</span>
                   </div>
-                  <p className="p2 nf-route__desc">{r.description}</p>
+                  <p className="p1 nf-route__desc">{r.description}</p>
                 </Link>
               </Reveal>
             ))}

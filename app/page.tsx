@@ -1442,7 +1442,7 @@ export default function Home() {
             </div>
             {/* 4. Think label */}
             <p className="label hero-mid__think hero-anim hero-anim--fade" style={{ opacity: 0, animationDuration: '500ms', animationDelay: '480ms' }}>
-              Our studios and sanctuaries invite leaders, creators, and organisations into inspiration and flow
+              Our ateliers and sanctuaries invite leaders, creators, and organisations into inspiration and flow
             </p>
             {/* 5. Copy label */}
             <p className="label hero-mid__copy hero-anim hero-anim--fade" style={{ opacity: 0, animationDuration: '500ms', animationDelay: '640ms' }}>

@@ -57,7 +57,7 @@ export const SITEMAP: SitemapEntry[] = [
     topic: 'Brand system, intelligences, design language',
     summary: 'The Aura brand is built around three intelligences — Natural, Human, and Machine — converging into one regenerative practice. Design language favours silence over noise, depth over width, memory over trend.',
     facts: [
-      { label: 'Intelligences', value: 'Natural · Ancient · Human · Machine' },
+      { label: 'Intelligences', value: 'Natural · Human · Machine' },
       { label: 'Type system', value: 'Bricolage Grotesque (display + body) · DM Mono (label) · Mynerve (pull quote)' },
     ],
     related: ['/reason', '/artistry'],

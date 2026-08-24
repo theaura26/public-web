@@ -40,7 +40,7 @@ export default function SanctuaryPage() {
 
       <Placeholder
         type="Aerial · two hemispheres"
-        caption="The four-valley map — Mudigere, Ohara, Munduk, Daylesford"
+        caption="The four-valley map — Mudigere, Ohara, Munduk, Punakha"
       />
 
       <Placeholder
@@ -57,7 +57,7 @@ export default function SanctuaryPage() {
           A network of sanctuaries is only useful if a rhythm passes between them. Aura&apos;s
           rhythm is the seasons doing the scheduling. When Mudigere is closed by monsoon, Ohara is
           turning through its own four seasons undisturbed. When Ohara is buried in snow, Munduk
-          is in its dry-side window. Daylesford balances the southern hemisphere against the rest.
+          is in its dry-side window.
         </p>
         <p className="p1">
           The same posture moves with the rhythm — the same insistence on observation before
@@ -99,7 +99,7 @@ export default function SanctuaryPage() {
       <TwoCol id="shared" heading="What actually travels between them.">
         <p className="p1">
           Not the crops, not the climate, not even the language. What moves from Mudigere to
-          Ohara — and will move to Munduk and Daylesford when they&apos;re ready — is a small set
+          Ohara — and will move to Munduk and Punakha when they&apos;re ready — is a small set
           of working habits, tested wherever they&apos;ve been tried and kept because they held.
         </p>
         <DataGrid cols={3}>
@@ -142,10 +142,11 @@ export default function SanctuaryPage() {
           drew its own line between use and reverence — before Aura had a name.
         </p>
         <p className="p1">
-          <strong>Daylesford</strong>, in Victoria, Australia, is Aura&apos;s southern
-          counterweight — the only valley in the network with a real winter. Its mineral springs
-          have been rising through 450-million-year-old rock since long before the town that
-          protects them existed to notice.
+          <strong>Punakha</strong>, in western Bhutan, sits where the Pho Chhu and Mo Chhu
+          meet — the father and mother rivers, running down from snow into subtropical forest.
+          It is a valley where mindfulness is the ordinary shape of a day, where craft and ritual
+          stay attached to cultivation, and where forest cover is held by constitution. The things
+          Aura argues for elsewhere are already how life is arranged here.
         </p>
       </TwoCol>
 
@@ -155,8 +156,8 @@ export default function SanctuaryPage() {
       />
 
       <Placeholder
-        type="Landscape · southern hemisphere"
-        caption="Daylesford — old volcanic lakes and pasture in Victoria, Australia"
+        type="Landscape · Himalayan valley"
+        caption="Punakha — river confluence and terraced valley in western Bhutan, ~1,200 m"
       />
 
       <TwoCol id="why-network" heading="Why a network at all.">
@@ -169,7 +170,7 @@ export default function SanctuaryPage() {
         </p>
         <p className="p1">
           A valley enters Aura when the land says yes and the lineage says yes — not before.
-          There is no roadmap past Daylesford. There is a posture, repeated across climates,
+          There is no roadmap past Punakha. There is a posture, repeated across climates,
           until the land tells us where it would like to be tended next.
         </p>
       </TwoCol>

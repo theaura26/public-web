@@ -764,8 +764,8 @@ function AgentHome() {
         <h3>Aura Munduk — planned</h3>
         <dl><dt>Location</dt><dd>Bali, Indonesia</dd></dl>
 
-        <h3>Aura Daylesford — planned</h3>
-        <dl><dt>Location</dt><dd>Victoria, Australia</dd></dl>
+        <h3>Aura Punakha — planned</h3>
+        <dl><dt>Location</dt><dd>Punakha, Bhutan</dd></dl>
       </section>
 
       <hr />
@@ -912,13 +912,13 @@ const OHARA_S: Sanctuary = {
   bgVideo: '/aura-ohara.mp4',
   bgSrc: '/aura-ohara.jpg',
 }
-const DAYLESFORD: Sanctuary = {
-  name: 'Daylesford',
-  tagline: 'A space for craft and wellbeing',
-  region: 'VICTORIA, AUSTRALIA',
-  coords: '37.34°S · 144.14°E',
-  /* Daylesford ships as a still image only — no MP4 available. */
-  bgSrc: '/aura-daylesford.jpg',
+const PUNAKHA: Sanctuary = {
+  name: 'Punakha',
+  tagline: 'A space for biodiversity, mindfulness and craft',
+  region: 'PUNAKHA, BHUTAN',
+  coords: '27.59°N · 89.88°E',
+  /* Still image only — no MP4 available. */
+  bgSrc: '/aura-bhutan.jpg',
   comingSoon: true,
 }
 const MUNDUK: Sanctuary = {
@@ -1091,7 +1091,7 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
 
       {/* Bottom-anchored meta. For large (Mudigere/Ohara): region/coords pinned
           bottom-left, "Explore Sanctuary" pinned bottom-right — mirrors the
-          aura-hero banner CTA pattern. For 2-col (Munduk/Daylesford): keep the
+          aura-hero banner CTA pattern. For 2-col (Munduk/Punakha): keep the
           centered stack — those panels aren't clickable, just announce
           "coming soon". */}
       {large ? (
@@ -2034,7 +2034,7 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
         <div className="sanctuary-stack__spacer" style={{ height: '100vh' }} aria-hidden />
         <SanctuaryStackPanel s={OHARA_S} z={2} onClick={openOhara} />
         <div className="sanctuary-stack__spacer sanctuary-stack__post-ohara" style={{ height: '100vh' }} aria-hidden />
-        <SanctuaryStackPanel2Col left={MUNDUK} right={DAYLESFORD} z={3} />
+        <SanctuaryStackPanel2Col left={MUNDUK} right={PUNAKHA} z={3} />
         <div className="sanctuary-stack__trailing" style={{ height: '100vh' }} aria-hidden />
       </div>
 
@@ -2120,8 +2120,8 @@ function AgentHomeView() {
       <h3>Munduk — Mountain sanctuary for restoration</h3>
       <p>Bali, Indonesia · 8.27°S · 115.06°E · Coming soon. The ecosystem grows when the land says it&rsquo;s ready.</p>
 
-      <h3>Daylesford — A space for craft and wellbeing</h3>
-      <p>Victoria, Australia · 37.34°S · 144.14°E · Coming soon.</p>
+      <h3>Punakha — A space for biodiversity, mindfulness and craft</h3>
+      <p>Punakha, Bhutan · 27.59°N · 89.88°E · Coming soon.</p>
 
       <hr />
 

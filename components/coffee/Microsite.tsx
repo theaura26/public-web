@@ -433,12 +433,14 @@ export function Panel({
         .is-c .p-in { text-align: center; }
 
 
+        /* Interior panels sit a clear step below the page opener —
+           the hero is the only thing at display scale. */
         .p-h {
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 400;
-          font-size: clamp(38px, 5.6vw, 82px);
-          line-height: 1.02; letter-spacing: -0.045em;
-          color: #fff; margin: 0; max-width: 18ch;
+          font-size: clamp(28px, 3.6vw, 54px);
+          line-height: 1.08; letter-spacing: -0.035em;
+          color: #fff; margin: 0; max-width: 22ch;
         }
         /* The page opener wears the site's uppercase H1 display role —
            inherited from globals; only the ground colour is local. */

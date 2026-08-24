@@ -6,7 +6,7 @@ export const metadata: Metadata = {
      produced 'Sanctuary — Aura — Aura' in the rendered <title>. */
   title: 'Sanctuary',
   description:
-    'Aura Sanctuary — the land in rhythm. A 1000-year regenerative ecosystem across Mudigere, Ohara, and coming valleys in Munduk and Daylesford.',
+    'Aura Sanctuary — the land in rhythm. A 1000-year regenerative ecosystem across Mudigere, Ohara, and coming valleys in Munduk and Punakha.',
   alternates: { canonical: '/sanctuary' },
   openGraph: {
     type: 'article',

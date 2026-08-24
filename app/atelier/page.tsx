@@ -21,7 +21,7 @@ import { StudioPillarMedia } from '@/components/StudioPillarMedia'
 
 /* SEO + GEO metadata.
    - Title leads with the brand, then the page, so search snippets show
-     "Studios — Aura" rather than the generic "Studios".
+     "Atelier — Aura" rather than the generic "Atelier".
    - Description names the three studios and grounds them in the
      locations (Mudigere, Karnataka and Ohara, Kyoto) for geographic
      intent — searchers looking for "regenerative design studio Karnataka"
@@ -33,8 +33,8 @@ import { StudioPillarMedia } from '@/components/StudioPillarMedia'
 export const metadata = {
   /* `title` is a plain string here on purpose: the root layout's
      metadata.title.template ('%s — Aura') wraps it. Set title to
-     'Studios' so the rendered <title> becomes 'Studios — Aura' —
-     repeating 'Aura' here would produce 'Studios — Aura — Aura'. */
+     'Atelier' so the rendered <title> becomes 'Atelier — Aura' —
+     repeating 'Aura' here would produce 'Atelier — Aura — Aura'. */
   title: 'Atelier',
   description:
     'Origin, Engine, Hospitality. Three studios applying Natural Intelligence to story, systems, and place — built on regenerative land in Mudigere, Karnataka and Ohara, Kyoto. For monastic polymaths and crazy misfits.',
@@ -167,7 +167,7 @@ export default function StudiosPage() {
           <source src="/aura-studios/aura-studios.mp4" type="video/mp4" />
         </video>
         <p className="label journal-hero__caption">
-          Studios — where natural intelligence meets craft
+          Natural intelligence meets craft
         </p>
       </div>
 

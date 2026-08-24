@@ -48,8 +48,12 @@ const nextConfig: NextConfig = {
      too. The path is deliberately NOT disallowed in robots.txt — a blocked
      crawler can't read the noindex, which is what actually keeps it out. */
   async headers() {
+    const isPreview = process.env.VERCEL_ENV === 'preview';
     return [
       { source: '/signature/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }] },
+      /* Staging / PR preview deployments are for internal review only.
+         Apply noindex site-wide so they never appear in search results. */
+      ...(isPreview ? [{ source: '/(.*)', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }] : []),
     ]
   },
 };

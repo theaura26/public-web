@@ -153,7 +153,7 @@ export default function AgentReason() {
         <p>150 acres. 3,600 feet. UNESCO biodiversity zone. Coffee, tea, pepper, areca.</p>
         <p><W>Ohara, Kyoto, Japan.</W></p>
         <p>Two properties. Japanese garden. Teahouse. Caf&eacute; on the river. Studios.</p>
-        <p><W>Munduk, Bali. Daylesford, Australia.</W></p>
+        <p><W>Munduk, Bali. Punakha, Bhutan.</W></p>
         <p>The ecosystem grows when the land says it&apos;s ready.</p>
       </Chapter>
 

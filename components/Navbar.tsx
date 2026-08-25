@@ -975,7 +975,7 @@ export default function Navbar() {
           :global(.mg-btn-link) {
             font-family: var(--font-grotesque), sans-serif;
             font-weight: 600;
-            font-size: clamp(21px, 2.4vw, 28px);
+            font-size: clamp(24px, 2.9vw, 34px);
             line-height: 1.1; letter-spacing: -0.035em;
             color: var(--contrast-text);
             text-decoration: none; display: block;
@@ -989,7 +989,7 @@ export default function Navbar() {
             padding: 12px 0; width: 100%;
             font-family: var(--font-grotesque), sans-serif;
             font-weight: 600;
-            font-size: clamp(21px, 2.4vw, 28px);
+            font-size: clamp(24px, 2.9vw, 34px);
             line-height: 1.1; letter-spacing: -0.035em;
             color: var(--contrast-text);
             text-align: left; cursor: pointer;
@@ -1001,10 +1001,12 @@ export default function Navbar() {
             outline: 2px solid var(--brand-accent); outline-offset: 3px;
           }
           @media (max-width: 900px) {
-            .mg-btn, :global(.mg-btn-link), .mg-live { font-size: 20px; }
+            .mg-btn, :global(.mg-btn-link), .mg-live { font-size: 24px; }
+            :global(.mg-item) { font-size: 12px; }
           }
           @media (max-width: 600px) {
-            .mg-btn, :global(.mg-btn-link), .mg-live { font-size: 18px; }
+            .mg-btn, :global(.mg-btn-link), .mg-live { font-size: 21px; }
+            :global(.mg-item) { font-size: 11px; }
           }
           .mg-note {
             margin-left: 10px;
@@ -1036,6 +1038,8 @@ export default function Navbar() {
             display: flex; flex-direction: column; gap: 8px;
           }
 
+          /* DM Mono, per the type spec: Bricolage carries the groups,
+             mono carries the labels under them. */
           :global(.mg-item) {
             font-family: var(--font-mono), monospace;
             font-size: 12px; letter-spacing: 0.9px; text-transform: uppercase;
@@ -1050,14 +1054,14 @@ export default function Navbar() {
           .mg-sub :global(.mg-item) { font-size: 11px; color: var(--contrast-text-muted); }
           .mg-sub :global(.mg-item:hover) { color: var(--brand-accent); }
 
-          /* Switched off on purpose, versus not built yet. */
-          :global(.mg-item.is-off) {
-            color: var(--contrast-text-muted); opacity: 0.5;
-            cursor: default;
-          }
+          /* Switched off, but not dimmed — these read at full weight
+             like everything else. They simply do not go anywhere yet,
+             which aria-disabled carries for assistive tech. */
+          :global(.mg-item.is-off) { cursor: default; }
           :global(.mg-item.is-soon) { color: var(--contrast-text-muted); cursor: default; }
           .mg-soon {
-            font-size: 9px; letter-spacing: 0.8px;
+            font-family: var(--font-mono), monospace;
+            font-size: 9px; letter-spacing: 0.8px; text-transform: uppercase;
             color: var(--brand-accent);
           }
 
@@ -1072,7 +1076,7 @@ export default function Navbar() {
             display: inline-flex; align-items: center; gap: 12px;
             font-family: var(--font-grotesque), sans-serif;
             font-weight: 600;
-            font-size: clamp(21px, 2.4vw, 28px);
+            font-size: clamp(24px, 2.9vw, 34px);
             line-height: 1.1; letter-spacing: -0.035em;
             color: var(--contrast-text);
             padding: 12px 0;

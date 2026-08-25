@@ -83,30 +83,32 @@ type NavItem = {
   soon?: boolean
   children?: NavItem[]
 }
-type NavGroup = { id: string; label: string; note?: string; items: NavItem[] }
+/** A group is either an accordion (has `items`) or a plain link (has
+ *  `href`). Home is the only link — it has nothing to expand into. */
+type NavGroup = { id: string; label: string; note?: string; href?: string; items?: NavItem[] }
 
 const NAV_GROUPS: NavGroup[] = [
-  { id: 'home', label: 'Home', items: [{ href: '/', label: 'Index' }] },
+  { id: 'home', label: 'Home', href: '/' },
   {
     id: 'shop',
     label: 'Shop',
-    note: 'Mostly soon',
     items: [
       { label: 'Artist Residencies', off: true },
-      {
-        href: '/regenerative-coffee',
-        label: 'Coffee',
-        children: [
-          { href: '/regenerative-coffee', label: 'Regenerative coffee' },
-          { href: '/regenerative-coffee/biodynamic', label: 'Biodynamic' },
-          { href: '/regenerative-coffee/transparency', label: 'Transparency' },
-          { href: '/regenerative-coffee/flavour', label: 'Flavours' },
-          { href: '/regenerative-coffee/experience', label: 'Aura Festival' },
-        ],
-      },
+      { label: 'Coffee', off: true },
       { label: 'Experiences', off: true },
       { label: 'Tea', off: true },
       { label: 'View All', off: true },
+    ],
+  },
+  {
+    id: 'coffee',
+    label: 'Regenerative Coffee',
+    items: [
+      { href: '/regenerative-coffee', label: 'Overview' },
+      { href: '/regenerative-coffee/biodynamic', label: 'Biodynamic' },
+      { href: '/regenerative-coffee/transparency', label: 'Transparency' },
+      { href: '/regenerative-coffee/flavour', label: 'Flavours' },
+      { href: '/regenerative-coffee/experience', label: 'Aura Festival' },
     ],
   },
   {
@@ -144,7 +146,7 @@ const NAV_GROUPS: NavGroup[] = [
 /** The group that owns the current route, so the menu opens where you are. */
 function groupForPath(pathname: string): string {
   for (const g of NAV_GROUPS) {
-    for (const item of g.items) {
+    for (const item of g.items ?? []) {
       const hrefs = [item.href, ...(item.children ?? []).map((c) => c.href)]
       if (hrefs.some((h) => h && h !== '/' && pathname.startsWith(h))) return g.id
     }
@@ -187,7 +189,10 @@ function NavLeaf({
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
-  /** Which accordion group is open. One at a time, like the reference. */
+  /* Which accordion group is open — one at a time. `null` means the
+     reader has not chosen, so the menu follows the route and opens
+     where they already are; `''` means they closed them all. Derived
+     rather than written in an effect, which would cascade a render. */
   const [openGroup, setOpenGroup] = useState<string | null>(null)
   /* Inline contact modal — opened by the /mudigere "Contact
      us" nav link instead of routing to /contact, so the architect
@@ -260,9 +265,6 @@ export default function Navbar() {
     if (menuOpen) {
       const prev = document.body.style.overflow
       document.body.style.overflow = 'hidden'
-      /* Open where the reader already is, so the menu answers "where am
-         I" before they touch anything. */
-      setOpenGroup(groupForPath(pathname))
       return () => { document.body.style.overflow = prev }
     }
   }, [menuOpen])
@@ -729,7 +731,23 @@ export default function Navbar() {
         <aside className="menu-left">
           <nav className="mg" aria-label="Main">
             {NAV_GROUPS.map((g) => {
-              const open = openGroup === g.id
+              /* A group with no items is a destination, not an accordion. */
+              if (!g.items) {
+                return (
+                  <div className="mg-grp" key={g.id}>
+                    <Link
+                      href={g.href ?? '/'}
+                      onClick={() => setMenuOpen(false)}
+                      className="mg-btn mg-btn-link"
+                      data-attr={`menu-link:${g.href}`}
+                    >
+                      {g.label}
+                    </Link>
+                  </div>
+                )
+              }
+
+              const open = (openGroup ?? groupForPath(pathname)) === g.id
               return (
                 <div className="mg-grp" data-open={open} key={g.id}>
                   <button
@@ -737,9 +755,8 @@ export default function Navbar() {
                     className="mg-btn"
                     aria-expanded={open}
                     aria-controls={`mg-${g.id}`}
-                    onClick={() => setOpenGroup(open ? null : g.id)}
+                    onClick={() => setOpenGroup(open ? '' : g.id)}
                   >
-                    <span className="mg-rule" aria-hidden />
                     {g.label}
                     {g.note && <span className="mg-note">{g.note}</span>}
                   </button>
@@ -938,6 +955,18 @@ export default function Navbar() {
           .mg { display: flex; flex-direction: column; }
           .mg-grp { display: flex; flex-direction: column; }
 
+          :global(.mg-btn-link) {
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 600;
+            font-size: clamp(21px, 2.4vw, 28px);
+            line-height: 1.1; letter-spacing: -0.035em;
+            color: var(--contrast-text);
+            text-decoration: none; display: block;
+            padding: 12px 0;
+            transition: color var(--dur-base) var(--ease);
+          }
+          :global(.mg-btn-link:hover) { color: var(--brand-accent); }
+
           .mg-btn {
             appearance: none; background: none; border: 0;
             padding: 12px 0; width: 100%;
@@ -962,14 +991,6 @@ export default function Navbar() {
             /* wraps to its own line rather than clipping the group name */
             flex: 0 0 auto;
           }
-
-          .mg-rule {
-            display: block; height: 2px; background: currentColor;
-            width: 0; margin-right: 0; flex: none;
-            transition: width var(--dur-slow) var(--ease-out),
-                        margin-right var(--dur-slow) var(--ease-out);
-          }
-          .mg-grp[data-open='true'] .mg-rule { width: 34px; margin-right: 14px; }
 
           .mg-panel {
             display: grid; grid-template-rows: 0fr;
@@ -1004,7 +1025,6 @@ export default function Navbar() {
           /* Switched off on purpose, versus not built yet. */
           :global(.mg-item.is-off) {
             color: var(--contrast-text-muted); opacity: 0.5;
-            text-decoration: line-through; text-decoration-thickness: 1px;
             cursor: default;
           }
           :global(.mg-item.is-soon) { color: var(--contrast-text-muted); cursor: default; }
@@ -1034,7 +1054,7 @@ export default function Navbar() {
           }
           @media (prefers-reduced-motion: reduce) {
             .mg-dot { animation: none; }
-            .mg-rule, .mg-panel { transition: none; }
+            .mg-panel { transition: none; }
           }
 
           :global(.menu-link) {

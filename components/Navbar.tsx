@@ -182,11 +182,24 @@ function NavLeaf({
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  /* True only on a device that really hovers. Touch browsers
+     synthesise mouseenter on tap, which would open a group on the same
+     gesture that is trying to close one. */
+  const canHoverRef = useRef(false)
+  /* Hover intent: sweeping the cursor down the list must not flick
+     three panels open on the way past. */
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
   /* Which accordion group is open — one at a time. `null` means the
      reader has not chosen, so the menu follows the route and opens
      where they already are; `''` means they closed them all. Derived
      rather than written in an effect, which would cascade a render. */
   const [openGroup, setOpenGroup] = useState<string | null>(null)
+
+  useEffect(() => {
+    canHoverRef.current = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    return () => { if (hoverTimer.current) clearTimeout(hoverTimer.current) }
+  }, [])
   /* Inline contact modal — opened by the /mudigere "Contact
      us" nav link instead of routing to /contact, so the architect
      stays on the briefing page while writing. */
@@ -748,7 +761,18 @@ export default function Navbar() {
                     className="mg-btn"
                     aria-expanded={open}
                     aria-controls={`mg-${g.id}`}
-                    onClick={() => setOpenGroup(open ? '' : g.id)}
+                    onClick={() => {
+                      if (hoverTimer.current) clearTimeout(hoverTimer.current)
+                      setOpenGroup(open ? '' : g.id)
+                    }}
+                    onMouseEnter={() => {
+                      if (!canHoverRef.current || open) return
+                      if (hoverTimer.current) clearTimeout(hoverTimer.current)
+                      hoverTimer.current = setTimeout(() => setOpenGroup(g.id), 110)
+                    }}
+                    onMouseLeave={() => {
+                      if (hoverTimer.current) clearTimeout(hoverTimer.current)
+                    }}
                   >
                     {g.label}
                     {g.note && <span className="mg-note">{g.note}</span>}

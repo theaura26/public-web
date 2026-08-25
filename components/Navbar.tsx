@@ -1279,19 +1279,18 @@ export default function Navbar() {
             transform: translate(-50%, -50%);
             z-index: 11;
             font-family: var(--font-mono);
-            font-size: 11px;
+            font-size: 9.5px;
             font-weight: 400;
-            letter-spacing: 1px;
+            letter-spacing: 0.9px;
             text-transform: uppercase;
             color: var(--contrast-text);
-            /* Wraps rather than spilling out of a narrow tile — the
-               small tiles lost width when the nav column gained it. */
-            white-space: normal;
+            /* One line. Sized to fit the narrow tiles rather than
+               wrapping inside them. */
+            white-space: nowrap;
             text-align: center;
-            line-height: 1.35;
             max-width: calc(100% - 12px);
             pointer-events: none;
-            padding: 6px 10px;
+            padding: 5px 9px;
             background: color-mix(in oklab, var(--contrast-bg) 70%, transparent);
             border-radius: 2px;
           }

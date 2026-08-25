@@ -1281,10 +1281,15 @@ export default function Navbar() {
             font-family: var(--font-mono);
             font-size: 11px;
             font-weight: 400;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             color: var(--contrast-text);
-            white-space: nowrap;
+            /* Wraps rather than spilling out of a narrow tile — the
+               small tiles lost width when the nav column gained it. */
+            white-space: normal;
+            text-align: center;
+            line-height: 1.35;
+            max-width: calc(100% - 12px);
             pointer-events: none;
             padding: 6px 10px;
             background: color-mix(in oklab, var(--contrast-bg) 70%, transparent);
@@ -1375,7 +1380,7 @@ export default function Navbar() {
           .menu-right {
             position: absolute;
             top: 0;
-            left: calc(var(--gutter) + 345px + clamp(48px, 6vw, 120px));
+            left: calc(var(--gutter) + 345px + clamp(32px, 4vw, 80px));
             right: var(--gutter);
             bottom: 0;
             overflow-y: auto;
@@ -1481,7 +1486,7 @@ export default function Navbar() {
             /* Right tile feed — scrolls; pushed further right for breathing room */
             .menu-right {
               top: 0;
-              left: calc(260px + 24px + 120px);
+              left: calc(260px + 24px + 72px);
               right: 24px;
               bottom: 0;
               padding: 88px 0 80px;

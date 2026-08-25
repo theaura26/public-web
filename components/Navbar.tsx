@@ -127,11 +127,11 @@ const NAV_GROUPS: NavGroup[] = [
     label: 'About',
     items: [
       { href: '/atelier', label: 'Atelier' },
-      { href: '/contact', label: 'Contact Us' },
-      { href: '/brand', label: 'Our Brand' },
       { href: '/reason', label: 'The Reason' },
-      { href: '/mudigere', label: 'Mudigere' },
+      { href: '/brand', label: 'Our Brand' },
       { href: '/ohara', label: 'Ohara' },
+      { href: '/mudigere', label: 'Mudigere' },
+      { href: '/contact', label: 'Contact Us' },
     ],
   },
 ]

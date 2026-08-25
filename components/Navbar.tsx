@@ -130,7 +130,6 @@ const NAV_GROUPS: NavGroup[] = [
       { href: '/contact', label: 'Contact Us' },
       { href: '/brand', label: 'Our Brand' },
       { href: '/reason', label: 'The Reason' },
-      { label: 'Live Feed', soon: true },
     ],
   },
   {

@@ -79,8 +79,8 @@ const ARTICLES: Article[] = [
 type NavItem = {
   href?: string
   label: string
+  /** Deliberately switched off, as Shop is until there is stock. */
   off?: boolean
-  soon?: boolean
   children?: NavItem[]
 }
 /** A group is either an accordion (has `items`) or a plain link (has
@@ -105,7 +105,7 @@ const NAV_GROUPS: NavGroup[] = [
     label: 'Regenerative Coffee',
     items: [
       { href: '/regenerative-coffee', label: 'Remarkable Circle' },
-      { href: '/regenerative-coffee/biodynamic', label: 'Biodynamic' },
+      { href: '/regenerative-coffee/biodynamic', label: 'Better Ground' },
       { href: '/regenerative-coffee/transparency', label: 'Transparency' },
       { href: '/regenerative-coffee/flavour', label: 'Flavours' },
       { href: '/regenerative-coffee/experience', label: 'Aura Festival' },
@@ -159,11 +159,10 @@ function NavLeaf({
   onGo: () => void
   pathname: string
 }) {
-  if (!item.href || item.off || item.soon) {
+  if (!item.href || item.off) {
     return (
-      <span className={`mg-item ${item.off ? 'is-off' : ''} ${item.soon ? 'is-soon' : ''}`} aria-disabled>
+      <span className={`mg-item ${item.off ? 'is-off' : ''}`} aria-disabled>
         {item.label}
-        {item.soon && <span className="mg-soon">Soon</span>}
       </span>
     )
   }
@@ -200,6 +199,17 @@ export default function Navbar() {
     canHoverRef.current = window.matchMedia('(hover: hover) and (pointer: fine)').matches
     return () => { if (hoverTimer.current) clearTimeout(hoverTimer.current) }
   }, [])
+
+  /* Hovering an entry that has nothing to open still closes what is
+     open — on the same intent delay, so sweeping past does nothing. */
+  const cancelHover = () => {
+    if (hoverTimer.current) clearTimeout(hoverTimer.current)
+  }
+  const hoverCollapse = () => {
+    if (!canHoverRef.current) return
+    cancelHover()
+    hoverTimer.current = setTimeout(() => setOpenGroup(''), 110)
+  }
   /* Inline contact modal — opened by the /mudigere "Contact
      us" nav link instead of routing to /contact, so the architect
      stays on the briefing page while writing. */
@@ -737,13 +747,17 @@ export default function Navbar() {
         <aside className="menu-left">
           <nav className="mg" aria-label="Main">
             {NAV_GROUPS.map((g) => {
-              /* A group with no items is a destination, not an accordion. */
+              /* A group with no items is a destination, not an accordion.
+                 It still collapses whatever is open — hovering it means
+                 the reader has moved on from that panel. */
               if (!g.items) {
                 return (
                   <div className="mg-grp" key={g.id}>
                     <Link
                       href={g.href ?? '/'}
                       onClick={() => setMenuOpen(false)}
+                      onMouseEnter={hoverCollapse}
+                      onMouseLeave={cancelHover}
                       className="mg-btn mg-btn-link"
                       data-attr={`menu-link:${g.href}`}
                     >
@@ -804,7 +818,11 @@ export default function Navbar() {
           </nav>
 
           {/* Always visible, under the groups. */}
-          <span className="mg-live">
+          <span
+            className="mg-live"
+            onMouseEnter={hoverCollapse}
+            onMouseLeave={cancelHover}
+          >
             Live
             <span className="mg-dot" aria-hidden />
           </span>
@@ -1058,12 +1076,6 @@ export default function Navbar() {
              like everything else. They simply do not go anywhere yet,
              which aria-disabled carries for assistive tech. */
           :global(.mg-item.is-off) { cursor: default; }
-          :global(.mg-item.is-soon) { color: var(--contrast-text-muted); cursor: default; }
-          .mg-soon {
-            font-family: var(--font-mono), monospace;
-            font-size: 9px; letter-spacing: 0.8px; text-transform: uppercase;
-            color: var(--brand-accent);
-          }
 
           /* ── live ──────────────────────────────────────────────
              Sits in the same stack as the groups and is set like them,
@@ -1367,7 +1379,7 @@ export default function Navbar() {
             /* The panel logo is hidden at this width, so nothing sits
                above the nav but the close button — it can start higher
                than the marquee line it used to align to. */
-            top: 40px;
+            top: 20px;
             left: var(--gutter);          /* aligned with the panel's own gutter */
             bottom: 210px;                /* clears the utility icon stack */
             width: 345px;
@@ -1386,9 +1398,11 @@ export default function Navbar() {
             right: var(--gutter);
             bottom: 0;
             overflow-y: auto;
-            /* Not as high as the nav: the close button sits over this
-               column's right edge. */
-            padding: 64px 0 60px;
+            /* 32px lines the first tile's top edge up with Home's text
+               in the nav — the column's 20px offset plus the 12px
+               padding on a group. Tiles are left-aligned in this
+               column, so the close button at the far right is clear. */
+            padding: 32px 0 60px;
             box-sizing: border-box;
             /* Hide native scrollbar — the journal feed scrolls silently
                so the cards do all the visual work. */

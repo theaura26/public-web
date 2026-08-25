@@ -69,7 +69,7 @@ export const ACTIVE_JOURNALS: Journal[] = [
   },
   {
     href: '/coffee',
-    title: 'Our Coffee Story',
+    title: 'Our bean story',
     description: 'Six lots, one harvest. The same Arabica, six fermentation methods, six cups.',
     img: '/journals/coffee/aura-our-coffee-story.jpg',
   },
@@ -93,7 +93,7 @@ export const ACTIVE_JOURNALS: Journal[] = [
   },
   {
     href: '/biodynamic',
-    title: 'Biodynamic',
+    title: 'A living organism',
     description: 'A worldview, worked as method. BD 500–508, Jeevamrit, Panchgavya — the herd as engine.',
     img: '/journals/biodynamic/aura-biodynamic.jpg',
   },

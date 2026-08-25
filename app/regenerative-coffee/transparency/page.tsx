@@ -21,7 +21,7 @@ export default function TransparencyPage() {
         hero
         align="centre"
         title="Sensors and hands, one record."
-        lede="Machines take their own readings. People sign theirs. Neither half is the system on its own."
+        lede="Machines take their own readings. People sign theirs. The record is both halves together."
       />
 
       <Scene>

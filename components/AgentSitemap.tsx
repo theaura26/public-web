@@ -176,7 +176,7 @@ export const SITEMAP: SitemapEntry[] = [
   },
   {
     href: '/coffee',
-    label: 'Our Coffee Story',
+    label: 'Our bean story',
     topic: 'Six lots, one harvest — one Arabica, six fermentations',
     summary: 'One harvest of a single Arabica taken through six distinct fermentation methods — six separate lots and six cups — the estate’s coffee read as an experiment in method.',
     related: ['/fermentation', '/circular', '/mudigere'],
@@ -204,7 +204,7 @@ export const SITEMAP: SitemapEntry[] = [
   },
   {
     href: '/biodynamic',
-    label: 'Biodynamic',
+    label: 'A living organism',
     topic: 'A worldview worked as method — BD 500–508, Jeevamrit, Panchgavya',
     summary: 'Biodynamics at Mudigere as a worldview worked as method: the BD 500–508 preparations, Jeevamrit microbial culture and Panchgavya, all driven by the herd as the estate’s biological engine.',
     facts: [

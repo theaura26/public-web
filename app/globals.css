@@ -956,6 +956,116 @@ p.journal-hero__caption {
   width: auto !important;
 }
 
+/* ── Field Notes, agent view ───────────────────────────────────────
+   The View All page is a set of sideways-scrolling lanes and the
+   category pages are image-led rows. Neither survives being flattened
+   to plain text, so the rails become lists and the plates — which are
+   decoration once the photograph is gone — are dropped entirely. */
+[data-view="agent"] main :is(.sw, .fn, .lane, .lane-bar, .lane-scroll, .lane-track,
+  .lane-card, .fn-list, .fn-row, .fn-item, .fn-text, .fn-head, .sw-head, .fn-filters) {
+  display: block !important;
+  width: auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  max-width: none !important;
+}
+[data-view="agent"] main :is(.lane-plate, .fn-plate) { display: none !important; }
+[data-view="agent"] main :is(.lane, .fn-row) { padding: 8px 0 !important; }
+/* The filter row stays a row — it is a list of links, and reads fine. */
+[data-view="agent"] main .fn-filter { display: inline !important; margin-right: 12px !important; }
+
+/* ── Coffee microsite, agent view ──────────────────────────────────
+   The microsite is built out of viewport-tall panels: every Scene,
+   Panel, Chapter, Banner and the Remarkable Circle header each claim
+   100svh so the reader arrives at one idea at a time. Stripped of
+   their photography that becomes screen after screen of white space
+   with a sentence in it, so collapse the lot to their content height
+   and let the document read straight through.
+
+   Same treatment as .hero-section, .sanctuary-panel and .story2 above
+   — the microsite simply had none. */
+[data-view="agent"] main :is(
+  .rc, .rc-inner, .p, .sc, .ch, .bn, .rb, .ld, .cl, .pg, .xb,
+  .gl, .ix, .pr, .nb, .lots, .bx,
+  .m-hero, .m-next, .m-pillar, .m-say, .m-cards, .m-intro, .m-stats
+) {
+  display: block !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 12px 0 !important;
+  overflow: visible !important;
+}
+
+/* Every measure in here is set for a display face — 16ch on a Scene
+   heading, 22ch on a Panel. At one mono size those turn headings into
+   four-word ladders, so the whole microsite reads at full width. */
+[data-view="agent"] main :is(
+  .rc, .p, .sc, .ch, .bn, .rb, .ld, .cl, .pg, .xb,
+  .gl, .ix, .pr, .nb, .lots, .bx,
+  .m-hero, .m-next, .m-pillar, .m-say, .m-cards, .m-intro, .m-stats
+) * {
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* The decorative furniture: the turning ring and its strings, the loop
+   diagram's circle, the scrims that darken photography, and every empty
+   plate waiting on a picture. None of it carries meaning as plain text. */
+[data-view="agent"] main :is(
+  .rc-ring, .rc-orbit, .sc-bg, .sc-scrim, .p-bg, .p-scrim,
+  .ld-circle, .bn-m, .m-pillar-media, .m-next-m
+) {
+  display: none !important;
+}
+
+/* The circle's own layout: eight glyphs pinned around an orbit, each
+   counter-rotating. Flattened to static they would still be sized off
+   an aspect-ratio square, so the header would keep a viewport of dead
+   air above its first line. Collapse the stage and let the eight
+   labels read as the list of disciplines they are. */
+[data-view="agent"] main :is(
+  .rc-stage, .rc-spin, .rc-slot, .rc-counter, .rc-centre, .rc-item
+) {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  aspect-ratio: auto !important;
+}
+[data-view="agent"] main .rc-label { display: inline !important; }
+/* The season chip's two lines are flex children; as plain text they
+   need their own lines or they run together ("SeptemberFully booked"). */
+[data-view="agent"] main :is(.vm-w-n, .vm-w-f) { display: block !important; }
+/* The heading's hard break is a display decision — one line in the
+   markdown document. */
+[data-view="agent"] main .rc-br { display: none !important; }
+/* Decorative — the glyphs carry no meaning in the plain-text document. */
+[data-view="agent"] main .glyph { display: none !important; }
+/* The programme's time of day is an icon; the word beside it is hidden
+   for sighted readers. Swap them back for the plain-text document. */
+[data-view="agent"] main .pg-time svg { display: none !important; }
+[data-view="agent"] main .pg-time-t {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  clip-path: none !important;
+  overflow: visible !important;
+}
+
+/* Multi-column blocks read top-to-bottom instead of across: the
+   three-day programme, the season chips, the lot cards, the banners. */
+[data-view="agent"] main :is(
+  .pg-t, .pg-day, .vm-seg, .vm-w, .vm-step, .vm-step-c, .lots-g, .bn-in
+) {
+  display: block !important;
+  grid-template-columns: 1fr !important;
+  grid-template-rows: none !important;
+}
+
 /* Agent mode: hide every <img> entirely — the previous dashed alt-text
    placeholder was visual noise. The wordmark, hero film, brand slide
    stills, journal thumbnails, etc. all disappear; the alt text is

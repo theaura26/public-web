@@ -87,8 +87,8 @@ export default function FermentationPage() {
         </DataGrid>
         <p className="p1">
           Six methods, one cherry. The full lot-by-lot file — yields, immature
-          counts, drying timelines, cupping notes — lives on the{' '}
-          <a href="/coffee">Our Coffee Story</a> page.
+          counts, drying timelines, cupping notes — lives in{' '}
+          <a href="/coffee">Our bean story</a>.
         </p>
       </TwoCol>
 

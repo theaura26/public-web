@@ -1,0 +1,198 @@
+'use client'
+
+import Link from 'next/link'
+import { CATEGORIES, type CategoryId, type NoteEntry } from '@/lib/field-notes'
+
+/* ── Field Notes listing ──────────────────────────────────────────
+   Used by the index and by each category page. Rows rather than a
+   card grid: these are essays, and a row gives the description room
+   to do its job.
+
+   A commissioned-but-unwritten note renders on a flat grey plate and
+   is not a link — same treatment as the menu feed, so the two agree.
+*/
+
+export function NoteIndex({
+  eyebrow,
+  title,
+  lede,
+  active,
+  notes,
+}: {
+  eyebrow: string
+  title: string
+  lede: string
+  /** Highlights the current category in the filter row. */
+  active?: CategoryId | 'all'
+  notes: NoteEntry[]
+}) {
+  return (
+    <main className="fn">
+      <div className="section-w">
+        <header className="fn-head">
+          <p className="label fn-eyebrow">{eyebrow}</p>
+          <h1 className="fn-h">{title}</h1>
+          <p className="fn-lede">{lede}</p>
+        </header>
+
+        <nav className="fn-filters" aria-label="Field Notes categories">
+          <Link
+            href="/field-notes"
+            className={`fn-filter ${active === 'all' ? 'is-on' : ''}`}
+            aria-current={active === 'all' ? 'page' : undefined}
+          >
+            All
+          </Link>
+          {CATEGORIES.map((c) => (
+            <Link
+              key={c.id}
+              href={`/field-notes/${c.id}`}
+              className={`fn-filter ${active === c.id ? 'is-on' : ''}`}
+              aria-current={active === c.id ? 'page' : undefined}
+            >
+              {c.label}
+            </Link>
+          ))}
+        </nav>
+
+        <ul className="fn-list">
+          {notes.map((n) => {
+            const inner = (
+              <>
+                <span className="fn-plate" data-noimg={n.img ? undefined : 'true'} aria-hidden>
+                  {n.img ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={n.img} alt="" loading="lazy" decoding="async" />
+                  ) : null}
+                  {n.status === 'soon' && <span className="fn-soon">Coming soon</span>}
+                </span>
+                <span className="fn-text">
+                  <span className="fn-t">{n.title}</span>
+                  <span className="fn-d">{n.description}</span>
+                  {n.from && <span className="fn-from">In {n.from}</span>}
+                </span>
+              </>
+            )
+            return (
+              <li key={n.href} className="fn-row">
+                {n.status === 'soon' ? (
+                  <span className="fn-item is-soon" aria-disabled>{inner}</span>
+                ) : (
+                  <Link href={n.href} className="fn-item">{inner}</Link>
+                )}
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+
+      <style jsx global>{`
+        /* Global, not scoped: styled-jsx cannot put its scope class on a
+           <Link>, and the rows and filters are Links. Every selector is
+           nested under .fn by hand so nothing escapes this page. */
+        .fn {
+          background: var(--bg); color: var(--text);
+          padding: calc(var(--nav-h) + var(--space-9)) 0 var(--section-gap);
+          min-height: 100svh;
+        }
+        .fn .fn-head { display: flex; flex-direction: column; gap: var(--space-5); }
+        .fn .fn-eyebrow { margin: 0; }
+        .fn .fn-h {
+          font-family: var(--font-grotesque), sans-serif;
+          font-weight: 600; text-transform: uppercase;
+          font-size: clamp(40px, 8vw, 82px);
+          line-height: 1.02; letter-spacing: -0.06em;
+          margin: 0; max-width: 14ch; text-wrap: balance;
+        }
+        .fn .fn-lede {
+          font-size: clamp(17px, 1.7vw, 21px); line-height: 1.6;
+          color: var(--text-body); margin: 0; max-width: 52ch;
+        }
+
+        /* ── category filters ── */
+        .fn .fn-filters {
+          display: flex; flex-wrap: wrap; gap: 10px;
+          margin: clamp(48px, 7vh, 80px) 0 clamp(32px, 5vh, 56px);
+          padding-bottom: var(--space-6);
+          border-bottom: 1px solid var(--border);
+        }
+        .fn .fn-filter {
+          font-family: var(--font-mono), monospace;
+          font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+          color: var(--text-muted); text-decoration: none;
+          padding: 7px 14px; border: 1px solid var(--border);
+          border-radius: 999px;
+          transition: color var(--dur-base) var(--ease),
+                      border-color var(--dur-base) var(--ease);
+        }
+        .fn .fn-filter:hover { color: var(--text); border-color: var(--border-strong); }
+        .fn .fn-filter.is-on { color: var(--brand-accent); border-color: var(--brand-accent); }
+
+        /* ── the rows ── */
+        .fn .fn-list { list-style: none; margin: 0; padding: 0; }
+        .fn .fn-row { border-bottom: 1px solid var(--border); }
+        .fn .fn-item {
+          display: grid;
+          grid-template-columns: clamp(120px, 18vw, 200px) 1fr;
+          gap: clamp(20px, 3vw, 40px);
+          align-items: baseline;
+          padding: clamp(22px, 3vh, 34px) 0;
+          text-decoration: none; color: inherit;
+        }
+        .fn .fn-item.is-soon { cursor: default; }
+
+        .fn .fn-plate {
+          position: relative; display: block;
+          aspect-ratio: 16 / 9; overflow: hidden;
+          border-radius: var(--radius-1);
+          background: var(--bg-card);
+          /* baseline alignment is the house rule, but a plate has no
+             baseline of its own — nudge it onto the first text line */
+          align-self: start; margin-top: 4px;
+        }
+        .fn .fn-plate img {
+          width: 100%; height: 100%; object-fit: cover; display: block;
+          transition: transform var(--dur-slow) var(--ease-out);
+        }
+        .fn .fn-item:hover .fn-plate img { transform: scale(1.04); }
+        .fn .fn-plate[data-noimg='true'] { background: var(--text-muted); opacity: 0.16; }
+        .fn .fn-item.is-soon .fn-plate { background: var(--text-muted); opacity: 0.18; }
+        .fn .fn-soon {
+          position: absolute; inset: 0;
+          display: grid; place-items: center;
+          font-family: var(--font-mono), monospace;
+          font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase;
+          color: var(--bg);
+        }
+
+        .fn .fn-text { display: flex; flex-direction: column; gap: var(--space-3); }
+        .fn .fn-t {
+          font-family: var(--font-grotesque), sans-serif; font-weight: 400;
+          font-size: clamp(22px, 2.6vw, 34px);
+          line-height: 1.1; letter-spacing: -0.03em;
+          color: var(--text);
+          transition: color var(--dur-base) var(--ease);
+        }
+        .fn .fn-item:hover .fn-t { color: var(--brand-accent); }
+        .fn .fn-item.is-soon .fn-t { color: var(--text-muted); }
+        .fn .fn-d {
+          font-size: clamp(14px, 1.3vw, 17px); line-height: 1.6;
+          color: var(--text-body); max-width: 56ch; text-wrap: pretty;
+        }
+        .fn .fn-from {
+          font-family: var(--font-mono), monospace;
+          font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+          color: var(--text-muted);
+        }
+
+        @media (max-width: 640px) {
+          .fn .fn-item { grid-template-columns: 1fr; gap: var(--space-4); }
+          .fn .fn-plate { max-width: 220px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .fn .fn-plate img { transition: none; }
+        }
+      `}</style>
+    </main>
+  )
+}

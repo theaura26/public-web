@@ -1367,7 +1367,7 @@ export default function Navbar() {
             /* The panel logo is hidden at this width, so nothing sits
                above the nav but the close button — it can start higher
                than the marquee line it used to align to. */
-            top: 76px;
+            top: 40px;
             left: var(--gutter);          /* aligned with the panel's own gutter */
             bottom: 210px;                /* clears the utility icon stack */
             width: 345px;
@@ -1386,7 +1386,9 @@ export default function Navbar() {
             right: var(--gutter);
             bottom: 0;
             overflow-y: auto;
-            padding: 76px 0 60px;
+            /* Not as high as the nav: the close button sits over this
+               column's right edge. */
+            padding: 64px 0 60px;
             box-sizing: border-box;
             /* Hide native scrollbar — the journal feed scrolls silently
                so the cards do all the visual work. */

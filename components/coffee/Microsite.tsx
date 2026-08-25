@@ -52,8 +52,8 @@ function Media({
 
 const NAV = [
   { href: '/regenerative-coffee', label: 'Remarkable Circle' },
-  { href: '/regenerative-coffee/biodynamic', label: 'Biodynamic' },
-  { href: '/regenerative-coffee/transparency', label: 'Transparent' },
+  { href: '/regenerative-coffee/biodynamic', label: 'Better Ground' },
+  { href: '/regenerative-coffee/transparency', label: 'Transparency' },
   { href: '/regenerative-coffee/flavour', label: 'Flavours' },
 ]
 
@@ -1264,7 +1264,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     biodynamic: {
       title: 'Grown in a closed loop.',
       sub: 'The herd feeds the soil. The soil feeds the trees. Nothing is bought in.',
-      cta: 'Explore biodynamic',
+      cta: 'Better Ground',
     },
     transparency: {
       title: 'Written down as it happens.',
@@ -1303,7 +1303,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     biodynamic: {
       title: 'What the record is recording.',
       sub: 'Fifty-two cattle, fourteen numbered pits, and a canopy cut to a light reading instead of a feeling.',
-      cta: 'Explore biodynamic',
+      cta: 'Better Ground',
     },
     hub: {
       title: 'Nine ways of paying attention.',
@@ -1315,7 +1315,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     biodynamic: {
       title: 'What you would be standing in.',
       sub: 'Fifty-two cattle, a closed loop, and a canopy cut to a light reading instead of a feeling.',
-      cta: 'Explore biodynamic',
+      cta: 'Better Ground',
     },
     transparency: {
       title: 'And what gets written down.',
@@ -1337,7 +1337,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     biodynamic: {
       title: 'It started in the ground.',
       sub: 'Fifty-two cattle, a closed loop, and a canopy cut to a number.',
-      cta: 'Explore biodynamic',
+      cta: 'Better Ground',
     },
     transparency: {
       title: 'And all of it was written down.',

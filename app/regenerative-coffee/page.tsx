@@ -47,7 +47,7 @@ export default function RegenerativeCoffeePage() {
         glyph="aura-biodynamic-glyph.svg"
         title="Biodynamic."
         href="/regenerative-coffee/biodynamic"
-        cta="Explore biodynamic"
+        cta="Better Ground"
       >
         It begins with dung — packed into a cow horn, buried through winter,
         exhumed in spring as horn manure, BD 500. Ground quartz buried

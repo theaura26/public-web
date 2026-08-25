@@ -62,14 +62,14 @@ const ASSIGNMENT: Record<string, CategoryId[]> = {
 }
 
 /** A Field Note that has a category but no page yet. */
-export type PendingNote = {
+type PendingNote = {
   href: string
   title: string
   description: string
   categories: CategoryId[]
 }
 
-export const PENDING_NOTES: PendingNote[] = [
+const PENDING_NOTES: PendingNote[] = [
   /* Written but not yet published — these show as coming-soon tiles in
      the menu feed too, so the two surfaces agree. */
   {
@@ -139,7 +139,7 @@ export const PENDING_NOTES: PendingNote[] = [
  * category. Cross-listed, not moved — the canonical home stays where
  * it is, which is why each carries the section it came from.
  */
-export type CrossListed = {
+type CrossListed = {
   href: string
   title: string
   description: string
@@ -148,7 +148,7 @@ export type CrossListed = {
   from: string
 }
 
-export const CROSS_LISTED: CrossListed[] = [
+const CROSS_LISTED: CrossListed[] = [
   {
     href: '/regenerative-coffee/transparency',
     title: 'Transparency',
@@ -200,9 +200,4 @@ export function notesIn(id: CategoryId): NoteEntry[] {
 
 export function categoryById(id: string): Category | undefined {
   return CATEGORIES.find((c) => c.id === id)
-}
-
-/** Count shown beside a category in the menu and on the index. */
-export function countIn(id: CategoryId): number {
-  return notesIn(id).length
 }

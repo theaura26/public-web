@@ -4,7 +4,7 @@ import {
 } from '@/components/coffee/Microsite'
 
 export const metadata: Metadata = {
-  title: 'Biodynamic — Regenerative Coffee',
+  title: 'Better Ground — Regenerative Coffee',
   description:
     'Fifty-two cattle, 154,000 litres of Jeevamrit a year, and a canopy cut to a light reading instead of a feeling. Sampigekhan Estate, Mudigere.',
   alternates: { canonical: '/regenerative-coffee/biodynamic' },

@@ -79,8 +79,8 @@ const ARTICLES: Article[] = [
 type NavItem = {
   href?: string
   label: string
+  /** Deliberately switched off, as Shop is until there is stock. */
   off?: boolean
-  soon?: boolean
   children?: NavItem[]
 }
 /** A group is either an accordion (has `items`) or a plain link (has
@@ -105,7 +105,7 @@ const NAV_GROUPS: NavGroup[] = [
     label: 'Regenerative Coffee',
     items: [
       { href: '/regenerative-coffee', label: 'Remarkable Circle' },
-      { href: '/regenerative-coffee/biodynamic', label: 'Biodynamic' },
+      { href: '/regenerative-coffee/biodynamic', label: 'Better Ground' },
       { href: '/regenerative-coffee/transparency', label: 'Transparency' },
       { href: '/regenerative-coffee/flavour', label: 'Flavours' },
       { href: '/regenerative-coffee/experience', label: 'Aura Festival' },
@@ -159,11 +159,10 @@ function NavLeaf({
   onGo: () => void
   pathname: string
 }) {
-  if (!item.href || item.off || item.soon) {
+  if (!item.href || item.off) {
     return (
-      <span className={`mg-item ${item.off ? 'is-off' : ''} ${item.soon ? 'is-soon' : ''}`} aria-disabled>
+      <span className={`mg-item ${item.off ? 'is-off' : ''}`} aria-disabled>
         {item.label}
-        {item.soon && <span className="mg-soon">Soon</span>}
       </span>
     )
   }
@@ -1077,12 +1076,6 @@ export default function Navbar() {
              like everything else. They simply do not go anywhere yet,
              which aria-disabled carries for assistive tech. */
           :global(.mg-item.is-off) { cursor: default; }
-          :global(.mg-item.is-soon) { color: var(--contrast-text-muted); cursor: default; }
-          .mg-soon {
-            font-family: var(--font-mono), monospace;
-            font-size: 9px; letter-spacing: 0.8px; text-transform: uppercase;
-            color: var(--brand-accent);
-          }
 
           /* ── live ──────────────────────────────────────────────
              Sits in the same stack as the groups and is set like them,

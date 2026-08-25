@@ -104,7 +104,7 @@ const NAV_GROUPS: NavGroup[] = [
     id: 'coffee',
     label: 'Regenerative Coffee',
     items: [
-      { href: '/regenerative-coffee', label: 'Overview' },
+      { href: '/regenerative-coffee', label: 'Remarkable Circle' },
       { href: '/regenerative-coffee/biodynamic', label: 'Biodynamic' },
       { href: '/regenerative-coffee/transparency', label: 'Transparency' },
       { href: '/regenerative-coffee/flavour', label: 'Flavours' },
@@ -130,12 +130,6 @@ const NAV_GROUPS: NavGroup[] = [
       { href: '/contact', label: 'Contact Us' },
       { href: '/brand', label: 'Our Brand' },
       { href: '/reason', label: 'The Reason' },
-    ],
-  },
-  {
-    id: 'sanctuaries',
-    label: 'Sanctuaries',
-    items: [
       { href: '/mudigere', label: 'Mudigere' },
       { href: '/ohara', label: 'Ohara' },
     ],
@@ -787,8 +781,8 @@ export default function Navbar() {
 
           {/* Always visible, under the groups. */}
           <span className="mg-live">
-            <span className="mg-dot" aria-hidden />
             Live
+            <span className="mg-dot" aria-hidden />
           </span>
         </aside>
 
@@ -982,6 +976,12 @@ export default function Navbar() {
           .mg-btn:focus-visible {
             outline: 2px solid var(--brand-accent); outline-offset: 3px;
           }
+          @media (max-width: 900px) {
+            .mg-btn, :global(.mg-btn-link), .mg-live { font-size: 20px; }
+          }
+          @media (max-width: 600px) {
+            .mg-btn, :global(.mg-btn-link), .mg-live { font-size: 18px; }
+          }
           .mg-note {
             margin-left: 10px;
             font-family: var(--font-mono), monospace;
@@ -1000,7 +1000,12 @@ export default function Navbar() {
 
           .mg-items,
           .mg-sub { list-style: none; margin: 0; padding: 0; }
-          .mg-items { padding: 2px 0 16px; display: flex; flex-direction: column; gap: 10px; }
+          /* Indented under the group heading, so the hierarchy reads
+             without a rule or a bullet. */
+          .mg-items {
+            padding: 2px 0 16px 18px;
+            display: flex; flex-direction: column; gap: 10px;
+          }
           .mg-sub {
             margin: 8px 0 2px; padding-left: 13px;
             border-left: 1px solid var(--contrast-border);
@@ -1032,24 +1037,30 @@ export default function Navbar() {
             color: var(--brand-accent);
           }
 
-          /* ── the live cell ── */
+          /* ── live ──────────────────────────────────────────────
+             Sits in the same stack as the groups and is set like them,
+             so it reads as another way in rather than a status badge
+             bolted to the bottom. The dot carries all the signal. */
           .mg-live {
-            align-self: flex-start; margin-top: 28px;
-            display: inline-flex; align-items: center; gap: 9px;
-            padding: 8px 15px 8px 12px;
-            border: 2px solid var(--contrast-border);
-            font-family: var(--font-mono), monospace;
-            font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase;
+            /* No extra margin — the same 12px padding as a group button,
+               so it sits on the identical rhythm as the entries above. */
+            align-self: flex-start;
+            display: inline-flex; align-items: center; gap: 12px;
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 600;
+            font-size: clamp(21px, 2.4vw, 28px);
+            line-height: 1.1; letter-spacing: -0.035em;
             color: var(--contrast-text);
+            padding: 12px 0;
           }
           .mg-dot {
-            width: 7px; height: 7px; border-radius: 50%; flex: none;
+            width: 9px; height: 9px; border-radius: 50%; flex: none;
             background: var(--brand-accent);
             animation: mg-pulse 2.6s var(--ease) infinite;
           }
           @keyframes mg-pulse {
-            0%, 100% { box-shadow: 0 0 7px 0 var(--brand-accent); opacity: 0.85; }
-            50%      { box-shadow: 0 0 13px 2px var(--brand-accent); opacity: 1; }
+            0%, 100% { box-shadow: 0 0 8px 0 var(--brand-accent); opacity: 0.8; }
+            50%      { box-shadow: 0 0 16px 3px var(--brand-accent); opacity: 1; }
           }
           @media (prefers-reduced-motion: reduce) {
             .mg-dot { animation: none; }
@@ -1324,7 +1335,7 @@ export default function Navbar() {
             top: 116px;                   /* aligned with marquee top */
             left: var(--gutter);          /* aligned with the panel's own gutter */
             bottom: 210px;                /* clears the utility icon stack */
-            width: 300px;
+            width: 345px;
             overflow-y: auto;
             padding-bottom: var(--space-5);
             scrollbar-width: none; -ms-overflow-style: none;
@@ -1336,7 +1347,7 @@ export default function Navbar() {
           .menu-right {
             position: absolute;
             top: 0;
-            left: calc(var(--gutter) + 300px + clamp(48px, 6vw, 120px));
+            left: calc(var(--gutter) + 345px + clamp(48px, 6vw, 120px));
             right: var(--gutter);
             bottom: 0;
             overflow-y: auto;
@@ -1431,14 +1442,18 @@ export default function Navbar() {
             .menu-left {
               top: 88px;
               left: 24px;
-              width: 140px;
+              /* The accordion needs room the five flat links did not —
+                 "Regenerative Coffee" alone is wider than 140px. */
+              width: 260px;
+              bottom: 190px;
+              overflow-y: auto;
               z-index: 3;
             }
 
             /* Right tile feed — scrolls; pushed further right for breathing room */
             .menu-right {
               top: 0;
-              left: calc(140px + 24px + 200px);
+              left: calc(260px + 24px + 120px);
               right: 24px;
               bottom: 0;
               padding: 88px 0 80px;
@@ -1491,7 +1506,9 @@ export default function Navbar() {
               top: 76px;
               left: var(--gutter);
               right: auto;
-              width: 96px;
+              width: 220px;
+              bottom: 170px;
+              overflow-y: auto;
             }
             .menu-left :global(nav) {
               flex-direction: column !important;
@@ -1504,7 +1521,7 @@ export default function Navbar() {
                  nudge shrank the column too much, squashing the
                  cards — left at the pre-shift position so tiles
                  keep their previous pixel sizes. */
-              left: calc(var(--gutter) + 96px + 32px);
+              left: calc(var(--gutter) + 220px + 24px);
               right: var(--gutter);
               bottom: 0;
               /* Match HOME's top edge in the left rail (menu-left top: 76px)

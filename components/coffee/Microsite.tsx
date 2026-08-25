@@ -51,7 +51,7 @@ function Media({
 /* ── microsite header ───────────────────────────────────────────── */
 
 const NAV = [
-  { href: '/regenerative-coffee', label: 'Regenerative Coffee' },
+  { href: '/regenerative-coffee', label: 'Remarkable Circle' },
   { href: '/regenerative-coffee/biodynamic', label: 'Biodynamic' },
   { href: '/regenerative-coffee/transparency', label: 'Transparent' },
   { href: '/regenerative-coffee/flavour', label: 'Flavours' },
@@ -1291,7 +1291,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     hub: {
       title: 'Nine ways of paying attention.',
       sub: 'The whole loop, discipline by discipline — the practice this page is one part of.',
-      cta: 'Back to the loop',
+      cta: 'The Remarkable Circle',
     },
   },
   transparency: {
@@ -1308,7 +1308,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     hub: {
       title: 'Nine ways of paying attention.',
       sub: 'The whole loop, discipline by discipline.',
-      cta: 'Back to the loop',
+      cta: 'The Remarkable Circle',
     },
   },
   experience: {
@@ -1330,7 +1330,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     hub: {
       title: 'Nine ways of paying attention.',
       sub: 'The whole loop, discipline by discipline — three days is one pass through it.',
-      cta: 'Back to the loop',
+      cta: 'The Remarkable Circle',
     },
   },
   flavour: {
@@ -1347,7 +1347,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     hub: {
       title: 'One remarkable circle.',
       sub: 'Grass feeds the herd. The herd feeds the preparations. The preparations feed the soil. The soil grows the grass.',
-      cta: 'Back to the beginning',
+      cta: 'The Remarkable Circle',
     },
   },
 }

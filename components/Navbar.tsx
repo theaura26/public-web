@@ -83,30 +83,32 @@ type NavItem = {
   soon?: boolean
   children?: NavItem[]
 }
-type NavGroup = { id: string; label: string; note?: string; items: NavItem[] }
+/** A group is either an accordion (has `items`) or a plain link (has
+ *  `href`). Home is the only link — it has nothing to expand into. */
+type NavGroup = { id: string; label: string; note?: string; href?: string; items?: NavItem[] }
 
 const NAV_GROUPS: NavGroup[] = [
-  { id: 'home', label: 'Home', items: [{ href: '/', label: 'Index' }] },
+  { id: 'home', label: 'Home', href: '/' },
   {
     id: 'shop',
     label: 'Shop',
-    note: 'Mostly soon',
     items: [
       { label: 'Artist Residencies', off: true },
-      {
-        href: '/regenerative-coffee',
-        label: 'Coffee',
-        children: [
-          { href: '/regenerative-coffee', label: 'Regenerative coffee' },
-          { href: '/regenerative-coffee/biodynamic', label: 'Biodynamic' },
-          { href: '/regenerative-coffee/transparency', label: 'Transparency' },
-          { href: '/regenerative-coffee/flavour', label: 'Flavours' },
-          { href: '/regenerative-coffee/experience', label: 'Aura Festival' },
-        ],
-      },
+      { label: 'Coffee', off: true },
       { label: 'Experiences', off: true },
       { label: 'Tea', off: true },
       { label: 'View All', off: true },
+    ],
+  },
+  {
+    id: 'coffee',
+    label: 'Regenerative Coffee',
+    items: [
+      { href: '/regenerative-coffee', label: 'Remarkable Circle' },
+      { href: '/regenerative-coffee/biodynamic', label: 'Biodynamic' },
+      { href: '/regenerative-coffee/transparency', label: 'Transparency' },
+      { href: '/regenerative-coffee/flavour', label: 'Flavours' },
+      { href: '/regenerative-coffee/experience', label: 'Aura Festival' },
     ],
   },
   {
@@ -125,18 +127,11 @@ const NAV_GROUPS: NavGroup[] = [
     label: 'About',
     items: [
       { href: '/atelier', label: 'Atelier' },
-      { href: '/contact', label: 'Contact Us' },
-      { href: '/brand', label: 'Our Brand' },
       { href: '/reason', label: 'The Reason' },
-      { label: 'Live Feed', soon: true },
-    ],
-  },
-  {
-    id: 'sanctuaries',
-    label: 'Sanctuaries',
-    items: [
-      { href: '/mudigere', label: 'Mudigere' },
+      { href: '/brand', label: 'Our Brand' },
       { href: '/ohara', label: 'Ohara' },
+      { href: '/mudigere', label: 'Mudigere' },
+      { href: '/contact', label: 'Contact Us' },
     ],
   },
 ]
@@ -144,7 +139,7 @@ const NAV_GROUPS: NavGroup[] = [
 /** The group that owns the current route, so the menu opens where you are. */
 function groupForPath(pathname: string): string {
   for (const g of NAV_GROUPS) {
-    for (const item of g.items) {
+    for (const item of g.items ?? []) {
       const hrefs = [item.href, ...(item.children ?? []).map((c) => c.href)]
       if (hrefs.some((h) => h && h !== '/' && pathname.startsWith(h))) return g.id
     }
@@ -187,8 +182,24 @@ function NavLeaf({
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
-  /** Which accordion group is open. One at a time, like the reference. */
+  /* True only on a device that really hovers. Touch browsers
+     synthesise mouseenter on tap, which would open a group on the same
+     gesture that is trying to close one. */
+  const canHoverRef = useRef(false)
+  /* Hover intent: sweeping the cursor down the list must not flick
+     three panels open on the way past. */
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  /* Which accordion group is open — one at a time. `null` means the
+     reader has not chosen, so the menu follows the route and opens
+     where they already are; `''` means they closed them all. Derived
+     rather than written in an effect, which would cascade a render. */
   const [openGroup, setOpenGroup] = useState<string | null>(null)
+
+  useEffect(() => {
+    canHoverRef.current = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    return () => { if (hoverTimer.current) clearTimeout(hoverTimer.current) }
+  }, [])
   /* Inline contact modal — opened by the /mudigere "Contact
      us" nav link instead of routing to /contact, so the architect
      stays on the briefing page while writing. */
@@ -260,9 +271,6 @@ export default function Navbar() {
     if (menuOpen) {
       const prev = document.body.style.overflow
       document.body.style.overflow = 'hidden'
-      /* Open where the reader already is, so the menu answers "where am
-         I" before they touch anything. */
-      setOpenGroup(groupForPath(pathname))
       return () => { document.body.style.overflow = prev }
     }
   }, [menuOpen])
@@ -729,7 +737,23 @@ export default function Navbar() {
         <aside className="menu-left">
           <nav className="mg" aria-label="Main">
             {NAV_GROUPS.map((g) => {
-              const open = openGroup === g.id
+              /* A group with no items is a destination, not an accordion. */
+              if (!g.items) {
+                return (
+                  <div className="mg-grp" key={g.id}>
+                    <Link
+                      href={g.href ?? '/'}
+                      onClick={() => setMenuOpen(false)}
+                      className="mg-btn mg-btn-link"
+                      data-attr={`menu-link:${g.href}`}
+                    >
+                      {g.label}
+                    </Link>
+                  </div>
+                )
+              }
+
+              const open = (openGroup ?? groupForPath(pathname)) === g.id
               return (
                 <div className="mg-grp" data-open={open} key={g.id}>
                   <button
@@ -737,9 +761,19 @@ export default function Navbar() {
                     className="mg-btn"
                     aria-expanded={open}
                     aria-controls={`mg-${g.id}`}
-                    onClick={() => setOpenGroup(open ? null : g.id)}
+                    onClick={() => {
+                      if (hoverTimer.current) clearTimeout(hoverTimer.current)
+                      setOpenGroup(open ? '' : g.id)
+                    }}
+                    onMouseEnter={() => {
+                      if (!canHoverRef.current || open) return
+                      if (hoverTimer.current) clearTimeout(hoverTimer.current)
+                      hoverTimer.current = setTimeout(() => setOpenGroup(g.id), 110)
+                    }}
+                    onMouseLeave={() => {
+                      if (hoverTimer.current) clearTimeout(hoverTimer.current)
+                    }}
                   >
-                    <span className="mg-rule" aria-hidden />
                     {g.label}
                     {g.note && <span className="mg-note">{g.note}</span>}
                   </button>
@@ -771,8 +805,8 @@ export default function Navbar() {
 
           {/* Always visible, under the groups. */}
           <span className="mg-live">
-            <span className="mg-dot" aria-hidden />
             Live
+            <span className="mg-dot" aria-hidden />
           </span>
         </aside>
 
@@ -938,6 +972,18 @@ export default function Navbar() {
           .mg { display: flex; flex-direction: column; }
           .mg-grp { display: flex; flex-direction: column; }
 
+          :global(.mg-btn-link) {
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 600;
+            font-size: clamp(21px, 2.4vw, 28px);
+            line-height: 1.1; letter-spacing: -0.035em;
+            color: var(--contrast-text);
+            text-decoration: none; display: block;
+            padding: 12px 0;
+            transition: color var(--dur-base) var(--ease);
+          }
+          :global(.mg-btn-link:hover) { color: var(--brand-accent); }
+
           .mg-btn {
             appearance: none; background: none; border: 0;
             padding: 12px 0; width: 100%;
@@ -954,6 +1000,12 @@ export default function Navbar() {
           .mg-btn:focus-visible {
             outline: 2px solid var(--brand-accent); outline-offset: 3px;
           }
+          @media (max-width: 900px) {
+            .mg-btn, :global(.mg-btn-link), .mg-live { font-size: 20px; }
+          }
+          @media (max-width: 600px) {
+            .mg-btn, :global(.mg-btn-link), .mg-live { font-size: 18px; }
+          }
           .mg-note {
             margin-left: 10px;
             font-family: var(--font-mono), monospace;
@@ -962,14 +1014,6 @@ export default function Navbar() {
             /* wraps to its own line rather than clipping the group name */
             flex: 0 0 auto;
           }
-
-          .mg-rule {
-            display: block; height: 2px; background: currentColor;
-            width: 0; margin-right: 0; flex: none;
-            transition: width var(--dur-slow) var(--ease-out),
-                        margin-right var(--dur-slow) var(--ease-out);
-          }
-          .mg-grp[data-open='true'] .mg-rule { width: 34px; margin-right: 14px; }
 
           .mg-panel {
             display: grid; grid-template-rows: 0fr;
@@ -980,7 +1024,12 @@ export default function Navbar() {
 
           .mg-items,
           .mg-sub { list-style: none; margin: 0; padding: 0; }
-          .mg-items { padding: 2px 0 16px; display: flex; flex-direction: column; gap: 10px; }
+          /* Indented under the group heading, so the hierarchy reads
+             without a rule or a bullet. */
+          .mg-items {
+            padding: 2px 0 16px 18px;
+            display: flex; flex-direction: column; gap: 10px;
+          }
           .mg-sub {
             margin: 8px 0 2px; padding-left: 13px;
             border-left: 1px solid var(--contrast-border);
@@ -1004,7 +1053,6 @@ export default function Navbar() {
           /* Switched off on purpose, versus not built yet. */
           :global(.mg-item.is-off) {
             color: var(--contrast-text-muted); opacity: 0.5;
-            text-decoration: line-through; text-decoration-thickness: 1px;
             cursor: default;
           }
           :global(.mg-item.is-soon) { color: var(--contrast-text-muted); cursor: default; }
@@ -1013,28 +1061,34 @@ export default function Navbar() {
             color: var(--brand-accent);
           }
 
-          /* ── the live cell ── */
+          /* ── live ──────────────────────────────────────────────
+             Sits in the same stack as the groups and is set like them,
+             so it reads as another way in rather than a status badge
+             bolted to the bottom. The dot carries all the signal. */
           .mg-live {
-            align-self: flex-start; margin-top: 28px;
-            display: inline-flex; align-items: center; gap: 9px;
-            padding: 8px 15px 8px 12px;
-            border: 2px solid var(--contrast-border);
-            font-family: var(--font-mono), monospace;
-            font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase;
+            /* No extra margin — the same 12px padding as a group button,
+               so it sits on the identical rhythm as the entries above. */
+            align-self: flex-start;
+            display: inline-flex; align-items: center; gap: 12px;
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 600;
+            font-size: clamp(21px, 2.4vw, 28px);
+            line-height: 1.1; letter-spacing: -0.035em;
             color: var(--contrast-text);
+            padding: 12px 0;
           }
           .mg-dot {
-            width: 7px; height: 7px; border-radius: 50%; flex: none;
+            width: 9px; height: 9px; border-radius: 50%; flex: none;
             background: var(--brand-accent);
             animation: mg-pulse 2.6s var(--ease) infinite;
           }
           @keyframes mg-pulse {
-            0%, 100% { box-shadow: 0 0 7px 0 var(--brand-accent); opacity: 0.85; }
-            50%      { box-shadow: 0 0 13px 2px var(--brand-accent); opacity: 1; }
+            0%, 100% { box-shadow: 0 0 8px 0 var(--brand-accent); opacity: 0.8; }
+            50%      { box-shadow: 0 0 16px 3px var(--brand-accent); opacity: 1; }
           }
           @media (prefers-reduced-motion: reduce) {
             .mg-dot { animation: none; }
-            .mg-rule, .mg-panel { transition: none; }
+            .mg-panel { transition: none; }
           }
 
           :global(.menu-link) {
@@ -1305,7 +1359,7 @@ export default function Navbar() {
             top: 116px;                   /* aligned with marquee top */
             left: var(--gutter);          /* aligned with the panel's own gutter */
             bottom: 210px;                /* clears the utility icon stack */
-            width: 300px;
+            width: 345px;
             overflow-y: auto;
             padding-bottom: var(--space-5);
             scrollbar-width: none; -ms-overflow-style: none;
@@ -1317,7 +1371,7 @@ export default function Navbar() {
           .menu-right {
             position: absolute;
             top: 0;
-            left: calc(var(--gutter) + 300px + clamp(48px, 6vw, 120px));
+            left: calc(var(--gutter) + 345px + clamp(48px, 6vw, 120px));
             right: var(--gutter);
             bottom: 0;
             overflow-y: auto;
@@ -1412,14 +1466,18 @@ export default function Navbar() {
             .menu-left {
               top: 88px;
               left: 24px;
-              width: 140px;
+              /* The accordion needs room the five flat links did not —
+                 "Regenerative Coffee" alone is wider than 140px. */
+              width: 260px;
+              bottom: 190px;
+              overflow-y: auto;
               z-index: 3;
             }
 
             /* Right tile feed — scrolls; pushed further right for breathing room */
             .menu-right {
               top: 0;
-              left: calc(140px + 24px + 200px);
+              left: calc(260px + 24px + 120px);
               right: 24px;
               bottom: 0;
               padding: 88px 0 80px;
@@ -1472,7 +1530,9 @@ export default function Navbar() {
               top: 76px;
               left: var(--gutter);
               right: auto;
-              width: 96px;
+              width: 220px;
+              bottom: 170px;
+              overflow-y: auto;
             }
             .menu-left :global(nav) {
               flex-direction: column !important;
@@ -1485,7 +1545,7 @@ export default function Navbar() {
                  nudge shrank the column too much, squashing the
                  cards — left at the pre-shift position so tiles
                  keep their previous pixel sizes. */
-              left: calc(var(--gutter) + 96px + 32px);
+              left: calc(var(--gutter) + 220px + 24px);
               right: var(--gutter);
               bottom: 0;
               /* Match HOME's top edge in the left rail (menu-left top: 76px)

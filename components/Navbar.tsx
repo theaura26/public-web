@@ -1364,7 +1364,10 @@ export default function Navbar() {
           .menu-left::-webkit-scrollbar { display: none; width: 0; }
           .menu-left {
             position: absolute;
-            top: 116px;                   /* aligned with marquee top */
+            /* The panel logo is hidden at this width, so nothing sits
+               above the nav but the close button — it can start higher
+               than the marquee line it used to align to. */
+            top: 76px;
             left: var(--gutter);          /* aligned with the panel's own gutter */
             bottom: 210px;                /* clears the utility icon stack */
             width: 345px;
@@ -1383,7 +1386,7 @@ export default function Navbar() {
             right: var(--gutter);
             bottom: 0;
             overflow-y: auto;
-            padding: 116px 0 60px;
+            padding: 76px 0 60px;
             box-sizing: border-box;
             /* Hide native scrollbar — the journal feed scrolls silently
                so the cards do all the visual work. */

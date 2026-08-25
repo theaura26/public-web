@@ -176,3 +176,81 @@ Inline styles, styled-jsx, or Tailwind arbitrary values can all read tokens:
 ```
 
 When in doubt: pick a token, not a magic number.
+
+---
+
+## 12. Links and calls to action
+
+**There is one link UI on this site.** A 22 px circled chevron, then `.label` text. It is the "Explore Mudigere" control on the homepage, and it is what every "go deeper" action must look like — hub panels, pillar sections, cards, invitations.
+
+```tsx
+<a className="label" style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+  <span aria-hidden style={{
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+    width: 22, height: 22, borderRadius: '50%',
+    border: '1px solid rgba(255,255,255,0.7)',
+  }}>
+    <svg viewBox="0 0 24 24" width="11" height="11" fill="none">
+      <path d="M5 12h13M12.5 6l6.5 6-6.5 6" stroke="currentColor"
+        strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  </span>
+  Explore Mudigere
+</a>
+```
+
+The coffee microsite exposes it as `<ArrowLink>` / `<ArrowLinkStyles>` in [`components/coffee/Microsite.tsx`](components/coffee/Microsite.tsx).
+
+**Do not invent** bordered pill buttons, underlined mono links, or bare text-plus-arrow. If an action needs a different weight, change its placement or its surrounding space — not its form.
+
+---
+
+## 13. styled-jsx and `next/link` — a standing trap
+
+**styled-jsx scopes every element in a selector, including the first one.** A `next/link` renders its own `<a>`, which never receives the scope class. So this silently does nothing:
+
+```tsx
+<Link className="cta" href="/x">Go</Link>
+<style jsx>{`
+  .cta { color: white; }   /* ✗ compiles to .cta.jsx-abc — never matches */
+`}</style>
+```
+
+The rule does not error, does not warn, and the element renders with inherited styles — which on a dark ground usually means invisible dark text. It has bitten this codebase more than once.
+
+**Two fixes, in order of preference:**
+
+```tsx
+/* 1 — put shared link styles in a global block (best for anything reused) */
+<style jsx global>{`
+  .cta { color: white; }
+`}</style>
+
+/* 2 — wrap the scoped selector's root in :global() */
+<style jsx>{`
+  :global(.cta) { color: white; }
+  :global(.cta):hover { color: var(--brand-accent); }
+`}</style>
+```
+
+**The same applies to any component that renders its own root element** — not just `Link`. If you write a styled-jsx rule and the style does not appear, check whether the target is a component before checking anything else.
+
+**How to catch it:** the styles are missing, not wrong. Read the computed style rather than trusting the screenshot — `getComputedStyle(el).filter === 'none'` on an element you gave a filter is the tell.
+
+---
+
+## 14. Tokens: `globals.css` is the source of truth
+
+Sections 1–11 above have drifted ahead of the stylesheet. Before using a token, confirm it exists:
+
+```bash
+grep -- '--token-name:' app/globals.css
+```
+
+**Documented here but NOT in `globals.css` as of this audit** — using any of these resolves to nothing, silently:
+
+`--space-1` · `--space-10` · `--space-11` · `--space-12` · `--col2-gap` · `--max-w-narrow` · `--bg-elevated` · `--nav-bg` · `--radius-pill` · `--z-content` · `--z-overlay` · `--z-nav` · `--z-cursor` · `--ease-in` · `--ease-bounce` · `--dur-slower` · every `--brand-*` swatch except `--brand-accent`
+
+A missing token is not a build error. `padding: var(--space-12) 0` becomes `padding: 0` and the section collapses. Either add the token to `globals.css` or use one that exists.
+
+---

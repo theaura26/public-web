@@ -47,8 +47,9 @@ export default function BiodynamicPage() {
       </Scene>
 
       <Scene>
-        They are not scenery. Everything this soil is ever given comes out of
-        them — which is why nothing has been sprayed on the grass they eat.
+        The herd is the whole fertiliser supply. Everything this soil is ever
+        given comes out of them — which is why nothing has been sprayed on the
+        grass they eat.
         What goes into the animal comes back out into the ground the coffee is
         standing in.
       </Scene>

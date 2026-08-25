@@ -410,7 +410,7 @@ export function LotCards({ title, intro, lots }: {
       <style jsx>{`
         .lots {
           background: #000; color: #fff;
-          padding: clamp(72px, 12vh, 140px) 0;
+          padding: clamp(104px, 16vh, 196px) 0;
           border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
         .lots-h {
@@ -497,7 +497,7 @@ export function BlockExplorer() {
       <style jsx>{`
         .bx {
           background: #000; color: #fff;
-          padding: clamp(72px, 12vh, 140px) 0;
+          padding: clamp(104px, 16vh, 196px) 0;
           border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
         .bx-h {

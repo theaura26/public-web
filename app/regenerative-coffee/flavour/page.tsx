@@ -7,7 +7,7 @@ import {
 } from '@/components/coffee/HarvestInteractive'
 
 export const metadata: Metadata = {
-  title: 'Coffee — Regenerative Coffee',
+  title: 'Flavours — Regenerative Coffee',
   description:
     'Nine lots from one harvest — three Robusta, six Arabica. The ferment, the lab that ends it, two national wins, and the full file behind every lot.',
   alternates: { canonical: '/regenerative-coffee/flavour' },
@@ -85,7 +85,7 @@ export default function FlavourPage() {
         Four of the Arabica lots went in front of an
         independent Q grader under SCA protocol. They came back between
         82.25 and 85.25. Every one scored a perfect ten on uniformity,
-        clean cup and sweetness. The grader's note said the ceiling was
+        clean cup and sweetness. The grader’s note said the ceiling was
         the roast, and the coffee underneath it had further to go.
       </Scene>
 
@@ -97,9 +97,8 @@ export default function FlavourPage() {
       </Scene>
 
       <Scene>
-        Neither result is the point on its own. Both arrive at the same
-        finding independently: the ground is doing the work, and the ferment
-        only decides how much of it reaches the cup.
+        Two independent panels, one finding: the ground is doing the work,
+        and the ferment decides how much of it reaches the cup.
       </Scene>
 
       {/* ── Robusta — three lots, open ──────────────────────────── */}
@@ -107,7 +106,7 @@ export default function FlavourPage() {
       <Chapter>Robusta.</Chapter>
 
       <Scene title="Three lots. Two national wins.">
-        Old Peridenia, a heritage varietal, grown at 1,127 metres
+        Old Peridenia, a heritage varietal, grown at 3,600 feet
         under the same four-storey canopy as everything else here, picked
         at 97% ripeness. Brix comes in between 26% and 28%. No Arabica on
         this estate has ever read that high.
@@ -137,7 +136,8 @@ export default function FlavourPage() {
 
       <Scene>
         The 2026 Arabica went, in full, to one specialty cafe in Mumbai.
-        The files sit below regardless. The range is the argument.
+        The complete file for every lot sits below, and the next harvest is
+        the one to talk about.
       </Scene>
 
       <LotCards

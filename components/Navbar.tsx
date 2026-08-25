@@ -9,7 +9,7 @@ import ContactModal from './ContactModal'
 
 /* ── Article tiles for the journal slide-out ──
    Mirrors the sitemap of journal pages exactly. Top-level routes
-   (/, /reason, /brand, /contact) live in PRIMARY_LINKS and are
+   (/, /reason, /brand, /contact) live in NAV_GROUPS and are
    intentionally excluded.
 
    Titles match the actual <ArticleHero> on each page.
@@ -46,11 +46,11 @@ const ARTICLES: Article[] = [
   // ── Live journals (published on theaura.life) ──
   { href: '/wisdom',         title: 'Moral Spine',                        size: 'lg', img: '/journals/wisdom/aura-moral-spine.jpg' },
   { href: '/living-systems', title: 'Living Systems',                     size: 'sm', img: '/journals/living-systems/aura-living-systems.jpg' },
-  { href: '/coffee',         title: 'Our Coffee Story',                   size: 'sm', img: '/journals/coffee/aura-our-coffee-story.jpg' },
+  { href: '/coffee',         title: 'Our bean story',                      size: 'sm', img: '/journals/coffee/aura-our-coffee-story.jpg' },
   { href: '/rta',            title: 'Rta',                                size: 'lg', img: '/journals/rta/aura-rta.jpg' },
   { href: '/fermentation',   title: 'Fermentation',                       size: 'sm', img: '/journals/fermentation/aura-fermentation.jpg' },
   { href: '/land',           title: 'The Land',                           size: 'lg', img: '/journals/land/aura-the-land.jpg' },
-  { href: '/biodynamic',     title: 'Biodynamic',                         size: 'sm', img: '/journals/biodynamic/aura-biodynamic.jpg', video: '/journals/biodynamic/aura-biodynamic.mp4' },
+  { href: '/biodynamic',     title: 'A living organism',                    size: 'sm', img: '/journals/biodynamic/aura-biodynamic.jpg', video: '/journals/biodynamic/aura-biodynamic.mp4' },
   { href: '/residency',      title: 'Monastic Polymaths',                 size: 'sm', img: '/journals/residency/aura-monastic-polymath.jpg' },
   // ── Coming soon — not yet published. The journal's own image runs
   //    dimmed + desaturated behind a "COMING SOON" label (mirrors the
@@ -61,20 +61,134 @@ const ARTICLES: Article[] = [
   { href: '/pepper',         title: 'Malabar Pepper',                     size: 'lg', comingSoon: true, img: '/journals/fermentation/aura-pepper.jpg' },
   { href: '/provenance',     title: 'Provenance',                         size: 'sm', comingSoon: true, img: '/aura-provenance.jpg' },
   { href: '/sanctuary',      title: 'Sanctuary',                          size: 'lg', comingSoon: true, img: '/aura-sanctuary.jpg' },
+  /* Commissioned, not yet written. No image on purpose — these render
+     on a flat grey plate rather than borrowing a photograph that is
+     not theirs. */
+  { href: '/cows-of-aura',    title: 'Cows of Aura',                       size: 'sm', comingSoon: true },
+  { href: '/bug-hotels',      title: 'Bug Hotels',                         size: 'sm', comingSoon: true },
+  { href: '/pollinators',     title: 'Pollinators',                        size: 'lg', comingSoon: true },
+  { href: '/forest-islands',  title: 'Forest Islands',                     size: 'lg', comingSoon: true },
+  { href: '/spirit-prayer',   title: 'Spirit & Prayer',                    size: 'sm', comingSoon: true },
 ]
 
-const PRIMARY_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/reason', label: 'The Reason' },
-  { href: '/atelier', label: 'Atelier' },
-  { href: '/brand', label: 'Our Brand' },
-  { href: '/contact', label: 'Contact Us' },
+/* ── The menu's information architecture ──────────────────────────
+   Five groups, one open at a time. `off` is deliberately switched off
+   (Shop, until there is something to sell); `soon` is a real
+   destination that has no page yet. Both render unclickable — the
+   difference is that one is a decision and the other is a backlog. */
+type NavItem = {
+  href?: string
+  label: string
+  off?: boolean
+  soon?: boolean
+  children?: NavItem[]
+}
+type NavGroup = { id: string; label: string; note?: string; items: NavItem[] }
+
+const NAV_GROUPS: NavGroup[] = [
+  { id: 'home', label: 'Home', items: [{ href: '/', label: 'Index' }] },
+  {
+    id: 'shop',
+    label: 'Shop',
+    note: 'Mostly soon',
+    items: [
+      { label: 'Artist Residencies', off: true },
+      {
+        href: '/regenerative-coffee',
+        label: 'Coffee',
+        children: [
+          { href: '/regenerative-coffee', label: 'Regenerative coffee' },
+          { href: '/regenerative-coffee/biodynamic', label: 'Biodynamic' },
+          { href: '/regenerative-coffee/transparency', label: 'Transparency' },
+          { href: '/regenerative-coffee/flavour', label: 'Flavours' },
+          { href: '/regenerative-coffee/experience', label: 'Aura Festival' },
+        ],
+      },
+      { label: 'Experiences', off: true },
+      { label: 'Tea', off: true },
+      { label: 'View All', off: true },
+    ],
+  },
+  {
+    id: 'notes',
+    label: 'Field Notes',
+    items: [
+      { href: '/field-notes/activities', label: 'Activities' },
+      { href: '/field-notes/biodynamic', label: 'Biodynamic' },
+      { href: '/field-notes/biodiversity', label: 'Biodiversity' },
+      { href: '/field-notes/labs', label: 'Labs' },
+      { href: '/field-notes', label: 'View All' },
+    ],
+  },
+  {
+    id: 'about',
+    label: 'About',
+    items: [
+      { href: '/atelier', label: 'Atelier' },
+      { href: '/contact', label: 'Contact Us' },
+      { href: '/brand', label: 'Our Brand' },
+      { href: '/reason', label: 'The Reason' },
+      { label: 'Live Feed', soon: true },
+    ],
+  },
+  {
+    id: 'sanctuaries',
+    label: 'Sanctuaries',
+    items: [
+      { href: '/mudigere', label: 'Mudigere' },
+      { href: '/ohara', label: 'Ohara' },
+    ],
+  },
 ]
+
+/** The group that owns the current route, so the menu opens where you are. */
+function groupForPath(pathname: string): string {
+  for (const g of NAV_GROUPS) {
+    for (const item of g.items) {
+      const hrefs = [item.href, ...(item.children ?? []).map((c) => c.href)]
+      if (hrefs.some((h) => h && h !== '/' && pathname.startsWith(h))) return g.id
+    }
+  }
+  return 'notes'
+}
 
 const INSTAGRAM_URL = 'https://www.instagram.com/theaura.life/'
 
+/** One menu row. A destination is a link; anything switched off or
+ *  unbuilt renders as plain text, because a dead link is worse than an
+ *  honest label. */
+function NavLeaf({
+  item, onGo, pathname,
+}: {
+  item: NavItem
+  onGo: () => void
+  pathname: string
+}) {
+  if (!item.href || item.off || item.soon) {
+    return (
+      <span className={`mg-item ${item.off ? 'is-off' : ''} ${item.soon ? 'is-soon' : ''}`} aria-disabled>
+        {item.label}
+        {item.soon && <span className="mg-soon">Soon</span>}
+      </span>
+    )
+  }
+  return (
+    <Link
+      href={item.href}
+      onClick={onGo}
+      className="mg-item"
+      data-attr={`menu-link:${item.href}`}
+      data-active={pathname === item.href}
+    >
+      {item.label}
+    </Link>
+  )
+}
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  /** Which accordion group is open. One at a time, like the reference. */
+  const [openGroup, setOpenGroup] = useState<string | null>(null)
   /* Inline contact modal — opened by the /mudigere "Contact
      us" nav link instead of routing to /contact, so the architect
      stays on the briefing page while writing. */
@@ -146,6 +260,9 @@ export default function Navbar() {
     if (menuOpen) {
       const prev = document.body.style.overflow
       document.body.style.overflow = 'hidden'
+      /* Open where the reader already is, so the menu answers "where am
+         I" before they touch anything. */
+      setOpenGroup(groupForPath(pathname))
       return () => { document.body.style.overflow = prev }
     }
   }, [menuOpen])
@@ -610,20 +727,53 @@ export default function Navbar() {
 
         {/* Left — primary nav, locked at top, never scrolls */}
         <aside className="menu-left">
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {PRIMARY_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="menu-link"
-                data-attr={`menu-link:${link.href}`}
-                data-active={pathname === link.href}
-              >
-                {link.label}
-              </Link>
-            ))}
+          <nav className="mg" aria-label="Main">
+            {NAV_GROUPS.map((g) => {
+              const open = openGroup === g.id
+              return (
+                <div className="mg-grp" data-open={open} key={g.id}>
+                  <button
+                    type="button"
+                    className="mg-btn"
+                    aria-expanded={open}
+                    aria-controls={`mg-${g.id}`}
+                    onClick={() => setOpenGroup(open ? null : g.id)}
+                  >
+                    <span className="mg-rule" aria-hidden />
+                    {g.label}
+                    {g.note && <span className="mg-note">{g.note}</span>}
+                  </button>
+
+                  <div className="mg-panel" id={`mg-${g.id}`} role="group" aria-label={g.label}>
+                    <div className="mg-panel-in">
+                      <ul className="mg-items">
+                        {g.items.map((item) => (
+                          <li key={item.label}>
+                            <NavLeaf item={item} onGo={() => setMenuOpen(false)} pathname={pathname} />
+                            {item.children && (
+                              <ul className="mg-sub">
+                                {item.children.map((c) => (
+                                  <li key={c.label}>
+                                    <NavLeaf item={c} onGo={() => setMenuOpen(false)} pathname={pathname} />
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </nav>
+
+          {/* Always visible, under the groups. */}
+          <span className="mg-live">
+            <span className="mg-dot" aria-hidden />
+            Live
+          </span>
         </aside>
 
         {/* Bottom-left utilities: theme toggle + view-mode toggle + Instagram */}
@@ -715,6 +865,10 @@ export default function Navbar() {
                     className="tile"
                     data-size={a.size}
                     data-coming-soon={a.comingSoon ? 'true' : undefined}
+                    data-noimg={!a.img && !a.video ? 'true' : undefined}
+                    /* Some coming-soon entries have no page behind them yet —
+                       never prefetch a route that would 404. */
+                    prefetch={a.comingSoon ? false : undefined}
                     aria-disabled={a.comingSoon ? true : undefined}
                     tabIndex={a.comingSoon ? -1 : undefined}
                     style={{
@@ -777,6 +931,112 @@ export default function Navbar() {
         <style jsx>{`
           :global(.menu-overlay) { width: 90vw; color: var(--contrast-text); }
           :global(.menu-backdrop) { display: flex; align-items: stretch; }
+          /* ── the accordion ──────────────────────────────────────
+             Five groups, one open. The open one is marked by a 2px rule
+             that slides out in front of it — no chevrons. Panels animate
+             on grid-template-rows so nothing has to be measured. */
+          .mg { display: flex; flex-direction: column; }
+          .mg-grp { display: flex; flex-direction: column; }
+
+          .mg-btn {
+            appearance: none; background: none; border: 0;
+            padding: 12px 0; width: 100%;
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 600;
+            font-size: clamp(21px, 2.4vw, 28px);
+            line-height: 1.1; letter-spacing: -0.035em;
+            color: var(--contrast-text);
+            text-align: left; cursor: pointer;
+            display: flex; align-items: center; flex-wrap: wrap;
+            transition: color var(--dur-base) var(--ease);
+          }
+          .mg-btn:hover { color: var(--brand-accent); }
+          .mg-btn:focus-visible {
+            outline: 2px solid var(--brand-accent); outline-offset: 3px;
+          }
+          .mg-note {
+            margin-left: 10px;
+            font-family: var(--font-mono), monospace;
+            font-size: 8.5px; letter-spacing: 0.8px; text-transform: uppercase;
+            color: var(--brand-accent); white-space: nowrap;
+            /* wraps to its own line rather than clipping the group name */
+            flex: 0 0 auto;
+          }
+
+          .mg-rule {
+            display: block; height: 2px; background: currentColor;
+            width: 0; margin-right: 0; flex: none;
+            transition: width var(--dur-slow) var(--ease-out),
+                        margin-right var(--dur-slow) var(--ease-out);
+          }
+          .mg-grp[data-open='true'] .mg-rule { width: 34px; margin-right: 14px; }
+
+          .mg-panel {
+            display: grid; grid-template-rows: 0fr;
+            transition: grid-template-rows var(--dur-slow) var(--ease-out);
+          }
+          .mg-grp[data-open='true'] .mg-panel { grid-template-rows: 1fr; }
+          .mg-panel-in { overflow: hidden; }
+
+          .mg-items,
+          .mg-sub { list-style: none; margin: 0; padding: 0; }
+          .mg-items { padding: 2px 0 16px; display: flex; flex-direction: column; gap: 10px; }
+          .mg-sub {
+            margin: 8px 0 2px; padding-left: 13px;
+            border-left: 1px solid var(--contrast-border);
+            display: flex; flex-direction: column; gap: 8px;
+          }
+
+          :global(.mg-item) {
+            font-family: var(--font-mono), monospace;
+            font-size: 12px; letter-spacing: 0.9px; text-transform: uppercase;
+            line-height: 1.4;
+            color: var(--contrast-text-body);
+            text-decoration: none; display: inline-flex;
+            align-items: baseline; gap: 8px;
+            transition: color var(--dur-base) var(--ease);
+          }
+          :global(.mg-item:hover) { color: var(--brand-accent); }
+          :global(.mg-item[data-active='true']) { color: var(--brand-accent); }
+          .mg-sub :global(.mg-item) { font-size: 11px; color: var(--contrast-text-muted); }
+          .mg-sub :global(.mg-item:hover) { color: var(--brand-accent); }
+
+          /* Switched off on purpose, versus not built yet. */
+          :global(.mg-item.is-off) {
+            color: var(--contrast-text-muted); opacity: 0.5;
+            text-decoration: line-through; text-decoration-thickness: 1px;
+            cursor: default;
+          }
+          :global(.mg-item.is-soon) { color: var(--contrast-text-muted); cursor: default; }
+          .mg-soon {
+            font-size: 9px; letter-spacing: 0.8px;
+            color: var(--brand-accent);
+          }
+
+          /* ── the live cell ── */
+          .mg-live {
+            align-self: flex-start; margin-top: 28px;
+            display: inline-flex; align-items: center; gap: 9px;
+            padding: 8px 15px 8px 12px;
+            border: 2px solid var(--contrast-border);
+            font-family: var(--font-mono), monospace;
+            font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase;
+            color: var(--contrast-text);
+          }
+          .mg-dot {
+            width: 7px; height: 7px; border-radius: 50%; flex: none;
+            background: var(--brand-accent);
+            animation: mg-pulse 2.6s var(--ease) infinite;
+          }
+          @keyframes mg-pulse {
+            0%, 100% { box-shadow: 0 0 7px 0 var(--brand-accent); opacity: 0.85; }
+            50%      { box-shadow: 0 0 13px 2px var(--brand-accent); opacity: 1; }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .mg-dot { animation: none; }
+            .mg-rule, .mg-panel { transition: none; }
+          }
+
           :global(.menu-link) {
             font-family: var(--font-mono) !important;
             font-size: 12px !important;
@@ -929,6 +1189,14 @@ export default function Navbar() {
           :global(.tile[data-coming-soon="true"] .tile-img) {
             opacity: 0.55;
           }
+          /* An unwritten journal has no photograph to dim, so it gets a
+             flat grey plate instead of the card surface — visibly a
+             placeholder rather than an image that failed to load. */
+          :global(.tile[data-noimg="true"] .tile-img) {
+            background: var(--contrast-text-muted);
+            opacity: 0.22;
+          }
+          :global(.tile[data-noimg="true"]:hover .tile-img) { opacity: 0.28; }
           :global(.tile[data-coming-soon="true"] .tile-img img:not(.tile-symbol)),
           :global(.tile[data-coming-soon="true"] .tile-img video) {
             filter: grayscale(1) brightness(0.85);
@@ -1031,11 +1299,16 @@ export default function Navbar() {
             display: none;
           }
 
+          .menu-left::-webkit-scrollbar { display: none; width: 0; }
           .menu-left {
             position: absolute;
             top: 116px;                   /* aligned with marquee top */
             left: var(--gutter);          /* aligned with the panel's own gutter */
-            width: 240px;
+            bottom: 210px;                /* clears the utility icon stack */
+            width: 300px;
+            overflow-y: auto;
+            padding-bottom: var(--space-5);
+            scrollbar-width: none; -ms-overflow-style: none;
             display: flex;
             flex-direction: column;
             z-index: 2;
@@ -1044,7 +1317,7 @@ export default function Navbar() {
           .menu-right {
             position: absolute;
             top: 0;
-            left: calc(var(--gutter) + 240px + clamp(64px, 8vw, 160px));
+            left: calc(var(--gutter) + 300px + clamp(48px, 6vw, 120px));
             right: var(--gutter);
             bottom: 0;
             overflow-y: auto;

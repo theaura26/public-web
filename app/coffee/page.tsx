@@ -16,7 +16,7 @@ export default function CoffeePage() {
     <>
       <JournalHero
         currentHref="/coffee"
-        title="Our Coffee Story"
+        title="Our bean story"
         caption="Coffee flowers — the beginning of every lot"
       />
 

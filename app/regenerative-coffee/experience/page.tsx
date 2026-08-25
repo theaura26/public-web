@@ -1,18 +1,46 @@
 import type { Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import {
+  MicroNav, Panel, Chapter, NextBanners, ArrowLinkStyles,
+} from '@/components/coffee/Microsite'
+import { ExperienceBlock } from '@/components/coffee/ExperienceForm'
+import { Programme } from '@/components/coffee/Programme'
 
 export const metadata: Metadata = {
-  title: 'The Experience — Regenerative Coffee',
+  title: 'Aura Festival — Regenerative Coffee',
   description:
-    'Three windows a year at Sampigekhan Estate, Mudigere — September, November or December. Small groups, by arrangement.',
+    'Three days on the estate at Mudigere — the wet mill at five, the lab bench, the blocks and the cupping table. November or December, in small groups, and you go home with a lot of your own.',
   alternates: { canonical: '/regenerative-coffee/experience' },
 }
 
-/**
- * The clean marketing URL. theaura.life/regenerative-coffee/experience
- * lands on the hub with the form already open — one link for a
- * campaign, an email footer, or a printed card.
+/*
+ * The Aura Festival — the site's one ask, built to the same system as
+ * the three pillars: banner, line, form, then the three days, then the
+ * hand-off to everything else. No clay close: this page is what the
+ * clay close on every other page points at.
  */
+
 export default function ExperiencePage() {
-  redirect('/regenerative-coffee?experience')
+  return (
+    <>
+      <MicroNav />
+      <ArrowLinkStyles />
+
+      <Panel
+        hero
+        align="centre"
+        title="Aura Festival."
+        lede="Three days on the estate, and you go home having designed a lot of your own. Twenty places a window, three times a year."
+      />
+
+      <Chapter tight>Come and get your hands dirty.</Chapter>
+
+      <ExperienceBlock />
+
+      <Chapter tight>On the third day you build a coffee that exists nowhere else.</Chapter>
+
+      <Programme />
+
+      <NextBanners from="experience" />
+    </>
+  )
 }

@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import VisitModal, { openVisitModal } from './VisitModal'
 import { ScrollHighlight } from '@/components/article/Article'
+import { GlyphMark } from './RemarkableCircle'
 
 /* ═══════════════════════════════════════════════════════════════════
    MICROSITE BLOCKS — Regenerative Coffee
@@ -54,7 +54,7 @@ const NAV = [
   { href: '/regenerative-coffee', label: 'Regenerative Coffee' },
   { href: '/regenerative-coffee/biodynamic', label: 'Biodynamic' },
   { href: '/regenerative-coffee/transparency', label: 'Transparent' },
-  { href: '/regenerative-coffee/flavour', label: 'Flavourful' },
+  { href: '/regenerative-coffee/flavour', label: 'Flavours' },
 ]
 
 /**
@@ -136,15 +136,13 @@ export function MicroNav() {
 
           {/* The CTA sits above the scroller: links pass under it. */}
           <div className="ln-end">
-            <button type="button" className="p2 ln-cta" onClick={openVisitModal}>
-              <span className="ln-cta-long">The Experience</span>
-              <span className="ln-cta-short">Experience</span>
-            </button>
+            <Link href={PAGE_HREF.experience} className="p2 ln-cta">
+              <span className="ln-cta-long">Aura Festival</span>
+              <span className="ln-cta-short">Festival</span>
+            </Link>
           </div>
         </div>
       </nav>
-
-      <VisitModal />
 
       <style jsx global>{`
         /* Above the fold the header rides transparent on the hero, its
@@ -209,7 +207,11 @@ export function MicroNav() {
         /* Persistent: always on screen. It sits under the main bar, and
            rides up to the viewport top while that bar is hidden. */
         .ln {
-          position: fixed; left: 0; right: 0; z-index: 40;
+          /* 39, deliberately: the hamburger's backdrop is z-40 and the
+             site bar and menu panel are z-50. At 40 this bar tied with
+             the backdrop, won on DOM order, and showed through the strip
+             of backdrop beside the open menu. */
+          position: fixed; left: 0; right: 0; z-index: 39;
           height: 56px;
           /* Fallback first: a solid bar every browser can draw. */
           background: rgba(10, 10, 10, 0.94);
@@ -277,22 +279,24 @@ export function MicroNav() {
           text-decoration: none; white-space: nowrap;
           transition: color var(--dur-base) var(--ease);
         }
-        :global(.ln-l):hover { color: #fff; }
-        :global(.ln-l.is-on) { color: #fff; }
-        :global(.ln-l.is-on)::after {
-          content: ''; position: absolute; left: 0; right: 0; bottom: 0;
-          height: 1px; background: #fff;
-        }
+        /* No rule under the active tab — it reads as clay, which is enough
+           to mark where you are. Hover picks up the same clay. */
+        :global(.ln-l):hover { color: var(--brand-accent); }
+        :global(.ln-l.is-on) { color: var(--brand-accent); }
 
-        .ln-cta {
+        /* :global, because styled-jsx cannot put its scope class on a
+           <Link> — the same reason .ln-l is global above. */
+        :global(.ln-cta) {
           flex-shrink: 0; cursor: pointer;
+          display: inline-flex; align-items: center;
+          text-decoration: none; white-space: nowrap;
           font-size: 12px; line-height: 1.3;
           color: #fff; background: var(--brand-accent);
           border: none; border-radius: 999px;
           padding: 7px 16px;
           transition: filter var(--dur-base) var(--ease);
         }
-        .ln-cta:hover { filter: brightness(1.1); }
+        :global(.ln-cta):hover { filter: brightness(1.1); }
         .ln-cta-short { display: none; }
 
         @media (max-width: 640px) {
@@ -1035,9 +1039,9 @@ export function Closing({ children }: { children: string }) {
       </div>
       <style jsx>{`
         .cl {
-          min-height: 72svh; display: flex; align-items: center;
+          display: flex; align-items: center;
           background: #000;
-          padding: clamp(64px, 10vh, 120px) 0;
+          padding: clamp(112px, 18vh, 216px) 0;
         }
         /* ScrollHighlight renders a plain h2, which the global rule
            paints var(--text) — invisible on black in day mode. */
@@ -1057,12 +1061,10 @@ export function Closing({ children }: { children: string }) {
  * image so the type stays crisp and the labels stay selectable.
  */
 export function LoopDiagram({
-  label = 'Natural intelligence',
   centre,
   stations = ['Observe', 'Remember', 'Learn', 'Act'],
   caption,
 }: {
-  label?: string
   centre: string[]
   stations?: string[]
   caption?: string
@@ -1070,8 +1072,6 @@ export function LoopDiagram({
   return (
     <section className="ld">
       <div className="section-w">
-        <p className="ld-l">{label}</p>
-
         <div className="ld-ring" role="img"
           aria-label={`${centre.join(' ')} — a closed loop: ${stations.join(', then ')}, and back to the start.`}>
           <span className="ld-circle" aria-hidden />
@@ -1091,15 +1091,9 @@ export function LoopDiagram({
       <style jsx>{`
         .ld {
           background: #000; color: #fff;
-          padding: clamp(72px, 12vh, 140px) 0;
+          padding: clamp(104px, 16vh, 196px) 0;
           border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
-        .ld-l {
-          font-family: var(--font-mono), monospace;
-          font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.55); margin: 0 0 clamp(28px, 5vw, 56px);
-        }
-
         .ld-ring {
           position: relative;
           width: min(100%, 620px);
@@ -1140,8 +1134,8 @@ export function LoopDiagram({
 
         .ld-cap {
           font-size: clamp(15px, 1.5vw, 18px); line-height: 1.6;
-          color: rgba(255, 255, 255, 0.66);
-          margin: clamp(32px, 5vw, 56px) 0 0; max-width: 46ch;
+          color: rgba(255, 255, 255, 0.66); text-align: center;
+          margin: clamp(32px, 5vw, 56px) auto 0; max-width: 46ch;
         }
       `}</style>
     </section>
@@ -1183,10 +1177,10 @@ export function Banner({
 
       <style jsx>{`
         .bn {
-          min-height: 82svh;
+          min-height: 88svh;
           display: flex; align-items: center;
           background: #000; color: #fff;
-          padding: clamp(80px, 14vh, 160px) 0;
+          padding: clamp(112px, 18vh, 216px) 0;
           border-top: 1px solid rgba(255, 255, 255, 0.12);
         }
         .bn-in {
@@ -1250,13 +1244,14 @@ export function Banner({
 
 /* ── page hand-off — always the other three ─────────────────────── */
 
-type PageKey = 'hub' | 'biodynamic' | 'transparency' | 'flavour'
+type PageKey = 'hub' | 'biodynamic' | 'transparency' | 'flavour' | 'experience'
 
 const PAGE_HREF: Record<PageKey, string> = {
   hub: '/regenerative-coffee',
   biodynamic: '/regenerative-coffee/biodynamic',
   transparency: '/regenerative-coffee/transparency',
   flavour: '/regenerative-coffee/flavour',
+  experience: '/regenerative-coffee/experience',
 }
 
 const ORDER: PageKey[] = ['biodynamic', 'transparency', 'flavour', 'hub']
@@ -1279,7 +1274,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     flavour: {
       title: 'Nine lots. One harvest.',
       sub: 'Three Robusta, six Arabica, and the full file behind every one.',
-      cta: 'Explore the coffee',
+      cta: 'Explore the flavours',
     },
   },
   biodynamic: {
@@ -1291,7 +1286,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     flavour: {
       title: 'Then taste what it did.',
       sub: 'Nine lots off this ground, two national wins, and the file behind each one.',
-      cta: 'Explore the coffee',
+      cta: 'Explore the flavours',
     },
     hub: {
       title: 'Nine ways of paying attention.',
@@ -1303,7 +1298,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     flavour: {
       title: 'The record ends in a cup.',
       sub: 'Nine lots, scored by people with no stake in the result.',
-      cta: 'Explore the coffee',
+      cta: 'Explore the flavours',
     },
     biodynamic: {
       title: 'What the record is recording.',
@@ -1313,6 +1308,28 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     hub: {
       title: 'Nine ways of paying attention.',
       sub: 'The whole loop, discipline by discipline.',
+      cta: 'Back to the loop',
+    },
+  },
+  experience: {
+    biodynamic: {
+      title: 'What you would be standing in.',
+      sub: 'Fifty-two cattle, a closed loop, and a canopy cut to a light reading instead of a feeling.',
+      cta: 'Explore biodynamic',
+    },
+    transparency: {
+      title: 'And what gets written down.',
+      sub: 'Nine streams of data, signed from the field, and re-read ninety days later.',
+      cta: 'Explore transparency',
+    },
+    flavour: {
+      title: 'What it ends up tasting like.',
+      sub: 'Nine lots off this ground, two national wins, and the file behind every one.',
+      cta: 'Explore the flavours',
+    },
+    hub: {
+      title: 'Nine ways of paying attention.',
+      sub: 'The whole loop, discipline by discipline — three days is one pass through it.',
       cta: 'Back to the loop',
     },
   },
@@ -1360,32 +1377,25 @@ export function NextBanners({ from }: { from: PageKey }) {
 
 /**
  * The bottom of every microsite page. Clay ground (the brand accent),
- * one line, one button that opens the Experience form.
+ * one line, one link to the Festival page.
  */
 export function ReserveBanner() {
   return (
     <section className="rb">
       <div className="section-w rb-in">
-        <h2 className="rb-h">The Experience.</h2>
+        <h2 className="rb-h">The Aura Festival.</h2>
         <p className="rb-p">
-          Come and stand inside it — September, November or December.
-          Small groups, by arrangement, not by booking form.
+          Twenty places, three times a year. You set the protocol for a lot
+          of your own, and we build it and ship it under your name.
         </p>
-        <p className="rb-act">
-          <button type="button" className="label al is-ink rb-al" onClick={openVisitModal}>
-            <span className="al-i" aria-hidden>
-              <svg viewBox="0 0 24 24" width="11" height="11" fill="none">
-                <path d="M5 12h13M12.5 6l6.5 6-6.5 6" stroke="currentColor"
-                  strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-            Request the Experience
-          </button>
+        <p className="rb-act rb-al">
+          <ArrowLink href={PAGE_HREF.experience} tone="ink">Come to the Festival</ArrowLink>
         </p>
       </div>
       <style jsx>{`
         .rb {
-          min-height: 58svh; display: flex; align-items: center;
+          display: flex; align-items: center;
+          padding: clamp(128px, 20vh, 240px) 0;
           background: var(--brand-accent); color: #1d0f05;
           text-align: center;
         }
@@ -1404,9 +1414,9 @@ export function ReserveBanner() {
         }
         .rb-act { margin: var(--space-7) auto 0; display: flex; justify-content: center; }
         /* ArrowLink, inked to the clay ground */
-        :global(.rb-al) { cursor: pointer; color: #1d0f05; }
-        :global(.rb-al) :global(.al-i) { border-color: rgba(29, 15, 5, 0.5); }
-        :global(.rb-al):hover :global(.al-i) {
+        .rb-al :global(.al) { color: #1d0f05; }
+        .rb-al :global(.al-i) { border-color: rgba(29, 15, 5, 0.5); }
+        .rb-al :global(.al):hover :global(.al-i) {
           background: #1d0f05; border-color: #1d0f05; color: var(--brand-accent);
         }
       `}</style>
@@ -1510,9 +1520,10 @@ export function NextUp({
  * sentence the last one left off.
  */
 export function Scene({
-  src, poster, alt = '', mediaType = 'image', title, children, align = 'left', dim = 'mid',
-  href, cta,
+  id, src, poster, alt = '', mediaType = 'image', title, children, align = 'left', dim = 'mid',
+  href, cta, glyph,
 }: {
+  id?: string
   src?: string
   poster?: string
   alt?: string
@@ -1523,9 +1534,12 @@ export function Scene({
   dim?: 'low' | 'mid' | 'high'
   href?: string
   cta?: string
+  /** filename in /public/glyphs/coffee — marks the scene as one of the
+      eight disciplines on the Remarkable Circle. */
+  glyph?: string
 }) {
   return (
-    <section className={`sc is-${align} dim-${dim} ${src ? '' : 'is-blank'}`}>
+    <section id={id} className={`sc is-${align} dim-${dim} ${src ? '' : 'is-blank'}`}>
       {src && (
         <div className="sc-bg">
           <Media src={src} poster={poster} alt={alt} mediaType={mediaType} />
@@ -1534,6 +1548,11 @@ export function Scene({
       )}
       <div className="section-w sc-in">
         <div className="sc-t">
+          {glyph && (
+            <span className="sc-g" aria-hidden>
+              <GlyphMark name={glyph} size={58} />
+            </span>
+          )}
           {title && <h2 className="sc-h">{title}</h2>}
           <p className="sc-p">{children}</p>
           {href && cta && (
@@ -1546,11 +1565,19 @@ export function Scene({
         .sc {
           position: relative; min-height: 100svh;
           display: flex; align-items: flex-end;
-          padding: 0 0 clamp(48px, 9vh, 104px);
+          padding: 0 0 clamp(72px, 12vh, 144px);
           background: #000; color: #fff; overflow: hidden;
         }
-        /* a scene with no picture yet is simply black — the words carry it */
-        .is-blank { border-top: 1px solid rgba(255, 255, 255, 0.07); }
+        /* A scene with no picture yet is simply black — the words carry it.
+           Bottom-weighting exists to keep text off a photograph; with no
+           photograph it only throws the page out of balance, so a blank
+           scene centres instead and takes equal space above and below.
+           That is what makes the chapter cards sit evenly between them. */
+        .is-blank {
+          border-top: 1px solid rgba(255, 255, 255, 0.07);
+          align-items: center;
+          padding: clamp(72px, 12vh, 144px) 0;
+        }
         .sc-bg { position: absolute; inset: 0; }
         .sc-bg :global(.m-media) {
           width: 100%; height: 100%; object-fit: cover; display: block;
@@ -1577,6 +1604,12 @@ export function Scene({
         .sc-in { position: relative; z-index: 1; width: 100%; }
         .sc-t { max-width: 40rem; }
         .is-centre .sc-t { margin-inline: auto; text-align: center; }
+
+        /* the discipline's mark, sitting above its own heading — the same
+           glyph the reader just clicked in the circle up top */
+        .sc-g { display: block; margin: 0 0 var(--space-5); color: #fff; }
+        .is-centre .sc-g { display: flex; justify-content: center; }
+        .sc-g :global(.glyph) { opacity: 0.9; }
 
         .sc-h {
           font-family: var(--font-grotesque), sans-serif;
@@ -1605,18 +1638,29 @@ export function Scene({
  * A chapter card — black, one line, nothing else. Used sparingly to
  * break a run of scenes, the way a title card breaks a reel.
  */
-export function Chapter({ children }: { children: ReactNode }) {
+export function Chapter({
+  children, tight = false,
+}: {
+  children: ReactNode
+  /** Closes the gap below, for a line that reads straight into the
+      block under it rather than standing on its own. */
+  tight?: boolean
+}) {
   return (
-    <section className="ch">
+    <section className={`ch ${tight ? 'is-tight' : ''}`}>
       <div className="section-w">
         <h2 className="ch-h">{children}</h2>
       </div>
       <style jsx>{`
+        /* Symmetric padding rather than a min-height, so the space above
+           and below is identical however many lines the card runs to. */
         .ch {
-          min-height: 44svh; display: flex; align-items: center;
+          display: flex; align-items: center; justify-content: center;
+          padding: clamp(128px, 21vh, 248px) 0;
           background: #000; color: #fff; text-align: center;
           border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
+        .ch.is-tight { padding-bottom: clamp(40px, 6vh, 72px); }
         .ch-h {
           font-family: var(--font-hand), cursive;
           font-weight: 400;

@@ -1,6 +1,7 @@
 import {
   MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner, ArrowLinkStyles,
 } from '@/components/coffee/Microsite'
+import { RemarkableCircle } from '@/components/coffee/RemarkableCircle'
 
 /* ═══════════════════════════════════════════════════════════════════
    REGENERATIVE COFFEE — the hub. This is the Remarkable Loop.
@@ -10,7 +11,7 @@ import {
    full-screen beats. Three statement cards break the run where the
    source deck breaks it, and the three most relevant paragraphs link
    straight into their pillar. Three banners hand off to the pillars,
-   and the clay Experience banner closes, as it does on every page.
+   and the clay Festival banner closes, as it does on every page.
 
    Copy source: Homepage content.pdf (the Remarkable Loop deck).
 ═══════════════════════════════════════════════════════════════════ */
@@ -21,20 +22,15 @@ export default function RegenerativeCoffeePage() {
       <MicroNav />
       <ArrowLinkStyles />
 
-      {/* 01 — Welcome */}
-      <Panel
-        id="welcome"
-        align="centre"
-        hero
-        title="Regenerative coffee."
-        lede="Coffee that leaves the land better than it found it."
-      />
+      {/* 01 — The Remarkable Circle. Nine disciplines, always turning;
+          click one and the page goes to it. */}
+      <RemarkableCircle />
 
       {/* 02 — Manifesto */}
       <Panel
         id="manifesto"
-        title="Most farming is a withdrawal. This is the opposite arrangement."
-        lede="The herd feeds the soil, the soil feeds the trees, and nothing is bought in. Not an absence of chemicals — a direction of travel."
+        title="Every season, this ground is worth more than it was."
+        lede="The herd feeds the soil, the soil feeds the trees. Nothing is bought in, and nothing is trucked away."
       />
 
       {/* ── The Remarkable Loop ─────────────────────────────────── */}
@@ -47,6 +43,8 @@ export default function RegenerativeCoffeePage() {
       </Scene>
 
       <Scene
+        id="biodynamic"
+        glyph="aura-biodynamic-glyph.svg"
         title="Biodynamic."
         href="/regenerative-coffee/biodynamic"
         cta="Explore biodynamic"
@@ -62,7 +60,9 @@ export default function RegenerativeCoffeePage() {
       </Scene>
 
       <Scene
-        title="Machine intelligence."
+        id="intelligence"
+        glyph="aura-intelligence-glyph.svg"
+        title="Aura intelligence."
         href="/regenerative-coffee/transparency"
         cta="Explore transparency"
       >
@@ -71,12 +71,15 @@ export default function RegenerativeCoffeePage() {
         of judgment. A soil test does not decide what the estate does next;
         it confirms what generations of practice already suspected. Every
         batch’s pH, conductivity and colony counts are logged, timestamped,
-        traceable to the exact preparation and the day it was applied. Not
-        a competing approach — a complementary one. The land remembers on
-        its own terms; the data just lets us prove it.
+        traceable to the exact preparation and the day it was applied. The
+        land remembers on its own terms. The data lets us prove it.
       </Scene>
 
-      <Scene title="Tree-level observation.">
+      <Scene
+        id="observation"
+        glyph="aura-observation-glyph.svg"
+        title="Tree-level observation."
+      >
         Before the cherry becomes coffee, we read the tree. A harvest does
         not begin with picking — it begins with observation, tree by tree,
         canopy by canopy: how much light reaches the coffee, how the leaves
@@ -90,6 +93,8 @@ export default function RegenerativeCoffeePage() {
       <Chapter>Attention is a moral choice.</Chapter>
 
       <Scene
+        id="microbiome"
+        glyph="aura-microbiome-glyph.svg"
         title="Microbiome."
         href="/regenerative-coffee/flavour"
         cta="Explore the flavours"
@@ -105,7 +110,7 @@ export default function RegenerativeCoffeePage() {
         settles into the cup.
       </Scene>
 
-      <Scene title="Hydrology.">
+      <Scene id="hydrology" glyph="aura-hydrology-glyph.svg" title="Hydrology.">
         These hills take the Western Ghats monsoon in full, and none of it
         runs off unused. The four-storey canopy breaks the force of the
         rain before it reaches soil; what doesn’t sink into this ground
@@ -118,7 +123,7 @@ export default function RegenerativeCoffeePage() {
 
       <Chapter>Every layer talks to every other layer.</Chapter>
 
-      <Scene title="Biodiversity.">
+      <Scene id="biodiversity" glyph="aura-biodiversity-glyph.svg" title="Biodiversity.">
         Bees move through all four layers of the canopy, and nothing they
         touch stays isolated — a flower here, a fruit set three trees over,
         a seed carried into next season’s undergrowth. Below ground,
@@ -130,7 +135,7 @@ export default function RegenerativeCoffeePage() {
         that shelters them all.
       </Scene>
 
-      <Scene title="Plant pathology.">
+      <Scene id="pathology" glyph="aura-pathology-glyph.svg" title="Plant pathology.">
         Coffee leaf rust and berry disease move fast through a monoculture
         — same clone, same canopy gap, same humidity trap, and one infected
         block becomes the whole harvest. The four-storey canopy breaks that
@@ -144,7 +149,7 @@ export default function RegenerativeCoffeePage() {
 
       <Chapter>Generational impact.</Chapter>
 
-      <Scene title="Vedic farming.">
+      <Scene id="vedic" glyph="aura-vedic-glyph.svg" title="Vedic farming.">
         This is knowledge older than the written word — passed hand to
         hand, farmer to farmer, for centuries before anyone thought to name
         it. Dung, urine, jaggery and gram flour, fermented into a soil
@@ -154,7 +159,7 @@ export default function RegenerativeCoffeePage() {
         by memory rather than manual, kept alive simply by staying in use.
       </Scene>
 
-      <Scene title="Soil.">
+      <Scene id="soil" glyph="aura-soil-glyph.svg" title="Soil.">
         Nothing touches this ground untested. Every batch is read first —
         pH, electrical conductivity, microbial colony counts, Trichoderma
         and Pseudomonas viability, even a chromatogram pulled from filter
@@ -165,10 +170,13 @@ export default function RegenerativeCoffeePage() {
         years: the land keeps what it is given. Right time, right action.
       </Scene>
 
-      {/* The ring closes — the opening question, answered. */}
-      <Closing>{`Yes, it is.
-Nine disciplines, one estate, and a loop that closes on itself every season.
-One remarkable circle.`}</Closing>
+      {/* The ring closes — the loop the hero draws, named. */}
+      <Closing>{`One remarkable circle.
+Nine disciplines reading the same hundred and fifty acres, and a loop that closes on itself every season.
+Grass.
+Herd.
+Soil.
+Canopy.`}</Closing>
 
       {/* ── The three pillars ───────────────────────────────────── */}
 

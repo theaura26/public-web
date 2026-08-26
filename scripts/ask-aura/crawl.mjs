@@ -75,10 +75,41 @@ async function discover() {
    plus the prose under it, so that is the unit a reader thinks in and
    the unit an answer should cite. Content before the first heading is
    kept as the page lede. */
-function extract(html) {
+const decodeEntities = (v) => v
+  .replace(/&amp;/g, '&')
+  .replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d)))
+  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
+
+function extract(html, pageUrl) {
   const titleM = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)
   const canonM = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i)
   const descM = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["']/i)
+
+  /* A picture for the page, for citation cards. The og:image is the
+     page's own choice of representative image, but several pages fall
+     back to one shared landscape, so a content image living under a
+     page-specific path is preferred where one exists — it is what the
+     page is actually about. Logos and interface SVGs are skipped. */
+  const ogM = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
+  const contentImages = [...html.matchAll(/<img[^>]+src=["']([^"']+)["']/gi)]
+    .map((m) => m[1])
+    .filter((src) => !/\.svg(\?|$)/i.test(src))
+    .filter((src) => !/(logo|wordmark|icon|aura-dark|aura-animated)/i.test(src))
+  const base = pageUrl || ORIGIN
+  /* Several pages open with the same shared photograph, so "the first
+     content image" is not reliably about the page. An image filed under
+     the page's own slug is; anything else defers to og:image, which is
+     at least the page's own declared choice. */
+  const slug = (() => {
+    try { return new URL(base).pathname.split('/').filter(Boolean)[0] ?? '' } catch { return '' }
+  })()
+  const own = slug
+    ? contentImages.find((src) => src.toLowerCase().includes(`/${slug.toLowerCase()}/`))
+    : undefined
+  const chosen = own ?? (ogM ? ogM[1] : contentImages[0])
+  const image = chosen
+    ? new URL(decodeEntities(chosen), base).href
+    : ''
 
   let body = html
   body = body.replace(/<script[\s\S]*?<\/script>/gi, ' ')
@@ -134,6 +165,7 @@ function extract(html) {
     title: titleM ? clean(titleM[1]) : '',
     canonical: canonM ? canonM[1] : '',
     description: descM ? clean(descM[1]) : '',
+    image,
     headings: marks.map((x) => x.heading).filter(Boolean),
     sections,
     alts,
@@ -205,7 +237,7 @@ const records = await pool(urls, CONCURRENCY, async (url) => {
     if (status !== 200) {
       return { url, status, state: 'error', seenAt, issue: `HTTP ${status}` }
     }
-    const x = extract(body)
+    const x = extract(body, url)
     const hash = createHash('sha256').update(x.text).digest('hex').slice(0, 16)
     const issues = []
     if (x.words < 80) issues.push('thin content (<80 words)')
@@ -215,12 +247,12 @@ const records = await pool(urls, CONCURRENCY, async (url) => {
     await writeFile(
       path.join(DATA_DIR, 'pages', `${id}.json`),
       JSON.stringify({ id, url, canonical: x.canonical || url, title: x.title,
-        description: x.description, seenAt, hash,
+        description: x.description, image: x.image, seenAt, hash,
         sections: x.sections, alts: x.alts, terms: x.terms }, null, 2),
     )
     return {
       url, id, status, state: 'ok', seenAt, hash,
-      title: x.title, canonical: x.canonical, description: x.description,
+      title: x.title, canonical: x.canonical, description: x.description, image: x.image,
       words: x.words, sections: x.sections.length, headings: x.headings.slice(0, 8),
       issue: issues.join('; ') || '',
     }

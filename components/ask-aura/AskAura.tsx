@@ -1,9 +1,10 @@
 'use client'
 
-import { useCallback, useEffect, useId, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { track } from '@/lib/analytics'
 import { remember, preferred } from '@/lib/ask-aura/affinity'
+import OPENERS from '@/data/ask-aura/openers.json'
 
 /* Site-wide PostHog runs with `person_profiles: 'always'` and a stable
    cookie, and the contact form later calls identify() with an email —
@@ -43,7 +44,10 @@ type Msg = {
       Try again resends that, not whatever was asked most recently. */
   question?: string
 }
-type Citation = { sourceId: string; title: string; url: string; sourceType: string }
+type Citation = {
+  sourceId: string; title: string; url: string; sourceType: string
+  image?: string; page?: string
+}
 type Suggestion = { label: string; intent: string }
 
 const STORE_KEY = 'aura:ask:v1'
@@ -53,32 +57,23 @@ const STORE_KEY = 'aura:ask:v1'
 const STORE_TTL_MS = 2 * 60 * 60 * 1000
 
 /** Openers per section of the site, so the first view knows where it is. */
+/* Openers are generated at ingest time from what each page actually
+   contains — see scripts/ask-aura/ingest.mjs — so every page in the
+   corpus gets its own, not just the handful anyone remembered to write.
+   Imported rather than fetched: it is a few kilobytes, and the dock
+   should cost nothing at the moment it opens. */
 function opening(pathname: string): { line: string; prompts: string[] } {
-  const p = pathname
-  if (p.startsWith('/mudigere')) return {
-    line: 'You are looking at Mudigere, the estate in the Western Ghats.',
-    prompts: ['Why Mudigere?', 'How does the land shape the coffee?', 'Can I visit?'],
-  }
-  if (p.startsWith('/ohara')) return {
-    line: 'This is Ohara, the second place — a garden outside Kyoto.',
-    prompts: ['Why Kyoto?', 'What happens at Ohara?', 'How do the two estates relate?'],
-  }
-  if (p.startsWith('/regenerative-coffee') || p.startsWith('/coffee')) return {
-    line: 'You are in the coffee. Ask about a lot, the ferment, or the ground it came from.',
-    prompts: ['What makes each lot different?', 'How is the soil cared for?', 'Where can I taste it?'],
-  }
-  if (p.startsWith('/field-notes')) return {
-    line: 'Field Notes — what the estate has learned, written down.',
-    prompts: ['What is biodynamic practice?', 'How is biodiversity measured?', 'What happens in the labs?'],
-  }
-  if (p.startsWith('/reason') || p.startsWith('/brand') || p.startsWith('/idea')) return {
-    line: 'This is the argument behind the whole thing.',
-    prompts: ['Why does Aura exist?', 'What is natural intelligence?', 'What does generational impact mean?'],
-  }
-  if (p.startsWith('/atelier') || p.startsWith('/artistry') || p.startsWith('/residency')) return {
-    line: 'The atelier — where the making happens.',
-    prompts: ['What is the atelier?', 'Who comes to the residency?', 'How do I apply?'],
-  }
+  const route = (pathname || '/').replace(/\/+$/, '') || '/'
+  const generated = (OPENERS as Record<string, { line: string; prompts: string[] }>)[route]
+  if (generated?.prompts?.length) return generated
+
+  /* A route the corpus has not seen — a new page, or one behind a
+     redirect. Fall back to its section, then to the general opening. */
+  const section = route.split('/')[1] ?? ''
+  const sibling = Object.entries(OPENERS as Record<string, { line: string; prompts: string[] }>)
+    .find(([r]) => section && r.startsWith(`/${section}`))
+  if (sibling) return sibling[1]
+
   return {
     line: 'Ask me anything about Aura — the estates, the coffee, the practice.',
     prompts: ['What is Aura?', 'Where are the estates?', 'What do you grow?'],
@@ -105,7 +100,6 @@ export default function AskAura() {
   const launcherRef = useRef<HTMLButtonElement>(null)
   const abortRef = useRef<AbortController | null>(null)
   const sessionRef = useRef<string>('')
-  const titleId = useId()
 
   const intro = opening(pathname ?? '/')
 
@@ -448,13 +442,20 @@ export default function AskAura() {
              as pixels — a fuller record than the analytics property this
              file works so hard not to send. */
           className="aa-panel ph-no-capture"
+          /* backdrop-filter is set inline: styled-jsx drops it from the
+             emitted rules on this build, the same way it does for the
+             article slider's fade and the menu vignette. Below 768px the
+             site kills backdrop-filter globally for scroll cost, and an
+             !important stylesheet rule beats an inline one — so mobile
+             loses the blur automatically and takes the heavier scrim
+             defined alongside the media query. */
+          style={{ backdropFilter: 'blur(52px) saturate(1.8)', WebkitBackdropFilter: 'blur(52px) saturate(1.8)' }}
           ref={panelRef}
           role="dialog"
           aria-modal="false"
-          aria-labelledby={titleId}
+          aria-label="Ask Aura"
         >
           <header className="aa-head">
-            <h2 className="aa-title" id={titleId}>Ask Aura</h2>
             <div className="aa-head-acts">
               {msgs.length > 0 && (
                 <button type="button" className="aa-mini" onClick={clear}>Clear</button>
@@ -509,16 +510,34 @@ export default function AskAura() {
 
                 {m.role === 'assistant' && !!m.citations?.length && (
                   <ul className="aa-cites">
-                    {m.citations.map((c) => (
-                      <li key={c.sourceId}>
-                        <a
-                          href={c.url}
-                          onClick={() => track('ask_aura_citation', { page: pathname, url: c.url, ...ANONYMOUS })}
-                        >
-                          {c.title.split(' › ')[0].replace(/\s*—\s*Aura$/, '')}
-                        </a>
-                      </li>
-                    ))}
+                    {m.citations.map((c) => {
+                      const name = c.page || c.title.split(' › ')[0].replace(/\s*—\s*Aura$/, '')
+                      /* The section, when the passage came from one — it
+                         says which part of the page was read, which is
+                         the useful half of a citation. */
+                      const section = c.title.includes(' › ')
+                        ? c.title.split(' › ').slice(1).join(' › ').replace(/\.$/, '')
+                        : ''
+                      return (
+                        <li key={c.sourceId}>
+                          <a
+                            className="aa-card"
+                            href={c.url}
+                            onClick={() => track('ask_aura_citation', { page: pathname, url: c.url, ...ANONYMOUS })}
+                          >
+                            <span
+                              className="aa-card-thumb"
+                              aria-hidden
+                              style={c.image ? { backgroundImage: `url(${c.image})` } : undefined}
+                            />
+                            <span className="aa-card-text">
+                              <span className="aa-card-title">{name}</span>
+                              {section && <span className="aa-card-sub">{section}</span>}
+                            </span>
+                          </a>
+                        </li>
+                      )
+                    })}
                   </ul>
                 )}
               </div>
@@ -570,9 +589,7 @@ export default function AskAura() {
           </form>
 
           <p className="aa-terms">
-            Answers come from Aura&rsquo;s own pages and can be wrong. Your
-            question is not recorded — we keep only the subject it was about,
-            and nothing that identifies you.
+            Answers can be wrong, and your question is never recorded.
           </p>
         </div>
       )}
@@ -631,35 +648,63 @@ export default function AskAura() {
 
         /* ── panel ── */
         .aa-panel {
-          /* The site's --text-muted and --text-dim are decorative weights
-             tuned for large display type over imagery. Here they land on
-             9–11px functional labels — Clear, Close, citations, the terms
-             line — where they measure 2.6:1 in day theme and fail AA
-             outright. The dock uses its own weight instead: 8.5:1 on the
-             night ground, 5.9:1 on the day one, in both cases against the
-             panel's own near-opaque background rather than whatever
-             happens to be behind it. */
-          --aa-meta: color-mix(in srgb, var(--text) 68%, transparent);
+          /* Glass, and dark on purpose. This panel floats over hero
+             video as often as over white, so it cannot borrow the page's
+             ground and stay readable. A dark scrim with heavy blur and
+             lifted saturation takes its colour from whatever is behind
+             it — warm over the estate photography, cool over the forest
+             footage — while the text on top stays white against a
+             constant, known ground. Contrast is a property of the panel,
+             not of the page it happens to be sitting on. */
+          --aa-ink: rgba(255, 255, 255, 0.96);
+          --aa-meta: rgba(255, 255, 255, 0.62);
+          --aa-line: rgba(255, 255, 255, 0.14);
+          --aa-fill: rgba(255, 255, 255, 0.10);
+
           position: fixed;
           right: max(20px, env(safe-area-inset-right, 0px));
           bottom: max(20px, env(safe-area-inset-bottom, 0px));
           z-index: 46;
-          width: min(420px, calc(100vw - 40px));
-          max-height: min(620px, calc(100dvh - 120px));
+          width: min(440px, calc(100vw - 40px));
+          max-height: min(640px, calc(100dvh - 120px));
           display: flex; flex-direction: column;
-          border: 1px solid var(--border-strong);
-          border-radius: var(--radius-2);
-          /* Readability beats translucency here. The brief is explicit
-             that the transcript stays crisp, and this panel floats over
-             hero video as often as over white — 97% keeps AA contrast
-             on both while the edge still reads as glass. */
-          background: color-mix(in oklab, var(--bg) 97%, transparent);
-          backdrop-filter: blur(28px) saturate(1.4);
-          -webkit-backdrop-filter: blur(28px) saturate(1.4);
-          box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
-          color: var(--text);
+          border-radius: 28px;
+          /* Paired with the inline blur above, which does the tinting:
+             the panel still takes its colour from the page, warm over the
+             estate photographs and green over the forest.
+             The alpha is higher than the reference's because this site
+             is not the reference's. Aura's pages open with display type
+             at a hundred points, and a heading that size is low-frequency
+             enough that a 52px blur barely touches it — at 0.72 the word
+             CIRCULAR read straight through the answer. Blur softens
+             photographs and does almost nothing to letterforms, so the
+             scrim has to carry the type on its own. */
+          background: rgba(22, 20, 19, 0.9);
+          /* Two edges, not a border: a light top edge where a real pane
+             would catch the sky, and a darker outer ring to seat it. */
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.22),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+            0 24px 70px rgba(0, 0, 0, 0.42);
+          color: var(--aa-ink);
           overflow: hidden;
           animation: aa-in var(--dur-slow) var(--ease-out);
+        }
+
+        /* Where backdrop-filter is unavailable the scrim has to carry the
+           legibility on its own. */
+        /* No blur — either the browser cannot, the visitor asked for less
+           transparency, or the site switched it off for scroll cost below
+           768px. In every case the scrim is the only thing keeping the
+           page out of the answer, so it stops pretending to be glass. */
+        @supports not (backdrop-filter: blur(1px)) {
+          .aa-panel { background: rgba(22, 20, 19, 0.95); }
+        }
+        @media (prefers-reduced-transparency: reduce) {
+          .aa-panel { background: rgba(22, 20, 19, 0.97); }
+        }
+        @media (max-width: 768px) {
+          .aa-panel { background: rgba(22, 20, 19, 0.95); }
         }
         @keyframes aa-in {
           from { opacity: 0; transform: translateY(12px); }
@@ -667,32 +712,29 @@ export default function AskAura() {
         }
 
         .aa-head {
-          display: flex; align-items: center; justify-content: space-between;
-          padding: 14px 14px 12px 18px;
-          border-bottom: 1px solid var(--border);
+          display: flex; align-items: center; justify-content: flex-end;
+          padding: 12px 12px 0;
           flex: none;
-        }
-        .aa-title {
-          margin: 0;
-          font-family: var(--font-mono), monospace;
-          font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;
-          font-weight: 400; color: var(--aa-meta);
         }
         .aa-head-acts { display: flex; align-items: center; gap: 4px; }
         .aa-mini {
           background: none; border: 0; cursor: pointer;
           font-family: var(--font-mono), monospace;
           font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
-          color: var(--aa-meta); padding: 8px;
+          color: var(--aa-meta); padding: 8px 10px;
           transition: color var(--dur-base) var(--ease);
         }
-        .aa-mini:hover { color: var(--brand-accent); }
+        .aa-mini:hover { color: var(--aa-ink); }
         .aa-close {
-          background: none; border: 0; cursor: pointer;
-          width: 32px; height: 32px; font-size: 20px; line-height: 1;
-          color: var(--aa-meta);
+          display: grid; place-items: center;
+          width: 34px; height: 34px;
+          border: 0; border-radius: 50%; cursor: pointer;
+          background: var(--aa-fill);
+          font-size: 18px; line-height: 1;
+          color: var(--aa-ink);
+          transition: background var(--dur-base) var(--ease);
         }
-        .aa-close:hover { color: var(--text); }
+        .aa-close:hover { background: rgba(255, 255, 255, 0.2); }
         .aa-mini:focus-visible, .aa-close:focus-visible {
           outline: 2px solid var(--brand-accent); outline-offset: 2px;
         }
@@ -704,37 +746,55 @@ export default function AskAura() {
           scrollbar-width: thin;
         }
 
-        .aa-intro { display: flex; flex-direction: column; gap: 14px; }
+        .aa-intro { display: flex; flex-direction: column; gap: 16px; }
         .aa-intro-line {
-          margin: 0; font-size: 15px; line-height: 1.55; color: var(--text-body);
+          margin: 0;
+          font-family: var(--font-sans), system-ui, sans-serif;
+          font-size: 21px; line-height: 1.32; letter-spacing: -0.01em;
+          font-weight: 500;
+          color: var(--aa-ink);
+          text-wrap: balance;
         }
 
         .aa-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
         .aa-chips-follow { margin-top: -4px; }
         .aa-chip {
-          font-family: var(--font-mono), monospace;
-          font-size: 10.5px; letter-spacing: 0.6px;
-          padding: 8px 12px; min-height: 32px;
-          border: 1px solid var(--border-strong); border-radius: 999px;
-          background: transparent; color: var(--text-body); cursor: pointer;
+          /* Bricolage: these are questions a person would say out loud,
+             not interface labels, so they take the reading face. */
+          font-family: var(--font-sans), system-ui, sans-serif;
+          font-size: 14px; line-height: 1.25; letter-spacing: -0.005em;
+          padding: 10px 16px; min-height: 38px;
+          border: 0; border-radius: 999px;
+          background: var(--aa-fill);
+          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10);
+          color: var(--aa-ink); cursor: pointer;
           text-align: left;
-          transition: color var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease);
+          transition: background var(--dur-base) var(--ease), color var(--dur-base) var(--ease);
         }
-        .aa-chip:hover { color: var(--brand-accent); border-color: var(--brand-accent); }
-        .aa-chip:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 2px; }
+        /* The first opener is the one most people want; it leads. */
+        .aa-chips:not(.aa-chips-follow) > li:first-child .aa-chip {
+          background: rgba(250, 248, 245, 0.94);
+          color: #17150f;
+          box-shadow: none;
+          font-weight: 500;
+        }
+        .aa-chip:hover { background: rgba(255, 255, 255, 0.22); }
+        .aa-chips:not(.aa-chips-follow) > li:first-child .aa-chip:hover { background: #fff; }
+        .aa-chip:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }
 
         .aa-msg { display: flex; flex-direction: column; gap: 8px; }
         .aa-msg.is-user { align-items: flex-end; }
         .aa-msg.is-user .aa-text {
-          background: color-mix(in oklab, var(--brand-accent) 14%, transparent);
-          border: 1px solid color-mix(in oklab, var(--brand-accent) 30%, transparent);
-          border-radius: var(--radius-2);
-          padding: 9px 12px;
+          background: color-mix(in oklab, var(--brand-accent) 34%, transparent);
+          border: 0;
+          border-radius: 16px;
+          padding: 10px 14px;
           max-width: 88%;
+          color: var(--aa-ink);
         }
         .aa-text {
           margin: 0; font-size: 14.5px; line-height: 1.62;
-          color: var(--text); white-space: pre-wrap; text-wrap: pretty;
+          color: var(--aa-ink); white-space: pre-wrap; text-wrap: pretty;
         }
         .aa-msg.is-failed .aa-text { color: var(--aa-meta); }
 
@@ -748,56 +808,92 @@ export default function AskAura() {
         .aa-thinking i:nth-child(3) { animation-delay: 0.3s; }
         @keyframes aa-pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
 
-        .aa-cites { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 12px; }
-        .aa-cites a {
-          font-family: var(--font-mono), monospace;
-          font-size: 9.5px; letter-spacing: 0.8px; text-transform: uppercase;
-          color: var(--aa-meta); text-decoration: none;
-          border-bottom: 1px solid var(--border-strong);
-          padding-bottom: 1px;
+        .aa-cites {
+          list-style: none; margin: 2px 0 0; padding: 0;
+          display: grid; gap: 6px;
         }
-        .aa-cites a:hover { color: var(--brand-accent); border-color: var(--brand-accent); }
+        /* A card, not a link list: the picture is how someone recognises
+           a page they have already read, and recognising it is most of
+           what a citation is for. */
+        .aa-card {
+          display: grid;
+          grid-template-columns: 40px 1fr;
+          align-items: center;
+          gap: 10px;
+          padding: 6px;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.07);
+          text-decoration: none;
+          transition: background var(--dur-base) var(--ease);
+        }
+        .aa-card:hover { background: rgba(255, 255, 255, 0.16); }
+        .aa-card:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }
+        .aa-card-thumb {
+          width: 40px; height: 40px;
+          border-radius: 8px;
+          background-color: rgba(255, 255, 255, 0.12);
+          background-size: cover;
+          background-position: center;
+          flex: none;
+        }
+        .aa-card-text { display: grid; gap: 1px; min-width: 0; }
+        .aa-card-title {
+          font-family: var(--font-sans), system-ui, sans-serif;
+          font-size: 13px; line-height: 1.25; font-weight: 500;
+          color: var(--aa-ink);
+          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .aa-card-sub {
+          font-family: var(--font-mono), monospace;
+          font-size: 9.5px; letter-spacing: 0.6px; text-transform: uppercase;
+          color: var(--aa-meta);
+          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
 
         .aa-form {
-          flex: none; display: flex; gap: 8px; align-items: flex-end;
-          padding: 12px 14px; border-top: 1px solid var(--border);
+          flex: none;
+          display: flex; align-items: center; gap: 10px;
+          margin: 0 18px;
+          padding: 12px 0 10px;
+          border-top: 1px solid var(--aa-line);
         }
         .aa-input {
-          flex: 1 1 auto; resize: none;
-          font-family: var(--font-sans); font-size: 15px; line-height: 1.45;
-          /* 16px on iOS avoids the zoom-on-focus jump; 15 is fine elsewhere. */
-          /* Two lines of placeholder without clipping. */
-          min-height: 48px; max-height: 120px;
-          padding: 10px 10px;
-          border: 1px solid var(--border-strong); border-radius: var(--radius-2);
-          background: color-mix(in oklab, var(--bg) 60%, transparent);
-          color: var(--text);
+          flex: 1 1 auto; min-width: 0;
+          background: none; border: 0; resize: none;
+          font-family: var(--font-sans), system-ui, sans-serif;
+          font-size: 15px; line-height: 1.4;
+          color: var(--aa-ink);
+          max-height: 96px;
+          padding: 6px 0;
         }
         .aa-input::placeholder { color: var(--aa-meta); }
-        .aa-input:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 1px; }
+        .aa-input:focus { outline: none; }
+        .aa-form:focus-within { border-top-color: rgba(255, 255, 255, 0.34); }
         .aa-send {
-          flex: none; min-height: 40px; padding: 0 16px;
-          border: 0; border-radius: var(--radius-2);
-          /* White on this orange measures 3.15:1. The brand's own ink on
-             the same orange measures 5.7:1 and looks more deliberate. */
-          background: var(--brand-accent); color: #131719; cursor: pointer;
+          flex: none;
+          display: grid; place-items: center;
+          min-width: 40px; height: 36px; padding: 0 14px;
+          border: 0; border-radius: 999px;
+          background: rgba(250, 248, 245, 0.94); color: #17150f;
+          cursor: pointer;
           font-family: var(--font-mono), monospace;
-          font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
-          transition: filter var(--dur-base) var(--ease);
+          font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase;
+          transition: opacity var(--dur-base) var(--ease), background var(--dur-base) var(--ease);
         }
-        .aa-send:hover:not(:disabled) { filter: brightness(1.08); }
-        .aa-send:disabled { opacity: 0.55; cursor: default; }
-        .aa-send:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+        .aa-send:hover:not(:disabled) { background: #fff; }
+        .aa-send:disabled { opacity: 0.4; cursor: default; }
+        .aa-send:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }
 
         .aa-terms {
-          flex: none; margin: 0;
-          padding: 0 14px 12px;
+          flex: none;
+          margin: 0;
+          padding: 0 18px 16px;
+          text-align: center;
           font-family: var(--font-mono), monospace;
-          font-size: 10px; line-height: 1.5; letter-spacing: 0.3px;
+          font-size: 9.5px; line-height: 1.5; letter-spacing: 0.4px;
           color: var(--aa-meta);
         }
 
-        /* ── phone: a sheet, not a floating card ── */
         @media (max-width: 620px) {
           .aa-panel {
             right: 0; left: 0; bottom: 0;

@@ -23,6 +23,8 @@ export type Chunk = {
   title: string
   sectionPath: string
   heading: string
+  /** A representative picture of the page, for citation cards. */
+  image?: string
   text: string
   hash: string
   sourceType: SourceType

@@ -183,7 +183,11 @@ async function followUps(
               'You write follow-up questions a curious visitor to a regenerative coffee estate might ask next. ' +
               'Return JSON: {"suggestions":[{"label":"...","intent":"..."}]}. Two or three. ' +
               'Each must open a NEW subject, never restate what was just answered. ' +
-              'Six words or fewer, sentence case, no question mark unless natural. British English.',
+              'Each is a QUESTION someone would actually say out loud, ending in a question mark. ' +
+              'Never a command or a topic label: "How is the pepper dried?" is right; ' +
+              '"Learn about the pepper" and "Explore drying methods" are wrong. ' +
+              'Never begin with Learn, Explore, Discover, Dive or Uncover. ' +
+              'Seven words or fewer, sentence case, British English.',
           },
           { role: 'user', content: `They asked: ${question}\n\nThey were told: ${answer.slice(0, 1200)}` },
         ],
@@ -355,6 +359,10 @@ export async function POST(req: Request) {
             title: h.chunk.sectionPath,
             url: h.chunk.url,
             sourceType: h.chunk.sourceType,
+            image: h.chunk.image ?? '',
+            /* The page's own name, without the section and without the
+               "— Aura" suffix: a card wants a title, not a breadcrumb. */
+            page: h.chunk.title.split(' — ')[0].split(' › ')[0],
           }))
 
         const suggestions = await followUps(message, answer, key, req.signal)

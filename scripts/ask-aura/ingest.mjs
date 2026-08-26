@@ -112,6 +112,7 @@ function chunkPage(page) {
         docId: page.id,
         url: page.canonical || page.url,
         title: page.title,
+        image: page.image || '',
         /* The path a reader would describe: page → section. */
         sectionPath: [page.title, sec.heading].filter(Boolean).join(' › '),
         heading: sec.heading,
@@ -134,6 +135,7 @@ function chunkPage(page) {
         docId: page.id,
         url: page.canonical || page.url,
         title: page.title,
+        image: page.image || '',
         sectionPath: `${page.title} › Images`,
         heading: 'Images',
         text,
@@ -159,6 +161,7 @@ function chunkPage(page) {
         docId: page.id,
         url: page.canonical || page.url,
         title: page.title,
+        image: page.image || '',
         sectionPath: `${page.title} › Glossary`,
         heading: 'Glossary',
         text,
@@ -286,6 +289,89 @@ const corpus = {
 
 await mkdir(DATA, { recursive: true })
 await writeFile(path.join(DATA, 'corpus.json'), JSON.stringify(corpus))
+
+/* ── openers ────────────────────────────────────────────────────────
+   Three questions worth asking on each page, written from what that
+   page actually contains. Built here rather than in the browser so the
+   dock costs nothing at open time, and cached against the page hash so
+   this only spends a model call when the page itself has changed.
+
+   The alternative — showing every visitor "What is Aura?" regardless of
+   where they are standing — wastes the one moment the dock has to prove
+   it knows the page. */
+const OPENERS = path.join(DATA, 'openers.json')
+let openers = {}
+try { openers = JSON.parse(await readFile(OPENERS, 'utf8')) } catch { /* first run */ }
+
+const openerKey = process.env.OPENAI_API_KEY
+let written = 0
+let reused = 0
+
+for (const page of pages) {
+  const route = new URL(page.url).pathname || '/'
+  const cached = openers[route]
+  if (cached?.hash === page.hash) { reused++; continue }
+  if (!openerKey) continue
+
+  const headings = (page.sections ?? [])
+    .map((sec) => sec.heading)
+    .filter(Boolean)
+    .slice(0, 12)
+  const lede = (page.sections?.[0]?.text ?? '').slice(0, 600)
+
+  try {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${openerKey}` },
+      body: JSON.stringify({
+        model: 'gpt-4.1-mini',
+        temperature: 0.3,
+        response_format: { type: 'json_object' },
+        messages: [
+          {
+            role: 'system',
+            content:
+              'You write the two or three questions a curious visitor would most want to ask ' +
+              'while reading one page of a regenerative coffee estate\u2019s website, plus one short ' +
+              'line introducing the page.\n' +
+              'Return JSON: {"line":"...","prompts":["...","...","..."]}.\n' +
+              'The line is one sentence, under 14 words, saying what the reader is looking at, ' +
+              'in plain direct English. Say what the thing IS. Never open with Discover, ' +
+              'Explore, Learn about, Dive into or Uncover; never begin "Aura is"; never sell. ' +
+              '"The palm the whole estate is built on." is right. ' +
+              '"Discover the Sentinel Palm and its role" is wrong.\n' +
+              'Each prompt is a real question, six words or fewer where possible, answerable ' +
+              'from THIS page. Specific to it \u2014 never "What is Aura?" or "Tell me more". ' +
+              'Natural British English, sentence case, ending in a question mark.',
+          },
+          {
+            role: 'user',
+            content: `PAGE: ${page.title}\nURL: ${page.url}\nSECTIONS:\n${headings.join('\n')}\n\nOPENING TEXT:\n${lede}`,
+          },
+        ],
+      }),
+    })
+    if (!res.ok) continue
+    const json = await res.json()
+    const parsed = JSON.parse(json.choices?.[0]?.message?.content ?? '{}')
+    const prompts = (parsed.prompts ?? [])
+      .filter((q) => typeof q === 'string' && q.length > 4 && q.length < 60)
+      .slice(0, 3)
+    if (!parsed.line || prompts.length < 2) continue
+    openers[route] = { hash: page.hash, line: String(parsed.line).slice(0, 120), prompts }
+    written++
+  } catch { /* a page without openers falls back to the generic set */ }
+}
+
+/* Drop routes that no longer exist. */
+const liveRoutes = new Set(pages.map((pg) => new URL(pg.url).pathname || '/'))
+for (const route of Object.keys(openers)) {
+  if (!liveRoutes.has(route)) delete openers[route]
+}
+
+await writeFile(OPENERS, JSON.stringify(openers, null, 2))
+console.log(`  openers: ${written} written · ${reused} reused · ${Object.keys(openers).length} routes`)
+
 
 console.log(`Ingested ${pages.length} pages → ${chunks.length} chunks`)
 console.log(`  aura: ${auraChunks.length} · external: ${externalChunks.length} · embedded: ${corpus.counts.embedded}`)

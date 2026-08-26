@@ -1079,7 +1079,10 @@ export default function AskAura() {
         .aa-cites {
           list-style: none;
           margin: 0; padding: 0;
+          /* Ruled top and bottom, so the last row closes the set rather
+             than trailing off. */
           border-top: 1px solid var(--aa-line);
+          border-bottom: 1px solid var(--aa-line);
         }
         .aa-cites > li + li { border-top: 1px solid var(--aa-line); }
         .aa-card {

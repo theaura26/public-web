@@ -246,7 +246,7 @@ export const SECTIONS: NavSection[] = [
           { label: 'Harvest tours', href: '/from-aura/harvest-tours', soon: true },
         ],
       },
-      { label: 'View all', href: '/from-aura', soon: true },
+      { label: 'View all', href: '/from-aura' },
     ],
   },
   {

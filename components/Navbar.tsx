@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { SECTIONS, TABS, sectionFor } from '@/lib/site-nav'
+import { TABS } from '@/lib/site-nav'
 import { useMode } from './ModeProvider'
 import { LogoEmblem } from './Logo'
 import ContactModal from './ContactModal'
@@ -77,108 +77,12 @@ const ARTICLES: Article[] = [
    (Shop, until there is something to sell); `soon` is a real
    destination that has no page yet. Both render unclickable — the
    difference is that one is a decision and the other is a backlog. */
-type NavItem = {
-  href?: string
-  label: string
-  /** Deliberately switched off, as Shop is until there is stock. */
-  off?: boolean
-  children?: NavItem[]
-}
 /** A group is either an accordion (has `items`) or a plain link (has
  *  `href`). Home is the only link — it has nothing to expand into. */
-type NavGroup = { id: string; label: string; note?: string; href?: string; items?: NavItem[] }
 
-const NAV_GROUPS: NavGroup[] = [
-  { id: 'home', label: 'Home', href: '/' },
-  {
-    id: 'shop',
-    label: 'Shop',
-    items: [
-      { label: 'Artist Residencies', off: true },
-      { label: 'Coffee', off: true },
-      { label: 'Experiences', off: true },
-      { label: 'Tea', off: true },
-      { label: 'View All', off: true },
-    ],
-  },
-  {
-    id: 'coffee',
-    label: 'Regenerative Coffee',
-    items: [
-      { href: '/regenerative-coffee', label: 'Remarkable Circle' },
-      { href: '/regenerative-coffee/biodynamic', label: 'Better Ground' },
-      { href: '/regenerative-coffee/transparency', label: 'Transparency' },
-      { href: '/regenerative-coffee/flavour', label: 'Flavours' },
-      { href: '/regenerative-coffee/experience', label: 'Aura Festival' },
-    ],
-  },
-  {
-    id: 'notes',
-    label: 'Field Notes',
-    items: [
-      { href: '/field-notes/activities', label: 'Activities' },
-      { href: '/field-notes/biodynamic', label: 'Biodynamic' },
-      { href: '/field-notes/biodiversity', label: 'Biodiversity' },
-      { href: '/field-notes/labs', label: 'Labs' },
-      { href: '/field-notes', label: 'View All' },
-    ],
-  },
-  {
-    id: 'about',
-    label: 'About',
-    items: [
-      { href: '/atelier', label: 'Atelier' },
-      { href: '/reason', label: 'The Reason' },
-      { href: '/brand', label: 'Our Brand' },
-      { href: '/ohara', label: 'Ohara' },
-      { href: '/mudigere', label: 'Mudigere' },
-      { href: '/contact', label: 'Contact Us' },
-    ],
-  },
-]
 
-/** The group that owns the current route, so the menu opens where you are. */
-function groupForPath(pathname: string): string {
-  for (const g of NAV_GROUPS) {
-    for (const item of g.items ?? []) {
-      const hrefs = [item.href, ...(item.children ?? []).map((c) => c.href)]
-      if (hrefs.some((h) => h && h !== '/' && pathname.startsWith(h))) return g.id
-    }
-  }
-  return 'notes'
-}
 
 const INSTAGRAM_URL = 'https://www.instagram.com/theaura.life/'
-
-/** One menu row. A destination is a link; anything switched off or
- *  unbuilt renders as plain text, because a dead link is worse than an
- *  honest label. */
-function NavLeaf({
-  item, onGo, pathname,
-}: {
-  item: NavItem
-  onGo: () => void
-  pathname: string
-}) {
-  if (!item.href || item.off) {
-    return (
-      <span className={`mg-item ${item.off ? 'is-off' : ''}`} aria-disabled>
-        {item.label}
-      </span>
-    )
-  }
-  return (
-    <Link
-      href={item.href}
-      onClick={onGo}
-      className="mg-item"
-      data-attr={`menu-link:${item.href}`}
-      data-active={pathname === item.href}
-    >
-      {item.label}
-    </Link>
-  )
-}
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -201,16 +105,6 @@ export default function Navbar() {
     return () => { if (hoverTimer.current) clearTimeout(hoverTimer.current) }
   }, [])
 
-  /* Hovering an entry that has nothing to open still closes what is
-     open — on the same intent delay, so sweeping past does nothing. */
-  const cancelHover = () => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current)
-  }
-  const hoverCollapse = () => {
-    if (!canHoverRef.current) return
-    cancelHover()
-    hoverTimer.current = setTimeout(() => setOpenGroup(''), 110)
-  }
   /* Inline contact modal — opened by the /mudigere "Contact
      us" nav link instead of routing to /contact, so the architect
      stays on the briefing page while writing. */
@@ -240,11 +134,11 @@ export default function Navbar() {
      failing that whichever one covers the page they are on, and failing
      that the first. Derived rather than stored, so it cannot fall out of
      step with the route. */
-  const routeSection = sectionFor(pathname)
-  const activeSection =
-    openGroup ??
-    (TABS.some((t) => t.id === routeSection) ? routeSection : null) ??
-    TABS[0].id
+  /* Always opens on the first section. Opening on whichever section
+     covered the current route meant the menu looked different every
+     time it was opened, and a reader cannot learn a shape that keeps
+     moving. `openGroup` is what the reader has pointed at since. */
+  const activeSection = openGroup ?? TABS[0].id
   const scrollRef = useRef<HTMLDivElement>(null)
   const tileRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
@@ -789,10 +683,10 @@ export default function Navbar() {
                     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
                       e.preventDefault()
                       const next = e.key === 'ArrowRight'
-                        ? (i + 1) % SECTIONS.length
-                        : (i - 1 + SECTIONS.length) % SECTIONS.length
-                      setOpenGroup(SECTIONS[next].id)
-                      document.getElementById(`mn-tab-${SECTIONS[next].id}`)?.focus()
+                        ? (i + 1) % TABS.length
+                        : (i - 1 + TABS.length) % TABS.length
+                      setOpenGroup(TABS[next].id)
+                      document.getElementById(`mn-tab-${TABS[next].id}`)?.focus()
                     }
                   }}
                 >
@@ -811,7 +705,6 @@ export default function Navbar() {
 
             {TABS.map((sec) => {
               const on = activeSection === sec.id
-              let lastGroup: string | undefined
               return (
                 <div
                   key={sec.id}
@@ -877,8 +770,6 @@ export default function Navbar() {
             href="/now"
             className="mg-live"
             onClick={() => setMenuOpen(false)}
-            onMouseEnter={hoverCollapse}
-            onMouseLeave={cancelHover}
             data-attr="menu-link:/now"
           >
             Live

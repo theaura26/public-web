@@ -93,6 +93,12 @@ export default function AskAura() {
      mutation produces a stutter of half-sentences that outlasts the
      answer. Status goes here instead, once per state change. */
   const [announcement, setAnnouncement] = useState('')
+  /* Which of the page's questions the closed bar is showing. It cycles,
+     so the bar advertises what this page can actually answer instead of
+     asking to be clicked. */
+  const [tick, setTick] = useState(0)
+  const intro = opening(pathname ?? '/')
+  const teaser = intro.prompts[tick % Math.max(intro.prompts.length, 1)] ?? 'Ask about the estates'
 
   const panelRef = useRef<HTMLDivElement>(null)
   const logRef = useRef<HTMLDivElement>(null)
@@ -101,7 +107,6 @@ export default function AskAura() {
   const abortRef = useRef<AbortController | null>(null)
   const sessionRef = useRef<string>('')
 
-  const intro = opening(pathname ?? '/')
 
   /* ── session id: per browser session, not per person ── */
   useEffect(() => {
@@ -145,6 +150,17 @@ export default function AskAura() {
     }, 400)
     return () => clearTimeout(t)
   }, [msgs])
+
+  /* The bar ticks only while it is the thing on screen, and not at all
+     for a visitor who asked for less motion — for them it settles on the
+     first question, which is the one most people want anyway. */
+  useEffect(() => {
+    if (open) return
+    if (typeof window === 'undefined') return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const id = setInterval(() => setTick((n) => n + 1), 4200)
+    return () => clearInterval(id)
+  }, [open])
 
   /* ── real glass on the launcher only ── */
   useEffect(() => {
@@ -413,6 +429,11 @@ export default function AskAura() {
 
   const lastUser = [...msgs].reverse().find((m) => m.role === 'user')
   const tail = msgs[msgs.length - 1]
+  /* Nudged, not reordered: `preferred` is a stable sort, so anything the
+     model ranked equally keeps the order it gave. */
+  const followUps = tail?.role === 'assistant' && !tail.pending
+    ? preferred(tail.suggestions ?? [])
+    : []
 
   return (
     <>
@@ -423,9 +444,21 @@ export default function AskAura() {
           className={`aa-launch ${glassOn ? 'is-glass' : ''}`}
           onClick={() => { setOpen(true); track('ask_aura_opened', { page: pathname, ...ANONYMOUS }) }}
           aria-haspopup="dialog"
+          /* A stable name. The visible text moves, and a label that
+             changes under a screen reader every few seconds is a moving
+             target rather than a control. */
+          aria-label="Ask Aura"
         >
           <span className="aa-dot" aria-hidden />
-          Ask Aura
+          <span className="aa-launch-tick" aria-hidden>
+            <span key={tick} className="aa-launch-q">{teaser}</span>
+          </span>
+          <span className="aa-launch-icon" aria-hidden>
+            {/* Phosphor — paper-plane-tilt, fill */}
+            <svg viewBox="0 0 256 256" width="17" height="17" focusable="false">
+              <path fill="currentColor" d="M231.4,44.34s0,.1,0,.15l-58.2,191.94a15.88,15.88,0,0,1-14,11.51q-.69.06-1.38.06a15.86,15.86,0,0,1-14.42-9.15L107,164.15a4,4,0,0,1,.77-4.58l57.92-57.92a8,8,0,0,0-11.31-11.31L96.43,148.26a4,4,0,0,1-4.58.77L17.08,112.64a16,16,0,0,1,2.49-29.8l191.94-58.2h.15A16,16,0,0,1,231.4,44.34Z" />
+            </svg>
+          </span>
         </button>
       )}
 
@@ -573,6 +606,22 @@ export default function AskAura() {
                 )}
               </div>
             ))}
+
+            {followUps.length > 0 && (
+              <ul className="aa-chips aa-chips-follow">
+                {followUps.map((s, i) => (
+                  <li key={s.label}>
+                    <button
+                      type="button"
+                      className="aa-chip"
+                      onClick={() => { track('ask_aura_suggestion', { page: pathname, kind: 'follow_up', position: i, intent: s.intent, ...ANONYMOUS }); send(s.label) }}
+                    >
+                      {s.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <form
@@ -618,32 +667,66 @@ export default function AskAura() {
 
       <style jsx global>{`
         /* ── launcher ── */
+        /* Closed, this is a chat bar rather than a button: the width of
+           a place to type, showing one of the questions this page can
+           actually answer and changing it every few seconds. A pill that
+           says "Ask Aura" asks to be clicked; a bar that says "How do you
+           compost the herd's dung?" tells the reader what they would get.
+
+           It floats over whatever the page happens to be — a dark hero
+           video, a white editorial spread — so it cannot borrow theme
+           tokens and stay legible. It carries its own ground and holds
+           WCAG AA against both. */
         .aa-launch {
           position: fixed;
           left: 50%;
           bottom: max(20px, env(safe-area-inset-bottom, 0px));
           transform: translateX(-50%);
           z-index: 45;
-          display: inline-flex; align-items: center; gap: 9px;
-          min-height: 44px; padding: 11px 20px;
+          width: min(560px, calc(100vw - 32px));
+          display: flex; align-items: center; gap: 12px;
+          min-height: 56px; padding: 0 18px 0 20px;
           border-radius: 999px;
-          /* This floats over whatever the page happens to be — a dark
-             hero video, a white editorial spread. It cannot borrow theme
-             tokens and stay legible, so it carries its own ground and
-             holds WCAG AA against both. */
           border: 1px solid rgba(255, 255, 255, 0.22);
           background: rgba(19, 23, 25, 0.72);
           backdrop-filter: blur(14px) saturate(1.4);
           -webkit-backdrop-filter: blur(14px) saturate(1.4);
           color: #fff;
-          font-family: var(--font-mono), monospace;
-          font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;
           cursor: pointer;
-          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
+          text-align: left;
+          box-shadow: 0 10px 34px rgba(0, 0, 0, 0.22);
           transition: transform var(--dur-base) var(--ease-out),
                       border-color var(--dur-base) var(--ease);
         }
-        .aa-launch:hover { transform: translateX(-50%) translateY(-2px); border-color: var(--brand-accent); }
+        .aa-launch:hover { transform: translateX(-50%) translateY(-2px); border-color: rgba(255, 255, 255, 0.5); }
+
+        /* One line high and clipped, so a question leaving and the next
+           arriving never change the height of the bar. */
+        .aa-launch-tick {
+          flex: 1 1 auto; min-width: 0;
+          position: relative;
+          height: 1.4em;
+          overflow: hidden;
+        }
+        .aa-launch-q {
+          display: block;
+          font-family: var(--font-sans), system-ui, sans-serif;
+          font-size: 14px; line-height: 1.4; font-weight: 400;
+          color: rgba(255, 255, 255, 0.82);
+          white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+          animation: aa-tick var(--dur-slow) var(--ease-out);
+        }
+        @keyframes aa-tick {
+          from { opacity: 0; transform: translateY(0.6em); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .aa-launch-icon {
+          flex: none; display: grid; place-items: center;
+          width: 34px; height: 34px;
+          color: rgba(255, 255, 255, 0.62);
+          transition: color var(--dur-base) var(--ease);
+        }
+        .aa-launch:hover .aa-launch-icon { color: #fff; }
         /* Heard, not seen. Kept in the layout rather than display:none,
            which some screen readers skip entirely. */
         .aa-status {
@@ -710,8 +793,11 @@ export default function AskAura() {
           right: max(20px, env(safe-area-inset-right, 0px));
           bottom: max(20px, env(safe-area-inset-bottom, 0px));
           z-index: 46;
-          width: min(440px, calc(100vw - 40px));
-          max-height: min(640px, calc(100dvh - 120px));
+          /* Room to read in. The dock is where a whole conversation
+             happens, not a notification, and at 440 the answers were
+             scrolling almost as fast as they arrived. */
+          width: min(620px, calc(100vw - 40px));
+          max-height: min(min(820px, 88dvh), calc(100dvh - 88px));
           display: flex; flex-direction: column;
           border-radius: 28px;
           /* Paired with the inline blur above, which does the tinting:
@@ -810,6 +896,9 @@ export default function AskAura() {
         }
 
         .aa-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+        /* Where the conversation goes next, offered after the sources
+           rather than between the answer and its provenance. */
+        .aa-chips-follow { margin-top: -4px; }
         .aa-chips-follow { margin-top: -4px; }
         .aa-chip {
           /* Bricolage: these are questions a person would say out loud,
@@ -1037,6 +1126,7 @@ export default function AskAura() {
           .aa-thinking i { animation: none; opacity: 0.6; }
           .aa-launch { transition: none; }
           .aa-launch:hover { transform: translateX(-50%); }
+          .aa-launch-q { animation: none; }
         }
 
         /* Agent view renders the page as plain text; a floating chat

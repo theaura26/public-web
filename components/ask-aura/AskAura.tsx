@@ -481,12 +481,6 @@ export default function AskAura() {
           <span className="aa-launch-tick" aria-hidden>
             <span key={tick} className="aa-launch-q">{teaser}</span>
           </span>
-          <span className="aa-launch-icon" aria-hidden>
-            {/* Phosphor — paper-plane-tilt, fill */}
-            <svg viewBox="0 0 256 256" width="15" height="15" focusable="false">
-              <path fill="currentColor" d="M231.4,44.34s0,.1,0,.15l-58.2,191.94a15.88,15.88,0,0,1-14,11.51q-.69.06-1.38.06a15.86,15.86,0,0,1-14.42-9.15L107,164.15a4,4,0,0,1,.77-4.58l57.92-57.92a8,8,0,0,0-11.31-11.31L96.43,148.26a4,4,0,0,1-4.58.77L17.08,112.64a16,16,0,0,1,2.49-29.8l191.94-58.2h.15A16,16,0,0,1,231.4,44.34Z" />
-            </svg>
-          </span>
         </button>
       )}
 
@@ -497,7 +491,7 @@ export default function AskAura() {
           aria-hidden
           /* Inline for the same reason as the panel: styled-jsx drops
              backdrop-filter from the emitted rules on this build. */
-          style={{ backdropFilter: 'blur(7px)', WebkitBackdropFilter: 'blur(7px)' }}
+          style={{ backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}
         />
         <div
           /* `ph-no-capture` on the panel, not just the composer: session
@@ -752,11 +746,19 @@ export default function AskAura() {
           pointer-events: auto;
           transform: translateX(-50%) translateY(0);
         }
+        /* Hover is the same bar, lit: the ground lifts, the border
+           brightens and the question comes up to full white. Same shape,
+           more presence — a different-looking control on hover reads as a
+           different control. */
         .aa-launch.is-in:hover,
         .aa-launch.is-in:focus-visible {
           width: min(560px, calc(100vw - 32px));
-          border-color: rgba(255, 255, 255, 0.5);
+          border-color: rgba(255, 255, 255, 0.55);
+          background: rgba(28, 32, 34, 0.78);
+          box-shadow: 0 14px 44px rgba(0, 0, 0, 0.3);
         }
+        .aa-launch.is-in:hover .aa-launch-q,
+        .aa-launch.is-in:focus-visible .aa-launch-q { color: #fff; }
         .aa-launch.is-in:hover { transform: translateX(-50%) translateY(-2px); }
 
         /* One line high and clipped, so a question leaving and the next
@@ -764,11 +766,17 @@ export default function AskAura() {
         .aa-launch-tick {
           flex: 1 1 auto; min-width: 0;
           position: relative;
-          height: 1.4em;
+          display: flex; align-items: center;
+          /* One line high and clipped, so a question leaving and the next
+             arriving never change the height of the bar. */
+          height: 20px;
           overflow: hidden;
         }
         .aa-launch-q {
-          display: block;
+          display: block; width: 100%;
+          /* A pixel up: the cap-height of this face sits low in its line
+             box, so a geometrically centred line reads low. */
+          position: relative; top: -1px;
           font-family: var(--font-sans), system-ui, sans-serif;
           font-size: 13px; line-height: 1.4; font-weight: 400;
           color: rgba(255, 255, 255, 0.82);
@@ -779,13 +787,6 @@ export default function AskAura() {
           from { opacity: 0; transform: translateY(0.6em); }
           to { opacity: 1; transform: translateY(0); }
         }
-        .aa-launch-icon {
-          flex: none; display: grid; place-items: center;
-          width: 28px; height: 28px;
-          color: rgba(255, 255, 255, 0.62);
-          transition: color var(--dur-base) var(--ease);
-        }
-        .aa-launch:hover .aa-launch-icon { color: #fff; }
         /* Heard, not seen. Kept in the layout rather than display:none,
            which some screen readers skip entirely. */
         .aa-status {
@@ -811,21 +812,22 @@ export default function AskAura() {
            lets the panel itself stay translucent: the hero type and body
            copy that used to read straight through the answer soften into
            a field of colour, which is the thing glass is supposed to
-           refract. Gentle on purpose — enough for depth of field, not so
-           much that the page is erased and the reader loses their place.
+           refract. Enough that the panel is plainly the foreground and
+           the page has stepped back to make room for it, without erasing
+           the page and losing the reader their place.
            Click-through too: this is a dock, not a modal, and the page
            underneath stays usable. */
         .aa-scrim {
           position: fixed; inset: 0;
           z-index: 44;
           pointer-events: none;
-          background: rgba(16, 14, 13, 0.16);
+          background: rgba(16, 14, 13, 0.34);
           animation: aa-scrim-in var(--dur-base) var(--ease-out);
         }
         @keyframes aa-scrim-in { from { opacity: 0; } to { opacity: 1; } }
         @media (prefers-reduced-motion: reduce) { .aa-scrim { animation: none; } }
         /* No blur available below 768px, so the tint carries it alone. */
-        @media (max-width: 768px) { .aa-scrim { background: rgba(16, 14, 13, 0.42); } }
+        @media (max-width: 768px) { .aa-scrim { background: rgba(16, 14, 13, 0.55); } }
 
         /* globals.css gives every button:hover a brand-accent underline.
            That is the right affordance for a link in prose and the wrong
@@ -907,11 +909,14 @@ export default function AskAura() {
         @media (max-width: 768px) {
           .aa-panel { background: rgba(22, 20, 19, 0.93); }
         }
-        /* Composed with the centring transform, not replacing it — a
+        /* The bar opening up. It rises from where the bar sat and grows
+           into the middle, so the panel reads as the same object
+           enlarging rather than a new one appearing over the top of it.
+           Composed with the centring transform, not replacing it — a
            bare translateY here would drop the panel back to the corner
            for the length of the animation. */
         @keyframes aa-in {
-          from { opacity: 0; transform: translate(-50%, calc(-50% + 12px)) scale(0.985); }
+          from { opacity: 0; transform: translate(-50%, calc(-50% + 56px)) scale(0.92); }
           to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
 

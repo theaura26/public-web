@@ -692,7 +692,7 @@ export default function AskAura() {
              the keyboard arrives. */
           width: min(360px, calc(100vw - 32px));
           display: flex; align-items: center; gap: 8px;
-          min-height: 40px; padding: 0 8px 0 16px;
+          min-height: 40px; padding: 0 18px;
           border-radius: 999px;
           border: 1px solid rgba(255, 255, 255, 0.22);
           /* Solid black. Over a hero video, a white spread or an
@@ -709,8 +709,7 @@ export default function AskAura() {
           opacity: 0;
           pointer-events: none;
           transform: translateX(-50%) translateY(18px);
-          transition: width var(--dur-slow) var(--ease-out),
-                      transform var(--dur-slow) var(--ease-out),
+          transition: transform var(--dur-slow) var(--ease-out),
                       opacity var(--dur-slow) var(--ease-out),
                       border-color var(--dur-base) var(--ease);
         }
@@ -720,12 +719,12 @@ export default function AskAura() {
           transform: translateX(-50%) translateY(0);
         }
         /* Hover is the same bar, lit: the ground lifts, the border
-           brightens and the question comes up to full white. Same shape,
-           more presence — a different-looking control on hover reads as a
-           different control. */
+           brightens and the question comes up to full white. The width
+           does not move — a control that resizes under the cursor makes
+           the reader chase it, and the question it is showing was
+           already readable. */
         .aa-launch.is-in:hover,
         .aa-launch.is-in:focus-visible {
-          width: min(560px, calc(100vw - 32px));
           border-color: rgba(255, 255, 255, 0.55);
           background: #111;
           box-shadow: 0 14px 44px rgba(0, 0, 0, 0.34);
@@ -747,12 +746,11 @@ export default function AskAura() {
         }
         .aa-launch-q {
           display: block; width: 100%;
-          /* A pixel up: the cap-height of this face sits low in its line
-             box, so a geometrically centred line reads low. */
-          position: relative; top: -1px;
+          position: relative; top: 0;
           font-family: var(--font-sans), system-ui, sans-serif;
           font-size: 13px; line-height: 1.4; font-weight: 400;
           color: rgba(255, 255, 255, 0.82);
+          text-align: center;
           white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
           animation: aa-tick var(--dur-slow) var(--ease-out);
         }

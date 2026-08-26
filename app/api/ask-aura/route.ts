@@ -160,9 +160,20 @@ function sourcesBlock(hits: Hit[]): string {
   return fenceContext('SOURCES', body)
 }
 
+/* Follow-ups used to be written from the answer alone, which let them
+   invent the premise of the next question: reading an answer that
+   mentions tea in organic transition, organic sprays for the herd and
+   soil organic carbon, a model cheerfully offered "What makes your
+   coffee organic?" — and nothing on any Aura page says the coffee is
+   organic. A question is a claim in disguise; asked from the dock it
+   reads as something Aura has said about itself.
+
+   So they are grounded in the same passages the answer was, and told
+   plainly that a question may not assert a property. */
 async function followUps(
-  question: string, answer: string, key: string, signal: AbortSignal,
+  question: string, answer: string, hits: Hit[], key: string, signal: AbortSignal,
 ): Promise<Array<{ label: string; intent: string }>> {
+  const covered = [...new Set(hits.map((h) => h.chunk.sectionPath))].slice(0, 8)
   try {
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -184,9 +195,20 @@ async function followUps(
               'Never a command or a topic label: "How is the pepper dried?" is right; ' +
               '"Learn about the pepper" and "Explore drying methods" are wrong. ' +
               'Never begin with Learn, Explore, Discover, Dive or Uncover. ' +
-              'Seven words or fewer, sentence case, British English.',
+              'Seven words or fewer, sentence case, British English.\n\n' +
+              'GROUNDING, and this matters more than phrasing: ask only about subjects named ' +
+              'in the SOURCES SEEN below or in the answer itself. A question must not assert ' +
+              'or assume a property, certification, claim or outcome — "What makes your coffee ' +
+              'organic?" states that the coffee is organic, and asking it puts words in Aura\'s ' +
+              'mouth. Ask "Is the coffee certified?" instead of "Why is the coffee certified?". ' +
+              'When in doubt, ask about a thing rather than about a quality of a thing.',
           },
-          { role: 'user', content: `They asked: ${question}\n\nThey were told: ${answer.slice(0, 1200)}` },
+          {
+            role: 'user',
+            content:
+              `SOURCES SEEN:\n${covered.join('\n') || '(none)'}\n\n` +
+              `They asked: ${question}\n\nThey were told: ${answer.slice(0, 1200)}`,
+          },
         ],
       }),
     })
@@ -362,7 +384,7 @@ export async function POST(req: Request) {
             page: h.chunk.title.split(' — ')[0].split(' › ')[0],
           }))
 
-        const suggestions = await followUps(message, answer, key, req.signal)
+        const suggestions = await followUps(message, answer, hits, key, req.signal)
         const best = hits[0]?.confidence ?? 'low'
 
         /* The evidence actually put in front of the model, echoed back

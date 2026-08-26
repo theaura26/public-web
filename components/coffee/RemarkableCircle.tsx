@@ -379,7 +379,6 @@ export function RemarkableCircle() {
         </div>
       </div>
 
-      <p className="rc-lede label">Coffee that regenerates the land.</p>
 
       <style jsx global>{`
         /* The hero is white whatever the theme is, so the bar's marks have
@@ -411,7 +410,11 @@ export function RemarkableCircle() {
 
         .rc-stage {
           /* one length drives everything — ring, orbit radius, centre */
-          --rc-size: min(66vmin, 620px);
+          /* Thirty per cent larger. It is the page's one image and the
+             thing the section is named after, so it earns the room —
+             and running past the fold is the correct trade for a mark
+             that is meant to be looked at rather than glanced past. */
+          --rc-size: min(86vmin, 806px);
           --rc-r: calc(var(--rc-size) * 0.4);
           position: relative;
           width: var(--rc-size);
@@ -541,16 +544,6 @@ export function RemarkableCircle() {
 
         /* Sits at the foot of the frame, centred under the ring — banner
            caption type, the .label role carries it. */
-        .rc-lede {
-          position: absolute;
-          left: 50%;
-          bottom: clamp(20px, 4vh, 48px);
-          transform: translateX(-50%);
-          margin: 0; max-width: min(60ch, 80vw);
-          text-align: center; white-space: nowrap;
-          line-height: 1.5; color: rgba(19, 23, 25, 0.55);
-        }
-        @media (max-width: 560px) { .rc-lede { white-space: normal; } }
 
         @keyframes rc-turn      { to { transform: rotate(360deg); } }
         @keyframes rc-turn-back { to { transform: rotate(-360deg); } }
@@ -559,7 +552,7 @@ export function RemarkableCircle() {
            hang below their pucks and need the radius to clear the
            wordmark in the middle. */
         @media (max-width: 700px) {
-          .rc-stage { --rc-size: min(90vmin, 420px); }
+          .rc-stage { --rc-size: min(94vmin, 546px); }
           .rc-item { width: 58px; height: 58px; }
           .rc-item :global(.glyph) { width: 32px !important; height: 32px !important; }
           .rc-label { font-size: 8px; letter-spacing: 0.6px; width: 84px; }

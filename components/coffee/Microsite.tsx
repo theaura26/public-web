@@ -118,7 +118,7 @@ export function MicroNav() {
         aria-label="Regenerative Coffee"
         aria-hidden={!below}
       >
-        <div className="section-w ln-in">
+        <div className="ln-w ln-in">
           <div className="ln-scroll">
             {NAV.map((l) => (
               <Link
@@ -226,6 +226,24 @@ export function MicroNav() {
         .ln.is-below { opacity: 1; pointer-events: auto; transform: translateY(0); }
         /* header away — the bar takes the top edge itself */
         .ln.is-below.is-up { transform: translateY(calc(-1 * var(--nav-h))); }
+
+        /* This bar lines up with the navbar above it rather than with
+           the article column. The navbar is a 10vw / 1fr / 10vw grid
+           with the mark centred in the left rail and the menu button
+           centred in the right, so the marks sit 5vw from each edge less
+           half their own width. Those two widths are the dependency —
+           if either mark is resized, these follow. */
+        .ln-w {
+          --nav-mark: 32px;
+          --nav-burger: 44px;
+          width: 100%;
+          padding-left: calc(5vw - var(--nav-mark) / 2);
+          padding-right: calc(5vw - var(--nav-burger) / 2);
+        }
+        @media (max-width: 620px) {
+          /* The navbar drops its rails on small screens; so does this. */
+          .ln-w { padding-left: var(--gutter, 20px); padding-right: var(--gutter, 20px); }
+        }
 
         .ln-in {
           position: relative;

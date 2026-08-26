@@ -45,9 +45,14 @@ export const SECTIONS: NavSection[] = [
        Natural Intelligence, and the places under Sanctuaries. They are
        tiers, not siblings. */
     items: [
+      /* The existing Reason page answers "why", so it keeps that
+         question as its name. Natural Intelligence is the idea the page
+         argues for, and gets its own place above its three parts. */
+      { label: 'Why Aura?', href: '/reason' },
       {
         label: 'Natural Intelligence',
-        href: '/reason',
+        href: '/reason/natural-intelligence',
+        soon: true,
         children: [
           { label: 'Agroculture', href: '/reason/agroculture', soon: true },
           { label: 'Hospitality', href: '/reason/hospitality', soon: true },

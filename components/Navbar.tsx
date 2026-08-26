@@ -1280,13 +1280,12 @@ export default function Navbar() {
           /* Utility stack: left-aligned with the primary nav links column
              (var(--gutter) inside the menu panel). Stacks vertically, each
              chip left-anchored so the column reads tidy. */
-          /* Under the close cross, right-aligned with it. These are the
-             panel's own controls — theme, view mode, the one outward
-             link — and they belong with the other control rather than
-             marooned at the far corner from it. */
+          /* Bottom right, diagonally opposite Live. The panel's own
+             controls — theme, view mode, the one outward link — sit out
+             of the reading path, at the end of it. */
           :global(.menu-utils) {
             position: absolute;
-            top: 68px;
+            bottom: 44px;
             right: var(--gutter);
             /* Sit ABOVE the .tile-feed-vignette (z: 101), which is
                full-bleed on mobile — these have to stay crisp and
@@ -1683,7 +1682,7 @@ export default function Navbar() {
               line-height: 1.4;
             }
             :global(.menu-utils) {
-              top: 62px;
+              bottom: 40px;
               right: 24px;
               gap: 12px;
             }
@@ -1771,7 +1770,7 @@ export default function Navbar() {
             }
 
             :global(.menu-utils) {
-              top: 56px;
+              bottom: 32px;
               right: var(--gutter);
               gap: 10px;
             }

@@ -11,7 +11,7 @@
     "ask-aura:ingest": "node scripts/ask-aura/ingest.mjs",
     "ask-aura:build": "npm run ask-aura:crawl && npm run ask-aura:ingest",
     "ask-aura:eval": "tsx evals/ask-aura/run.mts",
-    "ask-aura:smoke": "tsx scripts/ask-aura/smoke/safety.mts && tsx scripts/ask-aura/smoke/privacy.mts && tsx scripts/ask-aura/smoke/retrieval.mts && tsx scripts/ask-aura/smoke/mcp.mts",
+    "ask-aura:smoke": "tsx scripts/ask-aura/smoke/safety.mts && tsx scripts/ask-aura/smoke/privacy.mts && tsx scripts/ask-aura/smoke/affinity.mts && tsx scripts/ask-aura/smoke/retrieval.mts && tsx scripts/ask-aura/smoke/mcp.mts",
     "ask-aura:mcp": "tsx mcp/aura-knowledge/server.mts"
   },
   "dependencies": {

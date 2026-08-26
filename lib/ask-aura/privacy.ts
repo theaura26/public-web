@@ -3,23 +3,27 @@
  * The question Aura wants answered is "what are people seeking?". The
  * obvious way to answer it — ship every question verbatim — is also the
  * one way that turns a search box into a store of other people's
- * personal details. A free-text field collects whatever a visitor types,
- * including the things you asked them not to type.
+ * personal details, because a free-text field collects whatever a
+ * visitor types, including the things you asked them not to type.
  *
- * So the text is not the unit of analysis. Intent and topic are. A
- * thousand rows reading "pricing · coffee · unanswered" tell you more
- * than a thousand raw strings, and they aggregate, segment and survive a
- * subject-access request without anyone having to redact them later.
+ * An earlier version of this file forwarded the question when a pattern
+ * list found nothing in it. An adversarial review took about a minute to
+ * defeat that: a National Insurance number, a PAN, a date of birth, a
+ * vehicle registration and a plain "Can Jane Smith, born 14/02/1986,
+ * visit?" all went through untouched, while "I am curious how the coffee
+ * is fermented" was mistaken for someone introducing themselves. Both
+ * failures have the same root, and it is not a missing pattern: a deny
+ * list can show that text contains something, and can never show that it
+ * contains nothing.
  *
- * Three things happen here:
- *   redact()    — removes the identifiers a person may have typed
- *   classify()  — turns a question into intent + topics
- *   insight()   — assembles the event that analytics is permitted to see
+ * So no free text leaves this module. Intent and topic are the unit of
+ * analysis instead. A thousand rows reading "pricing · coffee · gap"
+ * tell you more than a thousand raw strings — they aggregate, they
+ * segment, and nobody has to redact them later.
  *
- * Nothing in this file returns the visitor's own words to a third party
- * unless they survive redaction untouched and are short enough to be
- * unremarkable — and even that is switchable off in one environment
- * variable.
+ * Redaction survives for one narrower job: counting what *kind* of
+ * identifier people type into the box, so "a fifth of visiting questions
+ * carry contact details" is knowable without any of them being kept.
  */
 
 import type { Hit } from './retrieve'
@@ -45,18 +49,35 @@ const BEFORE_PHONES: Array<[RegExp, string]> = [
 ]
 
 const AFTER_PHONES: Array<[RegExp, string]> = [
-  /* UK postcodes, then Indian PINs. */
-  [/\b[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}\b/gi, '[postcode]'],
-  [/\b\d{6}\b/g, '[postcode]'],
+  /* UK postcodes need address context: "AB12 3CD" is also the shape of
+     a lot code, and Aura's own traceability ids look like that. */
+  [/\b(?:at|in|to|from|address|postcode|post code|deliver(?:y|ed)? to)\b[^.?!]{0,12}?[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}\b/gi, '[postcode]'],
+  /* Indian PINs, likewise: a bare six-digit number is far more often a
+     quantity — "250000 kg" — than an address. */
+  [/\b(?:pin|pincode|pin code|postcode|post code|zip|address)\b[^.?!\d]{0,12}\d{6}\b/gi, '[postcode]'],
   [/@[a-z0-9_]{3,}\b/gi, '[handle]'],
-  /* Someone introducing themselves. Narrow on purpose: an explicit
-     preamble followed by a capitalised word, never a bare capitalised
-     word, which would eat Mudigere, Ohara and every place worth
-     counting. */
-  [/\b(my name(?:'s| is)|i am|i'm|this is)\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?/gi, '[name]'],
+  /* National and tax identifiers, which have distinctive shapes even
+     though names do not: UK National Insurance, Indian PAN and Aadhaar,
+     US Social Security. */
+  [/\b[A-CEGHJ-PR-TW-Z]{2}\s?\d{2}\s?\d{2}\s?\d{2}\s?[A-D]\b/g, '[national-id]'],
+  [/\b[A-Z]{5}\d{4}[A-Z]\b/g, '[national-id]'],
+  [/\b\d{4}\s\d{4}\s\d{4}\b/g, '[national-id]'],
+  [/\b\d{3}-\d{2}-\d{4}\b/g, '[national-id]'],
+  /* Dates of birth, given as such. */
+  [/\b(born|d\.?o\.?b\.?|date of birth)\b[^.?!]{0,12}\d{1,4}[/.-]\d{1,2}[/.-]\d{2,4}/gi, '[dob]'],
+  /* Street addresses, by their giveaway: a number followed by a street
+     word. */
+  [/\b\d{1,4}[a-z]?\s+[A-Z][a-z]+\s+(road|rd|street|st|avenue|ave|lane|ln|close|drive|dr|way|court|crescent)\b/gi, '[address]'],
   /* Whatever long digit run is left: an account, an order, an ID. */
   [/\b\d{7,}\b/g, '[number]'],
 ]
+
+/* There is deliberately no rule for personal names. A name is a
+   capitalised word, and so are Mudigere, Ohara, Malnad Gidda, Arabica
+   and every other thing worth counting; the "my name is X" heuristic
+   this file used to carry mistook "I am curious how…" for an
+   introduction and ate the subject of the sentence. Names are the
+   clearest case of why no text is forwarded at all. */
 
 export type Redaction = { text: string; found: string[] }
 
@@ -74,6 +95,11 @@ function redactPhones(text: string): { text: string; hit: boolean } {
        bare run of digits with no punctuation is left to the [number]
        rule, which is the more honest label for it. */
     if (digits < 9 || digits > 15 || !/[\s().-]/.test(match)) return match
+    /* A run of years — "2025 - 2026 - 2027" — has the digit count of a
+       phone number and none of its meaning. Every group being a
+       plausible year is the tell. */
+    const groups = match.split(/[\s().-]+/).filter(Boolean)
+    if (groups.length >= 2 && groups.every((g) => /^(19|20)\d{2}$/.test(g))) return match
     hit = true
     return '[phone]'
   })
@@ -173,34 +199,11 @@ export type Insight = {
   admittedGap: boolean
   /** Which fixed refusal fired, if any. */
   refusal?: string
-  /** What kinds of identifier were stripped. Never the values. */
+  /** What kinds of identifier the visitor typed. Never the values, and
+      never the text around them — only the count of a category, so that
+      "a fifth of visiting questions carry contact details" is knowable
+      while none of those details are. */
   redacted: string[]
-  /** The question itself, only when it is safe and permitted. */
-  question?: string
-}
-
-const TEXT_LIMIT = 140
-
-/* Text is only ever forwarded when it needed no redaction and is short
-   enough to be an ordinary question rather than a paragraph about
-   someone's circumstances. Set ASK_AURA_LOG_QUESTIONS=off to hold back
-   every question and keep the labels alone. */
-function questionIsSafe(redaction: Redaction, refusal?: string): boolean {
-  /* A refused question is never forwarded, whatever it looks like. The
-     refusals are the most sensitive things anyone types into this box —
-     distress above all — and "it passed the redaction filter" is not a
-     good enough reason to keep a record of someone's worst evening. The
-     label alone says everything Aura needs to know. */
-  if (refusal) return false
-  if (process.env.ASK_AURA_LOG_QUESTIONS === 'off') return false
-  if (redaction.found.length > 0) return false
-  if (redaction.text.length > TEXT_LIMIT) return false
-  /* A question with no question in it — a paste, a list, a form filled
-     into the wrong box — is exactly the shape that carries details
-     nobody meant to send. */
-  if (redaction.text.split(/\s+/).length > 28) return false
-  if (/\n/.test(redaction.text)) return false
-  return true
 }
 
 /* The shapes the prompt's own instructions produce when the corpus is
@@ -218,13 +221,22 @@ const CONCESSION = [
   /\b(not|nothing) (in|on) (the|Aura'?s) (pages|sources|site|corpus)\b/i,
   /\b(has not|hasn'?t) been (measured|published|shared|decided)\b/i,
   /\bnot something (aura|the estate|we) (publishes|shares|says)\b/i,
-  /\bthat is not (a thing|something)\b/i,
 ]
 
 export function admittedGap(answer: string): boolean {
   return CONCESSION.some((p) => p.test(answer))
 }
 
+/**
+ * Everything analytics is permitted to know about one question.
+ *
+ * Note what is absent and cannot be switched back on: the question, the
+ * reader's selection, the page-context strings, and any identifier. What
+ * remains is a fixed vocabulary — sixteen intents, page ids from the
+ * corpus, four coverage values, two booleans and a list of redaction
+ * categories. None of it is free text, which is what makes it safe to
+ * attach to an event at all.
+ */
 export function insight(
   question: string,
   hits: Hit[],
@@ -236,13 +248,16 @@ export function insight(
     : (hits[0]?.confidence ?? 'low')
 
   return {
-    intent: classifyIntent(redaction.text),
+    /* Classified from the original wording, not the redacted copy: a
+       substituted "[phone]" reads as the word phone and would push an
+       ordinary question about harvests into the `contact` intent. The
+       output is one label from a fixed list either way. */
+    intent: classifyIntent(question),
     topics: topicsFrom(hits),
     coverage,
     thinEvidence: !hits.length || coverage === 'low',
     admittedGap: opts.answer ? admittedGap(opts.answer) : false,
     ...(opts.refusal ? { refusal: opts.refusal } : {}),
     redacted: redaction.found,
-    ...(questionIsSafe(redaction, opts.refusal) ? { question: redaction.text } : {}),
   }
 }

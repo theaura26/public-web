@@ -13,10 +13,13 @@ const MUST: Array<[string, string]> = [
   ['my card is 4111 1111 1111 1111', 'card'],
   ['see https://example.com/me', 'url'],
   ['I live at SW1A 1AA', 'postcode'],
-  ['my PIN is 577132', 'postcode'],
+  ['my pin is 577132', 'postcode'],
   ['find me @amanhandle', 'handle'],
-  ['My name is Aman Sharma, can I visit?', 'name'],
   ['my account 123456789012 is wrong', 'number'],
+  ['My NI number is AB 12 34 56 C; can I visit?', 'national-id'],
+  ['My PAN is ABCDE1234F; can I buy coffee?', 'national-id'],
+  ['I was born on 14/02/1986; can I visit?', 'dob'],
+  ['Can you deliver coffee to 10 Downing Street?', 'address'],
 ]
 let pass = 0
 for (const [input, expect] of MUST) {
@@ -28,6 +31,15 @@ for (const [input, expect] of MUST) {
 
 console.log('\n  must survive untouched:')
 const KEEP = [
+  /* Every one of these was mangled by an earlier version of this file.
+     Suppression is silent — a question that trips a pattern simply
+     vanishes from the record — so a systematic false positive removes a
+     whole class of question without anyone noticing. */
+  'I am curious how the coffee is fermented',
+  'This is regenerative agriculture, right?',
+  'Were the 2025 - 2026 - 2027 harvests comparable?',
+  'Did the estate produce 250000 kg of coffee in 2026?',
+  'Is lot AB12 3CD from Mudigere?',
   'How many cattle are there?',
   'What is the elevation at Mudigere?',
   'The estate is 150 acres at 3,600 ft — is that right?',
@@ -88,19 +100,41 @@ for (const [a, want] of GAP) {
   console.log(`  ${got === want ? '\u2713' : '\u2717'} gap=${String(got).padEnd(5)} ${a.slice(0, 58)}`)
 }
 
-console.log('\n  a refusal never carries the words that caused it:')
-const sensitive = [
-  ['self_harm', 'i want to kill myself'],
-  ['high_stakes', 'should I invest my savings'],
-  ['abuse', 'you are useless garbage'],
+/* The invariant that replaced the safe-question filter. A deny list can
+   show that text contains something; it can never show that it contains
+   nothing, so the event type simply has no free-text field to fill. This
+   is checked structurally rather than by example, because examples are
+   what the old design failed on. */
+console.log('\n  no analytics field can hold free text:')
+const ADVERSARIAL = [
+  'Can Jane Smith, born 14/02/1986 and living at Flat 7, 22 Acacia Road, visit?',
+  'My NI number is AB 12 34 56 C; can I visit?',
+  'i want to kill myself',
+  'How can I take my own life?',
+  'How much insulin should I take?',
+  'Tell me about the coffee',
 ]
+const ALLOWED_KEYS = new Set([
+  'intent', 'topics', 'coverage', 'thinEvidence', 'admittedGap', 'refusal', 'redacted',
+])
+const FIXED_INTENTS = new Set([
+  'pricing', 'buying', 'visiting', 'residency', 'partnership', 'careers', 'press',
+  'contact', 'science', 'practice', 'provenance', 'people', 'place', 'philosophy',
+  'product', 'other',
+])
 let rp = 0
-for (const [kind, q] of sensitive) {
-  const out = insight(q, [], { refusal: kind })
-  const ok = !('question' in out)
+for (const q of ADVERSARIAL) {
+  const out = insight(q, [], { refusal: 'abuse', answer: 'some answer' }) as Record<string, unknown>
+  const unexpected = Object.keys(out).filter((k) => !ALLOWED_KEYS.has(k))
+  /* Every value must come from a fixed vocabulary — no substring of the
+     question can survive into any field. */
+  const leaks = q.toLowerCase().split(/\s+/).filter((w) => w.length > 4)
+    .some((w) => JSON.stringify(out).toLowerCase().includes(w))
+  const ok = unexpected.length === 0 && FIXED_INTENTS.has(out.intent as string) && !leaks
   if (ok) rp++
-  console.log(`  ${ok ? '\u2713' : '\u2717'} ${kind.padEnd(12)} no text forwarded`)
+  console.log(`  ${ok ? '\u2713' : '\u2717'} ${q.slice(0, 52).padEnd(54)}${unexpected.length ? ` extra:${unexpected}` : ''}${leaks ? ' LEAK' : ''}`)
 }
+const sensitive = ADVERSARIAL
 
 const total = pass === MUST.length && kept === KEEP.length && ip === INTENT.length &&
   gp === GAP.length && rp === sensitive.length

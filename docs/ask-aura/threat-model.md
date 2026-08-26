@@ -101,38 +101,76 @@ So the text is not the unit of analysis. **Intent and topic are.** A thousand
 rows reading `pricing · coffee · gap` tell you more than a thousand raw strings,
 because they aggregate, they segment, and nobody has to redact them later.
 
+### Why no question text is kept
+
+An earlier version of this forwarded the question whenever a pattern list found
+nothing in it. An adversarial review defeated that in about a minute:
+
+```
+My NI number is AB 12 34 56 C; can I visit?
+My PAN is ABCDE1234F; can I buy coffee?
+Can Jane Smith, born 14/02/1986 and living at Flat 7, 22 Acacia Road, visit?
+```
+
+All three went through untouched. In the same pass, `I am curious how the coffee
+is fermented` was mistaken for someone introducing themselves and became
+`[name] the coffee is fermented`.
+
+Both failures have one root, and it is not a missing pattern. **A deny list can
+show that text contains something. It can never show that it contains nothing.**
+And the failure is silent in both directions: a question that trips a pattern
+simply vanishes from the record, so a systematic false positive removes a whole
+class of question without anyone noticing.
+
+So the event type has no free-text field to fill. This is enforced structurally
+and tested as an invariant rather than by example, because examples are what the
+previous design failed on.
+
 ### What each question sends
 
-`lib/ask-aura/privacy.ts` is the only place that decides this. The server
-classifies — it is the only party that knows which passages actually answered —
-and returns an `insight` object in the meta frame. The browser forwards that and
-nothing else.
+| Property | What it is |
+| --- | --- |
+| `intent` | one of sixteen fixed labels: `pricing`, `buying`, `visiting`, `residency`, `partnership`, `careers`, `press`, `contact`, `science`, `practice`, `provenance`, `people`, `place`, `philosophy`, `product`, `other` |
+| `topics` | up to three page ids, from what retrieval found — stable when copy is rewritten, which a keyword is not |
+| `coverage` | `high` / `medium` / `low` / `none`: how confident retrieval was |
+| `thinEvidence` | retrieval came back with nothing convincing |
+| `admittedGap` | the answer conceded it did not know — see below |
+| `refusal` | which fixed refusal fired |
+| `redacted` | which *kinds* of identifier the visitor typed. Never the values, never the surrounding text |
+| `turn`, `page`, `ms` | position in the conversation, which page, how long it took |
 
-| Property | What it is | Why it earns its place |
-| --- | --- | --- |
-| `intent` | One of sixteen fixed labels: `pricing`, `buying`, `visiting`, `residency`, `partnership`, `careers`, `press`, `contact`, `science`, `practice`, `provenance`, `people`, `place`, `philosophy`, `product`, `other` | What the person is trying to do. Fixed vocabulary, because a label that can be anything is a free-text field wearing a hat |
-| `topics` | Up to three page ids, from what retrieval found | Stable in a way keywords are not — `fermentation` stays `fermentation` when the copy is rewritten |
-| `coverage` | `high` / `medium` / `low` / `none` | How confident retrieval was |
-| `thinEvidence` | Retrieval came back with nothing convincing | Where the corpus is weak |
-| `admittedGap` | **The answer itself conceded it did not know** | The signal to watch. See below |
-| `refusal` | Which fixed refusal fired, if any | Volume of distress, high-stakes and abuse, without the words |
-| `redacted` | Which *kinds* of identifier were stripped. Never the values | "Someone left a phone number" is worth knowing; the number is not |
-| `question` | The question, **only** when it needed no redaction, is under 140 characters, under 28 words, single-line, and was not refused | The long tail, readable, for the cases where a label is too coarse |
+Every value comes from a fixed vocabulary. No substring of a question can reach
+any field.
 
-Two rules are absolute and enforced in code, not by convention:
+Intent is classified from the **original** wording rather than the redacted
+copy: a substituted `[phone]` reads as the word "phone" and pushed ordinary
+questions about harvest years into the `contact` intent. The output is one label
+from a closed list either way, so classifying the original costs nothing.
 
-- **A refused question is never stored, in any form.** Not when it passes the
-  redaction filter, not when it looks harmless. The refusals are the most
-  sensitive things anyone types into this box — distress above all — and the
-  label alone says everything Aura needs to know. `questionIsSafe()` returns
-  false on any refusal before it checks anything else.
-- **Redaction runs before the safety filter, not instead of it.** If anything
-  was stripped, the text is withheld entirely and only the *kind* is recorded.
-  A question that had an email in it is reported as `visiting · [email]`, which
-  still tells you someone wanted to come and left a way to reach them.
+### Three rules enforced in code
 
-`ASK_AURA_LOG_QUESTIONS=off` withholds every question text and keeps the labels.
-Nothing else changes; no dashboard breaks.
+- **Distress leaves no record whatsoever.** Not the labels, not the timing, not
+  the page. A `refusal: self_harm` against a timestamp is still a description of
+  what happened to someone, and no product question worth answering needs it.
+  Other refusal kinds are counted, because knowing the volume of abuse and
+  injection attempts is how the boundary gets maintained.
+- **Nothing is captured at send time.** Firing when the question is submitted
+  would record that someone asked *something* before knowing what kind of
+  something it was — leaving a timestamped trace of the worst sentence of
+  someone's life. The single event fires once the outcome is known.
+- **Ask Aura events do not build person profiles.** Site-wide PostHog runs with
+  `person_profiles: 'always'` and a stable cookie, and the contact form later
+  calls `identify()` with an email — which would merge every question anyone
+  asked into a named profile. Every Ask Aura event carries
+  `$process_person_profile: false`. They still count, segment and fill
+  dashboards; they do not accumulate against an individual.
+
+### Session replay
+
+The panel carries `ph-no-capture`, not just the composer. Replay records
+rendered DOM, so masking the input while leaving the transcript visible would
+capture every question and answer as pixels — a fuller record than the analytics
+property all of the above works to avoid.
 
 ### `admittedGap` is the one to watch
 
@@ -200,18 +238,26 @@ Steps 1 and 2 need no privacy decision at all. Step 4 needs the policy page.
 
 ### Still owed
 
-- **The site has no privacy policy page.** The dock's disclosure line — "we keep
-  a note of what people ask about, never of who asked" — is accurate about Ask
-  Aura, and should link to a page that says the same about the rest of the site.
+- **The site has no privacy policy page.** The dock's disclosure line — "your
+  question is not recorded; we keep only the subject it was about" — is accurate
+  about Ask Aura, and should link to a page that says what the rest of the site
+  does.
 - **Site-wide PostHog is on fullest tracking**: `person_profiles: 'always'`,
-  `persistence: 'localStorage+cookie'`, session replay on. That predates Ask
-  Aura and is unchanged here, but it is the reason a consent banner is still
-  outstanding — `app/providers.tsx` carries its own note to that effect. Ask
-  Aura is now the *least* identifying thing on the site, which is the wrong way
-  round.
-- **A retention period.** The labels can be kept indefinitely without much
-  thought. The stored question texts should have a window — twelve months is
-  defensible — after which they are aggregated to labels and dropped.
+  `persistence: 'localStorage+cookie'`, session replay on, and `identify()` on
+  contact-form submission merges prior anonymous history into a named profile.
+  Ask Aura now opts its own events out of all of that, but the rest of the site
+  does not, and the consent banner noted in `app/providers.tsx` is still
+  outstanding. Under UK GDPR, cookie-based tracking and replay of EU visitors
+  normally require prior informed consent; continuing to use the site is not
+  consent.
+- **A retention period.** The labels are a fixed vocabulary and carry no
+  personal data, so they can be kept. That is a decision to record rather than
+  leave implicit.
+- **Semantic screening.** The refusal patterns are narrow by design, and phrasings
+  outside them — "how can I take my own life", "how much insulin should I take" —
+  reach the model, which handles them but is not a deterministic boundary. Since
+  no free text is stored either way, the analytics consequence is closed; the
+  moderation question is not.
 
 ## Operating
 

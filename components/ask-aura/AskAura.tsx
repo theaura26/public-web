@@ -3,6 +3,15 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { track } from '@/lib/analytics'
+import { remember, preferred } from '@/lib/ask-aura/affinity'
+
+/* Site-wide PostHog runs with `person_profiles: 'always'` and a stable
+   cookie, and the contact form later calls identify() with an email —
+   which would merge every question anyone asked into a named profile.
+   That is the opposite of what the dock tells people, so Ask Aura opts
+   its own events out of person processing. They still count, segment and
+   fill dashboards; they do not accumulate against an individual. */
+const ANONYMOUS = { $process_person_profile: false } as const
 
 /* ── Ask Aura ─────────────────────────────────────────────────────
    A pill at the foot of every page that opens into a conversation.
@@ -245,16 +254,12 @@ export default function AskAura() {
     if (!question || busy) return
 
     const started = performance.now()
-    /* What is NOT sent here is the point: the question itself never
-       becomes an analytics property from the browser. The server
-       classifies it against what retrieval actually found and returns
-       intent, topics and coverage in the meta frame — that is what gets
-       captured below, once the answer is in. This event just marks that
-       a question was asked, and where. */
-    track('ask_aura_question', {
-      page: pathname,
-      turn: msgsRef.current.filter((m) => m.role === 'user').length + 1,
-    })
+    const turn = msgsRef.current.filter((m) => m.role === 'user').length + 1
+    /* Nothing is captured here, on purpose. Firing at send time would
+       record that a question was asked before knowing what kind it was —
+       and someone who typed the worst sentence of their life would leave
+       a timestamped trace of having done so. The single event fires
+       once the outcome is known, below, and not at all for distress. */
 
     const userMsg: Msg = { id: crypto.randomUUID(), role: 'user', text: question }
     const replyId = crypto.randomUUID()
@@ -361,18 +366,38 @@ export default function AskAura() {
          whether the corpus could answer at all — plus the question only
          when it needed no redaction and reads as an ordinary question.
          See lib/ask-aura/privacy.ts for what may and may not travel. */
-      track('ask_aura_answered', {
-        page: pathname,
-        ms: Math.round(performance.now() - started),
-        ...(insight ?? {}),
-      })
+      /* Distress leaves no record whatsoever — not the labels, not the
+         timing, not the page. A refusal class attached to a timestamp is
+         still a description of what happened to someone, and there is no
+         product question worth answering that needs it. The other
+         refusal kinds are counted, because knowing the volume of abuse
+         and injection attempts is how the boundary gets maintained. */
+      const refusal = insight?.refusal as string | undefined
+      if (refusal !== 'self_harm') {
+        track('ask_aura_answered', {
+          page: pathname,
+          ms: Math.round(performance.now() - started),
+          turn,
+          ...(insight ?? {}),
+          ...ANONYMOUS,
+        })
+      }
+      /* The same labels, kept on this device only, so the dock can put
+         what this visitor keeps returning to at the top of the next set
+         of suggestions. Nothing here is sent anywhere. */
+      if (!refusal) {
+        remember({
+          topics: (insight?.topics as string[]) ?? [],
+          intent: insight?.intent as string | undefined,
+        })
+      }
     } catch (err) {
       if ((err as Error).name === 'AbortError') return
       setMsgs((m) => m.map((x) => (x.id === replyId
         ? { ...x, pending: false, failed: true, text: x.text || 'I could not reach my sources just then.' }
         : x)))
       setAnnouncement('That answer did not arrive.')
-      track('ask_aura_error', { page: pathname, kind: 'network' })
+      track('ask_aura_error', { page: pathname, kind: 'network', ...ANONYMOUS })
     } finally {
       /* Only the request that still owns the controller may clear the
          busy flag. Stopping one answer and immediately asking another
@@ -394,7 +419,11 @@ export default function AskAura() {
 
   const lastUser = [...msgs].reverse().find((m) => m.role === 'user')
   const tail = msgs[msgs.length - 1]
-  const followUps = tail?.role === 'assistant' && !tail.pending ? tail.suggestions ?? [] : []
+  /* Nudged, not reordered: `preferred` is a stable sort, so anything the
+     model ranked equally keeps the order it gave. */
+  const followUps = tail?.role === 'assistant' && !tail.pending
+    ? preferred(tail.suggestions ?? [])
+    : []
 
   return (
     <>
@@ -403,7 +432,7 @@ export default function AskAura() {
           ref={launcherRef}
           type="button"
           className={`aa-launch ${glassOn ? 'is-glass' : ''}`}
-          onClick={() => { setOpen(true); track('ask_aura_opened', { page: pathname }) }}
+          onClick={() => { setOpen(true); track('ask_aura_opened', { page: pathname, ...ANONYMOUS }) }}
           aria-haspopup="dialog"
         >
           <span className="aa-dot" aria-hidden />
@@ -413,7 +442,12 @@ export default function AskAura() {
 
       {open && (
         <div
-          className="aa-panel"
+          /* `ph-no-capture` on the panel, not just the composer: session
+             replay records rendered DOM, so masking the input while leaving
+             the transcript visible would capture every question and answer
+             as pixels — a fuller record than the analytics property this
+             file works so hard not to send. */
+          className="aa-panel ph-no-capture"
           ref={panelRef}
           role="dialog"
           aria-modal="false"
@@ -443,12 +477,12 @@ export default function AskAura() {
               <div className="aa-intro">
                 <p className="aa-intro-line">{intro.line}</p>
                 <ul className="aa-chips">
-                  {intro.prompts.map((p) => (
+                  {intro.prompts.map((p, i) => (
                     <li key={p}>
                       <button
                         type="button"
                         className="aa-chip"
-                        onClick={() => { track('ask_aura_suggestion', { page: pathname, label: p }); send(p) }}
+                        onClick={() => { track('ask_aura_suggestion', { page: pathname, kind: 'opener', position: i, ...ANONYMOUS }); send(p) }}
                       >
                         {p}
                       </button>
@@ -479,7 +513,7 @@ export default function AskAura() {
                       <li key={c.sourceId}>
                         <a
                           href={c.url}
-                          onClick={() => track('ask_aura_citation', { page: pathname, url: c.url })}
+                          onClick={() => track('ask_aura_citation', { page: pathname, url: c.url, ...ANONYMOUS })}
                         >
                           {c.title.split(' › ')[0].replace(/\s*—\s*Aura$/, '')}
                         </a>
@@ -492,12 +526,12 @@ export default function AskAura() {
 
             {followUps.length > 0 && (
               <ul className="aa-chips aa-chips-follow">
-                {followUps.map((s) => (
+                {followUps.map((s, i) => (
                   <li key={s.label}>
                     <button
                       type="button"
                       className="aa-chip"
-                      onClick={() => { track('ask_aura_suggestion', { page: pathname, label: s.label }); send(s.label) }}
+                      onClick={() => { track('ask_aura_suggestion', { page: pathname, kind: 'follow_up', position: i, intent: s.intent, ...ANONYMOUS }); send(s.label) }}
                     >
                       {s.label}
                     </button>
@@ -536,9 +570,9 @@ export default function AskAura() {
           </form>
 
           <p className="aa-terms">
-            Answers come from Aura&rsquo;s own pages and can be wrong. We keep a
-            note of what people ask about, never of who asked. Anything that
-            looks like a personal detail is removed before it is stored.
+            Answers come from Aura&rsquo;s own pages and can be wrong. Your
+            question is not recorded — we keep only the subject it was about,
+            and nothing that identifies you.
           </p>
         </div>
       )}

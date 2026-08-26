@@ -47,6 +47,17 @@ type Corpus = {
   index: Index
 }
 
+/* Crude term overlap, used only when no query embedding is available
+   and a passage still has to be ranked against its siblings. */
+function overlap(query: string, text: string): number {
+  const q = new Set(query.toLowerCase().match(/[a-z0-9]+/g) ?? [])
+  const t = text.toLowerCase().match(/[a-z0-9]+/g) ?? []
+  if (!q.size || !t.length) return 0
+  let hits = 0
+  for (const w of t) if (q.has(w)) hits++
+  return hits / Math.sqrt(t.length)
+}
+
 /* Hard ceiling on any single result set. */
 const MAX_RESULTS = 12
 
@@ -239,6 +250,42 @@ export async function search(query: string, opts: SearchOptions = {}): Promise<H
   const PER_PAGE = 3
   const ranked = [...fused.entries()].sort((a, b) => b[1] - a[1])
 
+  /* A question asked while standing on a page is usually about that
+     page, but it rarely says so: "how does this connect to the coffee?"
+     asked on the herd page reads, lexically, as a question about coffee,
+     and every slot fills with coffee. The reader is then told about the
+     herd by a model that was shown nothing about the herd.
+
+     A multiplier cannot fix this — the page's passages lose on score, so
+     scaling their score still loses. What is needed is a seat kept for
+     them: the best passage from the page in view goes into the evidence
+     whether or not it earned a place on rank alone. */
+  const reserved: Array<[string, number]> = []
+  if (pageUrl && ranked.length) {
+    let fromPage = ranked.filter(([id]) => byId.get(id)?.url === pageUrl).slice(0, 2)
+
+    /* If the page did not place at all, it is not in the fused list to
+       be promoted — both retrievers dropped it before fusion, which is
+       exactly the case that matters. Score its own passages directly and
+       seat the best of them. */
+    if (!fromPage.length) {
+      const pageChunks = c.chunks.filter((ch) => ch.url === pageUrl && allowed.has(ch.id))
+      const scored: Array<[string, number]> = []
+      for (const ch of pageChunks) {
+        if (qv && ch.vec) scored.push([ch.id, cosine(unpack(ch.vec), qv)])
+        else scored.push([ch.id, overlap(query, ch.text)])
+      }
+      /* Seated just below the strongest match: relevant because the
+         reader is standing on it, not because it won on score. */
+      const ceiling = ranked[0][1] * 0.9
+      fromPage = scored
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 2)
+        .map(([id], i) => [id, ceiling * (1 - i * 0.05)] as [string, number])
+    }
+    reserved.push(...fromPage)
+  }
+
   /* The cap is there to stop one page filling every slot. It must not
      become a rule that throws away the best evidence: when a question is
      about one page, that page holds the answer, and a fourth strong
@@ -248,7 +295,16 @@ export async function search(query: string, opts: SearchOptions = {}): Promise<H
   const strongEnough = (ranked[0]?.[1] ?? 0) * 0.75
   const seenPerPage = new Map<string, number>()
   const top: Array<[string, number]> = []
+  const taken = new Set<string>()
+
+  for (const entry of reserved) {
+    taken.add(entry[0])
+    seenPerPage.set(pageUrl ?? '', (seenPerPage.get(pageUrl ?? '') ?? 0) + 1)
+    top.push(entry)
+  }
+
   for (const entry of ranked) {
+    if (taken.has(entry[0])) continue
     const url = byId.get(entry[0])?.url ?? ''
     const n = seenPerPage.get(url) ?? 0
     if (n >= PER_PAGE && url !== pageUrl && entry[1] < strongEnough) continue
@@ -257,6 +313,12 @@ export async function search(query: string, opts: SearchOptions = {}): Promise<H
     if (top.length >= limit) break
   }
   if (!top.length) return []
+
+  /* Reserved passages entered out of rank order; put the set back in
+     score order so the model reads the strongest evidence first and the
+     confidence below is measured against the true best. */
+  top.sort((a, b) => b[1] - a[1])
+  top.length = Math.min(top.length, limit)
 
   const best = top[0][1]
   return top.map(([id, score]) => {

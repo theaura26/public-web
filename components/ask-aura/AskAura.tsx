@@ -854,7 +854,7 @@ export default function AskAura() {
              the panel's ground, so quieter without being harder to read. */
           --aa-body: rgba(255, 255, 255, 0.72);
           --aa-meta: rgba(255, 255, 255, 0.62);
-          --aa-line: rgba(255, 255, 255, 0.14);
+          --aa-line: rgba(255, 255, 255, 0.08);
           --aa-fill: rgba(255, 255, 255, 0.10);
 
           /* Centred, not docked. With the page blurred behind it there
@@ -1185,7 +1185,7 @@ export default function AskAura() {
         }
         .aa-input::placeholder { color: rgba(255, 255, 255, 0.85); }
         .aa-input:focus { outline: none; }
-        .aa-form:focus-within { border-top-color: rgba(255, 255, 255, 0.34); }
+        .aa-form:focus-within { border-top-color: rgba(255, 255, 255, 0.18); }
         /* Just the icon. A filled circle here competed with the white
            pills above it for the eye, and this is the quieter control. */
         .aa-send {

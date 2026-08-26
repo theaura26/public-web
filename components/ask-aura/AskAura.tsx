@@ -17,14 +17,12 @@ const ANONYMOUS = { $process_person_profile: false } as const
 /* ── Ask Aura ─────────────────────────────────────────────────────
    A pill at the foot of every page that opens into a conversation.
 
-   On glass: the launcher gets real WebGL refraction from
-   @ybouane/liquidglass; the panel does not. The library works by
-   rasterising the DOM behind the glass into a texture, and a panel
-   holding a streaming transcript would re-capture on every token —
-   which is the one thing the brief rules out, and rightly. The panel
-   uses backdrop-filter instead, which composites without ever reading
-   the page back. One WebGL context for this feature, torn down when
-   the launcher unmounts.
+   On glass: the bar is solid black and the panel is a dark translucent
+   pane over a blurred page. There was a WebGL refraction on the bar,
+   from @ybouane/liquidglass, until the bar went opaque — a shader that
+   refracts what is behind an element has nothing to do when nothing is
+   behind it, so it went, and with it a WebGL context, a dynamic import
+   and a per-frame DOM rasterisation.
 
    Everything a visitor types is screened server-side before it reaches
    a model. This component holds no keys and makes no third-party
@@ -86,7 +84,6 @@ export default function AskAura() {
   const [msgs, setMsgs] = useState<Msg[]>([])
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
-  const [glassOn, setGlassOn] = useState(false)
   /* What a screen reader is told, separately from what the page shows.
      The transcript itself must not be a live region: a streaming answer
      mutates its text node many times a second, and announcing each
@@ -97,6 +94,9 @@ export default function AskAura() {
      so the bar advertises what this page can actually answer instead of
      asking to be clicked. */
   const [tick, setTick] = useState(0)
+  /* Opening animates and closing did not, so the panel arrived and then
+     vanished. It stays mounted for the length of its exit. */
+  const [closing, setClosing] = useState(false)
   /* The bar stays out of the first screen. A hero is the one part of a
      page that is composed, and a chat bar parked across it is the thing
      that spoils the composition — so it waits until the reader has gone
@@ -185,46 +185,6 @@ export default function AskAura() {
     return () => clearInterval(id)
   }, [open])
 
-  /* ── real glass on the launcher only ── */
-  useEffect(() => {
-    if (open) return
-    if (typeof window === 'undefined') return
-    if (window.matchMedia('(prefers-reduced-transparency: reduce)').matches) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    let instance: { destroy: () => void } | null = null
-    let cancelled = false
-
-    /* After idle, never on the critical path: this pulls a WebGL
-       library for an effect nobody is waiting on. */
-    const idle = (window.requestIdleCallback ?? ((f: () => void) => setTimeout(f, 1200)))(async () => {
-      try {
-        const el = launcherRef.current
-        if (!el || cancelled) return
-        const gl = document.createElement('canvas').getContext('webgl2')
-        if (!gl) return
-        const { LiquidGlass } = await import('@ybouane/liquidglass')
-        if (cancelled) return
-        instance = await LiquidGlass.init({
-          root: document.body,
-          glassElements: [el],
-        })
-        if (cancelled) { instance?.destroy(); instance = null; return }
-        setGlassOn(true)
-      } catch {
-        /* No WebGL, blocked context, or the library changed shape —
-           the CSS underneath is a complete look on its own. */
-      }
-    })
-
-    return () => {
-      cancelled = true
-      if (typeof window.cancelIdleCallback === 'function') window.cancelIdleCallback(idle as number)
-      instance?.destroy()
-      setGlassOn(false)
-    }
-  }, [open])
-
   /* Nothing should outlive the component: an unmount mid-answer used to
      leave the fetch and its reader running to completion. */
   useEffect(() => () => abortRef.current?.abort(), [])
@@ -235,11 +195,20 @@ export default function AskAura() {
      close — the element does not exist yet. The intent is recorded and
      acted on after the next commit. */
   const wantsLauncherFocus = useRef(false)
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const close = useCallback(() => {
     wantsLauncherFocus.current = true
-    setOpen(false)
     setAnnouncement('')
+    const reduced = typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) { setOpen(false); return }
+    setClosing(true)
+    closeTimer.current = setTimeout(() => {
+      setClosing(false)
+      setOpen(false)
+    }, 220)
   }, [])
+  useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current) }, [])
 
   useEffect(() => {
     if (open || !wantsLauncherFocus.current) return
@@ -464,7 +433,7 @@ export default function AskAura() {
         <button
           ref={launcherRef}
           type="button"
-          className={`aa-launch ${glassOn ? 'is-glass' : ''} ${past ? 'is-in' : ''}`}
+          className={`aa-launch ${past ? 'is-in' : ''}`}
           tabIndex={past ? 0 : -1}
           aria-hidden={!past}
           onClick={() => { setOpen(true); track('ask_aura_opened', { page: pathname, ...ANONYMOUS }) }}
@@ -473,10 +442,6 @@ export default function AskAura() {
              changes under a screen reader every few seconds is a moving
              target rather than a control. */
           aria-label="Ask Aura"
-          /* Inline, like the panel: styled-jsx drops backdrop-filter from
-             the emitted rules on this build, so the bar had never actually
-             been blurring anything. */
-          style={{ backdropFilter: 'blur(30px) saturate(1.7)', WebkitBackdropFilter: 'blur(30px) saturate(1.7)' }}
         >
           <span className="aa-launch-tick" aria-hidden>
             <span key={tick} className="aa-launch-q">{teaser}</span>
@@ -487,7 +452,7 @@ export default function AskAura() {
       {open && (
         <>
         <div
-          className="aa-scrim"
+          className={`aa-scrim ${closing ? 'is-closing' : ''}`}
           aria-hidden
           /* Inline for the same reason as the panel: styled-jsx drops
              backdrop-filter from the emitted rules on this build. */
@@ -499,7 +464,7 @@ export default function AskAura() {
              the transcript visible would capture every question and answer
              as pixels — a fuller record than the analytics property this
              file works so hard not to send. */
-          className="aa-panel ph-no-capture"
+          className={`aa-panel ph-no-capture ${closing ? 'is-closing' : ''}`}
           /* backdrop-filter is set inline: styled-jsx drops it from the
              emitted rules on this build, the same way it does for the
              article slider's fade and the menu vignette. Below 768px the
@@ -715,7 +680,12 @@ export default function AskAura() {
           left: 50%;
           bottom: max(20px, env(safe-area-inset-bottom, 0px));
           transform: translateX(-50%);
-          z-index: 45;
+          /* Over everything: the menu overlay sits at 102 and the term
+             tooltip at 1000, and the dock has to clear both. The
+             fullscreen film player at 9999 is deliberately left above —
+             a chat panel over a film playing full screen is not
+             something anyone asked for. */
+          z-index: 1200;
           /* Small until wanted. It sits over the page for the whole
              visit, so at rest it takes only the room a hint needs, and
              opens to the width of a place to type when the pointer or
@@ -725,7 +695,10 @@ export default function AskAura() {
           min-height: 40px; padding: 0 8px 0 16px;
           border-radius: 999px;
           border: 1px solid rgba(255, 255, 255, 0.22);
-          background: rgba(19, 23, 25, 0.72);
+          /* Solid black. Over a hero video, a white spread or an
+             editorial page it is the same object every time, which a
+             translucent ground could never be. */
+          background: #000;
           backdrop-filter: blur(14px) saturate(1.4);
           -webkit-backdrop-filter: blur(14px) saturate(1.4);
           color: #fff;
@@ -754,8 +727,8 @@ export default function AskAura() {
         .aa-launch.is-in:focus-visible {
           width: min(560px, calc(100vw - 32px));
           border-color: rgba(255, 255, 255, 0.55);
-          background: rgba(28, 32, 34, 0.78);
-          box-shadow: 0 14px 44px rgba(0, 0, 0, 0.3);
+          background: #111;
+          box-shadow: 0 14px 44px rgba(0, 0, 0, 0.34);
         }
         .aa-launch.is-in:hover .aa-launch-q,
         .aa-launch.is-in:focus-visible .aa-launch-q { color: #fff; }
@@ -799,14 +772,6 @@ export default function AskAura() {
         }
 
         .aa-launch:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
-        /* With the shader on, the blur is redundant — it refracts the
-           page itself. The tint stays: refraction of a dark hero is
-           still dark, and the label has to survive both. */
-        .aa-launch.is-glass {
-          backdrop-filter: none; -webkit-backdrop-filter: none;
-          background: rgba(19, 23, 25, 0.55);
-        }
-
         /* ── panel ── */
         /* The page, set back. Blurring what is behind the dock is what
            lets the panel itself stay translucent: the hero type and body
@@ -819,7 +784,7 @@ export default function AskAura() {
            underneath stays usable. */
         .aa-scrim {
           position: fixed; inset: 0;
-          z-index: 44;
+          z-index: 1201;
           pointer-events: none;
           background: rgba(16, 14, 13, 0.34);
           animation: aa-scrim-in var(--dur-base) var(--ease-out);
@@ -864,7 +829,7 @@ export default function AskAura() {
           left: 50%;
           top: 50%;
           transform: translate(-50%, -50%);
-          z-index: 46;
+          z-index: 1202;
           /* Room to read in. The dock is where a whole conversation
              happens, not a notification, and at 440 the answers were
              scrolling almost as fast as they arrived. */
@@ -919,6 +884,33 @@ export default function AskAura() {
           from { opacity: 0; transform: translate(-50%, calc(-50% + 56px)) scale(0.92); }
           to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
+        /* Back the way it came, and quicker: leaving should not take as
+           long as arriving. */
+        .aa-panel.is-closing {
+          animation: aa-out 220ms var(--ease) forwards;
+          pointer-events: none;
+        }
+        @keyframes aa-out {
+          from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+          to   { opacity: 0; transform: translate(-50%, calc(-50% + 40px)) scale(0.96); }
+        }
+        .aa-scrim.is-closing { animation: aa-scrim-out 220ms var(--ease) forwards; }
+        @keyframes aa-scrim-out { from { opacity: 1; } to { opacity: 0; } }
+
+        /* Each turn arrives rather than appearing. The delay is on the
+           assistant's block only — the reader's own words should be
+           there the instant they press send. */
+        .aa-msg { animation: aa-rise var(--dur-base) var(--ease-out) both; }
+        @keyframes aa-rise {
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: none; }
+        }
+        /* Sources and follow-ups settle in after the answer they belong
+           to, in that order, so the block resolves instead of landing
+           all at once. */
+        .aa-cites-label, .aa-cites { animation: aa-rise var(--dur-base) var(--ease-out) both; }
+        .aa-cites { animation-delay: 40ms; }
+        .aa-follow { animation: aa-rise var(--dur-base) var(--ease-out) 90ms both; }
 
         .aa-head {
           display: flex; align-items: center; justify-content: flex-end;
@@ -1019,12 +1011,17 @@ export default function AskAura() {
           cursor: pointer;
           text-align: left;
           transition: border-color var(--dur-base) var(--ease),
-                      background var(--dur-base) var(--ease);
+                      background var(--dur-base) var(--ease),
+                      transform 120ms var(--ease);
         }
         .aa-chip:hover {
           border-color: rgba(255, 255, 255, 0.7);
           background: rgba(255, 255, 255, 0.06);
         }
+        /* A press worth feeling. */
+        .aa-chip:active { transform: scale(0.985); }
+        .aa-card { transition: opacity var(--dur-base) var(--ease), transform 120ms var(--ease); }
+        .aa-card:active { transform: scale(0.995); }
         .aa-chip:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }
 
         .aa-msg { display: flex; flex-direction: column; gap: 10px; }
@@ -1240,7 +1237,15 @@ export default function AskAura() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .aa-panel { animation: none; }
+          .aa-panel,
+          .aa-panel.is-closing,
+          .aa-scrim,
+          .aa-scrim.is-closing,
+          .aa-msg,
+          .aa-cites-label,
+          .aa-cites,
+          .aa-follow { animation: none; }
+          .aa-chip:active, .aa-card:active { transform: none; }
           .aa-thinking i { animation: none; opacity: 0.6; }
           .aa-launch { transition: none; }
           .aa-launch:hover { transform: translateX(-50%); }

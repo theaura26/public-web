@@ -305,6 +305,15 @@ export function MicroNav() {
         /* :global, because styled-jsx cannot put its scope class on a
            <Link> — the same reason .ln-l is global above. */
         :global(.ln-cta) {
+          /* The parent turns pointer events off so the bar's gradient
+             mask does not swallow clicks meant for the links beneath it,
+             and the child rule was meant to turn them back on. It never
+             did: styled-jsx cannot put its scope class on a Link, so the
+             rule compiled to a descendant selector carrying the jsx hash
+             and matched nothing — this button has been unclickable. Set
+             on the class itself, which is already global for exactly
+             that reason. */
+          pointer-events: auto;
           flex-shrink: 0; cursor: pointer;
           display: inline-flex; align-items: center;
           text-decoration: none; white-space: nowrap;

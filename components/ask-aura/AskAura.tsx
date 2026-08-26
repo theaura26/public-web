@@ -1080,11 +1080,14 @@ export default function AskAura() {
           background: none; border: 0; resize: none;
           font-family: var(--font-sans), system-ui, sans-serif;
           font-size: 15px; line-height: 1.4;
-          color: var(--aa-ink);
+          /* Full white, and the prompt nearly so: the composer is the
+             one thing on the panel asking to be used, and at the meta
+             weight it read as disabled next to the chips above it. */
+          color: #fff;
           max-height: 96px;
           padding: 0;
         }
-        .aa-input::placeholder { color: var(--aa-meta); }
+        .aa-input::placeholder { color: rgba(255, 255, 255, 0.85); }
         .aa-input:focus { outline: none; }
         .aa-form:focus-within { border-top-color: rgba(255, 255, 255, 0.34); }
         /* Just the icon. A filled circle here competed with the white

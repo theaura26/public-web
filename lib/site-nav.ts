@@ -102,7 +102,7 @@ export const SECTIONS: NavSection[] = [
         children: [
           { label: 'A living organism', href: '/biodynamic' },
           { label: 'Circular Intelligence', href: '/circular' },
-          { label: 'Ṛta', href: '/rta' },
+          { label: 'Rta', href: '/rta' },
           { label: 'Vedic Farming', href: '/vedic' },
         ],
       },
@@ -131,6 +131,7 @@ export const SECTIONS: NavSection[] = [
         children: [
           { label: 'Artistry', href: '/artistry' },
           { label: 'Monastic Polymaths', href: '/residency' },
+          { label: 'Moral Spine', href: '/wisdom' },
         ],
       },
       {
@@ -140,6 +141,7 @@ export const SECTIONS: NavSection[] = [
         children: [
           { label: 'The Land', href: '/land' },
           { label: 'Mudigere', href: '/mudigere' },
+          { label: 'Asa. Niwa.', href: '/ohara' },
         ],
       },
       {
@@ -150,23 +152,6 @@ export const SECTIONS: NavSection[] = [
           { label: 'Our bean story', href: '/coffee' },
           { label: 'Fermentation', href: '/fermentation' },
           { label: 'Malabar Pepper', href: '/pepper' },
-        ],
-      },
-      {
-        label: 'From Mudigere',
-        href: '/field-notes/from-mudigere',
-        soon: true,
-        children: [
-          { label: 'Guests of the mountain', href: '/mudigere' },
-          { label: 'Moral Spine', href: '/wisdom' },
-        ],
-      },
-      {
-        label: 'From Ohara',
-        href: '/field-notes/from-ohara',
-        soon: true,
-        children: [
-          { label: 'Asa. Niwa.', href: '/ohara' },
         ],
       },
       {
@@ -236,7 +221,16 @@ export const SECTIONS: NavSection[] = [
           { label: 'Honey', href: '/from-aura/honey', soon: true },
         ],
       },
-      { label: 'Objects & Editions', href: '/from-aura/objects', soon: true },
+      {
+        label: 'Objects & Editions',
+        href: '/from-aura/objects',
+        soon: true,
+        children: [
+          { label: 'Art', href: '/from-aura/art', soon: true },
+          { label: 'Fashion', href: '/from-aura/fashion', soon: true },
+          { label: 'Stationery', href: '/from-aura/stationery', soon: true },
+        ],
+      },
       {
         label: 'Experiences',
         href: '/from-aura/experiences',

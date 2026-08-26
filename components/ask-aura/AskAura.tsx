@@ -448,8 +448,11 @@ export default function AskAura() {
              changes under a screen reader every few seconds is a moving
              target rather than a control. */
           aria-label="Ask Aura"
+          /* Inline, like the panel: styled-jsx drops backdrop-filter from
+             the emitted rules on this build, so the bar had never actually
+             been blurring anything. */
+          style={{ backdropFilter: 'blur(30px) saturate(1.7)', WebkitBackdropFilter: 'blur(30px) saturate(1.7)' }}
         >
-          <span className="aa-dot" aria-hidden />
           <span className="aa-launch-tick" aria-hidden>
             <span key={tick} className="aa-launch-q">{teaser}</span>
           </span>
@@ -589,6 +592,14 @@ export default function AskAura() {
                           <a
                             className="aa-card"
                             href={c.url}
+                            /* A new tab, so following a source does not
+                               cost the reader the conversation they were
+                               having. `noopener` because the opened page
+                               has no business reaching back into this
+                               one. */
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${name} — opens in a new tab`}
                             onClick={() => track('ask_aura_citation', { page: pathname, url: c.url, ...ANONYMOUS })}
                           >
                             <span
@@ -686,9 +697,13 @@ export default function AskAura() {
           bottom: max(20px, env(safe-area-inset-bottom, 0px));
           transform: translateX(-50%);
           z-index: 45;
-          width: min(560px, calc(100vw - 32px));
-          display: flex; align-items: center; gap: 12px;
-          min-height: 56px; padding: 0 18px 0 20px;
+          /* Small until wanted. It sits over the page for the whole
+             visit, so at rest it takes only the room a hint needs, and
+             opens to the width of a place to type when the pointer or
+             the keyboard arrives. */
+          width: min(300px, calc(100vw - 32px));
+          display: flex; align-items: center; gap: 10px;
+          min-height: 50px; padding: 0 14px 0 18px;
           border-radius: 999px;
           border: 1px solid rgba(255, 255, 255, 0.22);
           background: rgba(19, 23, 25, 0.72);
@@ -698,10 +713,16 @@ export default function AskAura() {
           cursor: pointer;
           text-align: left;
           box-shadow: 0 10px 34px rgba(0, 0, 0, 0.22);
-          transition: transform var(--dur-base) var(--ease-out),
+          transition: width var(--dur-slow) var(--ease-out),
+                      transform var(--dur-base) var(--ease-out),
                       border-color var(--dur-base) var(--ease);
         }
-        .aa-launch:hover { transform: translateX(-50%) translateY(-2px); border-color: rgba(255, 255, 255, 0.5); }
+        .aa-launch:hover,
+        .aa-launch:focus-visible {
+          width: min(560px, calc(100vw - 32px));
+          border-color: rgba(255, 255, 255, 0.5);
+        }
+        .aa-launch:hover { transform: translateX(-50%) translateY(-2px); }
 
         /* One line high and clipped, so a question leaving and the next
            arriving never change the height of the bar. */
@@ -749,10 +770,6 @@ export default function AskAura() {
           backdrop-filter: none; -webkit-backdrop-filter: none;
           background: rgba(19, 23, 25, 0.55);
         }
-        .aa-dot {
-          width: 6px; height: 6px; border-radius: 50%;
-          background: var(--brand-accent); flex: none;
-        }
 
         /* ── panel ── */
         /* The page, set back. Blurring what is behind the dock is what
@@ -774,6 +791,17 @@ export default function AskAura() {
         @media (prefers-reduced-motion: reduce) { .aa-scrim { animation: none; } }
         /* No blur available below 768px, so the tint carries it alone. */
         @media (max-width: 768px) { .aa-scrim { background: rgba(16, 14, 13, 0.42); } }
+
+        /* globals.css gives every button:hover a brand-accent underline.
+           That is the right affordance for a link in prose and the wrong
+           one for a chip, a close cross or a send icon, so the dock opts
+           its own controls out. */
+        .aa-launch,
+        .aa-launch:hover,
+        .aa-panel button,
+        .aa-panel button:hover,
+        .aa-panel a,
+        .aa-panel a:hover { text-decoration: none; }
 
         .aa-panel {
           /* Glass, and dark on purpose. This panel floats over hero
@@ -882,8 +910,22 @@ export default function AskAura() {
              more at the bottom so the last line clears the rule. */
           padding: 0 22px 20px;
           display: flex; flex-direction: column; gap: 26px;
+          /* A hairline, not a chrome scrollbar: the default one is a
+             light-themed widget on a dark panel and the loudest thing on
+             it. Firefox takes the two-value form; WebKit needs the
+             pseudo-elements below. */
           scrollbar-width: thin;
+          scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+          overscroll-behavior: contain;
         }
+        .aa-log::-webkit-scrollbar { width: 6px; }
+        .aa-log::-webkit-scrollbar-track { background: transparent; }
+        .aa-log::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.18);
+          border-radius: 999px;
+        }
+        .aa-log:hover::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); }
+        .aa-log::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.45); }
 
         /* The sentence and its footnote are one unit; the questions are
            a separate move, so they get their own air above them. */
@@ -923,7 +965,10 @@ export default function AskAura() {
           border: 1px solid rgba(255, 255, 255, 0.28);
           border-radius: 999px;
           background: transparent;
-          color: var(--aa-ink);
+          /* Grey, and it stays grey on hover: the border does the
+             responding, so the type never jumps brightness under the
+             cursor. */
+          color: var(--aa-body);
           cursor: pointer;
           text-align: left;
           transition: border-color var(--dur-base) var(--ease),
@@ -1086,6 +1131,10 @@ export default function AskAura() {
           color: #fff;
           max-height: 96px;
           padding: 0;
+          /* The row is as tall as the send button, and the text lands
+             half a pixel under its centre. One pixel up reads level. */
+          position: relative;
+          top: -1px;
         }
         .aa-input::placeholder { color: rgba(255, 255, 255, 0.85); }
         .aa-input:focus { outline: none; }

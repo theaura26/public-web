@@ -88,6 +88,20 @@ function extract(html) {
   const mainM = body.match(/<main[^>]*>([\s\S]*?)<\/main>/i)
   if (mainM) body = mainM[1]
 
+  /* Glossary. <Term> renders its definition as an aria-hidden span
+     inside the term itself, so left alone it splices a definition into
+     the middle of the sentence that used it. Lift them out as their own
+     entries — the definitions are worth retrieving — then strip them
+     from the prose. */
+  const terms = [...body.matchAll(
+    /<span[^>]*class="[^"]*aura-term[^"]*"[^>]*aria-label="([^"]+)"[^>]*>([\s\S]*?)<span[^>]*aura-term__tip[^>]*>/gi,
+  )].map((m) => ({ term: clean(m[2]), definition: clean(m[1]) }))
+    .filter((t) => t.term && t.definition)
+
+  /* Anything hidden from assistive tech is decoration or a duplicate —
+     neither belongs in a passage an answer might quote. */
+  body = body.replace(/<span[^>]*aria-hidden[^>]*>[^<]*<\/span>/gi, ' ')
+
   /* Keep figure captions and image alt text — on this site they carry
      real information ("Screen grading — defect analysis per SCA
      protocol"), not decoration. */
@@ -123,6 +137,7 @@ function extract(html) {
     headings: marks.map((x) => x.heading).filter(Boolean),
     sections,
     alts,
+    terms,
     text,
     words: text ? text.split(/\s+/).length : 0,
   }
@@ -134,7 +149,10 @@ function clean(s) {
     .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
     .replace(/&#39;|&rsquo;|&apos;/g, "'").replace(/&quot;|&ldquo;|&rdquo;/g, '"')
-    .replace(/&mdash;/g, '—').replace(/&hellip;/g, '…')
+    .replace(/&mdash;/g, '—').replace(/&ndash;/g, '–').replace(/&hellip;/g, '…')
+    /* Numeric entities last, so the named ones above win first. */
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
     .replace(/[ \t]+/g, ' ')
     .replace(/ ?\n ?/g, '\n')
     .replace(/\n{2,}/g, '\n')
@@ -197,7 +215,8 @@ const records = await pool(urls, CONCURRENCY, async (url) => {
     await writeFile(
       path.join(DATA_DIR, 'pages', `${id}.json`),
       JSON.stringify({ id, url, canonical: x.canonical || url, title: x.title,
-        description: x.description, seenAt, hash, sections: x.sections, alts: x.alts }, null, 2),
+        description: x.description, seenAt, hash,
+        sections: x.sections, alts: x.alts, terms: x.terms }, null, 2),
     )
     return {
       url, id, status, state: 'ok', seenAt, hash,

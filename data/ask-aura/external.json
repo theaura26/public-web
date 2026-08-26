@@ -1,0 +1,80 @@
+[
+  {
+    "id": "ext#unesco-western-ghats",
+    "docId": "unesco-western-ghats",
+    "title": "Western Ghats — UNESCO World Heritage List",
+    "sectionPath": "UNESCO › Western Ghats (ref 1342)",
+    "heading": "Western Ghats World Heritage listing",
+    "url": "https://whc.unesco.org/en/list/1342/",
+    "sourceType": "institutional",
+    "authors": "UNESCO World Heritage Centre",
+    "publishedAt": "2012",
+    "retrievedAt": "2026-08-26",
+    "text": "The Western Ghats are inscribed on the UNESCO World Heritage List (ref 1342, inscribed 2012) as one of the world's eight 'hottest hotspots' of biological diversity. The range is older than the Himalaya and influences the Indian monsoon weather pattern. It holds exceptionally high levels of endemism among plants, amphibians, reptiles, birds and fish. SUPPORTS: that the range Mudigere sits in is internationally recognised for biodiversity and monsoon influence. LIMITS: the listing describes the range, not any individual estate within it, and confers nothing on a property by location alone."
+  },
+  {
+    "id": "ext#coffee-board-india",
+    "docId": "coffee-board-india",
+    "title": "Coffee Board of India",
+    "sectionPath": "Government of India › Coffee Board",
+    "heading": "Indian coffee production and shade cultivation",
+    "url": "https://www.indiacoffee.org/",
+    "sourceType": "institutional",
+    "authors": "Coffee Board of India, Ministry of Commerce and Industry",
+    "publishedAt": "ongoing",
+    "retrievedAt": "2026-08-26",
+    "text": "The Coffee Board of India is the statutory body for Indian coffee. Karnataka accounts for the majority of Indian production, and Indian coffee is almost entirely shade-grown under a two-tier canopy — a practice the Board documents as the norm rather than the exception in this region. The Board also runs the Flavour of India Fine Cup Award. SUPPORTS: that shade cultivation is standard practice in Karnataka, and that the Fine Cup Award is a real national competition. LIMITS: being usual practice is not by itself evidence of superior outcome; the Board is a promotional as well as a regulatory body."
+  },
+  {
+    "id": "ext#shade-coffee-biodiversity",
+    "docId": "shade-coffee-biodiversity",
+    "title": "Shade coffee and biodiversity conservation",
+    "sectionPath": "Peer-reviewed › Shade agroforestry and biodiversity",
+    "heading": "What shade cover does for biodiversity",
+    "url": "https://doi.org/10.1146/annurev-environ-102016-060946",
+    "sourceType": "peer_reviewed",
+    "authors": "Jha, Bacon, Philpott et al., Annual Review of Environment and Resources",
+    "publishedAt": "2017",
+    "retrievedAt": "2026-08-26",
+    "text": "Reviews of shade-grown coffee agroforestry find that structurally complex, diverse shade canopies support substantially higher bird, ant and arthropod diversity than sun monoculture, and that this benefit scales with canopy cover, tree species richness and structural layering rather than with the label 'shade-grown' alone. SUPPORTS: the general claim that a multi-storey diverse canopy carries more life than an open one. LIMITS: measured at plot and landscape scale in Latin America and elsewhere; it does not establish figures for any specific Indian estate, and reviews consistently note that shade systems can still yield less per hectare than intensified sun systems."
+  },
+  {
+    "id": "ext#soil-carbon-agroforestry",
+    "docId": "soil-carbon-agroforestry",
+    "title": "Soil organic carbon under coffee agroforestry",
+    "sectionPath": "Peer-reviewed › Soil carbon in agroforestry",
+    "heading": "Soil carbon under tree-shaded coffee",
+    "url": "https://doi.org/10.1007/s10457-019-00366-8",
+    "sourceType": "peer_reviewed",
+    "authors": "Agroforestry Systems (review literature)",
+    "publishedAt": "2019",
+    "retrievedAt": "2026-08-26",
+    "text": "Meta-analyses of coffee agroforestry report higher soil organic carbon stocks under shaded systems than under unshaded coffee, with the size of the difference varying widely by climate, soil type, tree species, age of the system and sampling depth. SUPPORTS: that shaded coffee systems tend to hold more soil carbon than open ones. LIMITS: effect sizes are heterogeneous and depth-dependent; 'builds carbon the topsoil will hold for a hundred years' is a projection, not a measured finding, and no review supports a century-scale permanence claim for a particular site."
+  },
+  {
+    "id": "ext#biodynamic-review",
+    "docId": "biodynamic-review",
+    "title": "Biodynamic agriculture — evidence review",
+    "sectionPath": "Peer-reviewed › Biodynamic preparations",
+    "heading": "What the evidence does and does not show",
+    "url": "https://doi.org/10.1016/j.still.2019.104494",
+    "sourceType": "peer_reviewed",
+    "authors": "Soil & Tillage Research and related comparative-trial literature",
+    "publishedAt": "2019",
+    "retrievedAt": "2026-08-26",
+    "text": "Long-term comparative trials (notably the DOK trial, Switzerland) find organic and biodynamic systems can show higher soil microbial biomass, activity and aggregate stability than conventional systems, usually at some cost in yield. Where trials attempt to isolate the biodynamic preparations themselves from the wider organic management, effects are small, inconsistent, and often not statistically distinguishable. There is no accepted mechanism, and no controlled evidence, for the astronomical timing component. SUPPORTS: that biodynamically managed soils can measure better than conventionally managed ones. CONTRADICTS OR QUALIFIES: any claim that the preparations, or lunar and cosmic timing, are independently proven to cause those gains. This is the source to reach for when a visitor asks whether biodynamics is scientifically established — the honest answer is that the management shows up in the soil and the ritual component does not."
+  },
+  {
+    "id": "ext#malnad-gidda",
+    "docId": "malnad-gidda",
+    "title": "Malnad Gidda cattle",
+    "sectionPath": "Institutional › Indigenous cattle breeds of Karnataka",
+    "heading": "The Malnad Gidda breed",
+    "url": "https://nbagr.icar.gov.in/en/registered-cattle/",
+    "sourceType": "institutional",
+    "authors": "ICAR — National Bureau of Animal Genetic Resources",
+    "publishedAt": "ongoing",
+    "retrievedAt": "2026-08-26",
+    "text": "Malnad Gidda is a recognised indigenous dwarf cattle breed of the Malnad region of Karnataka, registered with India's National Bureau of Animal Genetic Resources. It is small-framed, low-input, and adapted to heavy monsoon, humid conditions and hilly terrain, with reported disease resistance relative to exotic breeds. SUPPORTS: that the breed is genuinely indigenous to this region and suited to these conditions. LIMITS: breed registration describes the breed, not the management of any particular herd."
+  }
+]

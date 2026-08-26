@@ -1,6 +1,12 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+
+/* The motion scale, mirrored from globals.css so the JS that unmounts a
+   thing waits exactly as long as the CSS that animates it out. Reading
+   them here rather than guessing is what stops an exit being cut off
+   halfway when someone retunes a token. */
+const DUR = { fast: 150, base: 250, slow: 450 } as const
 import { usePathname } from 'next/navigation'
 import { track } from '@/lib/analytics'
 import { remember, preferred } from '@/lib/ask-aura/affinity'
@@ -113,7 +119,7 @@ export default function AskAura() {
     if (shownRef.current === teaser) return
     setLeaving(shownRef.current)
     shownRef.current = teaser
-    const t = setTimeout(() => setLeaving(null), 460)
+    const t = setTimeout(() => setLeaving(null), DUR.slow)
     return () => clearTimeout(t)
   }, [teaser])
 
@@ -218,7 +224,7 @@ export default function AskAura() {
     closeTimer.current = setTimeout(() => {
       setClosing(false)
       setOpen(false)
-    }, 220)
+    }, DUR.base)
   }, [])
   useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current) }, [])
 
@@ -812,12 +818,12 @@ export default function AskAura() {
           color: rgba(255, 255, 255, 0.82);
           text-align: center;
           white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-          animation: aa-tick-in 420ms var(--ease-out) both;
+          animation: aa-tick-in var(--dur-slow) var(--ease-out) both;
         }
         /* Up and out, then up and in — both travel the same direction,
            which is what makes it read as one line replacing another
            rather than two unrelated fades. */
-        .aa-launch-q.is-out { animation: aa-tick-out 420ms var(--ease-out) both; }
+        .aa-launch-q.is-out { animation: aa-tick-out var(--dur-slow) var(--ease-out) both; }
         @keyframes aa-tick-in {
           from { opacity: 0; transform: translateY(0.75em); }
           to   { opacity: 1; transform: translateY(0); }
@@ -880,6 +886,11 @@ export default function AskAura() {
              footage — while the text on top stays white against a
              constant, known ground. Contrast is a property of the panel,
              not of the page it happens to be sitting on. */
+          /* One step for every staggered sequence in the panel. Small
+             enough that a list still reads as one gesture, large enough
+             that the order is legible. */
+          --aa-step: 45ms;
+
           --aa-ink: rgba(255, 255, 255, 0.96);
           /* The explanation sits back from the headline. Still 9.7:1 on
              the panel's ground, so quieter without being harder to read. */
@@ -952,15 +963,17 @@ export default function AskAura() {
         }
         /* Back the way it came, and quicker: leaving should not take as
            long as arriving. */
+        /* Leaving is base where arriving is slow: a thing should not
+           take as long to go as it took to appear. */
         .aa-panel.is-closing {
-          animation: aa-out 220ms var(--ease) forwards;
+          animation: aa-out var(--dur-base) var(--ease) forwards;
           pointer-events: none;
         }
         @keyframes aa-out {
           from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
           to   { opacity: 0; transform: translate(-50%, calc(-50% + 40px)) scale(0.96); }
         }
-        .aa-scrim.is-closing { animation: aa-scrim-out 220ms var(--ease) forwards; }
+        .aa-scrim.is-closing { animation: aa-scrim-out var(--dur-base) var(--ease) forwards; }
         @keyframes aa-scrim-out { from { opacity: 1; } to { opacity: 0; } }
 
         /* Each turn arrives rather than appearing. The delay is on the
@@ -974,9 +987,20 @@ export default function AskAura() {
         /* Sources and follow-ups settle in after the answer they belong
            to, in that order, so the block resolves instead of landing
            all at once. */
-        .aa-cites-label, .aa-cites { animation: aa-rise var(--dur-base) var(--ease-out) both; }
-        .aa-cites { animation-delay: 40ms; }
-        .aa-follow { animation: aa-rise var(--dur-base) var(--ease-out) 90ms both; }
+        .aa-head-line { animation: aa-rise var(--dur-base) var(--ease-out) both; }
+        .aa-cites-label { animation: aa-rise var(--dur-base) var(--ease-out) both; }
+        .aa-cites { animation: aa-rise var(--dur-base) var(--ease-out) calc(var(--aa-step) * 1) both; }
+        /* Source rows fall in one at a time — three records landing, not
+           a block appearing. */
+        .aa-cites > li { animation: aa-rise var(--dur-fast) var(--ease-out) both; }
+        .aa-cites > li:nth-child(1) { animation-delay: calc(var(--aa-step) * 2); }
+        .aa-cites > li:nth-child(2) { animation-delay: calc(var(--aa-step) * 3); }
+        .aa-cites > li:nth-child(3) { animation-delay: calc(var(--aa-step) * 4); }
+        .aa-follow { animation: aa-rise var(--dur-base) var(--ease-out) calc(var(--aa-step) * 5) both; }
+        .aa-follow .aa-chips > li { animation: aa-rise var(--dur-fast) var(--ease-out) both; }
+        .aa-follow .aa-chips > li:nth-child(1) { animation-delay: calc(var(--aa-step) * 6); }
+        .aa-follow .aa-chips > li:nth-child(2) { animation-delay: calc(var(--aa-step) * 7); }
+        .aa-follow .aa-chips > li:nth-child(3) { animation-delay: calc(var(--aa-step) * 8); }
 
         .aa-head {
           display: flex; align-items: center; justify-content: flex-end;
@@ -1034,7 +1058,19 @@ export default function AskAura() {
 
         /* The sentence and its footnote are one unit; the questions are
            a separate move, so they get their own air above them. */
+        /* The opening resolves in the order it is read: the sentence,
+           the note that qualifies it, then the questions. Each waits one
+           step on the one before. */
         .aa-intro { display: flex; flex-direction: column; gap: 8px; }
+        .aa-intro > * { animation: aa-rise var(--dur-base) var(--ease-out) both; }
+        .aa-intro > .aa-intro-line { animation-delay: calc(var(--aa-step) * 1); }
+        .aa-intro > .aa-terms { animation-delay: calc(var(--aa-step) * 2); }
+        .aa-intro > .aa-chips { animation-delay: calc(var(--aa-step) * 3); }
+        /* And the questions themselves arrive one after another. */
+        .aa-intro .aa-chips > li { animation: aa-rise var(--dur-base) var(--ease-out) both; }
+        .aa-intro .aa-chips > li:nth-child(1) { animation-delay: calc(var(--aa-step) * 4); }
+        .aa-intro .aa-chips > li:nth-child(2) { animation-delay: calc(var(--aa-step) * 5); }
+        .aa-intro .aa-chips > li:nth-child(3) { animation-delay: calc(var(--aa-step) * 6); }
         .aa-intro .aa-chips { margin-top: 28px; }
         .aa-intro-line {
           margin: 0;
@@ -1078,7 +1114,7 @@ export default function AskAura() {
           text-align: left;
           transition: border-color var(--dur-base) var(--ease),
                       background var(--dur-base) var(--ease),
-                      transform 120ms var(--ease);
+                      transform var(--dur-fast) var(--ease);
         }
         .aa-chip:hover {
           border-color: rgba(255, 255, 255, 0.7);
@@ -1086,7 +1122,7 @@ export default function AskAura() {
         }
         /* A press worth feeling. */
         .aa-chip:active { transform: scale(0.985); }
-        .aa-card { transition: opacity var(--dur-base) var(--ease), transform 120ms var(--ease); }
+        .aa-card { transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
         .aa-card:active { transform: scale(0.995); }
         .aa-chip:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }
 
@@ -1308,9 +1344,13 @@ export default function AskAura() {
           .aa-scrim,
           .aa-scrim.is-closing,
           .aa-msg,
+          .aa-head-line,
           .aa-cites-label,
           .aa-cites,
-          .aa-follow { animation: none; }
+          .aa-cites > li,
+          .aa-follow,
+          .aa-intro > *,
+          .aa-chips > li { animation: none; }
           .aa-chip:active, .aa-card:active { transform: none; }
           .aa-thinking i { animation: none; opacity: 0.6; }
           .aa-launch { transition: none; }

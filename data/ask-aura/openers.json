@@ -1,218 +1,218 @@
 {
   "/areca": {
     "hash": "a717202f0d3b8f97",
-    "line": "The Sentinel Palm, the estate's foundational tree.",
+    "line": "This is the palm the whole estate is built on — ask me anything.",
     "prompts": [
-      "Why is the Sentinel Palm important?",
-      "How does the palm support the ecosystem?",
-      "What role does the palm play in coffee growth?"
+      "Why is the areca called the Sentinel Palm?",
+      "How does the areca support other plants?",
+      "What makes areca an ecosystem engineer?"
     ]
   },
   "/artistry": {
     "hash": "51634ba842bd433a",
-    "line": "The studio and labs where design and craft meet subtraction.",
+    "line": "This is where we shape ideas into real things — ask me anything.",
     "prompts": [
-      "What disciplines does the studio focus on?",
-      "How does subtraction influence the making process?",
-      "What crafts are practised in the studio?"
+      "How does subtraction guide your making?",
+      "What crafts do you combine here?",
+      "What’s special about Ohara and Mudigere?"
     ]
   },
   "/atelier": {
     "hash": "72e094189d685a46",
-    "line": "The atelier where natural intelligence meets craft and innovation.",
+    "line": "This is where craft and nature come together — ask me anything.",
     "prompts": [
-      "What is the atelier's core philosophy?",
-      "How does the atelier blend craft and technology?",
-      "What does 'natural intelligence' mean here?"
+      "What does natural intelligence mean here?",
+      "How do you build for 1,000 years?",
+      "What makes your hospitality unique?"
     ]
   },
   "/biodynamic": {
     "hash": "8ffd775eee05f8b6",
-    "line": "The estate managed as a living organism using biodynamic methods.",
+    "line": "This estate lives and breathes as one — what would you like to know?",
     "prompts": [
       "What is biodynamic farming?",
-      "How does the herd support the estate?",
+      "How does the herd help farming?",
       "What are the numbered preparations?"
     ]
   },
   "/brand": {
     "hash": "beab1f5690cdd018",
-    "line": "The brand identity and principles behind Aura.",
+    "line": "This is our brand's heart and soul — what do you want to know?",
     "prompts": [
-      "What are Aura's three intelligences?",
-      "What principles guide the brand?",
-      "How does Aura define progress?"
+      "What are the three brand intelligences?",
+      "How do we define Natural Intelligence?",
+      "What are our brand principles?"
     ]
   },
   "/circular": {
     "hash": "b8673c9755be9333",
-    "line": "How Aura recycles waste into soil fertility on the estate.",
+    "line": "This is how we turn waste into life — what would you like to know?",
     "prompts": [
-      "How is compost made here?",
-      "What is Jeevamrit used for?",
-      "How is soil tested and improved?"
+      "How do you compost the herd's dung?",
+      "What is Jeevamrit and why use it?",
+      "How do you test soil fertility here?"
     ]
   },
   "/coffee": {
     "hash": "a2365b2a49c9cb92",
-    "line": "The story behind Aura's coffee and its unique lots.",
+    "line": "This is how our coffee journey began — what would you like to know?",
     "prompts": [
-      "What makes small the chosen strategy?",
-      "How does each lot differ?",
-      "What is fermenting in the process?"
+      "Why is small the strategy?",
+      "What makes each lot unique?",
+      "How does fermentation work here?"
     ]
   },
   "/contact": {
     "hash": "1543ba2904e7aadd",
-    "line": "Contact information and ways to reach Aura.",
+    "line": "Got questions or want to work with us? Ask away.",
     "prompts": [
-      "How can I contact Aura?",
-      "Where is Aura located?",
-      "Can I collaborate with Aura?"
+      "How can I contact you?",
+      "Where is the estate located?",
+      "Can I visit the atelier?"
     ]
   },
   "/ecology": {
     "hash": "5a574df2fece833c",
-    "line": "The estate's ecological health measured as one living system.",
+    "line": "This is the living system that keeps our farm thriving — ask me anything.",
     "prompts": [
-      "How is the ecological health index calculated?",
+      "How do you measure ecological health?",
       "What role do fungi play here?",
-      "How is dead wood used on the farm?"
+      "Why is dead wood important?"
     ]
   },
   "/fermentation": {
     "hash": "ac4158fbc41fafd1",
-    "line": "The fermentation processes used on the coffee estate.",
+    "line": "This is where our coffee's unique flavours begin — ask me anything.",
     "prompts": [
-      "What are the three fermentation types?",
-      "How is fermentation controlled and recorded?",
-      "How does fermentation affect coffee flavour?"
+      "How do you ferment coffee cherries?",
+      "What role does cow dung play?",
+      "Why is patience important here?"
     ]
   },
   "/herd": {
     "hash": "4946324a2dbb4145",
-    "line": "The herd of Malnad Gidda cattle drives the estate's ecosystem.",
+    "line": "This herd is the heart of our land — what do you want to know?",
     "prompts": [
-      "How many Malnad Gidda cattle graze here?",
-      "Why is every animal given a passport?",
-      "How is the herd cared for by hand?"
+      "How does the herd feed the land?",
+      "Why choose Malnad Gidda cattle?",
+      "How is each animal cared for?"
     ]
   },
   "/": {
     "hash": "226d26c530ca59b2",
-    "line": "Introduction to Aura's regenerative coffee estate and philosophy.",
+    "line": "Welcome to Aura — ask me anything about our work and vision.",
     "prompts": [
-      "Who are the Monastic Polymaths?",
-      "What are the two ancient farming intelligences?",
-      "What does regenerative conviction mean here?"
+      "What is a Monastic Polymath?",
+      "How do you combine wisdom and capital?",
+      "What makes your coffee regenerative?"
     ]
   },
   "/land": {
     "hash": "5b8daa55715a4803",
-    "line": "Information about the land and its role in the estate.",
+    "line": "This land shapes everything we do here—what do you want to know?",
     "prompts": [
-      "What is the land's ancestral significance?",
-      "Where are Mudigere and Ohara located?",
-      "How is the land worked here?"
+      "Why is land called ancestry?",
+      "What crops grow here?",
+      "How do you work this land?"
     ]
   },
   "/living-systems": {
     "hash": "7f9ec1df2b4fb4e8",
-    "line": "The living systems that make up the estate's ecosystem.",
+    "line": "This is how our forest farm truly works — ask me anything.",
     "prompts": [
-      "What are the four canopy layers?",
-      "How does the herd function here?",
-      "What data streams are tracked?"
+      "How does the canopy support crops?",
+      "What role does the herd play?",
+      "How do the nine data streams work?"
     ]
   },
   "/mudigere": {
     "hash": "7cf43d9cd5614887",
-    "line": "Overview of the Mudigere coffee estate and its farming methods.",
+    "line": "This is Mudigere, our oldest Arabica home — ask me anything.",
     "prompts": [
-      "What makes Mudigere the oldest Arabica region?",
-      "How are the four farming layers arranged?",
-      "What role do the bees play here?"
+      "What makes Mudigere special here?",
+      "How do you farm four layers?",
+      "What’s the closed loop system?"
     ]
   },
   "/ohara": {
     "hash": "74001f4ad5d73c33",
-    "line": "Ohara is a valley estate with three unique rooms and natural design.",
+    "line": "This is Ohara, a place where nature and design live together — ask me anything.",
     "prompts": [
-      "What are the three rooms called?",
-      "How does the design coexist with nature?",
-      "What is the rhythm of Ohara?"
+      "What makes Ohara valley unique?",
+      "How old is the home here?",
+      "What are Shu, Ha, Ri rhythms?"
     ]
   },
   "/pepper": {
     "hash": "1c29b8784ca91d15",
-    "line": "Details about Malabar Black Gold pepper cultivation and characteristics.",
+    "line": "This pepper vine climbs our palms—what would you like to know?",
     "prompts": [
-      "How is Malabar pepper grown?",
-      "What colours does the pepper have?",
-      "How is the pepper processed?"
+      "How is Malabar Black Gold pepper grown?",
+      "Why is the pepper retted, not rushed?",
+      "What does 'ecosystem engineers' mean here?"
     ]
   },
   "/provenance": {
     "hash": "04386e240d58c39f",
-    "line": "The detailed origin and tracking of Aura coffee lots.",
+    "line": "This is how we track every step of our coffee's journey.",
     "prompts": [
-      "How is each coffee lot recorded?",
-      "What does the buyer receive?",
-      "How are events verified?"
+      "How do you measure what you make?",
+      "What does 'the lot reads itself' mean?",
+      "How is every event verified here?"
     ]
   },
   "/reason": {
     "hash": "b67d5964423cbb27",
-    "line": "The story behind Aura's regenerative coffee estate.",
+    "line": "This is why we started Aura — what would you like to know?",
     "prompts": [
-      "What inspired Aura's creation?",
-      "Where is the estate located?",
-      "How did farming knowledge develop?"
+      "Why did you choose this land?",
+      "How did Ohara inspire you?",
+      "What makes Mudigere special?"
     ]
   },
   "/residency": {
     "hash": "98971308d764b773",
-    "line": "A residency for monastic polymaths at two estates.",
+    "line": "This residency brings science and art together — what would you like to ask?",
     "prompts": [
-      "What is a monastic polymath?",
-      "Where are the residency estates?",
-      "What environments support the residency?"
+      "Who are monastic polymaths here?",
+      "What makes the environment special?",
+      "How do the two estates connect?"
     ]
   },
   "/rta": {
     "hash": "e34d1f0868a1bf1c",
-    "line": "The Vedic principle guiding timing and actions on the estate.",
+    "line": "This is the principle guiding all our work here — ask me anything.",
     "prompts": [
-      "What does Rta mean here?",
-      "How does the land decide timing?",
-      "What is RTA Labs?"
+      "What does 'right time, right action' mean?",
+      "How does the land decide readiness?",
+      "What happens in RTA Labs?"
     ]
   },
   "/sanctuary": {
     "hash": "02bb35362dccab37",
-    "line": "Overview of the Sanctuary network and its ecological approach.",
+    "line": "This sanctuary is more than land — what would you like to know?",
     "prompts": [
-      "What are the four valleys?",
-      "How does the network function?",
-      "What is Circular Intelligence?"
+      "What are the four climates here?",
+      "How do the two valleys in practice differ?",
+      "Why have a network at all?"
     ]
   },
   "/shade": {
     "hash": "15f71950a3e0f905",
-    "line": "How Aura manages the coffee shade canopy for light.",
+    "line": "This is how we manage light for perfect coffee — ask me anything.",
     "prompts": [
-      "How is light measured before cutting?",
-      "What happens to the cut material?",
-      "Why is shade management a generational decision?"
+      "How do you measure light here?",
+      "Why cut only prescribed shade?",
+      "What happens to the cut material?"
     ]
   },
   "/wisdom": {
     "hash": "c16cd421f9aa2dad",
-    "line": "The core values and decision principles guiding the estate.",
+    "line": "This is our moral spine — ask me anything about it.",
     "prompts": [
-      "What are the things we will not do?",
-      "What are the seven decision filters?",
-      "What are the three intelligences?"
+      "What are the things you will not do?",
+      "How do you apply the fourfold self-check?",
+      "What are the seven decision filters?"
     ]
   }
 }

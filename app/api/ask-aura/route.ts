@@ -28,7 +28,6 @@ export const dynamic = 'force-dynamic'
 const MAX_BODY_BYTES = 32 * 1024
 
 const CHAT_MODEL = 'gpt-4.1'
-const SUGGEST_MODEL = 'gpt-4.1-nano'
 
 /* The prompt is a file so that changing how the host speaks is an
    editorial act, not a deploy.
@@ -107,10 +106,7 @@ function refusalStream(reply: string, kind: string, question = '') {
       const enc = new TextEncoder()
       c.enqueue(enc.encode(sse('token', { t: reply })))
       c.enqueue(enc.encode(sse('meta', {
-        suggestions: [
-          { label: 'What is Aura?', intent: 'overview' },
-          { label: 'Where are the estates?', intent: 'places' },
-        ],
+        suggestions: [],
         citations: [],
         confidence: 'high',
         refusal: kind,
@@ -161,52 +157,6 @@ function sourcesBlock(hits: Hit[]): string {
     )
     .join('\n\n')
   return fenceContext('SOURCES', body)
-}
-
-async function followUps(
-  question: string, answer: string, key: string, signal: AbortSignal,
-): Promise<Array<{ label: string; intent: string }>> {
-  try {
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
-      signal,
-      body: JSON.stringify({
-        model: SUGGEST_MODEL,
-        temperature: 0.6,
-        max_tokens: 160,
-        response_format: { type: 'json_object' },
-        messages: [
-          {
-            role: 'system',
-            content:
-              'You write follow-up questions a curious visitor to a regenerative coffee estate might ask next. ' +
-              'Return JSON: {"suggestions":[{"label":"...","intent":"..."}]}. Two or three. ' +
-              'Each must open a NEW subject, never restate what was just answered. ' +
-              'Each is a QUESTION someone would actually say out loud, ending in a question mark. ' +
-              'Never a command or a topic label: "How is the pepper dried?" is right; ' +
-              '"Learn about the pepper" and "Explore drying methods" are wrong. ' +
-              'Never begin with Learn, Explore, Discover, Dive or Uncover. ' +
-              'Seven words or fewer, sentence case, British English.',
-          },
-          { role: 'user', content: `They asked: ${question}\n\nThey were told: ${answer.slice(0, 1200)}` },
-        ],
-      }),
-    })
-    if (!res.ok) return []
-    const json = await res.json()
-    const parsed = JSON.parse(json.choices?.[0]?.message?.content ?? '{}')
-    return (parsed.suggestions ?? [])
-      .slice(0, 3)
-      .filter((s: unknown): s is { label: string; intent: string } =>
-        Boolean(s && typeof (s as { label?: unknown }).label === 'string'))
-      .map((s: { label: string; intent?: string }) => ({
-        label: s.label.slice(0, 60),
-        intent: (s.intent ?? 'follow_up').slice(0, 40),
-      }))
-  } catch {
-    return []
-  }
 }
 
 export async function POST(req: Request) {
@@ -365,7 +315,6 @@ export async function POST(req: Request) {
             page: h.chunk.title.split(' — ')[0].split(' › ')[0],
           }))
 
-        const suggestions = await followUps(message, answer, key, req.signal)
         const best = hits[0]?.confidence ?? 'low'
 
         /* The evidence actually put in front of the model, echoed back
@@ -382,7 +331,13 @@ export async function POST(req: Request) {
            the topic labels are worth more when they come from what was
            retrieved than from what was typed. */
         controller.enqueue(enc.encode(sse('meta', {
-          suggestions,
+          /* The opening questions are generated at ingest time from what
+             each page contains, so the dock has something to offer before
+             a conversation starts. Once it has started, the visitor has
+             their own next question and does not need three guesses at
+             it — and generating them cost a second model round-trip on
+             every answer to produce something nobody was shown. */
+          suggestions: [],
           citations,
           confidence: hits.length ? best : 'low',
           requestId,

@@ -335,11 +335,15 @@ for (const page of pages) {
               'while reading one page of a regenerative coffee estate\u2019s website, plus one short ' +
               'line introducing the page.\n' +
               'Return JSON: {"line":"...","prompts":["...","...","..."]}.\n' +
-              'The line is one sentence, under 14 words, saying what the reader is looking at, ' +
-              'in plain direct English. Say what the thing IS. Never open with Discover, ' +
-              'Explore, Learn about, Dive into or Uncover; never begin "Aura is"; never sell. ' +
-              '"The palm the whole estate is built on." is right. ' +
-              '"Discover the Sentinel Palm and its role" is wrong.\n' +
+              'The line is the host speaking to the reader, out loud, in one sentence under ' +
+              '14 words. Warm and plain, the way a person who works here would say it while ' +
+              'standing on the page with you. Address the reader directly and invite the ' +
+              'question.\n' +
+              '"This is the palm the whole estate is built on \u2014 ask me anything." is right.\n' +
+              '"Discover the Sentinel Palm and its role on the estate." is wrong: that is a ' +
+              'caption, not a person.\n' +
+              'Never open with Discover, Explore, Learn about, Dive into or Uncover, and never ' +
+              'begin "Aura is".\n' +
               'Each prompt is a real question, six words or fewer where possible, answerable ' +
               'from THIS page. Specific to it \u2014 never "What is Aura?" or "Tell me more". ' +
               'Natural British English, sentence case, ending in a question mark.',

@@ -413,11 +413,6 @@ export default function AskAura() {
 
   const lastUser = [...msgs].reverse().find((m) => m.role === 'user')
   const tail = msgs[msgs.length - 1]
-  /* Nudged, not reordered: `preferred` is a stable sort, so anything the
-     model ranked equally keeps the order it gave. */
-  const followUps = tail?.role === 'assistant' && !tail.pending
-    ? preferred(tail.suggestions ?? [])
-    : []
 
   return (
     <>
@@ -435,6 +430,14 @@ export default function AskAura() {
       )}
 
       {open && (
+        <>
+        <div
+          className="aa-scrim"
+          aria-hidden
+          /* Inline for the same reason as the panel: styled-jsx drops
+             backdrop-filter from the emitted rules on this build. */
+          style={{ backdropFilter: 'blur(7px)', WebkitBackdropFilter: 'blur(7px)' }}
+        />
         <div
           /* `ph-no-capture` on the panel, not just the composer: session
              replay records rendered DOM, so masking the input while leaving
@@ -466,7 +469,12 @@ export default function AskAura() {
                 onClick={close}
                 aria-label="Close Ask Aura"
               >
-                <span aria-hidden>×</span>
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden focusable="false">
+                  <path
+                    d="M6 6l12 12M18 6L6 18"
+                    fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
+                  />
+                </svg>
               </button>
             </div>
           </header>
@@ -477,8 +485,15 @@ export default function AskAura() {
             {msgs.length === 0 && (
               <div className="aa-intro">
                 <p className="aa-intro-line">{intro.line}</p>
+                {/* Said once, with the sentence it qualifies, before
+                    anyone has typed. Pinned under every answer it was
+                    furniture; here it is read and then forgotten. */}
+                <p className="aa-terms">
+                  Natural intelligence. Reads Aura&rsquo;s pages, can be wrong,
+                  keeps no record.
+                </p>
                 <ul className="aa-chips">
-                  {intro.prompts.map((p, i) => (
+                  {preferred(intro.prompts.map((label) => ({ label }))).map(({ label: p }, i) => (
                     <li key={p}>
                       <button
                         type="button"
@@ -500,7 +515,27 @@ export default function AskAura() {
                     <i /><i /><i />
                   </span>
                 )}
-                {m.text && <p className="aa-text">{m.text}</p>}
+                {m.text && (m.role === 'assistant'
+                  ? (() => {
+                      /* The prompt asks for a headline, a blank line, then
+                         the explanation. Split on the first line break so
+                         the headline sets as soon as it has arrived rather
+                         than waiting for the whole answer. A reply with no
+                         break — a refusal, a clarifying question — is all
+                         body, which is what it should be. */
+                      const [first, ...rest] = m.text.split('\n')
+                      const body = rest.join('\n').trim()
+                      const isHeadline = body.length > 0 && first.trim().length <= 90
+                      return isHeadline ? (
+                        <>
+                          <p className="aa-head-line">{first.trim()}</p>
+                          <p className="aa-text">{body}</p>
+                        </>
+                      ) : (
+                        <p className="aa-text">{m.text}</p>
+                      )
+                    })()
+                  : <p className="aa-text">{m.text}</p>)}
 
                 {m.failed && (m.question ?? lastUser?.text) && (
                   <button type="button" className="aa-mini" onClick={() => send(m.question ?? lastUser?.text ?? '')}>
@@ -512,12 +547,6 @@ export default function AskAura() {
                   <ul className="aa-cites">
                     {m.citations.map((c) => {
                       const name = c.page || c.title.split(' › ')[0].replace(/\s*—\s*Aura$/, '')
-                      /* The section, when the passage came from one — it
-                         says which part of the page was read, which is
-                         the useful half of a citation. */
-                      const section = c.title.includes(' › ')
-                        ? c.title.split(' › ').slice(1).join(' › ').replace(/\.$/, '')
-                        : ''
                       return (
                         <li key={c.sourceId}>
                           <a
@@ -530,10 +559,7 @@ export default function AskAura() {
                               aria-hidden
                               style={c.image ? { backgroundImage: `url(${c.image})` } : undefined}
                             />
-                            <span className="aa-card-text">
-                              <span className="aa-card-title">{name}</span>
-                              {section && <span className="aa-card-sub">{section}</span>}
-                            </span>
+                            <span className="aa-card-title">{name}</span>
                           </a>
                         </li>
                       )
@@ -542,22 +568,6 @@ export default function AskAura() {
                 )}
               </div>
             ))}
-
-            {followUps.length > 0 && (
-              <ul className="aa-chips aa-chips-follow">
-                {followUps.map((s, i) => (
-                  <li key={s.label}>
-                    <button
-                      type="button"
-                      className="aa-chip"
-                      onClick={() => { track('ask_aura_suggestion', { page: pathname, kind: 'follow_up', position: i, intent: s.intent, ...ANONYMOUS }); send(s.label) }}
-                    >
-                      {s.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
 
           <form
@@ -579,19 +589,26 @@ export default function AskAura() {
             />
             {busy ? (
               <button type="button" className="aa-send" onClick={stop} aria-label="Stop generating">
-                Stop
+                {/* Phosphor — stop */}
+                <svg viewBox="0 0 256 256" width="18" height="18" aria-hidden focusable="false">
+                  <path fill="currentColor" d="M200,40H56A16,16,0,0,0,40,56V200a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Z" />
+                </svg>
               </button>
             ) : (
-              <button type="submit" className="aa-send" disabled={!input.trim()}>
-                Ask
+              <button type="submit" className="aa-send" disabled={!input.trim()} aria-label="Send question">
+                {/* Phosphor — paper-plane-tilt, fill */}
+                <svg viewBox="0 0 256 256" width="20" height="20" aria-hidden focusable="false">
+                  <path
+                    fill="currentColor"
+                    d="M231.4,44.34s0,.1,0,.15l-58.2,191.94a15.88,15.88,0,0,1-14,11.51q-.69.06-1.38.06a15.86,15.86,0,0,1-14.42-9.15L107,164.15a4,4,0,0,1,.77-4.58l57.92-57.92a8,8,0,0,0-11.31-11.31L96.43,148.26a4,4,0,0,1-4.58.77L17.08,112.64a16,16,0,0,1,2.49-29.8l191.94-58.2h.15A16,16,0,0,1,231.4,44.34Z"
+                  />
+                </svg>
               </button>
             )}
           </form>
 
-          <p className="aa-terms">
-            Answers can be wrong, and your question is never recorded.
-          </p>
         </div>
+        </>
       )}
 
       <style jsx global>{`
@@ -647,6 +664,26 @@ export default function AskAura() {
         }
 
         /* ── panel ── */
+        /* The page, set back. Blurring what is behind the dock is what
+           lets the panel itself stay translucent: the hero type and body
+           copy that used to read straight through the answer soften into
+           a field of colour, which is the thing glass is supposed to
+           refract. Gentle on purpose — enough for depth of field, not so
+           much that the page is erased and the reader loses their place.
+           Click-through too: this is a dock, not a modal, and the page
+           underneath stays usable. */
+        .aa-scrim {
+          position: fixed; inset: 0;
+          z-index: 44;
+          pointer-events: none;
+          background: rgba(16, 14, 13, 0.16);
+          animation: aa-scrim-in var(--dur-base) var(--ease-out);
+        }
+        @keyframes aa-scrim-in { from { opacity: 0; } to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) { .aa-scrim { animation: none; } }
+        /* No blur available below 768px, so the tint carries it alone. */
+        @media (max-width: 768px) { .aa-scrim { background: rgba(16, 14, 13, 0.42); } }
+
         .aa-panel {
           /* Glass, and dark on purpose. This panel floats over hero
              video as often as over white, so it cannot borrow the page's
@@ -674,12 +711,12 @@ export default function AskAura() {
              estate photographs and green over the forest.
              The alpha is higher than the reference's because this site
              is not the reference's. Aura's pages open with display type
-             at a hundred points, and a heading that size is low-frequency
-             enough that a 52px blur barely touches it — at 0.72 the word
-             CIRCULAR read straight through the answer. Blur softens
-             photographs and does almost nothing to letterforms, so the
-             scrim has to carry the type on its own. */
-          background: rgba(22, 20, 19, 0.9);
+             at a hundred points, and a panel blur does almost nothing to
+             a letterform that size — at 0.72 alone the word CIRCULAR read
+             straight through the answer. The scrim behind the dock is
+             what fixes that: with the page already blurred and set back,
+             the panel can be properly translucent again. */
+          background: rgba(22, 20, 19, 0.74);
           /* Two edges, not a border: a light top edge where a real pane
              would catch the sky, and a darker outer ring to seat it. */
           box-shadow:
@@ -704,7 +741,7 @@ export default function AskAura() {
           .aa-panel { background: rgba(22, 20, 19, 0.97); }
         }
         @media (max-width: 768px) {
-          .aa-panel { background: rgba(22, 20, 19, 0.95); }
+          .aa-panel { background: rgba(22, 20, 19, 0.93); }
         }
         @keyframes aa-in {
           from { opacity: 0; transform: translateY(12px); }
@@ -713,7 +750,10 @@ export default function AskAura() {
 
         .aa-head {
           display: flex; align-items: center; justify-content: flex-end;
-          padding: 12px 12px 0;
+          /* Tight: the close button's 44px target already supplies the
+             breathing room, so the header adds almost nothing of its
+             own and the opening line sits near the top of the panel. */
+          padding: 4px 6px 0;
           flex: none;
         }
         .aa-head-acts { display: flex; align-items: center; gap: 4px; }
@@ -725,28 +765,33 @@ export default function AskAura() {
           transition: color var(--dur-base) var(--ease);
         }
         .aa-mini:hover { color: var(--aa-ink); }
+        /* The navbar's own weight: a bare 1.5px glyph on a 44px target,
+           no chip behind it. */
         .aa-close {
           display: grid; place-items: center;
-          width: 34px; height: 34px;
-          border: 0; border-radius: 50%; cursor: pointer;
-          background: var(--aa-fill);
-          font-size: 18px; line-height: 1;
-          color: var(--aa-ink);
-          transition: background var(--dur-base) var(--ease);
+          width: 44px; height: 44px;
+          border: 0; background: none; cursor: pointer;
+          color: var(--aa-meta);
+          transition: color var(--dur-base) var(--ease);
         }
-        .aa-close:hover { background: rgba(255, 255, 255, 0.2); }
+        .aa-close:hover { color: var(--aa-ink); }
         .aa-mini:focus-visible, .aa-close:focus-visible {
           outline: 2px solid var(--brand-accent); outline-offset: 2px;
         }
 
         .aa-log {
           flex: 1 1 auto; overflow-y: auto;
-          padding: 18px;
-          display: flex; flex-direction: column; gap: 18px;
+          /* Less at the top because the header already holds that space,
+             more at the bottom so the last line clears the rule. */
+          padding: 0 22px 20px;
+          display: flex; flex-direction: column; gap: 26px;
           scrollbar-width: thin;
         }
 
-        .aa-intro { display: flex; flex-direction: column; gap: 16px; }
+        /* The sentence and its footnote are one unit; the questions are
+           a separate move, so they get their own air above them. */
+        .aa-intro { display: flex; flex-direction: column; gap: 8px; }
+        .aa-intro .aa-chips { margin-top: 28px; }
         .aa-intro-line {
           margin: 0;
           font-family: var(--font-sans), system-ui, sans-serif;
@@ -756,33 +801,32 @@ export default function AskAura() {
           text-wrap: balance;
         }
 
-        .aa-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+        .aa-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 7px; }
         .aa-chips-follow { margin-top: -4px; }
         .aa-chip {
           /* Bricolage: these are questions a person would say out loud,
-             not interface labels, so they take the reading face. */
+             not interface labels, so they take the reading face. Solid
+             near-white on the dark glass — a filled pill reads as
+             something to press, where a translucent one reads as
+             another piece of the panel. */
           font-family: var(--font-sans), system-ui, sans-serif;
-          font-size: 14px; line-height: 1.25; letter-spacing: -0.005em;
-          padding: 10px 16px; min-height: 38px;
+          /* .p2 from the design system — 14px/1.6, regular. The chips are
+             body copy that happens to be pressable, so they take the body
+             role rather than a control size of their own. */
+          font-size: 14px; line-height: 1.6;
+          font-weight: 400; text-decoration: none;
+          padding: 9px 16px; min-height: 38px;
           border: 0; border-radius: 999px;
-          background: var(--aa-fill);
-          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10);
-          color: var(--aa-ink); cursor: pointer;
-          text-align: left;
-          transition: background var(--dur-base) var(--ease), color var(--dur-base) var(--ease);
-        }
-        /* The first opener is the one most people want; it leads. */
-        .aa-chips:not(.aa-chips-follow) > li:first-child .aa-chip {
           background: rgba(250, 248, 245, 0.94);
           color: #17150f;
-          box-shadow: none;
-          font-weight: 500;
+          cursor: pointer;
+          text-align: left;
+          transition: background var(--dur-base) var(--ease);
         }
-        .aa-chip:hover { background: rgba(255, 255, 255, 0.22); }
-        .aa-chips:not(.aa-chips-follow) > li:first-child .aa-chip:hover { background: #fff; }
+        .aa-chip:hover { background: #fff; }
         .aa-chip:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }
 
-        .aa-msg { display: flex; flex-direction: column; gap: 8px; }
+        .aa-msg { display: flex; flex-direction: column; gap: 10px; }
         .aa-msg.is-user { align-items: flex-end; }
         .aa-msg.is-user .aa-text {
           background: color-mix(in oklab, var(--brand-accent) 34%, transparent);
@@ -791,6 +835,16 @@ export default function AskAura() {
           padding: 10px 14px;
           max-width: 88%;
           color: var(--aa-ink);
+        }
+        /* The answer's first line: the answer itself, set as a headline
+           so it can be read without reading the paragraph under it. */
+        .aa-head-line {
+          margin: 0;
+          font-family: var(--font-sans), system-ui, sans-serif;
+          font-size: 17px; line-height: 1.3; letter-spacing: -0.01em;
+          font-weight: 500;
+          color: var(--aa-ink);
+          text-wrap: balance;
         }
         .aa-text {
           margin: 0; font-size: 14.5px; line-height: 1.62;
@@ -808,53 +862,103 @@ export default function AskAura() {
         .aa-thinking i:nth-child(3) { animation-delay: 0.3s; }
         @keyframes aa-pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
 
+        /* The site's own editorial list: no card fill, no rounded
+           corners, a hairline doing the segmenting, and the name set in
+           mono uppercase as a label rather than a headline. The rule sits
+           on top of each row and on the list itself, so the group reads
+           as a set of records rather than a stack of buttons. */
         .aa-cites {
-          list-style: none; margin: 2px 0 0; padding: 0;
-          display: grid; gap: 6px;
+          list-style: none;
+          /* The sources are a different kind of thing from the answer,
+             so they sit clear of it rather than tucked under the last
+             line. */
+          margin: 20px 0 0; padding: 0;
+          border-top: 1px solid var(--aa-line);
         }
-        /* A card, not a link list: the picture is how someone recognises
-           a page they have already read, and recognising it is most of
-           what a citation is for. */
+        .aa-cites > li + li { border-top: 1px solid var(--aa-line); }
         .aa-card {
           display: grid;
-          grid-template-columns: 40px 1fr;
+          grid-template-columns: 64px 1fr;
           align-items: center;
-          gap: 10px;
-          padding: 6px;
-          border-radius: 12px;
-          background: rgba(255, 255, 255, 0.07);
+          gap: 12px;
+          padding: 11px 0;
           text-decoration: none;
-          transition: background var(--dur-base) var(--ease);
+          transition: opacity var(--dur-base) var(--ease);
         }
-        .aa-card:hover { background: rgba(255, 255, 255, 0.16); }
-        .aa-card:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }
+        .aa-card:hover { opacity: 0.62; }
+        .aa-card:focus-visible {
+          outline: 2px solid rgba(255, 255, 255, 0.8);
+          outline-offset: -2px;
+        }
         .aa-card-thumb {
-          width: 40px; height: 40px;
-          border-radius: 8px;
-          background-color: rgba(255, 255, 255, 0.12);
+          width: 64px; aspect-ratio: 16 / 9;
+          /* Square, like the list this is quoting. */
+          border-radius: 0;
+          background-color: rgba(255, 255, 255, 0.10);
           background-size: cover;
           background-position: center;
           flex: none;
         }
-        .aa-card-text { display: grid; gap: 1px; min-width: 0; }
+        /* Label style, like the list this is quoting: the page name set
+           in mono caps rather than as a headline. */
         .aa-card-title {
-          font-family: var(--font-sans), system-ui, sans-serif;
-          font-size: 13px; line-height: 1.25; font-weight: 500;
-          color: var(--aa-ink);
-          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-        }
-        .aa-card-sub {
           font-family: var(--font-mono), monospace;
-          font-size: 9.5px; letter-spacing: 0.6px; text-transform: uppercase;
-          color: var(--aa-meta);
+          font-size: 10px; line-height: 1.3;
+          letter-spacing: 1.1px; text-transform: uppercase;
+          color: var(--aa-ink);
+          min-width: 0;
           overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
+
+
+        .aa-msg { display: flex; flex-direction: column; gap: 10px; }
+        .aa-msg.is-user { align-items: flex-end; }
+        .aa-msg.is-user .aa-text {
+          background: color-mix(in oklab, var(--brand-accent) 34%, transparent);
+          border: 0;
+          border-radius: 16px;
+          padding: 10px 14px;
+          max-width: 88%;
+          color: var(--aa-ink);
+        }
+        /* The answer's first line: the answer itself, set as a headline
+           so it can be read without reading the paragraph under it. */
+        .aa-head-line {
+          margin: 0;
+          font-family: var(--font-sans), system-ui, sans-serif;
+          font-size: 17px; line-height: 1.3; letter-spacing: -0.01em;
+          font-weight: 500;
+          color: var(--aa-ink);
+          text-wrap: balance;
+        }
+        .aa-text {
+          margin: 0; font-size: 14.5px; line-height: 1.62;
+          color: var(--aa-ink); white-space: pre-wrap; text-wrap: pretty;
+        }
+        .aa-msg.is-failed .aa-text { color: var(--aa-meta); }
+
+        .aa-thinking { display: inline-flex; gap: 4px; align-items: center; height: 18px; }
+        .aa-thinking i {
+          width: 5px; height: 5px; border-radius: 50%;
+          background: var(--aa-meta);
+          animation: aa-pulse 1.2s var(--ease) infinite;
+        }
+        .aa-thinking i:nth-child(2) { animation-delay: 0.15s; }
+        .aa-thinking i:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes aa-pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
 
         .aa-form {
           flex: none;
           display: flex; align-items: center; gap: 10px;
-          margin: 0 18px;
-          padding: 12px 0 10px;
+          /* The rule runs the full width of the panel rather than sitting
+             inside the text margin — it separates two regions, so it
+             should read as the edge of one. The padding, not a margin,
+             holds the controls off the sides. */
+          margin: 0;
+          /* Even above and below: the rule and the panel edge are the two
+             boundaries, and the input should sit centred between them
+             rather than crowding one. */
+          padding: 14px 16px 14px 22px;
           border-top: 1px solid var(--aa-line);
         }
         .aa-input {
@@ -864,34 +968,36 @@ export default function AskAura() {
           font-size: 15px; line-height: 1.4;
           color: var(--aa-ink);
           max-height: 96px;
-          padding: 6px 0;
+          padding: 0;
         }
         .aa-input::placeholder { color: var(--aa-meta); }
         .aa-input:focus { outline: none; }
         .aa-form:focus-within { border-top-color: rgba(255, 255, 255, 0.34); }
+        /* Just the icon. A filled circle here competed with the white
+           pills above it for the eye, and this is the quieter control. */
         .aa-send {
           flex: none;
           display: grid; place-items: center;
-          min-width: 40px; height: 36px; padding: 0 14px;
-          border: 0; border-radius: 999px;
-          background: rgba(250, 248, 245, 0.94); color: #17150f;
+          width: 40px; height: 40px; padding: 0;
+          border: 0; background: none;
+          color: var(--aa-ink);
           cursor: pointer;
-          font-family: var(--font-mono), monospace;
-          font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase;
-          transition: opacity var(--dur-base) var(--ease), background var(--dur-base) var(--ease);
+          transition: opacity var(--dur-base) var(--ease), color var(--dur-base) var(--ease);
         }
-        .aa-send:hover:not(:disabled) { background: #fff; }
-        .aa-send:disabled { opacity: 0.4; cursor: default; }
+        .aa-send:hover:not(:disabled) { color: #fff; }
+        .aa-send:disabled { opacity: 0.3; cursor: default; }
         .aa-send:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }
 
         .aa-terms {
-          flex: none;
-          margin: 0;
-          padding: 0 18px 16px;
-          text-align: center;
+          margin: 4px 0 0;
+          padding: 0;
+          text-align: left;
           font-family: var(--font-mono), monospace;
-          font-size: 9.5px; line-height: 1.5; letter-spacing: 0.4px;
-          color: var(--aa-meta);
+          max-width: 46ch;
+          font-size: 8.5px; line-height: 1.7;
+          letter-spacing: 0.9px; text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.42);
+          text-wrap: pretty;
         }
 
         @media (max-width: 620px) {

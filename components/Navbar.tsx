@@ -1205,19 +1205,22 @@ export default function Navbar() {
           /* Utility stack: left-aligned with the primary nav links column
              (var(--gutter) inside the menu panel). Stacks vertically, each
              chip left-anchored so the column reads tidy. */
+          /* Under the close cross, right-aligned with it. These are the
+             panel's own controls — theme, view mode, the one outward
+             link — and they belong with the other control rather than
+             marooned at the far corner from it. */
           :global(.menu-utils) {
             position: absolute;
-            bottom: 60px;
-            left: var(--gutter);
-            /* Sit ABOVE the .tile-feed-vignette (z: 101). On mobile
-               the vignette is full-bleed across the bottom of the
-               viewport; the utility icons need to remain crisp and
+            top: 68px;
+            right: var(--gutter);
+            /* Sit ABOVE the .tile-feed-vignette (z: 101), which is
+               full-bleed on mobile — these have to stay crisp and
                clickable on top of the blur. */
             z-index: 102;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            gap: 16px;
+            align-items: center;
+            gap: 14px;
           }
           /* Toggle chips (theme + view mode) — slightly bigger filled circle.
              Background tint is keyed off currentColor so it darkens in light
@@ -1605,9 +1608,9 @@ export default function Navbar() {
               line-height: 1.4;
             }
             :global(.menu-utils) {
-              bottom: 60px;
-              left: 24px;
-              gap: 14px;
+              top: 62px;
+              right: 24px;
+              gap: 12px;
             }
             :global(.menu-util-btn svg) {
               width: 20px;
@@ -1693,9 +1696,9 @@ export default function Navbar() {
             }
 
             :global(.menu-utils) {
-              left: var(--gutter);
-              bottom: 32px;
-              gap: 12px;
+              top: 56px;
+              right: var(--gutter);
+              gap: 10px;
             }
             :global(.menu-link) { font-size: 11px !important; }
             /* Phone: full-bleed bottom band — pull the vignette all

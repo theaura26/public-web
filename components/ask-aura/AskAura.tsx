@@ -488,9 +488,9 @@ export default function AskAura() {
                 {/* Said once, with the sentence it qualifies, before
                     anyone has typed. Pinned under every answer it was
                     furniture; here it is read and then forgotten. */}
-                <p className="aa-terms">
-                  Natural intelligence. Reads Aura&rsquo;s pages, can be wrong,
-                  keeps no record.
+<p className="aa-terms">
+                  Based on Aura Natural Intelligence. Can be wrong. We keep no
+                  records of the conversation.
                 </p>
                 <ul className="aa-chips">
                   {preferred(intro.prompts.map((label) => ({ label }))).map(({ label: p }, i) => (
@@ -544,6 +544,10 @@ export default function AskAura() {
                 )}
 
                 {m.role === 'assistant' && !!m.citations?.length && (
+                  <>
+                  {/* Named, so the rows read as where the answer came
+                      from rather than as a list of things to click. */}
+                  <p className="aa-cites-label">Sources</p>
                   <ul className="aa-cites">
                     {m.citations.map((c) => {
                       const name = c.page || c.title.split(' › ')[0].replace(/\s*—\s*Aura$/, '')
@@ -565,6 +569,7 @@ export default function AskAura() {
                       )
                     })}
                   </ul>
+                  </>
                 )}
               </div>
             ))}
@@ -694,6 +699,9 @@ export default function AskAura() {
              constant, known ground. Contrast is a property of the panel,
              not of the page it happens to be sitting on. */
           --aa-ink: rgba(255, 255, 255, 0.96);
+          /* The explanation sits back from the headline. Still 9.7:1 on
+             the panel's ground, so quieter without being harder to read. */
+          --aa-body: rgba(255, 255, 255, 0.72);
           --aa-meta: rgba(255, 255, 255, 0.62);
           --aa-line: rgba(255, 255, 255, 0.14);
           --aa-fill: rgba(255, 255, 255, 0.10);
@@ -816,14 +824,19 @@ export default function AskAura() {
           font-size: 14px; line-height: 1.6;
           font-weight: 400; text-decoration: none;
           padding: 9px 16px; min-height: 38px;
-          border: 0; border-radius: 999px;
-          background: rgba(250, 248, 245, 0.94);
-          color: #17150f;
+          border: 1px solid rgba(255, 255, 255, 0.28);
+          border-radius: 999px;
+          background: transparent;
+          color: var(--aa-ink);
           cursor: pointer;
           text-align: left;
-          transition: background var(--dur-base) var(--ease);
+          transition: border-color var(--dur-base) var(--ease),
+                      background var(--dur-base) var(--ease);
         }
-        .aa-chip:hover { background: #fff; }
+        .aa-chip:hover {
+          border-color: rgba(255, 255, 255, 0.7);
+          background: rgba(255, 255, 255, 0.06);
+        }
         .aa-chip:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }
 
         .aa-msg { display: flex; flex-direction: column; gap: 10px; }
@@ -848,7 +861,7 @@ export default function AskAura() {
         }
         .aa-text {
           margin: 0; font-size: 14.5px; line-height: 1.62;
-          color: var(--aa-ink); white-space: pre-wrap; text-wrap: pretty;
+          color: var(--aa-body); white-space: pre-wrap; text-wrap: pretty;
         }
         .aa-msg.is-failed .aa-text { color: var(--aa-meta); }
 
@@ -867,12 +880,16 @@ export default function AskAura() {
            mono uppercase as a label rather than a headline. The rule sits
            on top of each row and on the list itself, so the group reads
            as a set of records rather than a stack of buttons. */
+        .aa-cites-label {
+          margin: 20px 0 8px;
+          font-family: var(--font-mono), monospace;
+          font-size: 11px; font-weight: 400;
+          letter-spacing: 1px; text-transform: uppercase;
+          color: var(--aa-meta);
+        }
         .aa-cites {
           list-style: none;
-          /* The sources are a different kind of thing from the answer,
-             so they sit clear of it rather than tucked under the last
-             line. */
-          margin: 20px 0 0; padding: 0;
+          margin: 0; padding: 0;
           border-top: 1px solid var(--aa-line);
         }
         .aa-cites > li + li { border-top: 1px solid var(--aa-line); }
@@ -933,7 +950,7 @@ export default function AskAura() {
         }
         .aa-text {
           margin: 0; font-size: 14.5px; line-height: 1.62;
-          color: var(--aa-ink); white-space: pre-wrap; text-wrap: pretty;
+          color: var(--aa-body); white-space: pre-wrap; text-wrap: pretty;
         }
         .aa-msg.is-failed .aa-text { color: var(--aa-meta); }
 
@@ -994,9 +1011,12 @@ export default function AskAura() {
           text-align: left;
           font-family: var(--font-mono), monospace;
           max-width: 46ch;
-          font-size: 8.5px; line-height: 1.7;
-          letter-spacing: 0.9px; text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.42);
+          /* .label from the design system — mono 11px, 1px tracking,
+             uppercase — at the panel's own quiet weight. */
+          font-size: 11px; line-height: 1.6;
+          font-weight: 400;
+          letter-spacing: 1px; text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.45);
           text-wrap: pretty;
         }
 

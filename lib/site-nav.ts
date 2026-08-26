@@ -41,16 +41,30 @@ export const SECTIONS: NavSection[] = [
     label: 'The Reason',
     href: '/reason',
     note: 'Why any of this exists.',
+    /* The sitemap indents Agroculture, Hospitality and Atelier under
+       Natural Intelligence, and the places under Sanctuaries. They are
+       tiers, not siblings. */
     items: [
-      { label: 'Natural Intelligence', href: '/reason' },
-      { label: 'Agroculture', href: '/reason/agroculture', soon: true },
-      { label: 'Hospitality', href: '/reason/hospitality', soon: true },
-      { label: 'Atelier', href: '/atelier' },
+      {
+        label: 'Natural Intelligence',
+        href: '/reason',
+        children: [
+          { label: 'Agroculture', href: '/reason/agroculture', soon: true },
+          { label: 'Hospitality', href: '/reason/hospitality', soon: true },
+          { label: 'Atelier', href: '/atelier' },
+        ],
+      },
+      {
+        label: 'Sanctuaries',
+        href: '/sanctuary',
+        children: [
+          { label: 'Mudigere', href: '/mudigere' },
+          { label: 'Ohara', href: '/ohara' },
+          { label: 'Munduk', href: '/sanctuary/munduk', soon: true },
+          { label: 'Punakha', href: '/sanctuary/punakha', soon: true },
+        ],
+      },
       { label: 'Moral Spine', href: '/wisdom' },
-      { label: 'Sanctuaries', href: '/sanctuary' },
-      { label: 'Mudigere', href: '/mudigere' },
-      { label: 'Ohara', href: '/ohara' },
-      { label: 'Contact', href: '/contact' },
     ],
   },
   {
@@ -77,16 +91,95 @@ export const SECTIONS: NavSection[] = [
     label: 'Field Notes',
     href: '/field-notes',
     note: 'What the estate has learned, written down.',
+    /* The journals are Field Notes now, filed under the category they
+       belong to. A note may sit in more than one — the taxonomy in
+       lib/field-notes.ts already treats categories as tags rather than
+       folders, and repeating a note is cheaper than hiding it. */
     items: [
-      { label: 'Biodynamic', href: '/field-notes/biodynamic' },
-      { label: 'Biodiversity', href: '/field-notes/biodiversity' },
-      { label: 'Labs', href: '/field-notes/labs' },
-      { label: 'Art & Culture', href: '/field-notes/art-culture', soon: true },
-      { label: 'Land & Ecology', href: '/field-notes/land-ecology', soon: true },
-      { label: 'Coffee & Fermentation', href: '/field-notes/coffee-fermentation', soon: true },
-      { label: 'From Mudigere', href: '/field-notes/from-mudigere', soon: true },
-      { label: 'From Ohara', href: '/field-notes/from-ohara', soon: true },
-      { label: 'Animals', href: '/field-notes/animals', soon: true },
+      {
+        label: 'Biodynamic',
+        href: '/field-notes/biodynamic',
+        children: [
+          { label: 'A living organism', href: '/biodynamic' },
+          { label: 'Circular Intelligence', href: '/circular' },
+          { label: 'Ṛta', href: '/rta' },
+          { label: 'Vedic Farming', href: '/vedic' },
+        ],
+      },
+      {
+        label: 'Biodiversity',
+        href: '/field-notes/biodiversity',
+        children: [
+          { label: 'The Living System', href: '/ecology' },
+          { label: 'The Light Instrument', href: '/shade' },
+          { label: 'Living Systems', href: '/living-systems' },
+          { label: 'The Sentinel Palm', href: '/areca' },
+        ],
+      },
+      {
+        label: 'Labs',
+        href: '/field-notes/labs',
+        children: [
+          { label: 'Fermentation', href: '/fermentation' },
+          { label: 'Provenance', href: '/provenance' },
+        ],
+      },
+      {
+        label: 'Art & Culture',
+        href: '/field-notes/art-culture',
+        soon: true,
+        children: [
+          { label: 'Artistry', href: '/artistry' },
+          { label: 'Monastic Polymaths', href: '/residency' },
+        ],
+      },
+      {
+        label: 'Land & Ecology',
+        href: '/field-notes/land-ecology',
+        soon: true,
+        children: [
+          { label: 'The Land', href: '/land' },
+          { label: 'Mudigere', href: '/mudigere' },
+        ],
+      },
+      {
+        label: 'Coffee & Fermentation',
+        href: '/field-notes/coffee-fermentation',
+        soon: true,
+        children: [
+          { label: 'Our bean story', href: '/coffee' },
+          { label: 'Fermentation', href: '/fermentation' },
+          { label: 'Malabar Pepper', href: '/pepper' },
+        ],
+      },
+      {
+        label: 'From Mudigere',
+        href: '/field-notes/from-mudigere',
+        soon: true,
+        children: [
+          { label: 'Guests of the mountain', href: '/mudigere' },
+          { label: 'Moral Spine', href: '/wisdom' },
+        ],
+      },
+      {
+        label: 'From Ohara',
+        href: '/field-notes/from-ohara',
+        soon: true,
+        children: [
+          { label: 'Asa. Niwa.', href: '/ohara' },
+        ],
+      },
+      {
+        label: 'Animals',
+        href: '/field-notes/animals',
+        soon: true,
+        children: [
+          { label: 'Ecosystem Engineers', href: '/herd' },
+          { label: 'Cows of Aura', href: '/field-notes/cows-of-aura', soon: true },
+          { label: 'Pollinators', href: '/field-notes/pollinators', soon: true },
+          { label: 'Bug Hotels', href: '/field-notes/bug-hotels', soon: true },
+        ],
+      },
       { label: 'Tech & Robotics', href: '/field-notes/tech-robotics', soon: true },
       { label: 'View all', href: '/field-notes' },
     ],
@@ -132,7 +225,17 @@ export const SECTIONS: NavSection[] = [
           { label: '27/28 — pre-book', href: '/from-aura/areca-27-28', soon: true },
         ],
       },
-      { label: 'Other farm produce', href: '/from-aura/farm-produce', soon: true },
+      {
+        label: 'Farm Goods',
+        href: '/from-aura/farm-goods',
+        soon: true,
+        children: [
+          { label: 'Avocado', href: '/from-aura/avocado', soon: true },
+          { label: 'Cardamom', href: '/from-aura/cardamom', soon: true },
+          { label: 'Soapnut', href: '/from-aura/soapnut', soon: true },
+          { label: 'Honey', href: '/from-aura/honey', soon: true },
+        ],
+      },
       { label: 'Objects & Editions', href: '/from-aura/objects', soon: true },
       {
         label: 'Experiences',

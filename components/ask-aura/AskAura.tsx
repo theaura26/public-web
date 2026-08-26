@@ -1361,6 +1361,15 @@ export default function AskAura() {
           .aa-launch::before { animation: none; opacity: 0.8; }
         }
 
+        /* The menu takes the whole screen. Two things asking to be used
+           at once is one too many, so the bar stands down while it is
+           open — and goes out of reach, not just out of sight. */
+        :global(body.menu-open) .aa-launch {
+          opacity: 0;
+          pointer-events: none;
+          transform: translateX(-50%) translateY(18px);
+        }
+
         /* Agent view renders the page as plain text; a floating chat
            widget is chrome, and chrome is not content. */
         [data-view='agent'] .aa-launch,

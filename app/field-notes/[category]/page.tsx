@@ -2,12 +2,19 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { NoteIndex } from '@/components/field-notes/NoteIndex'
 import { CATEGORIES, categoryById, notesIn, type CategoryId } from '@/lib/field-notes'
+import ComingSoon from '@/components/ComingSoon'
+import { stubSlugs, labelFor } from '@/lib/site-nav'
 
 type Params = { category: string }
 
-/** The four categories are a fixed set — prerender all of them. */
+/* The written categories, plus the ones the sitemap names but nobody
+   has written yet. Both are a fixed set, so both prerender — and a
+   category on neither list still 404s. */
 export function generateStaticParams(): Params[] {
-  return CATEGORIES.map((c) => ({ category: c.id }))
+  return [
+    ...CATEGORIES.map((c) => ({ category: c.id })),
+    ...stubSlugs('/field-notes').map((slug) => ({ category: slug })),
+  ]
 }
 
 export async function generateMetadata(
@@ -15,7 +22,12 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { category } = await params
   const cat = categoryById(category)
-  if (!cat) return {}
+  if (!cat) {
+    const label = labelFor(`/field-notes/${category}`)
+    return label
+      ? { title: `${label} — Field Notes`, robots: { index: false, follow: true } }
+      : {}
+  }
   return {
     title: `${cat.label} — Field Notes`,
     description: cat.lede,
@@ -28,7 +40,11 @@ export default async function CategoryPage(
 ) {
   const { category } = await params
   const cat = categoryById(category)
-  if (!cat) notFound()
+  if (!cat) {
+    const label = labelFor(`/field-notes/${category}`)
+    if (!label) notFound()
+    return <ComingSoon title={label} section="Field Notes" sectionHref="/field-notes" />
+  }
 
   return (
     <NoteIndex

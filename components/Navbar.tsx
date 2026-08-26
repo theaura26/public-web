@@ -228,6 +228,14 @@ export default function Navbar() {
   const [hasOpenedMenu, setHasOpenedMenu] = useState(false)
   const { theme, setTheme, viewMode, setViewMode } = useMode()
   const pathname = usePathname()
+
+  /* The open menu is announced on <body> so anything else fixed to the
+     viewport can stand down while it is up. Same idiom the coffee
+     sub-nav already uses for its own bar. */
+  useEffect(() => {
+    document.body.classList.toggle('menu-open', menuOpen)
+    return () => document.body.classList.remove('menu-open')
+  }, [menuOpen])
   /* The section on show: whatever the reader last pointed at, and
      failing that whichever one covers the page they are on, and failing
      that the first. Derived rather than stored, so it cannot fall out of
@@ -864,17 +872,30 @@ export default function Navbar() {
         {/* Now, reached as it should be — the thing that is happening,
             not an item in a list of subjects. Bottom-left, where the
             panel's other standing marks sit. */}
-        <Link
-          href="/now"
-          className="mg-live"
-          onClick={() => setMenuOpen(false)}
-          onMouseEnter={hoverCollapse}
-          onMouseLeave={cancelHover}
-          data-attr="menu-link:/now"
-        >
-          Live
-          <span className="mg-dot" aria-hidden />
-        </Link>
+        <div className="menu-corner">
+          <Link
+            href="/now"
+            className="mg-live"
+            onClick={() => setMenuOpen(false)}
+            onMouseEnter={hoverCollapse}
+            onMouseLeave={cancelHover}
+            data-attr="menu-link:/now"
+          >
+            Live
+            <span className="mg-dot" aria-hidden />
+          </Link>
+          {/* Contact is not a subject the site is about; it is how you
+              reach a person. It sits with the standing marks rather than
+              inside a list of things to read. */}
+          <Link
+            href="/contact"
+            className="mn-corner-link"
+            onClick={() => setMenuOpen(false)}
+            data-attr="menu-link:/contact"
+          >
+            Contact Us
+          </Link>
+        </div>
 
         {/* Bottom-left utilities: theme toggle + view-mode toggle + Instagram */}
         <div className="menu-utils">
@@ -1112,10 +1133,10 @@ export default function Navbar() {
           }
           .mn-tab {
             background: none; border: 0; padding: 4px 0; cursor: pointer;
-            /* globals.css underlines every button on hover in the brand
-               accent. The selected tab already carries a rule of its
-               own, and two lines under one word is one too many. */
-            text-decoration: none;
+            /* The site's one hover affordance: a brand-accent underline,
+               inherited from globals.css rather than reinvented here.
+               The selected tab uses the same underline held on, so hover
+               and selection never draw two lines under one word. */
             /* Bricolage rather than mono: these are the names of parts of
                the site, not technical labels, and set small they read as
                a row of places rather than as machine text. */
@@ -1126,14 +1147,18 @@ export default function Navbar() {
             font-size: 14px; font-weight: 400;
             line-height: 1.6; letter-spacing: normal; text-transform: none;
             color: color-mix(in srgb, var(--contrast-text) 55%, transparent);
-            border-bottom: 1px solid transparent;
+            text-underline-offset: 4px;
+            text-decoration-thickness: 1.5px;
             transition: color var(--dur-base) var(--ease),
-                        border-color var(--dur-base) var(--ease);
+                        text-decoration-color var(--dur-base) var(--ease);
           }
-          .mn-tab:hover { color: var(--contrast-text); text-decoration: none; }
+          .mn-tab:hover { color: var(--contrast-text); }
           .mn-tab.is-on {
             color: var(--contrast-text);
-            border-bottom-color: var(--contrast-text);
+            text-decoration: underline;
+            text-decoration-color: var(--brand-accent);
+            text-underline-offset: 4px;
+            text-decoration-thickness: 1.5px;
           }
           .mn-tab:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
 
@@ -1153,7 +1178,7 @@ export default function Navbar() {
                         opacity var(--dur-base) var(--ease);
           }
           .mn-sub-in {
-            list-style: none; margin: 0; padding: 0;
+            list-style: none; margin: 0;
             overflow: hidden;
             min-height: 0;
           }
@@ -1162,9 +1187,12 @@ export default function Navbar() {
             grid-template-rows: 1fr;
             opacity: 1;
           }
+          /* Indented, so the tier reads as belonging to the line above
+             rather than as a continuation of the list. */
+          .mn-sub-in { padding-left: 18px; }
           :global(.mn-sub-leaf) {
             display: block;
-            padding: 3px 0 3px 2px;
+            padding: 3px 0;
             font-family: var(--font-mono), monospace;
             font-size: 11px; line-height: 1.5;
             letter-spacing: 0.6px; text-transform: uppercase;
@@ -1172,7 +1200,13 @@ export default function Navbar() {
             text-decoration: none;
           }
           :global(.mn-sub-leaf):hover,
-          :global(.mn-sub-leaf).is-on { color: var(--contrast-text); }
+          :global(.mn-sub-leaf).is-on {
+            color: var(--contrast-text);
+            text-decoration: underline;
+            text-decoration-color: var(--brand-accent);
+            text-underline-offset: 4px;
+            text-decoration-thickness: 1.5px;
+          }
           :global(.mn-sub-leaf):focus-visible {
             outline: 2px solid var(--brand-accent); outline-offset: 2px;
           }
@@ -1199,8 +1233,13 @@ export default function Navbar() {
             text-decoration: none;
             transition: opacity var(--dur-base) var(--ease);
           }
-          :global(.mn-leaf):hover { opacity: 0.55; }
-          :global(.mn-leaf).is-on { opacity: 0.55; }
+          :global(.mn-leaf):hover,
+          :global(.mn-leaf).is-on {
+            text-decoration: underline;
+            text-decoration-color: var(--brand-accent);
+            text-underline-offset: 6px;
+            text-decoration-thickness: 1.5px;
+          }
 
           :global(.mn-leaf):focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
 
@@ -1252,11 +1291,32 @@ export default function Navbar() {
              Sits in the same stack as the groups and is set like them,
              so it reads as another way in rather than a status badge
              bolted to the bottom. The dot carries all the signal. */
-          :global(.mg-live) {
+          .menu-corner {
             position: absolute;
             left: var(--gutter);
             bottom: 44px;
             z-index: 102;
+            display: flex; flex-direction: column;
+            align-items: flex-start; gap: 10px;
+          }
+          /* h3, the same as Live above it — they are two marks of the
+             same standing, not a heading with a footnote. */
+          :global(.mn-corner-link) {
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
+            color: var(--contrast-text);
+            text-decoration: none;
+            text-underline-offset: 4px;
+            text-decoration-thickness: 1.5px;
+          }
+          :global(.mn-corner-link):hover {
+            color: var(--contrast-text);
+            text-decoration: underline;
+            text-decoration-color: var(--brand-accent);
+          }
+          :global(.mg-live) {
             text-decoration: none;
             display: inline-flex; align-items: center; gap: 12px;
             font-family: var(--font-grotesque), sans-serif;
@@ -1554,7 +1614,9 @@ export default function Navbar() {
             /* The panel logo is hidden at this width, so nothing sits
                above the nav but the close button — it can start higher
                than the marquee line it used to align to. */
-            top: 84px;                    /* clears the section row above it */
+            /* Aligned with the marquee strip beside it: both start at
+               116px, so the panel reads as one horizon rather than two. */
+            top: 116px;
             left: var(--gutter);          /* aligned with the panel's own gutter */
             bottom: 210px;                /* clears the utility icon stack */
             width: 345px;

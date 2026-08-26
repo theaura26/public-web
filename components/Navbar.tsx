@@ -754,7 +754,7 @@ export default function Navbar() {
         </button>
 
         <ul className="mn-tabs" role="tablist" aria-label="Sections">
-          {SECTIONS.map((sec) => {
+          {TABS.map((sec) => {
             const on = activeSection === sec.id
             return (
               <li key={sec.id}>
@@ -1040,9 +1040,9 @@ export default function Navbar() {
 
           :global(.mg-btn-link) {
             font-family: var(--font-grotesque), sans-serif;
-            font-weight: 600;
-            font-size: clamp(24px, 2.9vw, 34px);
-            line-height: 1.1; letter-spacing: -0.035em;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
             color: var(--contrast-text);
             text-decoration: none; display: block;
             padding: 12px 0;
@@ -1054,9 +1054,9 @@ export default function Navbar() {
             appearance: none; background: none; border: 0;
             padding: 12px 0; width: 100%;
             font-family: var(--font-grotesque), sans-serif;
-            font-weight: 600;
-            font-size: clamp(24px, 2.9vw, 34px);
-            line-height: 1.1; letter-spacing: -0.035em;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
             color: var(--contrast-text);
             text-align: left; cursor: pointer;
             display: flex; align-items: center; flex-wrap: wrap;
@@ -1112,18 +1112,25 @@ export default function Navbar() {
           }
           .mn-tab {
             background: none; border: 0; padding: 4px 0; cursor: pointer;
+            /* globals.css underlines every button on hover in the brand
+               accent. The selected tab already carries a rule of its
+               own, and two lines under one word is one too many. */
+            text-decoration: none;
             /* Bricolage rather than mono: these are the names of parts of
                the site, not technical labels, and set small they read as
                a row of places rather than as machine text. */
-            font-family: var(--font-sans), system-ui, sans-serif;
-            font-size: 14px; font-weight: 500;
-            letter-spacing: -0.005em; text-transform: none;
+            /* .p2: grotesque, 14px, normal. The row labels the panel
+               rather than titling it, so it takes the secondary body
+               role rather than a heading one. */
+            font-family: var(--font-grotesque), sans-serif;
+            font-size: 14px; font-weight: 400;
+            line-height: 1.6; letter-spacing: normal; text-transform: none;
             color: color-mix(in srgb, var(--contrast-text) 55%, transparent);
             border-bottom: 1px solid transparent;
             transition: color var(--dur-base) var(--ease),
                         border-color var(--dur-base) var(--ease);
           }
-          .mn-tab:hover { color: var(--contrast-text); }
+          .mn-tab:hover { color: var(--contrast-text); text-decoration: none; }
           .mn-tab.is-on {
             color: var(--contrast-text);
             border-bottom-color: var(--contrast-text);
@@ -1173,20 +1180,29 @@ export default function Navbar() {
             .mn-sub { transition: none; }
           }
           .mn-items > li:first-child .mn-group { margin-top: 0; }
-          .mn-leaf {
+          /* :global — .mn-leaf sits on a Link, and styled-jsx cannot put
+             its scope class on a component, so a scoped rule here matches
+             nothing at all. The symptom is not a wrong style but an
+             absent one: these have been rendering at the inherited 16px
+             the whole time. Same reason .mn-sub-leaf is global below. */
+          :global(.mn-leaf) {
             display: block;
             padding: 5px 0;
-            font-family: var(--font-sans), system-ui, sans-serif;
-            font-size: clamp(1.7rem, 3.2vw, 2.7rem);
-            line-height: 1.14; letter-spacing: -0.02em;
+            /* h3 from the design system: grotesque, 22–32px, -0.03em,
+               1.15. These are sub-headings within the panel, which is
+               exactly the role h3 describes. */
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
             color: var(--contrast-text);
             text-decoration: none;
             transition: opacity var(--dur-base) var(--ease);
           }
-          .mn-leaf:hover { opacity: 0.55; }
-          .mn-leaf.is-on { opacity: 0.55; }
+          :global(.mn-leaf):hover { opacity: 0.55; }
+          :global(.mn-leaf).is-on { opacity: 0.55; }
 
-          .mn-leaf:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
+          :global(.mn-leaf):focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
 
           /* The panel changes under the pointer, so it should arrive
              rather than snap. */
@@ -1244,9 +1260,9 @@ export default function Navbar() {
             text-decoration: none;
             display: inline-flex; align-items: center; gap: 12px;
             font-family: var(--font-grotesque), sans-serif;
-            font-weight: 600;
-            font-size: clamp(24px, 2.9vw, 34px);
-            line-height: 1.1; letter-spacing: -0.035em;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
             color: var(--contrast-text);
             padding: 12px 0;
           }
@@ -1287,10 +1303,10 @@ export default function Navbar() {
             position: absolute;
             bottom: 44px;
             right: var(--gutter);
-            /* Sit ABOVE the .tile-feed-vignette (z: 101), which is
-               full-bleed on mobile — these have to stay crisp and
-               clickable on top of the blur. */
-            z-index: 102;
+            /* Top of the panel's stack. Above the tile feed vignette
+               (101) and above the feed itself, so these stay crisp and
+               clickable whatever scrolls under them. */
+            z-index: 120;
             display: flex;
             flex-direction: column;
             align-items: center;

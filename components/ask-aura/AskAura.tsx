@@ -24,11 +24,12 @@ const ANONYMOUS = { $process_person_profile: false } as const
    A pill at the foot of every page that opens into a conversation.
 
    On glass: the bar is solid black and the panel is a dark translucent
-   pane over a blurred page. There was a WebGL refraction on the bar,
-   from @ybouane/liquidglass, until the bar went opaque — a shader that
-   refracts what is behind an element has nothing to do when nothing is
-   behind it, so it went, and with it a WebGL context, a dynamic import
-   and a per-frame DOM rasterisation.
+   pane over a blurred page. There was a WebGL refraction on the bar
+   until the bar went opaque — a shader that refracts what is behind an
+   element has nothing to do when nothing is behind it — so it went, and
+   with it a WebGL context, a dynamic import and a per-frame DOM
+   rasterisation. The dependency has gone too; see the commit that
+   removed it for why that mattered more than the bytes.
 
    Everything a visitor types is screened server-side before it reaches
    a model. This component holds no keys and makes no third-party

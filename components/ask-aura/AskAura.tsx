@@ -97,6 +97,11 @@ export default function AskAura() {
      so the bar advertises what this page can actually answer instead of
      asking to be clicked. */
   const [tick, setTick] = useState(0)
+  /* The bar stays out of the first screen. A hero is the one part of a
+     page that is composed, and a chat bar parked across it is the thing
+     that spoils the composition — so it waits until the reader has gone
+     past and then slides up. */
+  const [past, setPast] = useState(false)
   const intro = opening(pathname ?? '/')
   const teaser = intro.prompts[tick % Math.max(intro.prompts.length, 1)] ?? 'Ask about the estates'
 
@@ -150,6 +155,24 @@ export default function AskAura() {
     }, 400)
     return () => clearTimeout(t)
   }, [msgs])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    let frame = 0
+    const read = () => {
+      frame = 0
+      setPast(window.scrollY > window.innerHeight * 0.75)
+    }
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(read) }
+    read()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    return () => {
+      if (frame) cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
 
   /* The bar ticks only while it is the thing on screen, and not at all
      for a visitor who asked for less motion — for them it settles on the
@@ -441,7 +464,9 @@ export default function AskAura() {
         <button
           ref={launcherRef}
           type="button"
-          className={`aa-launch ${glassOn ? 'is-glass' : ''}`}
+          className={`aa-launch ${glassOn ? 'is-glass' : ''} ${past ? 'is-in' : ''}`}
+          tabIndex={past ? 0 : -1}
+          aria-hidden={!past}
           onClick={() => { setOpen(true); track('ask_aura_opened', { page: pathname, ...ANONYMOUS }) }}
           aria-haspopup="dialog"
           /* A stable name. The visible text moves, and a label that
@@ -458,7 +483,7 @@ export default function AskAura() {
           </span>
           <span className="aa-launch-icon" aria-hidden>
             {/* Phosphor — paper-plane-tilt, fill */}
-            <svg viewBox="0 0 256 256" width="17" height="17" focusable="false">
+            <svg viewBox="0 0 256 256" width="15" height="15" focusable="false">
               <path fill="currentColor" d="M231.4,44.34s0,.1,0,.15l-58.2,191.94a15.88,15.88,0,0,1-14,11.51q-.69.06-1.38.06a15.86,15.86,0,0,1-14.42-9.15L107,164.15a4,4,0,0,1,.77-4.58l57.92-57.92a8,8,0,0,0-11.31-11.31L96.43,148.26a4,4,0,0,1-4.58.77L17.08,112.64a16,16,0,0,1,2.49-29.8l191.94-58.2h.15A16,16,0,0,1,231.4,44.34Z" />
             </svg>
           </span>
@@ -701,9 +726,9 @@ export default function AskAura() {
              visit, so at rest it takes only the room a hint needs, and
              opens to the width of a place to type when the pointer or
              the keyboard arrives. */
-          width: min(300px, calc(100vw - 32px));
-          display: flex; align-items: center; gap: 10px;
-          min-height: 50px; padding: 0 14px 0 18px;
+          width: min(360px, calc(100vw - 32px));
+          display: flex; align-items: center; gap: 8px;
+          min-height: 40px; padding: 0 8px 0 16px;
           border-radius: 999px;
           border: 1px solid rgba(255, 255, 255, 0.22);
           background: rgba(19, 23, 25, 0.72);
@@ -713,16 +738,26 @@ export default function AskAura() {
           cursor: pointer;
           text-align: left;
           box-shadow: 0 10px 34px rgba(0, 0, 0, 0.22);
+          /* Out of the way, and out of the tab order, until it is due. */
+          opacity: 0;
+          pointer-events: none;
+          transform: translateX(-50%) translateY(18px);
           transition: width var(--dur-slow) var(--ease-out),
-                      transform var(--dur-base) var(--ease-out),
+                      transform var(--dur-slow) var(--ease-out),
+                      opacity var(--dur-slow) var(--ease-out),
                       border-color var(--dur-base) var(--ease);
         }
-        .aa-launch:hover,
-        .aa-launch:focus-visible {
+        .aa-launch.is-in {
+          opacity: 1;
+          pointer-events: auto;
+          transform: translateX(-50%) translateY(0);
+        }
+        .aa-launch.is-in:hover,
+        .aa-launch.is-in:focus-visible {
           width: min(560px, calc(100vw - 32px));
           border-color: rgba(255, 255, 255, 0.5);
         }
-        .aa-launch:hover { transform: translateX(-50%) translateY(-2px); }
+        .aa-launch.is-in:hover { transform: translateX(-50%) translateY(-2px); }
 
         /* One line high and clipped, so a question leaving and the next
            arriving never change the height of the bar. */
@@ -735,7 +770,7 @@ export default function AskAura() {
         .aa-launch-q {
           display: block;
           font-family: var(--font-sans), system-ui, sans-serif;
-          font-size: 14px; line-height: 1.4; font-weight: 400;
+          font-size: 13px; line-height: 1.4; font-weight: 400;
           color: rgba(255, 255, 255, 0.82);
           white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
           animation: aa-tick var(--dur-slow) var(--ease-out);
@@ -746,7 +781,7 @@ export default function AskAura() {
         }
         .aa-launch-icon {
           flex: none; display: grid; place-items: center;
-          width: 34px; height: 34px;
+          width: 28px; height: 28px;
           color: rgba(255, 255, 255, 0.62);
           transition: color var(--dur-base) var(--ease);
         }
@@ -820,9 +855,13 @@ export default function AskAura() {
           --aa-line: rgba(255, 255, 255, 0.14);
           --aa-fill: rgba(255, 255, 255, 0.10);
 
+          /* Centred, not docked. With the page blurred behind it there
+             is nothing left for a corner to stay out of the way of, and
+             the middle is where a thing you are reading belongs. */
           position: fixed;
-          right: max(20px, env(safe-area-inset-right, 0px));
-          bottom: max(20px, env(safe-area-inset-bottom, 0px));
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
           z-index: 46;
           /* Room to read in. The dock is where a whole conversation
              happens, not a notification, and at 440 the answers were
@@ -868,9 +907,12 @@ export default function AskAura() {
         @media (max-width: 768px) {
           .aa-panel { background: rgba(22, 20, 19, 0.93); }
         }
+        /* Composed with the centring transform, not replacing it — a
+           bare translateY here would drop the panel back to the corner
+           for the length of the animation. */
         @keyframes aa-in {
-          from { opacity: 0; transform: translateY(12px); }
-          to   { opacity: 1; transform: none; }
+          from { opacity: 0; transform: translate(-50%, calc(-50% + 12px)) scale(0.985); }
+          to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
 
         .aa-head {
@@ -1170,15 +1212,23 @@ export default function AskAura() {
         }
 
         @media (max-width: 620px) {
+          /* A sheet, not a centred card: on a phone the keyboard takes
+             the bottom half, and a middle-anchored panel ends up sitting
+             behind it. */
           .aa-panel {
-            right: 0; left: 0; bottom: 0;
+            left: 0; right: 0; top: auto; bottom: 0;
+            transform: none;
             width: 100%;
             max-height: 86dvh;
             border-radius: var(--radius-2) var(--radius-2) 0 0;
-            border-left: 0; border-right: 0; border-bottom: 0;
             padding-bottom: env(safe-area-inset-bottom, 0px);
+            animation-name: aa-in-sheet;
           }
           .aa-input { font-size: 16px; }
+        }
+        @keyframes aa-in-sheet {
+          from { opacity: 0; transform: translateY(16px); }
+          to   { opacity: 1; transform: none; }
         }
 
         @media (prefers-reduced-motion: reduce) {

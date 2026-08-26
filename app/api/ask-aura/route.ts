@@ -6,6 +6,7 @@ import {
   screen, fenceContext, isCitableSource, LIMITS,
   type PageContext, type Turn,
 } from '@/lib/ask-aura/safety'
+import { insight } from '@/lib/ask-aura/privacy'
 
 /* Ask Aura — the answer service.
  *
@@ -96,7 +97,11 @@ function sse(event: string, data: unknown): string {
 }
 
 /** A fixed reply, delivered down the same channel the UI already reads. */
-function refusalStream(reply: string, kind: string) {
+function refusalStream(reply: string, kind: string, question = '') {
+  /* Even a refusal is worth counting: a run of high-stakes questions is
+     a thing Aura would want to know about. The labels go out; the words
+     that triggered them do not. */
+  const analytics = question ? insight(question, [], { refusal: kind }) : undefined
   const body = new ReadableStream({
     start(c) {
       const enc = new TextEncoder()
@@ -109,6 +114,7 @@ function refusalStream(reply: string, kind: string) {
         citations: [],
         confidence: 'high',
         refusal: kind,
+        ...(analytics ? { insight: analytics } : {}),
       })))
       c.enqueue(enc.encode(sse('done', {})))
       c.close()
@@ -231,7 +237,9 @@ export async function POST(req: Request) {
   }
 
   const verdict = screen(body, sessionKey(req, body))
-  if (!verdict.ok) return refusalStream(verdict.reply, verdict.kind)
+  if (!verdict.ok) {
+    return refusalStream(verdict.reply, verdict.kind, typeof body.message === 'string' ? body.message : '')
+  }
 
   const key = process.env.OPENAI_API_KEY
   if (!key) {
@@ -284,7 +292,13 @@ export async function POST(req: Request) {
           signal: req.signal,
           body: JSON.stringify({
             model: CHAT_MODEL,
-            temperature: 0.4,
+            /* Low, and deliberately so. Warmth here comes from the prompt
+               and from the source material, not from sampling: every
+               degree of temperature is another chance the model reaches
+               past the passages it was given for a fact it half-recalls.
+               The evaluation suite catches those, and at 0.4 it caught
+               different ones on every run. */
+            temperature: 0.2,
             max_tokens: 700,
             stream: true,
             messages,
@@ -355,11 +369,16 @@ export async function POST(req: Request) {
           ? hits.map((h) => ({ sectionPath: h.chunk.sectionPath, url: h.chunk.url, text: h.chunk.text }))
           : undefined
 
+        /* Classified here, not in the browser: this is the only place
+           that knows which passages actually answered the question, and
+           the topic labels are worth more when they come from what was
+           retrieved than from what was typed. */
         controller.enqueue(enc.encode(sse('meta', {
           suggestions,
           citations,
           confidence: hits.length ? best : 'low',
           requestId,
+          insight: insight(message, hits, { answer }),
           ...(trace ? { trace } : {}),
         })))
         controller.enqueue(enc.encode(sse('done', {})))

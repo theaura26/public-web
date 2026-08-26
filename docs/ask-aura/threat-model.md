@@ -89,32 +89,129 @@ list is a deliberate act.
 and never calls the model. Telling a model to admit it has no sources is not
 enforcement; not calling it is.
 
-## Privacy — an open obligation
+## What analytics knows, and how to use it
 
-`ask_aura_question` sends the visitor's **full question text** to PostHog,
-together with the page and turn number, gated on `NEXT_PUBLIC_POSTHOG_KEY`.
-This was an explicit product decision: Aura wants to know what people are
-actually seeking, and to build audience profiles and segmentation from it.
+The question Aura wants answered is *what are people seeking*. The obvious way
+to answer it — ship every question verbatim — is also the one way that turns a
+search box into a store of other people's personal details, because a free-text
+field collects whatever a visitor types, including the things you asked them not
+to type.
 
-The composer is marked `ph-no-capture`, so keystrokes are not recorded by
-session replay — only the submitted question is captured, deliberately.
+So the text is not the unit of analysis. **Intent and topic are.** A thousand
+rows reading `pricing · coffee · gap` tell you more than a thousand raw strings,
+because they aggregate, they segment, and nobody has to redact them later.
 
-The dock discloses this in a line beneath the composer: answers can be wrong,
-do not enter personal details, questions are recorded.
+### What each question sends
 
-**What is still owed, and this is not optional:**
+`lib/ask-aura/privacy.ts` is the only place that decides this. The server
+classifies — it is the only party that knows which passages actually answered —
+and returns an `insight` object in the meta frame. The browser forwards that and
+nothing else.
 
-- The site has no privacy policy page. Capturing free-text input and building
-  profiles from it needs one, and the disclosure line should link to it.
-- Under UK GDPR this is likely legitimate-interest processing of personal data,
-  because a free-text field is one a visitor may type their own details into
-  regardless of being asked not to. A retention period and a deletion route
-  need deciding.
-- If PostHog is configured with EU ingest (`eu.i.posthog.com`, as in
-  `.env.example`), keep it that way.
+| Property | What it is | Why it earns its place |
+| --- | --- | --- |
+| `intent` | One of sixteen fixed labels: `pricing`, `buying`, `visiting`, `residency`, `partnership`, `careers`, `press`, `contact`, `science`, `practice`, `provenance`, `people`, `place`, `philosophy`, `product`, `other` | What the person is trying to do. Fixed vocabulary, because a label that can be anything is a free-text field wearing a hat |
+| `topics` | Up to three page ids, from what retrieval found | Stable in a way keywords are not — `fermentation` stays `fermentation` when the copy is rewritten |
+| `coverage` | `high` / `medium` / `low` / `none` | How confident retrieval was |
+| `thinEvidence` | Retrieval came back with nothing convincing | Where the corpus is weak |
+| `admittedGap` | **The answer itself conceded it did not know** | The signal to watch. See below |
+| `refusal` | Which fixed refusal fired, if any | Volume of distress, high-stakes and abuse, without the words |
+| `redacted` | Which *kinds* of identifier were stripped. Never the values | "Someone left a phone number" is worth knowing; the number is not |
+| `question` | The question, **only** when it needed no redaction, is under 140 characters, under 28 words, single-line, and was not refused | The long tail, readable, for the cases where a label is too coarse |
 
-Engineering has done what it can here: the capture is gated, disclosed, and
-narrow. The remaining items are Aura's to decide, not the code's.
+Two rules are absolute and enforced in code, not by convention:
+
+- **A refused question is never stored, in any form.** Not when it passes the
+  redaction filter, not when it looks harmless. The refusals are the most
+  sensitive things anyone types into this box — distress above all — and the
+  label alone says everything Aura needs to know. `questionIsSafe()` returns
+  false on any refusal before it checks anything else.
+- **Redaction runs before the safety filter, not instead of it.** If anything
+  was stripped, the text is withheld entirely and only the *kind* is recorded.
+  A question that had an email in it is reported as `visiting · [email]`, which
+  still tells you someone wanted to come and left a way to reach them.
+
+`ASK_AURA_LOG_QUESTIONS=off` withholds every question text and keeps the labels.
+Nothing else changes; no dashboard breaks.
+
+### `admittedGap` is the one to watch
+
+Retrieval confidence is a poor proxy for whether a question was answered. Ask
+"do you ship to Berlin" and retrieval returns six confident passages about the
+estate, none of which answer it. So the gap signal reads the *answer* instead,
+for the concessions the prompt tells it to make — "not published", "no figure
+for that", "has not been measured here yet".
+
+Every one of those is a question the site could answer and currently does not.
+Sorted by frequency, `admittedGap = true` grouped by `intent` is a content
+backlog in priority order, generated by the people who wanted the content. It
+is the most commercially useful thing in this whole feature.
+
+### Segmenting
+
+Do not precompute segments. Define PostHog **cohorts** over these events, so a
+definition can be changed later without a deploy and without re-collecting
+anything. The properties above were chosen to make these cheap:
+
+- **Buyers** — `ask_aura_answered` where `intent` in (`pricing`, `buying`) at
+  least once. The most commercially direct group on the site.
+- **Visitors** — `intent` in (`visiting`, `residency`). Different funnel,
+  different follow-up, often a different season.
+- **Trade** — `intent` in (`partnership`, `press`, `careers`). Small, valuable,
+  and currently invisible in the contact form alone.
+- **Sceptics** — `intent = science`, or `topics` containing `biodynamic` with
+  `intent = science`. These are the people the external research corpus exists
+  for, and worth knowing the size of.
+- **Deep readers** — three or more `ask_aura_answered` in a session, or `turn`
+  ≥ 4. Engagement that page-depth alone does not show.
+- **Underserved** — any `admittedGap = true`. Cross this with the others: an
+  underserved *buyer* is a lost sale with a receipt.
+
+Cross-referencing intent against `topics` gives the interesting bit: someone
+asking `pricing` about `fermentation` is a roaster; someone asking `pricing`
+about `sanctuary` is a guest.
+
+### Where personalisation plugs in
+
+It does not need identity, and it should not wait for it. The data to
+personalise on is already on the visitor's own device: the transcript in
+`localStorage` under `aura:ask:v1`, which is a record of what this person cares
+about, held where it cannot leak.
+
+The order to build it in, cheapest first:
+
+1. **On-device affinity.** Tally the `topics` and `intent` of this visitor's own
+   questions in `localStorage`. Order the dock's opening suggestions by it. No
+   server, no profile, no consent question — the data never moves.
+2. **Page-aware openers.** Already half-built: `suggest_questions` in the MCP
+   server derives questions from the sections a page actually contains.
+   Combining that with (1) gives "what this page can answer, ordered by what you
+   have shown interest in".
+3. **Cohort-aware content.** Once the cohorts above have real volume, use them
+   for what they are good at — deciding what to *write* — before using them to
+   change what an individual sees.
+4. **Identified personalisation.** Only at the point someone identifies
+   themselves, which on this site means the contact form. `identify()` in
+   `lib/analytics.ts` already keys to the submitted email and merges the prior
+   anonymous history. That is the moment the privacy footing changes, and the
+   moment to have a policy page in place — not before.
+
+Steps 1 and 2 need no privacy decision at all. Step 4 needs the policy page.
+
+### Still owed
+
+- **The site has no privacy policy page.** The dock's disclosure line — "we keep
+  a note of what people ask about, never of who asked" — is accurate about Ask
+  Aura, and should link to a page that says the same about the rest of the site.
+- **Site-wide PostHog is on fullest tracking**: `person_profiles: 'always'`,
+  `persistence: 'localStorage+cookie'`, session replay on. That predates Ask
+  Aura and is unchanged here, but it is the reason a consent banner is still
+  outstanding — `app/providers.tsx` carries its own note to that effect. Ask
+  Aura is now the *least* identifying thing on the site, which is the wrong way
+  round.
+- **A retention period.** The labels can be kept indefinitely without much
+  thought. The stored question texts should have a window — twelve months is
+  defensible — after which they are aggregated to labels and dropped.
 
 ## Operating
 
@@ -130,16 +227,49 @@ edit costs a handful of embedding calls, not 240.
 
 **Before shipping a prompt or retrieval change**, run the suite. The release
 bar is zero failures in `injection`, `indirect-injection`, `high-stakes` and
-`abuse`, and 90% overall.
+`abuse`, and 90% overall. A run with `--no-judge`, or without an API key, or
+over a subset of cases, says so in its output and cannot report success.
 
 ```bash
-npx tsx evals/ask-aura/run.mts
+npm run ask-aura:eval
+```
+
+The deterministic suites are quick and need no model at all — redaction,
+screening, link validation, retrieval shape, MCP:
+
+```bash
+npm run ask-aura:smoke
 ```
 
 **Rollback** is a revert plus a redeploy; there is no migration and no
 persistent state. To switch the assistant off without a deploy, remove
 `OPENAI_API_KEY` — the route then answers with fixed text pointing at the pages
 and the contact form.
+
+## What the evaluation does and does not tell you
+
+66 cases, typically 94–97% passing, zero failures in the four categories where a
+failure is a safety incident. The gate is 90% and zero critical.
+
+The overall number moves by a few points between runs, and it is worth knowing
+why rather than re-running until it looks tidy. Two of the failures are stable
+and two rotate:
+
+- **`ctx-03` fails consistently** on the house rule against defining by
+  negation. The Ohara page itself says "a sanctuary is a posture, not a
+  property", and the model borrows the construction however plainly the prompt
+  forbids it.
+- **The `grounded` failures rotate** between broad identity questions — "what is
+  Aura", "why does Aura exist", "what do you grow". They are not hallucinations
+  in the ordinary sense: the model states things that are *true of Aura* but are
+  not in the six passages retrieved for that particular question. The judge
+  grades strict entailment against the evidence shown, which is the right bar
+  for a source-grounded assistant, and these answers do not clear it.
+
+Lowering sampling temperature from 0.4 to 0.2 did not change the rate, which
+tells you the cause is retrieval reach on broad questions rather than sampling.
+The fix, when someone picks it up, is to retrieve more widely when a question is
+about Aura as a whole — not to soften the assertion.
 
 ## Known gaps
 

@@ -245,11 +245,13 @@ export default function AskAura() {
     if (!question || busy) return
 
     const started = performance.now()
-    /* The visitor's own words, captured deliberately: Aura wants to
-       know what people are actually seeking. Gated on the same PostHog
-       switch as every other event on the site. */
+    /* What is NOT sent here is the point: the question itself never
+       becomes an analytics property from the browser. The server
+       classifies it against what retrieval actually found and returns
+       intent, topics and coverage in the meta frame — that is what gets
+       captured below, once the answer is in. This event just marks that
+       a question was asked, and where. */
     track('ask_aura_question', {
-      question,
       page: pathname,
       turn: msgsRef.current.filter((m) => m.role === 'user').length + 1,
     })
@@ -309,6 +311,7 @@ export default function AskAura() {
          managed first. Only `meta` or `done` says the answer finished. */
       let completed = false
       let streamError = false
+      let insight: Record<string, unknown> | null = null
 
       try {
         for (;;) {
@@ -329,6 +332,7 @@ export default function AskAura() {
               scheduleFlush()
             } else if (evt === 'meta') {
               completed = true
+              insight = (data.insight as Record<string, unknown>) ?? null
               flush()
               if (frame) { cancelAnimationFrame(frame); frame = 0 }
               setMsgs((m) => m.map((x) => (x.id === replyId ? {
@@ -353,7 +357,15 @@ export default function AskAura() {
 
       setMsgs((m) => m.map((x) => (x.id === replyId ? { ...x, pending: false } : x)))
       setAnnouncement('Answer complete.')
-      track('ask_aura_answered', { page: pathname, ms: Math.round(performance.now() - started) })
+      /* The insight is a fixed set of labels — intent, topics, coverage,
+         whether the corpus could answer at all — plus the question only
+         when it needed no redaction and reads as an ordinary question.
+         See lib/ask-aura/privacy.ts for what may and may not travel. */
+      track('ask_aura_answered', {
+        page: pathname,
+        ms: Math.round(performance.now() - started),
+        ...(insight ?? {}),
+      })
     } catch (err) {
       if ((err as Error).name === 'AbortError') return
       setMsgs((m) => m.map((x) => (x.id === replyId
@@ -524,8 +536,9 @@ export default function AskAura() {
           </form>
 
           <p className="aa-terms">
-            Answers come from Aura&rsquo;s own pages and can be wrong. Please do not
-            enter personal details. Questions are recorded to improve this.
+            Answers come from Aura&rsquo;s own pages and can be wrong. We keep a
+            note of what people ask about, never of who asked. Anything that
+            looks like a personal detail is removed before it is stored.
           </p>
         </div>
       )}

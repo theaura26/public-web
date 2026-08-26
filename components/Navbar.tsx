@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { SECTIONS, sectionFor } from '@/lib/site-nav'
+import { SECTIONS, TABS, sectionFor } from '@/lib/site-nav'
 import { useMode } from './ModeProvider'
 import { LogoEmblem } from './Logo'
 import ContactModal from './ContactModal'
@@ -232,7 +232,11 @@ export default function Navbar() {
      failing that whichever one covers the page they are on, and failing
      that the first. Derived rather than stored, so it cannot fall out of
      step with the route. */
-  const activeSection = openGroup ?? sectionFor(pathname) ?? SECTIONS[0].id
+  const routeSection = sectionFor(pathname)
+  const activeSection =
+    openGroup ??
+    (TABS.some((t) => t.id === routeSection) ? routeSection : null) ??
+    TABS[0].id
   const scrollRef = useRef<HTMLDivElement>(null)
   const tileRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
@@ -773,7 +777,7 @@ export default function Navbar() {
                   onKeyDown={(e) => {
                     /* Arrows walk the row, which is what a tablist
                        promises the moment it calls itself one. */
-                    const i = SECTIONS.findIndex((x) => x.id === activeSection)
+                    const i = TABS.findIndex((x) => x.id === activeSection)
                     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
                       e.preventDefault()
                       const next = e.key === 'ArrowRight'
@@ -797,7 +801,7 @@ export default function Navbar() {
         <aside className="menu-left">
           <nav className="mn" aria-label="Main">
 
-            {SECTIONS.map((sec) => {
+            {TABS.map((sec) => {
               const on = activeSection === sec.id
               let lastGroup: string | undefined
               return (
@@ -810,40 +814,67 @@ export default function Navbar() {
                   className="mn-panel"
                 >
                   <ul className="mn-items">
-                    {sec.items.map((item) => {
-                      const openGroupLabel = item.group && item.group !== lastGroup
-                      if (item.group) lastGroup = item.group
-                      return (
-                        <li key={item.href + item.label}>
-                          {openGroupLabel && <p className="label mn-group">{item.group}</p>}
-                          <Link
-                            href={item.href}
-                            className={`mn-leaf ${pathname === item.href ? 'is-on' : ''}`}
-                            aria-current={pathname === item.href ? 'page' : undefined}
-                            onClick={() => setMenuOpen(false)}
-                            data-attr={`menu-link:${item.href}`}
-                          >
-                            {item.label}
-                          </Link>
-                        </li>
-                      )
-                    })}
+                    {sec.items.map((item) => (
+                      <li
+                        key={item.href + item.label}
+                        className={`mn-row ${item.children ? 'has-more' : ''}`}
+                      >
+                        <Link
+                          href={item.href}
+                          className={`mn-leaf ${pathname === item.href ? 'is-on' : ''}`}
+                          aria-current={pathname === item.href ? 'page' : undefined}
+                          onClick={() => setMenuOpen(false)}
+                          data-attr={`menu-link:${item.href}`}
+                        >
+                          {item.label}
+                        </Link>
+
+                        {item.children && (
+                          /* The tier beneath. Open on hover, and on focus
+                             too — a layer a keyboard cannot reach is a
+                             layer that is not there. */
+                          <div className="mn-sub">
+                            <ul className="mn-sub-in">
+                            {item.children.map((child) => (
+                              <li key={child.href + child.label}>
+                                <Link
+                                  href={child.href}
+                                  className={`mn-sub-leaf ${pathname === child.href ? 'is-on' : ''}`}
+                                  aria-current={pathname === child.href ? 'page' : undefined}
+                                  onClick={() => setMenuOpen(false)}
+                                  data-attr={`menu-link:${child.href}`}
+                                >
+                                  {child.label}
+                                </Link>
+                              </li>
+                            ))}
+                            </ul>
+                          </div>
+                        )}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               )
             })}
           </nav>
 
-          {/* Always visible, under the sections. */}
-          <span
-            className="mg-live"
-            onMouseEnter={hoverCollapse}
-            onMouseLeave={cancelHover}
-          >
-            Live
-            <span className="mg-dot" aria-hidden />
-          </span>
         </aside>
+
+        {/* Now, reached as it should be — the thing that is happening,
+            not an item in a list of subjects. Bottom-left, where the
+            panel's other standing marks sit. */}
+        <Link
+          href="/now"
+          className="mg-live"
+          onClick={() => setMenuOpen(false)}
+          onMouseEnter={hoverCollapse}
+          onMouseLeave={cancelHover}
+          data-attr="menu-link:/now"
+        >
+          Live
+          <span className="mg-dot" aria-hidden />
+        </Link>
 
         {/* Bottom-left utilities: theme toggle + view-mode toggle + Instagram */}
         <div className="menu-utils">
@@ -1036,11 +1067,11 @@ export default function Navbar() {
             outline: 2px solid var(--brand-accent); outline-offset: 3px;
           }
           @media (max-width: 900px) {
-            .mg-btn, :global(.mg-btn-link), .mg-live { font-size: 24px; }
+            .mg-btn, :global(.mg-btn-link), :global(.mg-live) { font-size: 24px; }
             :global(.mg-item) { font-size: 12px; }
           }
           @media (max-width: 600px) {
-            .mg-btn, :global(.mg-btn-link), .mg-live { font-size: 21px; }
+            .mg-btn, :global(.mg-btn-link), :global(.mg-live) { font-size: 21px; }
             :global(.mg-item) { font-size: 11px; }
           }
           .mg-note {
@@ -1081,8 +1112,12 @@ export default function Navbar() {
           }
           .mn-tab {
             background: none; border: 0; padding: 4px 0; cursor: pointer;
-            font-family: var(--font-mono), monospace;
-            font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+            /* Bricolage rather than mono: these are the names of parts of
+               the site, not technical labels, and set small they read as
+               a row of places rather than as machine text. */
+            font-family: var(--font-sans), system-ui, sans-serif;
+            font-size: 14px; font-weight: 500;
+            letter-spacing: -0.005em; text-transform: none;
             color: color-mix(in srgb, var(--contrast-text) 55%, transparent);
             border-bottom: 1px solid transparent;
             transition: color var(--dur-base) var(--ease),
@@ -1096,23 +1131,61 @@ export default function Navbar() {
           .mn-tab:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
 
           .mn-items { list-style: none; margin: 0; padding: 0; }
-          .mn-group {
-            margin: 26px 0 6px;
-            color: color-mix(in srgb, var(--contrast-text) 45%, transparent);
+          /* A row that has a tier beneath it opens on hover, and on
+             focus within, so the keyboard reaches it too. Grid rows
+             animate from 0fr to 1fr, which is what lets the list push
+             down smoothly without anyone measuring anything. */
+          /* One grid row, one wrapper inside it. Collapsing the track
+             itself only governs the first row, so a parent with three
+             children kept two of them open — the wrapper gives the grid
+             a single thing to close. */
+          .mn-sub {
+            display: grid; grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows var(--dur-base) var(--ease-out),
+                        opacity var(--dur-base) var(--ease);
+          }
+          .mn-sub-in {
+            list-style: none; margin: 0; padding: 0;
+            overflow: hidden;
+            min-height: 0;
+          }
+          .mn-row.has-more:hover .mn-sub,
+          .mn-row.has-more:focus-within .mn-sub {
+            grid-template-rows: 1fr;
+            opacity: 1;
+          }
+          :global(.mn-sub-leaf) {
+            display: block;
+            padding: 3px 0 3px 2px;
+            font-family: var(--font-mono), monospace;
+            font-size: 11px; line-height: 1.5;
+            letter-spacing: 0.6px; text-transform: uppercase;
+            color: color-mix(in srgb, var(--contrast-text) 62%, transparent);
+            text-decoration: none;
+          }
+          :global(.mn-sub-leaf):hover,
+          :global(.mn-sub-leaf).is-on { color: var(--contrast-text); }
+          :global(.mn-sub-leaf):focus-visible {
+            outline: 2px solid var(--brand-accent); outline-offset: 2px;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .mn-sub { transition: none; }
           }
           .mn-items > li:first-child .mn-group { margin-top: 0; }
           .mn-leaf {
             display: block;
-            padding: 7px 0;
+            padding: 5px 0;
             font-family: var(--font-sans), system-ui, sans-serif;
-            font-size: clamp(1.4rem, 2.6vw, 2.1rem);
-            line-height: 1.16; letter-spacing: -0.015em;
+            font-size: clamp(1.7rem, 3.2vw, 2.7rem);
+            line-height: 1.14; letter-spacing: -0.02em;
             color: var(--contrast-text);
             text-decoration: none;
             transition: opacity var(--dur-base) var(--ease);
           }
           .mn-leaf:hover { opacity: 0.55; }
           .mn-leaf.is-on { opacity: 0.55; }
+
           .mn-leaf:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
 
           /* The panel changes under the pointer, so it should arrive
@@ -1163,10 +1236,12 @@ export default function Navbar() {
              Sits in the same stack as the groups and is set like them,
              so it reads as another way in rather than a status badge
              bolted to the bottom. The dot carries all the signal. */
-          .mg-live {
-            /* No extra margin — the same 12px padding as a group button,
-               so it sits on the identical rhythm as the entries above. */
-            align-self: flex-start;
+          :global(.mg-live) {
+            position: absolute;
+            left: var(--gutter);
+            bottom: 44px;
+            z-index: 102;
+            text-decoration: none;
             display: inline-flex; align-items: center; gap: 12px;
             font-family: var(--font-grotesque), sans-serif;
             font-weight: 600;

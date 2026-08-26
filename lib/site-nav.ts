@@ -16,13 +16,18 @@ export type NavLeaf = {
   href: string
   /** No page written yet. Renders a stub at `href`. */
   soon?: boolean
-  /** A heading inside a section, not a link — e.g. "Coffee" over its lots. */
-  group?: string
+  /** The tier beneath this one, revealed on hover. A parent with
+      children is a subject; its children are variants of it — the
+      seasons of a crop, the parts of a place. */
+  children?: NavLeaf[]
 }
 
 export type NavSection = {
   id: string
   label: string
+  /** Hidden from the section row. Still routed, still in the sitemap —
+      Now is reached through the Live indicator instead of a tab. */
+  offTabs?: boolean
   /** The section's own landing page, when it has one. */
   href?: string
   /** One line under the section name in the menu. */
@@ -50,7 +55,7 @@ export const SECTIONS: NavSection[] = [
   },
   {
     id: 'life',
-    label: 'The Regenerative Life',
+    label: 'Regenerative Life',
     href: '/regenerative-life',
     note: 'The nine disciplines the estate is farmed by.',
     /* These are the nine glyphs on the Remarkable Circle. Same nine, same
@@ -92,24 +97,60 @@ export const SECTIONS: NavSection[] = [
     href: '/from-aura',
     note: 'What the land produced, and what it is doing now.',
     items: [
-      { group: 'Coffee', label: '25/26 — nine lots', href: '/from-aura/coffee-25-26', soon: true },
-      { group: 'Coffee', label: '26/27 — blocks and zones', href: '/from-aura/coffee-26-27', soon: true },
-      { group: 'Coffee', label: '27/28 — pre-book', href: '/from-aura/coffee-27-28', soon: true },
-      { group: 'Tea', label: '27/28 — pre-book', href: '/from-aura/tea-27-28', soon: true },
-      { group: 'Pepper', label: '25/26 — black and white', href: '/from-aura/pepper-25-26', soon: true },
-      { group: 'Pepper', label: '26/27 — blocks and zones', href: '/from-aura/pepper-26-27', soon: true },
-      { group: 'Areca nut', label: '27/28 — pre-book', href: '/from-aura/areca-27-28', soon: true },
+      {
+        label: 'Coffee',
+        href: '/from-aura/coffee',
+        soon: true,
+        children: [
+          { label: '25/26 — nine lots', href: '/from-aura/coffee-25-26', soon: true },
+          { label: '26/27 — blocks and zones', href: '/from-aura/coffee-26-27', soon: true },
+          { label: '27/28 — pre-book', href: '/from-aura/coffee-27-28', soon: true },
+        ],
+      },
+      {
+        label: 'Tea',
+        href: '/from-aura/tea',
+        soon: true,
+        children: [
+          { label: '27/28 — pre-book', href: '/from-aura/tea-27-28', soon: true },
+        ],
+      },
+      {
+        label: 'Pepper',
+        href: '/from-aura/pepper',
+        soon: true,
+        children: [
+          { label: '25/26 — black and white', href: '/from-aura/pepper-25-26', soon: true },
+          { label: '26/27 — blocks and zones', href: '/from-aura/pepper-26-27', soon: true },
+        ],
+      },
+      {
+        label: 'Areca nut',
+        href: '/from-aura/areca',
+        soon: true,
+        children: [
+          { label: '27/28 — pre-book', href: '/from-aura/areca-27-28', soon: true },
+        ],
+      },
       { label: 'Other farm produce', href: '/from-aura/farm-produce', soon: true },
       { label: 'Objects & Editions', href: '/from-aura/objects', soon: true },
-      { group: 'Experiences', label: 'Artist residencies', href: '/residency' },
-      { group: 'Experiences', label: 'Farm tours', href: '/from-aura/farm-tours', soon: true },
-      { group: 'Experiences', label: 'Harvest tours', href: '/from-aura/harvest-tours', soon: true },
+      {
+        label: 'Experiences',
+        href: '/from-aura/experiences',
+        soon: true,
+        children: [
+          { label: 'Artist residencies', href: '/residency' },
+          { label: 'Farm tours', href: '/from-aura/farm-tours', soon: true },
+          { label: 'Harvest tours', href: '/from-aura/harvest-tours', soon: true },
+        ],
+      },
       { label: 'View all', href: '/from-aura', soon: true },
     ],
   },
   {
     id: 'now',
     label: 'Now',
+    offTabs: true,
     href: '/now',
     note: 'Mudigere, as it is today.',
     items: [
@@ -131,8 +172,15 @@ export const SECTIONS: NavSection[] = [
 ]
 
 /** Every stub URL under a given prefix, for generateStaticParams. */
+function flatten(items: NavLeaf[]): NavLeaf[] {
+  return items.flatMap((i) => (i.children ? [i, ...i.children] : [i]))
+}
+
+/** Every item in the site, parents and children alike. */
+export const ALL_LEAVES: NavLeaf[] = SECTIONS.flatMap((s) => flatten(s.items))
+
 export function stubSlugs(prefix: string): string[] {
-  return SECTIONS.flatMap((s) => s.items)
+  return ALL_LEAVES
     .filter((i) => i.soon && i.href.startsWith(`${prefix}/`))
     .map((i) => i.href.slice(prefix.length + 1))
 }
@@ -140,7 +188,10 @@ export function stubSlugs(prefix: string): string[] {
 /** The label a stub URL should announce. */
 export function labelFor(href: string): string | null {
   for (const s of SECTIONS) {
-    for (const i of s.items) if (i.href === href) return i.group ? `${i.group} — ${i.label}` : i.label
+    for (const i of s.items) {
+      if (i.href === href) return i.label
+      for (const c of i.children ?? []) if (c.href === href) return `${i.label} — ${c.label}`
+    }
   }
   return null
 }
@@ -149,7 +200,7 @@ export function labelFor(href: string): string | null {
 export function sectionFor(pathname: string): string | null {
   let best: { id: string; len: number } | null = null
   for (const s of SECTIONS) {
-    for (const i of s.items) {
+    for (const i of flatten(s.items)) {
       if (pathname === i.href || pathname.startsWith(`${i.href}/`)) {
         if (!best || i.href.length > best.len) best = { id: s.id, len: i.href.length }
       }
@@ -160,3 +211,6 @@ export function sectionFor(pathname: string): string | null {
   }
   return best?.id ?? null
 }
+
+/** The sections that appear as tabs. */
+export const TABS = SECTIONS.filter((s) => !s.offTabs)

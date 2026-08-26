@@ -12,9 +12,6 @@ export default function SectionIndex({ id }: { id: string }) {
   const section = SECTIONS.find((s) => s.id === id)
   if (!section) return null
 
-  /* Items that carry a group heading are printed under it, once. */
-  let lastGroup: string | undefined
-
   return (
     <main className="sx">
       <div className="section-w sx-in">
@@ -24,19 +21,26 @@ export default function SectionIndex({ id }: { id: string }) {
         </header>
 
         <ul className="sx-list">
-          {section.items.map((item) => {
-            const openGroup = item.group && item.group !== lastGroup
-            if (item.group) lastGroup = item.group
-            return (
-              <li key={item.href + item.label} className="sx-row">
-                {openGroup && <p className="label sx-group">{item.group}</p>}
-                <Link className="sx-link" href={item.href}>
-                  <span className="sx-label">{item.label}</span>
-                  {item.soon && <span className="label sx-soon">Not yet written</span>}
-                </Link>
-              </li>
-            )
-          })}
+          {section.items.map((item) => (
+            <li key={item.href + item.label} className="sx-row">
+              <Link className="sx-link" href={item.href}>
+                <span className="sx-label">{item.label}</span>
+                {item.soon && <span className="label sx-soon">Not yet written</span>}
+              </Link>
+              {item.children && (
+                <ul className="sx-sub">
+                  {item.children.map((child) => (
+                    <li key={child.href + child.label}>
+                      <Link className="sx-sub-link" href={child.href}>
+                        <span>{child.label}</span>
+                        {child.soon && <span className="sx-soon-dot" aria-hidden />}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -74,6 +78,23 @@ export default function SectionIndex({ id }: { id: string }) {
           color: var(--text);
         }
         .sx-soon { flex: none; color: var(--text-muted); }
+
+        /* The tier beneath, always open on the section's own page —
+           this is the page for reading the whole structure, so nothing
+           here should need hovering to be seen. */
+        .sx-sub { list-style: none; margin: 0; padding: 0 0 var(--space-4); }
+        .sx-sub-link {
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 4px 0;
+          font-family: var(--font-mono), monospace;
+          font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase;
+          color: var(--text-muted); text-decoration: none;
+        }
+        .sx-sub-link:hover { color: var(--text); }
+        .sx-soon-dot {
+          width: 4px; height: 4px; border-radius: 50%;
+          background: currentColor; opacity: 0.5;
+        }
       `}</style>
     </main>
   )

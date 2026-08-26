@@ -608,19 +608,22 @@ export default function AskAura() {
             ))}
 
             {followUps.length > 0 && (
-              <ul className="aa-chips aa-chips-follow">
-                {followUps.map((s, i) => (
-                  <li key={s.label}>
-                    <button
-                      type="button"
-                      className="aa-chip"
-                      onClick={() => { track('ask_aura_suggestion', { page: pathname, kind: 'follow_up', position: i, intent: s.intent, ...ANONYMOUS }); send(s.label) }}
-                    >
-                      {s.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+              <div className="aa-follow">
+                <p className="aa-list-label">Ask next</p>
+                <ul className="aa-chips aa-chips-follow">
+                  {followUps.map((s, i) => (
+                    <li key={s.label}>
+                      <button
+                        type="button"
+                        className="aa-chip"
+                        onClick={() => { track('ask_aura_suggestion', { page: pathname, kind: 'follow_up', position: i, intent: s.intent, ...ANONYMOUS }); send(s.label) }}
+                      >
+                        {s.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
 
@@ -897,8 +900,12 @@ export default function AskAura() {
 
         .aa-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 7px; }
         /* Where the conversation goes next, offered after the sources
-           rather than between the answer and its provenance. */
-        .aa-chips-follow { margin-top: -4px; }
+           rather than between the answer and its provenance — and set
+           well clear of them, because it is a different question from
+           "where did this come from". */
+        .aa-follow { margin-top: 16px; }
+        .aa-follow .aa-list-label { margin: 0 0 12px; }
+        .aa-chips-follow { margin: 0; }
         .aa-chips-follow { margin-top: -4px; }
         .aa-chip {
           /* Bricolage: these are questions a person would say out loud,
@@ -969,7 +976,8 @@ export default function AskAura() {
            mono uppercase as a label rather than a headline. The rule sits
            on top of each row and on the list itself, so the group reads
            as a set of records rather than a stack of buttons. */
-        .aa-cites-label {
+        .aa-cites-label,
+        .aa-list-label {
           margin: 20px 0 8px;
           font-family: var(--font-mono), monospace;
           font-size: 11px; font-weight: 400;

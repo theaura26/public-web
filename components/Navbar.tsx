@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { SECTIONS, sectionFor } from '@/lib/site-nav'
 import { useMode } from './ModeProvider'
 import { LogoEmblem } from './Logo'
 import ContactModal from './ContactModal'
@@ -227,6 +228,11 @@ export default function Navbar() {
   const [hasOpenedMenu, setHasOpenedMenu] = useState(false)
   const { theme, setTheme, viewMode, setViewMode } = useMode()
   const pathname = usePathname()
+  /* The section on show: whatever the reader last pointed at, and
+     failing that whichever one covers the page they are on, and failing
+     that the first. Derived rather than stored, so it cannot fall out of
+     step with the route. */
+  const activeSection = openGroup ?? sectionFor(pathname) ?? SECTIONS[0].id
   const scrollRef = useRef<HTMLDivElement>(null)
   const tileRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
@@ -743,81 +749,92 @@ export default function Navbar() {
           <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor', transform: 'translateY(-3.75px) rotate(-45deg)' }} />
         </button>
 
-        {/* Left — primary nav, locked at top, never scrolls */}
+        <ul className="mn-tabs" role="tablist" aria-label="Sections">
+          {SECTIONS.map((sec) => {
+            const on = activeSection === sec.id
+            return (
+              <li key={sec.id}>
+                <button
+                  type="button"
+                  role="tab"
+                  id={`mn-tab-${sec.id}`}
+                  aria-selected={on}
+                  aria-controls={`mn-panel-${sec.id}`}
+                  tabIndex={on ? 0 : -1}
+                  className={`mn-tab ${on ? 'is-on' : ''}`}
+                  onMouseEnter={() => {
+                    if (!canHoverRef.current) return
+                    if (hoverTimer.current) clearTimeout(hoverTimer.current)
+                    hoverTimer.current = setTimeout(() => setOpenGroup(sec.id), 90)
+                  }}
+                  onMouseLeave={() => { if (hoverTimer.current) clearTimeout(hoverTimer.current) }}
+                  onFocus={() => setOpenGroup(sec.id)}
+                  onClick={() => setOpenGroup(sec.id)}
+                  onKeyDown={(e) => {
+                    /* Arrows walk the row, which is what a tablist
+                       promises the moment it calls itself one. */
+                    const i = SECTIONS.findIndex((x) => x.id === activeSection)
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                      e.preventDefault()
+                      const next = e.key === 'ArrowRight'
+                        ? (i + 1) % SECTIONS.length
+                        : (i - 1 + SECTIONS.length) % SECTIONS.length
+                      setOpenGroup(SECTIONS[next].id)
+                      document.getElementById(`mn-tab-${SECTIONS[next].id}`)?.focus()
+                    }
+                  }}
+                >
+                  {sec.label}
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+
+        {/* Left — the five sections as a row, and the open one's
+            contents beneath. Hovering a section swaps the panel; the
+            reader never has to click to look. */}
         <aside className="menu-left">
-          <nav className="mg" aria-label="Main">
-            {NAV_GROUPS.map((g) => {
-              /* A group with no items is a destination, not an accordion.
-                 It still collapses whatever is open — hovering it means
-                 the reader has moved on from that panel. */
-              if (!g.items) {
-                return (
-                  <div className="mg-grp" key={g.id}>
-                    <Link
-                      href={g.href ?? '/'}
-                      onClick={() => setMenuOpen(false)}
-                      onMouseEnter={hoverCollapse}
-                      onMouseLeave={cancelHover}
-                      className="mg-btn mg-btn-link"
-                      data-attr={`menu-link:${g.href}`}
-                    >
-                      {g.label}
-                    </Link>
-                  </div>
-                )
-              }
+          <nav className="mn" aria-label="Main">
 
-              const open = (openGroup ?? groupForPath(pathname)) === g.id
+            {SECTIONS.map((sec) => {
+              const on = activeSection === sec.id
+              let lastGroup: string | undefined
               return (
-                <div className="mg-grp" data-open={open} key={g.id}>
-                  <button
-                    type="button"
-                    className="mg-btn"
-                    aria-expanded={open}
-                    aria-controls={`mg-${g.id}`}
-                    onClick={() => {
-                      if (hoverTimer.current) clearTimeout(hoverTimer.current)
-                      setOpenGroup(open ? '' : g.id)
-                    }}
-                    onMouseEnter={() => {
-                      if (!canHoverRef.current || open) return
-                      if (hoverTimer.current) clearTimeout(hoverTimer.current)
-                      hoverTimer.current = setTimeout(() => setOpenGroup(g.id), 110)
-                    }}
-                    onMouseLeave={() => {
-                      if (hoverTimer.current) clearTimeout(hoverTimer.current)
-                    }}
-                  >
-                    {g.label}
-                    {g.note && <span className="mg-note">{g.note}</span>}
-                  </button>
-
-                  <div className="mg-panel" id={`mg-${g.id}`} role="group" aria-label={g.label}>
-                    <div className="mg-panel-in">
-                      <ul className="mg-items">
-                        {g.items.map((item) => (
-                          <li key={item.label}>
-                            <NavLeaf item={item} onGo={() => setMenuOpen(false)} pathname={pathname} />
-                            {item.children && (
-                              <ul className="mg-sub">
-                                {item.children.map((c) => (
-                                  <li key={c.label}>
-                                    <NavLeaf item={c} onGo={() => setMenuOpen(false)} pathname={pathname} />
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
+                <div
+                  key={sec.id}
+                  id={`mn-panel-${sec.id}`}
+                  role="tabpanel"
+                  aria-labelledby={`mn-tab-${sec.id}`}
+                  hidden={!on}
+                  className="mn-panel"
+                >
+                  <ul className="mn-items">
+                    {sec.items.map((item) => {
+                      const openGroupLabel = item.group && item.group !== lastGroup
+                      if (item.group) lastGroup = item.group
+                      return (
+                        <li key={item.href + item.label}>
+                          {openGroupLabel && <p className="label mn-group">{item.group}</p>}
+                          <Link
+                            href={item.href}
+                            className={`mn-leaf ${pathname === item.href ? 'is-on' : ''}`}
+                            aria-current={pathname === item.href ? 'page' : undefined}
+                            onClick={() => setMenuOpen(false)}
+                            data-attr={`menu-link:${item.href}`}
+                          >
+                            {item.label}
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
                 </div>
               )
             })}
           </nav>
 
-          {/* Always visible, under the groups. */}
+          {/* Always visible, under the sections. */}
           <span
             className="mg-live"
             onMouseEnter={hoverCollapse}
@@ -1043,6 +1060,71 @@ export default function Navbar() {
           .mg-panel-in { overflow: hidden; }
 
           .mg-items,
+          /* ── sections ──────────────────────────────────────────
+             A row of five, and the open one's contents underneath. The
+             row is set in mono because it labels the panel rather than
+             being read as prose; the contents are Bricolage because they
+             are the names of things. */
+          .mn { display: flex; flex-direction: column; gap: 34px; }
+          /* Across the top of the whole panel, not inside the left
+             column — five section names will not sit in a 345px rail,
+             and the row is a header for both columns rather than for
+             one of them. */
+          .mn-tabs {
+            position: absolute;
+            top: 22px;
+            left: var(--gutter);
+            right: 84px;
+            z-index: 3;
+            list-style: none; margin: 0; padding: 0;
+            display: flex; flex-wrap: wrap; gap: 30px;
+          }
+          .mn-tab {
+            background: none; border: 0; padding: 4px 0; cursor: pointer;
+            font-family: var(--font-mono), monospace;
+            font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+            color: color-mix(in srgb, var(--contrast-text) 55%, transparent);
+            border-bottom: 1px solid transparent;
+            transition: color var(--dur-base) var(--ease),
+                        border-color var(--dur-base) var(--ease);
+          }
+          .mn-tab:hover { color: var(--contrast-text); }
+          .mn-tab.is-on {
+            color: var(--contrast-text);
+            border-bottom-color: var(--contrast-text);
+          }
+          .mn-tab:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
+
+          .mn-items { list-style: none; margin: 0; padding: 0; }
+          .mn-group {
+            margin: 26px 0 6px;
+            color: color-mix(in srgb, var(--contrast-text) 45%, transparent);
+          }
+          .mn-items > li:first-child .mn-group { margin-top: 0; }
+          .mn-leaf {
+            display: block;
+            padding: 7px 0;
+            font-family: var(--font-sans), system-ui, sans-serif;
+            font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+            line-height: 1.16; letter-spacing: -0.015em;
+            color: var(--contrast-text);
+            text-decoration: none;
+            transition: opacity var(--dur-base) var(--ease);
+          }
+          .mn-leaf:hover { opacity: 0.55; }
+          .mn-leaf.is-on { opacity: 0.55; }
+          .mn-leaf:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
+
+          /* The panel changes under the pointer, so it should arrive
+             rather than snap. */
+          .mn-panel[hidden] { display: none; }
+          .mn-panel { animation: mn-fade var(--dur-base) var(--ease-out); }
+          @keyframes mn-fade {
+            from { opacity: 0; transform: translateY(4px); }
+            to   { opacity: 1; transform: none; }
+          }
+          @media (prefers-reduced-motion: reduce) { .mn-panel { animation: none; } }
+
           .mg-sub { list-style: none; margin: 0; padding: 0; }
           /* Indented under the group heading, so the hierarchy reads
              without a rule or a bullet. */
@@ -1379,7 +1461,7 @@ export default function Navbar() {
             /* The panel logo is hidden at this width, so nothing sits
                above the nav but the close button — it can start higher
                than the marquee line it used to align to. */
-            top: 20px;
+            top: 84px;                    /* clears the section row above it */
             left: var(--gutter);          /* aligned with the panel's own gutter */
             bottom: 210px;                /* clears the utility icon stack */
             width: 345px;

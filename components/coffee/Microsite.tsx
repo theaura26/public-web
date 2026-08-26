@@ -1227,9 +1227,12 @@ export function Banner({
         .bn-h {
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 500;
-          font-size: clamp(28px, 3.4vw, 54px);
-          line-height: 1.14; letter-spacing: -0.03em;
-          color: #fff; margin: 0; max-width: 24ch;
+          /* The banner carries a title and a subtitle in one heading, so
+             it runs long — at 54px it filled the panel and read as the
+             page rather than as a way out of it. */
+          font-size: clamp(24px, 2.4vw, 38px);
+          line-height: 1.2; letter-spacing: -0.025em;
+          color: #fff; margin: 0; max-width: 30ch;
           text-wrap: pretty;
         }
         .bn-act { margin: var(--space-7) 0 0; }

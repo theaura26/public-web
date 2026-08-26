@@ -104,6 +104,18 @@ export default function AskAura() {
   const [past, setPast] = useState(false)
   const intro = opening(pathname ?? '/')
   const teaser = intro.prompts[tick % Math.max(intro.prompts.length, 1)] ?? 'Ask about the estates'
+  /* The question on its way out. Without it only the arriving line
+     moved and the old one simply blinked off, which reads as a swap
+     rather than a roll. */
+  const [leaving, setLeaving] = useState<string | null>(null)
+  const shownRef = useRef(teaser)
+  useEffect(() => {
+    if (shownRef.current === teaser) return
+    setLeaving(shownRef.current)
+    shownRef.current = teaser
+    const t = setTimeout(() => setLeaving(null), 460)
+    return () => clearTimeout(t)
+  }, [teaser])
 
   const panelRef = useRef<HTMLDivElement>(null)
   const logRef = useRef<HTMLDivElement>(null)
@@ -444,7 +456,8 @@ export default function AskAura() {
           aria-label="Ask Aura"
         >
           <span className="aa-launch-tick" aria-hidden>
-            <span key={tick} className="aa-launch-q">{teaser}</span>
+            {leaving && <span key={`out-${leaving}`} className="aa-launch-q is-out">{leaving}</span>}
+            <span key={teaser} className="aa-launch-q">{teaser}</span>
           </span>
         </button>
       )}
@@ -664,6 +677,16 @@ export default function AskAura() {
       )}
 
       <style jsx global>{`
+        /* Registered so the conic gradient's angle animates smoothly
+           instead of snapping between keyframes. Browsers without
+           @property simply hold the ring still, which still reads as an
+           outline. */
+        @property --aa-angle {
+          syntax: '<angle>';
+          initial-value: 0deg;
+          inherits: false;
+        }
+
         /* ── launcher ── */
         /* Closed, this is a chat bar rather than a button: the width of
            a place to type, showing one of the questions this page can
@@ -694,7 +717,7 @@ export default function AskAura() {
           display: flex; align-items: center; gap: 8px;
           min-height: 40px; padding: 0 18px;
           border-radius: 999px;
-          border: 1px solid rgba(255, 255, 255, 0.22);
+          border: 0;
           /* Solid black. Over a hero video, a white spread or an
              editorial page it is the same object every time, which a
              translucent ground could never be. */
@@ -711,13 +734,50 @@ export default function AskAura() {
           transform: translateX(-50%) translateY(18px);
           transition: transform var(--dur-slow) var(--ease-out),
                       opacity var(--dur-slow) var(--ease-out),
-                      border-color var(--dur-base) var(--ease);
+                      background var(--dur-base) var(--ease);
         }
         .aa-launch.is-in {
           opacity: 1;
           pointer-events: auto;
           transform: translateX(-50%) translateY(0);
         }
+
+        /* The outline is a light travelling round the pill rather than a
+           border sitting on it. A conic gradient is painted into a ring
+           — two masks, one clipped to the padding box, composited to
+           leave only the 1px edge — and the gradient's own angle is
+           animated, which needs @property to interpolate rather than
+           jump. Colours are the estate's: the brand orange, a leaf
+           green, a mist teal and a dusk violet, back to orange. */
+        .aa-launch::before {
+          content: '';
+          position: absolute; inset: 0;
+          border-radius: inherit;
+          padding: 1px;
+          background: conic-gradient(
+            from var(--aa-angle),
+            rgba(227, 113, 40, 0.95),
+            rgba(214, 196, 108, 0.9),
+            rgba(122, 176, 130, 0.85),
+            rgba(120, 178, 190, 0.9),
+            rgba(160, 140, 200, 0.85),
+            rgba(227, 113, 40, 0.95)
+          );
+          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask-composite: exclude;
+          opacity: 0.55;
+          transition: opacity var(--dur-base) var(--ease);
+          animation: aa-orbit 7s linear infinite;
+          pointer-events: none;
+        }
+        .aa-launch.is-in:hover::before,
+        .aa-launch.is-in:focus-visible::before { opacity: 1; }
+        @keyframes aa-orbit { to { --aa-angle: 360deg; } }
+
+        /* The text sits above the ring. */
+        .aa-launch-tick { position: relative; z-index: 1; }
         /* Hover is the same bar, lit: the ground lifts, the border
            brightens and the question comes up to full white. The width
            does not move — a control that resizes under the cursor makes
@@ -725,7 +785,6 @@ export default function AskAura() {
            already readable. */
         .aa-launch.is-in:hover,
         .aa-launch.is-in:focus-visible {
-          border-color: rgba(255, 255, 255, 0.55);
           background: #111;
           box-shadow: 0 14px 44px rgba(0, 0, 0, 0.34);
         }
@@ -735,15 +794,16 @@ export default function AskAura() {
 
         /* One line high and clipped, so a question leaving and the next
            arriving never change the height of the bar. */
+        /* Both questions occupy the same cell, so one can leave while
+           the other arrives without the bar changing height. */
         .aa-launch-tick {
           flex: 1 1 auto; min-width: 0;
-          position: relative;
-          display: flex; align-items: center;
-          /* One line high and clipped, so a question leaving and the next
-             arriving never change the height of the bar. */
+          display: grid;
+          align-items: center;
           height: 20px;
           overflow: hidden;
         }
+        .aa-launch-tick > * { grid-area: 1 / 1; }
         .aa-launch-q {
           display: block; width: 100%;
           position: relative; top: 0;
@@ -752,11 +812,19 @@ export default function AskAura() {
           color: rgba(255, 255, 255, 0.82);
           text-align: center;
           white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-          animation: aa-tick var(--dur-slow) var(--ease-out);
+          animation: aa-tick-in 420ms var(--ease-out) both;
         }
-        @keyframes aa-tick {
-          from { opacity: 0; transform: translateY(0.6em); }
-          to { opacity: 1; transform: translateY(0); }
+        /* Up and out, then up and in — both travel the same direction,
+           which is what makes it read as one line replacing another
+           rather than two unrelated fades. */
+        .aa-launch-q.is-out { animation: aa-tick-out 420ms var(--ease-out) both; }
+        @keyframes aa-tick-in {
+          from { opacity: 0; transform: translateY(0.75em); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes aa-tick-out {
+          from { opacity: 1; transform: translateY(0); }
+          to   { opacity: 0; transform: translateY(-0.75em); }
         }
         /* Heard, not seen. Kept in the layout rather than display:none,
            which some screen readers skip entirely. */
@@ -1248,6 +1316,8 @@ export default function AskAura() {
           .aa-launch { transition: none; }
           .aa-launch:hover { transform: translateX(-50%); }
           .aa-launch-q { animation: none; }
+          /* The ring holds still and stays lit, rather than travelling. */
+          .aa-launch::before { animation: none; opacity: 0.8; }
         }
 
         /* Agent view renders the page as plain text; a floating chat

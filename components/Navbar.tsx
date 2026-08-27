@@ -1053,7 +1053,12 @@ export default function Navbar() {
           }
           .mn-tab:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
 
-          .mn-items { list-style: none; margin: 0; padding: 0; }
+          /* Five pixels left of true. The items and the row above them
+             start on the same pixel — measured, both at 1632 — but the
+             items are set nearly three times larger, and larger type
+             carries more apparent side-bearing, so identical geometry
+             reads as an indent. Optical alignment, not geometric. */
+          .mn-items { list-style: none; margin: 0; padding: 0; margin-left: -5px; }
           /* A row that has a tier beneath it opens on hover, and on
              focus within, so the keyboard reaches it too. Grid rows
              animate from 0fr to 1fr, which is what lets the list push

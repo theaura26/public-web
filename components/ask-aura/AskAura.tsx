@@ -881,7 +881,7 @@ export default function AskAura() {
            reads as the panel behind it, at its own proportions. */
         .aa-mark {
           flex: none;
-          width: 19px;
+          width: 17px;
           height: auto;
           margin-left: 12px;
           display: block;

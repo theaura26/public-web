@@ -137,8 +137,8 @@ export function MicroNav() {
           {/* The CTA sits above the scroller: links pass under it. */}
           <div className="ln-end">
             <Link href={PAGE_HREF.experience} className="p2 ln-cta">
-              <span className="ln-cta-long">Aura Festival</span>
-              <span className="ln-cta-short">Festival</span>
+              <span className="ln-cta-long">Attend the Festival</span>
+              <span className="ln-cta-short">Attend</span>
             </Link>
           </div>
         </div>
@@ -215,7 +215,6 @@ export function MicroNav() {
           height: 56px;
           /* Fallback first: a solid bar every browser can draw. */
           background: rgba(10, 10, 10, 0.94);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.12);
           top: var(--nav-h);
           opacity: 0; pointer-events: none;
           transform: translateY(calc(-1 * var(--nav-h)));
@@ -1419,7 +1418,7 @@ export function ReserveBanner() {
           of your own, and we build it and ship it under your name.
         </p>
         <p className="rb-act rb-al">
-          <ArrowLink href={PAGE_HREF.experience} tone="ink">Come to the Festival</ArrowLink>
+          <ArrowLink href={PAGE_HREF.experience} tone="ink">Attend the Festival</ArrowLink>
         </p>
       </div>
       <style jsx>{`

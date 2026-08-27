@@ -32,22 +32,22 @@ export const CATEGORIES: Category[] = [
   {
     id: 'activities',
     label: 'Activities',
-    lede: 'The parts of the estate you can stand inside — residencies, stays, and the work that happens with visitors in the room.',
+    lede: 'Three ways to be here rather than read about it — an invited residency, the studios, and the days the estate opens to people who are not us.',
   },
   {
     id: 'biodynamic',
     label: 'Biodynamic',
-    lede: 'The practice: preparations buried and exhumed, a herd that feeds the ground, and a calendar older than the written word.',
+    lede: 'Preparations buried and exhumed on a calendar, fourteen numbered pits, and a herd that makes the fertility the ground is fed with.',
   },
   {
     id: 'biodiversity',
     label: 'Biodiversity',
-    lede: 'Four storeys of canopy and everything living in them. What the estate shelters, and what shelters the estate.',
+    lede: 'Four storeys of canopy across 150 acres, and the count of what lives in them — earthworms quarterly, light in lux, dead wood by decay class.',
   },
   {
     id: 'labs',
     label: 'Labs',
-    lede: 'Where the claims get tested — ferment logs, colony counts, cupping scores, and the numbers that decide when a tank comes off.',
+    lede: 'Where a claim gets tested. Ferment logs at fifteen-minute intervals, colony counts before and after, and the number that decides when a tank comes off.',
   },
   /* The menu named these five long before this file did, so they
      resolved to stubs and had to be marked coming-soon in the nav while
@@ -56,22 +56,22 @@ export const CATEGORIES: Category[] = [
   {
     id: 'animals',
     label: 'Animals',
-    lede: 'Fifty-two cattle, the insects a plantation forgets to house, and the pollinators nobody has counted yet.',
+    lede: 'Fifty-two Malnad Gidda carrying a number each, the insects a plantation forgets to house, and the pollinators nobody has counted yet.',
   },
   {
     id: 'land-ecology',
     label: 'Land & Ecology',
-    lede: 'The ground itself — what grows on it, what was here before the coffee, and what is being made room for again.',
+    lede: 'Red laterite at 3,600 ft, forest islands built inside the planting, and six introduced plants being taken back out of the understorey.',
   },
   {
     id: 'art-culture',
     label: 'Art & Culture',
-    lede: 'What the estate makes when it is not farming, and the beliefs it keeps alongside the measurements.',
+    lede: 'Six studios, an invited residency, and the lamp lit at the Gau Angan every morning before anyone starts work.',
   },
   {
     id: 'coffee-fermentation',
     label: 'Coffee & Fermentation',
-    lede: 'One harvest, many lots, and the hours of controlled decay that decide what ends up in the cup.',
+    lede: 'One harvest split into many lots, and the hours of controlled decay — stopped at pH 4.2 — that decide what reaches the cup.',
   },
   {
     id: 'tech-robotics',

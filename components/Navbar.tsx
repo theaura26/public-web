@@ -37,6 +37,13 @@ const ARTICLES: Article[] = [
   // "COMING SOON" placeholders. Mirror any change in lib/journals.ts.
   //
   // ── New editorials + places (reworked here) ──
+  // The masthead of the coffee microsite, and the only tile that is
+  // drawn rather than photographed. Composed from the same nine glyphs
+  // and the same ring geometry the live circle is built from, so the
+  // card and the thing it opens are the same object — see
+  // components/coffee/RemarkableCircle.tsx. White among photographs on
+  // purpose: it is a diagram, and it should not pretend to be a place.
+  { href: '/regenerative-coffee', title: 'The Remarkable Circle',         size: 'lg', img: '/coffee/aura-remarkable-circle-card.svg' },
   { href: '/mudigere',       title: 'Guests of the mountain.',            size: 'lg', img: '/aura-mudigere.jpg', video: '/aura-mudigere.mp4' },
   { href: '/herd',           title: 'Ecosystem Engineers',                size: 'sm', img: '/herd/images/aura-relationship2.jpg', video: '/herd/videos/aura-relationship2.mp4' },
   { href: '/circular',       title: 'Circular Intelligence',              size: 'sm', img: '/circular/images/aura-shed.jpg', video: '/circular/videos/aura-shed.mp4' },
@@ -1541,7 +1548,11 @@ export default function Navbar() {
           .menu-right {
             position: absolute;
             top: 0;
-            left: calc(var(--gutter) + 345px + clamp(32px, 4vw, 80px));
+            /* Clear of the tab row, not just of the 345px rail. The row
+               is a header for both columns and floats over this lane;
+               its four names run about 422px from the gutter, so a gap
+               sized to the rail alone puts a tile behind the last one. */
+            left: calc(var(--gutter) + 345px + clamp(150px, 12vw, 210px));
             right: var(--gutter);
             bottom: 0;
             overflow-y: auto;

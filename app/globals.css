@@ -1231,13 +1231,20 @@ a:hover, button:hover, [role="button"]:hover {
 ═══════════════════════════════════════════ */
 
 /* H1 — page display */
+/* The display heading, one spec. This used to be clamp(44,9vw,88) at
+   -0.06em while HeroBanner and JournalHero — the opener on every journal
+   and field note — used clamp(48,7.2vw,106) at -0.03em. Both were live
+   on pages sitting next to each other in the same menu, and on a phone
+   both clamp to their minimum, so the split showed as 48 against 44.
+   The banner's is the one the site actually looks like, so the banner's
+   is the one that survives. Recorded in DESIGN-SYSTEM.md section 12b. */
 h1 {
   font-family: var(--font-grotesque);
   font-weight: 600;
   text-transform: uppercase;
-  font-size: clamp(44px, 9vw, 88px);
-  line-height: 1.02;
-  letter-spacing: -0.06em;
+  font-size: clamp(48px, 7.2vw, 106px);
+  line-height: 1;
+  letter-spacing: -0.03em;
   color: var(--text);
   text-wrap: balance;
   font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;

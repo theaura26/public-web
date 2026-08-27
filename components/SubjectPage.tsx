@@ -1,5 +1,6 @@
 'use client'
 
+import { RelatedLane } from '@/components/Swimlanes'
 import {
   HeroBanner,
   TwoCol,
@@ -51,6 +52,31 @@ export type Subject = {
       reader looks up from a list of numbers before being told what the
       numbers do not cover. */
   breaker?: { caption: string; alt: string }
+  /** The rest of the set, offered at the foot. */
+  siblings?: { href: string; title: string; description: string; status: 'live' | 'soon' }[]
+  siblingsLabel?: string
+}
+
+/* A practice line may point at a field note, written as [label](/href).
+   Those open in a new tab: a reader is midway through an argument here,
+   and taking the page away from them to show a supporting note loses
+   the thread they were following. */
+const LINK = /\[([^\]]+)\]\(([^)]+)\)/g
+
+function withLinks(line: string) {
+  const out: React.ReactNode[] = []
+  let last = 0
+  for (const m of line.matchAll(LINK)) {
+    if (m.index! > last) out.push(line.slice(last, m.index))
+    out.push(
+      <a key={m.index} href={m[2]} target="_blank" rel="noopener noreferrer">
+        {m[1]}
+      </a>,
+    )
+    last = m.index! + m[0].length
+  }
+  if (last < line.length) out.push(line.slice(last))
+  return out
 }
 
 export default function SubjectPage({
@@ -72,9 +98,9 @@ export default function SubjectPage({
       />
 
       <TwoCol id="practice" heading={s.lede}>
-        <p className="p1">{lead}</p>
+        <p className="p1">{withLinks(lead)}</p>
         {rest.map((line) => (
-          <p className="p2" key={line}>{line}</p>
+          <p className="p2" key={line}>{withLinks(line)}</p>
         ))}
       </TwoCol>
 
@@ -109,15 +135,19 @@ export default function SubjectPage({
       )}
 
       <TwoCol id="open" heading="What is not settled">
-        <p className="p1">{s.open[0]}</p>
+        <p className="p1">{withLinks(s.open[0])}</p>
         {s.open.slice(1).map((line) => (
-          <p className="p2" key={line}>{line}</p>
+          <p className="p2" key={line}>{withLinks(line)}</p>
         ))}
       </TwoCol>
 
       {/* No 'read further' list and no prev/next: Continue already
           offers the next reads, and a second set of links under it was
           two footers arguing about where to go. */}
+      {!!s.siblings?.length && (
+        <RelatedLane label={s.siblingsLabel ?? 'Read on'} items={s.siblings} />
+      )}
+
       <Continue currentHref={`${basePath}/${s.slug}`} />
     </>
   )

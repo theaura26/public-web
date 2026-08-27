@@ -73,7 +73,3 @@ export const FROM_AURA: Lane[] = [
   },
 ]
 
-/** Every href From Aura owns, for the stub routes. */
-export const FROM_AURA_SLUGS = FROM_AURA.flatMap((l) =>
-  l.items.map((i) => i.href.replace('/from-aura/', '')),
-)

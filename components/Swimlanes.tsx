@@ -2,7 +2,10 @@
 
 import Link from 'next/link'
 import { CATEGORIES, notesIn, type NoteEntry } from '@/lib/field-notes'
-import { FROM_AURA } from '@/lib/from-aura'
+/* The shape lives with the data that defines it, and is re-exported so
+   a caller can type its own lanes without reaching past this file. */
+import { FROM_AURA, type Lane } from '@/lib/from-aura'
+export type { Lane }
 
 /* ── Lanes ────────────────────────────────────────────────────────
    A section's whole contents, one lane per group, each scrolling
@@ -16,12 +19,7 @@ import { FROM_AURA } from '@/lib/from-aura'
    cross-listed note does exactly that.
 */
 
-export type Lane = {
-  id: string
-  label: string
-  lede: string
-  items: NoteEntry[]
-}
+
 
 function Card({ note }: { note: NoteEntry }) {
   const inner = (
@@ -44,58 +42,29 @@ function Card({ note }: { note: NoteEntry }) {
   )
 }
 
-export function Swimlanes({
-  title, lede, lanes, ratio = '16 / 9',
-}: { title: string; lede: string; lanes: Lane[]; ratio?: string }) {
+
+/* The lane's styles, so both the index pages and a single strip on a
+   product page can render a lane without either owning the CSS. */
+function LaneStyles() {
   return (
-    <main className="sw" style={{ ['--lane-ratio' as string]: ratio }}>
-      <div className="section-w sw-head">
-        <h1 className="sw-h">{title}</h1>
-        <p className="sw-lede">{lede}</p>
-      </div>
-
-      {lanes.map((cat) => {
-        const notes = cat.items
-        if (!notes.length) return null
-        return (
-          <section className="lane" key={cat.id} aria-labelledby={`lane-${cat.id}`}>
-            <div className="section-w lane-bar">
-              <h2 className="lane-h" id={`lane-${cat.id}`}>{cat.label}</h2>
-            </div>
-            {/* The rail belongs to the wrapper. A narrow max-width on
-                the same element that carries section-w's padding fights
-                it, and the lede lands 40px left of every other line. */}
-            <div className="section-w">
-              <p className="lane-lede">{cat.lede}</p>
-            </div>
-
-            {/* Full-bleed, so the row runs off the right edge instead of
-                stopping at the rail. The track's own padding reproduces
-                the rail on the left so the first card still starts on
-                the heading's line. */}
-            <div className="lane-bleed">
-              <div className="lane-scroll">
-                <div className="lane-track">
-                  {notes.map((n) => <Card key={`${cat.id}-${n.href}`} note={n} />)}
-                </div>
-              </div>
-              {/* backdrop-filter inline: styled-jsx drops it from emitted
-                  rules on this build, the same way it does for the menu
-                  vignette and the homepage slider. */}
-              <div
-                className="lane-fade"
-                aria-hidden
-                style={{ backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
-              />
-            </div>
-          </section>
-        )
-      })}
-
       <style jsx global>{`
         /* Global, not scoped: styled-jsx cannot put its scope class on a
            <Link>, and the cards are Links. Every selector is therefore
            nested under .sw by hand so nothing escapes this page. */
+        /* A single lane at the foot of another page carries none of the
+           index page's own framing. */
+        .sw.is-strip {
+          min-height: 0;
+          padding: var(--section-gap) 0 var(--space-8);
+        }
+        /* The lane already pads under its card titles, and the strip pads
+           under the lane, and the footer pads above itself. Three paddings
+           stacked read as an empty screen, so the innermost one stands
+           down inside a strip. */
+        .sw.is-strip .lane-scroll { padding-bottom: 0; }
+        @media (max-width: 768px) {
+          .sw.is-strip { padding: var(--space-9) 0 var(--space-7); }
+        }
         .sw {
           background: var(--bg); color: var(--text);
           padding: calc(var(--nav-h) + var(--head-top)) 0 var(--section-gap);
@@ -268,7 +237,95 @@ export function Swimlanes({
           .sw .lane-lede { max-width: 100%; }
         }
       `}</style>
+  )
+}
+
+export function Swimlanes({
+  title, lede, lanes, ratio = '16 / 9',
+}: { title: string; lede: string; lanes: Lane[]; ratio?: string }) {
+  return (
+    <main className="sw" style={{ ['--lane-ratio' as string]: ratio }}>
+      <div className="section-w sw-head">
+        <h1 className="sw-h">{title}</h1>
+        <p className="sw-lede">{lede}</p>
+      </div>
+
+      {lanes.map((cat) => {
+        const notes = cat.items
+        if (!notes.length) return null
+        return (
+          <section className="lane" key={cat.id} aria-labelledby={`lane-${cat.id}`}>
+            <div className="section-w lane-bar">
+              <h2 className="lane-h" id={`lane-${cat.id}`}>{cat.label}</h2>
+            </div>
+            {/* The rail belongs to the wrapper. A narrow max-width on
+                the same element that carries section-w's padding fights
+                it, and the lede lands 40px left of every other line. */}
+            <div className="section-w">
+              <p className="lane-lede">{cat.lede}</p>
+            </div>
+
+            {/* Full-bleed, so the row runs off the right edge instead of
+                stopping at the rail. The track's own padding reproduces
+                the rail on the left so the first card still starts on
+                the heading's line. */}
+            <div className="lane-bleed">
+              <div className="lane-scroll">
+                <div className="lane-track">
+                  {notes.map((n) => <Card key={`${cat.id}-${n.href}`} note={n} />)}
+                </div>
+              </div>
+              {/* backdrop-filter inline: styled-jsx drops it from emitted
+                  rules on this build, the same way it does for the menu
+                  vignette and the homepage slider. */}
+              <div
+                className="lane-fade"
+                aria-hidden
+                style={{ backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
+              />
+            </div>
+          </section>
+        )
+      })}
+
+      <LaneStyles />
     </main>
+  )
+}
+
+/**
+ * One lane on its own, for the foot of a page that is not an index —
+ * a product page showing more of the store. Same markup and same styles
+ * as a lane inside Swimlanes, wrapped in .sw so those styles apply.
+ */
+export function RelatedLane({
+  label, lede, items, ratio = '16 / 9',
+}: { label: string; lede?: string; items: NoteEntry[]; ratio?: string }) {
+  if (!items.length) return null
+  return (
+    <section className="sw is-strip" style={{ ['--lane-ratio' as string]: ratio }}>
+      <div className="lane">
+        <div className="section-w lane-bar">
+          <h2 className="lane-h">{label}</h2>
+        </div>
+        {lede && (
+          <div className="section-w"><p className="lane-lede">{lede}</p></div>
+        )}
+        <div className="lane-bleed">
+          <div className="lane-scroll">
+            <div className="lane-track">
+              {items.map((n) => <Card key={n.href} note={n} />)}
+            </div>
+          </div>
+          <div
+            className="lane-fade"
+            aria-hidden
+            style={{ backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
+          />
+        </div>
+      </div>
+      <LaneStyles />
+    </section>
   )
 }
 

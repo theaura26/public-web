@@ -36,9 +36,19 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const { slug } = await params
   const d = disciplineBySlug(slug)
   if (!d) notFound()
+  /* The other eight, in ring order starting from this one — so a reader
+     leaves along the circle rather than back to an index. */
+  const i = DISCIPLINES.indexOf(d)
+  const siblings = [...DISCIPLINES.slice(i + 1), ...DISCIPLINES.slice(0, i)].map((x) => ({
+    href: `/regenerative-life/${x.slug}`,
+    title: x.label,
+    description: x.lede,
+    status: 'live' as const,
+  }))
+
   return (
     <SubjectPage
-      subject={d}
+      subject={{ ...d, siblings, siblingsLabel: 'The rest of the Regenerative Life' }}
       basePath="/regenerative-life"
     />
   )

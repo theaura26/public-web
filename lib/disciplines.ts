@@ -99,6 +99,8 @@ export const DISCIPLINES: Discipline[] = [
     plate: { type: 'Process · respiration sampling at 0–15 cm', caption: 'Read monthly, by the NaOH method' },
     quote: 'Coffee does not begin with coffee. It begins about a metre underground.',
     practice: [
+      'A respiration reading is a measure of how much is alive down there: the more the soil breathes, the more biology is working in it. Taken at the same depth on the same schedule, it becomes a trend rather than a number.',
+      'Retesting a block ninety days after an application, against the batch number that went on it, is what turns a preparation from an act of faith into a result somebody can check.',
       'Red laterite, held between pH 6.0 and 6.5.',
       'Soil respiration is read monthly by the NaOH method, at 0–15 cm.',
       'Every block is retested ninety days after a preparation goes on it, against the batch that was applied.',
@@ -125,6 +127,8 @@ export const DISCIPLINES: Discipline[] = [
     plate: { type: 'Process · a pH reading during ferment', caption: 'Every fifteen minutes, until it reaches 4.2' },
     quote: 'The ferment is stopped by a number, not by the clock.',
     practice: [
+      'Trichoderma and Pseudomonas are the two counted by name. Both are antagonists of common root and leaf pathogens, so their presence in a batch is the nearest thing to a reading of what that preparation will do once it reaches a block.',
+      'A block is plated again ninety days after an application and cross-referenced to the batch that went on it, which is the only way to know whether anything survived the journey from barrel to soil.',
       'Every preparation batch is plated before and after: colony counts, Trichoderma, Pseudomonas.',
       'Mycorrhizal colonisation is assessed once a year.',
       'In the wet mill the ferment is tracked hour by hour — pH every fifteen minutes, temperature three times a day, Brix at the start, the middle and the end. It ends at pH 4.2.',
@@ -153,9 +157,15 @@ export const DISCIPLINES: Discipline[] = [
     hero: { type: 'Detail · a major cut sealed with CPP and turmeric', caption: 'What goes on the wound, on the day it is made' },
     plate: { type: 'Portrait · the block after pruning', caption: 'No synthetic pesticides have gone onto these 150 acres' },
     practice: [
+      'The logic is preventive rather than curative. A plant standing on ground with an active microbial community, cut cleanly and sealed the same day, is a harder plant to infect \u2014 so the work happens before there is anything to treat.',
       'No synthetic pesticides or chemicals go onto the 150 acres.',
       'Trichoderma and Pseudomonas — both antagonists of common root and leaf pathogens — are counted in every preparation batch, so what reaches a block is known before it gets there.',
       'Every major canopy cut is sealed with cow pat preparation and turmeric.',
+    ],
+    record: [
+      { value: 'Zero', label: 'synthetic pesticides across 150 acres' },
+      { value: 'Every batch', label: 'counted for Trichoderma and Pseudomonas' },
+      { value: 'Every cut', label: 'sealed with cow pat preparation and turmeric' },
     ],
     open: [
       'This is the thinnest record of the nine. The practice is real and the inputs are logged, but there is no published disease-incidence protocol yet — nothing that counts occurrence block by block over a season.',
@@ -203,6 +213,7 @@ export const DISCIPLINES: Discipline[] = [
     hero: { type: 'Wide · monsoon arriving over the estate', caption: 'Forty to a hundred inches a year, logged at 3,600 ft' },
     plate: { type: 'Detail · the weather station', caption: 'Rainfall, temperature and humidity — the part of the water story that is written down' },
     practice: [
+      'A four-storey canopy is the estate\u2019s main water instrument. It breaks the fall of monsoon rain before it reaches bare soil, slows what runs off, and shades ground that would otherwise give its moisture back to the air by noon.',
       'A weather station at 3,600 ft logs rainfall, temperature and humidity.',
       'Water is measured where it meets the coffee: total dissolved solids are logged for every lot that goes through the wet mill.',
       'Canopy is managed for light, which is also what governs how much rain reaches the ground and how fast it leaves again.',
@@ -257,6 +268,8 @@ export const DISCIPLINES: Discipline[] = [
     hero: { type: 'Process · Jeevamrit brewing in the shed', caption: 'Volume planned backwards from the calendar, for 150 acres' },
     plate: { type: 'Detail · the five preparations', caption: 'Jeevamrit, Panchgavya, Beejamrit, cow pat pit, Kunapjal' },
     practice: [
+      'Jeevamrit is a microbial culture brewed from dung, urine, jaggery, pulse flour and a handful of undisturbed soil. Beejamrit treats seed before it goes in. Panchgavya is the five cow products together. Kunapjal is the old fermented liquid manure. Cow pat pit is the composted preparation, matured ninety days.',
+      'All five are brewed from the estate\u2019s own herd, which is the reason the herd is kept indigenous and kept on the land rather than bought in by the tanker.',
       'Jeevamrit, Panchgavya, Beejamrit, cow pat pit and Kunapjal are brewed on the estate from the estate’s own herd.',
       'Volume is planned backwards from the biodynamic calendar for 150 acres, and stock registers track every batch against that plan.',
       'The same gate applies as to everything else: tested before and after, held back if it fails.',
@@ -264,6 +277,7 @@ export const DISCIPLINES: Discipline[] = [
     record: [
       { value: '154,000 L', label: 'of Jeevamrit a year', note: 'Volume planned against the calendar; actual against planned is being confirmed.' },
       { value: '5', label: 'preparations in the Vedic set' },
+      { value: '150', label: 'acres the calendar is planned for' },
     ],
     open: [
       'Actual volume against planned, and the year it belongs to, are being confirmed before either figure is stated as a result.',

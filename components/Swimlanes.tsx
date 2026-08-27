@@ -126,7 +126,7 @@ export function Swimlanes({
            it takes the label role rather than the body one. */
         .sw .sw-lede {
           font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; line-height: normal;
-          margin: 0; max-width: 56ch;
+          margin: 0; max-width: 42ch;
           color: var(--text-muted);
         }
 
@@ -139,12 +139,16 @@ export function Swimlanes({
           padding-bottom: var(--space-4);
           border-bottom: 1px solid var(--border);
         }
+        /* The lane heading stays h3. The cards beneath it stepped down
+           to p1 so a card title no longer competes with the name of the
+           lane it sits in. */
         .sw .lane-h {
-          font-family: var(--font-grotesque), sans-serif; font-weight: 400; font-size: clamp(24px, 3vw, 32px); line-height: 1.15; letter-spacing: -0.03em;
+          font-family: var(--font-grotesque), sans-serif; font-weight: 400;
+          font-size: clamp(24px, 3vw, 32px); line-height: 1.15; letter-spacing: -0.03em;
           margin: 0;
         }
         .sw .lane-lede {
-          font-family: var(--font-sans); font-size: 14px; line-height: 1.6; letter-spacing: normal; color: var(--text-body);
+          font-family: var(--font-sans); font-size: 16px; line-height: 1.55; letter-spacing: normal; color: var(--text-body);
           margin: 0; max-width: 60ch;
         }
 
@@ -164,7 +168,6 @@ export function Swimlanes({
           width: clamp(64px, 12vw, 200px);
           pointer-events: none;
           z-index: 2;
-          background: linear-gradient(to right, transparent, var(--bg) 82%);
           -webkit-mask-image: linear-gradient(to right, transparent, #000 55%);
           mask-image: linear-gradient(to right, transparent, #000 55%);
         }
@@ -216,7 +219,7 @@ export function Swimlanes({
         }
 
         .sw .lane-t {
-          font-family: var(--font-grotesque), sans-serif; font-weight: 400; font-size: clamp(24px, 3vw, 32px); line-height: 1.15; letter-spacing: -0.03em;
+          font-family: var(--font-sans); font-size: 16px; line-height: 1.55; letter-spacing: normal;
           transition: color var(--dur-base) var(--ease);
           color: var(--text);
         }
@@ -229,6 +232,18 @@ export function Swimlanes({
 
         @media (prefers-reduced-motion: reduce) {
           .sw .lane-plate img { transition: none; }
+        }
+      
+        /* Mobile. A lane still scrolls sideways — that gesture is the
+           point and works better on a phone than on a mouse — but a
+           461px card on a 375px screen leaves no room to see there is
+           another one behind it. */
+        @media (max-width: 768px) {
+          .sw { gap: clamp(44px, 6vh, 64px); }
+          .sw .lane-card { width: min(78vw, 320px); }
+          .sw .lane-fade { width: clamp(40px, 10vw, 72px); }
+          .sw .lane { gap: var(--space-3); }
+          .sw .sw-lede, .sw .lane-lede { max-width: 100%; }
         }
       `}</style>
     </main>

@@ -5,8 +5,11 @@ import {
   OneCol,
   TwoCol,
   PullQuote,
+  DataGrid,
+  DataCard,
   Placeholder,
   Portrait,
+  ScrollHighlight,
   Continue,
 } from '@/components/article/Article'
 
@@ -83,6 +86,37 @@ export default function BugHotelsPage() {
         alt="Drilled logs of varied bore, mounted in the block"
         caption="The holes a managed landscape stops producing"
       />
+
+      <TwoCol id="record" heading="Four things worth writing down.">
+        <p className="p1">
+          Because a hotel is a fixed structure in a known place, the same four questions can be
+          asked of it season after season, and the answers can be compared rather than
+          remembered.
+        </p>
+        <DataGrid>
+          <DataCard value="Who">
+            Which organisms use the structures at all, and which return.
+          </DataCard>
+          <DataCard value="Which materials">
+            Whether one bore size or one timber is preferred over another, given the choice.
+          </DataCard>
+          <DataCard value="When">
+            How occupancy moves through the year — nesting, resting, overwintering.
+          </DataCard>
+          <DataCard value="Where">
+            How any of it relates to the vegetation immediately around a particular hotel.
+          </DataCard>
+        </DataGrid>
+        <p className="p2">
+          None of that requires an entomologist standing in the block every week. It requires the
+          structure to stay where it is and somebody to look at it on a schedule, which is a far
+          more realistic thing to ask of a working estate.
+        </p>
+      </TwoCol>
+
+      <ScrollHighlight>
+        {`Make room for the small lives\n   that keep the large system alive.`}
+      </ScrollHighlight>
 
       <TwoCol id="layers" heading="Not a programme on its own.">
         <p className="p1">

@@ -7,6 +7,7 @@ import {
   PullQuote,
   Placeholder,
   Portrait,
+  ScrollHighlight,
   Continue,
 } from '@/components/article/Article'
 
@@ -77,6 +78,10 @@ export default function LandSpiritSoulPage() {
         alt="The diya at the Gau Angan, lit with cow ghee"
         caption="What the cow gave, offered back to her as light"
       />
+
+      <ScrollHighlight>
+        {`The diya brings light.\n   The prayer brings intention.\n   The cow gives nourishment.\n   The Gaushala is the care owed back.`}
+      </ScrollHighlight>
 
       <TwoCol id="all-life" heading="Not only about the cows.">
         <p className="p1">

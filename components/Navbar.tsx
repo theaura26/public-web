@@ -72,11 +72,11 @@ const ARTICLES: Article[] = [
   /* Commissioned, not yet written. No image on purpose — these render
      on a flat grey plate rather than borrowing a photograph that is
      not theirs. */
-  { href: '/cows-of-aura',    title: 'Cows of Aura',                       size: 'sm', comingSoon: true },
-  { href: '/bug-hotels',      title: 'Bug Hotels',                         size: 'sm', comingSoon: true },
-  { href: '/pollinators',     title: 'Pollinators',                        size: 'lg', comingSoon: true },
-  { href: '/forest-islands',  title: 'Forest Islands',                     size: 'lg', comingSoon: true },
-  { href: '/spirit-prayer',   title: 'Spirit & Prayer',                    size: 'sm', comingSoon: true },
+  { href: '/cows-of-aura', title: 'Cows of Aura', size: 'sm', img: '/aura-placeholder.svg' },
+  { href: '/bug-hotels', title: 'Bug Hotels', size: 'sm', img: '/aura-placeholder.svg' },
+  { href: '/pollinators', title: 'Pollinators', size: 'lg', img: '/aura-placeholder.svg' },
+  { href: '/forest-islands', title: 'Forest Islands', size: 'lg', img: '/aura-placeholder.svg' },
+  { href: '/land-spirit-soul', title: 'Land, Spirit, Soul',                size: 'sm', img: '/aura-placeholder.svg' },
 ]
 
 /* ── The menu's information architecture ──────────────────────────
@@ -1674,24 +1674,48 @@ export default function Navbar() {
 
             /* Left nav column — fixed, stacked vertically below the top bar */
             .menu-left {
-              top: 88px;
+              top: 148px;
               left: 24px;
-              /* The accordion needs room the five flat links did not —
-                 "Regenerative Coffee" alone is wider than 140px. */
-              width: 260px;
+              right: 24px;
+              /* Full width now that the tile lane is gone from this
+                 breakpoint — the 260px rail existed to leave room for it. */
+              width: auto;
               bottom: 190px;
               overflow-y: auto;
               z-index: 3;
             }
 
-            /* Right tile feed — scrolls; pushed further right for breathing room */
-            .menu-right {
-              top: 0;
-              left: calc(260px + 24px + 72px);
-              right: 24px;
-              bottom: 0;
-              padding: 88px 0 80px;
+            /* ── the menu on a phone ──────────────────────────────
+               Two columns do not fit. The rail needs 260px and the tab
+               row needs about 420px, so on a 375px screen they were
+               drawing on top of each other and the tile lane had a
+               sliver left over.
+
+               So: one column. The tabs sit below the logo in a row that
+               scrolls sideways — the same gesture as the coffee
+               microsite's nav — and the tile feed is gone entirely. A
+               phone menu is for getting somewhere, and eighteen
+               thumbnails in a 90px gutter helped nobody find anything. */
+            .mn-tabs {
+              top: 76px;
+              left: 0; right: 0;
+              padding: 0 24px 14px;
+              flex-wrap: nowrap;
+              gap: 22px;
+              overflow-x: auto;
+              -webkit-overflow-scrolling: touch;
+              scrollbar-width: none;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+              /* The row dissolves at the right edge rather than being
+                 chopped, so it reads as scrollable. */
+              -webkit-mask-image: linear-gradient(to right, #000 84%, transparent 100%);
+              mask-image: linear-gradient(to right, #000 84%, transparent 100%);
             }
+            .mn-tabs::-webkit-scrollbar { display: none; }
+            .mn-tab { white-space: nowrap; }
+
+            .menu-right { display: none; }
+            :global(.tile-feed-vignette) { display: none; }
             .tile-feed {
               gap: 48px;
             }
@@ -1736,11 +1760,14 @@ export default function Navbar() {
             :global(.menu-logo) { top: 16px; left: var(--gutter); }
             :global(.menu-close) { top: 16px; right: var(--gutter); }
 
+            /* Below the tab row, and the full width of the panel — the
+               220px rail existed to leave room for a tile lane that no
+               longer renders at this breakpoint. */
             .menu-left {
-              top: 76px;
+              top: 148px;
               left: var(--gutter);
-              right: auto;
-              width: 220px;
+              right: var(--gutter);
+              width: auto;
               bottom: 170px;
               overflow-y: auto;
             }
@@ -1749,20 +1776,7 @@ export default function Navbar() {
               gap: 14px !important;
             }
 
-            .menu-right {
-              top: 0;
-              /* Original phone offset (no shift). The previous +60 px
-                 nudge shrank the column too much, squashing the
-                 cards — left at the pre-shift position so tiles
-                 keep their previous pixel sizes. */
-              left: calc(var(--gutter) + 220px + 24px);
-              right: var(--gutter);
-              bottom: 0;
-              /* Match HOME's top edge in the left rail (menu-left top: 76px)
-                 so the first tile starts on the same baseline as the first
-                 nav link. */
-              padding: 76px 0 100px;
-            }
+            .menu-right { display: none; }
             /* Keep the inline width-% per tile so each journal renders at
                its own ARTICLES.w * 0.85% — varied widths give the feed its
                editorial rhythm. We just override the original aspect / radius. */

@@ -9,6 +9,7 @@ import {
   DataCard,
   Placeholder,
   Portrait,
+  ScrollHighlight,
   Continue,
 } from '@/components/article/Article'
 
@@ -86,6 +87,10 @@ export default function ForestIslandsPage() {
       <PullQuote>
         A compost heap is built to be taken away. This one is built to stay.
       </PullQuote>
+
+      <ScrollHighlight>
+        {`Organic matter.\n   Decomposition.\n   Biological activity.\n   Nutrient cycling.\n   Habitat.`}
+      </ScrollHighlight>
 
       <TwoCol id="monitoring" heading="Also an experiment.">
         <p className="p1">

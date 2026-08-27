@@ -144,7 +144,6 @@ export function InfiniteArticleSlider() {
           width: clamp(64px, 12vw, 200px);
           pointer-events: none;
           z-index: 2;
-          background: linear-gradient(to right, transparent, var(--bg) 82%);
           -webkit-mask-image: linear-gradient(to right, transparent, #000 55%);
           mask-image: linear-gradient(to right, transparent, #000 55%);
         }

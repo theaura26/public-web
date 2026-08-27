@@ -1,7 +1,10 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'The Reason',
+  /* A default plus a template, not a bare string: a bare title here
+     leaves /reason/[slug] resolving to 'Agroculture — The Reason' with
+     no brand on the end, while every other section keeps it. */
+  title: { default: 'The Reason', template: '%s — Aura' },
   description: 'The story behind Aura — why we chose the regenerative path, thinking in generations instead of quarters.',
   alternates: { canonical: '/reason' },
   openGraph: {

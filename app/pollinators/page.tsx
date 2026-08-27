@@ -9,6 +9,7 @@ import {
   DataCard,
   Placeholder,
   Portrait,
+  ScrollHighlight,
   Continue,
 } from '@/components/article/Article'
 
@@ -103,6 +104,10 @@ export default function PollinatorsPage() {
           flowers, that is a shorter menu, available for fewer months.
         </p>
       </TwoCol>
+
+      <ScrollHighlight>
+        {`Space.\n   Light.\n   Regeneration.\n   Diversity.\n   The ground the next generation starts in.`}
+      </ScrollHighlight>
 
       <Placeholder
         type="Wide · cleared understorey with native regeneration"

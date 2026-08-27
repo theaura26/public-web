@@ -9,6 +9,7 @@ import {
   DataCard,
   Placeholder,
   Portrait,
+  ScrollHighlight,
   Continue,
 } from '@/components/article/Article'
 
@@ -66,6 +67,10 @@ export default function CowsOfAuraPage() {
         type="Detail · the register open on a field tablet"
         caption="One animal per row, nine mandatory fields, and a number issued once"
       />
+
+      <ScrollHighlight>
+        {`Fifty-two animals.\n   Fifty-two rows.\n   One number each, issued once.`}
+      </ScrollHighlight>
 
       <TwoCol id="role" heading="Every animal has a job written down.">
         <p className="p1">

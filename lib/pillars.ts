@@ -40,10 +40,16 @@ export const PILLARS: Pillar[] = [
     plate: { type: 'Detail · sensor and leaf in one frame', caption: 'Three intelligences: machine, human, and the oldest one' },
     quote: 'The land has been computing longer than any machine. We just stopped reading the output.',
     practice: [
+      'It is not a mystical claim. A forest that has held a slope for a thousand years has solved a problem, and the solution is legible if somebody bothers to measure it. Aura\u2019s position is that measuring is the respectful thing to do, not the reductive one.',
       'There are three intelligences at Aura: machine, human, and the oldest one. Natural Intelligence is the third — the accumulated problem-solving of a system that has been running field trials for 3.8 billion years without a break.',
       'It is practised in three places. Agroculture works it into 150 acres. Hospitality builds the rooms a person can meet it in. The Atelier turns what is learned into things that leave the estate.',
       'Reading the output means measurement. A canopy is read in lux before it is cut. A preparation is plated before it is spread. A ferment is stopped by its pH and not by the clock.',
       'The record is kept in plain formats and signed by the person who made it, so a reading can be checked by someone who was not there.',
+    ],
+    record: [
+      { value: 'Three', label: 'intelligences: machine, human, and the oldest' },
+      { value: '3.8bn', label: 'years of field trials, without a break' },
+      { value: 'Nine', label: 'disciplines it is practised as' },
     ],
     open: [
       'Natural Intelligence is Aura’s own term. It is defined once, here, and then left alone — the estate would rather it stayed a working idea than became a slogan.',
@@ -95,10 +101,15 @@ export const PILLARS: Pillar[] = [
     hero: { type: 'Architecture · a room open to the mist', caption: 'Morning at Mudigere, with nothing on the calendar' },
     plate: { type: 'Landscape · Asa. Niwa. at Ohara', caption: 'The second sanctuary, in Kyoto' },
     practice: [
+      'Mudigere is a working coffee estate in the Western Ghats. Asa. Niwa. at Ohara sits north of Kyoto. They are different countries and different buildings, and what they hold in common is that neither was built to be looked at.',
       'Hospitality at Aura is a sanctuary rather than a hotel: Mudigere in the Western Ghats, and Asa. Niwa. at Ohara in Kyoto.',
       'The offer is a rhythm rather than an itinerary — morning mist, nothing on the calendar, and a cup of coffee that grew within sight of where you slept.',
       'The estate is not staged for visitors. What a guest sees is the working day: the preparations being stirred, the herd going out, the lamp lit at the Gau Angan before anyone starts.',
       'Two more sanctuaries are named and not yet open — Munduk in Bali and Punakha in Bhutan.',
+    ],
+    record: [
+      { value: 'Two', label: 'sanctuaries open: Mudigere and Ohara' },
+      { value: 'Two', label: 'announced and not yet open: Munduk, Punakha' },
     ],
     open: [
       'Munduk and Punakha are announced, not bookable. No dates, rooms or rates are published for either, because none are settled.',

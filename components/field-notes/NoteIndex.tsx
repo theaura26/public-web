@@ -101,7 +101,7 @@ export function NoteIndex({
            says what a category is takes the label role. */
         .fn .fn-lede {
           font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; line-height: normal;
-          margin: 0; max-width: 56ch;
+          margin: 0; max-width: 42ch;
           color: var(--text-muted);
         }
 
@@ -162,7 +162,7 @@ export function NoteIndex({
 
         .fn .fn-text { display: flex; flex-direction: column; gap: var(--space-3); }
         .fn .fn-t {
-          font-family: var(--font-grotesque), sans-serif; font-weight: 400; font-size: clamp(24px, 3vw, 32px); line-height: 1.15; letter-spacing: -0.03em;
+          font-family: var(--font-sans); font-size: 16px; line-height: 1.55; letter-spacing: normal;
           transition: color var(--dur-base) var(--ease);
           color: var(--text);
         }
@@ -170,7 +170,7 @@ export function NoteIndex({
         .fn .fn-item.is-soon .fn-t { color: var(--text-muted); }
         .fn .fn-d {
           font-family: var(--font-sans); font-size: 14px; line-height: 1.6; letter-spacing: normal; color: var(--text-body);
-          max-width: 56ch; text-wrap: pretty;
+          max-width: 42ch; text-wrap: pretty;
         }
         .fn .fn-from {
           font-family: var(--font-mono), monospace;
@@ -185,6 +185,12 @@ export function NoteIndex({
         }
         @media (prefers-reduced-motion: reduce) {
           .fn .fn-plate img { transition: none; }
+        }
+      
+        @media (max-width: 768px) {
+          .fn .fn-list { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
+          .fn .fn-filters { margin: var(--space-7) 0 var(--space-6); }
+          .fn .fn-lede { max-width: 100%; }
         }
       `}</style>
     </main>

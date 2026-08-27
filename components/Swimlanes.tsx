@@ -45,10 +45,10 @@ function Card({ note }: { note: NoteEntry }) {
 }
 
 export function Swimlanes({
-  title, lede, lanes,
-}: { title: string; lede: string; lanes: Lane[] }) {
+  title, lede, lanes, ratio = '16 / 9',
+}: { title: string; lede: string; lanes: Lane[]; ratio?: string }) {
   return (
-    <main className="sw">
+    <main className="sw" style={{ ['--lane-ratio' as string]: ratio }}>
       <div className="section-w sw-head">
         <h1 className="sw-h">{title}</h1>
         <p className="sw-lede">{lede}</p>
@@ -135,10 +135,7 @@ export function Swimlanes({
         /* The heading and the rule beneath it. It was a two-item flex
            row until the 'all N' link came out; with one child the
            space-between and the gap had nothing left to do. */
-        .sw .lane-bar {
-          padding-bottom: var(--space-4);
-          border-bottom: 1px solid var(--border);
-        }
+        .sw .lane-bar { padding-bottom: var(--space-4); }
         /* The lane heading stays h3. The cards beneath it stepped down
            to p1 so a card title no longer competes with the name of the
            lane it sits in. */
@@ -196,7 +193,12 @@ export function Swimlanes({
         }
 
         .sw .lane-card {
-          flex: none; width: clamp(280px, 36vw, 520px);
+          flex: none;
+          /* One column of the two-column index grid, so a card is the
+             same object in both places rather than two sizes of it. */
+          width: calc(
+            (min(var(--max-w), 100vw) - 2 * var(--gutter) - clamp(28px, 4vw, 56px)) / 2
+          );
           display: flex; flex-direction: column; gap: var(--space-3);
           text-decoration: none; color: inherit;
         }
@@ -207,7 +209,7 @@ export function Swimlanes({
 
         .sw .lane-plate {
           position: relative; display: block;
-          aspect-ratio: 16 / 9; overflow: hidden;
+          aspect-ratio: var(--lane-ratio, 16 / 9); overflow: hidden;
           border-radius: var(--radius-1);
           background: var(--bg-card);
         }
@@ -277,6 +279,7 @@ export function FromAuraSwimlanes() {
       title="From Aura"
       lede="Three directions out of one estate — what the land grows, what the atelier makes, and what is offered to the people who buy at volume. Nothing here is for sale yet."
       lanes={FROM_AURA}
+      ratio="4 / 5"
     />
   )
 }

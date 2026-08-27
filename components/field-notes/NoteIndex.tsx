@@ -64,7 +64,6 @@ export function NoteIndex({
                 </span>
                 <span className="fn-text">
                   <span className="fn-t">{n.title}</span>
-                  <span className="fn-d">{n.description}</span>
                   {n.from && <span className="fn-from">In {n.from}</span>}
                 </span>
               </>
@@ -168,10 +167,6 @@ export function NoteIndex({
         }
         .fn .fn-item:hover .fn-t { color: var(--brand-accent); }
         .fn .fn-item.is-soon .fn-t { color: var(--text-muted); }
-        .fn .fn-d {
-          font-family: var(--font-sans); font-size: 14px; line-height: 1.6; letter-spacing: normal; color: var(--text-body);
-          max-width: 42ch; text-wrap: pretty;
-        }
         .fn .fn-from {
           font-family: var(--font-mono), monospace;
           font-size: 11px; letter-spacing: 1px; text-transform: uppercase;

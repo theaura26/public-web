@@ -63,15 +63,39 @@ function allowedOrigins(): Set<string> {
   return set
 }
 
+/** The host this request was actually served on, behind Vercel's proxy. */
+function servedHost(req: Request): string {
+  return (
+    req.headers.get('x-forwarded-host') ??
+    req.headers.get('host') ??
+    ''
+  ).toLowerCase()
+}
+
 function sameOrigin(req: Request): boolean {
   const origin = req.headers.get('origin')
 
   if (origin) {
+    let host: string
     try {
-      return allowedOrigins().has(new URL(origin).origin)
+      host = new URL(origin).host.toLowerCase()
     } catch {
       return false
     }
+
+    /* A page asking its own host is same-origin by definition, whatever
+       that host happens to be called. The allow-list could not know:
+       VERCEL_URL is the generated deployment hostname, so a custom
+       domain like staging.theaura.life was never on it and every request
+       from that page was refused — which the dock reports to the reader
+       as 'I could not reach my sources just then'.
+
+       This is still a CSRF check and still works as one. Browsers set
+       Origin honestly, so a page on another site sends its own origin
+       against this host and fails the comparison. */
+    if (host && host === servedHost(req)) return true
+
+    return allowedOrigins().has(new URL(origin).origin)
   }
 
   /* Absence is not proof of anything on its own — but a browser that

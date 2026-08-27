@@ -499,6 +499,11 @@ export default function AskAura() {
           aria-label="Ask Aura"
         >
           <header className="aa-head">
+            {/* The mark, alive. Same conic gradient as the bar's ring,
+                masked through the artwork rather than filled — the file
+                is a single-colour path set, so a mask recolours all of
+                it at once and the gradient turns underneath. */}
+            <span className="aa-mark" aria-hidden />
             <div className="aa-head-acts">
               {msgs.length > 0 && (
                 <button type="button" className="aa-mini" onClick={clear}>Clear</button>
@@ -833,6 +838,28 @@ export default function AskAura() {
           from { opacity: 1; transform: translateY(0); }
           to   { opacity: 0; transform: translateY(-0.75em); }
         }
+        .aa-mark {
+          flex: none;
+          width: 24px; height: 24px;
+          margin-left: 12px;
+          background: conic-gradient(
+            from var(--aa-angle),
+            rgba(227, 113, 40, 0.95),
+            rgba(214, 196, 108, 0.9),
+            rgba(122, 176, 130, 0.85),
+            rgba(120, 178, 190, 0.9),
+            rgba(160, 140, 200, 0.85),
+            rgba(227, 113, 40, 0.95)
+          );
+          -webkit-mask: url(/ask-aura.svg) center / contain no-repeat;
+          mask: url(/ask-aura.svg) center / contain no-repeat;
+          animation: aa-orbit 7s linear infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          /* Still lit, no longer turning. */
+          .aa-mark { animation: none; }
+        }
+
         /* Heard, not seen. Kept in the layout rather than display:none,
            which some screen readers skip entirely. */
         .aa-status {
@@ -1011,7 +1038,7 @@ export default function AskAura() {
         .aa-follow .aa-chips > li:nth-child(3) { animation-delay: calc(var(--aa-step) * 8); }
 
         .aa-head {
-          display: flex; align-items: center; justify-content: flex-end;
+          display: flex; align-items: center; justify-content: space-between;
           /* Tight: the close button's 44px target already supplies the
              breathing room, so the header adds almost nothing of its
              own and the opening line sits near the top of the panel. */

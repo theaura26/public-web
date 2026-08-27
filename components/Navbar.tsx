@@ -1053,12 +1053,7 @@ export default function Navbar() {
           }
           .mn-tab:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
 
-          /* Five pixels left of true. The items and the row above them
-             start on the same pixel — measured, both at 1632 — but the
-             items are set nearly three times larger, and larger type
-             carries more apparent side-bearing, so identical geometry
-             reads as an indent. Optical alignment, not geometric. */
-          .mn-items { list-style: none; margin: 0; padding: 0; margin-left: -5px; }
+          .mn-items { list-style: none; margin: 0; padding: 0; }
           /* A row that has a tier beneath it opens on hover, and on
              focus within, so the keyboard reaches it too. Grid rows
              animate from 0fr to 1fr, which is what lets the list push
@@ -1513,7 +1508,15 @@ export default function Navbar() {
             /* Aligned with the marquee strip beside it: both start at
                116px, so the panel reads as one horizon rather than two. */
             top: 116px;
-            left: var(--gutter);          /* aligned with the panel's own gutter */
+            /* Five pixels left of the gutter the row above uses. The two
+               start on the same pixel geometrically, but the items are
+               set nearly three times larger and larger type carries more
+               apparent side-bearing, so identical geometry reads as an
+               indent. Applied to the column rather than the list: this
+               column scrolls, and overflow-y auto computes overflow-x to
+               auto as well, so a negative margin on the list inside it
+               was simply clipped off. */
+            left: calc(var(--gutter) - 5px);
             bottom: 210px;                /* clears the utility icon stack */
             width: 345px;
             overflow-y: auto;

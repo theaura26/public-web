@@ -102,13 +102,49 @@ function LiveLandData() {
         </div>
       </div>
 
+          {/* Queried by COORDINATES, not a place name — a name query matches
+              a nearby business listing and auto-opens its card; coordinates
+              drop a clean pin. t=h satellite, the no-API-key ?output=embed form. */}
+      <div className="land-data__map">
+        <iframe
+          title="Aura Estate — Mudigere, Karnataka"
+          src="https://maps.google.com/maps?q=13.1365,75.6403&t=h&z=14&output=embed"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
+      </div>
 
       <style jsx>{`
-        /* Compact orientation panel — location + live weather. (The map
-           embed was removed: it broke into the agent/reader view and added
-           little the coordinates don't already give.) */
+        /* Orientation panel — facts on the left, satellite map on the right.
+           The map was pulled in July 2026 because it escaped into the
+           agent/reader view; the same commit added a global agent-mode rule
+           that hides every iframe in main, so the leak it was removed for is
+           handled centrally now and the map can sit here safely. */
         .land-data {
-          max-width: 640px;
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: clamp(28px, 5vw, 72px);
+          align-items: start;
+        }
+        @media (max-width: 768px) {
+          .land-data { grid-template-columns: 1fr; gap: 32px; }
+        }
+        .land-data__map {
+          position: relative;
+          aspect-ratio: 4 / 3;
+          border: 1px solid var(--border);
+          border-radius: var(--radius-1);
+          overflow: hidden;
+          background: var(--bg-card);
+        }
+        .land-data__map :global(iframe) {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+          display: block;
         }
       `}</style>
     </div>

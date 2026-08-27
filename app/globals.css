@@ -485,6 +485,7 @@ p.journal-hero__caption {
    wordmark / film-play overlay held over the length of a run. */
 [data-view="agent"] main .story2__run,
 [data-view="agent"] main .story2__overlay,
+[data-view="agent"] main .land-data__map,
 [data-view="agent"] main .journal-hero__media,
 [data-view="agent"] main .hero-tile__media,
 [data-view="agent"] main .pillar-media,

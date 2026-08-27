@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { stubSlugs, labelFor } from '@/lib/site-nav'
+import { stubSlugs, labelFor, SECTIONS } from '@/lib/site-nav'
 import { FROM_AURA } from '@/lib/from-aura'
 import { RelatedLane } from '@/components/Swimlanes'
 
@@ -45,7 +45,14 @@ function product(slug: string) {
     .find((i) => i.href === `${PREFIX}/${slug}`)
   const navLabel = labelFor(`${PREFIX}/${slug}`)
   if (!entry && !navLabel) return null
+  /* A parent — Coffee, Pepper, Farm Goods — lists what sits under it.
+     A reader on Coffee wants the seasons, and a paragraph about the
+     estate's philosophy is in the way of that. */
+  const shop = SECTIONS.find((x) => x.id === 'shop')
+  const parent = shop?.items.find((x) => x.href === `${PREFIX}/${slug}`)
+
   return {
+    children: parent?.children ?? [],
     title: entry?.title ?? navLabel!.split(' — ').slice(1).join(' — ') ?? navLabel!,
     lane: entry?.lane.label ?? SECTION,
     description: entry?.description ?? null,
@@ -83,15 +90,33 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
           {p.description && <p className="p1 pd-lede">{p.description}</p>}
 
-          <p className="p1 pd-p">
-            Nothing from this lot is released yet. When it is, this page carries what the
-            estate already keeps on it — the block it came from, the ferment, the drying,
-            and the lab record that closed it.
-          </p>
-          <p className="p1 pd-p">
-            Aura publishes the record before it publishes a price. That is the whole
-            argument, and it would be a strange thing to abandon at the point of sale.
-          </p>
+          {p.children.length > 0 ? (
+            <>
+              <p className="p1 pd-p">
+                What is under this, season by season. Each carries its own record when it
+                is released.
+              </p>
+              <ul className="pd-list">
+                {p.children.map((c) => (
+                  <li key={c.href}>
+                    <Link className="pd-child" href={c.href}>{c.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <>
+              <p className="p1 pd-p">
+                Nothing from this lot is released yet. When it is, this page carries what the
+                estate already keeps on it — the block it came from, the ferment, the drying,
+                and the lab record that closed it.
+              </p>
+              <p className="p1 pd-p">
+                Aura publishes the record before it publishes a price, and that holds at the
+                point of sale as much as anywhere else.
+              </p>
+            </>
+          )}
 
           <p className="pd-act">
             <Link className="pd-cta" href="/contact">Get in touch</Link>
@@ -165,6 +190,19 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
            still read as secondary next to the line above it, which is
            the thing that was wrong in the first place. */
         .pd-p { margin: 0; max-width: 46ch; }
+
+        /* The seasons under a parent, as a plain list. */
+        .pd-list {
+          list-style: none; margin: 0; padding: 0;
+          display: flex; flex-direction: column;
+        }
+        .pd-list li { border-top: 1px solid var(--border); }
+        .pd-list li:last-child { border-bottom: 1px solid var(--border); }
+        .pd-child {
+          display: block; padding: var(--space-4) 0;
+          font-family: var(--font-sans); font-size: 16px; line-height: 1.55;
+          color: var(--text); text-decoration: none;
+        }
 
         .pd-act { margin: var(--space-4) 0 0; }
         /* .p1, like every other link set in running text. The accent

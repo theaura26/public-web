@@ -23,15 +23,15 @@ const ARTICLES: Article[] = [
   { href: '/herd',           title: 'Ecosystem Engineers',   img: '/herd/images/aura-relationship2.jpg' },
   { href: '/circular',       title: 'Circular Intelligence', img: '/circular/images/aura-shed.jpg', size: 'md' },
   { href: '/shade',          title: 'The Light Instrument',  img: '/shade/images/aura-tree-canopy-lookup.jpg', size: 'lg' },
-  { href: '/ecology',        title: 'The Living System',     img: '/ecology/images/aura-forest-floor-seedling.jpg', size: 'sm' },
+  { href: '/ecology',        title: 'The Health Index',     img: '/ecology/images/aura-forest-floor-seedling.jpg', size: 'sm' },
   { href: '/artistry',       title: 'Artistry',              img: '/aura-artistry.jpg', size: 'md' },
   { href: '/wisdom',         title: 'Moral Spine',           img: '/journals/wisdom/aura-moral-spine.jpg', size: 'lg' },
   { href: '/living-systems', title: 'Living Systems',        img: '/journals/living-systems/aura-living-systems.jpg', size: 'sm' },
-  { href: '/coffee',         title: 'Our bean story',       img: '/journals/coffee/aura-our-coffee-story.jpg', size: 'md' },
+  { href: '/coffee',         title: 'Our Bean Story',       img: '/journals/coffee/aura-our-coffee-story.jpg', size: 'md' },
   { href: '/rta',            title: 'Rta',                   img: '/journals/rta/aura-rta.jpg', size: 'lg' },
   { href: '/fermentation',   title: 'Fermentation',          img: '/journals/fermentation/aura-fermentation.jpg', size: 'sm' },
   { href: '/land',           title: 'The Land',              img: '/journals/land/aura-the-land.jpg', size: 'md' },
-  { href: '/biodynamic',     title: 'A living organism',    img: '/journals/biodynamic/aura-biodynamic.jpg', size: 'lg' },
+  { href: '/biodynamic',     title: 'A Living Organism',    img: '/journals/biodynamic/aura-biodynamic.jpg', size: 'lg' },
   { href: '/residency',      title: 'Monastic Polymaths',    img: '/journals/residency/aura-monastic-polymath.jpg', size: 'sm' },
 ]
 
@@ -144,7 +144,6 @@ export function InfiniteArticleSlider() {
           width: clamp(64px, 12vw, 200px);
           pointer-events: none;
           z-index: 2;
-          background: linear-gradient(to right, transparent, var(--bg) 82%);
           -webkit-mask-image: linear-gradient(to right, transparent, #000 55%);
           mask-image: linear-gradient(to right, transparent, #000 55%);
         }

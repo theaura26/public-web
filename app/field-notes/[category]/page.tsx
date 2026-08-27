@@ -48,7 +48,6 @@ export default async function CategoryPage(
 
   return (
     <NoteIndex
-      eyebrow="Field Notes"
       title={cat.label}
       lede={cat.lede}
       active={cat.id as CategoryId}

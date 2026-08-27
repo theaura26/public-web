@@ -29,7 +29,7 @@ export default function EcologyPage() {
     <>
       <HeroBanner
         currentHref="/ecology"
-        title="The Living System"
+        title="The Health Index"
         src="/ecology/videos/aura-forest-floor-seedling.mp4"
         mediaType="video"
         poster="/ecology/images/aura-forest-floor-seedling.jpg"

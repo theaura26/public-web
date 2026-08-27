@@ -1,37 +1,45 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import ComingSoon from '@/components/ComingSoon'
-import { stubSlugs, labelFor } from '@/lib/site-nav'
+import SubjectPage from '@/components/SubjectPage'
+import { DISCIPLINES, disciplineBySlug } from '@/lib/disciplines'
 
-/* Stubs for the parts of The Regenerative Life that are in the structure but not
-   yet written. One route rather than a file each: the list lives in
-   lib/site-nav.ts, and `dynamicParams = false` means anything not on
-   that list still 404s rather than quietly rendering a placeholder. */
-
-const PREFIX = '/regenerative-life'
-const SECTION = 'The Regenerative Life'
+/* The nine disciplines, one route.
+ *
+ * A file each would be nine copies of one page differing only in their
+ * prose, and the prose is data — see lib/disciplines.ts, which the
+ * Remarkable Circle reads too, so the ring and the site cannot come to
+ * disagree about what the nine are. `dynamicParams = false` keeps
+ * anything not on the ring from resolving.
+ */
 
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return stubSlugs(PREFIX).map((slug) => ({ slug }))
+  return DISCIPLINES.map((d) => ({ slug: d.slug }))
 }
 
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> },
 ): Promise<Metadata> {
   const { slug } = await params
-  const label = labelFor(`${PREFIX}/${slug}`)
+  const d = disciplineBySlug(slug)
+  if (!d) return { title: 'The Regenerative Life — Aura' }
   return {
-    title: label ? `${label} — ${SECTION}` : SECTION,
-    description: `${label ?? SECTION} — not yet written.`,
-    robots: { index: false, follow: true },
+    title: `${d.label} — The Regenerative Life`,
+    description: d.lede,
+    alternates: { canonical: `/regenerative-life/${d.slug}` },
+    openGraph: { type: 'article', title: `${d.label} — Aura`, description: d.lede },
   }
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const label = labelFor(`${PREFIX}/${slug}`)
-  if (!label) notFound()
-  return <ComingSoon title={label} section={SECTION} sectionHref={PREFIX} />
+  const d = disciplineBySlug(slug)
+  if (!d) notFound()
+  return (
+    <SubjectPage
+      subject={d}
+      basePath="/regenerative-life"
+    />
+  )
 }

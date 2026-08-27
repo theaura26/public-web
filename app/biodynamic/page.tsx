@@ -19,7 +19,7 @@ export default function BiodynamicPage() {
         src="/journals/biodynamic/aura-biodynamic.mp4"
         mediaType="video"
         poster="/journals/biodynamic/aura-biodynamic.jpg"
-        title="A living organism"
+        title="A Living Organism"
         type="Detail · cattle in pen"
         caption="The estate as one living organism"
         alt="The estate working as one organism — biodynamic practice across canopy, herd, and soil"

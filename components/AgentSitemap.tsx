@@ -138,7 +138,7 @@ export const SITEMAP: SitemapEntry[] = [
   },
   {
     href: '/ecology',
-    label: 'The Living System',
+    label: 'The Health Index',
     topic: 'Whole-farm ecological monitoring — the Ecological Health Index',
     summary: 'Aura reads its estate as one living system, above ground and below — retained wood and the saprophytic fungi that eat it, forest islands, soil respiration, earthworms, roots — and folds fifteen monitoring programmes into one Ecological Health Index per block.',
     facts: [
@@ -176,7 +176,7 @@ export const SITEMAP: SitemapEntry[] = [
   },
   {
     href: '/coffee',
-    label: 'Our bean story',
+    label: 'Our Bean Story',
     topic: 'Six lots, one harvest — one Arabica, six fermentations',
     summary: 'One harvest of a single Arabica taken through six distinct fermentation methods — six separate lots and six cups — the estate’s coffee read as an experiment in method.',
     related: ['/fermentation', '/circular', '/mudigere'],
@@ -204,7 +204,7 @@ export const SITEMAP: SitemapEntry[] = [
   },
   {
     href: '/biodynamic',
-    label: 'A living organism',
+    label: 'A Living Organism',
     topic: 'A worldview worked as method — BD 500–508, Jeevamrit, Panchgavya',
     summary: 'Biodynamics at Mudigere as a worldview worked as method: the BD 500–508 preparations, Jeevamrit microbial culture and Panchgavya, all driven by the herd as the estate’s biological engine.',
     facts: [

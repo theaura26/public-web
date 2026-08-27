@@ -1,3 +1,6 @@
+import { DISCIPLINES } from './disciplines'
+import { FROM_AURA } from './from-aura'
+
 /* The site's structure, in one place.
  *
  * The navigation, the coming-soon stub routes and the sitemap are all
@@ -16,6 +19,13 @@ export type NavLeaf = {
   href: string
   /** No page written yet. Renders a stub at `href`. */
   soon?: boolean
+  /** Named in the structure, but with no page at all — not even a stub.
+      Rendered as plain text rather than a link, and kept out of
+      generateStaticParams and the sitemap. Use for something that is
+      announced before it is a place: a sanctuary that does not open for
+      another year has nothing to say yet, and a stub saying so is a
+      page nobody needs. */
+  disabled?: boolean
   /** The tier beneath this one, revealed on hover. A parent with
       children is a subject; its children are variants of it — the
       seasons of a crop, the parts of a place. */
@@ -52,10 +62,9 @@ export const SECTIONS: NavSection[] = [
       {
         label: 'Natural Intelligence',
         href: '/reason/natural-intelligence',
-        soon: true,
         children: [
-          { label: 'Agroculture', href: '/reason/agroculture', soon: true },
-          { label: 'Hospitality', href: '/reason/hospitality', soon: true },
+          { label: 'Agroculture', href: '/reason/agroculture' },
+          { label: 'Hospitality', href: '/reason/hospitality' },
           { label: 'Atelier', href: '/atelier' },
         ],
       },
@@ -65,8 +74,8 @@ export const SECTIONS: NavSection[] = [
         children: [
           { label: 'Mudigere', href: '/mudigere' },
           { label: 'Ohara', href: '/ohara' },
-          { label: 'Munduk', href: '/sanctuary/munduk', soon: true },
-          { label: 'Punakha', href: '/sanctuary/punakha', soon: true },
+          { label: 'Munduk', href: '/sanctuary/munduk', soon: true, disabled: true },
+          { label: 'Punakha', href: '/sanctuary/punakha', soon: true, disabled: true },
         ],
       },
       { label: 'Moral Spine', href: '/wisdom' },
@@ -79,18 +88,22 @@ export const SECTIONS: NavSection[] = [
     note: 'The nine disciplines the estate is farmed by.',
     /* These are the nine glyphs on the Remarkable Circle. Same nine, same
        order, so the menu and the mark agree. */
-    items: [
-      { label: 'Biodynamic', href: '/biodynamic' },
-      { label: 'Aura Intelligence', href: '/regenerative-life/aura-intelligence', soon: true },
-      { label: 'Tree Level Observation', href: '/regenerative-life/tree-level-observation', soon: true },
-      { label: 'Microbiome', href: '/regenerative-life/microbiome', soon: true },
-      { label: 'Hydrology', href: '/regenerative-life/hydrology', soon: true },
-      { label: 'Biodiversity', href: '/regenerative-life/biodiversity', soon: true },
-      { label: 'Plant Pathology', href: '/regenerative-life/plant-pathology', soon: true },
-      { label: 'Vedic Farming', href: '/vedic' },
-      { label: 'Soil', href: '/regenerative-life/soil', soon: true },
-    ],
+    /* The nine, in the order they sit on the Remarkable Circle rather
+       than an order of their own. Generated from lib/disciplines.ts so
+       the ring, the menu and the nine pages cannot come to disagree
+       about what the nine are — which they already had, the menu running
+       a different sequence from the glyphs.
+
+       Two of them used to point at a journal: Biodynamic at /biodynamic
+       and Vedic Farming at /vedic. A discipline is how the estate is
+       farmed; a field note is something the estate learned. The essays
+       stay under Field Notes, and each discipline links to them. */
+    items: DISCIPLINES.map((d) => ({
+      label: d.label,
+      href: `/regenerative-life/${d.slug}`,
+    })),
   },
+
   {
     id: 'notes',
     label: 'Field Notes',
@@ -105,7 +118,7 @@ export const SECTIONS: NavSection[] = [
         label: 'Biodynamic',
         href: '/field-notes/biodynamic',
         children: [
-          { label: 'A living organism', href: '/biodynamic' },
+          { label: 'A Living Organism', href: '/biodynamic' },
           { label: 'Circular Intelligence', href: '/circular' },
           { label: 'Rta', href: '/rta' },
           { label: 'Vedic Farming', href: '/vedic' },
@@ -115,7 +128,7 @@ export const SECTIONS: NavSection[] = [
         label: 'Biodiversity',
         href: '/field-notes/biodiversity',
         children: [
-          { label: 'The Living System', href: '/ecology' },
+          { label: 'The Health Index', href: '/ecology' },
           { label: 'The Light Instrument', href: '/shade' },
           { label: 'Living Systems', href: '/living-systems' },
           { label: 'The Sentinel Palm', href: '/areca' },
@@ -132,19 +145,19 @@ export const SECTIONS: NavSection[] = [
       {
         label: 'Art & Culture',
         href: '/field-notes/art-culture',
-        soon: true,
         children: [
           { label: 'Artistry', href: '/artistry' },
           { label: 'Monastic Polymaths', href: '/residency' },
           { label: 'Moral Spine', href: '/wisdom' },
+          { label: 'Land, Spirit, Soul', href: '/land-spirit-soul' },
         ],
       },
       {
         label: 'Land & Ecology',
         href: '/field-notes/land-ecology',
-        soon: true,
         children: [
           { label: 'The Land', href: '/land' },
+          { label: 'Forest Islands', href: '/forest-islands' },
           { label: 'Mudigere', href: '/mudigere' },
           { label: 'Asa. Niwa.', href: '/ohara' },
         ],
@@ -152,9 +165,8 @@ export const SECTIONS: NavSection[] = [
       {
         label: 'Coffee & Fermentation',
         href: '/field-notes/coffee-fermentation',
-        soon: true,
         children: [
-          { label: 'Our bean story', href: '/coffee' },
+          { label: 'Our Bean Story', href: '/coffee' },
           { label: 'Fermentation', href: '/fermentation' },
           { label: 'Malabar Pepper', href: '/pepper' },
         ],
@@ -162,15 +174,17 @@ export const SECTIONS: NavSection[] = [
       {
         label: 'Animals',
         href: '/field-notes/animals',
-        soon: true,
         children: [
           { label: 'Ecosystem Engineers', href: '/herd' },
-          { label: 'Cows of Aura', href: '/field-notes/cows-of-aura', soon: true },
-          { label: 'Pollinators', href: '/field-notes/pollinators', soon: true },
-          { label: 'Bug Hotels', href: '/field-notes/bug-hotels', soon: true },
+          /* A note is a page in its own right, not a slice of its
+             category — /field-notes/<id> is where the category index
+             lives, and these three were pointing at it. */
+          { label: 'Cows of Aura', href: '/cows-of-aura' },
+          { label: 'Pollinators', href: '/pollinators' },
+          { label: 'Bug Hotels', href: '/bug-hotels' },
         ],
       },
-      { label: 'Tech & Robotics', href: '/field-notes/tech-robotics', soon: true },
+      { label: 'Tech & Robotics', href: '/field-notes/tech-robotics' },
       { label: 'View all', href: '/field-notes' },
     ],
   },
@@ -178,74 +192,22 @@ export const SECTIONS: NavSection[] = [
     id: 'shop',
     label: 'From Aura',
     href: '/from-aura',
-    note: 'What the land produced, and what it is doing now.',
+    note: 'Three directions out of one estate.',
+    /* Generated from lib/from-aura.ts, so the menu and the section page
+       group the same things the same way. Sorting by crop hid the story:
+       the land, the atelier and the trade desk are three different
+       relationships with three different people on the other end. */
     items: [
-      {
-        label: 'Coffee',
-        href: '/from-aura/coffee',
+      ...FROM_AURA.map((lane) => ({
+        label: lane.label,
+        href: `/from-aura/${lane.id}`,
         soon: true,
-        children: [
-          { label: '25/26 — nine lots', href: '/from-aura/coffee-25-26', soon: true },
-          { label: '26/27 — blocks and zones', href: '/from-aura/coffee-26-27', soon: true },
-          { label: '27/28 — pre-book', href: '/from-aura/coffee-27-28', soon: true },
-        ],
-      },
-      {
-        label: 'Tea',
-        href: '/from-aura/tea',
-        soon: true,
-        children: [
-          { label: '27/28 — pre-book', href: '/from-aura/tea-27-28', soon: true },
-        ],
-      },
-      {
-        label: 'Pepper',
-        href: '/from-aura/pepper',
-        soon: true,
-        children: [
-          { label: '25/26 — black and white', href: '/from-aura/pepper-25-26', soon: true },
-          { label: '26/27 — blocks and zones', href: '/from-aura/pepper-26-27', soon: true },
-        ],
-      },
-      {
-        label: 'Areca nut',
-        href: '/from-aura/areca',
-        soon: true,
-        children: [
-          { label: '27/28 — pre-book', href: '/from-aura/areca-27-28', soon: true },
-        ],
-      },
-      {
-        label: 'Farm Goods',
-        href: '/from-aura/farm-goods',
-        soon: true,
-        children: [
-          { label: 'Avocado', href: '/from-aura/avocado', soon: true },
-          { label: 'Cardamom', href: '/from-aura/cardamom', soon: true },
-          { label: 'Soapnut', href: '/from-aura/soapnut', soon: true },
-          { label: 'Honey', href: '/from-aura/honey', soon: true },
-        ],
-      },
-      {
-        label: 'Objects & Editions',
-        href: '/from-aura/objects',
-        soon: true,
-        children: [
-          { label: 'Art', href: '/from-aura/art', soon: true },
-          { label: 'Fashion', href: '/from-aura/fashion', soon: true },
-          { label: 'Stationery', href: '/from-aura/stationery', soon: true },
-        ],
-      },
-      {
-        label: 'Experiences',
-        href: '/from-aura/experiences',
-        soon: true,
-        children: [
-          { label: 'Artist residencies', href: '/residency' },
-          { label: 'Farm tours', href: '/from-aura/farm-tours', soon: true },
-          { label: 'Harvest tours', href: '/from-aura/harvest-tours', soon: true },
-        ],
-      },
+        children: lane.items.map((i) => ({
+          label: i.title,
+          href: i.href,
+          soon: true,
+        })),
+      })),
       { label: 'View all', href: '/from-aura' },
     ],
   },
@@ -283,7 +245,7 @@ export const ALL_LEAVES: NavLeaf[] = SECTIONS.flatMap((s) => flatten(s.items))
 
 export function stubSlugs(prefix: string): string[] {
   return ALL_LEAVES
-    .filter((i) => i.soon && i.href.startsWith(`${prefix}/`))
+    .filter((i) => i.soon && !i.disabled && i.href.startsWith(`${prefix}/`))
     .map((i) => i.href.slice(prefix.length + 1))
 }
 

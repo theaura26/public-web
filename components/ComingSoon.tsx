@@ -18,7 +18,6 @@ export default function ComingSoon({
   return (
     <main className="cs">
       <div className="section-w cs-in">
-        <p className="label cs-eyebrow">{section}</p>
         <h1 className="cs-title">{title}</h1>
         <p className="p1 cs-note">
           This one is not written yet. It is part of how the estate works and it
@@ -42,18 +41,14 @@ export default function ComingSoon({
         .cs {
           min-height: 72svh;
           display: flex; align-items: center;
-          padding: calc(var(--nav-h) + var(--space-9)) 0 var(--space-9);
+          padding: calc(var(--nav-h) + var(--head-top)) 0 var(--space-9);
           background: var(--bg);
         }
         .cs-in { display: flex; flex-direction: column; gap: var(--space-4); max-width: 62ch; }
-        .cs-eyebrow { margin: 0; color: var(--text-muted); }
         .cs-title {
-          margin: 0;
-          font-family: var(--font-sans), system-ui, sans-serif;
-          font-size: clamp(2rem, 6vw, 3.4rem);
-          line-height: 1.05; letter-spacing: -0.02em;
+          font-family: var(--font-grotesque), sans-serif; font-weight: 600; text-transform: uppercase; font-size: clamp(44px, 9vw, 88px); line-height: 1.02; letter-spacing: -0.06em;
+          margin: 0; text-wrap: balance;
           color: var(--text);
-          text-wrap: balance;
         }
         .cs-note { margin: 0; color: var(--text-body); max-width: 54ch; }
         .cs-out { display: flex; flex-wrap: wrap; gap: var(--space-5); margin-top: var(--space-3); }

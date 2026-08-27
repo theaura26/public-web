@@ -10,7 +10,16 @@
 
 import { ACTIVE_JOURNALS, type Journal } from './journals'
 
-export type CategoryId = 'activities' | 'biodynamic' | 'biodiversity' | 'labs'
+export type CategoryId =
+  | 'activities'
+  | 'biodynamic'
+  | 'biodiversity'
+  | 'labs'
+  | 'animals'
+  | 'land-ecology'
+  | 'art-culture'
+  | 'coffee-fermentation'
+  | 'tech-robotics'
 
 export type Category = {
   id: CategoryId
@@ -40,25 +49,69 @@ export const CATEGORIES: Category[] = [
     label: 'Labs',
     lede: 'Where the claims get tested — ferment logs, colony counts, cupping scores, and the numbers that decide when a tank comes off.',
   },
+  /* The menu named these five long before this file did, so they
+     resolved to stubs and had to be marked coming-soon in the nav while
+     the notes filed under them were already written. They are real
+     categories with real notes in them now. */
+  {
+    id: 'animals',
+    label: 'Animals',
+    lede: 'Fifty-two cattle, the insects a plantation forgets to house, and the pollinators nobody has counted yet.',
+  },
+  {
+    id: 'land-ecology',
+    label: 'Land & Ecology',
+    lede: 'The ground itself — what grows on it, what was here before the coffee, and what is being made room for again.',
+  },
+  {
+    id: 'art-culture',
+    label: 'Art & Culture',
+    lede: 'What the estate makes when it is not farming, and the beliefs it keeps alongside the measurements.',
+  },
+  {
+    id: 'coffee-fermentation',
+    label: 'Coffee & Fermentation',
+    lede: 'One harvest, many lots, and the hours of controlled decay that decide what ends up in the cup.',
+  },
+  {
+    id: 'tech-robotics',
+    label: 'Tech & Robotics',
+    lede: 'Sensors, models and the machines that will do the counting. Nothing written here yet.',
+  },
 ]
 
 /** Where each published journal sits. A journal may appear in several. */
 const ASSIGNMENT: Record<string, CategoryId[]> = {
-  '/residency': ['activities'],
-  '/artistry': ['activities'],
+  '/residency': ['activities', 'art-culture'],
+  '/artistry': ['activities', 'art-culture'],
+  '/wisdom': ['art-culture'],
 
   '/biodynamic': ['biodynamic'],
-  '/herd': ['biodynamic'],
   '/circular': ['biodynamic'],
   '/rta': ['biodynamic'],
-  '/land': ['biodynamic'],
+  '/vedic': ['biodynamic'],
 
-  '/ecology': ['biodiversity'],
+  '/herd': ['biodynamic', 'animals'],
+
+  '/land': ['land-ecology'],
+  '/mudigere': ['land-ecology'],
+  '/ohara': ['land-ecology'],
+
+  '/ecology': ['biodiversity', 'land-ecology'],
   '/living-systems': ['biodiversity'],
   '/shade': ['biodiversity'],
+  '/areca': ['biodiversity'],
 
-  '/fermentation': ['labs'],
-  '/coffee': ['labs'],
+  '/forest-islands': ['biodiversity', 'land-ecology'],
+  '/bug-hotels': ['biodiversity', 'animals'],
+  '/pollinators': ['biodiversity', 'animals'],
+  '/cows-of-aura': ['animals', 'biodynamic'],
+  '/land-spirit-soul': ['art-culture'],
+
+  '/fermentation': ['labs', 'coffee-fermentation'],
+  '/coffee': ['labs', 'coffee-fermentation'],
+  '/pepper': ['coffee-fermentation'],
+  '/provenance': ['labs'],
 }
 
 /** A Field Note that has a category but no page yet. */
@@ -101,36 +154,6 @@ const PENDING_NOTES: PendingNote[] = [
     title: 'Provenance',
     description: 'Where a thing came from, proved rather than asserted.',
     categories: ['labs'],
-  },
-  {
-    href: '/cows-of-aura',
-    title: 'Cows of Aura',
-    description: 'Every animal in the herd carries a record — lineage, grazing block, and what its dung went into.',
-    categories: ['biodynamic'],
-  },
-  {
-    href: '/spirit-prayer',
-    title: 'Spirit & Prayer',
-    description: 'The part of the practice that predates the measurements, and why it is still kept.',
-    categories: ['biodynamic'],
-  },
-  {
-    href: '/bug-hotels',
-    title: 'Bug Hotels',
-    description: 'Deliberate housing for the predators that keep a monoculture from happening.',
-    categories: ['biodiversity'],
-  },
-  {
-    href: '/pollinators',
-    title: 'Pollinators',
-    description: 'Bees through all four canopy layers, and what a flower here sets three trees over.',
-    categories: ['biodiversity'],
-  },
-  {
-    href: '/forest-islands',
-    title: 'Forest Islands',
-    description: 'Untouched stands left inside the planting, and what they seed back into it.',
-    categories: ['biodiversity'],
   },
 ]
 

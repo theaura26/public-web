@@ -81,7 +81,7 @@ function opening(pathname: string): { line: string; prompts: string[] } {
 
   return {
     line: 'Ask me anything about Aura — the estates, the coffee, the practice.',
-    prompts: ['What is Aura?', 'Where are the estates?', 'What do you grow?'],
+    prompts: ['What is Aura?', 'Where are the estates?', 'What does Aura grow?'],
   }
 }
 
@@ -123,6 +123,24 @@ export default function AskAura() {
     const t = setTimeout(() => setLeaving(null), DUR.slow)
     return () => clearTimeout(t)
   }, [teaser])
+
+  /* The invitation names the page it is sitting on. The generated
+     openers carry a line and three questions per route but no short
+     subject, and the page's own title is exactly that — so it is read
+     from the document rather than kept in a second list that would drift
+     from the first. Read on open as well as on navigation, because Next
+     applies title metadata in its own commit and the dock is opened long
+     after that has settled. */
+  const [subject, setSubject] = useState('')
+  useEffect(() => {
+    const t = (document.title || '').replace(/\s*[—–|-]\s*Aura\s*$/, '').trim()
+    /* A title long enough to wrap is a sentence, not a subject, and
+       would be truncated mid-word in a one-line field. */
+    setSubject(t && t.length <= 38 ? t : '')
+  }, [pathname, open])
+  const placeholder = subject
+    ? `Ask about ${subject}…`
+    : 'Ask about the estates, the coffee…'
 
   const panelRef = useRef<HTMLDivElement>(null)
   const logRef = useRef<HTMLDivElement>(null)
@@ -250,13 +268,32 @@ export default function AskAura() {
 
   /* Follow the answer down only if the reader was already at the
      bottom. Yanking them back while they are reading an earlier answer
-     is the rudest thing a transcript can do. */
-  useEffect(() => {
+     is the rudest thing a transcript can do.
+
+     Which is why this is read from the reader's own scrolling rather
+     than measured after new content lands. Sources and follow-ups do not
+     stream in a line at a time — they arrive together as one block a few
+     hundred pixels tall, so a measurement taken afterwards always
+     concludes the reader had scrolled away and leaves the block below
+     the fold. Below the fold is precisely where a follow-up is no use. */
+  const pinnedRef = useRef(true)
+  const onLogScroll = useCallback(() => {
     const el = logRef.current
     if (!el) return
-    const distance = el.scrollHeight - el.scrollTop - el.clientHeight
-    if (distance < 120) el.scrollTop = el.scrollHeight
-  }, [msgs])
+    pinnedRef.current = el.scrollHeight - el.scrollTop - el.clientHeight < 120
+  }, [])
+
+  /* Settling is smooth and streaming is not: an answer arriving a token
+     at a time would restart a smooth scroll sixty times a second and
+     never reach the bottom. */
+  const settled = msgs[msgs.length - 1]?.pending === false
+  useEffect(() => {
+    const el = logRef.current
+    if (!el || !pinnedRef.current) return
+    const smooth = settled && !matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (smooth) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
+    else el.scrollTop = el.scrollHeight
+  }, [msgs, settled])
 
   /* History for the next request, read at send time. Depending on `msgs`
      directly would rebuild `send` on every token of every answer. */
@@ -282,6 +319,9 @@ export default function AskAura() {
        a timestamped trace of having done so. The single event fires
        once the outcome is known, below, and not at all for distress. */
 
+    /* Asking is a request to be shown the answer, wherever they had
+       scrolled to read the last one. */
+    pinnedRef.current = true
     const userMsg: Msg = { id: crypto.randomUUID(), role: 'user', text: question }
     const replyId = crypto.randomUUID()
     setMsgs((m) => [...m, userMsg, { id: replyId, role: 'assistant', text: '', pending: true, question }])
@@ -499,6 +539,10 @@ export default function AskAura() {
           aria-label="Ask Aura"
         >
           <header className="aa-head">
+            {/* The mark as drawn: a white outline on the panel's own
+                dark ground. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="aa-mark" src="/ask-aura.svg" alt="" aria-hidden />
             <div className="aa-head-acts">
               {msgs.length > 0 && (
                 <button type="button" className="aa-mini" onClick={clear}>Clear</button>
@@ -521,7 +565,7 @@ export default function AskAura() {
 
           <p className="aa-status" role="status" aria-live="polite">{announcement}</p>
 
-          <div className="aa-log" ref={logRef}>
+          <div className="aa-log" ref={logRef} onScroll={onLogScroll}>
             {msgs.length === 0 && (
               <div className="aa-intro">
                 <p className="aa-intro-line">{intro.line}</p>
@@ -651,7 +695,7 @@ export default function AskAura() {
               className="aa-input ph-no-capture"
               rows={1}
               value={input}
-              placeholder="Ask about the estates, the coffee…"
+              placeholder={placeholder}
               maxLength={1200}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
@@ -833,6 +877,16 @@ export default function AskAura() {
           from { opacity: 1; transform: translateY(0); }
           to   { opacity: 0; transform: translateY(-0.75em); }
         }
+        /* The artwork as it was drawn — a white stroke over a fill that
+           reads as the panel behind it, at its own proportions. */
+        .aa-mark {
+          flex: none;
+          width: 19px;
+          height: auto;
+          margin-left: 12px;
+          display: block;
+        }
+
         /* Heard, not seen. Kept in the layout rather than display:none,
            which some screen readers skip entirely. */
         .aa-status {
@@ -1011,7 +1065,7 @@ export default function AskAura() {
         .aa-follow .aa-chips > li:nth-child(3) { animation-delay: calc(var(--aa-step) * 8); }
 
         .aa-head {
-          display: flex; align-items: center; justify-content: flex-end;
+          display: flex; align-items: center; justify-content: space-between;
           /* Tight: the close button's 44px target already supplies the
              breathing room, so the header adds almost nothing of its
              own and the opening line sits near the top of the panel. */

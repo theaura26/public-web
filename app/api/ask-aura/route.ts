@@ -195,10 +195,13 @@ async function followUps(
               'Never a command or a topic label: "How is the pepper dried?" is right; ' +
               '"Learn about the pepper" and "Explore drying methods" are wrong. ' +
               'Never begin with Learn, Explore, Discover, Dive or Uncover. ' +
-              'Seven words or fewer, sentence case, British English.\n\n' +
+              'Seven words or fewer, sentence case, British English. ' +
+              'Name Aura; never address it as you or your. "How does Aura dry the pepper?" ' +
+              'is right, "How do you dry your pepper?" is wrong \u2014 these sit in Aura\u2019s ' +
+              'own panel, where "your pepper" reads as the reader\u2019s.\n\n' +
               'GROUNDING, and this matters more than phrasing: ask only about subjects named ' +
               'in the SOURCES SEEN below or in the answer itself. A question must not assert ' +
-              'or assume a property, certification, claim or outcome — "What makes your coffee ' +
+              'or assume a property, certification, claim or outcome — "What makes Aura\u2019s coffee ' +
               'organic?" states that the coffee is organic, and asking it puts words in Aura\'s ' +
               'mouth. Ask "Is the coffee certified?" instead of "Why is the coffee certified?". ' +
               'When in doubt, ask about a thing rather than about a quality of a thing.',

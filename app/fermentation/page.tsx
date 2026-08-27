@@ -88,7 +88,7 @@ export default function FermentationPage() {
         <p className="p1">
           Six methods, one cherry. The full lot-by-lot file — yields, immature
           counts, drying timelines, cupping notes — lives in{' '}
-          <a href="/coffee">Our bean story</a>.
+          <a href="/coffee">Our Bean Story</a>.
         </p>
       </TwoCol>
 

@@ -45,16 +45,13 @@ export default function SectionIndex({ id }: { id: string }) {
       </div>
 
       <style>{`
-        .sx { padding: calc(var(--nav-h) + var(--space-9)) 0 var(--space-9); background: var(--bg); }
-        .sx-in { display: flex; flex-direction: column; gap: var(--space-8); }
+        .sx { padding: calc(var(--nav-h) + var(--head-top)) 0 var(--space-9); background: var(--bg); }
+        .sx-in { display: flex; flex-direction: column; gap: var(--head-bottom); }
         .sx-head { display: flex; flex-direction: column; gap: var(--space-3); max-width: 46ch; }
         .sx-title {
-          margin: 0;
-          font-family: var(--font-sans), system-ui, sans-serif;
-          font-size: clamp(2.2rem, 7vw, 4rem);
-          line-height: 1.02; letter-spacing: -0.02em;
+          font-family: var(--font-grotesque), sans-serif; font-weight: 600; text-transform: uppercase; font-size: clamp(44px, 9vw, 88px); line-height: 1.02; letter-spacing: -0.06em;
+          margin: 0; text-wrap: balance;
           color: var(--text);
-          text-wrap: balance;
         }
         .sx-note { margin: 0; color: var(--text-body); }
 
@@ -72,9 +69,7 @@ export default function SectionIndex({ id }: { id: string }) {
         }
         .sx-link:hover { opacity: 0.6; }
         .sx-label {
-          font-family: var(--font-sans), system-ui, sans-serif;
-          font-size: clamp(1.25rem, 3vw, 1.9rem);
-          line-height: 1.2; letter-spacing: -0.01em;
+          font-family: var(--font-grotesque), sans-serif; font-weight: 400; font-size: clamp(24px, 3vw, 32px); line-height: 1.15; letter-spacing: -0.03em;
           color: var(--text);
         }
         .sx-soon { flex: none; color: var(--text-muted); }
@@ -84,10 +79,8 @@ export default function SectionIndex({ id }: { id: string }) {
            here should need hovering to be seen. */
         .sx-sub { list-style: none; margin: 0; padding: 0 0 var(--space-4); }
         .sx-sub-link {
-          display: inline-flex; align-items: center; gap: 8px;
-          padding: 4px 0;
-          font-family: var(--font-mono), monospace;
-          font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase;
+          font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; line-height: normal;
+          display: inline-flex; gap: 8px;
           color: var(--text-muted); text-decoration: none;
         }
         .sx-sub-link:hover { color: var(--text); }

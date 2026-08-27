@@ -395,7 +395,7 @@ export default function CircularPage() {
       <Continue
         items={[
           { href: '/herd', label: 'Ecosystem Engineers', description: 'Where the raw material comes from — fifty-two Malnad Gidda, the estate’s biological engine, each passported.', img: '/herd/images/aura-relationship2.jpg' },
-          { href: '/ecology', label: 'The Living System', description: 'What the fertility feeds — the whole farm measured, and rolled into one Ecological Health Index per block.', img: '/aura-mudigere-landscape.jpg' },
+          { href: '/ecology', label: 'The Health Index', description: 'What the fertility feeds — the whole farm measured, and rolled into one Ecological Health Index per block.', img: '/aura-mudigere-landscape.jpg' },
           { href: '/shade', label: 'The Light Instrument', description: 'The canopy above the loop — shade whiskering, measured in lux and cut to prescription.', img: '/aura-land.jpg' },
         ]}
       />

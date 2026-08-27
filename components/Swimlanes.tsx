@@ -228,7 +228,11 @@ function LaneStyles() {
         @media (max-width: 768px) {
           .sw { gap: clamp(44px, 6vh, 64px); }
           .sw .lane-card { width: min(78vw, 320px); }
-          .sw .lane-fade { width: clamp(40px, 10vw, 72px); }
+          /* The overhang has to come along. Overriding the width alone
+             left the fade positioned 32px off-screen at right:-32px with
+             only 8px of itself visible — a hard sliver of blur instead of
+             a gradient. */
+          .sw .lane-fade { width: calc(clamp(40px, 10vw, 72px) + 32px); }
           .sw .lane { gap: var(--space-3); }
           /* Only the lane lede fills — it is body prose. The centred
              mono line keeps its measure at every width; letting it run

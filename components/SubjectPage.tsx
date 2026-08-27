@@ -139,12 +139,12 @@ export default function SubjectPage({
     />
   ) : null
 
-  const open = (
-    <TwoCol key="open" id="open" heading="What we have not proved">
-      <p className="p1">
-        Everything above has a record behind it. Here is where the record stops — so
-        you know which parts to trust and which to hold lightly.
-      </p>
+  /* Only when there is a genuine evidence gap to declare. A page with
+     nothing outstanding should not manufacture a caveat to fill the
+     block — that was how a note about terminology ended up filed under
+     things the estate cannot prove. */
+  const open = s.open.length === 0 ? null : (
+    <TwoCol key="open" id="open" heading="What we can't prove yet">
       {s.open.map((line) => (
         <p className="p1" key={line}>{withLinks(line)}</p>
       ))}

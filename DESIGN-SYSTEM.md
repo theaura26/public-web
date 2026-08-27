@@ -325,3 +325,23 @@ The mono `.label` role is still correct for what it was made for:
 naming a part of a page (SOURCES, ASK NEXT), captioning a figure, or
 labelling a row in a spec table. The rule is about the position — above
 the title — not about the type style.
+
+### h2 renders at three sizes, on purpose
+
+An audit across ten pages found `h2` computing to 60px, 32px and 28px.
+All three are correct, and the reason is worth writing down so the next
+audit does not try to "fix" it:
+
+- **60px** — `clamp(36,5.5vw,60)`, the section heading in page content.
+  This is the h2 of section 8 and the default everywhere.
+- **32px** — a lane heading (`.lane-h`) on the Field Notes and From Aura
+  indexes. It is an `<h2>` because it heads a section of the document
+  outline, and it is set at the h3 size because it labels a row of cards
+  sitting under a 92px page title. A 60px lane heading would out-shout
+  the page.
+- **28px** — the footer manifesto title, a fixed footer treatment that
+  appears identically on every page.
+
+The rule: the element is chosen for the document outline, the size is
+chosen for the visual hierarchy, and where they disagree the disagreement
+is deliberate and recorded here.

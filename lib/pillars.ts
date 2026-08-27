@@ -44,10 +44,9 @@ export const PILLARS: Pillar[] = [
       'In practice it means measuring first. A canopy is read in lux before anyone cuts it. A preparation is plated before it is spread. A ferment is stopped by its pH. The instinct comes second, and it is a better instinct for having numbers under it.',
       'It runs through three studios and three places. Agroculture works it into 150 acres. Hospitality builds the rooms where a person can meet it. The Atelier is the taste layer — what is worth making at all, and what is good enough to leave here carrying the name.',
       'And it sets the horizon. Every decision is weighed against the year 3026, which changes what counts as a good one: the machine that listens beats the machine that acts, and the slow answer usually wins.',
+      'The term is Aura’s own. It is defined here and then left alone, because it is meant to stay a way of working.',
     ],
-    open: [
-      'Natural Intelligence is Aura’s own term. It is defined once, here, and then left alone — the estate would rather it stayed a working idea than became a slogan.',
-    ],
+    open: [],
     related: [
       { label: 'Why Aura?', href: '/reason' },
       { label: 'The Atelier', href: '/atelier' },

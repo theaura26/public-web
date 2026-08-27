@@ -158,14 +158,20 @@ export function Swimlanes({
           position: relative;
           width: 100vw;
           margin-left: calc(50% - 50vw);
+          /* Clips the fade's overhang below. */
+          overflow: hidden;
         }
         /* The row dissolves off the right rather than hard-cropping —
            the same gesture as the homepage slider and the menu's
            bottom vignette. */
         .sw .lane-fade {
           position: absolute;
-          top: 0; right: 0; bottom: 0;
-          width: clamp(64px, 12vw, 200px);
+          top: 0; bottom: 0;
+          /* Runs past the right edge so the blur has backdrop to sample
+             all the way to 1280 and its clamped boundary falls outside
+             the clip. Flush at right: 0 it left a hard vertical seam. */
+          right: -32px;
+          width: calc(clamp(64px, 12vw, 200px) + 32px);
           pointer-events: none;
           z-index: 2;
           -webkit-mask-image: linear-gradient(to right, transparent, #000 55%);

@@ -900,19 +900,26 @@ export default function AskAura() {
           --aa-line: rgba(255, 255, 255, 0.08);
           --aa-fill: rgba(255, 255, 255, 0.10);
 
-          /* Centred, not docked. With the page blurred behind it there
-             is nothing left for a corner to stay out of the way of, and
-             the middle is where a thing you are reading belongs. */
+          /* Centred horizontally, anchored by its bottom edge. Centring
+             vertically meant the panel grew in both directions, so its
+             foot moved every time an answer arrived and the composer
+             crept up the screen under the reader's hand. Fixed at the
+             bottom it grows upward only, and the thing you type into
+             stays where you left it.
+             6dvh is where the centred panel already sat at full height,
+             so nothing jumps; the clamp keeps it sane on a short
+             viewport and a tall one. */
           position: fixed;
           left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
+          bottom: clamp(24px, 6dvh, 56px);
+          transform: translateX(-50%);
           z-index: 1202;
           /* Room to read in. The dock is where a whole conversation
              happens, not a notification, and at 440 the answers were
              scrolling almost as fast as they arrived. */
           width: min(620px, calc(100vw - 40px));
-          max-height: min(min(820px, 88dvh), calc(100dvh - 88px));
+          /* Never taller than the room left above its anchored foot. */
+          max-height: min(820px, calc(100dvh - clamp(24px, 6dvh, 56px) - 54px));
           display: flex; flex-direction: column;
           border-radius: 28px;
           /* Paired with the inline blur above, which does the tinting:
@@ -959,8 +966,8 @@ export default function AskAura() {
            bare translateY here would drop the panel back to the corner
            for the length of the animation. */
         @keyframes aa-in {
-          from { opacity: 0; transform: translate(-50%, calc(-50% + 56px)) scale(0.92); }
-          to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+          from { opacity: 0; transform: translateX(-50%) translateY(56px) scale(0.92); }
+          to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
         }
         /* Back the way it came, and quicker: leaving should not take as
            long as arriving. */
@@ -971,8 +978,8 @@ export default function AskAura() {
           pointer-events: none;
         }
         @keyframes aa-out {
-          from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-          to   { opacity: 0; transform: translate(-50%, calc(-50% + 40px)) scale(0.96); }
+          from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+          to   { opacity: 0; transform: translateX(-50%) translateY(40px) scale(0.96); }
         }
         .aa-scrim.is-closing { animation: aa-scrim-out var(--dur-base) var(--ease) forwards; }
         @keyframes aa-scrim-out { from { opacity: 1; } to { opacity: 0; } }

@@ -81,7 +81,7 @@ function opening(pathname: string): { line: string; prompts: string[] } {
 
   return {
     line: 'Ask me anything about Aura — the estates, the coffee, the practice.',
-    prompts: ['What is Aura?', 'Where are the estates?', 'What do you grow?'],
+    prompts: ['What is Aura?', 'Where are the estates?', 'What does Aura grow?'],
   }
 }
 

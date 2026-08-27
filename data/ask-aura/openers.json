@@ -12,8 +12,8 @@
     "hash": "51634ba842bd433a",
     "line": "This is where we shape ideas into real things — ask me anything.",
     "prompts": [
-      "How does subtraction guide your making?",
-      "What crafts do you combine here?",
+      "How does subtraction guide Aura’s making?",
+      "What crafts does Aura combine here?",
       "What’s special about Ohara and Mudigere?"
     ]
   },
@@ -22,8 +22,8 @@
     "line": "This is where craft and nature come together — ask me anything.",
     "prompts": [
       "What does natural intelligence mean here?",
-      "How do you build for 1,000 years?",
-      "What makes your hospitality unique?"
+      "How does Aura build for 1,000 years?",
+      "What makes Aura’s hospitality unique?"
     ]
   },
   "/biodynamic": {
@@ -48,9 +48,9 @@
     "hash": "b8673c9755be9333",
     "line": "This is how we turn waste into life — what would you like to know?",
     "prompts": [
-      "How do you compost the herd's dung?",
+      "How does Aura compost the herd’s dung?",
       "What is Jeevamrit and why use it?",
-      "How do you test soil fertility here?"
+      "How does Aura test soil fertility here?"
     ]
   },
   "/coffee": {
@@ -66,7 +66,7 @@
     "hash": "1543ba2904e7aadd",
     "line": "Got questions or want to work with us? Ask away.",
     "prompts": [
-      "How can I contact you?",
+      "How can I contact Aura?",
       "Where is the estate located?",
       "Can I visit the atelier?"
     ]
@@ -75,7 +75,7 @@
     "hash": "5a574df2fece833c",
     "line": "This is the living system that keeps our farm thriving — ask me anything.",
     "prompts": [
-      "How do you measure ecological health?",
+      "How does Aura measure ecological health?",
       "What role do fungi play here?",
       "Why is dead wood important?"
     ]
@@ -84,7 +84,7 @@
     "hash": "ac4158fbc41fafd1",
     "line": "This is where our coffee's unique flavours begin — ask me anything.",
     "prompts": [
-      "How do you ferment coffee cherries?",
+      "How does Aura ferment coffee cherries?",
       "What role does cow dung play?",
       "Why is patience important here?"
     ]
@@ -103,8 +103,8 @@
     "line": "Welcome to Aura — ask me anything about our work and vision.",
     "prompts": [
       "What is a Monastic Polymath?",
-      "How do you combine wisdom and capital?",
-      "What makes your coffee regenerative?"
+      "How does Aura combine wisdom and capital?",
+      "What makes Aura’s coffee regenerative?"
     ]
   },
   "/land": {
@@ -113,7 +113,7 @@
     "prompts": [
       "Why is land called ancestry?",
       "What crops grow here?",
-      "How do you work this land?"
+      "How does Aura work this land?"
     ]
   },
   "/living-systems": {
@@ -130,7 +130,7 @@
     "line": "This is Mudigere, our oldest Arabica home — ask me anything.",
     "prompts": [
       "What makes Mudigere special here?",
-      "How do you farm four layers?",
+      "How does Aura farm four layers?",
       "What’s the closed loop system?"
     ]
   },
@@ -156,7 +156,7 @@
     "hash": "04386e240d58c39f",
     "line": "This is how we track every step of our coffee's journey.",
     "prompts": [
-      "How do you measure what you make?",
+      "How does Aura measure what it makes?",
       "What does 'the lot reads itself' mean?",
       "How is every event verified here?"
     ]
@@ -165,8 +165,8 @@
     "hash": "b67d5964423cbb27",
     "line": "This is why we started Aura — what would you like to know?",
     "prompts": [
-      "Why did you choose this land?",
-      "How did Ohara inspire you?",
+      "Why did Aura choose this land?",
+      "How did Ohara inspire Aura?",
       "What makes Mudigere special?"
     ]
   },
@@ -201,7 +201,7 @@
     "hash": "15f71950a3e0f905",
     "line": "This is how we manage light for perfect coffee — ask me anything.",
     "prompts": [
-      "How do you measure light here?",
+      "How does Aura measure light here?",
       "Why cut only prescribed shade?",
       "What happens to the cut material?"
     ]
@@ -210,8 +210,8 @@
     "hash": "c16cd421f9aa2dad",
     "line": "This is our moral spine — ask me anything about it.",
     "prompts": [
-      "What are the things you will not do?",
-      "How do you apply the fourfold self-check?",
+      "What are the things Aura will not do?",
+      "How does Aura apply the fourfold self-check?",
       "What are the seven decision filters?"
     ]
   }

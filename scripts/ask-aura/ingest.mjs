@@ -346,7 +346,12 @@ for (const page of pages) {
               'begin "Aura is".\n' +
               'Each prompt is a real question, six words or fewer where possible, answerable ' +
               'from THIS page. Specific to it \u2014 never "What is Aura?" or "Tell me more". ' +
-              'Natural British English, sentence case, ending in a question mark.',
+              'Natural British English, sentence case, ending in a question mark.\n' +
+              'A prompt names Aura and never addresses it as you or your. ' +
+              '"What makes Aura\u2019s coffee regenerative?" is right; "What makes your coffee ' +
+              'regenerative?" is wrong \u2014 the prompts sit in Aura\u2019s own panel, where ' +
+              '"your coffee" reads as the reader\u2019s. The line is different: it is the host ' +
+              'speaking, so it addresses the reader as you.',
           },
           {
             role: 'user',

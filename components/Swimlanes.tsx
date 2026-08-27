@@ -123,7 +123,7 @@ export function Swimlanes({
         }
 
         /* ── one lane ── */
-        .sw .lane { display: flex; flex-direction: column; gap: var(--space-4); }
+        .sw .lane { display: flex; flex-direction: column; gap: var(--space-3); }
         /* The heading and the rule beneath it. It was a two-item flex
            row until the 'all N' link came out; with one child the
            space-between and the gap had nothing left to do. */
@@ -138,7 +138,7 @@ export function Swimlanes({
           margin: 0; max-width: 50ch;
         }
 
-        .sw .lane-bar { padding-bottom: var(--space-4); }
+        .sw .lane-bar { padding-bottom: 0; }
         /* The lane heading stays h3. The cards beneath it stepped down
            to p1 so a card title no longer competes with the name of the
            lane it sits in. */
@@ -155,6 +155,9 @@ export function Swimlanes({
         /* The rail bleeds past the gutter so it reads as continuing
            beyond the viewport rather than stopping at the margin. */
         .sw .lane-bleed {
+          /* The lane's own gap is now the heading-to-lede pairing, so the
+             cards restore their own distance rather than inheriting it. */
+          margin-top: var(--space-4);
           position: relative;
           width: 100vw;
           margin-left: calc(50% - 50vw);
@@ -182,7 +185,7 @@ export function Swimlanes({
           /* No scroll-snap. Snapping pulls the first card flush to the
              container edge, which scrolls straight past the track's rail
              padding and lands it at x=0 instead of on the heading. */
-          padding: var(--space-4) 0 var(--space-5);
+          padding: var(--space-4) 0 var(--space-7);
           scrollbar-width: none; -ms-overflow-style: none;
         }
         .sw .lane-scroll::-webkit-scrollbar { display: none; height: 0; }
@@ -192,7 +195,11 @@ export function Swimlanes({
           /* Reproduces the rail so the first card lines up with the lane
              heading above it, and the last runs past the right edge. */
           padding-left: max(var(--gutter), calc(50vw - var(--max-w) / 2 + var(--gutter)));
-          padding-right: var(--gutter);
+          /* The blurred fade sits over the last card at the end of the
+             scroll, so the track has to be able to travel past it —
+             a gutter alone left the final card permanently half-dissolved
+             with nowhere further to scroll. */
+          padding-right: calc(clamp(64px, 12vw, 200px) + var(--gutter));
         }
 
         .sw .lane-card {

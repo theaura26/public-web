@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 import { useEffect, useState } from 'react'
 import { LogoEmblem } from './Logo'
 import { useMode } from './ModeProvider'
@@ -53,6 +55,10 @@ export default function Footer() {
           <div>
             <p className="label" style={{ marginBottom: 'var(--space-3)' }}>Follow us</p>
             <a href="https://www.instagram.com/theaura.life/" target="_blank" rel="noopener noreferrer" className="p1" style={{ display: 'block' }}>Instagram</a>
+            {/* Not a social account, but this is where a reader who wants
+                more of Aura rather than more of the estate is already
+                looking. Internal, so it uses next/link and opens in place. */}
+            <Link href="/brand" className="p1" style={{ display: 'block', marginTop: 'var(--space-2)' }}>Our Brand</Link>
           </div>
           <div>
             <p className="label" style={{ marginBottom: 'var(--space-4)' }}>Locations</p>

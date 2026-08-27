@@ -66,12 +66,24 @@ export function NoteSwimlanes() {
               <p className="lane-lede">{cat.lede}</p>
             </div>
 
-            <div className="section-w">
+            {/* Full-bleed, so the row runs off the right edge instead of
+                stopping at the rail. The track's own padding reproduces
+                the rail on the left so the first card still starts on
+                the heading's line. */}
+            <div className="lane-bleed">
               <div className="lane-scroll">
                 <div className="lane-track">
                   {notes.map((n) => <Card key={`${cat.id}-${n.href}`} note={n} />)}
                 </div>
               </div>
+              {/* backdrop-filter inline: styled-jsx drops it from emitted
+                  rules on this build, the same way it does for the menu
+                  vignette and the homepage slider. */}
+              <div
+                className="lane-fade"
+                aria-hidden
+                style={{ backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
+              />
             </div>
           </section>
         )
@@ -139,14 +151,29 @@ export function NoteSwimlanes() {
 
         /* The rail bleeds past the gutter so it reads as continuing
            beyond the viewport rather than stopping at the margin. */
-        /* Scrolls inside the rail rather than across the viewport, so
-           the first card starts on the same line as the lane heading.
-           A full-bleed track would need its padding to reproduce the
-           rail's own arithmetic, and would drift the moment either
-           changed. */
+        .sw .lane-bleed {
+          position: relative;
+          width: 100vw;
+          margin-left: calc(50% - 50vw);
+        }
+        /* The row dissolves off the right rather than hard-cropping —
+           the same gesture as the homepage slider and the menu's
+           bottom vignette. */
+        .sw .lane-fade {
+          position: absolute;
+          top: 0; right: 0; bottom: 0;
+          width: clamp(64px, 12vw, 200px);
+          pointer-events: none;
+          z-index: 2;
+          background: linear-gradient(to right, transparent, var(--bg) 82%);
+          -webkit-mask-image: linear-gradient(to right, transparent, #000 55%);
+          mask-image: linear-gradient(to right, transparent, #000 55%);
+        }
         .sw .lane-scroll {
           overflow-x: auto;
-          scroll-snap-type: x proximity;
+          /* No scroll-snap. Snapping pulls the first card flush to the
+             container edge, which scrolls straight past the track's rail
+             padding and lands it at x=0 instead of on the heading. */
           padding: var(--space-4) 0 var(--space-5);
           scrollbar-width: none; -ms-overflow-style: none;
         }
@@ -154,11 +181,14 @@ export function NoteSwimlanes() {
         .sw .lane-track {
           display: flex; gap: clamp(16px, 2.2vw, 32px);
           width: max-content;
+          /* Reproduces the rail so the first card lines up with the lane
+             heading above it, and the last runs past the right edge. */
+          padding-left: max(var(--gutter), calc(50vw - var(--max-w) / 2 + var(--gutter)));
+          padding-right: var(--gutter);
         }
 
         .sw .lane-card {
-          scroll-snap-align: start;
-          flex: none; width: clamp(240px, 30vw, 420px);
+          flex: none; width: clamp(280px, 36vw, 520px);
           display: flex; flex-direction: column; gap: var(--space-3);
           text-decoration: none; color: inherit;
         }

@@ -132,6 +132,7 @@ export function InfiniteArticleSlider() {
           position: relative;
           width: 100vw;
           margin-left: calc(50% - 50vw);
+          overflow: hidden;
           padding: clamp(18px, 3vh, 40px) 0 clamp(24px, 5vh, 64px);
         }
         /* Right-edge blur + fade, like the slide-out menu's vignette, so
@@ -139,9 +140,11 @@ export function InfiniteArticleSlider() {
         .ias__fade {
           position: absolute;
           top: 0;
-          right: 0;
+          /* Same overhang as the Field Notes lanes — a backdrop-filter
+             flush to the viewport edge leaves a seam. */
+          right: -32px;
           bottom: 0;
-          width: clamp(64px, 12vw, 200px);
+          width: calc(clamp(64px, 12vw, 200px) + 32px);
           pointer-events: none;
           z-index: 2;
           -webkit-mask-image: linear-gradient(to right, transparent, #000 55%);

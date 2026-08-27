@@ -117,7 +117,7 @@ export const SECTIONS: NavSection[] = [
         label: 'Biodynamic',
         href: '/field-notes/biodynamic',
         children: [
-          { label: 'A living organism', href: '/biodynamic' },
+          { label: 'A Living Organism', href: '/biodynamic' },
           { label: 'Circular Intelligence', href: '/circular' },
           { label: 'Rta', href: '/rta' },
           { label: 'Vedic Farming', href: '/vedic' },
@@ -165,7 +165,7 @@ export const SECTIONS: NavSection[] = [
         label: 'Coffee & Fermentation',
         href: '/field-notes/coffee-fermentation',
         children: [
-          { label: 'Our bean story', href: '/coffee' },
+          { label: 'Our Bean Story', href: '/coffee' },
           { label: 'Fermentation', href: '/fermentation' },
           { label: 'Malabar Pepper', href: '/pepper' },
         ],

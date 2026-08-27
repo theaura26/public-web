@@ -27,11 +27,11 @@ const ARTICLES: Article[] = [
   { href: '/artistry',       title: 'Artistry',              img: '/aura-artistry.jpg', size: 'md' },
   { href: '/wisdom',         title: 'Moral Spine',           img: '/journals/wisdom/aura-moral-spine.jpg', size: 'lg' },
   { href: '/living-systems', title: 'Living Systems',        img: '/journals/living-systems/aura-living-systems.jpg', size: 'sm' },
-  { href: '/coffee',         title: 'Our bean story',       img: '/journals/coffee/aura-our-coffee-story.jpg', size: 'md' },
+  { href: '/coffee',         title: 'Our Bean Story',       img: '/journals/coffee/aura-our-coffee-story.jpg', size: 'md' },
   { href: '/rta',            title: 'Rta',                   img: '/journals/rta/aura-rta.jpg', size: 'lg' },
   { href: '/fermentation',   title: 'Fermentation',          img: '/journals/fermentation/aura-fermentation.jpg', size: 'sm' },
   { href: '/land',           title: 'The Land',              img: '/journals/land/aura-the-land.jpg', size: 'md' },
-  { href: '/biodynamic',     title: 'A living organism',    img: '/journals/biodynamic/aura-biodynamic.jpg', size: 'lg' },
+  { href: '/biodynamic',     title: 'A Living Organism',    img: '/journals/biodynamic/aura-biodynamic.jpg', size: 'lg' },
   { href: '/residency',      title: 'Monastic Polymaths',    img: '/journals/residency/aura-monastic-polymath.jpg', size: 'sm' },
 ]
 

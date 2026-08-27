@@ -30,7 +30,7 @@ type Day = { n: string; title: string; slots: string[] }
 const DAYS: Day[] = [
   {
     n: 'Day one',
-    title: 'Guests of the mountain',
+    title: 'Guests of the Mountain',
     slots: [
       'Four hours up from Bengaluru, and somewhere in the last one the canopy shuts over the road and the temperature drops six degrees. Nobody owns a mountain. You arrive as its guest, which is the only way anyone arrives here.',
       'Walk the estate before a single person explains it. A hundred and fifty acres, four storeys of canopy, and more going on overhead than you will manage to name — this is where you meet the biodiversity rather than read about it.',

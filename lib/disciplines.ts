@@ -82,7 +82,7 @@ export const DISCIPLINES: Discipline[] = [
       'Chromatography is run as a soil-vitality image. It is a qualitative indicator and is published as a practice, never as evidence of an outcome.',
     ],
     related: [
-      { label: 'A living organism', href: '/biodynamic' },
+      { label: 'A Living Organism', href: '/biodynamic' },
       { label: 'Circular Intelligence', href: '/circular' },
     ],
   },

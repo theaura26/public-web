@@ -21,7 +21,6 @@ function Card({ note }: { note: NoteEntry }) {
           // eslint-disable-next-line @next/next/no-img-element
           <img src={note.img} alt="" loading="lazy" decoding="async" />
         ) : null}
-        {note.status === 'soon' && <span className="lane-soon">Coming soon</span>}
       </span>
       <span className="lane-t">{note.title}</span>
       {note.from && <span className="lane-from">In {note.from}</span>}
@@ -96,13 +95,13 @@ export function NoteSwimlanes() {
           display: flex; flex-direction: column;
           gap: clamp(56px, 8vh, 96px);
         }
-        .sw .sw-head { display: flex; flex-direction: column; gap: var(--space-5); }
+        .sw .sw-head { align-items: center; text-align: center; display: flex; flex-direction: column; gap: var(--space-5); }
         /* The banner title spec, unchanged — same size, weight, tracking
            and measure as every journal hero. This page had drifted to a
            smaller size and much tighter tracking, which read as a
            different family of page. */
         .sw .sw-h {
-          margin: 0;
+          margin: 0 auto;
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 600;
           font-size: clamp(48px, 7.2vw, 106px);
@@ -112,11 +111,16 @@ export function NoteSwimlanes() {
           color: var(--text);
           max-width: min(90vw, 7.5em);
           text-wrap: balance;
+          text-align: center;
         }
+        /* Centred under a centred title, and set in mono: the lede here
+           states what the page is rather than beginning an argument, so
+           it takes the label role rather than the body one. */
         .sw .sw-lede {
-          font-family: var(--font-sans);
-          font-size: 16px; line-height: 1.55; font-weight: 400;
-          color: var(--text-body); margin: 0; max-width: 52ch;
+          font-family: var(--font-mono), monospace;
+          font-size: 12px; line-height: 1.7; letter-spacing: 0.4px;
+          color: var(--text-muted); margin: 0;
+          max-width: 56ch;
         }
 
         /* ── one lane ── */
@@ -182,7 +186,10 @@ export function NoteSwimlanes() {
           display: flex; flex-direction: column; gap: var(--space-3);
           text-decoration: none; color: inherit;
         }
-        .sw .lane-card.is-soon { cursor: default; }
+        /* Announced, not open. Dimmed and inert, and unlabelled — the
+           same treatment the menu gives Munduk and Punakha. The stamp
+           said in words what the grey already says. */
+        .sw .lane-card.is-soon { cursor: default; opacity: 0.55; }
 
         .sw .lane-plate {
           position: relative; display: block;
@@ -201,12 +208,6 @@ export function NoteSwimlanes() {
         .sw .lane-plate[data-noimg='true'] { background: var(--text-muted); opacity: 0.16; }
         .sw .lane-card.is-soon .lane-plate {
           background: var(--text-muted); opacity: 0.18;
-        }
-        .sw .lane-soon {
-          position: absolute; inset: 0; display: grid; place-items: center;
-          font-family: var(--font-mono), monospace;
-          font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase;
-          color: var(--bg);
         }
 
         .sw .lane-t {

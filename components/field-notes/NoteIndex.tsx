@@ -61,7 +61,6 @@ export function NoteIndex({
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={n.img} alt="" loading="lazy" decoding="async" />
                   ) : null}
-                  {n.status === 'soon' && <span className="fn-soon">Coming soon</span>}
                 </span>
                 <span className="fn-text">
                   <span className="fn-t">{n.title}</span>
@@ -92,17 +91,21 @@ export function NoteIndex({
           padding: calc(var(--nav-h) + var(--space-9)) 0 var(--section-gap);
           min-height: 100svh;
         }
-        .fn .fn-head { display: flex; flex-direction: column; gap: var(--space-5); }
+        .fn .fn-head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-5); }
         .fn .fn-h {
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 600; text-transform: uppercase;
           font-size: clamp(40px, 8vw, 82px);
           line-height: 1.02; letter-spacing: -0.06em;
           margin: 0; max-width: 14ch; text-wrap: balance;
+          text-align: center;
         }
+        /* Mono and centred, matching the Field Notes index — a lede that
+           says what a category is takes the label role. */
         .fn .fn-lede {
-          font-size: clamp(17px, 1.7vw, 21px); line-height: 1.6;
-          color: var(--text-body); margin: 0; max-width: 52ch;
+          font-family: var(--font-mono), monospace;
+          font-size: 12px; line-height: 1.7; letter-spacing: 0.4px;
+          color: var(--text-muted); margin: 0; max-width: 56ch;
         }
 
         /* ── category filters ── */
@@ -142,7 +145,8 @@ export function NoteIndex({
         @media (max-width: 640px) {
           .fn .fn-list { grid-template-columns: minmax(0, 1fr); }
         }
-        .fn .fn-item.is-soon { cursor: default; }
+        /* Matches the menu: dimmed, inert, unlabelled. */
+        .fn .fn-item.is-soon { cursor: default; opacity: 0.55; }
 
         .fn .fn-plate {
           position: relative; display: block;
@@ -158,13 +162,6 @@ export function NoteIndex({
         .fn .fn-item:hover .fn-plate img { transform: scale(1.04); }
         .fn .fn-plate[data-noimg='true'] { background: var(--text-muted); opacity: 0.16; }
         .fn .fn-item.is-soon .fn-plate { background: var(--text-muted); opacity: 0.18; }
-        .fn .fn-soon {
-          position: absolute; inset: 0;
-          display: grid; place-items: center;
-          font-family: var(--font-mono), monospace;
-          font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase;
-          color: var(--bg);
-        }
 
         .fn .fn-text { display: flex; flex-direction: column; gap: var(--space-3); }
         .fn .fn-t {

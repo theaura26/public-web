@@ -121,20 +121,23 @@ export function Swimlanes({
           text-wrap: balance;
           text-align: center;
         }
-        /* Centred under a centred title, and set in mono: the lede here
-           states what the page is rather than beginning an argument, so
-           it takes the label role rather than the body one. */
-        .sw .sw-lede {
-          font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; line-height: normal;
-          margin: 0; max-width: 42ch;
-          color: var(--text-muted);
-        }
 
         /* ── one lane ── */
         .sw .lane { display: flex; flex-direction: column; gap: var(--space-4); }
         /* The heading and the rule beneath it. It was a two-item flex
            row until the 'all N' link came out; with one child the
            space-between and the gap had nothing left to do. */
+        /* Centred under a centred title and set in mono: this line
+           states what the page is rather than starting an argument, so
+           it takes the label role. */
+        .sw .sw-lede {
+          font-family: var(--font-mono), monospace;
+          font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+          line-height: normal;
+          color: var(--text-muted);
+          margin: 0; max-width: 50ch;
+        }
+
         .sw .lane-bar { padding-bottom: var(--space-4); }
         /* The lane heading stays h3. The cards beneath it stepped down
            to p1 so a card title no longer competes with the name of the

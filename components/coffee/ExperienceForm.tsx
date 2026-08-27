@@ -93,7 +93,7 @@ export function ExperienceForm() {
   }
 
   const btnLabel = {
-    idle: 'Ask for a place',
+    idle: 'Attend the Festival',
     sending: 'Sending…',
     sent: 'Asked ✓',
     error: 'Try again',

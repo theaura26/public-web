@@ -137,7 +137,7 @@ export function MicroNav() {
           {/* The CTA sits above the scroller: links pass under it. */}
           <div className="ln-end">
             <Link href={PAGE_HREF.experience} className="p2 ln-cta">
-              <span className="ln-cta-long">Aura Festival</span>
+              <span className="ln-cta-long">Attend the Festival</span>
               <span className="ln-cta-short">Festival</span>
             </Link>
           </div>
@@ -1419,7 +1419,7 @@ export function ReserveBanner() {
           of your own, and we build it and ship it under your name.
         </p>
         <p className="rb-act rb-al">
-          <ArrowLink href={PAGE_HREF.experience} tone="ink">Come to the Festival</ArrowLink>
+          <ArrowLink href={PAGE_HREF.experience} tone="ink">Attend the Festival</ArrowLink>
         </p>
       </div>
       <style jsx>{`

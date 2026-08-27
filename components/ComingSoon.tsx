@@ -46,12 +46,9 @@ export default function ComingSoon({
         }
         .cs-in { display: flex; flex-direction: column; gap: var(--space-4); max-width: 62ch; }
         .cs-title {
-          margin: 0;
-          font-family: var(--font-sans), system-ui, sans-serif;
-          font-size: clamp(2rem, 6vw, 3.4rem);
-          line-height: 1.05; letter-spacing: -0.02em;
+          font-family: var(--font-grotesque), sans-serif; font-weight: 600; text-transform: uppercase; font-size: clamp(44px, 9vw, 88px); line-height: 1.02; letter-spacing: -0.06em;
+          margin: 0; text-wrap: balance;
           color: var(--text);
-          text-wrap: balance;
         }
         .cs-note { margin: 0; color: var(--text-body); max-width: 54ch; }
         .cs-out { display: flex; flex-wrap: wrap; gap: var(--space-5); margin-top: var(--space-3); }

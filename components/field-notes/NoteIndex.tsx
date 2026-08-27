@@ -93,19 +93,16 @@ export function NoteIndex({
         }
         .fn .fn-head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-5); }
         .fn .fn-h {
-          font-family: var(--font-grotesque), sans-serif;
-          font-weight: 600; text-transform: uppercase;
-          font-size: clamp(40px, 8vw, 82px);
-          line-height: 1.02; letter-spacing: -0.06em;
-          margin: 0; max-width: 14ch; text-wrap: balance;
-          text-align: center;
+          font-family: var(--font-grotesque), sans-serif; font-weight: 600; text-transform: uppercase; font-size: clamp(44px, 9vw, 88px); line-height: 1.02; letter-spacing: -0.06em;
+          margin: 0; max-width: 14ch; text-wrap: balance; text-align: center;
+          color: var(--text);
         }
         /* Mono and centred, matching the Field Notes index — a lede that
            says what a category is takes the label role. */
         .fn .fn-lede {
-          font-family: var(--font-mono), monospace;
-          font-size: 12px; line-height: 1.7; letter-spacing: 0.4px;
-          color: var(--text-muted); margin: 0; max-width: 56ch;
+          font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; line-height: normal;
+          margin: 0; max-width: 56ch;
+          color: var(--text-muted);
         }
 
         /* ── category filters ── */
@@ -165,21 +162,20 @@ export function NoteIndex({
 
         .fn .fn-text { display: flex; flex-direction: column; gap: var(--space-3); }
         .fn .fn-t {
-          font-family: var(--font-grotesque), sans-serif; font-weight: 400;
-          font-size: clamp(22px, 2.6vw, 34px);
-          line-height: 1.1; letter-spacing: -0.03em;
-          color: var(--text);
+          font-family: var(--font-grotesque), sans-serif; font-weight: 400; font-size: clamp(24px, 3vw, 32px); line-height: 1.15; letter-spacing: -0.03em;
           transition: color var(--dur-base) var(--ease);
+          color: var(--text);
         }
         .fn .fn-item:hover .fn-t { color: var(--brand-accent); }
         .fn .fn-item.is-soon .fn-t { color: var(--text-muted); }
         .fn .fn-d {
-          font-size: clamp(14px, 1.3vw, 17px); line-height: 1.6;
-          color: var(--text-body); max-width: 56ch; text-wrap: pretty;
+          font-family: var(--font-sans); font-size: 14px; line-height: 1.6; letter-spacing: normal; color: var(--text-body);
+          max-width: 56ch; text-wrap: pretty;
         }
         .fn .fn-from {
           font-family: var(--font-mono), monospace;
-          font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+          font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+          line-height: normal;
           color: var(--text-muted);
         }
 

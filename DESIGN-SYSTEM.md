@@ -230,6 +230,12 @@ Recorded rather than silently fixed, because changing them alters how the site f
 
 **Brand accent as a literal.** `#E37128` appears three times outside its token, in `VideoReactiveArt` and `RemarkableCircle`. Both are palettes passed to canvas and WebGL rather than CSS, so they cannot read a custom property — this is a real constraint, not laziness, but it does mean the accent has three copies that will not follow if the token changes.
 
+**The display heading has two specs.** Section 8 defines `h1` as `clamp(44,9vw,88)` at `-0.06em` and line-height 1.02. `HeroBanner` and `JournalHero` — the opener on every journal and field note — use `clamp(48,7.2vw,106)` at `-0.03em` and line-height 1. Those are different kinds of heading, and both are in use on pages that sit next to each other in the same menu.
+
+The Field Notes and From Aura index headings follow the banner, because they open a section the way a banner opens an article and were explicitly matched to it. The category pages, section indexes and coming-soon stubs follow section 8.
+
+Pick one. Until then, the rule is: a page that opens with a full-width display line follows the banner; a page that opens with a heading in the reading column follows section 8.
+
 **Two non-system curves.** `cubic-bezier(.6,0,.2,1)` and `cubic-bezier(0.34,1.56,0.64,1)` are in use and are not among the three in section 7. The second is an overshoot spring, which the system has no equivalent of. Either adopt it as a fourth curve or retire it.
 
 ---

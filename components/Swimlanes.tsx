@@ -125,10 +125,9 @@ export function Swimlanes({
            states what the page is rather than beginning an argument, so
            it takes the label role rather than the body one. */
         .sw .sw-lede {
-          font-family: var(--font-mono), monospace;
-          font-size: 12px; line-height: 1.7; letter-spacing: 0.4px;
-          color: var(--text-muted); margin: 0;
-          max-width: 56ch;
+          font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; line-height: normal;
+          margin: 0; max-width: 56ch;
+          color: var(--text-muted);
         }
 
         /* ── one lane ── */
@@ -141,14 +140,12 @@ export function Swimlanes({
           border-bottom: 1px solid var(--border);
         }
         .sw .lane-h {
-          font-family: var(--font-grotesque), sans-serif; font-weight: 400;
-          font-size: clamp(24px, 3vw, 40px);
-          line-height: 1.1; letter-spacing: -0.035em;
-          margin: 0; color: var(--text);
+          font-family: var(--font-grotesque), sans-serif; font-weight: 400; font-size: clamp(24px, 3vw, 32px); line-height: 1.15; letter-spacing: -0.03em;
+          margin: 0;
         }
         .sw .lane-lede {
-          font-size: 15px; line-height: 1.55;
-          color: var(--text-muted); margin: 0; max-width: 60ch;
+          font-family: var(--font-sans); font-size: 14px; line-height: 1.6; letter-spacing: normal; color: var(--text-body);
+          margin: 0; max-width: 60ch;
         }
 
         /* The rail bleeds past the gutter so it reads as continuing
@@ -219,17 +216,14 @@ export function Swimlanes({
         }
 
         .sw .lane-t {
-          font-family: var(--font-grotesque), sans-serif; font-weight: 400;
-          font-size: clamp(16px, 1.5vw, 20px);
-          line-height: 1.2; letter-spacing: -0.02em;
-          color: var(--text);
+          font-family: var(--font-grotesque), sans-serif; font-weight: 400; font-size: clamp(24px, 3vw, 32px); line-height: 1.15; letter-spacing: -0.03em;
           transition: color var(--dur-base) var(--ease);
+          color: var(--text);
         }
         .sw .lane-card:hover .lane-t { color: var(--brand-accent); }
         .sw .lane-card.is-soon .lane-t { color: var(--text-muted); }
         .sw .lane-from {
-          font-family: var(--font-mono), monospace;
-          font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+          font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; line-height: normal;
           color: var(--text-muted);
         }
 

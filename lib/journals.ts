@@ -103,6 +103,36 @@ export const ACTIVE_JOURNALS: Journal[] = [
     description: 'An artist residency for natural intelligence. Embedded, invitation-based.',
     img: '/journals/residency/aura-monastic-polymath.jpg',
   },
+  {
+    href: '/forest-islands',
+    title: 'Forest Islands',
+    description: 'Small ecological nuclei built inside the planting — four metres of dung and green cuttings, then left alone.',
+    img: '/aura-placeholder.svg',
+  },
+  {
+    href: '/bug-hotels',
+    title: 'Bug Hotels',
+    description: 'A plantation can be full of plants and short of homes. Drilled logs, nothing introduced, and a way to see who turns up.',
+    img: '/aura-placeholder.svg',
+  },
+  {
+    href: '/pollinators',
+    title: 'Pollinators',
+    description: 'Six invasive plants are taking the flowering understorey. What is being done about it, and what nobody has counted yet.',
+    img: '/aura-placeholder.svg',
+  },
+  {
+    href: '/cows-of-aura',
+    title: 'Cows of Aura',
+    description: 'An ear tag can fall out and a name is not a record. Every animal carries a number issued once, and a job written down.',
+    img: '/aura-placeholder.svg',
+  },
+  {
+    href: '/land-spirit-soul',
+    title: 'Land, Spirit, Soul',
+    description: 'The lamp at the Gau Angan is lit with ghee from the herd it is lit for — the closed loop, said in one gesture.',
+    img: '/aura-placeholder.svg',
+  },
 ]
 
 /** The next N journals after `currentHref`, wrapping around. Excludes

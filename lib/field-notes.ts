@@ -102,6 +102,12 @@ const ASSIGNMENT: Record<string, CategoryId[]> = {
   '/shade': ['biodiversity'],
   '/areca': ['biodiversity'],
 
+  '/forest-islands': ['biodiversity', 'land-ecology'],
+  '/bug-hotels': ['biodiversity', 'animals'],
+  '/pollinators': ['biodiversity', 'animals'],
+  '/cows-of-aura': ['animals', 'biodynamic'],
+  '/land-spirit-soul': ['art-culture'],
+
   '/fermentation': ['labs', 'coffee-fermentation'],
   '/coffee': ['labs', 'coffee-fermentation'],
   '/pepper': ['coffee-fermentation'],
@@ -148,36 +154,6 @@ const PENDING_NOTES: PendingNote[] = [
     title: 'Provenance',
     description: 'Where a thing came from, proved rather than asserted.',
     categories: ['labs'],
-  },
-  {
-    href: '/cows-of-aura',
-    title: 'Cows of Aura',
-    description: 'Every animal in the herd carries a record — lineage, grazing block, and what its dung went into.',
-    categories: ['biodynamic'],
-  },
-  {
-    href: '/spirit-prayer',
-    title: 'Spirit & Prayer',
-    description: 'The part of the practice that predates the measurements, and why it is still kept.',
-    categories: ['biodynamic'],
-  },
-  {
-    href: '/bug-hotels',
-    title: 'Bug Hotels',
-    description: 'Deliberate housing for the predators that keep a monoculture from happening.',
-    categories: ['biodiversity'],
-  },
-  {
-    href: '/pollinators',
-    title: 'Pollinators',
-    description: 'Bees through all four canopy layers, and what a flower here sets three trees over.',
-    categories: ['biodiversity'],
-  },
-  {
-    href: '/forest-islands',
-    title: 'Forest Islands',
-    description: 'Untouched stands left inside the planting, and what they seed back into it.',
-    categories: ['biodiversity'],
   },
 ]
 

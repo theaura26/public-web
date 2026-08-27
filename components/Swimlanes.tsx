@@ -57,7 +57,15 @@ function LaneStyles() {
            index page's own framing. */
         .sw.is-strip {
           min-height: 0;
-          padding: var(--section-gap) 0 var(--space-9);
+          padding: var(--section-gap) 0 var(--space-8);
+        }
+        /* The lane already pads under its card titles, and the strip pads
+           under the lane, and the footer pads above itself. Three paddings
+           stacked read as an empty screen, so the innermost one stands
+           down inside a strip. */
+        .sw.is-strip .lane-scroll { padding-bottom: 0; }
+        @media (max-width: 768px) {
+          .sw.is-strip { padding: var(--space-9) 0 var(--space-7); }
         }
         .sw {
           background: var(--bg); color: var(--text);

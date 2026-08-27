@@ -474,12 +474,11 @@ export function Panel({
         }
         /* The page opener wears the site's uppercase H1 display role —
            inherited from globals; only the ground colour is local. */
+        /* Now it really does inherit: the size, weight, case, leading
+           and tracking were restated here, so the rule went on drawing
+           the old display spec after globals had moved. Only the ground
+           colour and the measure are local. */
         .p-h.is-hero {
-          font-weight: 600;
-          text-transform: uppercase;
-          font-size: clamp(44px, 9vw, 88px);
-          line-height: 1.02;
-          letter-spacing: -0.06em;
           color: #fff; max-width: 16ch;
           text-wrap: balance;
         }

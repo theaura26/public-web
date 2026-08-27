@@ -46,7 +46,7 @@ export default function ComingSoon({
         }
         .cs-in { display: flex; flex-direction: column; gap: var(--space-4); max-width: 62ch; }
         .cs-title {
-          font-family: var(--font-grotesque), sans-serif; font-weight: 600; text-transform: uppercase; font-size: clamp(44px, 9vw, 88px); line-height: 1.02; letter-spacing: -0.06em;
+          font-family: var(--font-grotesque), sans-serif; font-weight: 600; text-transform: uppercase; font-size: clamp(48px, 7.2vw, 106px); line-height: 1; letter-spacing: -0.03em;
           margin: 0; text-wrap: balance;
           color: var(--text);
         }

@@ -144,10 +144,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
            the whole of it. */
         @media (max-width: 768px) {
           .pd-plate { width: calc(100% + 2 * var(--pd-rail)); }
-          /* --head-top is air for a page that opens on its title. This
-             one opens on a full-bleed picture, and on a phone that air
-             read as an empty screen before anything arrived. */
-          .pd { padding-top: calc(var(--nav-h) + var(--space-3)); }
+          /* Flush to the header line. --head-top is air for a page that
+             opens on its title; this one opens on a full-bleed picture,
+             and the picture should start where the header stops. */
+          .pd { padding-top: var(--nav-h); }
         }
 
         .pd-body { display: flex; flex-direction: column; gap: var(--space-4); }
@@ -155,8 +155,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           margin: 0 0 var(--space-3);
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 600; text-transform: uppercase;
-          font-size: clamp(44px, 9vw, 88px);
-          line-height: 1.02; letter-spacing: -0.06em;
+          font-size: clamp(48px, 7.2vw, 106px);
+          line-height: 1; letter-spacing: -0.03em;
           color: var(--text); text-wrap: balance;
         }
         .pd-lede { margin: 0; color: var(--text); max-width: 42ch; }

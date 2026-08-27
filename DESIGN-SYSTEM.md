@@ -130,7 +130,7 @@ Three families, four roles. Headings **and body** use Bricolage Grotesque — `-
 
 | Role | Font | Size | Tracking | Line-height | Use |
 |---|---|---|---|---|---|
-| `h1` | grotesque | `clamp(44,9vw,88)` | `-0.06em` | 1.02 | page display, **weight 600, uppercase** |
+| `h1` | grotesque | `clamp(48,7.2vw,106)` | `-0.03em` | 1 | page display, **weight 600, uppercase** |
 | `h2` | grotesque | `clamp(36,5.5vw,60)` | `-0.04em` | 1.06 | section heading |
 | `h3` | grotesque | `clamp(24,3vw,32)` | `-0.03em` | 1.15 | sub-heading / card title |
 | `.p1` | sans | 16px | normal | 1.55 | primary body |
@@ -229,8 +229,6 @@ Recorded rather than silently fixed, because changing them alters how the site f
 **Durations off the scale.** The scale is four values — 150 / 250 / 400 / 450 ms. Roughly forty declarations sit outside it, most often `0.3s`, `0.4s`, `0.6s` and `0.9s`. Some are deliberate and correct: the marquees run at 72 s and 90 s, the Ask Aura ring orbits at 7 s, and long ambient motion has no business on a UI scale. The rest is drift. Retiming them is a design pass, not a find-and-replace.
 
 **Brand accent as a literal.** `#E37128` appears three times outside its token, in `VideoReactiveArt` and `RemarkableCircle`. Both are palettes passed to canvas and WebGL rather than CSS, so they cannot read a custom property — this is a real constraint, not laziness, but it does mean the accent has three copies that will not follow if the token changes.
-
-**The display heading has two specs.** Section 8 defines `h1` as `clamp(44,9vw,88)` at `-0.06em` and line-height 1.02. `HeroBanner` and `JournalHero` — the opener on every journal and field note — use `clamp(48,7.2vw,106)` at `-0.03em` and line-height 1. Those are different kinds of heading, and both are in use on pages that sit next to each other in the same menu.
 
 The Field Notes and From Aura index headings follow the banner, because they open a section the way a banner opens an article and were explicitly matched to it. The category pages, section indexes and coming-soon stubs follow section 8.
 

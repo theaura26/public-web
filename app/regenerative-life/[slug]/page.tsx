@@ -40,7 +40,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   return (
     <SubjectPage
       subject={d}
-      eyebrow={`The Regenerative Life · ${String(i + 1).padStart(2, '0')} of ${DISCIPLINES.length}`}
       prev={DISCIPLINES[(i - 1 + DISCIPLINES.length) % DISCIPLINES.length]}
       next={DISCIPLINES[(i + 1) % DISCIPLINES.length]}
       basePath="/regenerative-life"

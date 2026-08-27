@@ -13,13 +13,11 @@ import { CATEGORIES, type CategoryId, type NoteEntry } from '@/lib/field-notes'
 */
 
 export function NoteIndex({
-  eyebrow,
   title,
   lede,
   active,
   notes,
 }: {
-  eyebrow: string
   title: string
   lede: string
   /** Highlights the current category in the filter row. */
@@ -30,7 +28,6 @@ export function NoteIndex({
     <main className="fn">
       <div className="section-w">
         <header className="fn-head">
-          <p className="label fn-eyebrow">{eyebrow}</p>
           <h1 className="fn-h">{title}</h1>
           <p className="fn-lede">{lede}</p>
         </header>
@@ -96,7 +93,6 @@ export function NoteIndex({
           min-height: 100svh;
         }
         .fn .fn-head { display: flex; flex-direction: column; gap: var(--space-5); }
-        .fn .fn-eyebrow { margin: 0; }
         .fn .fn-h {
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 600; text-transform: uppercase;
@@ -128,16 +124,23 @@ export function NoteIndex({
         .fn .fn-filter:hover { color: var(--text); border-color: var(--border-strong); }
         .fn .fn-filter.is-on { color: var(--brand-accent); border-color: var(--brand-accent); }
 
-        /* ── the rows ── */
-        .fn .fn-list { list-style: none; margin: 0; padding: 0; }
-        .fn .fn-row { border-bottom: 1px solid var(--border); }
+        /* ── the cards ──
+           Two across, image over text. A note is chosen by the look of
+           the place it is about, so the picture gets the room a row
+           could never give it. */
+        .fn .fn-list {
+          list-style: none; margin: 0; padding: 0;
+          display: grid; gap: clamp(28px, 4vw, 56px);
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .fn .fn-row { border-bottom: 0; }
         .fn .fn-item {
-          display: grid;
-          grid-template-columns: clamp(120px, 18vw, 200px) 1fr;
-          gap: clamp(20px, 3vw, 40px);
-          align-items: baseline;
-          padding: clamp(22px, 3vh, 34px) 0;
+          display: flex; flex-direction: column;
+          gap: clamp(14px, 1.6vw, 20px);
           text-decoration: none; color: inherit;
+        }
+        @media (max-width: 640px) {
+          .fn .fn-list { grid-template-columns: minmax(0, 1fr); }
         }
         .fn .fn-item.is-soon { cursor: default; }
 
@@ -146,9 +149,7 @@ export function NoteIndex({
           aspect-ratio: 16 / 9; overflow: hidden;
           border-radius: var(--radius-1);
           background: var(--bg-card);
-          /* baseline alignment is the house rule, but a plate has no
-             baseline of its own — nudge it onto the first text line */
-          align-self: start; margin-top: 4px;
+          align-self: start;
         }
         .fn .fn-plate img {
           width: 100%; height: 100%; object-fit: cover; display: block;

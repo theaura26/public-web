@@ -38,7 +38,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   return (
     <SubjectPage
       subject={p}
-      eyebrow={`The Reason · ${String(i + 1).padStart(2, '0')} of ${PILLARS.length}`}
       prev={PILLARS[(i - 1 + PILLARS.length) % PILLARS.length]}
       next={PILLARS[(i + 1) % PILLARS.length]}
       basePath="/reason"

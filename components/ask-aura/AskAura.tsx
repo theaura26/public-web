@@ -838,12 +838,10 @@ export default function AskAura() {
           to   { opacity: 0; transform: translateY(-0.75em); }
         }
         /* The artwork as it was drawn — a white stroke over a fill that
-           reads as the panel behind it. Left at its own proportions and
-           given enough size for a 2px stroke to survive: at 26px that
-           line falls below a pixel and the mark dissolves. */
+           reads as the panel behind it, at its own proportions. */
         .aa-mark {
           flex: none;
-          width: 34px;
+          width: 24px;
           height: auto;
           margin-left: 12px;
           display: block;

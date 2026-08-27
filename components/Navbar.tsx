@@ -727,15 +727,26 @@ export default function Navbar() {
                         key={item.href + item.label}
                         className={`mn-row ${item.children ? 'has-more' : ''}`}
                       >
-                        <Link
-                          href={item.href}
-                          className={`mn-leaf ${pathname === item.href ? 'is-on' : ''}`}
-                          aria-current={pathname === item.href ? 'page' : undefined}
-                          onClick={() => setMenuOpen(false)}
-                          data-attr={`menu-link:${item.href}`}
-                        >
-                          {item.label}
-                        </Link>
+                        {/* Something announced but not yet a place is
+                            plain text, not a dead link — the marker says
+                            so, and there is nothing to click through to. */}
+                        {item.disabled ? (
+                          <span className="mn-leaf is-soon" aria-disabled>
+                            {item.label}
+                            <span className="mn-soon">Soon</span>
+                          </span>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            className={`mn-leaf ${pathname === item.href ? 'is-on' : ''}`}
+                            aria-current={pathname === item.href ? 'page' : undefined}
+                            onClick={() => setMenuOpen(false)}
+                            data-attr={`menu-link:${item.href}`}
+                          >
+                            {item.label}
+                            {item.soon && <span className="mn-soon">Soon</span>}
+                          </Link>
+                        )}
 
                         {item.children && (
                           /* The tier beneath. Open on hover, and on focus
@@ -745,15 +756,23 @@ export default function Navbar() {
                             <ul className="mn-sub-in">
                             {item.children.map((child) => (
                               <li key={child.href + child.label}>
-                                <Link
-                                  href={child.href}
-                                  className={`mn-sub-leaf ${pathname === child.href ? 'is-on' : ''}`}
-                                  aria-current={pathname === child.href ? 'page' : undefined}
-                                  onClick={() => setMenuOpen(false)}
-                                  data-attr={`menu-link:${child.href}`}
-                                >
-                                  {child.label}
-                                </Link>
+                                {child.disabled ? (
+                                  <span className="mn-sub-leaf is-soon" aria-disabled>
+                                    {child.label}
+                                    <span className="mn-soon">Soon</span>
+                                  </span>
+                                ) : (
+                                  <Link
+                                    href={child.href}
+                                    className={`mn-sub-leaf ${pathname === child.href ? 'is-on' : ''}`}
+                                    aria-current={pathname === child.href ? 'page' : undefined}
+                                    onClick={() => setMenuOpen(false)}
+                                    data-attr={`menu-link:${child.href}`}
+                                  >
+                                    {child.label}
+                                    {child.soon && <span className="mn-soon">Soon</span>}
+                                  </Link>
+                                )}
                               </li>
                             ))}
                             </ul>
@@ -1209,11 +1228,28 @@ export default function Navbar() {
             text-underline-offset: var(--rule-offset);
             text-decoration-thickness: var(--rule-weight);
           }
-          :global(.mn-corner-link):hover {
-            color: var(--contrast-text);
-            text-decoration: underline;
-            text-decoration-color: var(--brand-accent);
+          /* The same hover as every other link of its size in this
+             panel — .mg-btn-link turns accent, so this does too. It was
+             holding its colour and drawing only the underline, which
+             made the one link in the corner behave unlike the rest. */
+          :global(.mn-corner-link):hover { color: var(--brand-accent); }
+
+          /* Not yet a page. DM Mono, small and muted: it labels the row
+             rather than being read as part of the name. */
+          :global(.mn-soon) {
+            margin-left: 10px;
+            font-family: var(--font-mono), monospace;
+            font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+            color: color-mix(in srgb, var(--contrast-text) 42%, transparent);
+            vertical-align: middle;
           }
+          :global(.mn-leaf.is-soon),
+          :global(.mn-sub-leaf.is-soon) {
+            cursor: default;
+            color: color-mix(in srgb, var(--contrast-text) 55%, transparent);
+          }
+          :global(.mn-leaf.is-soon):hover,
+          :global(.mn-sub-leaf.is-soon):hover { text-decoration: none; }
           :global(.mg-live) {
             text-decoration: none;
             display: inline-flex; align-items: center; gap: 12px;

@@ -16,6 +16,13 @@ export type NavLeaf = {
   href: string
   /** No page written yet. Renders a stub at `href`. */
   soon?: boolean
+  /** Named in the structure, but with no page at all — not even a stub.
+      Rendered as plain text rather than a link, and kept out of
+      generateStaticParams and the sitemap. Use for something that is
+      announced before it is a place: a sanctuary that does not open for
+      another year has nothing to say yet, and a stub saying so is a
+      page nobody needs. */
+  disabled?: boolean
   /** The tier beneath this one, revealed on hover. A parent with
       children is a subject; its children are variants of it — the
       seasons of a crop, the parts of a place. */
@@ -65,8 +72,8 @@ export const SECTIONS: NavSection[] = [
         children: [
           { label: 'Mudigere', href: '/mudigere' },
           { label: 'Ohara', href: '/ohara' },
-          { label: 'Munduk', href: '/sanctuary/munduk', soon: true },
-          { label: 'Punakha', href: '/sanctuary/punakha', soon: true },
+          { label: 'Munduk', href: '/sanctuary/munduk', soon: true, disabled: true },
+          { label: 'Punakha', href: '/sanctuary/punakha', soon: true, disabled: true },
         ],
       },
       { label: 'Moral Spine', href: '/wisdom' },
@@ -290,7 +297,7 @@ export const ALL_LEAVES: NavLeaf[] = SECTIONS.flatMap((s) => flatten(s.items))
 
 export function stubSlugs(prefix: string): string[] {
   return ALL_LEAVES
-    .filter((i) => i.soon && i.href.startsWith(`${prefix}/`))
+    .filter((i) => i.soon && !i.disabled && i.href.startsWith(`${prefix}/`))
     .map((i) => i.href.slice(prefix.length + 1))
 }
 

@@ -119,13 +119,31 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           .pd-in { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
         }
 
+        /* The product runs off the left edge of the page. The rail is
+           reproduced as a negative margin and given back as width, the
+           same arithmetic the lane tracks use to line their first card
+           up with a heading — so the text column stays on the rail while
+           the picture does not. */
+        .pd {
+          --pd-rail: max(var(--gutter), calc(50vw - var(--max-w) / 2 + var(--gutter)));
+        }
         .pd-plate {
+          margin-left: calc(-1 * var(--pd-rail));
+          width: calc(100% + var(--pd-rail));
           aspect-ratio: 4 / 5;
           /* The same grey the journal kit's drafting cards use, so an
              unphotographed product reads as 'image to come' rather than
              as an empty column. --bg-card is near-white and vanished. */
           background: #d6d6d6;
           border-radius: var(--radius-1);
+        }
+
+        /* Edge to edge on a phone: with one column there is no middle
+           for the picture to stop at. After the base rule, not before —
+           a media query does not raise specificity, so source order is
+           the whole of it. */
+        @media (max-width: 768px) {
+          .pd-plate { width: calc(100% + 2 * var(--pd-rail)); }
         }
 
         .pd-body { display: flex; flex-direction: column; gap: var(--space-4); }

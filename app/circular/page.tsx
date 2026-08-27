@@ -183,8 +183,8 @@ export default function CircularPage() {
       <DataGrid cols={3} standalone>
         <DataCard value="Cow Dung">
           <em>The living culture.</em> Fresh dung from the estate&apos;s Malnad Gidda herd. The breed
-          matters — their gut microbiome is adapted to this altitude, these grasses, this soil, so the
-          microbial signature it carries is native to the ground it feeds.
+          matters, on a belief the estate has yet to test: that a gut adapted to this altitude and
+          these grasses carries biology suited to the ground the dung returns to.
         </DataCard>
         <DataCard value="Eggshell">
           <em>The calcium source.</em> Crushed eggshell — calcium carbonate, a slow-release calcium that

@@ -162,7 +162,7 @@ export default function LandPage() {
         </p>
         <DataGrid cols={3}>
           <DataCard value="4–5×">Estimated carbon vs monoculture coffee.</DataCard>
-          <DataCard value="500–1,000 t">CO₂ credit potential per year.</DataCard>
+          <DataCard value="Quarterly">Canopy vitality read by satellite.</DataCard>
           <DataCard value="100 acres">Shade-grown coffee.</DataCard>
           <DataCard value="32 acres">Tea, organic transition 2027.</DataCard>
           <DataCard value="~35,000">Trees, estimated pending a completed count.</DataCard>

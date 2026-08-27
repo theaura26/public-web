@@ -142,10 +142,10 @@ export default function BiodynamicPage() {
         <p className="p1">
           Everything begins with the cattle. The 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> are the
           small indigenous cattle of these hills, grazing at this altitude for
-          centuries. Their gut microbiome is
-          adapted to the estate&rsquo;s grasses and soil. Their dung carries
-          microbial characteristics specific to this breed, this land, this
-          climate.
+          centuries. Their gut has adapted to the estate&rsquo;s grasses and
+          soil over generations, and the reasoning here is that the dung
+          carries that adaptation with it. The comparison against another
+          breed has not been run.
         </p>
         <p className="p1">
           The dung drives BD 500, CPP, Jeevamrit, Panchgavya, and compost

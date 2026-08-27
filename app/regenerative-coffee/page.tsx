@@ -99,11 +99,11 @@ export default function RegenerativeCoffeePage() {
         href="/regenerative-coffee/flavour"
         cta="Explore the flavours"
       >
-        The herd’s gut microbiome has adapted to these grasses and this
-        soil, generation after generation. Their dung carries a microbial
-        signature shaped by this breed, this land, this climate —
-        inoculating horn manure, CPP and Jeevamrit with biology from
-        nowhere else. Every batch is tested before it touches the ground,
+        The herd’s gut has adapted to these grasses and this soil,
+        generation after generation, and the estate’s reasoning is that
+        the dung carries that adaptation into horn manure, CPP and
+        Jeevamrit. That much is belief, held openly and acted on. What
+        follows is measured: every batch is tested before it touches the ground,
         and cross-referenced against soil health for months after. The same
         intelligence carries into the wet mill, one ferment’s culture
         shaping the next, until the microbial signature of these hills

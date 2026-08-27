@@ -1927,35 +1927,38 @@ Awake.`}</ScrollHighlight>
             {[
               {
                 title: 'Agroculture',
-                lead: 'We cultivate regenerative land systems',
-                desc: 'Coffee, pepper, areca, tea, soil, biodiversity, and long-term stewardship — managed through biodynamic and Vedic agricultural practices.',
+                href: '/reason/agroculture',
+                lead: 'Farming as though the land has to be worth more in a century',
+                desc: 'A hundred and fifty acres of forest that produces crops — coffee, tea, pepper and areca under four storeys of canopy, fed by fertility the estate makes from its own herd.',
                 video: '/aura-agroculture.mp4',
                 poster: '/aura-agroculture.jpg',
                 alt: 'Aura plantation — coffee, pepper, areca, tea, soil biodiversity',
               },
               {
                 title: 'Sanctuary',
-                lead: 'Hospitality designed for clarity',
-                desc: 'Architect-led sanctuaries, slow living experiences, workshops, residencies, and time designed around nature and clarity.',
+                href: '/reason/hospitality',
+                lead: 'Places that hold the right kind of attention',
+                desc: 'Two sanctuaries open and two more named — architecture, kitchen and residency, built to run for decades on a farm that would be working anyway.',
                 video: '/aura-hospitality.mp4',
                 poster: '/aura-hospitality.jpg',
                 alt: 'Aura sanctuary — hospitality, retreats, slow living',
               },
               {
                 title: 'Atelier',
-                lead: 'Spaces for regenerative thinking',
-                desc: 'Small-group residencies, experiments, and learning experiences spanning AI, systems thinking, creativity, wellbeing, and craft.',
+                href: '/atelier',
+                lead: 'The taste layer — what is worth making at all',
+                desc: 'Origin, Engine and Hospitality. Three studios deciding what the estate makes, and what is good enough to leave here carrying the name.',
                 video: '/aura-labs.mp4',
                 poster: '/aura-labs.jpg',
                 alt: 'Aura labs — residencies, experiments, learning',
               },
             ].map((card) => (
               <Reveal key={card.title}>
-                {/* Pillar cards are descriptive only — the underlying pages
-                    (/land, /sanctuary, /artistry) are reachable via the
-                    journal index in the main nav, not from here. No Link,
-                    no hover affordance, no cursor pill. */}
-                <div className="pillar-card">
+                {/* Each pillar opens the page that explains it. These three
+                    cards are where most readers first meet the three, so
+                    they set the tone for Agroculture, Hospitality and the
+                    Atelier and then take you to them. */}
+                <Link href={card.href} className="pillar-card no-underline">
                   <PillarVideo src={card.video} poster={card.poster} alt={card.alt} />
                   <h3 style={{ marginTop: 'var(--space-5)', marginBottom: 'var(--space-3)' }}>{card.title}</h3>
                   {/* Lead reads as a meta caption underneath the title —
@@ -1963,7 +1966,7 @@ Awake.`}</ScrollHighlight>
                       every other meta caption on the page. */}
                   <p className="label" style={{ marginBottom: 'var(--space-4)' }}>{card.lead}</p>
                   <p className="p1">{card.desc}</p>
-                </div>
+                </Link>
               </Reveal>
             ))}
           </div>
@@ -2097,13 +2100,13 @@ function AgentHomeView() {
       <hr />
 
       <h2>Three Pillars</h2>
-      <h3>Agroculture — We cultivate regenerative land systems</h3>
+      <h3>Agroculture — Farming as though the land has to be worth more in a century</h3>
       <p>Coffee, pepper, areca, tea, soil, biodiversity, and long-term stewardship — managed through Biodynamic (BD 500-508, CPP, lunar cycles) and Vedic (Jeevamrit, Panchgavya, Beejamrit) agricultural practices. Not competing approaches — complementary intelligence.</p>
 
-      <h3>Sanctuary — Hospitality designed for clarity</h3>
+      <h3>Sanctuary — Places that hold the right kind of attention</h3>
       <p>Architect-led sanctuaries, slow living experiences, workshops, residencies, and time designed around nature and clarity.</p>
 
-      <h3>Atelier — Spaces for regenerative thinking</h3>
+      <h3>Atelier — The taste layer, what is worth making at all</h3>
       <p>Small-group residencies, experiments, and learning experiences spanning AI, systems thinking, creativity, wellbeing, and craft. Ateliers, workshops, gallery, gurukul, festivals — the connective tissue.</p>
 
       <hr />

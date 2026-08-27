@@ -19,7 +19,6 @@ export type CategoryId =
   | 'land-ecology'
   | 'art-culture'
   | 'coffee-fermentation'
-  | 'tech-robotics'
 
 export type Category = {
   id: CategoryId
@@ -72,11 +71,6 @@ export const CATEGORIES: Category[] = [
     id: 'coffee-fermentation',
     label: 'Coffee & Fermentation',
     lede: 'One harvest split into many lots, and the hours of controlled decay — stopped at pH 4.2 — that decide what reaches the cup.',
-  },
-  {
-    id: 'tech-robotics',
-    label: 'Tech & Robotics',
-    lede: 'Sensors, models and the machines that will do the counting. Nothing written here yet.',
   },
 ]
 

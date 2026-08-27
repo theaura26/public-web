@@ -183,7 +183,7 @@ export default function CoffeePage() {
           lactic-acid bacteria colonise the sweet mucilage on the bean, secreting
           enzymes that dissolve it while the pH drops. The alcohols and acids they
           leave behind are the raw material of the esters a taster later calls
-          &ldquo;fruity.&rdquo; We have watched every step of it happen.
+          &ldquo;fruity.&rdquo; We track it hour by hour.
         </p>
         <p className="p1">
           It is also double-edged. The same microbes that build fruit build faults

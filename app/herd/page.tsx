@@ -184,14 +184,15 @@ export default function HerdPage() {
         <p className="p1">
           The Malnad Gidda is an indigenous Karnataka breed that has grazed these hills for centuries —
           small-framed, hardy, heat-tolerant, and adapted to the altitude, the monsoon, and the specific
-          grasses of the Western Ghats. Its gut microbiome is shaped by this landscape, not a generic one.
+          grasses of the Western Ghats. Aura keeps it because a gut shaped by this ground is the likeliest source of dung suited to it.
         </p>
         <p className="p1">
-          That is why the breed matters: the dung carries the microbiome. Malnad Gidda dung has a
-          microbial composition suited to this soil, co-evolved with it over generations, and a commercial
-          dairy breed cannot replicate it. Aura keeps the line pure and estate-bred, documented in each
-          passport — the herd is a genetic resource as much as an engine, an indigenous breed grown rare
-          in modern Karnataka, kept alive here because the soil asks for it.
+          That is the reasoning, and it is worth naming as reasoning. Dung carries the gut that made
+          it; a gut adapted to these grasses over generations is the likeliest source of biology suited
+          to this soil. No metagenomic comparison against another breed has been run here, so the estate
+          holds it as a belief it acts on rather than a result it can show you. It acts on it thoroughly:
+          the line is kept pure and estate-bred, documented in each passport, an indigenous breed grown
+          rare in modern Karnataka and kept alive here because the soil is thought to ask for it.
         </p>
       </TwoCol>
 

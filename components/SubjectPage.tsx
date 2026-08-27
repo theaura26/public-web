@@ -24,7 +24,7 @@ import {
  *   what it is        the lede, carried as the first heading
  *   what is done      practice — facts, with records behind them
  *   what is measured  the figures, each carrying its own qualification
- *   what is not settled   where the record runs out
+ *   what we have not proved   where the record runs out
  *
  * The fourth is load-bearing rather than defensive. A farm that publishes
  * the edge of its own evidence is telling you the rest of the numbers are
@@ -140,7 +140,11 @@ export default function SubjectPage({
   ) : null
 
   const open = (
-    <TwoCol key="open" id="open" heading="What is not settled">
+    <TwoCol key="open" id="open" heading="What we have not proved">
+      <p className="p1">
+        Everything above has a record behind it. Here is where the record stops — so
+        you know which parts to trust and which to hold lightly.
+      </p>
       {s.open.map((line) => (
         <p className="p1" key={line}>{withLinks(line)}</p>
       ))}

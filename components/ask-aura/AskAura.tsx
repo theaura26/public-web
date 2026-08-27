@@ -499,11 +499,10 @@ export default function AskAura() {
           aria-label="Ask Aura"
         >
           <header className="aa-head">
-            {/* The mark, alive. Same conic gradient as the bar's ring,
-                masked through the artwork rather than filled — the file
-                is a single-colour path set, so a mask recolours all of
-                it at once and the gradient turns underneath. */}
-            <span className="aa-mark" aria-hidden />
+            {/* The mark as drawn: a white outline on the panel's own
+                dark ground. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="aa-mark" src="/ask-aura.svg" alt="" aria-hidden />
             <div className="aa-head-acts">
               {msgs.length > 0 && (
                 <button type="button" className="aa-mini" onClick={clear}>Clear</button>
@@ -838,30 +837,16 @@ export default function AskAura() {
           from { opacity: 1; transform: translateY(0); }
           to   { opacity: 0; transform: translateY(-0.75em); }
         }
+        /* The artwork as it was drawn — a white stroke over a fill that
+           reads as the panel behind it. Left at its own proportions and
+           given enough size for a 2px stroke to survive: at 26px that
+           line falls below a pixel and the mark dissolves. */
         .aa-mark {
           flex: none;
-          /* Its own proportions, not a square. The artwork is
-             1079 × 1048, and forcing it into a square box left it
-             sitting off-centre inside its own frame. */
-          width: 26px;
-          aspect-ratio: 1079 / 1048;
+          width: 34px;
+          height: auto;
           margin-left: 12px;
-          background: conic-gradient(
-            from var(--aa-angle),
-            rgba(227, 113, 40, 0.95),
-            rgba(214, 196, 108, 0.9),
-            rgba(122, 176, 130, 0.85),
-            rgba(120, 178, 190, 0.9),
-            rgba(160, 140, 200, 0.85),
-            rgba(227, 113, 40, 0.95)
-          );
-          -webkit-mask: url(/ask-aura.svg) center / contain no-repeat;
-          mask: url(/ask-aura.svg) center / contain no-repeat;
-          animation: aa-orbit 7s linear infinite;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          /* Still lit, no longer turning. */
-          .aa-mark { animation: none; }
+          display: block;
         }
 
         /* Heard, not seen. Kept in the layout rather than display:none,

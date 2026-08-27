@@ -10,7 +10,13 @@ intention to achievement while it waits.
 
 ---
 
-## 1. Blocking — a claim is on the site and the record is not attached
+## 1. Held for the next edition
+
+Aman's call, 2026-08-28: these stay as they are for now and are worked in
+the next edition. Every claim below is already worded conservatively on
+the page — described as estate practice, or carried in a *what we can't
+prove yet* block — so nothing here is overclaiming while it waits. What is
+missing is the artefact that would let the page say more.
 
 ### 1.1 The lab record for preparations
 
@@ -71,55 +77,10 @@ it should say which parts are running.
 
 ---
 
-## 2. Decisions for Aura, not for the writing
+## 2. Decisions for Aura
 
-### 2.1 The Fine Cup Award result
-
-**Pages:** `/regenerative-coffee/flavour`
-
-The page states that two Robusta lots won their categories at the Coffee
-Board of India's Flavour of India Fine Cup Award, and a third placed in
-the top four. This is a publicly checkable third-party result and no
-record of it exists in `AURA_COFFEE/`.
-
-**Decision needed:** confirm the year, the categories and the placings, or
-the claim comes off the page. A competition result is the easiest thing on
-this list to verify and the most damaging to get wrong.
-
-*(The neighbouring Q-grader claim on the same page has already been
-corrected — see §4.)*
-
-### 2.2 Naming individuals
-
-**Pages:** `/provenance`, discipline pages
-
-The signed-event example names Raju. Every human event on the estate is
-signed by the person who did it, and that is the point of the system.
-
-**Decision needed:** written consent before a real name is published, or
-the example moves to an initial or a role.
-
-### 2.3 The privacy policy
-
-**Pages:** none — that is the problem
-
-Ask Aura collects questions and sends them to a third-party model. There
-is no privacy policy page, and no decided retention period.
-
-**Decision needed:** both. This is a legal obligation, not an editorial one.
-
-### 2.4 The three months at Ohara
-
-**Pages:** `/ohara`, `/residency`
-
-`AURA_COFFEE/05_CONTENT/content-gaps.md` records that no source material
-describes what the three months actually are — harvest experience,
-residency, cupping week, gathering.
-
-**Decision needed:** what they are. The pages currently describe the
-posture of the place and stop before the offer, which is correct but thin.
-
----
+All four open decisions were answered on 2026-08-28. They are recorded in
+§4 with what changed on the site. Nothing is outstanding in this section.
 
 ## 3. Assets the writing is waiting on
 
@@ -145,6 +106,10 @@ photograph. None of these pages invent an image or borrow one.
 
 | Question | Resolution |
 |---|---|
+| What are the three months at Ohara? | **The residency.** Ohara is a residency site alongside Mudigere, which `/residency` already describes as running across both estates. No page claimed three unexplained months, so nothing had to be corrected — the question is simply answered. |
+| Is there a privacy policy? | **Yes, now.** `/privacy` is written from the shipping code rather than a template: PostHog's autocapture, session recording, cookie-and-local-storage profile, and the Ask Aura path to OpenAI. Two items are published as unsettled on the page itself — the retention period, and consent for non-essential cookies. Linked at label size from the footer. |
+| May real names be published? | **Three are cleared:** Pulkit (biodiversity), Rao (herd), Chander (director), with the instruction not to overuse them. The uncleared name *Raju* in the signed-event example is now Rao, across all four files that carry the row. Pulkit signs the quarterly earthworm count in `lib/disciplines.ts`, which is the only other place a name earns its keep. Chander is cleared and unused. |
+| Are the Fine Cup Award placings real? | **Yes.** Flavour of India Fine Cup Awards **2026**: Aura Estate, **1st place Robusta Experimental** and **2nd place Robusta Washed**. `/regenerative-coffee/flavour` said "both won their categories" with a third in the top four, which was wrong; it now states the two placings. |
 | Does an independent Q grader's score exist? | **No.** `information-architecture.md:96` and `content-gaps.md:78` both record it as an open gap, and `claims-and-proof.md:183` lists getting one as an action. The claim was on `/regenerative-coffee/flavour` and `/regenerative-coffee/transparency` and has been rewritten to attribute the 82.25–85.25 range to the estate's own cupping table. The scores themselves are unchanged and remain an estate record. |
 | Which coordinate set is correct? | The set matching the map embed, 13.1686 °N / 75.4340 °E. The second set, ~23 km away, is removed site-wide. |
 | Is the estate inside a UNESCO World Heritage site? | No. The Western Ghats site is a serial property of 39 components. The site says *region* throughout and never claims inscription. |

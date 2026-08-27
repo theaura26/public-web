@@ -43,7 +43,7 @@ const ARTICLES: Article[] = [
   // card and the thing it opens are the same object — see
   // components/coffee/RemarkableCircle.tsx. White among photographs on
   // purpose: it is a diagram, and it should not pretend to be a place.
-  { href: '/regenerative-coffee', title: 'Regenerative Coffee',          size: 'lg', img: '/coffee/aura-remarkable-circle-card.svg', comingSoon: true },
+  { href: '/regenerative-coffee', title: 'Regenerative Coffee',          size: 'lg', img: '/coffee/aura-remarkable-circle-card.svg' },
   { href: '/mudigere',       title: 'Guests of the Mountain',             size: 'lg', img: '/aura-mudigere.jpg', video: '/aura-mudigere.mp4' },
   { href: '/herd',           title: 'Ecosystem Engineers',                size: 'sm', img: '/herd/images/aura-relationship2.jpg', video: '/herd/videos/aura-relationship2.mp4' },
   { href: '/circular',       title: 'Circular Intelligence',              size: 'sm', img: '/circular/images/aura-shed.jpg', video: '/circular/videos/aura-shed.mp4' },

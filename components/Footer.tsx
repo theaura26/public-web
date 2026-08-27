@@ -51,6 +51,19 @@ export default function Footer() {
           <div>
             <p className="label" style={{ marginBottom: 'var(--space-3)' }}>Contact</p>
             <a href="mailto:hello@theaura.life" className="p1">hello@theaura.life</a>
+            {/* Set at the label size rather than p1: it belongs in the
+                footer and it is not one of the three things the footer is
+                for, so it sits quietly under the address. */}
+            <Link
+              href="/privacy"
+              className="label footer-privacy"
+              /* inline-block, not block: block stretched the hit area to
+                 the full column width, so the hover fired anywhere in a
+                 697 px band. The target should be the word. */
+              style={{ display: 'inline-block', marginTop: 'var(--space-4)' }}
+            >
+              Privacy
+            </Link>
           </div>
           <div>
             <p className="label" style={{ marginBottom: 'var(--space-3)' }}>Follow us</p>
@@ -82,6 +95,14 @@ export default function Footer() {
              than a section title — same sans family as p1, lighter weight,
              same baseline color. The "label" sub below picks up the existing
              mono-uppercase treatment so they read as a paired signature. */
+          /* The one link in the footer set at label size. Muted until
+             hovered, like every other quiet link on the site. */
+          .footer-privacy {
+            color: var(--text-body);
+            text-decoration: none;
+            transition: color var(--dur-fast) var(--ease);
+          }
+          .footer-privacy:hover { color: var(--text); }
           .footer-manifesto-title {
             font-family: var(--font-sans);
             font-size: clamp(20px, 2.2vw, 28px);

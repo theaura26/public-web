@@ -66,7 +66,7 @@ export default function RtaPage() {
           A spray logged at 06:12 carries more integrity than a weekly report
           written on Friday. The data does not say &ldquo;we sprayed this
           week.&rdquo; It says &ldquo;<Term tip="Horn silica. Ground quartz buried over summer, sprayed as fine mist for light metabolism.">BD 501</Term> was applied to Block 07 at 06:14 on
-          a waning moon, humidity 78%, by Raju, using dung batch G-03.&rdquo;
+          a waning moon, humidity 78%, by Rao, using dung batch G-03.&rdquo;
         </p>
         <DataGrid cols={3}>
           <DataCard value="Timestamp.">To the minute.</DataCard>

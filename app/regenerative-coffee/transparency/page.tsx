@@ -31,7 +31,7 @@ export default function TransparencyPage() {
 
       <Scene title="One row, out of millions.">
         Somewhere in a file on this estate there is a row that reads: BD 501,
-        Block 07, 06:14, waning moon, humidity 78%, by Raju, dung batch
+        Block 07, 06:14, waning moon, humidity 78%, by Rao, dung batch
         G-03.
       </Scene>
 

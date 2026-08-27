@@ -78,7 +78,7 @@ ledger records what the site currently says and what backs it.
 | Minimum 95% ripeness; ferment ends at pH 4.2 | `/coffee`, disciplines | Protocol + logs | Estate record |
 | pH every 15 min; temperature 3×/day; Brix at start, middle, end | `/coffee`, `/fermentation` | Ferment logs | Estate record |
 | Cupping scores 85.25 / 84.25 / 83.00 / 82.25 | `/regenerative-coffee/flavour`, `/regenerative-coffee/transparency` | Estate cupping table | **Estate record** — attributed on both pages as Aura's own. A third-party grading claim was corrected out of both during this pass; see *Removed* below |
-| Two Robusta lots won their categories at the Coffee Board of India Flavour of India Fine Cup Award; a third placed top four | `/regenerative-coffee/flavour` | — | **Unverified** — a publicly checkable third-party result with no record in `AURA_COFFEE/`. Logged in `open-questions.md` §2.1 for confirmation or removal |
+| Flavour of India Fine Cup Awards 2026 — Aura Estate, 1st place Robusta Experimental and 2nd place Robusta Washed | `/regenerative-coffee/flavour` | Coffee Board of India, confirmed by Aura 2026-08-28 | **External** — the only third-party assessment the site claims. The earlier wording ("both won their categories", plus a third in the top four) was wrong and has been corrected to the two actual placings |
 | Target 80+ SCA | `/coffee` | Aura's stated target | Ambition — worded as a target |
 | Wild yeasts and lactic-acid bacteria drive the ferment | `/fermentation`, `/regenerative-life/microbiome` | Published fermentation science | External — the site does not claim to have identified species on this estate |
 | Solera carry-forward holds a house culture across seasons | `/coffee` | — | Ambition, labelled as unproven by Aura itself |
@@ -88,7 +88,7 @@ ledger records what the site currently says and what backs it.
 | Claim | Where | Source | Confidence |
 |---|---|---|---|
 | Soil respiration monthly, NaOH, 0–15 cm | `/ecology`, `/regenerative-life/soil` | Monitoring protocol | Estate record — which programmes are live is being confirmed |
-| Earthworms counted quarterly, 50 × 50 cm quadrat | `/ecology`, disciplines | Monitoring protocol | Estate record |
+| Earthworms counted quarterly, 50 × 50 cm quadrat, same frames, signed by Pulkit | `/ecology`, disciplines | Monitoring protocol | Estate record — name cleared 2026-08-28 |
 | Forest islands ~4 × 1 m, 80–120 cm, alternating cow-dung compost and green biomass | `/forest-islands`, `/regenerative-life/biodiversity` | Estate write-up, *Forest Islands_Bug hotel_Invasive plants.docx* | Estate record — supersedes the 5 × 1 × 60 cm figure in the claims document |
 | Woody biomass cut to 60–90 cm, retained in block, decay class I–V logged | `/ecology`, disciplines | Practice + records | Estate record |
 | 14 monitoring programmes rolled into an Ecological Health Index, 0–100 per block | `/ecology` | Index design | **Partly ambition** — not every block carries a scored index; no estate-wide figure published |
@@ -103,7 +103,7 @@ ledger records what the site currently says and what backs it.
 |---|---|---|---|
 | Nine data streams, each on its own clock | `/provenance`, `/regenerative-life/aura-intelligence` | System record | Estate record |
 | Every human event signed by the person who did it | `/provenance`, disciplines | Event log | Estate record |
-| Example: BD 501, Block 07, 06:14, waning moon, humidity 78%, by Raju, dung batch G-03 | `/provenance`, disciplines | Event log | Estate record — **written consent needed before naming individuals** |
+| Example: BD 501, Block 07, 06:14, waning moon, humidity 78%, by Rao, dung batch G-03 | `/provenance`, `/rta`, `/regenerative-coffee/transparency`, disciplines | Event log | Estate record — Rao is cleared for publication. Cleared names are Pulkit (biodiversity), Rao (herd) and Chander (director), to be used sparingly. *Raju* was never cleared and is gone |
 | Records exportable in open formats | `/regenerative-life/aura-intelligence` | System architecture | Estate record |
 | Milestones written to a public chain | — | — | **Ambition** — removed from all pages as a statement of fact; stated as intent with no verification link |
 

@@ -96,7 +96,7 @@ export default function ProvenancePage() {
       <TwoCol id="one-record" heading="One record, in full.">
         <p className="p1">
           A single biodynamic spray, as the record holds it: <em>BD 501 applied to Block 07 at 06:14,
-          on a waning moon, humidity 78%, by Raju, from dung batch G-03.</em> That row — the minute, the
+          on a waning moon, humidity 78%, by Rao, from dung batch G-03.</em> That row — the minute, the
           moon, the hand, the source — is the unit the whole system is built to protect.
         </p>
         <p className="p1">

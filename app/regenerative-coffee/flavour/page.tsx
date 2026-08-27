@@ -91,9 +91,9 @@ export default function FlavourPage() {
 
       <Scene>
         Then the Robusta went to the Coffee Board of India’s Flavour of
-        India Fine Cup Award, judged nationally against estates from five
-        other states. Volcanic Wash and Appassimento Maceration both won
-        their categories, and a second washed entry placed in the top four.
+        India Fine Cup Awards, judged nationally. At the 2026 awards Aura
+        Estate took first place in Robusta Experimental and second place
+        in Robusta Washed.
       </Scene>
 
       <Scene>

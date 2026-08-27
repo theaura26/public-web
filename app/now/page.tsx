@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import SectionIndex from '@/components/SectionIndex'
 
 export const metadata: Metadata = {
-  title: 'Now — Aura',
+  title: 'Now',
   description: 'Mudigere, as it is today.',
 }
 

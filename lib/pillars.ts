@@ -25,6 +25,8 @@ export type Pillar = {
   plate?: { type: string; caption: string }
   /** One line worth setting on its own. At most one per page. */
   quote?: string
+  /** A tall breaker between the figures and the gaps. */
+  breaker?: { caption: string; alt: string }
 }
 
 export const PILLARS: Pillar[] = [

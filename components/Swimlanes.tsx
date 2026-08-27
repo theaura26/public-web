@@ -2,16 +2,26 @@
 
 import Link from 'next/link'
 import { CATEGORIES, notesIn, type NoteEntry } from '@/lib/field-notes'
+import { FROM_AURA } from '@/lib/from-aura'
 
-/* ── Field Notes, View All ────────────────────────────────────────
-   One lane per category, each scrolling sideways. The whole corpus is
-   visible in four gestures rather than one long column, and a reader
-   who only cares about Labs never has to scroll past Biodynamic.
-   Every lane heads to its own category page for the full list.
+/* ── Lanes ────────────────────────────────────────────────────────
+   A section's whole contents, one lane per group, each scrolling
+   sideways off the right edge. Everything is visible in a handful of
+   gestures rather than one long column, and a reader who only wants one
+   group never scrolls past the others.
 
-   Cross-listed pages appear in whichever lanes claim them — the same
-   card can legitimately show up twice.
+   Two sections are built this way — Field Notes and From Aura — so the
+   layout lives here once and each supplies its own lanes. An item can
+   legitimately appear in more than one lane; in Field Notes a
+   cross-listed note does exactly that.
 */
+
+export type Lane = {
+  id: string
+  label: string
+  lede: string
+  items: NoteEntry[]
+}
 
 function Card({ note }: { note: NoteEntry }) {
   const inner = (
@@ -34,20 +44,18 @@ function Card({ note }: { note: NoteEntry }) {
   )
 }
 
-export function NoteSwimlanes() {
+export function Swimlanes({
+  title, lede, lanes,
+}: { title: string; lede: string; lanes: Lane[] }) {
   return (
     <main className="sw">
       <div className="section-w sw-head">
-        <h1 className="sw-h">Field Notes</h1>
-        <p className="sw-lede">
-          What the estate has learned, sorted by the discipline that learned
-          it. Some notes sit in more than one lane, which is usually a sign
-          they matter.
-        </p>
+        <h1 className="sw-h">{title}</h1>
+        <p className="sw-lede">{lede}</p>
       </div>
 
-      {CATEGORIES.map((cat) => {
-        const notes = notesIn(cat.id)
+      {lanes.map((cat) => {
+        const notes = cat.items
         if (!notes.length) return null
         return (
           <section className="lane" key={cat.id} aria-labelledby={`lane-${cat.id}`}>
@@ -230,5 +238,30 @@ export function NoteSwimlanes() {
         }
       `}</style>
     </main>
+  )
+}
+
+/** Field Notes: one lane per category, in taxonomy order. */
+export function NoteSwimlanes() {
+  const lanes: Lane[] = CATEGORIES
+    .map((c) => ({ id: c.id, label: c.label, lede: c.lede, items: notesIn(c.id) }))
+    .filter((l) => l.items.length)
+  return (
+    <Swimlanes
+      title="Field Notes"
+      lede="What the estate has learned, sorted by the discipline that learned it. Some notes sit in more than one lane, which is usually a sign they matter."
+      lanes={lanes}
+    />
+  )
+}
+
+/** From Aura: the land, the atelier, and the trade desk. */
+export function FromAuraSwimlanes() {
+  return (
+    <Swimlanes
+      title="From Aura"
+      lede="Three directions out of one estate — what the land grows, what the atelier makes, and what is offered to the people who buy at volume. Nothing here is for sale yet."
+      lanes={FROM_AURA}
+    />
   )
 }

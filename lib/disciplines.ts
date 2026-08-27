@@ -46,6 +46,8 @@ export type Discipline = {
   plate?: { type: string; caption: string }
   /** One line worth setting on its own. At most one per page. */
   quote?: string
+  /** A tall breaker between the figures and the gaps. */
+  breaker?: { caption: string; alt: string }
   /** Where to read more, on pages that already exist. */
   related?: { label: string; href: string }[]
 }

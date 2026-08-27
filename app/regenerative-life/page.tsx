@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import SectionIndex from '@/components/SectionIndex'
 
 export const metadata: Metadata = {
-  title: 'The Regenerative Life — Aura',
+  title: 'The Regenerative Life',
   description: 'The nine disciplines the estate is farmed by.',
 }
 

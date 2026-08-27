@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { NoteSwimlanes } from '@/components/field-notes/NoteSwimlanes'
+import { NoteSwimlanes } from '@/components/Swimlanes'
 
 export const metadata: Metadata = {
   title: 'Field Notes',

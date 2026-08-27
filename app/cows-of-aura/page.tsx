@@ -8,6 +8,7 @@ import {
   DataGrid,
   DataCard,
   Placeholder,
+  Portrait,
   Continue,
 } from '@/components/article/Article'
 
@@ -42,7 +43,7 @@ export default function CowsOfAuraPage() {
         The ear tag can change. The Cow ID must not.
       </PullQuote>
 
-      <OneCol heading="The identity layer">
+      <TwoCol id="identity" heading="One animal per row, and nine fields before it counts.">
         <p className="p1">
           The register holds one animal per row, and one rule above all the others: the Cow ID is
           stable for life. COW-0001 is Litty — dark brown with white marks, born to Lulu, who is
@@ -59,7 +60,7 @@ export default function CowsOfAuraPage() {
           {' '}rather than a blank. A blank is ambiguous — it might mean nobody checked. Unknown is
           a statement, and a statement can be corrected later.
         </p>
-      </OneCol>
+      </TwoCol>
 
       <Placeholder
         type="Detail · the register open on a field tablet"
@@ -94,6 +95,13 @@ export default function CowsOfAuraPage() {
         </p>
       </TwoCol>
 
+      <Portrait
+        src="/aura-placeholder.svg"
+        ratio="5 / 7"
+        alt="A Malnad Gidda in the shed at Sampigekhan Estate"
+        caption="Fifty-two animals, each one a row that outlives its ear tag"
+      />
+
       <TwoCol id="grazing" heading="Where they are, and how they are kept.">
         <p className="p1">
           Location is a mandatory field and it changes: cow shed, quarantine shed, treatment pen,
@@ -115,7 +123,7 @@ export default function CowsOfAuraPage() {
         </p>
       </TwoCol>
 
-      <OneCol heading="What this is not, yet">
+      <TwoCol id="limits" heading="The structure is built. Filling it is work in progress.">
         <p className="p1">
           The register is the identity layer and nothing more. Daily milk, daily health and daily
           feed do not belong in it — those are logs, and logs point back at the Cow ID rather
@@ -131,7 +139,7 @@ export default function CowsOfAuraPage() {
           affectionate. A farm that can trace one animal&rsquo;s dung to one block on one date is
           accountable. Aura would like to be both, and only one of the two can be audited.
         </p>
-      </OneCol>
+      </TwoCol>
 
       <Continue currentHref="/cows-of-aura" />
     </>

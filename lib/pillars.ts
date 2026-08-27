@@ -33,6 +33,7 @@ export const PILLARS: Pillar[] = [
     label: 'Natural Intelligence',
     slug: 'natural-intelligence',
     lede: 'The land has been computing longer than any machine. Aura’s work is to read the output.',
+    breaker: { caption: 'Three point eight billion years of field trials', alt: 'Old growth above the planting at Mudigere' },
     hero: { type: 'Landscape · old growth above the planting', caption: 'The land has been computing longer than any machine' },
     plate: { type: 'Detail · sensor and leaf in one frame', caption: 'Three intelligences: machine, human, and the oldest one' },
     quote: 'The land has been computing longer than any machine. We just stopped reading the output.',
@@ -55,6 +56,7 @@ export const PILLARS: Pillar[] = [
     label: 'Agroculture',
     slug: 'agroculture',
     lede: 'One hundred and fifty acres that are meant to be worth more in a hundred years than they are now.',
+    breaker: { caption: 'A hundred and fifty acres, tended in decades', alt: 'The herd going out at first light' },
     hero: { type: 'Aerial · 150 acres at sunrise', caption: 'Sampigekhan Estate, Mudigere, at 3,600 ft in the Western Ghats' },
     plate: { type: 'Portrait · animal · the herd going out', caption: 'Fifty-two Malnad Gidda on the ground the coffee grows in' },
     quote: 'Aura is not certified organic or biodynamic. It practises both, and publishes the record instead.',
@@ -87,6 +89,7 @@ export const PILLARS: Pillar[] = [
     label: 'Hospitality',
     slug: 'hospitality',
     lede: 'A working farm you can sleep on, where the coffee grew within sight of the bed.',
+    breaker: { caption: 'A working day, not a staged one', alt: 'A room open to the mist at Mudigere' },
     hero: { type: 'Architecture · a room open to the mist', caption: 'Morning at Mudigere, with nothing on the calendar' },
     plate: { type: 'Landscape · Asa. Niwa. at Ohara', caption: 'The second sanctuary, in Kyoto' },
     practice: [

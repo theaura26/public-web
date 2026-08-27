@@ -8,6 +8,7 @@ import {
   DataGrid,
   DataCard,
   Placeholder,
+  Portrait,
   Continue,
 } from '@/components/article/Article'
 
@@ -108,6 +109,13 @@ export default function PollinatorsPage() {
         caption="Where invasives come out, natives go back in — an empty gap is an invitation"
       />
 
+      <Portrait
+        src="/aura-placeholder.svg"
+        ratio="5 / 7"
+        alt="Native flowering herbs in the understorey at Mudigere"
+        caption="The layer six introduced plants are taking"
+      />
+
       <TwoCol id="work" heading="What is being done about it.">
         <p className="p1">
           Invasive plants at Aura grow among coffee, shade trees and native regeneration, which
@@ -130,7 +138,7 @@ export default function PollinatorsPage() {
         </p>
       </TwoCol>
 
-      <OneCol heading="What is not known here">
+      <TwoCol id="unknown" heading="Aura has not surveyed its pollinators.">
         <p className="p1">
           Aura has not surveyed its pollinators. There is no species list, no count, and no
           season-by-season record of who is visiting what.
@@ -146,7 +154,7 @@ export default function PollinatorsPage() {
           to see past a good year. Until that exists, this is the thinnest record on the estate
           and the honest thing is to say so out loud.
         </p>
-      </OneCol>
+      </TwoCol>
 
       <Continue currentHref="/pollinators" />
     </>

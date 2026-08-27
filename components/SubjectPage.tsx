@@ -9,6 +9,7 @@ import {
   DataGrid,
   DataCard,
   Placeholder,
+  Portrait,
   Continue,
 } from '@/components/article/Article'
 
@@ -48,6 +49,10 @@ export type Subject = {
   quote?: string
   /** Mid-page image slot, in its drafting state. */
   plate?: { type: string; caption: string }
+  /** A tall breaker between the figures and the gaps — the beat where a
+      reader looks up from a list of numbers before being told what the
+      numbers do not cover. */
+  breaker?: { caption: string; alt: string }
 }
 
 export default function SubjectPage({
@@ -103,6 +108,15 @@ export default function SubjectPage({
       )}
 
       {s.plate && <Placeholder type={s.plate.type} caption={s.plate.caption} />}
+
+      {s.breaker && (
+        <Portrait
+          src="/aura-placeholder.svg"
+          ratio="5 / 7"
+          alt={s.breaker.alt}
+          caption={s.breaker.caption}
+        />
+      )}
 
       <TwoCol id="open" heading="What is not settled">
         <p className="p1">{s.open[0]}</p>

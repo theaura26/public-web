@@ -39,8 +39,7 @@ export function NoteSwimlanes() {
   return (
     <main className="sw">
       <div className="section-w sw-head">
-        <p className="label">Field Notes</p>
-        <h1 className="sw-h">Everything written down.</h1>
+        <h1 className="sw-h">Field Notes</h1>
         <p className="sw-lede">
           What the estate has learned, sorted by the discipline that learned
           it. Some notes sit in more than one lane, which is usually a sign
@@ -60,11 +59,18 @@ export function NoteSwimlanes() {
                 <span aria-hidden> →</span>
               </Link>
             </div>
-            <p className="section-w lane-lede">{cat.lede}</p>
+            {/* The rail belongs to the wrapper. A narrow max-width on
+                the same element that carries section-w's padding fights
+                it, and the lede lands 40px left of every other line. */}
+            <div className="section-w">
+              <p className="lane-lede">{cat.lede}</p>
+            </div>
 
-            <div className="lane-scroll">
-              <div className="lane-track">
-                {notes.map((n) => <Card key={`${cat.id}-${n.href}`} note={n} />)}
+            <div className="section-w">
+              <div className="lane-scroll">
+                <div className="lane-track">
+                  {notes.map((n) => <Card key={`${cat.id}-${n.href}`} note={n} />)}
+                </div>
               </div>
             </div>
           </section>
@@ -83,15 +89,25 @@ export function NoteSwimlanes() {
           gap: clamp(56px, 8vh, 96px);
         }
         .sw .sw-head { display: flex; flex-direction: column; gap: var(--space-5); }
+        /* The banner title spec, unchanged — same size, weight, tracking
+           and measure as every journal hero. This page had drifted to a
+           smaller size and much tighter tracking, which read as a
+           different family of page. */
         .sw .sw-h {
+          margin: 0;
           font-family: var(--font-grotesque), sans-serif;
-          font-weight: 600; text-transform: uppercase;
-          font-size: clamp(40px, 8vw, 82px);
-          line-height: 1.02; letter-spacing: -0.06em;
-          margin: 0; max-width: 14ch; text-wrap: balance;
+          font-weight: 600;
+          font-size: clamp(48px, 7.2vw, 106px);
+          line-height: 1;
+          letter-spacing: -0.03em;
+          text-transform: uppercase;
+          color: var(--text);
+          max-width: min(90vw, 7.5em);
+          text-wrap: balance;
         }
         .sw .sw-lede {
-          font-size: clamp(17px, 1.7vw, 21px); line-height: 1.6;
+          font-family: var(--font-sans);
+          font-size: 16px; line-height: 1.55; font-weight: 400;
           color: var(--text-body); margin: 0; max-width: 52ch;
         }
 
@@ -123,6 +139,11 @@ export function NoteSwimlanes() {
 
         /* The rail bleeds past the gutter so it reads as continuing
            beyond the viewport rather than stopping at the margin. */
+        /* Scrolls inside the rail rather than across the viewport, so
+           the first card starts on the same line as the lane heading.
+           A full-bleed track would need its padding to reproduce the
+           rail's own arithmetic, and would drift the moment either
+           changed. */
         .sw .lane-scroll {
           overflow-x: auto;
           scroll-snap-type: x proximity;
@@ -131,14 +152,13 @@ export function NoteSwimlanes() {
         }
         .sw .lane-scroll::-webkit-scrollbar { display: none; height: 0; }
         .sw .lane-track {
-          display: flex; gap: clamp(14px, 2vw, 28px);
-          padding-inline: var(--gutter);
+          display: flex; gap: clamp(16px, 2.2vw, 32px);
           width: max-content;
         }
 
         .sw .lane-card {
           scroll-snap-align: start;
-          flex: none; width: clamp(220px, 26vw, 340px);
+          flex: none; width: clamp(240px, 30vw, 420px);
           display: flex; flex-direction: column; gap: var(--space-3);
           text-decoration: none; color: inherit;
         }

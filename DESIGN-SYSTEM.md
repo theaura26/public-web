@@ -303,3 +303,21 @@ grep -- '--token-name:' app/globals.css
 A missing token is not a build error. `padding: var(--space-12) 0` becomes `padding: 0` and the section collapses. Either add the token to `globals.css` or use one that exists.
 
 ---
+
+### No eyebrows
+
+A page title stands on its own. Do not put a small mono label above an
+`<h1>` to announce the section a page belongs to — not "FIELD NOTES"
+above a category name, not "THE REGENERATIVE LIFE" above a discipline.
+The reader arrived from somewhere; the menu, the URL and the title
+already say where they are, and the label just adds a line of noise
+above the one line that matters.
+
+This is a standing rule, not a preference on one page. If a page needs
+to say which section it belongs to, it says it in the prose or in the
+navigation at the foot.
+
+The mono `.label` role is still correct for what it was made for:
+naming a part of a page (SOURCES, ASK NEXT), captioning a figure, or
+labelling a row in a spec table. The rule is about the position — above
+the title — not about the type style.

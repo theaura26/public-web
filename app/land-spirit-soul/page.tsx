@@ -6,6 +6,7 @@ import {
   TwoCol,
   PullQuote,
   Placeholder,
+  Portrait,
   Continue,
 } from '@/components/article/Article'
 
@@ -70,6 +71,13 @@ export default function LandSpiritSoulPage() {
         caption="A moment of stillness before the day starts — every morning, not on occasion"
       />
 
+      <Portrait
+        src="/aura-placeholder.svg"
+        ratio="5 / 7"
+        alt="The diya at the Gau Angan, lit with cow ghee"
+        caption="What the cow gave, offered back to her as light"
+      />
+
       <TwoCol id="all-life" heading="Not only about the cows.">
         <p className="p1">
           The prayer at the Gaushala is addressed to the whole system. A plantation works because
@@ -83,7 +91,7 @@ export default function LandSpiritSoulPage() {
         </p>
       </TwoCol>
 
-      <OneCol heading="Why every day">
+      <TwoCol id="daily" heading="The significance is in the repetition.">
         <p className="p1">
           The significance is in the repetition rather than the ceremony. Performed every
           morning, it makes a small pause before work that returns everyone to one idea: we are
@@ -99,7 +107,7 @@ export default function LandSpiritSoulPage() {
           what happens on this estate, and has never found a way to measure that. It is kept
           anyway, at six in the morning, every day.
         </p>
-      </OneCol>
+      </TwoCol>
 
       <Continue currentHref="/land-spirit-soul" />
     </>

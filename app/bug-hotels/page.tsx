@@ -6,6 +6,7 @@ import {
   TwoCol,
   PullQuote,
   Placeholder,
+  Portrait,
   Continue,
 } from '@/components/article/Article'
 
@@ -76,7 +77,14 @@ export default function BugHotelsPage() {
         </p>
       </TwoCol>
 
-      <OneCol heading="One layer of several">
+      <Portrait
+        src="/aura-placeholder.svg"
+        ratio="5 / 7"
+        alt="Drilled logs of varied bore, mounted in the block"
+        caption="The holes a managed landscape stops producing"
+      />
+
+      <TwoCol id="layers" heading="Not a programme on its own.">
         <p className="p1">
           The hotels are not a programme on their own. They sit alongside the Forest Islands,
           the native vegetation being encouraged back into the understorey, the deadwood that
@@ -92,7 +100,7 @@ export default function BugHotelsPage() {
           The aim is not complicated. Make room for the small lives that keep the large system
           running.
         </p>
-      </OneCol>
+      </TwoCol>
 
       <Continue currentHref="/bug-hotels" />
     </>

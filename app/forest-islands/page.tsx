@@ -8,6 +8,7 @@ import {
   DataGrid,
   DataCard,
   Placeholder,
+  Portrait,
   Continue,
 } from '@/components/article/Article'
 
@@ -35,7 +36,7 @@ export default function ForestIslandsPage() {
         </p>
       </TwoCol>
 
-      <OneCol heading="What one is">
+      <TwoCol id="build" heading="Four metres by one, and then nothing happens to it.">
         <p className="p1">
           A Forest Island at Aura is about four metres by one, and stands 80 to 120 cm high. It
           is built in alternating layers: cow-dung compost from the estate&rsquo;s own herd, and
@@ -50,7 +51,7 @@ export default function ForestIslandsPage() {
           Then nothing happens to it. The island is not turned, not watered and not harvested. A
           compost heap is built to be taken away; this one is built to stay.
         </p>
-      </OneCol>
+      </TwoCol>
 
       <Placeholder
         type="Process · building the layers"
@@ -74,6 +75,13 @@ export default function ForestIslandsPage() {
           demonstrated yet, and this page will say so until it has.
         </p>
       </TwoCol>
+
+      <Portrait
+        src="/aura-placeholder.svg"
+        ratio="5 / 7"
+        alt="A forest island in its first season, before anything has colonised it"
+        caption="A pile built to be left alone, photographed in its first season"
+      />
 
       <PullQuote>
         A compost heap is built to be taken away. This one is built to stay.
@@ -109,7 +117,7 @@ export default function ForestIslandsPage() {
         </DataGrid>
       </TwoCol>
 
-      <OneCol heading="Why many small ones">
+      <TwoCol id="scale" heading="A hundred and fifty acres cannot be restored at once.">
         <p className="p1">
           A hundred and fifty acres cannot be restored at once, and an estate that tried would
           stop being an estate. Many small centres of activity can be built one at a time,
@@ -125,7 +133,7 @@ export default function ForestIslandsPage() {
           Either result is worth the ground it stands on. Only one of them is worth repeating,
           and the monitoring is there to say which.
         </p>
-      </OneCol>
+      </TwoCol>
 
       <Continue currentHref="/forest-islands" />
     </>

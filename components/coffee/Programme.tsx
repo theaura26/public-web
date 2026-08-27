@@ -99,7 +99,7 @@ export function Programme() {
         .pg-days {
           list-style: none; margin: 0; padding: 0;
           display: flex; flex-direction: column;
-          gap: clamp(44px, 6vh, 76px);
+          gap: clamp(56px, 8vh, 96px);
         }
 
         /* Day label and theme on the left, the day itself on the right —
@@ -109,8 +109,6 @@ export function Programme() {
           display: grid;
           grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
           gap: clamp(24px, 4vw, 64px);
-          padding-top: clamp(22px, 3vh, 34px);
-          border-top: 1px solid rgba(255, 255, 255, 0.14);
         }
         @media (max-width: 768px) {
           .pg-day { grid-template-columns: minmax(0, 1fr); gap: 18px; }
@@ -134,23 +132,14 @@ export function Programme() {
           display: flex; flex-direction: column;
           gap: clamp(14px, 1.8vh, 20px);
         }
-        /* A rule per item rather than a bullet glyph: the list is a
-           sequence of moments, and a hairline separates them without
-           adding a mark the rest of the site never uses. */
+        /* No marker. The gap between items is the separation, and the
+           site has no bullet convention to borrow — inventing one here
+           would have made this the only page with it. */
         .pg-b {
-          position: relative;
           font-family: var(--font-sans);
           font-size: 16px; line-height: 1.55;
           color: rgba(255, 255, 255, 0.78);
           margin: 0; text-wrap: pretty;
-          padding-left: 22px;
-        }
-        .pg-b::before {
-          content: '';
-          position: absolute;
-          left: 0; top: 0.7em;
-          width: 10px; height: 1px;
-          background: var(--brand-accent);
         }
       `}</style>
     </section>

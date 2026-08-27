@@ -144,6 +144,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
            the whole of it. */
         @media (max-width: 768px) {
           .pd-plate { width: calc(100% + 2 * var(--pd-rail)); }
+          /* --head-top is air for a page that opens on its title. This
+             one opens on a full-bleed picture, and on a phone that air
+             read as an empty screen before anything arrived. */
+          .pd { padding-top: calc(var(--nav-h) + var(--space-3)); }
         }
 
         .pd-body { display: flex; flex-direction: column; gap: var(--space-4); }

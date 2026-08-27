@@ -32,7 +32,7 @@ export const CATEGORIES: Category[] = [
   {
     id: 'activities',
     label: 'Activities',
-    lede: 'Three ways to be here rather than read about it — an invited residency, the studios, and the days the estate opens to people who are not us.',
+    lede: 'Three ways to be here — an invited residency, the studios, and the days the estate opens to people from outside it.',
   },
   {
     id: 'biodynamic',
@@ -152,7 +152,7 @@ const PENDING_NOTES: PendingNote[] = [
   {
     href: '/provenance',
     title: 'Provenance',
-    description: 'Where a thing came from, proved rather than asserted.',
+    description: 'Where a thing came from, with the record to prove it.',
     categories: ['labs'],
   },
 ]

@@ -82,7 +82,7 @@ export default function PollinatorsPage() {
       </TwoCol>
 
       <PullQuote>
-        A flowering understorey is not decoration. It is where the pollinators eat.
+        A flowering understorey is where the pollinators eat.
       </PullQuote>
 
       <TwoCol id="mechanism" heading="How a thicket empties a canopy.">

@@ -225,7 +225,7 @@ export default function CoffeePage() {
         <p className="p1">
           The on-estate lab tests every lot. Brix per zone on harvest day,
           moisture tracking through drying, screen grading and defect analysis
-          per SCA protocol. Every lot is cupped — target 80+ specialty.
+          per SCA protocol. Every lot is cupped at the estate against a target of 80+ specialty. The scores are our own table; a third-party grading is not in yet, and until it is we publish ours as ours.
         </p>
         <p className="p1">
           The next build adds caffeine and polyphenol profiling, on-site <Term tip="SCA-certified coffee grader.">Q-grader</Term>{' '}

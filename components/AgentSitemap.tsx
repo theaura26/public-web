@@ -138,7 +138,7 @@ export const SITEMAP: SitemapEntry[] = [
   },
   {
     href: '/ecology',
-    label: 'The Living System',
+    label: 'The Health Index',
     topic: 'Whole-farm ecological monitoring — the Ecological Health Index',
     summary: 'Aura reads its estate as one living system, above ground and below — retained wood and the saprophytic fungi that eat it, forest islands, soil respiration, earthworms, roots — and folds fifteen monitoring programmes into one Ecological Health Index per block.',
     facts: [

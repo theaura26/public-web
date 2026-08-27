@@ -23,7 +23,7 @@ const ARTICLES: Article[] = [
   { href: '/herd',           title: 'Ecosystem Engineers',   img: '/herd/images/aura-relationship2.jpg' },
   { href: '/circular',       title: 'Circular Intelligence', img: '/circular/images/aura-shed.jpg', size: 'md' },
   { href: '/shade',          title: 'The Light Instrument',  img: '/shade/images/aura-tree-canopy-lookup.jpg', size: 'lg' },
-  { href: '/ecology',        title: 'The Living System',     img: '/ecology/images/aura-forest-floor-seedling.jpg', size: 'sm' },
+  { href: '/ecology',        title: 'The Health Index',     img: '/ecology/images/aura-forest-floor-seedling.jpg', size: 'sm' },
   { href: '/artistry',       title: 'Artistry',              img: '/aura-artistry.jpg', size: 'md' },
   { href: '/wisdom',         title: 'Moral Spine',           img: '/journals/wisdom/aura-moral-spine.jpg', size: 'lg' },
   { href: '/living-systems', title: 'Living Systems',        img: '/journals/living-systems/aura-living-systems.jpg', size: 'sm' },

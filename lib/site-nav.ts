@@ -122,7 +122,7 @@ export const SECTIONS: NavSection[] = [
         label: 'Biodiversity',
         href: '/field-notes/biodiversity',
         children: [
-          { label: 'The Living System', href: '/ecology' },
+          { label: 'The Health Index', href: '/ecology' },
           { label: 'The Light Instrument', href: '/shade' },
           { label: 'Living Systems', href: '/living-systems' },
           { label: 'The Sentinel Palm', href: '/areca' },

@@ -22,7 +22,7 @@ Crawl started 2026-08-26T09:46:13.732Z.
 | `/circular` | ok | Circular Intelligence — Aura | 14 | 1739 | `b8673c9755be9333` | 2026-08-26T09:46:13Z | — |
 | `/coffee` | ok | Our Coffee Story — Aura | 20 | 1231 | `a2365b2a49c9cb92` | 2026-08-26T09:46:13Z | — |
 | `/contact` | ok | Contact — Aura | 8 | 180 | `1543ba2904e7aadd` | 2026-08-26T09:46:13Z | — |
-| `/ecology` | ok | The Living System — Aura | 15 | 1245 | `5a574df2fece833c` | 2026-08-26T09:46:13Z | — |
+| `/ecology` | ok | The Health Index — Aura | 15 | 1245 | `5a574df2fece833c` | 2026-08-26T09:46:13Z | — |
 | `/fermentation` | ok | Fermentation — Aura | 14 | 811 | `ac4158fbc41fafd1` | 2026-08-26T09:46:13Z | — |
 | `/herd` | ok | Ecosystem Engineers — Aura | 16 | 1227 | `4946324a2dbb4145` | 2026-08-26T09:46:13Z | — |
 | `/land` | ok | The Land — Aura | 14 | 699 | `5b8daa55715a4803` | 2026-08-26T09:46:13Z | — |

@@ -264,7 +264,7 @@ export default function ShadePage() {
 
       <Continue
         items={[
-          { href: '/ecology', label: 'The Living System', description: 'The canopy is one reading among many — the whole farm measured, above ground and below.', img: '/aura-mudigere-landscape.jpg' },
+          { href: '/ecology', label: 'The Health Index', description: 'The canopy is one reading among many — the whole farm measured, above ground and below.', img: '/aura-mudigere-landscape.jpg' },
           { href: '/circular', label: 'Circular Intelligence', description: 'What the pruned wood and the herd feed back — measured fertility, tested before the soil.', img: '/circular/images/aura-shed.jpg' },
           { href: '/herd', label: 'Ecosystem Engineers', description: 'The biological engine under the canopy — fifty-two Malnad Gidda, each passported.', img: '/herd/images/aura-relationship2.jpg' },
         ]}

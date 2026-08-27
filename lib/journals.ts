@@ -39,7 +39,7 @@ export const ACTIVE_JOURNALS: Journal[] = [
   },
   {
     href: '/ecology',
-    title: 'The Living System',
+    title: 'The Health Index',
     description: 'The whole farm, read and measured — dead wood, fungi, worms, and one Ecological Health Index per block.',
     img: '/aura-mudigere-landscape.jpg',
   },

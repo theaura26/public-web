@@ -43,12 +43,12 @@ const ARTICLES: Article[] = [
   // card and the thing it opens are the same object — see
   // components/coffee/RemarkableCircle.tsx. White among photographs on
   // purpose: it is a diagram, and it should not pretend to be a place.
-  { href: '/regenerative-coffee', title: 'The Remarkable Circle',         size: 'lg', img: '/coffee/aura-remarkable-circle-card.svg' },
-  { href: '/mudigere',       title: 'Guests of the mountain.',            size: 'lg', img: '/aura-mudigere.jpg', video: '/aura-mudigere.mp4' },
+  { href: '/regenerative-coffee', title: 'Regenerative Coffee',          size: 'lg', img: '/coffee/aura-remarkable-circle-card.svg' },
+  { href: '/mudigere',       title: 'Guests of the mountain',             size: 'lg', img: '/aura-mudigere.jpg', video: '/aura-mudigere.mp4' },
   { href: '/herd',           title: 'Ecosystem Engineers',                size: 'sm', img: '/herd/images/aura-relationship2.jpg', video: '/herd/videos/aura-relationship2.mp4' },
   { href: '/circular',       title: 'Circular Intelligence',              size: 'sm', img: '/circular/images/aura-shed.jpg', video: '/circular/videos/aura-shed.mp4' },
   { href: '/shade',          title: 'The Light Instrument',               size: 'lg', img: '/shade/images/aura-tree-canopy-lookup.jpg', video: '/shade/videos/aura-tree-canopy-lookup.mp4' },
-  { href: '/ecology',        title: 'The Living System',                  size: 'sm', img: '/ecology/images/aura-forest-floor-seedling.jpg', video: '/ecology/videos/aura-forest-floor-seedling.mp4' },
+  { href: '/ecology',        title: 'The Health Index',                  size: 'sm', img: '/ecology/images/aura-forest-floor-seedling.jpg', video: '/ecology/videos/aura-forest-floor-seedling.mp4' },
   { href: '/ohara',          title: 'Asa. Niwa.',                         size: 'lg', img: '/ohara/images/aura-header.jpg', video: '/ohara/videos/aura-header.mp4' },
   { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg', video: '/aura-artistry.mp4' },
   // ── Live journals (published on theaura.life) ──

@@ -941,7 +941,17 @@ export default function Navbar() {
 
 
         <style jsx>{`
-          :global(.menu-overlay) { width: 90vw; color: var(--contrast-text); }
+          :global(.menu-overlay) {
+            width: 90vw; color: var(--contrast-text);
+            /* How far down the tile lane has to clear the tab row that
+               floats over it. Declared here because the row and the lane
+               are siblings — the row cannot hand it down to the lane, so
+               their common ancestor holds it and both read the same
+               number. The row wraps, and a fade sized for one line would
+               leave the second line sitting on a photograph. */
+            --mn-fade-start: 60px;
+            --mn-fade-end: 104px;
+          }
           :global(.menu-backdrop) { display: flex; align-items: stretch; }
           /* ── the accordion ──────────────────────────────────────
              Five groups, one open. The open one is marked by a 2px rule
@@ -1551,6 +1561,23 @@ export default function Navbar() {
                column, so the close button at the far right is clear. */
             padding: 32px 0 60px;
             box-sizing: border-box;
+            /* The tab row is a header for both columns, so it sits over
+               this lane rather than beside it — five section names do
+               not fit in the 345px rail, and "From Aura" runs 26px past
+               where the tiles begin. A tile scrolling up therefore
+               passes directly behind it.
+
+               So the lane dissolves before it reaches the row, the same
+               way it already dissolves into the vignette at the foot.
+               Masking the scroller rather than moving it keeps the first
+               tile lined up with Home's text, which is what the 32px
+               above is for. */
+            -webkit-mask-image: linear-gradient(to bottom,
+              transparent 0, transparent var(--mn-fade-start),
+              #000 var(--mn-fade-end));
+            mask-image: linear-gradient(to bottom,
+              transparent 0, transparent var(--mn-fade-start),
+              #000 var(--mn-fade-end));
             /* Hide native scrollbar — the journal feed scrolls silently
                so the cards do all the visual work. */
             scrollbar-width: none;

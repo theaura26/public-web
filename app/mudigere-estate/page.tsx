@@ -296,10 +296,6 @@ export default function MudigerePage() {
           transform: translate(-50%, -1px);
         }
         @media (max-width: 600px) {
-          .mud-hero__caption {
-            font-size: 10px !important;
-            line-height: 1.45 !important;
-          }
           .mud-hero__download {
             padding: 10px 14px !important;
             font-size: 10px !important;

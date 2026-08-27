@@ -1592,12 +1592,20 @@ section.one-col + section.one-col {
   border-radius: 2px;
   opacity: 0;
   transition: opacity var(--dur-fast) var(--ease);
+  /* Out of flow until it is wanted. An absolutely positioned box still
+     contributes to the document's scroll width at opacity 0, and a term
+     near the right edge was pushing the page 5-16px wide on every route
+     that uses <Term> — /land, /circular, /ecology, /biodynamic,
+     /mudigere, /ohara and /mudigere-estate. The fade is worth less than
+     a page that does not scroll sideways. */
+  display: none;
 }
 /* term tooltip — open on hover (pointer), on focus (keyboard), or
    when [data-open] is set by the JSX tap handler (touch). */
 .aura-term:hover .aura-term__tip,
 .aura-term:focus .aura-term__tip,
 .aura-term[data-open] .aura-term__tip {
+  display: block;
   opacity: 1;
 }
 .aura-term:focus { outline: none; }

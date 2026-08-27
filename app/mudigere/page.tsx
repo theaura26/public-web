@@ -256,9 +256,6 @@ export default function MudigerePage() {
         .hero-banner__back,
         .journal-hero__back,
         .article-hero__back { display: none !important; }
-        @media (max-width: 600px) {
-          .mud-hero__caption { font-size: 10px !important; line-height: 1.45 !important; }
-        }
         /* Four-layer cross-section — flowed into the crops column: the
            label stacked above its description, one block per canopy layer
            so it reads cleanly in the narrower second column. */

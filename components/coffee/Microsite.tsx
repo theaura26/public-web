@@ -215,7 +215,6 @@ export function MicroNav() {
           height: 56px;
           /* Fallback first: a solid bar every browser can draw. */
           background: rgba(10, 10, 10, 0.94);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.12);
           top: var(--nav-h);
           opacity: 0; pointer-events: none;
           transform: translateY(calc(-1 * var(--nav-h)));

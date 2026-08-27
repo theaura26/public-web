@@ -64,8 +64,6 @@ export function Programme() {
   return (
     <section className="pg">
       <div className="section-w">
-        <h2 className="pg-h">What to expect across three days</h2>
-
         <ol className="pg-days">
           {DAYS.map((d) => (
             <li className="pg-day" key={d.n}>
@@ -87,13 +85,6 @@ export function Programme() {
         .pg {
           background: #000; color: #fff;
           padding: 0 0 clamp(96px, 15vh, 176px);
-        }
-
-        .pg-h {
-          font-family: var(--font-grotesque), sans-serif; font-weight: 400;
-          font-size: clamp(24px, 3vw, 32px); line-height: 1.15;
-          letter-spacing: -0.03em; color: #fff;
-          margin: 0 0 clamp(40px, 6vh, 72px);
         }
 
         .pg-days {

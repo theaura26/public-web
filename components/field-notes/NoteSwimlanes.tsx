@@ -54,10 +54,6 @@ export function NoteSwimlanes() {
           <section className="lane" key={cat.id} aria-labelledby={`lane-${cat.id}`}>
             <div className="section-w lane-bar">
               <h2 className="lane-h" id={`lane-${cat.id}`}>{cat.label}</h2>
-              <Link href={`/field-notes/${cat.id}`} className="lane-all">
-                All {notes.length}
-                <span aria-hidden> →</span>
-              </Link>
             </div>
             {/* The rail belongs to the wrapper. A narrow max-width on
                 the same element that carries section-w's padding fights
@@ -125,9 +121,10 @@ export function NoteSwimlanes() {
 
         /* ── one lane ── */
         .sw .lane { display: flex; flex-direction: column; gap: var(--space-4); }
+        /* The heading and the rule beneath it. It was a two-item flex
+           row until the 'all N' link came out; with one child the
+           space-between and the gap had nothing left to do. */
         .sw .lane-bar {
-          display: flex; align-items: baseline; justify-content: space-between;
-          gap: var(--space-5);
           padding-bottom: var(--space-4);
           border-bottom: 1px solid var(--border);
         }
@@ -137,13 +134,6 @@ export function NoteSwimlanes() {
           line-height: 1.1; letter-spacing: -0.035em;
           margin: 0; color: var(--text);
         }
-        .sw .lane-all {
-          font-family: var(--font-mono), monospace;
-          font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
-          color: var(--text-muted); text-decoration: none; white-space: nowrap;
-          transition: color var(--dur-base) var(--ease);
-        }
-        .sw .lane-all:hover { color: var(--brand-accent); }
         .sw .lane-lede {
           font-size: 15px; line-height: 1.55;
           color: var(--text-muted); margin: 0; max-width: 60ch;

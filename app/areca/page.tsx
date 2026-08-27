@@ -113,8 +113,8 @@ export default function ArecaPage() {
         <p className="p1">
           An areca takes five to seven years to bear its first useful nut, and longer before its trunk
           roughens enough for a pepper vine to trust. Plant one today and you are planting shade for a
-          block that will not exist for a decade. That is not a complaint. It is the estate&apos;s whole
-          logic written as a planting schedule.
+          block that will not exist for a decade. That is the estate&apos;s whole logic written as a
+          planting schedule.
         </p>
         <p className="p1">
           A palm Aura plants this year will still be the mid-canopy in the 2050s, holding up coffee that

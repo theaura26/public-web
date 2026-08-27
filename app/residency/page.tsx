@@ -48,7 +48,7 @@ export default function ResidencyPage() {
       <TwoCol heading="The environment of focus.">
         <p className="p1">
           Focus is the estate&apos;s first gift to a resident. Days run on the
-          land&apos;s clock, not a calendar — you eat from the garden you walked
+          land&apos;s clock — you eat from the garden you walked
           past at dawn, and the work answers to the season and the people who
           have read this place longer than any of us have been alive.
         </p>

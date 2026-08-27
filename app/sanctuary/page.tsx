@@ -23,11 +23,10 @@ export default function SanctuaryPage() {
         alt="Aura Sanctuary — the four-valley sanctuary network"
       />
 
-      <TwoCol id="posture" heading="A sanctuary is a posture, not a property.">
+      <TwoCol id="posture" heading="A sanctuary is a posture a place takes.">
         <p className="p1">
-          A sanctuary is not a place you go. It is a posture a place takes. It is what happens
-          when a piece of land is tended long enough that it begins to tend the people who stand
-          on it. The two we already run have a journal of their own — the geographies, the
+          It is what happens when a piece of land is tended long enough that it begins to tend the
+          people who stand on it. You do not visit it so much as fall into step with it. The two we already run have a journal of their own — the geographies, the
           coordinates, the year counts on the buildings — and that journal is{' '}
           <em>The Land</em>. This one is about what the network does.
         </p>
@@ -98,7 +97,7 @@ export default function SanctuaryPage() {
 
       <TwoCol id="shared" heading="What actually travels between them.">
         <p className="p1">
-          Not the crops, not the climate, not even the language. What moves from Mudigere to
+          The crops differ, the climate differs, the language differs. What moves from Mudigere to
           Ohara — and will move to Munduk and Punakha when they&apos;re ready — is a small set
           of working habits, tested wherever they&apos;ve been tried and kept because they held.
         </p>
@@ -108,12 +107,12 @@ export default function SanctuaryPage() {
             how obvious the answer looks on day one.
           </DataCard>
           <DataCard value="The animal pays its way">
-            Every valley keeps a herd sized to the land, not the ambition — the five-product
+            Every valley keeps a herd the land can carry — the five-product
             economy of the cow, or its local equivalent, doing real work in the loop.
           </DataCard>
           <DataCard value="Lineage over import">
-            Local craft, local cultivar, local calendar. A practice imported wholesale from
-            another valley is a decoration, not a discipline.
+            Local craft, local cultivar, local calendar. A practice earns its place in a valley by
+            being tested there first.
           </DataCard>
         </DataGrid>
       </TwoCol>
@@ -125,7 +124,7 @@ export default function SanctuaryPage() {
 
       <Placeholder
         type="Portrait · the herd"
-        caption="A herd sized to the land, not the ambition — one valley's version of the five-product economy"
+        caption="A herd the land can carry — one valley's version of the five-product economy"
       />
 
       <TwoCol id="two-listening" heading="The two in listening.">

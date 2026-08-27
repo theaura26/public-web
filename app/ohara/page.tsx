@@ -228,6 +228,9 @@ const OHARA_PASSAGES = [
 export default function OharaPage() {
   return (
     <>
+      {/* The story opens on the wordmark intro rather than a set title,
+          so the outline has no top level of its own. This supplies one. */}
+      <h1 className="sr-only">Ohara</h1>
       <style jsx global>{`
         .layer-row {
           border-top: 1px solid var(--border);

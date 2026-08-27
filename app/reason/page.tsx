@@ -333,6 +333,9 @@ export default function TheReasonPage() {
 
   return (
     <div className="reason">
+      {/* The board sets its title in artwork, so the outline has no top
+          level of its own. This supplies one. */}
+      <h1 className="sr-only">The Reason</h1>
       <div className="reason-stage">
 
         {/* ── Flower stems grow up out of the dark block (rendered before it, so

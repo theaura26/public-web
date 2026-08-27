@@ -71,8 +71,8 @@ export default function LandPage() {
         <p className="p1">
           One hundred acres of shade-grown coffee — Arabica <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>,
           planted beneath a four-story canopy of silver oak, Albizzia,
-          jackfruit, and native fig. Thirty-two acres of tea, in organic
-          transition targeting 2027.
+          jackfruit, and native fig. Beside them, thirty-two acres of tea,
+          working towards organic certification in 2027.
         </p>
         <p className="p1">
           Black pepper climbing areca palms. Cardamom in the lower shade. Cacao,

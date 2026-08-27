@@ -100,11 +100,12 @@ export default function TransparencyPage() {
       </Scene>
 
       <Scene title="What exists instead is a record.">
-        In August 2026 we put four of the
-        Arabica lots in front of an independent Q grader. They came back
-        between 82.25 and 85.25 SCA. Every one scored a perfect 10 on
-        uniformity, clean cup and sweetness. The grader’s notes say
-        the ceiling right now is the roast, not the coffee underneath it.
+        In August 2026 we cupped four of the
+        Arabica lots to SCA protocol. They came back between 82.25 and
+        85.25 on our own table. Every one scored a perfect 10 on
+        uniformity, clean cup and sweetness. The note against them says
+        the ceiling right now is the roast, and the coffee underneath it
+        has further to go.
       </Scene>
 
       <Closing>{`The record instead.

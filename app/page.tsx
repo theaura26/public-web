@@ -1045,7 +1045,11 @@ function SanctuaryBg({ s }: { s: Sanctuary }) {
 }
 
 function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large?: boolean; onExplore?: () => void }) {
-  const Heading = large ? 'h1' : 'h2'
+  /* Always h2. The size is set inline below and does not follow from
+     the element — these are section banners inside the homepage, and
+     the page's one h1 is the hero above them. Keying the element off
+     `large` gave the homepage three h1s. */
+  const Heading = 'h2'
   return (
     <div
       className="sanctuary-content"
@@ -1079,8 +1083,8 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
           margin: 0,
           marginBottom: 20,
           color: '#ffffff',
-          /* Match the type scale: h1 is 600, h2 is 400. A flat 400 here
-             was overriding h1's weight on the large panels. */
+          /* The large panels carry display weight, the 2-col panels the
+             regular one. Set here because the element is h2 either way. */
           fontWeight: large ? 600 : 400,
           textShadow: '0 2px 24px rgba(0, 0, 0, 0.35)',
         }}>
@@ -1560,13 +1564,15 @@ export default function Home() {
             margin-top: -4px;
           }
           .hero-mid__logo :global(svg) { width: clamp(96px, 11vw, 132px); height: auto; }
+          /* The label role sets size and tracking. These two set only
+             what is particular to the hero row: the primary colour, the
+             looser leading and the measure. Restating 11px here is how
+             three separate components drifted a pixel apart. */
           .hero-mid__think,
           .hero-mid__copy {
             color: var(--text);
             margin: 0;
             line-height: 1.6;
-            font-size: 10px;
-            letter-spacing: 1.4px;
             max-width: 290px;
           }
           .hero-mid__think {
@@ -1672,8 +1678,6 @@ export default function Home() {
             margin: 16px 0 0;
             color: var(--text);
             line-height: 1.6;
-            font-size: 10px;
-            letter-spacing: 1.4px;
             /* Desktop: captions stay hidden until the tile is hovered.
                Fades in on hover, fades out when the pointer leaves. */
             opacity: 0;

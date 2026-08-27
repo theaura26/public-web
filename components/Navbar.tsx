@@ -953,7 +953,7 @@ export default function Navbar() {
                         <span className="tile-coming-soon">Coming Soon</span>
                       )}
                     </div>
-                    <p className="tile-title">{a.title}</p>
+                    <p className="label tile-title">{a.title}</p>
                   </Link>
                 )
               })
@@ -1482,15 +1482,12 @@ export default function Navbar() {
             background: color-mix(in oklab, var(--contrast-bg) 70%, transparent);
             border-radius: 2px;
           }
-          /* Matches the global .label style exactly: DM Mono 11px, 1px
-             letter-spacing, uppercase. Title and meta labels site-wide now
-             share one type role. */
+          /* The label role, worn on the element itself. This rule sets
+             only what the menu changes about it: the contrast colour the
+             overlay needs, the leading, and the gap above. Restating the
+             role's own values here is what let the phone breakpoint below
+             drift to 10px under a comment claiming it matched. */
           :global(.tile-title) {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            font-weight: 400;
-            letter-spacing: 1px;
-            text-transform: uppercase;
             line-height: 1.4;
             color: var(--contrast-text);
             margin-top: 16px;
@@ -1791,16 +1788,10 @@ export default function Navbar() {
               aspect-ratio: 16 / 10;
               border-radius: 3px;
             }
-            /* Phone — pin the tile title to the global label spec
-               (mono 10 px, 1 px letter-spacing, uppercase, muted)
-               so it reads as a caption rather than a headline under
-               the smaller cards. !important to beat any inherited
-               styles from p / agent-mode rules. */
+            /* Phone — the label role already sets the type. Only the
+               gap above and the weight of the ink change under the
+               smaller cards. */
             :global(.tile-title) {
-              font-size: 10px !important;
-              line-height: 1.4 !important;
-              letter-spacing: 1px !important;
-              font-weight: 400 !important;
               margin-top: 10px;
               opacity: 0.7;
             }

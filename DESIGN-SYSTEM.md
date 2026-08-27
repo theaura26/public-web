@@ -345,3 +345,59 @@ audit does not try to "fix" it:
 The rule: the element is chosen for the document outline, the size is
 chosen for the visual hierarchy, and where they disagree the disagreement
 is deliberate and recorded here.
+
+The reverse is always wrong. `SanctuaryContent` on the homepage chose its
+element from its size — `const Heading = large ? 'h1' : 'h2'` — which gave
+the homepage three `h1`s, because two of the sanctuary banners happened to
+be big. It is an `h2` now, at the same size it always was.
+
+### Measured state
+
+Every public route (63 including the 404 and one product page) measured at
+1280 / 768 / 375 against a **production build**, not the dev server. The
+dev server served stale `globals.css` for the whole of this project, and an
+audit against it reports sizes the site does not ship. Serve the build:
+
+```
+npm run build && npx next start -p 3100
+```
+
+| Role | 1280 | 768 | 375 | Routes |
+|---|---|---|---|---|
+| `h1` | 92.16 | 55.3 | 48 | 56 |
+| `h2` content | 60 | 42.24 | 32 | 43 |
+| `h2` lane | 32 | 24 | 24 | 11 |
+| `h2` footer | 28 | 20 | 20 | 58 |
+| `.label` | 11 | 11 | 11 | **58 — one value, every route, every width** |
+| `.p1` | 16 | 15 | 15 | 58 |
+| `.p2` | 14 | 14 | 14 | 10 |
+
+Horizontal overflow: zero on every route at every width. Text clipped by an
+ancestor: none. Routes without an `h1`: none.
+
+### Intentional exceptions
+
+Three, and only three. Anything else that measures off this table is drift.
+
+1. **`/atelier` and `/mudigere-estate`** carry a larger display `h1` —
+   166.4 / 99.84 / 56px. Both are hero-led pages whose title is the
+   composition.
+2. **`/`** runs its own display scale: a 94.72px hero `h1` and 204.8px
+   manifesto rows. The homepage is a poster, and the rest of the site is
+   not.
+3. **`/regenerative-coffee` and its four sub-routes** are a self-contained
+   microsite with its own type scale — `h2` at 58.88 / 51.2 / 46.08 /
+   30.72px where the main site has one value. It was built as a separate
+   narrative object and restored deliberately. Leave it alone; it is
+   excluded from the site-wide type measurement for that reason.
+
+### The drift signature
+
+Every type inconsistency found in this pass had the same shape: a component
+restating a role's values locally instead of wearing the class. Three of
+them sat under comments claiming they matched the global spec, and had
+since drifted a pixel from it.
+
+If a component needs a role, give the element the class and override only
+what is genuinely particular to that context — the colour on a dark
+overlay, the leading in a tight box, the gap above. Never the size.

@@ -723,8 +723,8 @@ export default function MudigerePage() {
           Together they are turning a colonial-era plantation, built for
           extraction, into a living system — one that grows its structures
           around the landscape rather than through it. An artist residency, a
-          research laboratory, sanctuary spaces: built to be lived in, not
-          only worked.
+          research laboratory, sanctuary spaces: built to be lived in as well as
+          worked.
         </p>
         <p className="p1">
           Phase one fixes the hydrology — reservoirs that catch three thousand

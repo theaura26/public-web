@@ -198,7 +198,7 @@ export default function RtaPage() {
 
       <OneCol id="closing" heading="The land decides when it is ready.">
         <p className="p1">
-          BD application at dusk. Fermentation closed by pH, not by hour. Cattle
+          BD application at dusk. Fermentation closed by pH. Cattle
           rotated by cherry stage. Each is the same observation in a different
           register: the work waits on the land, and the land is right more
           often than we are.

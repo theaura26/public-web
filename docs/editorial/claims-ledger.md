@@ -77,7 +77,8 @@ ledger records what the site currently says and what backs it.
 | Per-lot figures: harvest kg, floats, Brix, TDS, ferment hours, drying days | `/coffee` | Wet mill logs | Estate record — harvest year should be stated |
 | Minimum 95% ripeness; ferment ends at pH 4.2 | `/coffee`, disciplines | Protocol + logs | Estate record |
 | pH every 15 min; temperature 3×/day; Brix at start, middle, end | `/coffee`, `/fermentation` | Ferment logs | Estate record |
-| Cupping scores 85.25 / 84.25 / 83.00 / 82.25 | `/regenerative-coffee/flavour` | Estate cupping table | **Estate record** — attributed on the page as Aura's own; no third-party grading. `master-story.md:175` lists on-site Q-grader certification under what Aura is building |
+| Cupping scores 85.25 / 84.25 / 83.00 / 82.25 | `/regenerative-coffee/flavour`, `/regenerative-coffee/transparency` | Estate cupping table | **Estate record** — attributed on both pages as Aura's own. A third-party grading claim was corrected out of both during this pass; see *Removed* below |
+| Two Robusta lots won their categories at the Coffee Board of India Flavour of India Fine Cup Award; a third placed top four | `/regenerative-coffee/flavour` | — | **Unverified** — a publicly checkable third-party result with no record in `AURA_COFFEE/`. Logged in `open-questions.md` §2.1 for confirmation or removal |
 | Target 80+ SCA | `/coffee` | Aura's stated target | Ambition — worded as a target |
 | Wild yeasts and lactic-acid bacteria drive the ferment | `/fermentation`, `/regenerative-life/microbiome` | Published fermentation science | External — the site does not claim to have identified species on this estate |
 | Solera carry-forward holds a house culture across seasons | `/coffee` | — | Ambition, labelled as unproven by Aura itself |
@@ -125,4 +126,5 @@ ledger records what the site currently says and what backs it.
 | "Sealed on the blockchain as a permanent, verifiable event" / "tamper-evident" | No chain, contract or explorer link exists. |
 | "We have watched every step of it happen" | Implies on-estate microbial identification. Replaced with "we track it hour by hour." |
 | "500–1,000 t CO₂ credit potential per year" | Unissued and unverified. Belongs in investor material, labelled potential. |
+| "An independent Q grader" scored four Arabica lots in August 2026 | No third-party score exists. `02_MICROSITE/information-architecture.md:96` states there is none, `05_CONTENT/content-gaps.md:78` lists getting one as the open gap, and `01_STRATEGY/claims-and-proof.md:183` lists it as an action. The claim reached `/regenerative-coffee/flavour` and `/regenerative-coffee/transparency` when the microsite was restored, and appears in no source document. The scores are retained as the estate's own cupping table. |
 | Second coordinate set (13.168594 / 75.433983 vs 13.1365 / 75.6403) | Two sets, ~23 km apart. One retained, matching the map embed. |

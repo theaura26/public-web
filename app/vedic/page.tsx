@@ -44,11 +44,11 @@ export default function VedicPage() {
 
       <TwoCol id="read" heading="Read the plant before you treat it.">
         <p className="p1">
-          The Vrikshayurveda is a way of looking, not a book of recipes. It reads a plant the way its
+          The Vrikshayurveda is a way of looking. It reads a plant the way its
           sibling text reads a body — as a being with digestion, seasons, and specific weaknesses —
           and its first instruction never changes: read the plant before you treat it. A leaf that
-          yellows from the tip is one diagnosis; from the edge, another. Treat the diagnosis, not the
-          symptom.
+          yellows from the tip is one diagnosis; from the edge, another. Treat the diagnosis the
+          symptom points to.
         </p>
         <p className="p1">
           Industrial agriculture inherited the{' '}
@@ -133,7 +133,7 @@ export default function VedicPage() {
           pH, electrical conductivity, and a live colony count before a drop is sprayed.
         </DataCard>
         <DataCard value="90 days">
-          The soil re-read after application — proof that the thing worked in the ground, not the pot.
+          The soil re-read after application — proof that the thing worked in the ground.
         </DataCard>
         <DataCard value="Signed">
           Each spray logged: the block, the lunar day, the humidity, the dung batch, the hand that

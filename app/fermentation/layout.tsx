@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 export const metadata: Metadata = {
   title: 'Fermentation',
   description:
-    'Three fermentation disciplines, one estate. Coffee, pepper, and cow dung — pH every fifteen minutes, temperature three times daily, Brix start to end. Every lot a tracked individual, not an average.',
+    'Three fermentation disciplines, one estate. Coffee, pepper, and cow dung — pH every fifteen minutes, temperature three times daily, Brix start to end. Every lot is tracked as an individual and carries its own record.',
   alternates: { canonical: '/fermentation' },
   openGraph: {
     type: 'article',

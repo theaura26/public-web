@@ -296,9 +296,11 @@ export default function MudigerePage() {
           transform: translate(-50%, -1px);
         }
         @media (max-width: 600px) {
+          /* Tighter box on a phone so the chip sits inside the gutter.
+             The type stays on the label role — dropping it to 10px here
+             made this the one label on the site a pixel off the rest. */
           .mud-hero__download {
             padding: 10px 14px !important;
-            font-size: 10px !important;
             gap: 8px !important;
           }
         }
@@ -527,14 +529,14 @@ export default function MudigerePage() {
         <p className="p1">
           The <Term tip="UNESCO designation for regions with exceptional plant and animal endemism under high threat of habitat loss.">Western Ghats</Term> run 1,600 km along
           India&rsquo;s western coast — older than the Himalayas.
-          Mudigere sits at the intersection of monsoon shadow and mist
-          forest, where altitude, rainfall, and red <Term tip="Red, iron-rich, free-draining volcanic soil typical of the Western Ghats. pH 6.0–6.5.">laterite</Term> soil
+          Mudigere sits where the monsoon shadow gives way to mist
+          forest, and altitude, rainfall and red <Term tip="Red, iron-rich, free-draining volcanic soil typical of the Western Ghats. pH 6.0–6.5.">laterite</Term> soil
           create conditions of exceptional biological density.
         </p>
         <p className="p1">
           Soil pH 6.0–6.5 over granite, alive with mycorrhizal networks.
-          Excellent drainage. Strong thermal mass. This is not farming
-          despite the climate — it is farming because of it.
+          Excellent drainage. Strong thermal mass. The climate is the argument
+          for farming here.
         </p>
       </TwoCol>
 

@@ -84,7 +84,7 @@ export const DISCIPLINES: Discipline[] = [
     open: [
       '[A Living Organism](/biodynamic) is the longer account of why the estate keeps the preparations at all.',
       'Aura is not certified biodynamic. It practises the system and publishes the record instead.',
-      'The lunar calendar sets the timing. The reason for keeping these preparations is the biology, not the cosmology — the charts are a schedule, and Aura has said so in print rather than leaving the impression of a belief it does not hold.',
+      'The lunar calendar sets the timing. The reason for keeping these preparations is the biology it builds — the charts are a schedule, and Aura has said so in print rather than leaving the impression of a belief it does not hold.',
       'Chromatography is run as a soil-vitality image. It is a qualitative indicator and is published as a practice, never as evidence of an outcome.',
     ],
     related: [
@@ -234,7 +234,7 @@ export const DISCIPLINES: Discipline[] = [
       'A closed canopy is the first thing it meets. [The Light Instrument](/shade) covers how that canopy is measured and cut, and the same readings govern what reaches the ground.',
       'A four-storey canopy is the estate\u2019s main water instrument. It breaks the fall of monsoon rain before it reaches bare soil, slows what runs off, and shades ground that would otherwise give its moisture back to the air by noon.',
       'A weather station at 3,600 ft logs rainfall, temperature and humidity.',
-      'Water is measured where it meets the coffee: total dissolved solids are logged for every lot that goes through the wet mill.',
+      'Water is measured at the point it enters the coffee: total dissolved solids are logged for every lot that goes through the wet mill.',
       'Canopy is managed for light, which is also what governs how much rain reaches the ground and how fast it leaves again.',
     ],
     record: [
@@ -245,7 +245,7 @@ export const DISCIPLINES: Discipline[] = [
     open: [
       '[The Land](/land) carries what is known about the ground this water moves through.',
       'What is written down here is weather and process water. Catchment, infiltration and runoff are not yet on a published protocol.',
-      'Of the nine disciplines this one has the least record behind it. It is on the ring because it governs the others, not because it is the best documented — and saying otherwise would undo the value of the eight that are.',
+      'Of the nine disciplines this one has the least record behind it. It is on the ring because it governs the others, and the record is thinner than that role deserves — saying otherwise would undo the value of the eight that are.',
     ],
     related: [{ label: 'The Land', href: '/land' }],
   },

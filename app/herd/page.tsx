@@ -107,8 +107,8 @@ export default function HerdPage() {
           it needs it, treated with{' '}
           <Term tip="Plant-based sprays — neem, herbal decoctions, and biodynamic preparations — used in place of synthetic veterinary chemicals wherever possible.">organic sprays</Term>{' '}
           before reaching for a chemical. What touches an animal that grazes a pesticide-free block has to
-          answer to the same rule as the block. And it is a whole household, not a headcount: cows,
-          chickens, and the estate dogs now, goats to come, each known by the people who keep them.
+          answer to the same rule as the block. And it is a whole household: cows,
+          chickens, and the estate dogs now, goats to come, each known by name to the people who keep them.
         </p>
         <p className="p1">
           The closeness earns its keep. A caretaker washing a cow at dawn reads a limp, an off feed, a

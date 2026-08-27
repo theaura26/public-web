@@ -129,7 +129,7 @@ export default function EcologyPage() {
       />
 
       <PullQuote>
-        A forest is nourished not only by what it grows, but by what it leaves behind.
+        A forest is nourished by what it grows and by what it leaves behind.
       </PullQuote>
 
       <ExpandingBanner

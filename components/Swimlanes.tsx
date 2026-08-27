@@ -135,7 +135,7 @@ export function Swimlanes({
           font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
           line-height: normal;
           color: var(--text-muted);
-          margin: 0; max-width: 50ch;
+          margin: 0; max-width: 42ch;
         }
 
         .sw .lane-bar { padding-bottom: 0; }
@@ -261,7 +261,11 @@ export function Swimlanes({
           .sw .lane-card { width: min(78vw, 320px); }
           .sw .lane-fade { width: clamp(40px, 10vw, 72px); }
           .sw .lane { gap: var(--space-3); }
-          .sw .sw-lede, .sw .lane-lede { max-width: 100%; }
+          /* Only the lane lede fills — it is body prose. The centred
+             mono line keeps its measure at every width; letting it run
+             the full width of a phone was what made it a four-line
+             uppercase block. */
+          .sw .lane-lede { max-width: 100%; }
         }
       `}</style>
     </main>

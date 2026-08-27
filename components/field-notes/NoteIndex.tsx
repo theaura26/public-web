@@ -185,7 +185,7 @@ export function NoteIndex({
         @media (max-width: 768px) {
           .fn .fn-list { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
           .fn .fn-filters { margin: var(--space-7) 0 var(--space-6); }
-          .fn .fn-lede { max-width: 100%; }
+
         }
       `}</style>
     </main>

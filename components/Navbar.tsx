@@ -733,7 +733,6 @@ export default function Navbar() {
                         {item.disabled ? (
                           <span className="mn-leaf is-soon" aria-disabled>
                             {item.label}
-                            <span className="mn-soon">Soon</span>
                           </span>
                         ) : (
                           <Link
@@ -744,7 +743,6 @@ export default function Navbar() {
                             data-attr={`menu-link:${item.href}`}
                           >
                             {item.label}
-                            {item.soon && <span className="mn-soon">Soon</span>}
                           </Link>
                         )}
 
@@ -759,7 +757,6 @@ export default function Navbar() {
                                 {child.disabled ? (
                                   <span className="mn-sub-leaf is-soon" aria-disabled>
                                     {child.label}
-                                    <span className="mn-soon">Soon</span>
                                   </span>
                                 ) : (
                                   <Link
@@ -770,7 +767,6 @@ export default function Navbar() {
                                     data-attr={`menu-link:${child.href}`}
                                   >
                                     {child.label}
-                                    {child.soon && <span className="mn-soon">Soon</span>}
                                   </Link>
                                 )}
                               </li>
@@ -1234,15 +1230,8 @@ export default function Navbar() {
              made the one link in the corner behave unlike the rest. */
           :global(.mn-corner-link):hover { color: var(--brand-accent); }
 
-          /* Not yet a page. DM Mono, small and muted: it labels the row
-             rather than being read as part of the name. */
-          :global(.mn-soon) {
-            margin-left: 10px;
-            font-family: var(--font-mono), monospace;
-            font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
-            color: color-mix(in srgb, var(--contrast-text) 42%, transparent);
-            vertical-align: middle;
-          }
+          /* Announced, not visitable. Dimmed and inert, with no label —
+             the menu says what exists by what it lets you open. */
           :global(.mn-leaf.is-soon),
           :global(.mn-sub-leaf.is-soon) {
             cursor: default;

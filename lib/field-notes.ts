@@ -10,7 +10,16 @@
 
 import { ACTIVE_JOURNALS, type Journal } from './journals'
 
-export type CategoryId = 'activities' | 'biodynamic' | 'biodiversity' | 'labs'
+export type CategoryId =
+  | 'activities'
+  | 'biodynamic'
+  | 'biodiversity'
+  | 'labs'
+  | 'animals'
+  | 'land-ecology'
+  | 'art-culture'
+  | 'coffee-fermentation'
+  | 'tech-robotics'
 
 export type Category = {
   id: CategoryId
@@ -40,25 +49,63 @@ export const CATEGORIES: Category[] = [
     label: 'Labs',
     lede: 'Where the claims get tested — ferment logs, colony counts, cupping scores, and the numbers that decide when a tank comes off.',
   },
+  /* The menu named these five long before this file did, so they
+     resolved to stubs and had to be marked coming-soon in the nav while
+     the notes filed under them were already written. They are real
+     categories with real notes in them now. */
+  {
+    id: 'animals',
+    label: 'Animals',
+    lede: 'Fifty-two cattle, the insects a plantation forgets to house, and the pollinators nobody has counted yet.',
+  },
+  {
+    id: 'land-ecology',
+    label: 'Land & Ecology',
+    lede: 'The ground itself — what grows on it, what was here before the coffee, and what is being made room for again.',
+  },
+  {
+    id: 'art-culture',
+    label: 'Art & Culture',
+    lede: 'What the estate makes when it is not farming, and the beliefs it keeps alongside the measurements.',
+  },
+  {
+    id: 'coffee-fermentation',
+    label: 'Coffee & Fermentation',
+    lede: 'One harvest, many lots, and the hours of controlled decay that decide what ends up in the cup.',
+  },
+  {
+    id: 'tech-robotics',
+    label: 'Tech & Robotics',
+    lede: 'Sensors, models and the machines that will do the counting. Nothing written here yet.',
+  },
 ]
 
 /** Where each published journal sits. A journal may appear in several. */
 const ASSIGNMENT: Record<string, CategoryId[]> = {
-  '/residency': ['activities'],
-  '/artistry': ['activities'],
+  '/residency': ['activities', 'art-culture'],
+  '/artistry': ['activities', 'art-culture'],
+  '/wisdom': ['art-culture'],
 
   '/biodynamic': ['biodynamic'],
-  '/herd': ['biodynamic'],
   '/circular': ['biodynamic'],
   '/rta': ['biodynamic'],
-  '/land': ['biodynamic'],
+  '/vedic': ['biodynamic'],
 
-  '/ecology': ['biodiversity'],
+  '/herd': ['biodynamic', 'animals'],
+
+  '/land': ['land-ecology'],
+  '/mudigere': ['land-ecology'],
+  '/ohara': ['land-ecology'],
+
+  '/ecology': ['biodiversity', 'land-ecology'],
   '/living-systems': ['biodiversity'],
   '/shade': ['biodiversity'],
+  '/areca': ['biodiversity'],
 
-  '/fermentation': ['labs'],
-  '/coffee': ['labs'],
+  '/fermentation': ['labs', 'coffee-fermentation'],
+  '/coffee': ['labs', 'coffee-fermentation'],
+  '/pepper': ['coffee-fermentation'],
+  '/provenance': ['labs'],
 }
 
 /** A Field Note that has a category but no page yet. */

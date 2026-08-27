@@ -61,10 +61,9 @@ export const SECTIONS: NavSection[] = [
       {
         label: 'Natural Intelligence',
         href: '/reason/natural-intelligence',
-        soon: true,
         children: [
-          { label: 'Agroculture', href: '/reason/agroculture', soon: true },
-          { label: 'Hospitality', href: '/reason/hospitality', soon: true },
+          { label: 'Agroculture', href: '/reason/agroculture' },
+          { label: 'Hospitality', href: '/reason/hospitality' },
           { label: 'Atelier', href: '/atelier' },
         ],
       },
@@ -145,19 +144,19 @@ export const SECTIONS: NavSection[] = [
       {
         label: 'Art & Culture',
         href: '/field-notes/art-culture',
-        soon: true,
         children: [
           { label: 'Artistry', href: '/artistry' },
           { label: 'Monastic Polymaths', href: '/residency' },
           { label: 'Moral Spine', href: '/wisdom' },
+          { label: 'Land, Spirit, Soul', href: '/land-spirit-soul' },
         ],
       },
       {
         label: 'Land & Ecology',
         href: '/field-notes/land-ecology',
-        soon: true,
         children: [
           { label: 'The Land', href: '/land' },
+          { label: 'Forest Islands', href: '/forest-islands' },
           { label: 'Mudigere', href: '/mudigere' },
           { label: 'Asa. Niwa.', href: '/ohara' },
         ],
@@ -165,7 +164,6 @@ export const SECTIONS: NavSection[] = [
       {
         label: 'Coffee & Fermentation',
         href: '/field-notes/coffee-fermentation',
-        soon: true,
         children: [
           { label: 'Our bean story', href: '/coffee' },
           { label: 'Fermentation', href: '/fermentation' },
@@ -175,15 +173,17 @@ export const SECTIONS: NavSection[] = [
       {
         label: 'Animals',
         href: '/field-notes/animals',
-        soon: true,
         children: [
           { label: 'Ecosystem Engineers', href: '/herd' },
-          { label: 'Cows of Aura', href: '/field-notes/cows-of-aura', soon: true },
-          { label: 'Pollinators', href: '/field-notes/pollinators', soon: true },
-          { label: 'Bug Hotels', href: '/field-notes/bug-hotels', soon: true },
+          /* A note is a page in its own right, not a slice of its
+             category — /field-notes/<id> is where the category index
+             lives, and these three were pointing at it. */
+          { label: 'Cows of Aura', href: '/cows-of-aura' },
+          { label: 'Pollinators', href: '/pollinators' },
+          { label: 'Bug Hotels', href: '/bug-hotels' },
         ],
       },
-      { label: 'Tech & Robotics', href: '/field-notes/tech-robotics', soon: true },
+      { label: 'Tech & Robotics', href: '/field-notes/tech-robotics' },
       { label: 'View all', href: '/field-notes' },
     ],
   },

@@ -313,7 +313,6 @@ export const DISCIPLINES: Discipline[] = [
   },
 ]
 
-export const DISCIPLINE_SLUGS = DISCIPLINES.map((d) => d.slug)
 
 export function disciplineBySlug(slug: string): Discipline | undefined {
   return DISCIPLINES.find((d) => d.slug === slug)

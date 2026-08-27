@@ -2,7 +2,10 @@
 
 import Link from 'next/link'
 import { CATEGORIES, notesIn, type NoteEntry } from '@/lib/field-notes'
-import { FROM_AURA } from '@/lib/from-aura'
+/* The shape lives with the data that defines it, and is re-exported so
+   a caller can type its own lanes without reaching past this file. */
+import { FROM_AURA, type Lane } from '@/lib/from-aura'
+export type { Lane }
 
 /* ── Lanes ────────────────────────────────────────────────────────
    A section's whole contents, one lane per group, each scrolling
@@ -16,12 +19,7 @@ import { FROM_AURA } from '@/lib/from-aura'
    cross-listed note does exactly that.
 */
 
-export type Lane = {
-  id: string
-  label: string
-  lede: string
-  items: NoteEntry[]
-}
+
 
 function Card({ note }: { note: NoteEntry }) {
   const inner = (

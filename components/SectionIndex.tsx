@@ -56,10 +56,6 @@ export default function SectionIndex({ id }: { id: string }) {
         .sx-note { margin: 0; color: var(--text-body); }
 
         .sx-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
-        .sx-group {
-          margin: var(--space-6) 0 0;
-          color: var(--text-muted);
-        }
         .sx-link {
           display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4);
           padding: var(--space-4) 0;

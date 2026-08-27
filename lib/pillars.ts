@@ -42,7 +42,7 @@ export const PILLARS: Pillar[] = [
     practice: [
       'It is not a mystical claim. A forest that has held a slope for a thousand years has solved a problem, and the solution is legible if somebody bothers to measure it. Aura\u2019s position is that measuring is the respectful thing to do, not the reductive one.',
       'There are three intelligences at Aura: machine, human, and the oldest one. Natural Intelligence is the third — the accumulated problem-solving of a system that has been running field trials for 3.8 billion years without a break.',
-      'It is practised in three places. Agroculture works it into 150 acres. Hospitality builds the rooms a person can meet it in. The Atelier turns what is learned into things that leave the estate.',
+      'It is practised in three places. Agroculture works it into 150 acres. Hospitality builds the rooms a person can meet it in. The Atelier is the taste layer — what is worth making at all, and what is good enough to leave here carrying the name.',
       'Reading the output means measurement. A canopy is read in lux before it is cut. A preparation is plated before it is spread. A ferment is stopped by its pH and not by the clock.',
       'The record is kept in plain formats and signed by the person who made it, so a reading can be checked by someone who was not there.',
     ],
@@ -123,7 +123,6 @@ export const PILLARS: Pillar[] = [
   },
 ]
 
-export const PILLAR_SLUGS = PILLARS.map((p) => p.slug)
 
 export function pillarBySlug(slug: string): Pillar | undefined {
   return PILLARS.find((p) => p.slug === slug)

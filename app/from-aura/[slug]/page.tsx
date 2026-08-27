@@ -83,12 +83,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
           {p.description && <p className="p1 pd-lede">{p.description}</p>}
 
-          <p className="p2 pd-p">
+          <p className="p1 pd-p">
             Nothing from this lot is released yet. When it is, this page carries what the
             estate already keeps on it — the block it came from, the ferment, the drying,
             and the lab record that closed it.
           </p>
-          <p className="p2 pd-p">
+          <p className="p1 pd-p">
             Aura publishes the record before it publishes a price. That is the whole
             argument, and it would be a strange thing to abandon at the point of sale.
           </p>
@@ -160,7 +160,14 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           color: var(--text); text-wrap: balance;
         }
         .pd-lede { margin: 0; color: var(--text); max-width: 42ch; }
-        .pd-p { margin: 0; color: var(--text-body); max-width: 46ch; }
+        /* .p1 like the line above it. A product page is short enough
+           that dropping to the secondary body size halfway down just
+           made the same voice quieter for no reason. */
+        .pd-p {
+          margin: 0; max-width: 46ch;
+          font-family: var(--font-sans); font-size: 16px; line-height: 1.55;
+          letter-spacing: normal; color: var(--text-body);
+        }
 
         .pd-act { margin: var(--space-4) 0 0; }
         /* .p1, like every other link set in running text. The accent

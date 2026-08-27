@@ -840,7 +840,11 @@ export default function AskAura() {
         }
         .aa-mark {
           flex: none;
-          width: 24px; height: 24px;
+          /* Its own proportions, not a square. The artwork is
+             1079 × 1048, and forcing it into a square box left it
+             sitting off-centre inside its own frame. */
+          width: 26px;
+          aspect-ratio: 1079 / 1048;
           margin-left: 12px;
           background: conic-gradient(
             from var(--aa-angle),

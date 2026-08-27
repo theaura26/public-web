@@ -65,6 +65,16 @@
   --ease-out: cubic-bezier(0.19, 1, 0.22, 1);      /* easeOutExpo — hero reveals, panel slides, hover swaps */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);    /* Spring micro-snap — used by navbar tile + Continue card symbol hover */
 
+  /* ── The hover rule ──────────────────────────────────────────────
+     One affordance for every clickable thing on the site: a brand-accent
+     underline. Its offset is proportional rather than fixed, because a
+     4px gap that looks right under an 11px label looks pinched under a
+     32px heading — the same number cannot be correct at both sizes, and
+     three different numbers in three files is how it drifted before.
+     Thickness stays absolute: a hairline is a hairline at any size. */
+  --rule-offset: 0.22em;
+  --rule-weight: 1.5px;
+
   --dur-fast: 150ms;
   --dur-base: 250ms;
   --dur-slow: 450ms;
@@ -1192,8 +1202,8 @@ button:disabled,
 a:hover, button:hover, [role="button"]:hover {
   text-decoration: underline;
   text-decoration-color: var(--brand-accent);
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1.5px;
+  text-underline-offset: var(--rule-offset);
+  text-decoration-thickness: var(--rule-weight);
 }
 
 /* Sanctuary banner: hover affordance is the cursor pill (Explore X) — no
@@ -1919,7 +1929,7 @@ body:has(.reason) .page-vignette { display: none !important; }
   display: block;
   transform: translateY(115%);
   opacity: 0;
-  transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: transform 0.9s var(--ease-out), opacity 0.9s var(--ease-out);
   will-change: transform;
 }
 .rl.is-in .rl-inner { transform: none; opacity: 1; }
@@ -2142,7 +2152,7 @@ html.lenis, html.lenis body { height: auto; }
 /* …and a GRADUAL opacity fade to go with the burst — override the shared
    .rm-fadein ease (easeOutExpo front-loads opacity into a pop) with an even
    ease-in-out over a longer beat, so the constellation truly fades in. */
-.rm-disc.rm-fadein { transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+.rm-disc.rm-fadein { transition: opacity 1.5s var(--ease); }
 .rm-whereland { position: absolute; width: 84%; filter: drop-shadow(0 2px 14px rgba(240,237,232,0.95)); }
 /* hover the overlay text → constellation behind it eases to 70% so the text reads cleaner */
 .rm-disc:has(.rm-whereland:hover) .rm-art { opacity: 0.7; }

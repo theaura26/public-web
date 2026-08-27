@@ -179,6 +179,23 @@ When in doubt: pick a token, not a magic number.
 
 ---
 
+## 11b. The hover rule
+
+**One affordance for everything clickable: a brand-accent underline.** It is declared once, on `a:hover, button:hover, [role="button"]:hover` in `globals.css`, and inherited everywhere. Two tokens control it:
+
+| Token | Value | Why |
+|---|---|---|
+| `--rule-offset` | `0.22em` | **Proportional, not fixed.** A 4 px gap that sits right under an 11 px label looks pinched under a 32 px heading. The same number cannot be correct at both sizes. |
+| `--rule-weight` | `1.5px` | Absolute. A hairline is a hairline at any size. |
+
+This drifted once and is worth knowing how: the offset had been written as a literal in three files at three values — `4px` in `globals.css`, `6px` in the navbar, `7px` in the coffee microsite — because each was tuned by eye at its own type size. An em value is consistent by construction; a pixel value has to be re-tuned every time it meets new type, and nobody remembers to.
+
+**Selection is the same underline held on.** Where something is both hoverable and current — a nav tab, an active sub-nav link — it carries `text-decoration: underline` permanently rather than a `border-bottom`. Two mechanisms means two lines under one word the moment a reader hovers the thing they are already on.
+
+**To opt out**, set `text-decoration: none` on both the element and its `:hover`. Do this only where the underline is wrong for the object, not merely unfamiliar: the Ask Aura dock does it for chips, its close cross and its send icon, because an underline under an icon is meaningless.
+
+---
+
 ## 12. Links and calls to action
 
 **There is one link UI on this site.** A 22 px circled chevron, then `.label` text. It is the "Explore Mudigere" control on the homepage, and it is what every "go deeper" action must look like — hub panels, pillar sections, cards, invitations.
@@ -202,6 +219,18 @@ When in doubt: pick a token, not a magic number.
 The coffee microsite exposes it as `<ArrowLink>` / `<ArrowLinkStyles>` in [`components/coffee/Microsite.tsx`](components/coffee/Microsite.tsx).
 
 **Do not invent** bordered pill buttons, underlined mono links, or bare text-plus-arrow. If an action needs a different weight, change its placement or its surrounding space — not its form.
+
+---
+
+## 12b. Known drift
+
+Recorded rather than silently fixed, because changing them alters how the site feels and that is a decision, not a cleanup.
+
+**Durations off the scale.** The scale is four values — 150 / 250 / 400 / 450 ms. Roughly forty declarations sit outside it, most often `0.3s`, `0.4s`, `0.6s` and `0.9s`. Some are deliberate and correct: the marquees run at 72 s and 90 s, the Ask Aura ring orbits at 7 s, and long ambient motion has no business on a UI scale. The rest is drift. Retiming them is a design pass, not a find-and-replace.
+
+**Brand accent as a literal.** `#E37128` appears three times outside its token, in `VideoReactiveArt` and `RemarkableCircle`. Both are palettes passed to canvas and WebGL rather than CSS, so they cannot read a custom property — this is a real constraint, not laziness, but it does mean the accent has three copies that will not follow if the token changes.
+
+**Two non-system curves.** `cubic-bezier(.6,0,.2,1)` and `cubic-bezier(0.34,1.56,0.64,1)` are in use and are not among the three in section 7. The second is an overshoot spring, which the system has no equivalent of. Either adopt it as a fourth curve or retire it.
 
 ---
 
@@ -236,6 +265,26 @@ The rule does not error, does not warn, and the element renders with inherited s
 **The same applies to any component that renders its own root element** — not just `Link`. If you write a styled-jsx rule and the style does not appear, check whether the target is a component before checking anything else.
 
 **How to catch it:** the styles are missing, not wrong. Read the computed style rather than trusting the screenshot — `getComputedStyle(el).filter === 'none'` on an element you gave a filter is the tell.
+
+**Seen in the wild, all of them silent:**
+
+| Where | Symptom |
+|---|---|
+| `.ln-end > *` on the coffee sub-nav | `pointer-events: auto` never applied, so the Aura Festival button was unclickable from the day it was written |
+| `.mn-leaf` in the menu | every item rendered at the inherited 16 px through two separate rounds of being asked to make it bigger |
+| `.ln-cta`, `.lane-card`, `.fn-item`, `.mg-btn-link` | styled correctly only after being made global |
+
+### Two more things this file will do to you
+
+**Backticks inside a CSS comment end the template literal.** The block is a template string, so `` /* like `this` */ `` terminates it and the build fails with a parse error pointing at a line that looks fine. Write the property name plainly.
+
+**`backdrop-filter` is dropped from emitted rules on this build.** It does not warn; the property simply is not in the stylesheet. Set it inline instead:
+
+```tsx
+<div style={{ backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)' }} />
+```
+
+`InfiniteArticleSlider`, the menu vignette, the Ask Aura panel and its bar all do this. If something that should be frosted looks flat, this is why — and note the bar carried a flat scrim for days before anyone noticed, because a missing blur reads as a design choice rather than a bug.
 
 ---
 

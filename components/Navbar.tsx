@@ -1038,8 +1038,8 @@ export default function Navbar() {
             font-size: 14px; font-weight: 400;
             line-height: 1.6; letter-spacing: normal; text-transform: none;
             color: color-mix(in srgb, var(--contrast-text) 55%, transparent);
-            text-underline-offset: 4px;
-            text-decoration-thickness: 1.5px;
+            text-underline-offset: var(--rule-offset);
+            text-decoration-thickness: var(--rule-weight);
             transition: color var(--dur-base) var(--ease),
                         text-decoration-color var(--dur-base) var(--ease);
           }
@@ -1048,8 +1048,8 @@ export default function Navbar() {
             color: var(--contrast-text);
             text-decoration: underline;
             text-decoration-color: var(--brand-accent);
-            text-underline-offset: 4px;
-            text-decoration-thickness: 1.5px;
+            text-underline-offset: var(--rule-offset);
+            text-decoration-thickness: var(--rule-weight);
           }
           .mn-tab:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
 
@@ -1095,8 +1095,8 @@ export default function Navbar() {
             color: var(--contrast-text);
             text-decoration: underline;
             text-decoration-color: var(--brand-accent);
-            text-underline-offset: 4px;
-            text-decoration-thickness: 1.5px;
+            text-underline-offset: var(--rule-offset);
+            text-decoration-thickness: var(--rule-weight);
           }
           :global(.mn-sub-leaf):focus-visible {
             outline: 2px solid var(--brand-accent); outline-offset: 2px;
@@ -1128,8 +1128,8 @@ export default function Navbar() {
           :global(.mn-leaf).is-on {
             text-decoration: underline;
             text-decoration-color: var(--brand-accent);
-            text-underline-offset: 6px;
-            text-decoration-thickness: 1.5px;
+            text-underline-offset: var(--rule-offset);
+            text-decoration-thickness: var(--rule-weight);
           }
 
           :global(.mn-leaf):focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
@@ -1199,8 +1199,8 @@ export default function Navbar() {
             line-height: 1.15; letter-spacing: -0.03em;
             color: var(--contrast-text);
             text-decoration: none;
-            text-underline-offset: 4px;
-            text-decoration-thickness: 1.5px;
+            text-underline-offset: var(--rule-offset);
+            text-decoration-thickness: var(--rule-weight);
           }
           :global(.mn-corner-link):hover {
             color: var(--contrast-text);

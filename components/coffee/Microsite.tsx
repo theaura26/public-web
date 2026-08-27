@@ -1253,14 +1253,14 @@ export function Banner({
           letter-spacing: -0.01em;
           color: #fff;
           text-decoration: underline;
-          text-decoration-thickness: 1.5px;
-          text-underline-offset: 7px;
+          text-decoration-thickness: var(--rule-weight);
+          text-underline-offset: var(--rule-offset);
         }
         :global(.bn-btn):hover {
           text-decoration: underline;
           text-decoration-color: var(--brand-accent);
-          text-decoration-thickness: 1.5px;
-          text-underline-offset: 7px;
+          text-decoration-thickness: var(--rule-weight);
+          text-underline-offset: var(--rule-offset);
         }
 
         @media (max-width: 860px) {

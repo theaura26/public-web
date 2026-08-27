@@ -160,14 +160,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           color: var(--text); text-wrap: balance;
         }
         .pd-lede { margin: 0; color: var(--text); max-width: 42ch; }
-        /* .p1 like the line above it. A product page is short enough
-           that dropping to the secondary body size halfway down just
-           made the same voice quieter for no reason. */
-        .pd-p {
-          margin: 0; max-width: 46ch;
-          font-family: var(--font-sans); font-size: 16px; line-height: 1.55;
-          letter-spacing: normal; color: var(--text-body);
-        }
+        /* .p1 entire — colour as well as size. Moving to the p1 size
+           while keeping p2's --text-body was half a change: the text
+           still read as secondary next to the line above it, which is
+           the thing that was wrong in the first place. */
+        .pd-p { margin: 0; max-width: 46ch; }
 
         .pd-act { margin: var(--space-4) 0 0; }
         /* .p1, like every other link set in running text. The accent

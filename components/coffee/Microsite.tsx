@@ -138,7 +138,7 @@ export function MicroNav() {
           <div className="ln-end">
             <Link href={PAGE_HREF.experience} className="p2 ln-cta">
               <span className="ln-cta-long">Attend the Festival</span>
-              <span className="ln-cta-short">Festival</span>
+              <span className="ln-cta-short">Attend</span>
             </Link>
           </div>
         </div>

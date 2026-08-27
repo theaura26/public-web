@@ -65,6 +65,9 @@ export const DISCIPLINES: Discipline[] = [
     plate: { type: 'Detail · a numbered pit opened at ninety days', caption: 'Fourteen pits, each one numbered, each batch traceable to the block it went on' },
     quote: 'A batch that fails is corrected or held. No untested material touches the soil.',
     practice: [
+      'The calendar sets when, and the lab decides whether. A preparation goes out on the day the calendar names and only if the plate agrees — which is the order of operations the whole system rests on.',
+      'The dung comes from the estate’s own herd, fifty-two Malnad Gidda grazing the ground the preparations return to. [Circular Intelligence](/circular) follows one batch through that loop end to end.',
+      'A pit that fails is not spread thin and hoped over. It is corrected and re-tested, or it is held back and the block waits — which occasionally means a block waits.',
       'BD 500 through 508 are prepared here and applied to the blocks on a calendar built for 150 acres.',
       'Barrels are stirred by hand for about forty-five minutes a day, vortex and reverse.',
       'Cow pat pit matures for ninety days. The other preparations run sixty- to ninety-day cycles.',
@@ -79,6 +82,7 @@ export const DISCIPLINES: Discipline[] = [
       { value: '2,420 kg', label: 'of CPP a year', note: 'Volume planned against the calendar; actual against planned is being confirmed.' },
     ],
     open: [
+      '[A Living Organism](/biodynamic) is the longer account of why the estate keeps the preparations at all.',
       'Aura is not certified biodynamic. It practises the system and publishes the record instead.',
       'The lunar calendar sets the timing. The reason for keeping these preparations is the biology, not the cosmology — the charts are a schedule, and Aura has said so in print rather than leaving the impression of a belief it does not hold.',
       'Chromatography is run as a soil-vitality image. It is a qualitative indicator and is published as a practice, never as evidence of an outcome.',
@@ -99,6 +103,9 @@ export const DISCIPLINES: Discipline[] = [
     plate: { type: 'Process · respiration sampling at 0–15 cm', caption: 'Read monthly, by the NaOH method' },
     quote: 'Coffee does not begin with coffee. It begins about a metre underground.',
     practice: [
+      'Red laterite is old, iron-rich and free-draining, which is a gift in a hundred inches of rain and a problem in the weeks between. Holding it at pH 6.0 to 6.5 is what keeps nutrients available rather than locked.',
+      'Forest islands are built into the blocks as small, permanent concentrations of decomposition — see [Forest Islands](/forest-islands) for how one is made and what is watched on it.',
+      'Decay classes I to V are logged as retained wood breaks down, so the carbon going back is recorded as a rate rather than a gesture.',
       'A respiration reading is a measure of how much is alive down there: the more the soil breathes, the more biology is working in it. Taken at the same depth on the same schedule, it becomes a trend rather than a number.',
       'Retesting a block ninety days after an application, against the batch number that went on it, is what turns a preparation from an act of faith into a result somebody can check.',
       'Red laterite, held between pH 6.0 and 6.5.',
@@ -112,6 +119,7 @@ export const DISCIPLINES: Discipline[] = [
       { value: '0–15 cm', label: 'respiration sampling depth, read monthly' },
     ],
     open: [
+      '[The Health Index](/ecology) is where the soil readings are rolled up with everything else measured on a block.',
       'Fourteen monitoring programmes are designed for the estate. Which of them run on every block, and which are designed but not yet running, is being confirmed block by block — so no claim is made here about full-estate coverage.',
     ],
     related: [{ label: 'The Health Index', href: '/ecology' }],
@@ -127,6 +135,8 @@ export const DISCIPLINES: Discipline[] = [
     plate: { type: 'Process · a pH reading during ferment', caption: 'Every fifteen minutes, until it reaches 4.2' },
     quote: 'The ferment is stopped by a number, not by the clock.',
     practice: [
+      'A colony count is a crude instrument and an honest one: it says how much is alive in a batch, before and after, on the same medium each time. Trends from a crude instrument used consistently beat one good reading.',
+      'The wet mill is the other half of the same subject. [Fermentation](/fermentation) sets out how a tank is read and what stops it.',
       'Trichoderma and Pseudomonas are the two counted by name. Both are antagonists of common root and leaf pathogens, so their presence in a batch is the nearest thing to a reading of what that preparation will do once it reaches a block.',
       'A block is plated again ninety days after an application and cross-referenced to the batch that went on it, which is the only way to know whether anything survived the journey from barrel to soil.',
       'Every preparation batch is plated before and after: colony counts, Trichoderma, Pseudomonas.',
@@ -139,6 +149,7 @@ export const DISCIPLINES: Discipline[] = [
       { value: 'Annual', label: 'mycorrhizal colonisation assessment' },
     ],
     open: [
+      'What the estate can show is that a batch changed between two platings. What it cannot yet show is which organisms did the changing.',
       'The herd is an indigenous breed because Aura believes a gut microbiome follows the ground it grazes. No metagenomic comparison against another breed has been run, so that stays a reading rather than a result.',
       'The wild yeasts and lactic-acid bacteria that drive a coffee ferment are well described in the literature. Aura has not identified the species on this estate — what it tracks is the ferment’s behaviour, not its species list.',
     ],
@@ -157,6 +168,8 @@ export const DISCIPLINES: Discipline[] = [
     hero: { type: 'Detail · a major cut sealed with CPP and turmeric', caption: 'What goes on the wound, on the day it is made' },
     plate: { type: 'Portrait · the block after pruning', caption: 'No synthetic pesticides have gone onto these 150 acres' },
     practice: [
+      'Turmeric on a cut is not folklore standing in for medicine — it is an antifungal dressing applied the same day the wound is made, which is when a wound is worth dressing.',
+      'Canopy work is disease work. A block held at the right light is a block that dries after rain, and [The Light Instrument](/shade) is how that light gets set.',
       'The logic is preventive rather than curative. A plant standing on ground with an active microbial community, cut cleanly and sealed the same day, is a harder plant to infect \u2014 so the work happens before there is anything to treat.',
       'No synthetic pesticides or chemicals go onto the 150 acres.',
       'Trichoderma and Pseudomonas — both antagonists of common root and leaf pathogens — are counted in every preparation batch, so what reaches a block is known before it gets there.',
@@ -168,6 +181,7 @@ export const DISCIPLINES: Discipline[] = [
       { value: 'Every cut', label: 'sealed with cow pat preparation and turmeric' },
     ],
     open: [
+      'A protocol would not be elaborate: fixed plants, a fixed interval, a person who can tell one lesion from another. It does not exist yet, and until it does this page stays the shortest of the nine.',
       'This is the thinnest record of the nine. The practice is real and the inputs are logged, but there is no published disease-incidence protocol yet — nothing that counts occurrence block by block over a season.',
       'Until that exists, Aura can say what it puts on the estate and what it keeps off it. It cannot yet publish what the effect has been, and does not claim to.',
     ],
@@ -183,6 +197,9 @@ export const DISCIPLINES: Discipline[] = [
     plate: { type: 'Detail · a 50 x 50 cm quadrat, earthworms counted', caption: 'Quarterly, in the same frame, in the same places' },
     quote: 'Being in the Western Ghats is not the same as being inside a World Heritage component. Aura is in the region.',
     practice: [
+      'Bug hotels are put up where a working landscape has stopped producing cavities — [Bug Hotels](/bug-hotels) explains what is drilled and why nothing is introduced.',
+      'Six introduced plants are being taken back out of the understorey so the native ground layer has somewhere to return to. [Pollinators](/pollinators) names them and what each one does.',
+      '[Forest Islands](/forest-islands) are the third piece: small built nuclei meant to seed biological activity outward into the block around them.',
       'Earthworms are counted quarterly, in a 50 × 50 cm quadrat.',
       'Forest islands are built to about 4 × 1 m and 80–120 cm high, in alternating layers of cow-dung compost and freshly cut green biomass, and then left alone.',
       'Woody biomass stays in the block it came from, and its decay is logged.',
@@ -213,6 +230,8 @@ export const DISCIPLINES: Discipline[] = [
     hero: { type: 'Wide · monsoon arriving over the estate', caption: 'Forty to a hundred inches a year, logged at 3,600 ft' },
     plate: { type: 'Detail · the weather station', caption: 'Rainfall, temperature and humidity — the part of the water story that is written down' },
     practice: [
+      'The rain does not arrive evenly. Most of the year’s hundred inches comes in a few monsoon months, so the question is never how much falls but how fast it leaves.',
+      'A closed canopy is the first thing it meets. [The Light Instrument](/shade) covers how that canopy is measured and cut, and the same readings govern what reaches the ground.',
       'A four-storey canopy is the estate\u2019s main water instrument. It breaks the fall of monsoon rain before it reaches bare soil, slows what runs off, and shades ground that would otherwise give its moisture back to the air by noon.',
       'A weather station at 3,600 ft logs rainfall, temperature and humidity.',
       'Water is measured where it meets the coffee: total dissolved solids are logged for every lot that goes through the wet mill.',
@@ -224,6 +243,7 @@ export const DISCIPLINES: Discipline[] = [
       { value: '58%', label: 'humidity' },
     ],
     open: [
+      '[The Land](/land) carries what is known about the ground this water moves through.',
       'What is written down here is weather and process water. Catchment, infiltration and runoff are not yet on a published protocol.',
       'Of the nine disciplines this one has the least record behind it. It is on the ring because it governs the others, not because it is the best documented — and saying otherwise would undo the value of the eight that are.',
     ],
@@ -240,6 +260,8 @@ export const DISCIPLINES: Discipline[] = [
     plate: { type: 'Detail · a tagged tree', caption: 'The unit of management is one tree, not one block' },
     quote: 'Measure first. Prune later. Validate afterwards.',
     practice: [
+      'Whiskering is the cut itself: thinning a canopy by hand, branch by branch, to a light target rather than to a shape. It is slow, and it is the only way to prune to a number.',
+      'Managing at tree level means the unit of decision is one plant. Two trees in the same block can want opposite things, and a block-level instruction gives both the wrong one.',
       'Trees are tagged across the estate, and a cow pat ball can be logged to an individual plant.',
       'The 2026 pre-monsoon illuminance survey read five clusters an acre, ten readings each — fifty observations an acre, taken on two digital lux meters.',
       'Block 3, Byton Patte, came back at roughly 33,000 lux in Zone A, 62,000 in Zone B and 82,000 in Zone C, against CCRI targets of 50,000–70,000 for Arabica.',
@@ -252,6 +274,7 @@ export const DISCIPLINES: Discipline[] = [
       { value: '33 / 62 / 82k', label: 'lux, Block 3 zones A / B / C' },
     ],
     open: [
+      '[The Light Instrument](/shade) is the full account of the survey and what was done with it.',
       'That blocks held at 65–75% canopy cup better is Aura’s own reading against its own cupping table. It is not a general agronomic law and is not offered as one.',
       'Plant-level logging exists. Whether it covers the whole estate or a pilot block is being confirmed.',
       'Quarterly canopy vitality by satellite is designed. Whether it is running is being verified before it is claimed.',
@@ -268,6 +291,8 @@ export const DISCIPLINES: Discipline[] = [
     hero: { type: 'Process · Jeevamrit brewing in the shed', caption: 'Volume planned backwards from the calendar, for 150 acres' },
     plate: { type: 'Detail · the five preparations', caption: 'Jeevamrit, Panchgavya, Beejamrit, cow pat pit, Kunapjal' },
     practice: [
+      'Each preparation does a different job. Jeevamrit inoculates, Beejamrit protects the seed, Panchgavya feeds the plant directly, Kunapjal supplies nitrogen, and cow pat pit carries the composted biology into the soil.',
+      'None of it is bought. [Ecosystem Engineers](/herd) is the herd that makes it, and the reason it is an indigenous breed kept on the land.',
       'Jeevamrit is a microbial culture brewed from dung, urine, jaggery, pulse flour and a handful of undisturbed soil. Beejamrit treats seed before it goes in. Panchgavya is the five cow products together. Kunapjal is the old fermented liquid manure. Cow pat pit is the composted preparation, matured ninety days.',
       'All five are brewed from the estate\u2019s own herd, which is the reason the herd is kept indigenous and kept on the land rather than bought in by the tanker.',
       'Jeevamrit, Panchgavya, Beejamrit, cow pat pit and Kunapjal are brewed on the estate from the estate’s own herd.',
@@ -280,6 +305,7 @@ export const DISCIPLINES: Discipline[] = [
       { value: '150', label: 'acres the calendar is planned for' },
     ],
     open: [
+      '[Vedic Farming](/vedic) is the longer account of the tradition these preparations come from.',
       'Actual volume against planned, and the year it belongs to, are being confirmed before either figure is stated as a result.',
       'Aura is not certified organic. The 32-acre tea block is in organic transition targeting 2027, which is stated as the ambition it is.',
     ],
@@ -296,6 +322,9 @@ export const DISCIPLINES: Discipline[] = [
     plate: { type: 'Detail · the record in plain CSV', caption: 'Readable without any of Aura’s own software' },
     quote: 'A ledger cannot forget, and it cannot flatter.',
     practice: [
+      'Nine streams, because nine things move at nine different rates: soil, canopy, weather, herd, preparation, ferment, harvest, lab and the human record that ties them together.',
+      'Plain formats are a hedge against Aura. Software gets replaced; a CSV written today opens in thirty years, and a hundred-year claim needs a record that outlives the company making it.',
+      '[Provenance](/provenance) is the fuller account of how an event becomes a record.',
       'Nine streams, each running at the rate the thing it watches actually changes — soil does not need reading as often as a ferment does.',
       'Every human event is signed by the person who did it, from the field.',
       'A record reads: BD 501, Block 07, 06:14, waning moon, humidity 78%, by Raju, dung batch G-03. That is one row, and the estate is made of them.',

@@ -401,7 +401,7 @@ export default function MudigerePage() {
           <DataCard value="52">Malnad Gidda cattle.</DataCard>
           <DataCard value="20 acres">Protected forest, eastern boundary.</DataCard>
           <DataCard value="13.1686° · 75.4340°">Coordinates · N, E.</DataCard>
-          <DataCard value="UNESCO">Western Ghats biodiversity hotspot.</DataCard>
+          <DataCard value="Western Ghats">A UNESCO World Heritage region.</DataCard>
         </DataGrid>
       </TwoCol>
 

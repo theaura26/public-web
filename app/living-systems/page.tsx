@@ -40,8 +40,8 @@ export default function LivingSystemsPage() {
           <DataCard value="3,600 ft">Altitude in the Western Ghats.</DataCard>
           <DataCard value="35,000">Individual trees.</DataCard>
           <DataCard value="52">Malnad Gidda cattle, indigenous.</DataCard>
-          <DataCard value="3–5×">Carbon sequestration vs monoculture.</DataCard>
-          <DataCard value="UNESCO">Biodiversity zone.</DataCard>
+          <DataCard value="4–5×">Estimated carbon sequestration vs monoculture.</DataCard>
+          <DataCard value="Western Ghats">A UNESCO World Heritage region.</DataCard>
         </DataGrid>
       </TwoCol>
 

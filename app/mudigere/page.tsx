@@ -72,7 +72,7 @@ function WeatherGlyph({ code, isDay, size = 20 }: { code: number; isDay: boolean
 }
 
 function LiveLandData() {
-  const weather = useWeather(13.1365, 75.6403)
+  const weather = useWeather(13.168594, 75.433983)
   const condition = weather ? (WEATHER_LABELS[weather.code] ?? 'Overcast') : null
   return (
     <div className="land-data">
@@ -93,7 +93,7 @@ function LiveLandData() {
         )}
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 32px' }}>
-          <div><p className="label">COORDINATES</p><p style={{ marginTop: 2, color: 'var(--text)' }}>13.1365&deg; N, 75.6403&deg; E</p></div>
+          <div><p className="label">COORDINATES</p><p style={{ marginTop: 2, color: 'var(--text)' }}>13.1686&deg; N, 75.4340&deg; E</p></div>
           <div><p className="label">ALTITUDE</p><p style={{ marginTop: 2, color: 'var(--text)' }}>3,600 ft.</p></div>
           <div><p className="label">TEMP.</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.temp}°C now · 14–30°C` : '14–30°C'}</p></div>
           <div><p className="label">HUMIDITY</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.humidity}%` : '58%'}</p></div>
@@ -108,7 +108,7 @@ function LiveLandData() {
       <div className="land-data__map">
         <iframe
           title="Aura Estate — Mudigere, Karnataka"
-          src="https://maps.google.com/maps?q=13.1365,75.6403&t=h&z=14&output=embed"
+          src="https://maps.google.com/maps?q=13.168594,75.433983&t=h&z=14&output=embed"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
           allowFullScreen
@@ -416,7 +416,7 @@ export default function MudigerePage() {
         </p>
       </section>
 
-      <Movement heading={<>The world&rsquo;s oldest Arabica region, rediscovered.</>}>
+      <Movement heading={<>Where Indian coffee began.</>}>
         <p className="p1">
           Four centuries ago, seven coffee seeds crossed from Yemen into
           the hills above Chikmagalur and took root — the cradle of Indian

@@ -140,7 +140,7 @@ export default function ProvenancePage() {
       <DataGrid cols={3} standalone>
         <DataCard value="15 min">The interval a fermenting lot&apos;s pH is read at, start to finish.</DataCard>
         <DataCard value="9 streams">Of estate data, each on its own clock — from every quarter-hour to once a year.</DataCard>
-        <DataCard value="3–5×">Estimated carbon held per acre by the four-storey polyculture over monoculture coffee.</DataCard>
+        <DataCard value="4–5×">Estimated carbon held per acre by the four-storey polyculture over monoculture coffee.</DataCard>
       </DataGrid>
 
       <OneCol id="close" heading="The record outlasts the sale.">

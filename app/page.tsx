@@ -629,7 +629,7 @@ function LocationDataGrid({ location, coords, altitude, tempRange, avgHumidity, 
 
 /* ═══ MUDIGERE ═══ */
 function MudigereModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const weather = useWeather(13.1365, 75.6403)
+  const weather = useWeather(13.168594, 75.433983)
   return (
     <LocationModal open={open} onClose={onClose} label="MUDIGERE">
       <LocationContent>
@@ -651,7 +651,7 @@ function MudigereModal({ open, onClose }: { open: boolean; onClose: () => void }
         <div className="loc-bottom">
           <LocationDataGrid
             location="Mudigere, Chikmagalur District, Karnataka, India."
-            coords="13.1365° N, 75.6403° E"
+            coords="13.1686° N, 75.4340° E"
             altitude="3,600 FT."
             tempRange="14–30°C"
             avgHumidity="58%"
@@ -661,9 +661,9 @@ function MudigereModal({ open, onClose }: { open: boolean; onClose: () => void }
             <img src="/aura-mudigere-map.svg" alt="Map of the Aura Mudigere estate" className="loc-map" style={{ width: '100%', display: 'block' }} />
           </LocationDataGrid>
           <div>
-            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>World&rsquo;s Oldest Arabica Region, Rediscovered.</h2>
+            <h2 className="loc-h2" style={{ marginBottom: 'var(--space-5)' }}>Where Indian Coffee Began, Rediscovered.</h2>
             <div className="loc-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-              <p>The Western Ghats are a UNESCO World Heritage biodiversity hotspot — one of the eight most biodiverse regions on earth. Chikmagalur sits within this range at 900&ndash;1100 metres, where altitude, monsoon rainfall, and ancient volcanic soil create conditions for coffee of exceptional complexity.</p>
+              <p>The Western Ghats are a UNESCO World Heritage region and one of the eight most biodiverse regions on earth. Chikmagalur sits within this range at 900&ndash;1100 metres, where altitude, monsoon rainfall, and ancient volcanic soil create conditions for coffee of exceptional complexity.</p>
               <p>Aura&rsquo;s 150 acres are farmed as a four-layer agroforestry system: native shade trees above, pepper vines in the mid-canopy, coffee and tea in the understory, cover crops and soil regeneration plants at ground level.</p>
             </div>
             <img src="/aura-mudigere-landscape.jpg" alt="Aura Mudigere estate in the Western Ghats" style={{ width: '100%', borderRadius: 'var(--radius-1)', display: 'block', objectFit: 'cover', aspectRatio: '16 / 10', marginTop: 'var(--space-6)' }} />
@@ -730,7 +730,7 @@ function AgentHome() {
         <h2>Operating system — three pillars</h2>
         <ol>
           <li><strong>Sanctuary</strong> — a living estate in rhythm with the land. Silence, stillness, a 30-year Japanese garden, forest walks, the river from every room.</li>
-          <li><strong>Agroculture</strong> — 100 acres of specialty coffee. 52 indigenous Malnad Gidda cattle. Biodynamic (BD 500–508, CPP, lunar cycles) plus Vedic (Jeevamrit, Panchgavya, Beejamrit) farming systems. UNESCO biodiversity zone.</li>
+          <li><strong>Agroculture</strong> — 100 acres of specialty coffee. 52 indigenous Malnad Gidda cattle. Biodynamic (BD 500–508, CPP, lunar cycles) plus Vedic (Jeevamrit, Panchgavya, Beejamrit) farming systems. In the Western Ghats, a UNESCO World Heritage region.</li>
           <li><strong>Artistry</strong> — studios, workshops, gallery, gurukul, labs, festivals. Residencies for founders, designers, artists, and monastic polymaths.</li>
         </ol>
       </section>
@@ -743,11 +743,11 @@ function AgentHome() {
         <h3>Aura Mudigere — active</h3>
         <p><a href="/mudigere">Read more</a></p>
         <dl>
-          <dt>Coordinates</dt><dd>13.1365°N, 75.6403°E</dd>
+          <dt>Coordinates</dt><dd>13.1686°N, 75.4340°E</dd>
           <dt>Altitude</dt><dd>3,600 ft (900–1,100 m)</dd>
           <dt>Area</dt><dd>150 acres (100 coffee)</dd>
           <dt>Soil</dt><dd>Laterite, pH 6.0–6.5</dd>
-          <dt>Zone</dt><dd>UNESCO Western Ghats biodiversity hotspot</dd>
+          <dt>Zone</dt><dd>Western Ghats, a UNESCO World Heritage region</dd>
           <dt>Climate</dt><dd>14–30°C, humidity 58%, wind 5 km/h</dd>
           <dt>Herd</dt><dd>52 Malnad Gidda cattle (indigenous breed)</dd>
         </dl>
@@ -850,7 +850,7 @@ function AgentHome() {
 
       <section>
         <h2>Provenance</h2>
-        <p>Cherry to cup, on chain. Three layers — blockchain provenance, live sensors, and a persistent machine memory grown from the farm&rsquo;s own readings. Together they replace the forty-thousand-dollar certification stack with something the land itself can verify.</p>
+        <p>Cherry to cup, written down. Three layers — a signed record, live sensors, and a persistent machine memory grown from the farm&rsquo;s own readings. Together they replace the forty-thousand-dollar certification stack with something the land itself can verify.</p>
       </section>
 
       <hr />
@@ -900,7 +900,7 @@ const MUDIGERE: Sanctuary = {
   name: 'Mudigere',
   tagline: 'Regenerative plantation sanctuary',
   region: 'KARNATAKA, INDIA',
-  coords: '13.13°N · 75.63°E',
+  coords: '13.17°N · 75.43°E',
   bgVideo: '/aura-mudigere.mp4',
   bgSrc: '/aura-mudigere.jpg',
 }
@@ -2112,7 +2112,7 @@ function AgentHomeView() {
       <p>Aura unfolds through sanctuary, land, and practice. Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm. Places shaped for slower living and deeper restoration.</p>
 
       <h3>Mudigere — Regenerative plantation sanctuary</h3>
-      <p>Karnataka, India · 13.13°N · 75.63°E. 150 acres at 3,600 feet in the Western Ghats. UNESCO biodiversity zone. Coffee, tea, pepper, areca. 52 indigenous cattle. Bees. Native canopy nursery. Forest-to-table kitchen. Coffee festivals.</p>
+      <p>Karnataka, India · 13.17°N · 75.43°E. 150 acres at 3,600 feet in the Western Ghats, a UNESCO World Heritage region. Biodiversity zone. Coffee, tea, pepper, areca. 52 indigenous cattle. Bees. Native canopy nursery. Forest-to-table kitchen. Coffee festivals.</p>
 
       <h3>Ohara — Retreats and slow living in nature</h3>
       <p>Kyoto Prefecture, Japan · 35.13°N · 135.83°E. A quiet valley north of Kyoto. Cedar forests, rivers, temples. A 30-year Japanese garden. Teahouse. Café on the river. Studios. Ki no Ie. Workshops. Gallery. Weekend restaurant. Wellbeing retreat.</p>

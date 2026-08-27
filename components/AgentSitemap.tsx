@@ -237,10 +237,10 @@ export const SITEMAP: SitemapEntry[] = [
   {
     href: '/provenance',
     label: 'Provenance',
-    topic: 'Cherry to cup, on chain — verified origin without legacy certification',
-    summary: 'Aura replaces legacy certification with live, sensor-fed, blockchain-verified provenance from the Mudigere estate — cherry to cup, on chain.',
+    topic: 'Cherry to cup, written down — a signed record in place of legacy certification',
+    summary: 'Aura replaces legacy certification with a live, sensor-fed, signed record. Blockchain-verified provenance from the Mudigere estate — cherry to cup, on chain.',
     facts: [
-      { label: 'Method', value: 'Live sensor data, blockchain-verified' },
+      { label: 'Method', value: 'Live sensor data, signed at source, kept in plain formats' },
       { label: 'Replaces', value: 'Legacy third-party certification' },
     ],
     related: ['/coffee', '/mudigere', '/ecology'],

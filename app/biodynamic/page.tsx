@@ -193,19 +193,23 @@ export default function BiodynamicPage() {
         </DataGrid>
       </TwoCol>
 
-      <TwoCol id="onchain" heading="On chain.">
+      <TwoCol id="onchain" heading="The record, and where it is going.">
         <p className="p1">
-          The BD seasonal cycle — a full year of preparations applied, tested,
-          and recorded — is sealed on the blockchain as a permanent, verifiable
-          event.
+          A full biodynamic year — every preparation applied, every batch
+          tested, every block retested at ninety days — is written down as it
+          happens and signed by the person who did it. The record is kept in
+          plain JSON and CSV, readable without any of Aura&rsquo;s own software.
         </p>
         <p className="p1">
-          Organic and biodynamic certification evidence becomes tamper-evident,
-          cross-referenced against weather data, lunar records, and soil outcomes
-          that cannot be retroactively altered.
+          Each entry sits alongside the weather at the hour, the point in the
+          lunar calendar, and the soil result that followed it, so a claim about
+          a block can be traced back to the batch that made it.
         </p>
         <p className="p1">
-          This is the practice, recorded with integrity, made permanent.
+          Writing those milestones to a public chain is the intention, and it is
+          not done yet. There is no verification link to give you, so this page
+          claims a signed record and nothing more. When there is a lot page
+          anyone can open and check, that is what will appear here.
         </p>
       </TwoCol>
 

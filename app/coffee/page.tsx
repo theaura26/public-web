@@ -85,8 +85,8 @@ export default function CoffeePage() {
           <DataCard value="6.0–6.5">Soil pH, laterite.</DataCard>
           <DataCard value="Sln.9 + Sln.795">Arabica cultivars.</DataCard>
           <DataCard value="80+ SCA">Cupping target.</DataCard>
-          <DataCard value="3–5×">Carbon vs monoculture.</DataCard>
-          <DataCard value="UNESCO">Biodiversity zone.</DataCard>
+          <DataCard value="4–5×">Estimated carbon vs monoculture.</DataCard>
+          <DataCard value="Western Ghats">A UNESCO World Heritage region.</DataCard>
         </DataGrid>
       </TwoCol>
 

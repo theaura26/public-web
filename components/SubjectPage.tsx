@@ -3,13 +3,12 @@
 import { RelatedLane } from '@/components/Swimlanes'
 import {
   HeroBanner,
+  OneCol,
   TwoCol,
   PullQuote,
-  DataGrid,
-  DataCard,
+  SpecTable,
   Placeholder,
   Portrait,
-  Continue,
 } from '@/components/article/Article'
 
 /* One page shape for every subject the site explains.
@@ -55,6 +54,8 @@ export type Subject = {
   /** The rest of the set, offered at the foot. */
   siblings?: { href: string; title: string; description: string; status: 'live' | 'soon' }[]
   siblingsLabel?: string
+  /** Which of the three arrangements this page takes. */
+  variant?: number
 }
 
 /* A practice line may point at a field note, written as [label](/href).
@@ -86,69 +87,81 @@ export default function SubjectPage({
   subject: Subject
   basePath: string
 }) {
-  const [lead, ...rest] = s.practice
+  const v = (s.variant ?? 0) % 3
+
+  const opener = (
+    <HeroBanner
+      key="hero"
+      title={s.label}
+      type={s.hero?.type ?? 'Landscape · Mudigere'}
+      caption={s.hero?.caption ?? s.lede}
+      alt={`${s.label} — Aura, Sampigekhan Estate, Mudigere`}
+    />
+  )
+
+  /* Two columns on most pages, one reading column on the third. Same
+     words, different rhythm. */
+  const Practice = v === 2 ? OneCol : TwoCol
+  const practice = (
+    <Practice key="practice" id="practice" heading={s.lede}>
+      {s.practice.map((line) => (
+        <p className="p1" key={line}>{withLinks(line)}</p>
+      ))}
+    </Practice>
+  )
+
+  /* A list, not a grid of cards. These are readings with units, and a
+     reading is a row — the thing on the left, the figure on the right,
+     with any qualification travelling beside the figure rather than
+     being left to a footnote. */
+  const measured = s.record?.length ? (
+    <SpecTable
+      key="measured"
+      title="What is measured"
+      rows={s.record.map((r) => ({
+        label: r.label,
+        value: r.note ? `${r.value} · ${r.note}` : r.value,
+      }))}
+    />
+  ) : null
+
+  const quote = s.quote ? <PullQuote key="quote">{s.quote}</PullQuote> : null
+  const plate = s.plate
+    ? <Placeholder key="plate" type={s.plate.type} caption={s.plate.caption} />
+    : null
+  const breaker = s.breaker ? (
+    <Portrait
+      key="breaker"
+      src="/aura-placeholder.svg"
+      ratio="4 / 5"
+      alt={s.breaker.alt}
+      caption={s.breaker.caption}
+    />
+  ) : null
+
+  const open = (
+    <TwoCol key="open" id="open" heading="What is not settled">
+      {s.open.map((line) => (
+        <p className="p1" key={line}>{withLinks(line)}</p>
+      ))}
+    </TwoCol>
+  )
+
+  const middle =
+    v === 0 ? [quote, measured, plate]
+    : v === 1 ? [breaker, measured, quote]
+    : [measured, breaker, quote]
 
   return (
     <>
-      <HeroBanner
-        title={s.label}
-        type={s.hero?.type ?? 'Landscape · Mudigere'}
-        caption={s.hero?.caption ?? s.lede}
-        alt={`${s.label} — Aura, Sampigekhan Estate, Mudigere`}
-      />
-
-      <TwoCol id="practice" heading={s.lede}>
-        <p className="p1">{withLinks(lead)}</p>
-        {rest.map((line) => (
-          <p className="p2" key={line}>{withLinks(line)}</p>
-        ))}
-      </TwoCol>
-
-      {s.quote && <PullQuote>{s.quote}</PullQuote>}
-
-      {!!s.record?.length && (
-        <TwoCol id="record" heading="What is measured">
-          <p className="p1">
-            The figures the estate keeps for {s.label.toLowerCase()}, with the qualification
-            attached to each rather than left to a footnote.
-          </p>
-          <DataGrid>
-            {s.record.map((r) => (
-              <DataCard key={r.label} value={r.value}>
-                {r.label}
-                {r.note ? ` — ${r.note}` : '.'}
-              </DataCard>
-            ))}
-          </DataGrid>
-        </TwoCol>
-      )}
-
-      {s.plate && <Placeholder type={s.plate.type} caption={s.plate.caption} />}
-
-      {s.breaker && (
-        <Portrait
-          src="/aura-placeholder.svg"
-          ratio="5 / 7"
-          alt={s.breaker.alt}
-          caption={s.breaker.caption}
-        />
-      )}
-
-      <TwoCol id="open" heading="What is not settled">
-        <p className="p1">{withLinks(s.open[0])}</p>
-        {s.open.slice(1).map((line) => (
-          <p className="p2" key={line}>{withLinks(line)}</p>
-        ))}
-      </TwoCol>
-
-      {/* No 'read further' list and no prev/next: Continue already
-          offers the next reads, and a second set of links under it was
-          two footers arguing about where to go. */}
+      {opener}
+      {v === 2 && plate}
+      {practice}
+      {middle}
+      {open}
       {!!s.siblings?.length && (
         <RelatedLane label={s.siblingsLabel ?? 'Read on'} items={s.siblings} />
       )}
-
-      <Continue currentHref={`${basePath}/${s.slug}`} />
     </>
   )
 }

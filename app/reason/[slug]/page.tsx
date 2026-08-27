@@ -36,7 +36,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   if (!p) notFound()
   return (
     <SubjectPage
-      subject={p}
+      subject={{ ...p, variant: PILLARS.indexOf(p) }}
       basePath="/reason"
     />
   )

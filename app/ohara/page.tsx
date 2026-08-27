@@ -17,7 +17,7 @@ import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, Cloud
 /* ═══════════════════════════════════════════════════════════════════
    OHARA — a single scrolling story, structured as the deliberate
    flip of /mudigere. Mudigere opens on land and fact (geology,
-   acreage, the world's oldest Arabica region) and only arrives at
+   acreage, the region where Indian coffee began) and only arrives at
    people and philosophy in its final third. Ohara opens on essence —
    the valley, Asa (朝) and Niwa (庭), 豊かな暮らし — and closes on the
    practical shape of the next three years (Shu-Ha-Ri) and the

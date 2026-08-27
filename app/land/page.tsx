@@ -45,7 +45,7 @@ export default function LandPage() {
 
       <TwoCol id="facts" heading="Aura Estate.">
         <DataGrid cols={3}>
-          <DataCard value="13.1365°N, 75.6403°E">Coordinates.</DataCard>
+          <DataCard value="13.1686°N, 75.4340°E">Coordinates.</DataCard>
           <DataCard value="3,600 ft">Altitude.</DataCard>
           <DataCard value="Laterite">Soil — red, volcanic, pH 6.0–6.5.</DataCard>
           <DataCard value="40–100 in / yr">
@@ -53,7 +53,7 @@ export default function LandPage() {
           </DataCard>
           <DataCard value="14 – 30 °C">Temperature range.</DataCard>
           <DataCard value="58%">Humidity.</DataCard>
-          <DataCard value="UNESCO">Biodiversity zone.</DataCard>
+          <DataCard value="Western Ghats">A UNESCO World Heritage region.</DataCard>
           <DataCard value="150">Acres.</DataCard>
           <DataCard value="35,000">Trees.</DataCard>
         </DataGrid>
@@ -138,7 +138,7 @@ export default function LandPage() {
           alt="Mudigere mountains rising over the Western Ghats — the valley that holds Aura Estate"
           value="Mudigere · Karnataka."
         >
-          150 acres, 3,600 ft, laterite soil, UNESCO biodiversity zone. Four-
+          150 acres, 3,600 ft, laterite soil, in the Western Ghats — a UNESCO World Heritage region. Four-
           story polyculture. 52 Malnad Gidda cattle. The agricultural engine.
         </DataCard>
         <DataCard
@@ -161,11 +161,11 @@ export default function LandPage() {
           baseline.
         </p>
         <DataGrid cols={3}>
-          <DataCard value="4–5×">Carbon vs monoculture coffee.</DataCard>
+          <DataCard value="4–5×">Estimated carbon vs monoculture coffee.</DataCard>
           <DataCard value="500–1,000 t">CO₂ credit potential per year.</DataCard>
           <DataCard value="100 acres">Shade-grown coffee.</DataCard>
           <DataCard value="32 acres">Tea, organic transition 2027.</DataCard>
-          <DataCard value="35,000">Trees on chain over time.</DataCard>
+          <DataCard value="~35,000">Trees, estimated pending a completed count.</DataCard>
         </DataGrid>
         <p className="p1">
           The land is a carbon asset, a biodiversity corridor, a water

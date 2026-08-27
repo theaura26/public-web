@@ -79,15 +79,22 @@ export const SECTIONS: NavSection[] = [
     note: 'The nine disciplines the estate is farmed by.',
     /* These are the nine glyphs on the Remarkable Circle. Same nine, same
        order, so the menu and the mark agree. */
+    /* All nine are their own pages, and none of them is written yet.
+       Two of them used to point at a journal — Biodynamic at /biodynamic
+       and Vedic Farming at /vedic — which read as though the discipline
+       had been documented when what existed was an essay that mentions
+       it. A discipline is how the estate is farmed; a field note is
+       something the estate learned. The essays stay where they belong,
+       under Field Notes, and are still reachable there. */
     items: [
-      { label: 'Biodynamic', href: '/biodynamic' },
+      { label: 'Biodynamic', href: '/regenerative-life/biodynamic', soon: true },
       { label: 'Aura Intelligence', href: '/regenerative-life/aura-intelligence', soon: true },
       { label: 'Tree Level Observation', href: '/regenerative-life/tree-level-observation', soon: true },
       { label: 'Microbiome', href: '/regenerative-life/microbiome', soon: true },
       { label: 'Hydrology', href: '/regenerative-life/hydrology', soon: true },
       { label: 'Biodiversity', href: '/regenerative-life/biodiversity', soon: true },
       { label: 'Plant Pathology', href: '/regenerative-life/plant-pathology', soon: true },
-      { label: 'Vedic Farming', href: '/vedic' },
+      { label: 'Vedic Farming', href: '/regenerative-life/vedic-farming', soon: true },
       { label: 'Soil', href: '/regenerative-life/soil', soon: true },
     ],
   },

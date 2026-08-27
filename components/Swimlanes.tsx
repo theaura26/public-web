@@ -192,7 +192,11 @@ export function Swimlanes({
           /* Reproduces the rail so the first card lines up with the lane
              heading above it, and the last runs past the right edge. */
           padding-left: max(var(--gutter), calc(50vw - var(--max-w) / 2 + var(--gutter)));
-          padding-right: var(--gutter);
+          /* The blurred fade sits over the last card at the end of the
+             scroll, so the track has to be able to travel past it —
+             a gutter alone left the final card permanently half-dissolved
+             with nowhere further to scroll. */
+          padding-right: calc(clamp(64px, 12vw, 200px) + var(--gutter));
         }
 
         .sw .lane-card {

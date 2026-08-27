@@ -34,15 +34,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const { slug } = await params
   const p = pillarBySlug(slug)
   if (!p) notFound()
-  const i = PILLARS.findIndex((x) => x.id === p.id)
   return (
     <SubjectPage
       subject={p}
-      prev={PILLARS[(i - 1 + PILLARS.length) % PILLARS.length]}
-      next={PILLARS[(i + 1) % PILLARS.length]}
       basePath="/reason"
-      allLabel="The Reason"
-      allHref="/reason"
     />
   )
 }

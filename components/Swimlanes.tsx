@@ -98,10 +98,10 @@ export function Swimlanes({
            nested under .sw by hand so nothing escapes this page. */
         .sw {
           background: var(--bg); color: var(--text);
-          padding: calc(var(--nav-h) + var(--space-9)) 0 var(--section-gap);
+          padding: calc(var(--nav-h) + var(--head-top)) 0 var(--section-gap);
           min-height: 100svh;
           display: flex; flex-direction: column;
-          gap: clamp(56px, 8vh, 96px);
+          gap: var(--head-bottom);
         }
         .sw .sw-head { align-items: center; text-align: center; display: flex; flex-direction: column; gap: var(--space-5); }
         /* The banner title spec, unchanged — same size, weight, tracking

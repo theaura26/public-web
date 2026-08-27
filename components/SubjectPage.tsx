@@ -1,9 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import {
   HeroBanner,
-  OneCol,
   TwoCol,
   PullQuote,
   DataGrid,
@@ -57,18 +55,10 @@ export type Subject = {
 
 export default function SubjectPage({
   subject: s,
-  prev,
-  next,
   basePath,
-  allLabel,
-  allHref,
 }: {
   subject: Subject
-  prev: { label: string; slug: string }
-  next: { label: string; slug: string }
   basePath: string
-  allLabel: string
-  allHref: string
 }) {
   const [lead, ...rest] = s.practice
 
@@ -125,31 +115,9 @@ export default function SubjectPage({
         ))}
       </TwoCol>
 
-      {!!s.related?.length && (
-        <OneCol heading="Read further">
-          <p className="p2 sp-rel">
-            {s.related.map((r, i) => (
-              <span key={r.href}>
-                {i > 0 && <span aria-hidden> · </span>}
-                <Link href={r.href}>{r.label}</Link>
-              </span>
-            ))}
-          </p>
-        </OneCol>
-      )}
-
-      {/* Around the ring rather than back to an index: these are a cycle,
-          and the next one along is the next one along. */}
-      <OneCol heading={allLabel}>
-        <p className="p2 sp-ring">
-          <Link href={`${basePath}/${prev.slug}`}>← {prev.label}</Link>
-          <span aria-hidden> · </span>
-          <Link href={allHref}>{allLabel}</Link>
-          <span aria-hidden> · </span>
-          <Link href={`${basePath}/${next.slug}`}>{next.label} →</Link>
-        </p>
-      </OneCol>
-
+      {/* No 'read further' list and no prev/next: Continue already
+          offers the next reads, and a second set of links under it was
+          two footers arguing about where to go. */}
       <Continue currentHref={`${basePath}/${s.slug}`} />
     </>
   )

@@ -88,7 +88,7 @@ export function NoteIndex({
            nested under .fn by hand so nothing escapes this page. */
         .fn {
           background: var(--bg); color: var(--text);
-          padding: calc(var(--nav-h) + var(--space-9)) 0 var(--section-gap);
+          padding: calc(var(--nav-h) + var(--head-top)) 0 var(--section-gap);
           min-height: 100svh;
         }
         .fn .fn-head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-5); }
@@ -108,7 +108,7 @@ export function NoteIndex({
         /* ── category filters ── */
         .fn .fn-filters {
           display: flex; flex-wrap: wrap; gap: 10px;
-          margin: clamp(48px, 7vh, 80px) 0 clamp(32px, 5vh, 56px);
+          margin: var(--head-bottom) 0 clamp(38px, 6vh, 67px);
           padding-bottom: var(--space-6);
           border-bottom: 1px solid var(--border);
         }

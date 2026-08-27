@@ -45,8 +45,8 @@ export default function SectionIndex({ id }: { id: string }) {
       </div>
 
       <style>{`
-        .sx { padding: calc(var(--nav-h) + var(--space-9)) 0 var(--space-9); background: var(--bg); }
-        .sx-in { display: flex; flex-direction: column; gap: var(--space-8); }
+        .sx { padding: calc(var(--nav-h) + var(--head-top)) 0 var(--space-9); background: var(--bg); }
+        .sx-in { display: flex; flex-direction: column; gap: var(--head-bottom); }
         .sx-head { display: flex; flex-direction: column; gap: var(--space-3); max-width: 46ch; }
         .sx-title {
           font-family: var(--font-grotesque), sans-serif; font-weight: 600; text-transform: uppercase; font-size: clamp(44px, 9vw, 88px); line-height: 1.02; letter-spacing: -0.06em;

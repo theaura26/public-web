@@ -41,7 +41,7 @@ export default function ComingSoon({
         .cs {
           min-height: 72svh;
           display: flex; align-items: center;
-          padding: calc(var(--nav-h) + var(--space-9)) 0 var(--space-9);
+          padding: calc(var(--nav-h) + var(--head-top)) 0 var(--space-9);
           background: var(--bg);
         }
         .cs-in { display: flex; flex-direction: column; gap: var(--space-4); max-width: 62ch; }

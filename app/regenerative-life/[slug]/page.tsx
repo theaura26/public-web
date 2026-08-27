@@ -36,15 +36,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const { slug } = await params
   const d = disciplineBySlug(slug)
   if (!d) notFound()
-  const i = DISCIPLINES.findIndex((x) => x.id === d.id)
   return (
     <SubjectPage
       subject={d}
-      prev={DISCIPLINES[(i - 1 + DISCIPLINES.length) % DISCIPLINES.length]}
-      next={DISCIPLINES[(i + 1) % DISCIPLINES.length]}
       basePath="/regenerative-life"
-      allLabel="All nine"
-      allHref="/regenerative-life"
     />
   )
 }

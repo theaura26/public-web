@@ -1,5 +1,4 @@
 import { DISCIPLINES } from './disciplines'
-import { FROM_AURA } from './from-aura'
 
 /* The site's structure, in one place.
  *
@@ -192,22 +191,79 @@ export const SECTIONS: NavSection[] = [
     id: 'shop',
     label: 'From Aura',
     href: '/from-aura',
-    note: 'Three directions out of one estate.',
-    /* Generated from lib/from-aura.ts, so the menu and the section page
-       group the same things the same way. Sorting by crop hid the story:
-       the land, the atelier and the trade desk are three different
-       relationships with three different people on the other end. */
+    note: 'What the land produced, and what it is doing now.',
+    /* By product, as it was. The page groups the same things by who is
+       buying — the land, the atelier, the trade desk — and that reading
+       works on a page with room to explain it. In a menu a reader is
+       looking for a thing, not a relationship, so the menu lists things.
+       lib/from-aura.ts holds the page's grouping. */
     items: [
-      ...FROM_AURA.map((lane) => ({
-        label: lane.label,
-        href: `/from-aura/${lane.id}`,
+      {
+        label: 'Coffee',
+        href: '/from-aura/coffee',
         soon: true,
-        children: lane.items.map((i) => ({
-          label: i.title,
-          href: i.href,
-          soon: true,
-        })),
-      })),
+        children: [
+          { label: '25/26 — nine lots', href: '/from-aura/coffee-25-26', soon: true },
+          { label: '26/27 — blocks and zones', href: '/from-aura/coffee-26-27', soon: true },
+          { label: '27/28 — pre-book', href: '/from-aura/coffee-27-28', soon: true },
+        ],
+      },
+      {
+        label: 'Tea',
+        href: '/from-aura/tea',
+        soon: true,
+        children: [
+          { label: '27/28 — pre-book', href: '/from-aura/tea-27-28', soon: true },
+        ],
+      },
+      {
+        label: 'Pepper',
+        href: '/from-aura/pepper',
+        soon: true,
+        children: [
+          { label: '25/26 — black and white', href: '/from-aura/pepper-25-26', soon: true },
+          { label: '26/27 — blocks and zones', href: '/from-aura/pepper-26-27', soon: true },
+        ],
+      },
+      {
+        label: 'Areca nut',
+        href: '/from-aura/areca',
+        soon: true,
+        children: [
+          { label: '27/28 — pre-book', href: '/from-aura/areca-27-28', soon: true },
+        ],
+      },
+      {
+        label: 'Farm Goods',
+        href: '/from-aura/farm-goods',
+        soon: true,
+        children: [
+          { label: 'Avocado', href: '/from-aura/avocado', soon: true },
+          { label: 'Cardamom', href: '/from-aura/cardamom', soon: true },
+          { label: 'Soapnut', href: '/from-aura/soapnut', soon: true },
+          { label: 'Honey', href: '/from-aura/honey', soon: true },
+        ],
+      },
+      {
+        label: 'Objects & Editions',
+        href: '/from-aura/objects',
+        soon: true,
+        children: [
+          { label: 'Art', href: '/from-aura/art', soon: true },
+          { label: 'Fashion', href: '/from-aura/fashion', soon: true },
+          { label: 'Stationery', href: '/from-aura/stationery', soon: true },
+        ],
+      },
+      {
+        label: 'Experiences',
+        href: '/from-aura/experiences',
+        soon: true,
+        children: [
+          { label: 'Artist residencies', href: '/residency' },
+          { label: 'Farm tours', href: '/from-aura/farm-tours', soon: true },
+          { label: 'Harvest tours', href: '/from-aura/harvest-tours', soon: true },
+        ],
+      },
       { label: 'View all', href: '/from-aura' },
     ],
   },

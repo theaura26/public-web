@@ -1224,11 +1224,18 @@ export default function Navbar() {
             text-underline-offset: var(--rule-offset);
             text-decoration-thickness: var(--rule-weight);
           }
-          /* The same hover as every other link of its size in this
-             panel — .mg-btn-link turns accent, so this does too. It was
-             holding its colour and drawing only the underline, which
-             made the one link in the corner behave unlike the rest. */
-          :global(.mn-corner-link):hover { color: var(--brand-accent); }
+          /* Underline only, like the leaves. The accent arrives as the
+             rule under the word and the word keeps its colour — turning
+             the text accent as well was two signals for one hover. */
+          :global(.mn-corner-link):hover {
+            text-decoration-line: underline;
+            text-decoration-color: var(--brand-accent);
+            /* Longhands, not the shorthand: 'text-decoration: underline'
+               resets thickness and offset to initial, so the rule came
+               back at the browser default instead of the house weight. */
+            text-underline-offset: var(--rule-offset);
+            text-decoration-thickness: var(--rule-weight);
+          }
 
           /* Announced, not visitable. Dimmed and inert, with no label —
              the menu says what exists by what it lets you open. */

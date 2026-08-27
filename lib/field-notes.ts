@@ -172,20 +172,6 @@ type CrossListed = {
 }
 
 const CROSS_LISTED: CrossListed[] = [
-  {
-    href: '/regenerative-coffee/transparency',
-    title: 'Transparency',
-    description: 'Nine streams of data, every batch read before and after, and an honest account of the one thing we cannot yet prove.',
-    categories: ['labs'],
-    from: 'Regenerative Coffee',
-  },
-  {
-    href: '/regenerative-coffee/flavour',
-    title: 'Flavours',
-    description: 'Nine lots from one harvest — the ferment, the lab that ends it, and the full file behind every lot.',
-    categories: ['labs'],
-    from: 'Regenerative Coffee',
-  },
 ]
 
 /** One entry as the category pages render it. */

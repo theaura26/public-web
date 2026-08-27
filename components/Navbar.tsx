@@ -1343,9 +1343,19 @@ export default function Navbar() {
           /* Hover symbol — vector glyph centred over the photo, hidden
              at rest and revealed on hover. Pure 35 % of the card width
              (no clamp) so the mark scales with the tile — small cards
-             get a small mark, large cards get a large one. Difference
-             blend so it reads on any underlying tone; z-index high so
-             the mark sits above the thumbnail unambiguously. */
+             get a small mark, large cards get a large one.
+
+             It used to difference-blend, on the theory that inverting
+             would make it read against any tone. Difference is precisely
+             what fails against a mid-tone: white differenced with a
+             mid-grey returns a mid-grey, so contrast collapses and this
+             mark's particle edges turn to speckle. Over the estate
+             photography — green, brown, mid-everything — that is most of
+             the time.
+
+             So the mark is simply white, and the hover darkens the photo
+             beneath it to guarantee it a ground. Predictable on any
+             image rather than theoretically clever on some. */
           :global(.tile-img .tile-symbol) {
             position: absolute;
             top: 50%;
@@ -1356,7 +1366,6 @@ export default function Navbar() {
             opacity: 0;
             pointer-events: none;
             z-index: 10;
-            mix-blend-mode: difference;
             transition: opacity 0.32s var(--ease-out), transform 0.4s var(--ease-spring);
           }
           /* On hover: blur the photo AND scale it just past the clip, so the
@@ -1365,7 +1374,9 @@ export default function Navbar() {
              doesn't get the styled-jsx scope class, so the chain is global. */
           :global(.tile:hover .tile-img img:not(.tile-symbol)),
           :global(.tile:hover .tile-img video) {
-            filter: blur(14px);
+            /* Darkened as well as blurred, so the white mark always has
+               something to sit against. */
+            filter: blur(14px) brightness(0.5);
             transform: scale(1.12);
           }
           :global(.tile:hover .tile-img .tile-symbol) {

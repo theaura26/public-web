@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { stubSlugs, labelFor } from '@/lib/site-nav'
 import { FROM_AURA } from '@/lib/from-aura'
+import { RelatedLane } from '@/components/Swimlanes'
 
 /* A product page.
  *
@@ -48,6 +49,9 @@ function product(slug: string) {
     title: entry?.title ?? navLabel!.split(' — ').slice(1).join(' — ') ?? navLabel!,
     lane: entry?.lane.label ?? SECTION,
     description: entry?.description ?? null,
+    /* The rest of its own lane. A buyer looking at one season of coffee
+       is more likely to want another season than a bar of soapnut. */
+    siblings: (entry?.lane.items ?? []).filter((i) => i.href !== `${PREFIX}/${slug}`),
   }
 }
 
@@ -92,12 +96,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <p className="pd-act">
             <Link className="pd-cta" href="/contact">Get in touch</Link>
           </p>
-
-          <p className="label pd-back">
-            <Link href={PREFIX}>← All of {SECTION}</Link>
-          </p>
         </div>
       </div>
+
+      {p.siblings.length > 0 && (
+        <RelatedLane
+          label="More from the store"
+          items={p.siblings}
+          ratio="4 / 5"
+        />
+      )}
 
       <style>{`
         .pd { padding: calc(var(--nav-h) + var(--head-top)) 0 var(--space-9); background: var(--bg); }
@@ -133,13 +141,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         .pd-p { margin: 0; color: var(--text-body); max-width: 46ch; }
 
         .pd-act { margin: var(--space-4) 0 0; }
+        /* .p1, like every other link set in running text. The accent
+           rule on hover arrives from globals.css, same as anywhere. */
         .pd-cta {
           font-family: var(--font-sans);
-          font-size: 16px; line-height: 1.55;
+          font-size: 16px; line-height: 1.55; letter-spacing: normal;
           color: var(--text); text-decoration: none;
         }
-        .pd-back { margin: var(--space-6) 0 0; }
-        .pd-back a { color: var(--text-muted); text-decoration: none; }
       `}</style>
     </main>
   )

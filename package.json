@@ -6,9 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "ask-aura:crawl": "node scripts/ask-aura/crawl.mjs",
+    "ask-aura:ingest": "node scripts/ask-aura/ingest.mjs",
+    "ask-aura:build": "npm run ask-aura:crawl && npm run ask-aura:ingest",
+    "ask-aura:eval": "tsx evals/ask-aura/run.mts",
+    "ask-aura:smoke": "tsx scripts/ask-aura/smoke/safety.mts && tsx scripts/ask-aura/smoke/privacy.mts && tsx scripts/ask-aura/smoke/affinity.mts && tsx scripts/ask-aura/smoke/retrieval.mts && tsx scripts/ask-aura/smoke/mcp.mts",
+    "ask-aura:mcp": "tsx mcp/aura-knowledge/server.mts"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "@phosphor-icons/react": "^2.1.10",
     "@types/three": "^0.184.1",
     "framer-motion": "^12.38.0",
@@ -19,7 +26,8 @@
     "posthog-js": "^1.409.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "resend": "^6.12.0"
+    "resend": "^6.12.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -29,6 +37,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.3",
     "tailwindcss": "^4",
+    "tsx": "^4.23.12",
     "typescript": "^5"
   }
 }

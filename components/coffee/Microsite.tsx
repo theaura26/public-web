@@ -118,7 +118,7 @@ export function MicroNav() {
         aria-label="Regenerative Coffee"
         aria-hidden={!below}
       >
-        <div className="section-w ln-in">
+        <div className="ln-w ln-in">
           <div className="ln-scroll">
             {NAV.map((l) => (
               <Link
@@ -227,6 +227,24 @@ export function MicroNav() {
         /* header away — the bar takes the top edge itself */
         .ln.is-below.is-up { transform: translateY(calc(-1 * var(--nav-h))); }
 
+        /* This bar lines up with the navbar above it rather than with
+           the article column. The navbar is a 10vw / 1fr / 10vw grid
+           with the mark centred in the left rail and the menu button
+           centred in the right, so the marks sit 5vw from each edge less
+           half their own width. Those two widths are the dependency —
+           if either mark is resized, these follow. */
+        .ln-w {
+          --nav-mark: 32px;
+          --nav-burger: 44px;
+          width: 100%;
+          padding-left: calc(5vw - var(--nav-mark) / 2);
+          padding-right: calc(5vw - var(--nav-burger) / 2);
+        }
+        @media (max-width: 620px) {
+          /* The navbar drops its rails on small screens; so does this. */
+          .ln-w { padding-left: var(--gutter, 20px); padding-right: var(--gutter, 20px); }
+        }
+
         .ln-in {
           position: relative;
           height: 100%;
@@ -287,6 +305,15 @@ export function MicroNav() {
         /* :global, because styled-jsx cannot put its scope class on a
            <Link> — the same reason .ln-l is global above. */
         :global(.ln-cta) {
+          /* The parent turns pointer events off so the bar's gradient
+             mask does not swallow clicks meant for the links beneath it,
+             and the child rule was meant to turn them back on. It never
+             did: styled-jsx cannot put its scope class on a Link, so the
+             rule compiled to a descendant selector carrying the jsx hash
+             and matched nothing — this button has been unclickable. Set
+             on the class itself, which is already global for exactly
+             that reason. */
+          pointer-events: auto;
           flex-shrink: 0; cursor: pointer;
           display: inline-flex; align-items: center;
           text-decoration: none; white-space: nowrap;
@@ -1209,9 +1236,12 @@ export function Banner({
         .bn-h {
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 500;
-          font-size: clamp(28px, 3.4vw, 54px);
-          line-height: 1.14; letter-spacing: -0.03em;
-          color: #fff; margin: 0; max-width: 24ch;
+          /* The banner carries a title and a subtitle in one heading, so
+             it runs long — at 54px it filled the panel and read as the
+             page rather than as a way out of it. */
+          font-size: clamp(24px, 2.4vw, 38px);
+          line-height: 1.2; letter-spacing: -0.025em;
+          color: #fff; margin: 0; max-width: 30ch;
           text-wrap: pretty;
         }
         .bn-act { margin: var(--space-7) 0 0; }

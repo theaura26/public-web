@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { TABS } from '@/lib/site-nav'
 import { useMode } from './ModeProvider'
 import { LogoEmblem } from './Logo'
 import ContactModal from './ContactModal'
@@ -76,108 +77,12 @@ const ARTICLES: Article[] = [
    (Shop, until there is something to sell); `soon` is a real
    destination that has no page yet. Both render unclickable — the
    difference is that one is a decision and the other is a backlog. */
-type NavItem = {
-  href?: string
-  label: string
-  /** Deliberately switched off, as Shop is until there is stock. */
-  off?: boolean
-  children?: NavItem[]
-}
 /** A group is either an accordion (has `items`) or a plain link (has
  *  `href`). Home is the only link — it has nothing to expand into. */
-type NavGroup = { id: string; label: string; note?: string; href?: string; items?: NavItem[] }
 
-const NAV_GROUPS: NavGroup[] = [
-  { id: 'home', label: 'Home', href: '/' },
-  {
-    id: 'shop',
-    label: 'Shop',
-    items: [
-      { label: 'Artist Residencies', off: true },
-      { label: 'Coffee', off: true },
-      { label: 'Experiences', off: true },
-      { label: 'Tea', off: true },
-      { label: 'View All', off: true },
-    ],
-  },
-  {
-    id: 'coffee',
-    label: 'Regenerative Coffee',
-    items: [
-      { href: '/regenerative-coffee', label: 'Remarkable Circle' },
-      { href: '/regenerative-coffee/biodynamic', label: 'Better Ground' },
-      { href: '/regenerative-coffee/transparency', label: 'Transparency' },
-      { href: '/regenerative-coffee/flavour', label: 'Flavours' },
-      { href: '/regenerative-coffee/experience', label: 'Aura Festival' },
-    ],
-  },
-  {
-    id: 'notes',
-    label: 'Field Notes',
-    items: [
-      { href: '/field-notes/activities', label: 'Activities' },
-      { href: '/field-notes/biodynamic', label: 'Biodynamic' },
-      { href: '/field-notes/biodiversity', label: 'Biodiversity' },
-      { href: '/field-notes/labs', label: 'Labs' },
-      { href: '/field-notes', label: 'View All' },
-    ],
-  },
-  {
-    id: 'about',
-    label: 'About',
-    items: [
-      { href: '/atelier', label: 'Atelier' },
-      { href: '/reason', label: 'The Reason' },
-      { href: '/brand', label: 'Our Brand' },
-      { href: '/ohara', label: 'Ohara' },
-      { href: '/mudigere', label: 'Mudigere' },
-      { href: '/contact', label: 'Contact Us' },
-    ],
-  },
-]
 
-/** The group that owns the current route, so the menu opens where you are. */
-function groupForPath(pathname: string): string {
-  for (const g of NAV_GROUPS) {
-    for (const item of g.items ?? []) {
-      const hrefs = [item.href, ...(item.children ?? []).map((c) => c.href)]
-      if (hrefs.some((h) => h && h !== '/' && pathname.startsWith(h))) return g.id
-    }
-  }
-  return 'notes'
-}
 
 const INSTAGRAM_URL = 'https://www.instagram.com/theaura.life/'
-
-/** One menu row. A destination is a link; anything switched off or
- *  unbuilt renders as plain text, because a dead link is worse than an
- *  honest label. */
-function NavLeaf({
-  item, onGo, pathname,
-}: {
-  item: NavItem
-  onGo: () => void
-  pathname: string
-}) {
-  if (!item.href || item.off) {
-    return (
-      <span className={`mg-item ${item.off ? 'is-off' : ''}`} aria-disabled>
-        {item.label}
-      </span>
-    )
-  }
-  return (
-    <Link
-      href={item.href}
-      onClick={onGo}
-      className="mg-item"
-      data-attr={`menu-link:${item.href}`}
-      data-active={pathname === item.href}
-    >
-      {item.label}
-    </Link>
-  )
-}
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -200,16 +105,6 @@ export default function Navbar() {
     return () => { if (hoverTimer.current) clearTimeout(hoverTimer.current) }
   }, [])
 
-  /* Hovering an entry that has nothing to open still closes what is
-     open — on the same intent delay, so sweeping past does nothing. */
-  const cancelHover = () => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current)
-  }
-  const hoverCollapse = () => {
-    if (!canHoverRef.current) return
-    cancelHover()
-    hoverTimer.current = setTimeout(() => setOpenGroup(''), 110)
-  }
   /* Inline contact modal — opened by the /mudigere "Contact
      us" nav link instead of routing to /contact, so the architect
      stays on the briefing page while writing. */
@@ -227,6 +122,23 @@ export default function Navbar() {
   const [hasOpenedMenu, setHasOpenedMenu] = useState(false)
   const { theme, setTheme, viewMode, setViewMode } = useMode()
   const pathname = usePathname()
+
+  /* The open menu is announced on <body> so anything else fixed to the
+     viewport can stand down while it is up. Same idiom the coffee
+     sub-nav already uses for its own bar. */
+  useEffect(() => {
+    document.body.classList.toggle('menu-open', menuOpen)
+    return () => document.body.classList.remove('menu-open')
+  }, [menuOpen])
+  /* The section on show: whatever the reader last pointed at, and
+     failing that whichever one covers the page they are on, and failing
+     that the first. Derived rather than stored, so it cannot fall out of
+     step with the route. */
+  /* Always opens on the first section. Opening on whichever section
+     covered the current route meant the menu looked different every
+     time it was opened, and a reader cannot learn a shape that keeps
+     moving. `openGroup` is what the reader has pointed at since. */
+  const activeSection = openGroup ?? TABS[0].id
   const scrollRef = useRef<HTMLDivElement>(null)
   const tileRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
@@ -743,90 +655,138 @@ export default function Navbar() {
           <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor', transform: 'translateY(-3.75px) rotate(-45deg)' }} />
         </button>
 
-        {/* Left — primary nav, locked at top, never scrolls */}
+        <ul className="mn-tabs" role="tablist" aria-label="Sections">
+          {TABS.map((sec) => {
+            const on = activeSection === sec.id
+            return (
+              <li key={sec.id}>
+                <button
+                  type="button"
+                  role="tab"
+                  id={`mn-tab-${sec.id}`}
+                  aria-selected={on}
+                  aria-controls={`mn-panel-${sec.id}`}
+                  tabIndex={on ? 0 : -1}
+                  className={`mn-tab ${on ? 'is-on' : ''}`}
+                  onMouseEnter={() => {
+                    if (!canHoverRef.current) return
+                    if (hoverTimer.current) clearTimeout(hoverTimer.current)
+                    hoverTimer.current = setTimeout(() => setOpenGroup(sec.id), 90)
+                  }}
+                  onMouseLeave={() => { if (hoverTimer.current) clearTimeout(hoverTimer.current) }}
+                  onFocus={() => setOpenGroup(sec.id)}
+                  onClick={() => setOpenGroup(sec.id)}
+                  onKeyDown={(e) => {
+                    /* Arrows walk the row, which is what a tablist
+                       promises the moment it calls itself one. */
+                    const i = TABS.findIndex((x) => x.id === activeSection)
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                      e.preventDefault()
+                      const next = e.key === 'ArrowRight'
+                        ? (i + 1) % TABS.length
+                        : (i - 1 + TABS.length) % TABS.length
+                      setOpenGroup(TABS[next].id)
+                      document.getElementById(`mn-tab-${TABS[next].id}`)?.focus()
+                    }
+                  }}
+                >
+                  {sec.label}
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+
+        {/* Left — the five sections as a row, and the open one's
+            contents beneath. Hovering a section swaps the panel; the
+            reader never has to click to look. */}
         <aside className="menu-left">
-          <nav className="mg" aria-label="Main">
-            {NAV_GROUPS.map((g) => {
-              /* A group with no items is a destination, not an accordion.
-                 It still collapses whatever is open — hovering it means
-                 the reader has moved on from that panel. */
-              if (!g.items) {
-                return (
-                  <div className="mg-grp" key={g.id}>
-                    <Link
-                      href={g.href ?? '/'}
-                      onClick={() => setMenuOpen(false)}
-                      onMouseEnter={hoverCollapse}
-                      onMouseLeave={cancelHover}
-                      className="mg-btn mg-btn-link"
-                      data-attr={`menu-link:${g.href}`}
-                    >
-                      {g.label}
-                    </Link>
-                  </div>
-                )
-              }
+          <nav className="mn" aria-label="Main">
 
-              const open = (openGroup ?? groupForPath(pathname)) === g.id
+            {TABS.map((sec) => {
+              const on = activeSection === sec.id
               return (
-                <div className="mg-grp" data-open={open} key={g.id}>
-                  <button
-                    type="button"
-                    className="mg-btn"
-                    aria-expanded={open}
-                    aria-controls={`mg-${g.id}`}
-                    onClick={() => {
-                      if (hoverTimer.current) clearTimeout(hoverTimer.current)
-                      setOpenGroup(open ? '' : g.id)
-                    }}
-                    onMouseEnter={() => {
-                      if (!canHoverRef.current || open) return
-                      if (hoverTimer.current) clearTimeout(hoverTimer.current)
-                      hoverTimer.current = setTimeout(() => setOpenGroup(g.id), 110)
-                    }}
-                    onMouseLeave={() => {
-                      if (hoverTimer.current) clearTimeout(hoverTimer.current)
-                    }}
-                  >
-                    {g.label}
-                    {g.note && <span className="mg-note">{g.note}</span>}
-                  </button>
+                <div
+                  key={sec.id}
+                  id={`mn-panel-${sec.id}`}
+                  role="tabpanel"
+                  aria-labelledby={`mn-tab-${sec.id}`}
+                  hidden={!on}
+                  className="mn-panel"
+                >
+                  <ul className="mn-items">
+                    {sec.items.map((item) => (
+                      <li
+                        key={item.href + item.label}
+                        className={`mn-row ${item.children ? 'has-more' : ''}`}
+                      >
+                        <Link
+                          href={item.href}
+                          className={`mn-leaf ${pathname === item.href ? 'is-on' : ''}`}
+                          aria-current={pathname === item.href ? 'page' : undefined}
+                          onClick={() => setMenuOpen(false)}
+                          data-attr={`menu-link:${item.href}`}
+                        >
+                          {item.label}
+                        </Link>
 
-                  <div className="mg-panel" id={`mg-${g.id}`} role="group" aria-label={g.label}>
-                    <div className="mg-panel-in">
-                      <ul className="mg-items">
-                        {g.items.map((item) => (
-                          <li key={item.label}>
-                            <NavLeaf item={item} onGo={() => setMenuOpen(false)} pathname={pathname} />
-                            {item.children && (
-                              <ul className="mg-sub">
-                                {item.children.map((c) => (
-                                  <li key={c.label}>
-                                    <NavLeaf item={c} onGo={() => setMenuOpen(false)} pathname={pathname} />
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
+                        {item.children && (
+                          /* The tier beneath. Open on hover, and on focus
+                             too — a layer a keyboard cannot reach is a
+                             layer that is not there. */
+                          <div className="mn-sub">
+                            <ul className="mn-sub-in">
+                            {item.children.map((child) => (
+                              <li key={child.href + child.label}>
+                                <Link
+                                  href={child.href}
+                                  className={`mn-sub-leaf ${pathname === child.href ? 'is-on' : ''}`}
+                                  aria-current={pathname === child.href ? 'page' : undefined}
+                                  onClick={() => setMenuOpen(false)}
+                                  data-attr={`menu-link:${child.href}`}
+                                >
+                                  {child.label}
+                                </Link>
+                              </li>
+                            ))}
+                            </ul>
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )
             })}
           </nav>
 
-          {/* Always visible, under the groups. */}
-          <span
+        </aside>
+
+        {/* Now, reached as it should be — the thing that is happening,
+            not an item in a list of subjects. Bottom-left, where the
+            panel's other standing marks sit. */}
+        <div className="menu-corner">
+          <Link
+            href="/now"
             className="mg-live"
-            onMouseEnter={hoverCollapse}
-            onMouseLeave={cancelHover}
+            onClick={() => setMenuOpen(false)}
+            data-attr="menu-link:/now"
           >
             Live
             <span className="mg-dot" aria-hidden />
-          </span>
-        </aside>
+          </Link>
+          {/* Contact is not a subject the site is about; it is how you
+              reach a person. It sits with the standing marks rather than
+              inside a list of things to read. */}
+          <Link
+            href="/contact"
+            className="mn-corner-link"
+            onClick={() => setMenuOpen(false)}
+            data-attr="menu-link:/contact"
+          >
+            Contact Us
+          </Link>
+        </div>
 
         {/* Bottom-left utilities: theme toggle + view-mode toggle + Instagram */}
         <div className="menu-utils">
@@ -992,9 +952,9 @@ export default function Navbar() {
 
           :global(.mg-btn-link) {
             font-family: var(--font-grotesque), sans-serif;
-            font-weight: 600;
-            font-size: clamp(24px, 2.9vw, 34px);
-            line-height: 1.1; letter-spacing: -0.035em;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
             color: var(--contrast-text);
             text-decoration: none; display: block;
             padding: 12px 0;
@@ -1006,9 +966,9 @@ export default function Navbar() {
             appearance: none; background: none; border: 0;
             padding: 12px 0; width: 100%;
             font-family: var(--font-grotesque), sans-serif;
-            font-weight: 600;
-            font-size: clamp(24px, 2.9vw, 34px);
-            line-height: 1.1; letter-spacing: -0.035em;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
             color: var(--contrast-text);
             text-align: left; cursor: pointer;
             display: flex; align-items: center; flex-wrap: wrap;
@@ -1019,11 +979,11 @@ export default function Navbar() {
             outline: 2px solid var(--brand-accent); outline-offset: 3px;
           }
           @media (max-width: 900px) {
-            .mg-btn, :global(.mg-btn-link), .mg-live { font-size: 24px; }
+            .mg-btn, :global(.mg-btn-link), :global(.mg-live) { font-size: 24px; }
             :global(.mg-item) { font-size: 12px; }
           }
           @media (max-width: 600px) {
-            .mg-btn, :global(.mg-btn-link), .mg-live { font-size: 21px; }
+            .mg-btn, :global(.mg-btn-link), :global(.mg-live) { font-size: 21px; }
             :global(.mg-item) { font-size: 11px; }
           }
           .mg-note {
@@ -1043,6 +1003,152 @@ export default function Navbar() {
           .mg-panel-in { overflow: hidden; }
 
           .mg-items,
+          /* ── sections ──────────────────────────────────────────
+             A row of five, and the open one's contents underneath. The
+             row is set in mono because it labels the panel rather than
+             being read as prose; the contents are Bricolage because they
+             are the names of things. */
+          .mn { display: flex; flex-direction: column; gap: 34px; }
+          /* Across the top of the whole panel, not inside the left
+             column — five section names will not sit in a 345px rail,
+             and the row is a header for both columns rather than for
+             one of them. */
+          .mn-tabs {
+            position: absolute;
+            top: 22px;
+            left: var(--gutter);
+            right: 84px;
+            z-index: 3;
+            list-style: none; margin: 0; padding: 0;
+            display: flex; flex-wrap: wrap; gap: 30px;
+          }
+          .mn-tab {
+            background: none; border: 0; padding: 4px 0; cursor: pointer;
+            /* The site's one hover affordance: a brand-accent underline,
+               inherited from globals.css rather than reinvented here.
+               The selected tab uses the same underline held on, so hover
+               and selection never draw two lines under one word. */
+            /* Bricolage rather than mono: these are the names of parts of
+               the site, not technical labels, and set small they read as
+               a row of places rather than as machine text. */
+            /* .p2: grotesque, 14px, normal. The row labels the panel
+               rather than titling it, so it takes the secondary body
+               role rather than a heading one. */
+            font-family: var(--font-grotesque), sans-serif;
+            font-size: 14px; font-weight: 400;
+            line-height: 1.6; letter-spacing: normal; text-transform: none;
+            color: color-mix(in srgb, var(--contrast-text) 55%, transparent);
+            text-underline-offset: 4px;
+            text-decoration-thickness: 1.5px;
+            transition: color var(--dur-base) var(--ease),
+                        text-decoration-color var(--dur-base) var(--ease);
+          }
+          .mn-tab:hover { color: var(--contrast-text); }
+          .mn-tab.is-on {
+            color: var(--contrast-text);
+            text-decoration: underline;
+            text-decoration-color: var(--brand-accent);
+            text-underline-offset: 4px;
+            text-decoration-thickness: 1.5px;
+          }
+          .mn-tab:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
+
+          /* Five pixels left of true. The items and the row above them
+             start on the same pixel — measured, both at 1632 — but the
+             items are set nearly three times larger, and larger type
+             carries more apparent side-bearing, so identical geometry
+             reads as an indent. Optical alignment, not geometric. */
+          .mn-items { list-style: none; margin: 0; padding: 0; margin-left: -5px; }
+          /* A row that has a tier beneath it opens on hover, and on
+             focus within, so the keyboard reaches it too. Grid rows
+             animate from 0fr to 1fr, which is what lets the list push
+             down smoothly without anyone measuring anything. */
+          /* One grid row, one wrapper inside it. Collapsing the track
+             itself only governs the first row, so a parent with three
+             children kept two of them open — the wrapper gives the grid
+             a single thing to close. */
+          .mn-sub {
+            display: grid; grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows var(--dur-base) var(--ease-out),
+                        opacity var(--dur-base) var(--ease);
+          }
+          .mn-sub-in {
+            list-style: none; margin: 0;
+            overflow: hidden;
+            min-height: 0;
+          }
+          .mn-row.has-more:hover .mn-sub,
+          .mn-row.has-more:focus-within .mn-sub {
+            grid-template-rows: 1fr;
+            opacity: 1;
+          }
+          /* Indented, so the tier reads as belonging to the line above
+             rather than as a continuation of the list. */
+          .mn-sub-in { padding-left: 18px; }
+          :global(.mn-sub-leaf) {
+            display: block;
+            padding: 3px 0;
+            font-family: var(--font-mono), monospace;
+            font-size: 11px; line-height: 1.5;
+            letter-spacing: 0.6px; text-transform: uppercase;
+            color: color-mix(in srgb, var(--contrast-text) 62%, transparent);
+            text-decoration: none;
+          }
+          :global(.mn-sub-leaf):hover,
+          :global(.mn-sub-leaf).is-on {
+            color: var(--contrast-text);
+            text-decoration: underline;
+            text-decoration-color: var(--brand-accent);
+            text-underline-offset: 4px;
+            text-decoration-thickness: 1.5px;
+          }
+          :global(.mn-sub-leaf):focus-visible {
+            outline: 2px solid var(--brand-accent); outline-offset: 2px;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .mn-sub { transition: none; }
+          }
+          .mn-items > li:first-child .mn-group { margin-top: 0; }
+          /* :global — .mn-leaf sits on a Link, and styled-jsx cannot put
+             its scope class on a component, so a scoped rule here matches
+             nothing at all. The symptom is not a wrong style but an
+             absent one: these have been rendering at the inherited 16px
+             the whole time. Same reason .mn-sub-leaf is global below. */
+          :global(.mn-leaf) {
+            display: block;
+            padding: 5px 0;
+            /* h3 from the design system: grotesque, 22–32px, -0.03em,
+               1.15. These are sub-headings within the panel, which is
+               exactly the role h3 describes. */
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
+            color: var(--contrast-text);
+            text-decoration: none;
+            transition: opacity var(--dur-base) var(--ease);
+          }
+          :global(.mn-leaf):hover,
+          :global(.mn-leaf).is-on {
+            text-decoration: underline;
+            text-decoration-color: var(--brand-accent);
+            text-underline-offset: 6px;
+            text-decoration-thickness: 1.5px;
+          }
+
+          :global(.mn-leaf):focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
+
+          /* The panel changes under the pointer, so it should arrive
+             rather than snap. */
+          .mn-panel[hidden] { display: none; }
+          .mn-panel { animation: mn-fade var(--dur-base) var(--ease-out); }
+          @keyframes mn-fade {
+            from { opacity: 0; transform: translateY(4px); }
+            to   { opacity: 1; transform: none; }
+          }
+          @media (prefers-reduced-motion: reduce) { .mn-panel { animation: none; } }
+
           .mg-sub { list-style: none; margin: 0; padding: 0; }
           /* Indented under the group heading, so the hierarchy reads
              without a rule or a bullet. */
@@ -1081,15 +1187,38 @@ export default function Navbar() {
              Sits in the same stack as the groups and is set like them,
              so it reads as another way in rather than a status badge
              bolted to the bottom. The dot carries all the signal. */
-          .mg-live {
-            /* No extra margin — the same 12px padding as a group button,
-               so it sits on the identical rhythm as the entries above. */
-            align-self: flex-start;
+          .menu-corner {
+            position: absolute;
+            left: var(--gutter);
+            bottom: 44px;
+            z-index: 102;
+            display: flex; flex-direction: column;
+            align-items: flex-start; gap: 10px;
+          }
+          /* h3, the same as Live above it — they are two marks of the
+             same standing, not a heading with a footnote. */
+          :global(.mn-corner-link) {
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
+            color: var(--contrast-text);
+            text-decoration: none;
+            text-underline-offset: 4px;
+            text-decoration-thickness: 1.5px;
+          }
+          :global(.mn-corner-link):hover {
+            color: var(--contrast-text);
+            text-decoration: underline;
+            text-decoration-color: var(--brand-accent);
+          }
+          :global(.mg-live) {
+            text-decoration: none;
             display: inline-flex; align-items: center; gap: 12px;
             font-family: var(--font-grotesque), sans-serif;
-            font-weight: 600;
-            font-size: clamp(24px, 2.9vw, 34px);
-            line-height: 1.1; letter-spacing: -0.035em;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
             color: var(--contrast-text);
             padding: 12px 0;
           }
@@ -1123,19 +1252,21 @@ export default function Navbar() {
           /* Utility stack: left-aligned with the primary nav links column
              (var(--gutter) inside the menu panel). Stacks vertically, each
              chip left-anchored so the column reads tidy. */
+          /* Bottom right, diagonally opposite Live. The panel's own
+             controls — theme, view mode, the one outward link — sit out
+             of the reading path, at the end of it. */
           :global(.menu-utils) {
             position: absolute;
-            bottom: 60px;
-            left: var(--gutter);
-            /* Sit ABOVE the .tile-feed-vignette (z: 101). On mobile
-               the vignette is full-bleed across the bottom of the
-               viewport; the utility icons need to remain crisp and
-               clickable on top of the blur. */
-            z-index: 102;
+            bottom: 44px;
+            right: var(--gutter);
+            /* Top of the panel's stack. Above the tile feed vignette
+               (101) and above the feed itself, so these stay crisp and
+               clickable whatever scrolls under them. */
+            z-index: 120;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            gap: 16px;
+            align-items: center;
+            gap: 14px;
           }
           /* Toggle chips (theme + view mode) — slightly bigger filled circle.
              Background tint is keyed off currentColor so it darkens in light
@@ -1379,7 +1510,9 @@ export default function Navbar() {
             /* The panel logo is hidden at this width, so nothing sits
                above the nav but the close button — it can start higher
                than the marquee line it used to align to. */
-            top: 20px;
+            /* Aligned with the marquee strip beside it: both start at
+               116px, so the panel reads as one horizon rather than two. */
+            top: 116px;
             left: var(--gutter);          /* aligned with the panel's own gutter */
             bottom: 210px;                /* clears the utility icon stack */
             width: 345px;
@@ -1523,9 +1656,9 @@ export default function Navbar() {
               line-height: 1.4;
             }
             :global(.menu-utils) {
-              bottom: 60px;
-              left: 24px;
-              gap: 14px;
+              bottom: 40px;
+              right: 24px;
+              gap: 12px;
             }
             :global(.menu-util-btn svg) {
               width: 20px;
@@ -1611,9 +1744,9 @@ export default function Navbar() {
             }
 
             :global(.menu-utils) {
-              left: var(--gutter);
               bottom: 32px;
-              gap: 12px;
+              right: var(--gutter);
+              gap: 10px;
             }
             :global(.menu-link) { font-size: 11px !important; }
             /* Phone: full-bleed bottom band — pull the vignette all

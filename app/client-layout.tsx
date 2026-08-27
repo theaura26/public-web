@@ -3,6 +3,7 @@
 import { ReactNode } from 'react'
 import { ModeProvider } from '@/components/ModeProvider'
 import Navbar from '@/components/Navbar'
+import AskAura from '@/components/ask-aura/AskAura'
 import Footer from '@/components/Footer'
 import { Analytics } from './providers'
 import { ScrollDepth } from '@/components/ScrollDepth'
@@ -14,6 +15,8 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
       <Navbar />
       <ScrollDepth />
       <main>{children}</main>
+      {/* Outside <main>: it is chrome, and it must survive route changes. */}
+      <AskAura />
       <Footer />
       {/* Page-level bottom blur vignette — fixed to the viewport bottom,
           sits above the page content but below the nav/modals. Pure

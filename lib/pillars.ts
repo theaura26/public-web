@@ -49,7 +49,7 @@ export const PILLARS: Pillar[] = [
       'In practice it means measuring first. A canopy is read in lux before anyone cuts it. A preparation is plated before it is spread. A ferment is stopped by its pH. The instinct comes second, and it is a better instinct for having numbers under it.',
       'It runs through three studios and three places. Agroculture works it into 150 acres. Hospitality builds the rooms where a person can meet it. The Atelier is the taste layer — what is worth making at all, and what is good enough to leave here carrying the name.',
       'And it sets the horizon. Every decision is weighed against the year 3026, which changes what counts as a good one: the machine that listens beats the machine that acts, and the slow answer usually wins.',
-      'One estate proves a practice; two test it. Mudigere is the first and Ohara the second, and what passes between them is the point — a reading that holds in the Western Ghats and again in a Kyoto valley is worth more than either on its own.',
+      'One place proves a practice; two test it. Mudigere is the estate — 150 acres under crop — and Ohara is a sanctuary north of Kyoto with no farming on it at all. That difference is the point: a way of working that holds in both is worth more than one that holds in either.',
       '[Aura Intelligence](/regenerative-life/aura-intelligence) is the machinery underneath all of this: what is captured, what is remembered, and where the record stops.',
       'The term is Aura’s own. It is defined here and then left alone, because it is meant to stay a way of working.',
       'Aura is not certified organic or biodynamic. It practises both and publishes the record instead, which is the harder standard and the one a reader can check.',

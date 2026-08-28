@@ -26,7 +26,7 @@ export default function ResidencyPage() {
         <p className="p1">
           At Mudigere and Ohara, Aura runs a residency for polymaths — people
           who think, craft, and work across science and art, and will not
-          choose one over the other. We gather them onto the estates, hold the
+          choose one over the other. We gather them onto the land, hold the
           noise of the world off, and give them an environment built for focus.
           What comes out is the truest work they can make.
         </p>
@@ -118,9 +118,9 @@ export default function ResidencyPage() {
         caption="Sit close to someone who has been listening to one craft for thirty years."
       />
 
-      <TwoCol heading="Two estates, one residency.">
+      <TwoCol heading="Two places, one residency.">
         <p className="p1">
-          The residency runs across both estates because the two hold different
+          The residency runs across both places because the two hold different
           intelligences. Mudigere is Vedic — raw, monsoon, soil, a four-story
           canopy and fifty-two indigenous cattle, work that is loud, hot, and
           generous. Ohara is Zen — tea, washi, a seventy-year-old home and a
@@ -151,7 +151,7 @@ export default function ResidencyPage() {
           and by hand.
         </DataCard>
         <DataCard value="Creation">
-          Two working estates as the studio — forest, kiln, wet mill, garden —
+          A working estate and a sanctuary as the studio — forest, kiln, wet mill, garden —
           where residents make with material grown, fermented, or fired on the
           ground they stand on.
         </DataCard>

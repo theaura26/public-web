@@ -51,19 +51,6 @@ export default function Footer() {
           <div>
             <p className="label" style={{ marginBottom: 'var(--space-3)' }}>Contact</p>
             <a href="mailto:hello@theaura.life" className="p1">hello@theaura.life</a>
-            {/* Set at the label size rather than p1: it belongs in the
-                footer and it is not one of the three things the footer is
-                for, so it sits quietly under the address. */}
-            <Link
-              href="/privacy"
-              className="label footer-privacy"
-              /* inline-block, not block: block stretched the hit area to
-                 the full column width, so the hover fired anywhere in a
-                 697 px band. The target should be the word. */
-              style={{ display: 'inline-block', marginTop: 'var(--space-4)' }}
-            >
-              Privacy
-            </Link>
           </div>
           <div>
             <p className="label" style={{ marginBottom: 'var(--space-3)' }}>Follow us</p>
@@ -90,7 +77,22 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        {/* Parked bottom right, under the four columns and above the
+            wordmark band — that band is pointer-events:none and cropped
+            below the fold, so nothing clickable can live inside it. Its
+            own row rather than a fifth column: a legal link is not one of
+            the three things this footer is for. */}
+        <div className="footer-legal">
+          <Link href="/privacy" className="label footer-privacy">Privacy</Link>
+        </div>
+
         <style jsx>{`
+          .footer-legal {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: var(--space-7);
+          }
           /* Manifesto reads as a quiet continuation of the body copy rather
              than a section title — same sans family as p1, lighter weight,
              same baseline color. The "label" sub below picks up the existing
@@ -98,6 +100,9 @@ export default function Footer() {
           /* The one link in the footer set at label size. Muted until
              hovered, like every other quiet link on the site. */
           .footer-privacy {
+            /* inline-block so the hit area is the word: as a block it
+               stretched to its container and the hover fired across it. */
+            display: inline-block;
             color: var(--text-body);
             text-decoration: none;
             transition: color var(--dur-fast) var(--ease);

@@ -80,8 +80,8 @@ function opening(pathname: string): { line: string; prompts: string[] } {
   if (sibling) return sibling[1]
 
   return {
-    line: 'Ask me anything about Aura — the estates, the coffee, the practice.',
-    prompts: ['What is Aura?', 'Where are the estates?', 'What does Aura grow?'],
+    line: 'Ask me anything about Aura — the land, the coffee, the practice.',
+    prompts: ['What is Aura?', 'Where is Aura?', 'What does Aura grow?'],
   }
 }
 
@@ -110,7 +110,7 @@ export default function AskAura() {
      past and then slides up. */
   const [past, setPast] = useState(false)
   const intro = opening(pathname ?? '/')
-  const teaser = intro.prompts[tick % Math.max(intro.prompts.length, 1)] ?? 'Ask about the estates'
+  const teaser = intro.prompts[tick % Math.max(intro.prompts.length, 1)] ?? 'Ask about the land'
   /* The question on its way out. Without it only the arriving line
      moved and the old one simply blinked off, which reads as a swap
      rather than a roll. */
@@ -140,7 +140,7 @@ export default function AskAura() {
   }, [pathname, open])
   const placeholder = subject
     ? `Ask about ${subject}…`
-    : 'Ask about the estates, the coffee…'
+    : 'Ask about the land, the coffee…'
 
   const panelRef = useRef<HTMLDivElement>(null)
   const logRef = useRef<HTMLDivElement>(null)

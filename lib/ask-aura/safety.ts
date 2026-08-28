@@ -166,7 +166,7 @@ const match = (patterns: RegExp[], s: string) => patterns.some((p) => p.test(s))
    a refusal an attacker can use to run up a bill. */
 export const REPLIES: Record<RefusalKind, string> = {
   empty:
-    'I did not catch a question there. Ask me about the estates, the coffee, the practice, or how to visit.',
+    'I did not catch a question there. Ask me about the land, the coffee, the practice, or how to visit.',
   too_long:
     'That is longer than I can take in one go. Could you put the essential part in a few sentences?',
   rate_limited:

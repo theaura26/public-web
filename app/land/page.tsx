@@ -119,8 +119,9 @@ export default function LandPage() {
 
       <TwoCol id="east-east" heading="Mudigere and Ohara.">
         <p className="p1">
-          Aura works two estates. The first is here at Mudigere; the second
-          sits in Ohara, Kyoto — two properties totalling roughly 1,200 <Term tip="Japanese land measure. About 3.3 m² per tsubo.">tsubo</Term>,
+          Aura holds two places. Mudigere is the estate — the 150 acres described
+          above. Ohara is a sanctuary, north of Kyoto: two properties totalling
+          roughly 1,200 <Term tip="Japanese land measure. About 3.3 m² per tsubo.">tsubo</Term>,
           with seven existing buildings, a teahouse with a hearth, a
           thirty-year-old Japanese garden, and a cafe overlooking a river.
         </p>

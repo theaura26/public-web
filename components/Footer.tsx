@@ -51,7 +51,7 @@ export default function Footer() {
               tallest. On one column it has nowhere to drop to, so it is
               lifted to the top right instead, on the manifesto's line. */}
           <div className="footer-manifesto-col">
-            <div className="footer-manifesto-head">
+            <div>
               <h2 className="footer-manifesto-title">A 1,000 Year Idea</h2>
               <p className="label" style={{ marginTop: 'var(--space-3)' }}>Think in generations</p>
             </div>
@@ -101,18 +101,23 @@ export default function Footer() {
              the link out whenever another column (the clocks, once they
              wrap) makes the row taller, and changes nothing when they
              are level. */
-          .footer-manifesto-col {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-          }
-          .footer-manifesto-head { display: block; }
           /* .footer-privacy is NOT here. It sits on a next/link, and a
              styled-jsx rule targeting one compiles to .class.jsx-hash
              against an element that never receives the hash — so it
              matches nothing and fails silently. Every declaration for it
              lives in globals.css. See DESIGN-SYSTEM.md section 13. */
+          /* The column stretches to the row height, so space-between
+             holds the title block at the top and drops the legal link to
+             the foot — level with the clocks, on the manifesto's own
+             left edge. */
+          .footer-manifesto-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /* The positioning context for the one-column rule, which
+               lifts the link onto the manifesto's own line. */
+            position: relative;
+          }
           .footer-manifesto-title {
             font-family: var(--font-sans);
             font-size: clamp(20px, 2.2vw, 28px);

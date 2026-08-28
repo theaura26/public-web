@@ -1478,6 +1478,9 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
    manifesto's own line instead. */
 @media (max-width: 767px) {
   .footer-privacy {
+    /* One column: it would sit under the manifesto and above Contact,
+       which is worse than either edge. Lifted onto the manifesto's own
+       line instead, against the right gutter. */
     position: absolute;
     top: 0;
     right: 0;

@@ -100,6 +100,16 @@ photograph belongs. The copy is finished; the picture is not.
 A grey plate is the honest placeholder and stays until there is a real
 photograph. None of these pages invent an image or borrow one.
 
+**The brief is built.** All 57 slots across the 17 new pages are laid out
+in Figma — *AURA // Coffee Festival*, Web page, section *AURA — New pages ·
+content + image briefs*. One frame per route in the order the page reads,
+carrying the shipping copy, with every picture as a grey plate labelled
+with its aspect ratio, its exact pixel size, and what the shot is meant to
+be. Forty-two at 16:9, fifteen at 4:5, inside a 1200px rail.
+
+`npm run figma:spec` regenerates the underlying JSON from the source, so
+the board can be rebuilt from the site rather than drifting from it.
+
 ---
 
 ## 4. Closed during this pass

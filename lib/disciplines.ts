@@ -578,7 +578,7 @@ export const DISCIPLINES: Discipline[] = [
         lines: [
           'Everything exports in open formats. Software gets replaced; a hundred-year claim needs a record that outlives the company keeping it, and portability is what lets somebody outside Aura audit the estate.',
           'The record is signed and exportable, and that is where the claim stops. Writing milestones to a public chain is an intention and is not built, so nothing here is described as verifiable by a third party.',
-          'One place is a sample of one. The sanctuary at Ohara tests whether a way of working that held in the Western Ghats holds in a Kyoto valley with a different climate, a different soil and no crop on it, and a practice confirmed in two valleys is worth more than one confirmed in one.',
+          'One place is a sample of one. Ohara — the second sanctuary, north of Kyoto — tests whether a way of working that held in the Western Ghats holds in a valley with a different climate, a different soil and no crop on it, and a practice confirmed in two valleys is worth more than one confirmed in one.',
           '[Natural Intelligence](/reason/natural-intelligence) is the fuller argument for why this is possible now. [Provenance](/provenance) is the fuller account of how a single event becomes a record.',
         ],
       },

@@ -199,7 +199,7 @@ export const SITEMAP: SitemapEntry[] = [
     href: '/land',
     label: 'The Land',
     topic: 'Land as ancestry — Mudigere and Ohara in dialogue',
-    summary: 'The estate and the sanctuary in dialogue — Mudigere in the Western Ghats and Ohara north of Kyoto — held as ancestry and stewardship across generations rather than acreage.',
+    summary: 'Two sanctuaries in dialogue — Aura Estate at Mudigere in the Western Ghats and Ohara north of Kyoto — held as ancestry and stewardship across generations rather than acreage.',
     related: ['/mudigere', '/ohara', '/ecology'],
   },
   {
@@ -226,7 +226,7 @@ export const SITEMAP: SitemapEntry[] = [
   {
     href: '/sanctuary',
     label: 'Sanctuary',
-    topic: 'The land in rhythm — estate and sanctuary as one ecosystem',
+    topic: 'The land in rhythm — two sanctuaries as one ecosystem',
     summary: 'Aura Sanctuary — the land in rhythm. A 1000-year regenerative ecosystem across Mudigere, Ohara, and coming valleys in Munduk and Punakha.',
     facts: [
       { label: 'Active', value: 'Mudigere (India) · Ohara (Japan)' },

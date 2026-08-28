@@ -118,9 +118,9 @@ export default function ResidencyPage() {
         caption="Sit close to someone who has been listening to one craft for thirty years."
       />
 
-      <TwoCol heading="Two places, one residency.">
+      <TwoCol heading="Two sanctuaries, one residency.">
         <p className="p1">
-          The residency runs across both places because the two hold different
+          The residency runs across both sanctuaries because the two hold different
           intelligences. Mudigere is Vedic — raw, monsoon, soil, a four-story
           canopy and fifty-two indigenous cattle, work that is loud, hot, and
           generous. Ohara is Zen — tea, washi, a seventy-year-old home and a
@@ -151,7 +151,7 @@ export default function ResidencyPage() {
           and by hand.
         </DataCard>
         <DataCard value="Creation">
-          A working estate and a sanctuary as the studio — forest, kiln, wet mill, garden —
+          Two sanctuaries as the studio — forest, kiln, wet mill, garden —
           where residents make with material grown, fermented, or fired on the
           ground they stand on.
         </DataCard>

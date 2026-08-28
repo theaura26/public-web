@@ -92,6 +92,20 @@ export const DISCIPLINES: Discipline[] = [
         after: { kind: 'plate', type: 'Process · barrels mid-stir, vortex and reverse', caption: 'Forty-five minutes a day, by hand' },
       },
       {
+        heading: 'BD 500 through 508.',
+        lines: [
+          'Eight preparations, each with its own job and its own cycle. They are made on the estate, from the estate, and applied on a calendar built for 150 acres.',
+        ],
+        tiles: [
+          { value: 'BD 500', note: 'Horn manure. Buried over winter, stirred and sprayed on the soil — the root-zone preparation.' },
+          { value: 'BD 501', note: 'Horn silica. Sprayed on the leaf at dawn; the light preparation, and the one in the signed example.' },
+          { value: 'BD 502–507', note: 'The compost set — yarrow, chamomile, nettle, oak bark, dandelion, valerian — each steering a different part of the pile.' },
+          { value: 'BD 508', note: 'Horsetail. Against fungal pressure, which on a four-storey canopy in a hundred inches of rain is the standing problem.' },
+          { value: 'Cow pat pit', note: 'Fourteen numbered pits, matured ninety days, turned by reading rather than by timer.' },
+          { value: 'The gate', note: 'Every batch tested before and after. A batch that fails is corrected or held, and the block waits.' },
+        ],
+      },
+      {
         heading: 'Nothing goes out untested.',
         lines: [
           'Every batch is tested before and after it is made: pH, electrical conductivity, colony counts, Trichoderma, Pseudomonas. A batch that fails is corrected or held back, and the block waits — which occasionally means a block waits.',
@@ -472,7 +486,7 @@ export const DISCIPLINES: Discipline[] = [
       {
         heading: 'Why this is possible now.',
         lines: [
-          'Three technologies converged: foundation models, robotics, and sensors cheap enough to leave outdoors through a monsoon. For the first time a landscape can be made machine-readable.',
+          'What changed is that a landscape can now be made machine-readable — foundation models to read it, robotics to work it, and sensors cheap enough to leave in a block through a monsoon. [Natural Intelligence](/reason/natural-intelligence) is the fuller argument for why that matters.',
           'Machine intelligence sits inside that rather than above it. There is a living layer, a human layer, and a physical layer of sensors and machines — natural intelligence is all of them read together.',
           'Three things make it hard here in particular: 150 acres of four-storey canopy is a difficult thing to capture at scale, the people who can read it are fewer every year, and nothing about listening is automatic.',
         ],

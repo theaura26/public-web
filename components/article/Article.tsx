@@ -758,7 +758,11 @@ export function OneCol({
               within section-w, producing a visible indent mismatch
               between consecutive sections on /rta and elsewhere. */}
           <div style={{ maxWidth: 760, margin: 0, textAlign: 'left' }}>
-            <h2 style={{ marginTop: 0, marginBottom: 'var(--space-4)' }}>{heading}</h2>
+            {/* space-6, not space-4. Sixteen pixels under a 44px heading
+                read as the heading being crushed onto its own paragraph;
+                the one-column block has no second column to give the
+                heading air, so it has to come from below it. */}
+            <h2 style={{ marginTop: 0, marginBottom: 'var(--space-6)' }}>{heading}</h2>
             <div className="article-body">{children}</div>
           </div>
         </Reveal>

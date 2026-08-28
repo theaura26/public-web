@@ -1459,6 +1459,32 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
   border: 0;
 }
 
+/* Footer privacy link.
+   Unscoped on purpose: it is a next/link, and a styled-jsx rule in
+   Footer.tsx would compile to .footer-privacy.jsx-hash against an
+   element that never gets the hash. It matched nothing and the link
+   rendered as a bare .label — no position, no measure, no hover. */
+.footer-privacy {
+  display: inline-block;
+  justify-self: start;
+  color: var(--text-body);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+.footer-privacy:hover { color: var(--text); }
+
+/* It is last in the DOM so that a single column stacks it below the
+   clocks, which is where it belongs when the footer is a list. On four
+   columns it is placed back into column one at the foot of the row —
+   the manifesto's left edge, level with the clocks. */
+@media (min-width: 768px) {
+  .footer-privacy {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+  }
+}
+
 /* Visually hidden, still read aloud.
    For a page whose title is set as artwork — an SVG wordmark, a letter
    row, a Figma-faithful board — the visual title is not a heading to a
@@ -1563,11 +1589,16 @@ section.one-col + section.one-col {
    p1 lead and the p2 body lines breathe. Without this, consecutive
    <p> blocks inside <TwoCol>/<OneCol> stack with zero space because
    `.p1` / `.p2` carry their type spec but no margin. */
+/* Paragraph rhythm inside a body block. It was clamp(12px, 1.4vh, 20px),
+   which is tighter than the leading it sits between — at 17px over 158%
+   a line is ~27px, so a 20px gap read as one dense slab rather than
+   separate paragraphs. Set above the line height so the break is
+   legible. */
 .article-body > p + p,
 .article-body > p + div,
 .article-body > div + p,
 .article-body p + p {
-  margin-top: clamp(12px, 1.4vh, 20px) !important;
+  margin-top: clamp(20px, 2.2vh, 30px) !important;
 }
 
 /* Mobile: trim the section rhythm by ~30% so the journals don't feel

@@ -28,10 +28,23 @@ gap is recorded in `open-questions.md`.
 The nine disciplines and the three pillars share `components/SubjectPage.tsx`.
 One movement, not a set of sections:
 
-**What we do** — the lede carried as the heading, the processes and
-practices under it, and the figures folded in at the end of the same body.
+The page is a sequence of **movements**. Each is a heading and two or
+three paragraphs, followed by its own visual. The figures fold into the
+second movement — far enough in that a reader has context for them, early
+enough that they are not an appendix.
+
+Two or three paragraphs is the ceiling, and it is the whole point. These
+pages were one block of up to ten, which reads as a wall however good the
+sentences are. `/shade` and `/mudigere` are the model: short prose,
+its own heading, a picture, more prose.
+
+The column alternates — two-column, then one — so consecutive blocks do
+not sit in the same shape. Visuals rotate through a banner, a plate and a
+portrait, and each carries a drafting brief until there is a photograph,
+so an unshot page reads as *image to come* rather than as a hole.
+
 The processes and practices of the business *are* what we do; they are not
-three separate headings.
+separate headings from it.
 
 Any qualification travels beside the figure it qualifies, never to a
 footnote. A figure carrying a qualification is a sentence and is allowed to

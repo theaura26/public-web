@@ -88,7 +88,7 @@ export const ACTIVE_JOURNALS: Journal[] = [
   {
     href: '/land',
     title: 'The Land',
-    description: 'Land carries ancestry, not just acreage. Mudigere and Ohara, in dialogue.',
+    description: 'Land carries ancestry as well as acreage. Mudigere and Ohara, in dialogue.',
     img: '/journals/land/aura-the-land.jpg',
   },
   {

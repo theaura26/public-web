@@ -219,7 +219,7 @@ export default function MobileReason() {
         <ScaleIn><img className="rm-symbol r-float" src={`${A}/aura-three.png`} alt="" aria-hidden loading="lazy" decoding="async" /></ScaleIn>
         <RT className="rm-hand">The Three Pillars</RT>
         {[
-          { video: '/aura-hospitality.mp4', poster: '/aura-hospitality.jpg', t: 'The Sanctuary', b: 'Where silence is not the absence of sound — it is the presence of everything you stopped noticing.' },
+          { video: '/aura-hospitality.mp4', poster: '/aura-hospitality.jpg', t: 'The Sanctuary', b: 'Where silence is the presence of everything you had stopped noticing.' },
           { video: '/aura-agroculture.mp4', poster: '/aura-agroculture.jpg', t: 'The Agroculture', b: '150 acres that get better every season, tended by people who think in decades not quarters.' },
           { video: '/aura-labs.mp4', poster: '/aura-labs.jpg', t: 'The Artistry', b: 'The connective tissue — studios, workshops, festivals. Where what the land grows becomes what the hands make.' },
         ].map((p, i) => (

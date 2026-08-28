@@ -1224,7 +1224,9 @@ export function Portrait({
   poster?: string
   alt?: string
   caption?: string
-  /** CSS aspect-ratio string matching the image so nothing is cropped. */
+  /** The picture's own aspect ratio, as a CSS string. The box is set to
+   *  it, so nothing is cropped and the space is reserved before the file
+   *  loads. Declare the real one. */
   ratio?: string
   align?: 'left' | 'center' | 'right'
 }) {
@@ -1239,10 +1241,15 @@ export function Portrait({
     io.observe(v)
     return () => io.disconnect()
   }, [video])
-  const justify = align === 'left' ? 'flex-start' : align === 'right' ? 'flex-end' : 'center'
   return (
     <section style={{ padding: 'var(--section-gap) 0' }}>
-      <div className="section-w" style={{ display: 'flex', justifyContent: justify }}>
+      {/* A block, not a flex row. The Reveal wrapper sits between this
+          and the figure, and as a flex item with no width of its own it
+          shrank to its content — the picture came out 365px wide inside a
+          1200px rail, varying with the length of its own caption. As a
+          plain block child, width:100% on the figure resolves against the
+          rail. `align` is moot while the figure fills it. */}
+      <div className="section-w">
         <Reveal>
           <figure className="portrait" style={{ ['--pt-ratio' as string]: ratio }}>
             <div className="portrait__media">
@@ -1255,11 +1262,29 @@ export function Portrait({
             </div>
             {caption && <figcaption className="label portrait__caption">{caption}</figcaption>}
             <style jsx>{`
+              /* Full rail. It used to be clamp(300px, 46vw, 560px), which
+                 put the picture at half the width of the text and the
+                 spec table beside it — it read as undersized rather than
+                 as a deliberate inset. */
               .portrait {
                 margin: 0;
-                width: clamp(300px, 46vw, 560px);
+                width: 100%;
                 max-width: 100%;
               }
+              /* The box holds the ratio of the picture that goes in it,
+                 which the caller declares. Getting that right is the
+                 whole job: matched, object-fit cover crops nothing and
+                 the space is reserved before the file loads. A fixed ratio applied
+                 to every image regardless of its shape is what made this
+                 letterbox a 16:9 plate into a 4:5 hole.
+
+                 Two things were tried and failed. A :has() rule scoping
+                 :global(img) to release the ratio once an image exists is
+                 dropped silently by styled-jsx and never reaches the
+                 stylesheet — backticks in this comment would break the
+                 template literal too, which is why there are none.
+                 Dropping the ratio entirely collapses the box to zero
+                 height until a lazy image loads. */
               .portrait__media {
                 position: relative;
                 width: 100%;

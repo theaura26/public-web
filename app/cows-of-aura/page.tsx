@@ -83,7 +83,7 @@ export default function CowsOfAuraPage() {
             Lactation status, lactation number, last calving date. The dairy side of the herd.
           </DataCard>
           <DataCard value="Breeding">
-            Dam and sire by Cow ID, so lineage is a link rather than a memory.
+            Dam and sire by Cow ID, so lineage is a link you can follow.
           </DataCard>
           <DataCard value="BD 500 / CPP">
             Dung destined for the biodynamic preparations — the horn manure and the cow pat pits.

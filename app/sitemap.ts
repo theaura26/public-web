@@ -14,6 +14,11 @@ const OFF_MENU = [
   '/contact',
   '/brand',
   '/idea',
+  '/regenerative-coffee',
+  '/regenerative-coffee/biodynamic',
+  '/regenerative-coffee/transparency',
+  '/regenerative-coffee/flavour',
+  '/regenerative-coffee/experience',
 ]
 
 /* The sitemap is derived, not maintained.

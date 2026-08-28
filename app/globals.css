@@ -1459,6 +1459,26 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
   border: 0;
 }
 
+/* Visually hidden, still read aloud.
+   For a page whose title is set as artwork — an SVG wordmark, a letter
+   row, a Figma-faithful board — the visual title is not a heading to a
+   screen reader or to a search engine, and the document outline starts
+   at h2 with no top level. This carries the real title in the markup
+   without touching the design. The 1px box plus `clip` is deliberate:
+   an off-screen `left: -9999px` version of this would widen
+   documentElement.scrollWidth and show up as horizontal overflow. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ── Atelier hero — editorial display title ─────────────────────────
    "ATELIER" stretches edge-to-edge across the section-w rail, in
    the same uppercase grotesque the journal heroes use. Letters are
@@ -1592,12 +1612,20 @@ section.one-col + section.one-col {
   border-radius: 2px;
   opacity: 0;
   transition: opacity var(--dur-fast) var(--ease);
+  /* Out of flow until it is wanted. An absolutely positioned box still
+     contributes to the document's scroll width at opacity 0, and a term
+     near the right edge was pushing the page 5-16px wide on every route
+     that uses <Term> — /land, /circular, /ecology, /biodynamic,
+     /mudigere, /ohara and /mudigere-estate. The fade is worth less than
+     a page that does not scroll sideways. */
+  display: none;
 }
 /* term tooltip — open on hover (pointer), on focus (keyboard), or
    when [data-open] is set by the JSX tap handler (touch). */
 .aura-term:hover .aura-term__tip,
 .aura-term:focus .aura-term__tip,
 .aura-term[data-open] .aura-term__tip {
+  display: block;
   opacity: 1;
 }
 .aura-term:focus { outline: none; }

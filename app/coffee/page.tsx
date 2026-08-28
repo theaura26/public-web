@@ -85,8 +85,8 @@ export default function CoffeePage() {
           <DataCard value="6.0–6.5">Soil pH, laterite.</DataCard>
           <DataCard value="Sln.9 + Sln.795">Arabica cultivars.</DataCard>
           <DataCard value="80+ SCA">Cupping target.</DataCard>
-          <DataCard value="3–5×">Carbon vs monoculture.</DataCard>
-          <DataCard value="UNESCO">Biodiversity zone.</DataCard>
+          <DataCard value="4–5×">Estimated carbon vs monoculture.</DataCard>
+          <DataCard value="Western Ghats">A UNESCO World Heritage region.</DataCard>
         </DataGrid>
       </TwoCol>
 
@@ -183,7 +183,7 @@ export default function CoffeePage() {
           lactic-acid bacteria colonise the sweet mucilage on the bean, secreting
           enzymes that dissolve it while the pH drops. The alcohols and acids they
           leave behind are the raw material of the esters a taster later calls
-          &ldquo;fruity.&rdquo; We have watched every step of it happen.
+          &ldquo;fruity.&rdquo; We track it hour by hour.
         </p>
         <p className="p1">
           It is also double-edged. The same microbes that build fruit build faults
@@ -225,7 +225,7 @@ export default function CoffeePage() {
         <p className="p1">
           The on-estate lab tests every lot. Brix per zone on harvest day,
           moisture tracking through drying, screen grading and defect analysis
-          per SCA protocol. Every lot is cupped — target 80+ specialty.
+          per SCA protocol. Every lot is cupped at the estate against a target of 80+ specialty. The scores are our own table; a third-party grading is not in yet, and until it is we publish ours as ours.
         </p>
         <p className="p1">
           The next build adds caffeine and polyphenol profiling, on-site <Term tip="SCA-certified coffee grader.">Q-grader</Term>{' '}

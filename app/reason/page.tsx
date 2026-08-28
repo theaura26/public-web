@@ -333,6 +333,9 @@ export default function TheReasonPage() {
 
   return (
     <div className="reason">
+      {/* The board sets its title in artwork, so the outline has no top
+          level of its own. This supplies one. */}
+      <h1 className="sr-only">The Reason</h1>
       <div className="reason-stage">
 
         {/* ── Flower stems grow up out of the dark block (rendered before it, so
@@ -455,7 +458,7 @@ export default function TheReasonPage() {
         <PhotoVideo x={19} y={16028} w={553} h={745} src="/aura-hospitality.mp4" poster="/aura-hospitality.jpg" alt="The Sanctuary" />
         <PhotoVideo x={582} y={16028} w={553} h={745} src="/aura-agroculture.mp4" poster="/aura-agroculture.jpg" alt="The Agroculture" delay={0.08} />
         <PhotoVideo x={1145} y={16028} w={553} h={745} src="/aura-labs.mp4" poster="/aura-labs.jpg" alt="The Artistry" delay={0.16} />
-        <Caption x={19} y={16820} w={400} title="The Sanctuary" body="Where silence is not the absence of sound — it is the presence of everything you stopped noticing." />
+        <Caption x={19} y={16820} w={400} title="The Sanctuary" body="Where silence is the presence of everything you had stopped noticing." />
         <Caption x={582} y={16820} w={420} title="The Agroculture" body="150 acres that get better every season, tended by people who think in decades not quarters." delay={0.06} />
         <Caption x={1145} y={16820} w={470} title="The Artistry" body="The connective tissue — studios, workshops, festivals. Where what the land grows becomes what the hands make." delay={0.12} />
 

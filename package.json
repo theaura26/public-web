@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "lint:editorial": "node scripts/editorial/lint.mjs",
     "ask-aura:crawl": "node scripts/ask-aura/crawl.mjs",
     "ask-aura:ingest": "node scripts/ask-aura/ingest.mjs",
     "ask-aura:build": "npm run ask-aura:crawl && npm run ask-aura:ingest",

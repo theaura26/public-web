@@ -75,13 +75,30 @@ export default function Footer() {
                 </div>
               ))}
             </div>
+            {/* Under the clocks, on the Locations column's own left edge.
+                A legal link rather than one of the three things this
+                footer is for, so it sits at label size and stays quiet. */}
+            <Link href="/privacy" className="label footer-privacy">Privacy Policy</Link>
           </div>
         </div>
+
         <style jsx>{`
           /* Manifesto reads as a quiet continuation of the body copy rather
              than a section title — same sans family as p1, lighter weight,
              same baseline color. The "label" sub below picks up the existing
              mono-uppercase treatment so they read as a paired signature. */
+          /* The one link in the footer set at label size. Muted until
+             hovered, like every other quiet link on the site. */
+          .footer-privacy {
+            /* inline-block so the hit area is the words: as a block it
+               stretched to the column and the hover fired across it. */
+            display: inline-block;
+            margin-top: var(--space-6);
+            color: var(--text-body);
+            text-decoration: none;
+            transition: color var(--dur-fast) var(--ease);
+          }
+          .footer-privacy:hover { color: var(--text); }
           .footer-manifesto-title {
             font-family: var(--font-sans);
             font-size: clamp(20px, 2.2vw, 28px);

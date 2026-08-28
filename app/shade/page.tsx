@@ -67,7 +67,7 @@ export default function ShadePage() {
 
       <TwoCol id="stories" heading="Four stories, one canopy.">
         <p className="p1">
-          The canopy is not a uniform blanket — it is a four-story architecture, and every tree in it has
+          The canopy is a four-story architecture, and every tree in it has
           been counted, tagged, and mapped. An emergent layer of silver oak, fig, and jackfruit regulates
           temperature and holds carbon. Beneath it, areca palm and native hardwoods carry the mid-level
           shade and trellis the pepper. The coffee — Arabica Sln.9 and 795 — sits in the understory,
@@ -126,9 +126,8 @@ export default function ShadePage() {
           To catch how much the canopy varies within a single acre, Aura built a five-cluster method. Each
           acre was divided into five clusters, and ten readings taken at random inside each — fifty
           observations an acre, resolved into five cluster averages. The readings map each block into
-          zones — dense shade, medium, open — so it reads not as one number but as a gradient. The cut
-          answers the zone, not the block: fine enough to find a shaded pocket a few trees wide and leave
-          the rest standing.
+          zones — dense shade, medium, open — so a block reads as a gradient. The cut answers the zone:
+          fine enough to find a shaded pocket a few trees wide and leave the rest standing.
         </p>
       </TwoCol>
 
@@ -178,7 +177,7 @@ export default function ShadePage() {
 
       <PullQuote>
         Cut too much and you flood the coffee with light. Cut too little and the cherry never ripens.
-        The right cut is in the reading, not the manual.
+        The reading tells you where the right cut is.
       </PullQuote>
 
       <ExpandingBanner
@@ -218,8 +217,8 @@ export default function ShadePage() {
         <p className="p1">
           The estate already knows the light is worth this much attention: blocks held at sixty-five to
           seventy-five per cent canopy cup measurably better, and canopy vitality is tracked by satellite
-          every quarter. Whiskering is where that knowledge meets the tree — the annual decision that sets
-          the light for the whole season beneath it.
+          every quarter. Whiskering is that knowledge carried up a ladder and applied to one tree — the annual
+          decision that sets the light for the whole season beneath it.
         </p>
         <p className="p1">
           What Aura added is the loop that makes it repeatable: baseline reading, block-wise prescription,

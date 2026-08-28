@@ -79,26 +79,27 @@ export default function FlavourPage() {
 
       {/* ── what specialty means here ───────────────────────────── */}
 
-      <Chapter>Then somebody else scores it.</Chapter>
+      <Chapter>Then it goes on the table.</Chapter>
 
-      <Scene title="August 2026, in front of a Q grader.">
-        Four of the Arabica lots went in front of an
-        independent Q grader under SCA protocol. They came back between
-        82.25 and 85.25. Every one scored a perfect ten on uniformity,
-        clean cup and sweetness. The grader’s note said the ceiling was
-        the roast, and the coffee underneath it had further to go.
+      <Scene title="August 2026, on the cupping table.">
+        Four of the Arabica lots were cupped to SCA protocol on the
+        estate’s own table. They came back between 82.25 and 85.25.
+        Every one scored a perfect ten on uniformity, clean cup and
+        sweetness. The note against them said the ceiling was the roast,
+        and the coffee underneath it had further to go.
       </Scene>
 
       <Scene>
         Then the Robusta went to the Coffee Board of India’s Flavour of
-        India Fine Cup Award, judged nationally against estates from five
-        other states. Volcanic Wash and Appassimento Maceration both won
-        their categories, and a second washed entry placed in the top four.
+        India Fine Cup Awards, judged nationally. At the 2026 awards Aura
+        Estate took first place in Robusta Experimental and second place
+        in Robusta Washed.
       </Scene>
 
       <Scene>
-        Two independent panels, one finding: the ground is doing the work,
-        and the ferment decides how much of it reaches the cup.
+        Our own table and a national one, pointing the same way: the ground
+        is doing the work, and the ferment decides how much of it reaches
+        the cup.
       </Scene>
 
       {/* ── Robusta — three lots, open ──────────────────────────── */}

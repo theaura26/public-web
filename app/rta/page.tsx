@@ -66,7 +66,7 @@ export default function RtaPage() {
           A spray logged at 06:12 carries more integrity than a weekly report
           written on Friday. The data does not say &ldquo;we sprayed this
           week.&rdquo; It says &ldquo;<Term tip="Horn silica. Ground quartz buried over summer, sprayed as fine mist for light metabolism.">BD 501</Term> was applied to Block 07 at 06:14 on
-          a waning moon, humidity 78%, by Raju, using dung batch G-03.&rdquo;
+          a waning moon, humidity 78%, by Rao, using dung batch G-03.&rdquo;
         </p>
         <DataGrid cols={3}>
           <DataCard value="Timestamp.">To the minute.</DataCard>
@@ -198,7 +198,7 @@ export default function RtaPage() {
 
       <OneCol id="closing" heading="The land decides when it is ready.">
         <p className="p1">
-          BD application at dusk. Fermentation closed by pH, not by hour. Cattle
+          BD application at dusk. Fermentation closed by pH. Cattle
           rotated by cherry stage. Each is the same observation in a different
           register: the work waits on the land, and the land is right more
           often than we are.

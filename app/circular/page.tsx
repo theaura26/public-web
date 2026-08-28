@@ -171,9 +171,9 @@ export default function CircularPage() {
         <p className="p1">
           Every pit carries a number, and every pit is worked by hand: the dung is mixed and stirred
           roughly forty-five minutes a day, breaking up the pulps so it matures evenly. Fourteen pits run
-          across the estate in overlapping cycles — around 2,420 kilograms of CPP a year — turned by
-          reading, not by timer. The team checks temperature, texture, smell, and colour and turns a pit
-          when the compost signals it is ready. After three months — ninety days — the raw mix has become something
+          across the estate in overlapping cycles — around 2,420 kilograms of CPP a year — and every turn
+          is a judgement. The team reads temperature, texture, smell and colour, and turns a pit when
+          the compost says it is ready. After three months — ninety days — the raw mix has become something
           new: dark, crumbly, earth-smelling.
         </p>
       </TwoCol>
@@ -183,8 +183,8 @@ export default function CircularPage() {
       <DataGrid cols={3} standalone>
         <DataCard value="Cow Dung">
           <em>The living culture.</em> Fresh dung from the estate&apos;s Malnad Gidda herd. The breed
-          matters — their gut microbiome is adapted to this altitude, these grasses, this soil, so the
-          microbial signature it carries is native to the ground it feeds.
+          matters, on a belief the estate has yet to test: that a gut adapted to this altitude and
+          these grasses carries biology suited to the ground the dung returns to.
         </DataCard>
         <DataCard value="Eggshell">
           <em>The calcium source.</em> Crushed eggshell — calcium carbonate, a slow-release calcium that
@@ -211,7 +211,7 @@ export default function CircularPage() {
 
       <TwoCol id="ball" heading="The ball, placed at the root.">
         <p className="p1">
-          Matured CPP does not just go out as a spray. Much of it is rolled by hand into balls of measured
+          Matured CPP leaves the pit two ways. Much of it is rolled by hand into balls of measured
           sizes, because the dose has to fit the plant. Each ball is dug in a little way from a
           coffee plant&apos;s roots and covered with mulch, so it holds its moisture and seeps its biology
           slowly down into the root zone — a slow compost feeding one plant at a time.
@@ -237,12 +237,12 @@ export default function CircularPage() {
           <Term tip="A living microbial culture from Vedic farming — fermented from cow dung, cow urine, jaggery, gram flour, and a handful of native soil, applied as a soil drench to inoculate the root zone with locally-adapted microbes.">Jeevamrit</Term>:
           dung and urine from the herd, jaggery to feed the microbes, gram flour for protein, and a
           handful of native soil to seed it with the estate&apos;s own organisms. The name carries its
-          purpose — <em>jeeva</em>, life; <em>amrit</em>, nectar. It feeds the soil, not the plant — a
+          purpose — <em>jeeva</em>, life; <em>amrit</em>, nectar. It feeds the soil and lets the soil feed the plant — a
           culture poured into the ground as a drench that floods the root zone with living microbes.
         </p>
         <p className="p1">
           It is the highest-volume preparation on the estate — around 154,000 litres a year — and its
-          daily stir is the rhythm of the estate itself, not a task on a schedule. Each barrel is
+          daily stir sets the rhythm of the estate. Each barrel is
           stirred about forty-five minutes a day, one direction then the other, building a vortex and
           breaking it so oxygen works deep into the liquid and the beneficial organisms outcompete the
           pathogens. How much to brew is planned backwards from the land: a{' '}

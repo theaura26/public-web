@@ -61,15 +61,15 @@ export default function IdeaPage() {
       <TwoCol id="rta" heading="Right time, right action.">
         <p className="p1">
           The oldest instrument on the estate is timing.{' '}
-          <Term tip="Right time, right action — the principle that an action is right when it sits in alignment with everything around it, not only with the clock."><Rta /></Term>{' '}
-          holds that an action is right when it aligns with everything around it, not only with the
-          clock. Move the herd at the right hour and the soil builds; move it at the wrong one and
+          <Term tip="Right time, right action — the principle that an action is right when it sits in alignment with everything around it: the soil, the weather, the moon, the plant."><Rta /></Term>{' '}
+          holds that an action is right when it aligns with everything around it. The soil, the weather,
+          the moon and the plant all have a say in the hour. Move the herd at the right one and the soil builds; move it at the wrong one and
           the same animals bare the ground.
         </p>
         <p className="p1">
           This is working knowledge, and the instruments now confirm it season after season. Aura
           keeps the ancestral sense of time and puts numbers to it — reading the soil, the canopy,
-          and the water, and acting when the land, not the calendar, says to.
+          and the water, and acting when the land says to.
         </p>
       </TwoCol>
 

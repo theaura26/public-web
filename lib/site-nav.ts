@@ -183,7 +183,6 @@ export const SECTIONS: NavSection[] = [
           { label: 'Bug Hotels', href: '/bug-hotels' },
         ],
       },
-      { label: 'Tech & Robotics', href: '/field-notes/tech-robotics' },
       { label: 'View all', href: '/field-notes' },
     ],
   },

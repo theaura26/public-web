@@ -150,7 +150,7 @@ export default function AgentReason() {
 
       <Chapter title="The Geography">
         <p><W>Mudigere, Western Ghats, India.</W></p>
-        <p>150 acres. 3,600 feet. UNESCO biodiversity zone. Coffee, tea, pepper, areca.</p>
+        <p>150 acres. 3,600 feet. Western Ghats, a UNESCO World Heritage region. Coffee, tea, pepper, areca.</p>
         <p><W>Ohara, Kyoto, Japan.</W></p>
         <p>Two properties. Japanese garden. Teahouse. Caf&eacute; on the river. Studios.</p>
         <p><W>Munduk, Bali. Punakha, Bhutan.</W></p>

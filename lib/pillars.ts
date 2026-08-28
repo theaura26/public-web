@@ -17,7 +17,6 @@ export type Pillar = {
   lede: string
   practice: string[]
   record?: { value: string; label: string; note?: string }[]
-  open: string[]
   related?: { label: string; href: string }[]
   /** Drafting brief for the banner, until there is a photograph. */
   hero?: { type: string; caption: string }
@@ -34,28 +33,32 @@ export const PILLARS: Pillar[] = [
     id: 'natural-intelligence',
     label: 'Natural Intelligence',
     slug: 'natural-intelligence',
-    lede: 'The land has been computing longer than any machine. Aura’s work is to read the output.',
+    lede: 'Read the land first, then build.',
+    hero: { type: 'Landscape · old growth above the planting', caption: 'The oldest working intelligence on the estate' },
+    plate: { type: 'Detail · a sensor and a leaf in one frame', caption: 'Machine, human, and the one that came first' },
     breaker: { caption: 'Three point eight billion years of field trials', alt: 'Old growth above the planting at Mudigere' },
-    hero: { type: 'Landscape · old growth above the planting', caption: 'The land has been computing longer than any machine' },
-    plate: { type: 'Detail · sensor and leaf in one frame', caption: 'Three intelligences: machine, human, and the oldest one' },
     quote: 'The land has been computing longer than any machine. We just stopped reading the output.',
     practice: [
-      'It is not a mystical claim. A forest that has held a slope for a thousand years has solved a problem, and the solution is legible if somebody bothers to measure it. Aura\u2019s position is that measuring is the respectful thing to do, not the reductive one.',
-      'There are three intelligences at Aura: machine, human, and the oldest one. Natural Intelligence is the third — the accumulated problem-solving of a system that has been running field trials for 3.8 billion years without a break.',
-      'It is practised in three places. Agroculture works it into 150 acres. Hospitality builds the rooms a person can meet it in. The Atelier is the taste layer — what is worth making at all, and what is good enough to leave here carrying the name.',
-      'Reading the output means measurement. A canopy is read in lux before it is cut. A preparation is plated before it is spread. A ferment is stopped by its pH and not by the clock.',
-      'The record is kept in plain formats and signed by the person who made it, so a reading can be checked by someone who was not there.',
-    ],
-    record: [
-      { value: 'Three', label: 'intelligences: machine, human, and the oldest' },
-      { value: '3.8bn', label: 'years of field trials, without a break' },
-      { value: 'Nine', label: 'disciplines it is practised as' },
-    ],
-    open: [
-      'Natural Intelligence is Aura’s own term. It is defined once, here, and then left alone — the estate would rather it stayed a working idea than became a slogan.',
+      'Natural Intelligence is Aura’s way of working. A forest that has held a slope for a thousand years has solved a problem; the work is to read that solution before proposing one of our own.',
+      'Nature is already wise. The gap is in our ability to observe what it does, remember it, learn from it, and act at the right time — and closing that gap is the whole of the term.',
+      'Three technologies converged to make that possible now: foundation models, robotics, and sensors cheap enough to leave outdoors through a monsoon. For the first time a landscape can be made machine-readable.',
+      'Machine intelligence sits inside this rather than above it. There is a living layer, a human layer, and a physical layer of sensors and machines; natural intelligence is all of them read together, which is a larger thing than any model sitting in the middle of it.',
+      'Three problems make it hard, and they are worth naming plainly. A landscape is difficult to capture at scale. Fewer people each year want to work in agriculture. And listening is a skill, so the open question is how a system learns to do it well.',
+      'The knowledge itself is old. Growing in balance was worked out thousands of years ago, in the same traditions this estate still farms by. What never happened was industrialising it.',
+      'Agriculture was made simple by hiding its complexity. Fifty years ago the farmer was handed a box and told not to ask questions, and it worked until the land began to pay for it. Regeneration brings the complexity back, and something has to be able to hold it.',
+      'In practice it means measuring first. A canopy is read in lux before anyone cuts it. A preparation is plated before it is spread. A ferment is stopped by its pH. The instinct comes second, and it is a better instinct for having numbers under it.',
+      'It runs through three studios and three places. Agroculture works it into 150 acres. Hospitality builds the rooms where a person can meet it. The Atelier is the taste layer — what is worth making at all, and what is good enough to leave here carrying the name.',
+      'And it sets the horizon. Every decision is weighed against the year 3026, which changes what counts as a good one: the machine that listens beats the machine that acts, and the slow answer usually wins.',
+      'One place proves a practice; two test it. Mudigere is the estate — 150 acres under crop — and Ohara is a sanctuary north of Kyoto with no farming on it at all. That difference is the point: a way of working that holds in both is worth more than one that holds in either.',
+      '[Aura Intelligence](/regenerative-life/aura-intelligence) is the machinery underneath all of this: what is captured, what is remembered, and where the record stops.',
+      'The term is Aura’s own. It is defined here and then left alone, because it is meant to stay a way of working.',
+      'Aura is not certified organic or biodynamic. It practises both and publishes the record instead, which is the harder standard and the one a reader can check.',
+      'The 32-acre tea block is in organic transition, targeting 2027.',
+      'The loop that is closed is the fertility loop. Fuel, tools, packaging and labour come from outside, and the estate is described as closed on fertility rather than closed outright.',
     ],
     related: [
       { label: 'Why Aura?', href: '/reason' },
+      { label: 'The Atelier', href: '/atelier' },
       { label: 'The Moral Spine', href: '/wisdom' },
     ],
   },
@@ -63,28 +66,21 @@ export const PILLARS: Pillar[] = [
     id: 'agroculture',
     label: 'Agroculture',
     slug: 'agroculture',
-    lede: 'One hundred and fifty acres that are meant to be worth more in a hundred years than they are now.',
-    breaker: { caption: 'A hundred and fifty acres, tended in decades', alt: 'The herd going out at first light' },
-    hero: { type: 'Aerial · 150 acres at sunrise', caption: 'Sampigekhan Estate, Mudigere, at 3,600 ft in the Western Ghats' },
-    plate: { type: 'Portrait · animal · the herd going out', caption: 'Fifty-two Malnad Gidda on the ground the coffee grows in' },
-    quote: 'Aura is not certified organic or biodynamic. It practises both, and publishes the record instead.',
+    lede: 'Farming as though the land has to be worth more in a century.',
+    hero: { type: 'Aerial · 150 acres at first light', caption: 'Sampigekhan Estate, Mudigere, at 3,600 ft in the Western Ghats' },
+    plate: { type: 'Portrait · animal · the herd going out at dawn', caption: 'Fifty-two Malnad Gidda on the ground the coffee grows in' },
+    breaker: { caption: 'A hundred and fifty acres, tended in decades', alt: 'The estate at Mudigere seen from the ridge' },
+    quote: 'We do not buy fertility. We keep the animals that make it.',
     practice: [
-      'Sampigekhan Estate sits at 3,600 ft at Mudigere, in Chikmagalur district, Karnataka — 100 acres under shade-grown coffee, 32 under tea, on red laterite held between pH 6.0 and 6.5.',
-      'A four-storey canopy — emergent, canopy, understorey, ground — is maintained across it, and read in lux before any of it is cut.',
-      'Fifty-two Malnad Gidda cattle, an indigenous breed of these hills, graze the same ground the coffee grows in. Every animal carries a passport: health, milk and urine daily, dung logged per herd each morning.',
-      'Fertility is made here. BD 500 through 508 and the Vedic set — Jeevamrit, Panchgavya, Beejamrit, cow pat pit, Kunapjal — are brewed from the herd and tested before and after.',
-      'A batch that fails a test is corrected or held. No untested material touches the soil.',
-    ],
-    record: [
-      { value: '150', label: 'acres at Mudigere' },
-      { value: '100 / 32', label: 'acres of coffee / tea' },
-      { value: '52', label: 'Malnad Gidda cattle' },
-      { value: '3,600 ft', label: 'altitude, Western Ghats' },
-    ],
-    open: [
-      'Aura is not certified organic or biodynamic. It practises both and publishes the record instead — which is the harder of the two things to do.',
-      'The 32-acre tea block is in organic transition, targeting 2027. That is an ambition with a date on it, and is stated as one.',
-      'Fertility is not bought in. The estate as a whole is not closed: fuel, tools, packaging and labour all come from outside, and the closed loop claim is made about fertility only.',
+      'Aura grows coffee, tea, pepper, areca and what the season gives, on 150 acres at 3,600 ft in the Western Ghats. Four hours up from Bengaluru the canopy closes over the road and the temperature drops six degrees; that is where the farm starts.',
+      'The work is a forest that produces crops. Four storeys of canopy — emergent, canopy, understorey, ground — are maintained rather than cleared, and the coffee grows in the shade of them. Nothing is planted in rows in an open field.',
+      'Aura makes its own fertility. Fifty-two Malnad Gidda graze the ground the coffee grows in, and their dung becomes the biodynamic preparations and the Vedic brews — BD 500 through 508, Jeevamrit, Panchgavya, Beejamrit, cow pat pit, Kunapjal. All of it is brewed here, from here.',
+      'Everything is measured before it is acted on and after it is done. A canopy is read in lux before a branch is cut. A batch is plated before it is spread and the block is retested ninety days later against the batch number. A batch that fails is corrected or held, and the block waits.',
+      'And everything is written down. Every event is signed by the person who did it, so a claim about a cup can be walked back to the block, the batch, and the morning it went on.',
+      'None of those is unusual alone. Doing all of them on the same ground, for decades, and publishing what happened is the part that is hard to copy.',
+      'Aura is not certified organic or biodynamic. It practises both and publishes the record instead, which is the harder standard and the one a reader can check.',
+      'The 32-acre tea block is in organic transition, targeting 2027.',
+      'The loop that is closed is the fertility loop. Fuel, tools, packaging and labour come from outside, and the estate is described as closed on fertility rather than closed outright.',
     ],
     related: [
       { label: 'Ecosystem Engineers', href: '/herd' },
@@ -96,24 +92,19 @@ export const PILLARS: Pillar[] = [
     id: 'hospitality',
     label: 'Hospitality',
     slug: 'hospitality',
-    lede: 'A working farm you can sleep on, where the coffee grew within sight of the bed.',
-    breaker: { caption: 'A working day, not a staged one', alt: 'A room open to the mist at Mudigere' },
+    lede: 'Places that hold the right kind of attention.',
     hero: { type: 'Architecture · a room open to the mist', caption: 'Morning at Mudigere, with nothing on the calendar' },
-    plate: { type: 'Landscape · Asa. Niwa. at Ohara', caption: 'The second sanctuary, in Kyoto' },
+    plate: { type: 'Landscape · Asa. Niwa. at Ohara', caption: 'The second sanctuary, an hour north of Kyoto' },
+    breaker: { caption: 'Nobody owns a mountain. You arrive as its guest', alt: 'Mist over the ridge at Mudigere' },
+    quote: 'Morning mist. Nothing on the calendar. A cup of coffee that grew within sight of where you slept.',
     practice: [
-      'Mudigere is a working coffee estate in the Western Ghats. Asa. Niwa. at Ohara sits north of Kyoto. They are different countries and different buildings, and what they hold in common is that neither was built to be looked at.',
-      'Hospitality at Aura is a sanctuary rather than a hotel: Mudigere in the Western Ghats, and Asa. Niwa. at Ohara in Kyoto.',
-      'The offer is a rhythm rather than an itinerary — morning mist, nothing on the calendar, and a cup of coffee that grew within sight of where you slept.',
-      'The estate is not staged for visitors. What a guest sees is the working day: the preparations being stirred, the herd going out, the lamp lit at the Gau Angan before anyone starts.',
-      'Two more sanctuaries are named and not yet open — Munduk in Bali and Punakha in Bhutan.',
-    ],
-    record: [
-      { value: 'Two', label: 'sanctuaries open: Mudigere and Ohara' },
-      { value: 'Two', label: 'announced and not yet open: Munduk, Punakha' },
-    ],
-    open: [
-      'Munduk and Punakha are announced, not bookable. No dates, rooms or rates are published for either, because none are settled.',
-      'Aura publishes no occupancy, rates or guest numbers. When the sanctuaries open properly, those belong here.',
+      'Aura builds and runs sanctuaries. Two are open: Mudigere, a working coffee estate in the Western Ghats, and Asa. Niwa. at Ohara, an hour north of Kyoto. Munduk in Bali and Punakha in Bhutan are named and not yet built.',
+      'The work is the room and everything under it — architecture, kitchen, the residency programme, and the operations that keep all three running for decades. The soil under the building is part of the brief.',
+      'What a guest gets is the working day rather than a version staged for them. The barrels being stirred at dawn, the herd going out, the lamp lit at the Gau Angan before anyone starts. The room sits in the middle of a farm that would be doing this anyway.',
+      'Three times a year the estate opens properly, for the festival: three days, twenty places, and a guest leaves having set the protocol for a lot of coffee that is then built and shipped under their own name.',
+      'And the residency runs alongside it — invited, embedded, for people making work that needs a place like this to be made in.',
+      'Munduk and Punakha are announced and not open. Dates, rooms and rates arrive when they are settled.',
+      'No occupancy, rates or guest numbers are published. When the sanctuaries open properly, those belong here.',
     ],
     related: [
       { label: 'Mudigere', href: '/mudigere' },
@@ -122,7 +113,6 @@ export const PILLARS: Pillar[] = [
     ],
   },
 ]
-
 
 export function pillarBySlug(slug: string): Pillar | undefined {
   return PILLARS.find((p) => p.slug === slug)

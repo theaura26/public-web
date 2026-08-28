@@ -28,7 +28,7 @@ export type Lot = {
 export const ARABICA_LOTS: Lot[] = [
   {
     id: 'DO01',
-    eyebrow: 'SCA 85.25 · Excellent grade',
+    eyebrow: 'Our table: 85.25 · excellent range',
     name: 'Liquid Gold',
     method: 'Dry Osmosis',
     headline: ['Brix 19.55% · zero quakers', 'Agtron 63.2 · 48 hr anaerobic'],
@@ -49,7 +49,7 @@ export const ARABICA_LOTS: Lot[] = [
   },
   {
     id: 'AM01-A',
-    eyebrow: 'SCA 84.25 · Specialty grade',
+    eyebrow: 'Our table: 84.25 · specialty range',
     name: 'Silver Lining',
     method: 'Appassimento Maceration',
     headline: ['48 hr cold soak below 10 °C', '8-day anaerobic · Agtron 67.5'],
@@ -70,7 +70,7 @@ export const ARABICA_LOTS: Lot[] = [
   },
   {
     id: 'BW01',
-    eyebrow: 'SCA 83.00 · Specialty grade',
+    eyebrow: 'Our table: 83.00 · specialty range',
     name: 'Coal Black',
     method: 'Banana Wash',
     headline: ['24 hr anaerobic + 48 hr banana leaf', 'Brix 19.25% · Agtron 53.1'],
@@ -91,7 +91,7 @@ export const ARABICA_LOTS: Lot[] = [
   },
   {
     id: 'RH01',
-    eyebrow: 'SCA 82.25 · Specialty grade',
+    eyebrow: 'Our table: 82.25 · specialty range',
     name: 'Red Affair',
     method: 'Red Honey Anaerobic',
     headline: ['Mucilage on · anaerobic', 'Zero quakers · Agtron 64.5'],

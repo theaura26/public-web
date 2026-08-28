@@ -19,7 +19,6 @@ export type CategoryId =
   | 'land-ecology'
   | 'art-culture'
   | 'coffee-fermentation'
-  | 'tech-robotics'
 
 export type Category = {
   id: CategoryId
@@ -32,7 +31,7 @@ export const CATEGORIES: Category[] = [
   {
     id: 'activities',
     label: 'Activities',
-    lede: 'Three ways to be here rather than read about it — an invited residency, the studios, and the days the estate opens to people who are not us.',
+    lede: 'Three ways to be here — an invited residency, the studios, and the days the estate opens to people from outside it.',
   },
   {
     id: 'biodynamic',
@@ -72,11 +71,6 @@ export const CATEGORIES: Category[] = [
     id: 'coffee-fermentation',
     label: 'Coffee & Fermentation',
     lede: 'One harvest split into many lots, and the hours of controlled decay — stopped at pH 4.2 — that decide what reaches the cup.',
-  },
-  {
-    id: 'tech-robotics',
-    label: 'Tech & Robotics',
-    lede: 'Sensors, models and the machines that will do the counting. Nothing written here yet.',
   },
 ]
 
@@ -152,8 +146,14 @@ const PENDING_NOTES: PendingNote[] = [
   {
     href: '/provenance',
     title: 'Provenance',
-    description: 'Where a thing came from, proved rather than asserted.',
+    description: 'Where a thing came from, with the record to prove it.',
     categories: ['labs'],
+  },
+  {
+    href: '/idea',
+    title: 'The 1000 Year Idea',
+    description: 'The standard every decision at Aura is measured against, and the seven filters it runs through.',
+    categories: ['art-culture'],
   },
 ]
 

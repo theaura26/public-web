@@ -130,20 +130,19 @@ function LaneStyles() {
           position: relative;
           width: 100vw;
           margin-left: calc(50% - 50vw);
-          /* Clips the fade's overhang below. */
-          overflow: hidden;
         }
         /* The row dissolves off the right rather than hard-cropping —
            the same gesture as the homepage slider and the menu's
            bottom vignette. */
+        /* Flush to the edge, and no clipping ancestor. An overflow:hidden
+           parent gives backdrop-filter nothing to sample — the element
+           renders as a blank plate instead of a blur — so the overhang
+           that clip was there to hide had to go with it. The mask alone
+           carries the fade. */
         .sw .lane-fade {
           position: absolute;
-          top: 0; bottom: 0;
-          /* Runs past the right edge so the blur has backdrop to sample
-             all the way to 1280 and its clamped boundary falls outside
-             the clip. Flush at right: 0 it left a hard vertical seam. */
-          right: -32px;
-          width: calc(clamp(64px, 12vw, 200px) + 32px);
+          top: 0; bottom: 0; right: 0;
+          width: clamp(64px, 12vw, 200px);
           pointer-events: none;
           z-index: 2;
           -webkit-mask-image: linear-gradient(to right, transparent, #000 55%);
@@ -228,6 +227,10 @@ function LaneStyles() {
         @media (max-width: 768px) {
           .sw { gap: clamp(44px, 6vh, 64px); }
           .sw .lane-card { width: min(78vw, 320px); }
+          /* The overhang has to come along. Overriding the width alone
+             left the fade positioned 32px off-screen at right:-32px with
+             only 8px of itself visible — a hard sliver of blur instead of
+             a gradient. */
           .sw .lane-fade { width: clamp(40px, 10vw, 72px); }
           .sw .lane { gap: var(--space-3); }
           /* Only the lane lede fills — it is body prose. The centred

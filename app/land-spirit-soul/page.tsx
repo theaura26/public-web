@@ -21,7 +21,7 @@ export default function LandSpiritSoulPage() {
         alt="The morning lamp at the Gau Angan, Sampigekhan Estate"
       />
 
-      <TwoCol id="premise" heading="The day starts with a lamp, not a task list.">
+      <TwoCol id="premise" heading="The day starts with a lamp.">
         <p className="p1">
           Before anyone walks a block, before the barrels are stirred or the herd goes out, a
           lamp is lit at the Gau Angan and a prayer is said to the cows.
@@ -83,7 +83,7 @@ export default function LandSpiritSoulPage() {
         {`The diya brings light.\n   The prayer brings intention.\n   The cow gives nourishment.\n   The Gaushala is the care owed back.`}
       </ScrollHighlight>
 
-      <TwoCol id="all-life" heading="Not only about the cows.">
+      <TwoCol id="all-life" heading="Addressed to the whole system.">
         <p className="p1">
           The prayer at the Gaushala is addressed to the whole system. A plantation works because
           an enormous number of organisms are working: cattle, insects, birds, microorganisms,
@@ -98,12 +98,12 @@ export default function LandSpiritSoulPage() {
 
       <TwoCol id="daily" heading="The significance is in the repetition.">
         <p className="p1">
-          The significance is in the repetition rather than the ceremony. Performed every
+          The significance is in the repetition. Performed every
           morning, it makes a small pause before work that returns everyone to one idea: we are
           part of nature, not separate from it.
         </p>
         <p className="p2">
-          Held daily, that idea becomes a working habit rather than a sentiment — compassion,
+          Held daily, that idea becomes a working habit — compassion,
           responsibility and gratitude, carried out of the Gaushala and into the blocks.
         </p>
         <p className="p2">

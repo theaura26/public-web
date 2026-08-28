@@ -63,8 +63,7 @@ export default function BugHotelsPage() {
 
       <TwoCol id="instrument" heading="A shelter that is also an instrument.">
         <p className="p1">
-          The value of a Bug Hotel is not the count of insects inside it. It is that the count
-          can be taken at all. Most of the invertebrate life on a plantation is impossible to
+          The value of a Bug Hotel is that the count can be taken at all. Most of the invertebrate life on a plantation is impossible to
           survey without enormous effort; a fixed structure in a known place makes a small part
           of it legible.
         </p>
@@ -118,9 +117,9 @@ export default function BugHotelsPage() {
         {`Make room for the small lives\n   that keep the large system alive.`}
       </ScrollHighlight>
 
-      <TwoCol id="layers" heading="Not a programme on its own.">
+      <TwoCol id="layers" heading="One layer among several.">
         <p className="p1">
-          The hotels are not a programme on their own. They sit alongside the Forest Islands,
+          The hotels sit alongside the Forest Islands,
           the native vegetation being encouraged back into the understorey, the deadwood that
           now stays in the block it came from, and the leaf litter that is no longer tidied.
         </p>
@@ -131,8 +130,7 @@ export default function BugHotelsPage() {
           predators that keep pests in proportion, decomposers that keep the ground fed.
         </p>
         <p className="p2">
-          The aim is not complicated. Make room for the small lives that keep the large system
-          running.
+          The aim is simple: make room for the small lives that keep the large system running.
         </p>
       </TwoCol>
 

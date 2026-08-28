@@ -199,7 +199,7 @@ export const SITEMAP: SitemapEntry[] = [
     href: '/land',
     label: 'The Land',
     topic: 'Land as ancestry — Mudigere and Ohara in dialogue',
-    summary: 'The two estates in dialogue — Mudigere in the Western Ghats and Ohara north of Kyoto — held as ancestry and stewardship across generations rather than acreage.',
+    summary: 'The estate and the sanctuary in dialogue — Mudigere in the Western Ghats and Ohara north of Kyoto — held as ancestry and stewardship across generations rather than acreage.',
     related: ['/mudigere', '/ohara', '/ecology'],
   },
   {
@@ -226,7 +226,7 @@ export const SITEMAP: SitemapEntry[] = [
   {
     href: '/sanctuary',
     label: 'Sanctuary',
-    topic: 'The land in rhythm — the estates as one ecosystem',
+    topic: 'The land in rhythm — estate and sanctuary as one ecosystem',
     summary: 'Aura Sanctuary — the land in rhythm. A 1000-year regenerative ecosystem across Mudigere, Ohara, and coming valleys in Munduk and Punakha.',
     facts: [
       { label: 'Active', value: 'Mudigere (India) · Ohara (Japan)' },
@@ -237,10 +237,10 @@ export const SITEMAP: SitemapEntry[] = [
   {
     href: '/provenance',
     label: 'Provenance',
-    topic: 'Cherry to cup, on chain — verified origin without legacy certification',
-    summary: 'Aura replaces legacy certification with live, sensor-fed, blockchain-verified provenance from the Mudigere estate — cherry to cup, on chain.',
+    topic: 'Cherry to cup, written down — a signed record in place of legacy certification',
+    summary: 'Aura replaces legacy certification with a live, sensor-fed, signed record. Blockchain-verified provenance from the Mudigere estate — cherry to cup, on chain.',
     facts: [
-      { label: 'Method', value: 'Live sensor data, blockchain-verified' },
+      { label: 'Method', value: 'Live sensor data, signed at source, kept in plain formats' },
       { label: 'Replaces', value: 'Legacy third-party certification' },
     ],
     related: ['/coffee', '/mudigere', '/ecology'],

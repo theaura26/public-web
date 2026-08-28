@@ -138,8 +138,8 @@ export default function FermentationPage() {
           value="Sealed. Logged."
         >
           Experimental anaerobic coffee tanks. pH every fifteen minutes,
-          temperature three times daily, Brix start to end. Every lot is a
-          tracked individual, not an average.
+          temperature three times daily, Brix start to end. Every lot is tracked
+          as an individual and carries its own record.
         </DataCard>
         <DataCard
           img="/journals/fermentation/aura-water-pepper.jpg"

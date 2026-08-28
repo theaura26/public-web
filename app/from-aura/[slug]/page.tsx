@@ -70,6 +70,10 @@ export async function generateMetadata(
   return {
     title: p ? `${p.title} — ${SECTION}` : SECTION,
     description: p?.description ?? `${p?.title ?? SECTION} — not released yet.`,
+    /* Each product is its own page. Without this every one of them
+       inherits the root canonical and declares itself a duplicate of the
+       homepage — twenty-four pages pointing at `/`. */
+    alternates: { canonical: `${PREFIX}/${slug}` },
     robots: { index: false, follow: true },
   }
 }

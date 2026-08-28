@@ -25,6 +25,7 @@ export async function generateMetadata(
   return {
     title: label ? `${label} — ${SECTION}` : SECTION,
     description: `${label ?? SECTION} — not yet written.`,
+    alternates: { canonical: `${PREFIX}/${slug}` },
     robots: { index: false, follow: true },
   }
 }

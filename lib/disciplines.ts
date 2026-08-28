@@ -42,7 +42,7 @@ export type Discipline = {
   movements?: {
     heading: string
     lines: string[]
-    after?: { kind: 'banner' | 'plate' | 'portrait'; type: string; caption: string; alt?: string }
+    after?: { kind: 'banner' | 'plate' | 'portrait'; type: string; caption: string; alt?: string; ratio?: string }
   }[]
   /** Figures worth pulling out. `note` qualifies where the record does. */
   record?: { value: string; label: string; note?: string }[]

@@ -75,24 +75,14 @@ export default function Footer() {
                 </div>
               ))}
             </div>
+            {/* Under the clocks, on the Locations column's own left edge.
+                A legal link rather than one of the three things this
+                footer is for, so it sits at label size and stays quiet. */}
+            <Link href="/privacy" className="label footer-privacy">Privacy Policy</Link>
           </div>
         </div>
 
-        {/* Parked bottom right, under the four columns and above the
-            wordmark band — that band is pointer-events:none and cropped
-            below the fold, so nothing clickable can live inside it. Its
-            own row rather than a fifth column: a legal link is not one of
-            the three things this footer is for. */}
-        <div className="footer-legal">
-          <Link href="/privacy" className="label footer-privacy">Privacy</Link>
-        </div>
-
         <style jsx>{`
-          .footer-legal {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: var(--space-7);
-          }
           /* Manifesto reads as a quiet continuation of the body copy rather
              than a section title — same sans family as p1, lighter weight,
              same baseline color. The "label" sub below picks up the existing
@@ -100,9 +90,10 @@ export default function Footer() {
           /* The one link in the footer set at label size. Muted until
              hovered, like every other quiet link on the site. */
           .footer-privacy {
-            /* inline-block so the hit area is the word: as a block it
-               stretched to its container and the hover fired across it. */
+            /* inline-block so the hit area is the words: as a block it
+               stretched to the column and the hover fired across it. */
             display: inline-block;
+            margin-top: var(--space-6);
             color: var(--text-body);
             text-decoration: none;
             transition: color var(--dur-fast) var(--ease);

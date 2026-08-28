@@ -46,7 +46,7 @@ import {
 export type Movement = {
   heading: string
   lines: string[]
-  after?: { kind: 'banner' | 'plate' | 'portrait'; type: string; caption: string; alt?: string }
+  after?: { kind: 'banner' | 'plate' | 'portrait'; type: string; caption: string; alt?: string; ratio?: string }
 }
 
 export type Subject = {
@@ -166,6 +166,9 @@ export default function SubjectPage({
         <Portrait
           key={key}
           src="/aura-placeholder.svg"
+          /* The ratio the shot is to be delivered at. The box is set to
+             it, so a matched picture is never cropped. */
+          ratio={after.ratio ?? '4 / 5'}
           alt={after.alt ?? after.caption}
           caption={after.caption}
         />

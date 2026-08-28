@@ -455,60 +455,125 @@ export const DISCIPLINES: Discipline[] = [
     quote: 'A ledger cannot forget, and it cannot flatter.',
     movements: [
       {
-        heading: 'Observe, remember, learn, act.',
+        heading: 'Ambient intelligence for a living system.',
         lines: [
-          'Four moves, in that order: observe what is happening, remember what was done, learn from what followed, act at the right time. Everything below is machinery for those four.',
+          'What is being built is an operating system for a living ecosystem: a layer that sits across soil, canopy, weather, herd and people, and holds the whole of it at once.',
+          'The direction the estate is walking is towards regeneration that can be proved at scale. Regenerative and organic are the starting point; the harder claim is abundance that somebody outside the farm can check.',
         ],
-        after: { kind: 'banner', type: 'Wide · the estate from above, blocks and paths', caption: 'Four moves, and everything else is machinery for them' },
+        after: { kind: 'banner', type: 'Wide · the estate as one system, from above', caption: 'Soil, canopy, weather, herd and people, held at once', ratio: '16 / 9' },
       },
       {
-        heading: 'Capture where the work already happens.',
+        heading: 'A closed loop: observe, remember, learn, act.',
         lines: [
-          'Field teams log through WhatsApp workflows — field work, fertiliser work, cow work, estate walks — in formatted text, photographs and voice, so the record gets built without asking anybody to work differently.',
-          'Base data is the other half: every tree, plant and animal labelled and identified, with an ID, a photograph and a zone on the estate map. A reading is worth very little until it is attached to the thing it was taken from.',
+          'Four moves, in that order, running continuously on a biodiversity plantation. Observe what is happening. Remember what was done. Learn from what followed. Act at the right time.',
+          'Everything below is machinery for those four, and the loop matters more than any single reading inside it.',
+        ],
+      },
+      {
+        heading: 'Why this is possible now.',
+        lines: [
+          'Three technologies converged: foundation models, robotics, and sensors cheap enough to leave outdoors through a monsoon. For the first time a landscape can be made machine-readable.',
+          'Machine intelligence sits inside that rather than above it. There is a living layer, a human layer, and a physical layer of sensors and machines — natural intelligence is all of them read together.',
+          'Three things make it hard here in particular: 150 acres of four-storey canopy is a difficult thing to capture at scale, the people who can read it are fewer every year, and nothing about listening is automatic.',
+        ],
+        after: { kind: 'plate', type: 'Detail · a leaf sensor in place', caption: 'Cheap enough to leave outdoors through a monsoon', ratio: '16 / 9' },
+      },
+      {
+        heading: 'The knowledge is six thousand years old.',
+        lines: [
+          'Growing in balance was worked out a very long time ago, in the same traditions this estate still farms by. What never happened was industrialising it.',
+          'So this is less an invention than a recovery: remembering what was known, and putting it back to work with instruments behind it.',
+        ],
+      },
+      {
+        heading: 'Agriculture was made simple by hiding its complexity.',
+        lines: [
+          'Fifty years ago the farmer was handed a box and told not to ask questions. It worked, until the land began to pay for it.',
+          'Regeneration hands the complexity back. Something has to be able to hold it, and that is the whole of the problem this discipline exists to solve.',
+        ],
+        after: { kind: 'portrait', type: 'Detail · the box, and what it hid', caption: 'It worked until the land began to pay for it', ratio: '4 / 5' },
+      },
+      {
+        heading: 'From an old estate to a regenerative one.',
+        lines: [
+          'The shift happens in three stages, and the estate is somewhere inside them rather than at the end.',
+        ],
+        tiles: [
+          { value: 'Observe', note: 'The land is read continuously — today by people in the field, and by a weather station and lab; drones and a wider sensor network are the design rather than the present.' },
+          { value: 'Plan', note: 'Every reading meets a knowledge base built for regeneration, so a number arrives with what is known about numbers like it.' },
+          { value: 'Continuous ops', note: 'A digital twin runs the estate day after day, season after season. A limited pilot is in build.' },
+        ],
+      },
+      {
+        heading: 'Listen. Decide. Regenerate.',
+        lines: [
+          'Listening turns scattered signals into a living picture of a place, and turns what one person knows into something the estate keeps. The knowledge held by somebody who has read this valley for thirty years leaves when they do, and writing it down is the part of this work with a clock on it.',
+          'Deciding turns that picture into an interpretation — what is happening, what may be causing it, what remains uncertain — with the evidence and the reasoning visible behind it.',
+          'Regenerating turns a decision into coordinated action, and then measures what the action did. Listen, decide, regenerate, measure, prove, learn, listen again.',
+        ],
+      },
+      {
+        heading: 'How the land is read.',
+        lines: [
+          'Capture happens where the work already happens. Field teams log through WhatsApp workflows — field work, fertiliser work, cow work, estate walks — as formatted text, photographs and voice, so the record gets built without asking anybody to work differently.',
+          'A weather station at 3,600 ft and the estate lab are the other two live sources. Drones, a plant-sensor network and satellite are in the design and not yet running, and this page will say so until they are.',
+        ],
+        after: { kind: 'banner', type: 'Detail · a field log entered on a phone, mid-block', caption: 'Formatted text, photographs and voice — without changing how anybody works', ratio: '16 / 9' },
+      },
+      {
+        heading: 'Every tree. Every cow. Every season.',
+        lines: [
+          'Base data is the ground of it: every tree, plant and animal labelled and identified, with an ID, a photograph and a zone on the estate map. A reading is worth very little until it is attached to the thing it was taken from.',
+          'The estate is described across seven domains — crop, weather, fauna, flora, soil, the fungal network, and the geological foundation under all of it.',
+        ],
+        reveal: 'Every tree. Every leaf.\nEvery cow. Every bee.\nEvery rainfall. Every compost batch.\nEvery intervention. Every mistake.\nEvery season.',
+      },
+      {
+        heading: 'The farm brain.',
+        lines: [
           'Two logs run daily. An observation log holds everything seen or measured; an intervention log holds every action taken. Planning reads from both, which is what keeps a plan answerable to the ground.',
+          'Above them sits memory: base data, observations, interventions and outside knowledge in one governed system, sliced so a question about husbandry meets what the estate already knows about husbandry. That layer is in build now.',
+          'Nine streams feed it, each sampling at its own interval, because soil moves in seasons and a ferment moves in minutes. Every human event is signed by the person who did it: BD 501, Block 07, 06:14, waning moon, humidity 78%, by Rao, dung batch G-03.',
         ],
-        after: { kind: 'plate', type: 'Detail · a field log entered on a phone, mid-block', caption: 'Formatted text, photographs and voice, without changing how anybody works' },
+        after: { kind: 'plate', type: 'Detail · the estate database, queried', caption: 'A block, a batch, a lot and a date, all addressable', ratio: '16 / 9' },
       },
       {
-        heading: 'Nine streams, seven domains.',
+        heading: 'Building the world model.',
         lines: [
-          'Nine streams run continuously: soil, canopy, weather, herd, preparation, ferment, harvest, lab, and the human record that ties them together. Each samples at its own interval, because soil moves in seasons and a ferment moves in minutes.',
-          'The estate is described across seven domains — crop, weather, fauna, flora, soil, the fungal network and the geological foundation under all of it. Every human event is entered in the field and signed by the person who did it: BD 501, Block 07, 06:14, waning moon, humidity 78%, by Rao, dung batch G-03.',
-        ],
-        after: { kind: 'portrait', type: 'Detail · a reading entered and signed in the field', caption: 'BD 501, Block 07, 06:14, waning moon, humidity 78%, by Rao' },
-      },
-      {
-        heading: 'The part that leaves when people do.',
-        lines: [
-          'The hardest thing to capture is the part that lives in people. Somebody who has read this valley for thirty years knows things no sensor reports, and that knowledge leaves when they do. Getting it written down, attached to a block and a season, is the part of this work with a clock on it.',
-        ],
-      },
-      {
-        heading: 'Joining what was captured.',
-        lines: [
-          'A stream is only worth keeping if it can be joined to another. Nine separate logs are nine separate logs; the value is being able to ask what went on this block, and what the cup did four months later, and get one answer.',
-          'A block, a batch, a lot and a date are all addressable, so that is a query rather than an afternoon in the filing cabinet. Above the logs sits a memory layer, in build now: base data, observations, interventions and outside knowledge in one governed system, sliced so a question about husbandry meets what the estate already knows about husbandry.',
-        ],
-        after: { kind: 'banner', type: 'Detail · the estate database, queried', caption: 'A block, a batch, a lot and a date, all addressable' },
-      },
-      {
-        heading: 'Learning from the gap.',
-        lines: [
-          'That memory is what a digital twin runs on. A limited pilot is being built, and the questions it exists to answer are ordinary ones — what is here and where, what is happening today, what happened last time conditions looked like this, and what is likely next.',
+          'The chain is curated estate data, then field context, then a model conditioned on both, then a prediction, then a recommended intervention, then validation against what actually happened.',
           'Every outcome is checked against what was predicted, and the gap between them is what trains the model. Better memory, better predictions, better decisions, season after season.',
         ],
-        after: { kind: 'plate', type: 'Detail · a predicted outcome beside the measured one', caption: 'The difference between them is what trains the model' },
-        reveal: 'The loop is the thing being built.\nNot any single reading inside it.',
       },
       {
-        heading: 'Who decides.',
+        heading: 'What a twin is for.',
         lines: [
-          'What the design puts in front of a land manager is an interpretation: what is happening, what may be causing it, and what remains uncertain, with the evidence and the reasoning visible behind it.',
-          'The person stays responsible. Consequential decisions are approved by a human, and any move towards machines acting on their own is bounded by conditions written down in advance — a commitment rather than a limitation of the technology.',
-          'The chain worth keeping runs observation, recommendation, approval, action, measured outcome. Holding all five together is what would let somebody audit a claim instead of being asked to trust it, and everything exports in open formats so the record outlives the software. Writing milestones to a public chain is an intention and is not built.',
+          'The questions it exists to answer are ordinary ones: what is here and where, and what condition is it in. What is happening today and what needs attention. What has happened before under conditions like these. What is likely next, and what would happen if something changed.',
+          'A limited pilot is being built. Predictions are validated against sensor readings, field observations and intervention outcomes, and fed back into the estate model.',
         ],
-        after: { kind: 'portrait', type: 'Detail · a recommendation, with its evidence beside it', caption: 'A person approves the consequential ones' },
+        after: { kind: 'portrait', type: 'Detail · a predicted outcome beside the measured one', caption: 'The difference between them is what trains the model', ratio: '4 / 5' },
+      },
+      {
+        heading: 'The next right step, in the hands of the person on the ground.',
+        lines: [
+          'The point of all of it is one instruction to one person in one block, at the moment it is useful, with the reason attached.',
+          'The person stays responsible. Consequential decisions are approved by a human, and any move towards machines acting on their own is bounded by conditions written down in advance — a commitment rather than a limitation of the technology.',
+          'The same data makes the estate a living laboratory: experiments that only this record makes possible, run on ground that is being farmed anyway.',
+        ],
+      },
+      {
+        heading: 'Animal, preparation, soil, cherry, cup.',
+        lines: [
+          'The chain worth keeping runs from the animal through the preparation, into the soil, into the cherry, into the cup — and alongside it, observation, recommendation, approval, action, measured outcome. Holding all of it together is what would let somebody audit a claim instead of being asked to trust it.',
+          'Everything exports in open formats, because software gets replaced and a hundred-year claim needs a record that outlives the company keeping it. Writing milestones to a public chain is an intention and is not built.',
+        ],
+      },
+      {
+        heading: 'One estate, then a network.',
+        lines: [
+          'Mudigere is the first, and one place is a sample of one. Ohara — the second sanctuary, north of Kyoto — tests whether a way of working that held in the Western Ghats holds in a valley with a different climate, a different soil and no crop on it.',
+          'What passes between them is the point. A reading confirmed in two valleys is worth more than one confirmed in one, and the same record is what makes robotics, universities, hospitality and agriculture able to build on it. [Natural Intelligence](/reason/natural-intelligence) is the fuller argument; [Provenance](/provenance) is how a single event becomes a record.',
+        ],
+        after: { kind: 'banner', type: 'Wide · two valleys, one practice', caption: 'Mudigere in the Western Ghats, Ohara north of Kyoto', ratio: '16 / 9' },
       },
     ],
     record: [

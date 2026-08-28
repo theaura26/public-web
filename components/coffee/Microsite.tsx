@@ -463,21 +463,23 @@ export function Panel({
         .is-c .p-in { text-align: center; }
 
 
-        /* Interior panels sit a clear step below the page opener —
-           the hero is the only thing at display scale. */
+        /* Both headings wear their element's role from globals — h1 for
+           the opener, h2 for an interior panel — and set only what is
+           local to a dark ground: the colour and the measure.
+
+           :not(.is-hero) is doing real work. A class beats an element
+           selector, so an unscoped font-weight of 400 on .p-h sat on top
+           of the h1 rule and the opener rendered at book weight and two
+           thirds of display size — while the comment above it claimed it
+           inherited. Scope anything that is only true of the interior
+           heading, or it silently overrides the opener too. */
         .p-h {
-          font-family: var(--font-grotesque), sans-serif;
-          font-weight: 400;
-          font-size: clamp(28px, 3.6vw, 54px);
-          line-height: 1.08; letter-spacing: -0.035em;
           color: #fff; margin: 0; max-width: 22ch;
         }
-        /* The page opener wears the site's uppercase H1 display role —
-           inherited from globals; only the ground colour is local. */
-        /* Now it really does inherit: the size, weight, case, leading
-           and tracking were restated here, so the rule went on drawing
-           the old display spec after globals had moved. Only the ground
-           colour and the measure are local. */
+        .p-h:not(.is-hero) {
+          line-height: 1.08;
+          max-width: 22ch;
+        }
         .p-h.is-hero {
           color: #fff; max-width: 16ch;
           text-wrap: balance;

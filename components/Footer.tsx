@@ -44,9 +44,18 @@ export default function Footer() {
           on mobile (first stacked row). Then Contact, Follow Us, Locations. */}
       <div style={{ padding: 'var(--space-8) var(--gutter) var(--space-9)', position: 'relative', zIndex: 2 }}>
         <div className="grid grid-cols-1 md:grid-cols-4" style={{ gap: 'clamp(24px, 3vw, 48px)', rowGap: 'var(--space-7)' }}>
+          {/* The legal link lives in the manifesto column so it shares
+              that column's left edge on desktop, and `margin-top: auto`
+              drops it to the foot of the row — level with the bottom of
+              the Locations clocks, since grid columns stretch to the
+              tallest. On one column it has nowhere to drop to, so it is
+              lifted to the top right instead, on the manifesto's line. */}
           <div className="footer-manifesto-col">
-            <h2 className="footer-manifesto-title">A 1,000 Year Idea</h2>
-            <p className="label" style={{ marginTop: 'var(--space-3)' }}>Think in generations</p>
+            <div className="footer-manifesto-head">
+              <h2 className="footer-manifesto-title">A 1,000 Year Idea</h2>
+              <p className="label" style={{ marginTop: 'var(--space-3)' }}>Think in generations</p>
+            </div>
+            <Link href="/privacy" className="label footer-privacy">Privacy Policy</Link>
           </div>
           <div>
             <p className="label" style={{ marginBottom: 'var(--space-3)' }}>Contact</p>
@@ -75,10 +84,6 @@ export default function Footer() {
                 </div>
               ))}
             </div>
-            {/* Under the clocks, on the Locations column's own left edge.
-                A legal link rather than one of the three things this
-                footer is for, so it sits at label size and stays quiet. */}
-            <Link href="/privacy" className="label footer-privacy">Privacy Policy</Link>
           </div>
         </div>
 
@@ -89,16 +94,25 @@ export default function Footer() {
              mono-uppercase treatment so they read as a paired signature. */
           /* The one link in the footer set at label size. Muted until
              hovered, like every other quiet link on the site. */
-          .footer-privacy {
-            /* inline-block so the hit area is the words: as a block it
-               stretched to the column and the hover fired across it. */
-            display: inline-block;
-            margin-top: var(--space-6);
-            color: var(--text-body);
-            text-decoration: none;
-            transition: color var(--dur-fast) var(--ease);
+          /* space-between rather than margin-top:auto on the link.
+             auto resolves against free space, and this column is
+             usually the tallest one in the row — so there was no free
+             space and the used value came out 0. space-between bottoms
+             the link out whenever another column (the clocks, once they
+             wrap) makes the row taller, and changes nothing when they
+             are level. */
+          .footer-manifesto-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
           }
-          .footer-privacy:hover { color: var(--text); }
+          .footer-manifesto-head { display: block; }
+          /* .footer-privacy is NOT here. It sits on a next/link, and a
+             styled-jsx rule targeting one compiles to .class.jsx-hash
+             against an element that never receives the hash — so it
+             matches nothing and fails silently. Every declaration for it
+             lives in globals.css. See DESIGN-SYSTEM.md section 13. */
           .footer-manifesto-title {
             font-family: var(--font-sans);
             font-size: clamp(20px, 2.2vw, 28px);

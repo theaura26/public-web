@@ -14,8 +14,8 @@ intention to achievement while it waits.
 
 Aman's call, 2026-08-28: these stay as they are for now and are worked in
 the next edition. Every claim below is already worded conservatively on
-the page — described as estate practice, or carried in a *what we can't
-prove yet* block — so nothing here is overclaiming while it waits. What is
+the page — described as estate practice, or qualified in the sentence that
+carries the claim — so nothing here is overclaiming while it waits. What is
 missing is the artefact that would let the page say more.
 
 ### 1.1 The lab record for preparations
@@ -114,15 +114,21 @@ photograph. None of these pages invent an image or borrow one.
 | Which coordinate set is correct? | The set matching the map embed, 13.1686 °N / 75.4340 °E. The second set, ~23 km away, is removed site-wide. |
 | Is the estate inside a UNESCO World Heritage site? | No. The Western Ghats site is a serial property of 39 components. The site says *region* throughout and never claims inscription. |
 | Is Aura certified organic or biodynamic? | No, and the site says so plainly on `/regenerative-coffee/transparency` and `/reason/agroculture`. |
+| Are the Robusta Block 3 figures real? | **No — speculative, and staying off the site.** They come from a digital-twin design mock in `AURA-NaturalIntelligence.pdf`, and a neighbouring mock in the same deck is stamped "DEMO TRACEABILITY DATA". Confirmed by Aman, 2026-08-28. Recorded in the ledger as do-not-publish so a future pass does not mistake them for an estate record. |
 | Is the forest-island specification 5 × 1 × 60 cm or 4 × 1 m × 80–120 cm? | The latter. The estate write-up supersedes the older figure in the claims document. |
 
 ---
 
 ## How to use this file
 
-When a page cannot say something, the gap goes here and a short version of
-it goes into the page's own *what we can't prove yet* block. A reader who
-can see where the record stops has a reason to trust the part that does not.
+When a page cannot say something, the gap goes here, and the qualification
+travels in the sentence that makes the claim or beside the figure in the
+spec table. A reader who can see where the record stops has a reason to
+trust the part that does not.
+
+The *what we can't prove yet* block that used to sit at the foot of every
+subject page was removed on 2026-08-28: a third of it was project status,
+which belongs in this file rather than on the site.
 
 When a gap closes, move the row to §4 with what closed it, and update
 `claims-ledger.md` in the same commit.

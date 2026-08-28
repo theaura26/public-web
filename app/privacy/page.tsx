@@ -58,9 +58,9 @@ export default function PrivacyPage() {
           { label: 'Clicks', value: 'Interactions across the site, captured automatically' },
           { label: 'Session replay', value: 'A recording of your visit, with every form field masked' },
           { label: 'Errors', value: 'What the site throws, so it can be fixed' },
-          { label: 'A profile', value: 'Held in a cookie and in local storage, linking your visits together' },
+          { label: 'A profile', value: 'Held in your browser\u2019s local storage, linking your visits together' },
         ]}
-        note="The profile is the row worth pausing on: it means return visits are recognised as the same visitor. Clearing your browser's cookies and site data for this domain ends that, and a browser set to block third-party storage will limit it further."
+        note="The profile is the row worth pausing on: it means return visits are recognised as the same visitor. This site sets no cookies at all — the profile lives in local storage, and clearing site data for this domain ends it."
       />
 
       <TwoCol id="ask" heading="Ask Aura.">
@@ -130,10 +130,11 @@ export default function PrivacyPage() {
           not a period Aura chose. A period will be set and stated here.
         </p>
         <p className="p1">
-          <strong>Consent for non-essential cookies.</strong> This site sets an analytics cookie
-          and records sessions without asking first. Where you are reading from may require it to
-          ask. That is being resolved, and until it is, the paragraph above tells you how to opt
-          out by hand.
+          <strong>Consent for what is stored on your device.</strong> This site sets no cookies.
+          It does keep an analytics profile in your browser&rsquo;s local storage and it records
+          sessions, and it does both without asking first. The rules where you are reading from
+          treat local storage the same way they treat a cookie, so removing the cookie did not
+          settle this. Clearing site data for this domain ends it in the meantime.
         </p>
       </OneCol>
 

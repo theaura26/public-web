@@ -46,7 +46,15 @@ if (
     ui_host: HOST,                              // so toolbar/links resolve
     capture_pageview: false,                    // App Router: captured manually below
     autocapture: true,                          // every click/input site-wide
-    persistence: 'localStorage+cookie',         // fullest: stable cross-session identity
+    /* localStorage only — no cookie is written. Worth being precise
+       about what that does and does not buy: the visitor is still
+       recognised across sessions, because localStorage persists exactly
+       like the cookie did. Under UK/EU rules storage on a reader's
+       device is treated the same whichever bucket it lives in, so this
+       removes cookies without removing the consent question. Dropping
+       that too means persistence: 'memory' and person_profiles: 'never',
+       which costs returning-visitor analytics entirely. */
+    persistence: 'localStorage',
     person_profiles: 'always',                  // profile every visitor
     capture_exceptions: true,                   // error tracking: unhandled exceptions
     session_recording: { maskAllInputs: true }, // replay with all form values masked

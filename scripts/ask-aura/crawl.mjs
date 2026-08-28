@@ -58,10 +58,15 @@ async function discover() {
   const seen = new Set()
   for (const loc of locs) {
     try {
+      /* The sitemap always states the canonical production URL, whichever
+         host served it — that is what a sitemap is for. So take the path
+         and hang it on the origin actually being crawled, rather than
+         discarding everything as foreign. Without this, --origin could
+         only ever be theaura.life and there was no way to build the
+         corpus from staging or from a local build. */
       const u = new URL(loc)
-      if (u.origin !== ORIGIN) continue
       if (!allowed(u.pathname)) continue
-      seen.add(u.origin + u.pathname.replace(/\/$/, '') || '/')
+      seen.add(ORIGIN + (u.pathname.replace(/\/$/, '') || ''))
     } catch { /* skip malformed */ }
   }
   return [...seen].sort()

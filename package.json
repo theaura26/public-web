@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "lint:editorial": "node scripts/editorial/lint.mjs",
+    "figma:spec": "node scripts/editorial/figma-spec.mjs",
     "ask-aura:crawl": "node scripts/ask-aura/crawl.mjs",
     "ask-aura:ingest": "node scripts/ask-aura/ingest.mjs",
     "ask-aura:build": "npm run ask-aura:crawl && npm run ask-aura:ingest",

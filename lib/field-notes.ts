@@ -149,6 +149,12 @@ const PENDING_NOTES: PendingNote[] = [
     description: 'Where a thing came from, with the record to prove it.',
     categories: ['labs'],
   },
+  {
+    href: '/idea',
+    title: 'The 1000 Year Idea',
+    description: 'The standard every decision at Aura is measured against, and the seven filters it runs through.',
+    categories: ['art-culture'],
+  },
 ]
 
 /**

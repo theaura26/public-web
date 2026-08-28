@@ -122,6 +122,35 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${bricolage.variable} ${instrumentSerif.variable} ${dmMono.variable} ${pixelifySans.variable} ${mynerve.variable}`}>
+      <head>
+        {/* Two lines, before first paint, and both are about the page
+            being readable rather than pretty.
+
+            `js` gates the reveal-on-scroll styling. .reveal starts at
+            opacity 0, so without this every page is blank until React
+            hydrates — and permanently blank if scripts fail or are
+            blocked. Gated, a no-JS reader gets the whole page
+            immediately, unanimated.
+
+            The timer covers the other failure: scripts load but
+            hydration never finishes, so nothing is ever revealed. It
+            fires only if, after two and a half seconds, not one reveal
+            has been shown — which on a working page is impossible,
+            since anything in view is shown within about thirty
+            milliseconds of mount. So a healthy page keeps its
+            scroll animation untouched, and a broken one shows its
+            content unanimated rather than staying blank. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.documentElement.classList.add('js');" +
+              "setTimeout(function(){" +
+              "var all=document.querySelectorAll('.reveal');if(!all.length)return;" +
+              "if(document.querySelector('.reveal.visible'))return;" +
+              "for(var i=0;i<all.length;i++)all[i].classList.add('visible')},2500)",
+          }}
+        />
+      </head>
       <body>
         <script
           type="application/ld+json"

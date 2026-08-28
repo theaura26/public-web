@@ -1152,14 +1152,18 @@ body::-webkit-scrollbar { width: 0; }
    states (pointer on anchors/buttons) handle everything now. */
 
 
-/* ═══ Reveal-on-scroll ═══ */
-.reveal {
+/* ═══ Reveal-on-scroll ═══
+   Gated on .js, which an inline script in <head> sets before first
+   paint. Ungated, opacity:0 hides every page until React hydrates, and
+   hides it forever if scripts are blocked or hydration throws — the
+   content is in the HTML, so that failure is entirely self-inflicted. */
+.js .reveal {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
 }
 
-.reveal.visible {
+.js .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -1863,7 +1867,7 @@ section.one-col + section.one-col {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .reveal { opacity: 1; transform: none; }
+  .js .reveal { opacity: 1; transform: none; }
   .hero-anim { opacity: 1 !important; transform: none !important; }
 }
 

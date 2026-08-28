@@ -1466,25 +1466,22 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
    rendered as a bare .label — no position, no measure, no hover. */
 .footer-privacy {
   display: inline-block;
-  align-self: flex-start;
-  margin-top: var(--space-7);
+  justify-self: start;
   color: var(--text-body);
   text-decoration: none;
   transition: color var(--dur-fast) var(--ease);
 }
 .footer-privacy:hover { color: var(--text); }
 
-/* One column: nothing below to drop to, so it sits top right on the
-   manifesto's own line instead. */
-@media (max-width: 767px) {
+/* It is last in the DOM so that a single column stacks it below the
+   clocks, which is where it belongs when the footer is a list. On four
+   columns it is placed back into column one at the foot of the row —
+   the manifesto's left edge, level with the clocks. */
+@media (min-width: 768px) {
   .footer-privacy {
-    /* One column: it would sit under the manifesto and above Contact,
-       which is worse than either edge. Lifted onto the manifesto's own
-       line instead, against the right gutter. */
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-top: 0;
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
   }
 }
 

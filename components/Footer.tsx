@@ -44,24 +44,15 @@ export default function Footer() {
           on mobile (first stacked row). Then Contact, Follow Us, Locations. */}
       <div style={{ padding: 'var(--space-8) var(--gutter) var(--space-9)', position: 'relative', zIndex: 2 }}>
         <div className="grid grid-cols-1 md:grid-cols-4" style={{ gap: 'clamp(24px, 3vw, 48px)', rowGap: 'var(--space-7)' }}>
-          {/* The legal link lives in the manifesto column so it shares
-              that column's left edge on desktop, and `margin-top: auto`
-              drops it to the foot of the row — level with the bottom of
-              the Locations clocks, since grid columns stretch to the
-              tallest. On one column it has nowhere to drop to, so it is
-              lifted to the top right instead, on the manifesto's line. */}
-          <div className="footer-manifesto-col">
-            <div>
-              <h2 className="footer-manifesto-title">A 1,000 Year Idea</h2>
-              <p className="label" style={{ marginTop: 'var(--space-3)' }}>Think in generations</p>
-            </div>
-            <Link href="/privacy" className="label footer-privacy">Privacy Policy</Link>
+          <div className="footer-manifesto-col footer-col-1">
+            <h2 className="footer-manifesto-title">A 1,000 Year Idea</h2>
+            <p className="label" style={{ marginTop: 'var(--space-3)' }}>Think in generations</p>
           </div>
-          <div>
+          <div className="footer-col-2">
             <p className="label" style={{ marginBottom: 'var(--space-3)' }}>Contact</p>
             <a href="mailto:hello@theaura.life" className="p1">hello@theaura.life</a>
           </div>
-          <div>
+          <div className="footer-col-3">
             <p className="label" style={{ marginBottom: 'var(--space-3)' }}>Follow us</p>
             <a href="https://www.instagram.com/theaura.life/" target="_blank" rel="noopener noreferrer" className="p1" style={{ display: 'block' }}>Instagram</a>
             {/* Not a social account, but this is where a reader who wants
@@ -69,7 +60,7 @@ export default function Footer() {
                 looking. Internal, so it uses next/link and opens in place. */}
             <Link href="/brand" className="p1" style={{ display: 'block', marginTop: 'var(--space-2)' }}>Our Brand</Link>
           </div>
-          <div>
+          <div className="footer-col-4">
             <p className="label" style={{ marginBottom: 'var(--space-4)' }}>Locations</p>
             <div className="flex flex-wrap gap-6">
               {[
@@ -85,9 +76,27 @@ export default function Footer() {
               ))}
             </div>
           </div>
+          {/* Last in the DOM so a single column stacks it below the
+              clocks, which is where it belongs when the footer is a
+              list. On four columns it is placed back into column one and
+              aligned to the foot of the row, level with the clocks and
+              on the manifesto's left edge. */}
+          <Link href="/privacy" className="label footer-privacy">Privacy Policy</Link>
         </div>
 
         <style jsx>{`
+          /* The four columns are placed explicitly. The privacy link is
+             last in the DOM and is placed back into column one, and an
+             explicitly-placed item reserves its cell before auto
+             placement runs — so without this the Locations column got
+             pushed into a second row and the whole footer grew a row it
+             did not need. Placing all five removes the interaction. */
+          @media (min-width: 768px) {
+            .footer-col-1 { grid-column: 1; grid-row: 1; }
+            .footer-col-2 { grid-column: 2; grid-row: 1; }
+            .footer-col-3 { grid-column: 3; grid-row: 1; }
+            .footer-col-4 { grid-column: 4; grid-row: 1; }
+          }
           /* Manifesto reads as a quiet continuation of the body copy rather
              than a section title — same sans family as p1, lighter weight,
              same baseline color. The "label" sub below picks up the existing
@@ -110,14 +119,7 @@ export default function Footer() {
              holds the title block at the top and drops the legal link to
              the foot — level with the clocks, on the manifesto's own
              left edge. */
-          .footer-manifesto-col {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            /* The positioning context for the one-column rule, which
-               lifts the link onto the manifesto's own line. */
-            position: relative;
-          }
+
           .footer-manifesto-title {
             font-family: var(--font-sans);
             font-size: clamp(20px, 2.2vw, 28px);

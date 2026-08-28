@@ -22,7 +22,14 @@ const RULES = [
   {
     id: 'negation',
     why: 'Say what a thing is. The "X, not Y" construction is banned outright.',
-    re: /\b(?:is|are|was|were|it['’]s)\s+not\s+(?:a|an|the)\b[^.]{0,60}\.\s*(?:It|They|That)\s+(?:is|are)\b/gi,
+    /* Two shapes of the same move. Either it runs across a full stop —
+       "It is not a complaint. It is the logic." — or it pivots on a dash,
+       comma or semicolon inside one sentence: "is not folklore — it is a
+       dressing", "is not nine logs; it is being able to ask". The article
+       is optional; requiring a/an/the let the second shape through for a
+       whole pass, and omitting the semicolon let one more through after
+       that. */
+    re: /\b(?:is|are|was|were|it['’]s)\s+not\s+(?:a|an|the\s+)?\w[^.—,;]{0,60}(?:\.\s*(?:It|They|That)|\s*[—,;]\s*(?:it|they|that))\s+(?:is|are)\b/gi,
   },
   {
     id: 'negation-comma',
@@ -47,6 +54,18 @@ const RULES = [
     re: /className="label[^"]*"\s*>\s*\{?[^<]{0,40}\}?\s*<\/p>\s*\n\s*<h1/g },
 ]
 
+/* Quoted words. The rules police Aura's own prose, and a quotation is
+   somebody else's. Only the founder's signature line is here, which is an
+   aphorism he wrote and the site prints under his name in four places —
+   the desktop board, the mobile board, the agent view and the homepage.
+   Rewriting it would be putting words in his mouth.
+
+   Add to this only for words a named person actually said. A sentence
+   Aura wrote about itself does not become a quotation by being italic. */
+const QUOTED = [
+  'Aura is not built, it is grown.',
+]
+
 /* Prose only: strip styles, comments, class names and attribute values so
    a CSS token or an alt token cannot trip a rule.
 
@@ -65,6 +84,7 @@ function prose(src) {
     .replace(/\/\/[^\n]*/g, blank)
     .replace(/className="[^"]*"/g, blank)
     .replace(/\b(?:src|href|alt|poster|id|ratio|type|glyph|slug|currentHref|tip|label|caption|value|title|description)="[^"]*"/g, blank)
+    .replace(new RegExp(QUOTED.map((q) => q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g'), blank)
 }
 
 function walk(dir, out = []) {

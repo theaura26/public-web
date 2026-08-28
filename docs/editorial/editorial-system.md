@@ -14,7 +14,7 @@ not been written yet.
 | **Brand proposition** | Why Aura exists | Concise claims carried by concrete practice | 700–1,200 |
 | **Practice / pillar** | What Aura does in a domain | What the work is, what it produces, who does it | 700–1,400 |
 | **Place** | Give a place its own character | Scene-led, particular, long-form | 700–1,400 |
-| **Regenerative Life explainer** | The highest evidence standard on the site | What it is → what is done → what is measured → what we can't prove yet | 1,000–1,800 |
+| **Regenerative Life explainer** | The highest evidence standard on the site | One movement: what we do — the processes and practices, with the figures folded in | 1,000–1,800 |
 | **Field Note** | Authored and specific | Varies: field report, register, ritual, species account | 450–1,600 |
 | **Product** | Answer a buyer's practical questions | Parent lists its seasons; leaf states its record | 250–700 |
 | **Index** | Orient and route onward | Lanes and filters. Never repeats child copy | as short as works |
@@ -23,25 +23,44 @@ not been written yet.
 Word counts are a diagnostic. A page short of evidence stays short, and the
 gap is recorded in `open-questions.md`.
 
-## The four-part subject page
+## The subject page: what we do
 
-The nine disciplines and the three pillars share `components/SubjectPage.tsx`:
+The nine disciplines and the three pillars share `components/SubjectPage.tsx`.
+One movement, not a set of sections:
 
-1. **What it is** — the lede, carried as the first heading.
-2. **What is done** — practice, with records behind it.
-3. **What is measured** — a spec list. Any qualification travels beside the
-   figure rather than being left to a footnote.
-4. **What we can't prove yet** — where the record stops.
+**What we do** — the lede carried as the heading, the processes and
+practices under it, and the figures folded in at the end of the same body.
+The processes and practices of the business *are* what we do; they are not
+three separate headings.
 
-The fourth is load-bearing. A farm that publishes the edge of its own
-evidence is telling you the rest of the numbers are real, and that is the
-only reason to believe the first three parts. It renders **only when there
-is a genuine gap** — a page with nothing outstanding does not manufacture a
-caveat to fill a heading.
+Any qualification travels beside the figure it qualifies, never to a
+footnote. A figure carrying a qualification is a sentence and is allowed to
+wrap; a bare figure stays on one line.
 
 Three layout arrangements rotate across the set, keyed on a subject's
 position, so twelve pages do not read as one form filled in twelve times.
-What moves is where the picture, the quote and the figures fall.
+What moves is where the picture and the quote fall.
+
+### The block that was removed
+
+There used to be a fourth part headed *what we can't prove yet*. It was
+doing three jobs and only one of them belonged on a public page:
+
+- a **genuine qualification** — now carried in the sentence that makes the
+  claim, or beside the figure in the spec table;
+- a **link to a fuller account** — now inline in the body, where a reader
+  meets it while the argument is live;
+- **project status** — "whether it is running is being verified",
+  "coverage is being confirmed" — which is a register entry, not copy. It
+  gave a reader "we have not finished checking our own homework" at the
+  foot of every page.
+
+Publishing the edge of the evidence still matters, and it is stronger in
+the sentence carrying the claim than in a block at the bottom under a
+heading that reads as an apology. The gaps live in `open-questions.md`.
+
+Most of what sat in those blocks turned out to be the work itself,
+described defensively. Folding it back in thickened four pages.
 
 ## Evidence rules
 
@@ -141,7 +160,10 @@ of the ring, starting from the one just read.
    it could, it is not finished.
 5. Run `npm run lint:editorial` for prohibited constructions. It is clean
    as of this pass, so any finding is something you introduced. `--strict`
-   exits non-zero and is safe to put in CI.
+   exits non-zero and is safe to put in CI. The negation rule catches both
+   shapes — across a full stop, and turning on a dash or comma inside one
+   sentence. Quoted speech is exempt via `QUOTED`; add to it only for words
+   a named person actually said.
 6. View it at 375, 768 and 1280 against a **production build**. The dev
    server has served stale CSS during this project, and an audit against it
    reports sizes the site does not ship.

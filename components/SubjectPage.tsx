@@ -19,17 +19,24 @@ import {
  * from a note about Bug Hotels to the Biodiversity discipline stays in
  * one publication. Nothing here draws its own furniture.
  *
- * Four parts, always the same four, always in this order:
+ * One movement, not four sections:
  *
- *   what it is        the lede, carried as the first heading
- *   what is done      practice — facts, with records behind them
- *   what is measured  the figures, each carrying its own qualification
- *   what we have not proved   where the record runs out
+ *   what we do   the lede as the heading, the processes and practices
+ *                under it, and the figures folded in at the end of it
  *
- * The fourth is load-bearing rather than defensive. A farm that publishes
- * the edge of its own evidence is telling you the rest of the numbers are
- * real, and that is the only reason to believe the first three parts. It
- * is never omitted and never softened.
+ * There used to be a fourth block headed "what we can't prove yet". It
+ * was doing three jobs and only one of them belonged on the page. Some of
+ * it was a genuine qualification, which now travels beside the thing it
+ * qualifies. Some was a link to a fuller account, which now sits inline
+ * in the body. And a third of it was project status — "whether it is
+ * running is being verified" — which is an entry in a register, not
+ * something to publish. A reader got "we have not finished checking our
+ * own homework" at the foot of every page.
+ *
+ * Publishing the edge of the evidence still matters. It happens in the
+ * sentence that carries the claim now, which is stronger than a block at
+ * the bottom under a heading that reads as an apology. The gaps live in
+ * docs/editorial/open-questions.md.
  */
 
 export type Subject = {
@@ -39,7 +46,6 @@ export type Subject = {
   lede: string
   practice: string[]
   record?: { value: string; label: string; note?: string }[]
-  open: string[]
   related?: { label: string; href: string }[]
   /** Drafting hints for the banner, until there is a photograph. */
   hero?: { type: string; caption: string }
@@ -102,28 +108,42 @@ export default function SubjectPage({
   /* Two columns on most pages, one reading column on the third. Same
      words, different rhythm. */
   const Practice = v === 2 ? OneCol : TwoCol
+
+  /* A list, not a grid of cards. These are readings with units, and a
+     reading is a row — the thing on the left, the figure on the right,
+     with any qualification travelling beside the figure rather than
+     being left to a footnote.
+
+     standalone={false} because it is folded into the body of what we do
+     rather than standing as a section of its own. The figures are part
+     of the work, not a separate topic that happens to follow it. */
+  const measured = s.record?.length ? (
+    <SpecTable
+      key="measured"
+      title="What we measure"
+      standalone={false}
+      rows={s.record.map((r) => ({
+        label: r.label,
+        /* A bare figure stays on one line — .spec__value is nowrap, and a
+           reading should not break across two. A figure carrying its
+           qualification is a sentence, and has to be allowed to wrap:
+           left as nowrap it became an 800px unbreakable string and
+           pushed the page sideways. */
+        value: r.note ? (
+          <span style={{ whiteSpace: 'normal' }}>{r.value} · {r.note}</span>
+        ) : r.value,
+      }))}
+    />
+  ) : null
+
   const practice = (
     <Practice key="practice" id="practice" heading={s.lede}>
       {s.practice.map((line) => (
         <p className="p1" key={line}>{withLinks(line)}</p>
       ))}
+      {measured && <div style={{ marginTop: 'var(--space-6)' }}>{measured}</div>}
     </Practice>
   )
-
-  /* A list, not a grid of cards. These are readings with units, and a
-     reading is a row — the thing on the left, the figure on the right,
-     with any qualification travelling beside the figure rather than
-     being left to a footnote. */
-  const measured = s.record?.length ? (
-    <SpecTable
-      key="measured"
-      title="What is measured"
-      rows={s.record.map((r) => ({
-        label: r.label,
-        value: r.note ? `${r.value} · ${r.note}` : r.value,
-      }))}
-    />
-  ) : null
 
   const quote = s.quote ? <PullQuote key="quote">{s.quote}</PullQuote> : null
   const plate = s.plate
@@ -139,22 +159,14 @@ export default function SubjectPage({
     />
   ) : null
 
-  /* Only when there is a genuine evidence gap to declare. A page with
-     nothing outstanding should not manufacture a caveat to fill the
-     block — that was how a note about terminology ended up filed under
-     things the estate cannot prove. */
-  const open = s.open.length === 0 ? null : (
-    <TwoCol key="open" id="open" heading="What we can't prove yet">
-      {s.open.map((line) => (
-        <p className="p1" key={line}>{withLinks(line)}</p>
-      ))}
-    </TwoCol>
-  )
-
+  /* The figures used to sit in this rotation, which is why it had three
+     slots. With them folded into the body above, what is left is the
+     visual beat — a quote, a plate, a portrait — and the rotation exists
+     so twelve pages do not read as one form filled in twelve times. */
   const middle =
-    v === 0 ? [quote, measured, plate]
-    : v === 1 ? [breaker, measured, quote]
-    : [measured, breaker, quote]
+    v === 0 ? [quote, plate]
+    : v === 1 ? [breaker, quote]
+    : [breaker, quote]
 
   return (
     <>
@@ -162,7 +174,6 @@ export default function SubjectPage({
       {v === 2 && plate}
       {practice}
       {middle}
-      {open}
       {!!s.siblings?.length && (
         <RelatedLane label={s.siblingsLabel ?? 'Read on'} items={s.siblings} />
       )}

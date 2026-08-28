@@ -17,7 +17,6 @@ export type Pillar = {
   lede: string
   practice: string[]
   record?: { value: string; label: string; note?: string }[]
-  open: string[]
   related?: { label: string; href: string }[]
   /** Drafting brief for the banner, until there is a photograph. */
   hero?: { type: string; caption: string }
@@ -45,8 +44,10 @@ export const PILLARS: Pillar[] = [
       'It runs through three studios and three places. Agroculture works it into 150 acres. Hospitality builds the rooms where a person can meet it. The Atelier is the taste layer — what is worth making at all, and what is good enough to leave here carrying the name.',
       'And it sets the horizon. Every decision is weighed against the year 3026, which changes what counts as a good one: the machine that listens beats the machine that acts, and the slow answer usually wins.',
       'The term is Aura’s own. It is defined here and then left alone, because it is meant to stay a way of working.',
+      'Aura is not certified organic or biodynamic. It practises both and publishes the record instead, which is the harder standard and the one a reader can check.',
+      'The 32-acre tea block is in organic transition, targeting 2027.',
+      'The loop that is closed is the fertility loop. Fuel, tools, packaging and labour come from outside, and the estate is described as closed on fertility rather than closed outright.',
     ],
-    open: [],
     related: [
       { label: 'Why Aura?', href: '/reason' },
       { label: 'The Atelier', href: '/atelier' },
@@ -69,11 +70,9 @@ export const PILLARS: Pillar[] = [
       'Everything is measured before it is acted on and after it is done. A canopy is read in lux before a branch is cut. A batch is plated before it is spread and the block is retested ninety days later against the batch number. A batch that fails is corrected or held, and the block waits.',
       'And everything is written down. Every event is signed by the person who did it, so a claim about a cup can be walked back to the block, the batch, and the morning it went on.',
       'None of those is unusual alone. Doing all of them on the same ground, for decades, and publishing what happened is the part that is hard to copy.',
-    ],
-    open: [
-      'Aura is not certified organic or biodynamic. It practises both and publishes the record instead.',
+      'Aura is not certified organic or biodynamic. It practises both and publishes the record instead, which is the harder standard and the one a reader can check.',
       'The 32-acre tea block is in organic transition, targeting 2027.',
-      'The closed loop is about fertility. Fuel, tools, packaging and labour all come from outside, and calling the whole estate closed would be untrue.',
+      'The loop that is closed is the fertility loop. Fuel, tools, packaging and labour come from outside, and the estate is described as closed on fertility rather than closed outright.',
     ],
     related: [
       { label: 'Ecosystem Engineers', href: '/herd' },
@@ -96,10 +95,8 @@ export const PILLARS: Pillar[] = [
       'What a guest gets is the working day rather than a version staged for them. The barrels being stirred at dawn, the herd going out, the lamp lit at the Gau Angan before anyone starts. The room sits in the middle of a farm that would be doing this anyway.',
       'Three times a year the estate opens properly, for the festival: three days, twenty places, and a guest leaves having set the protocol for a lot of coffee that is then built and shipped under their own name.',
       'And the residency runs alongside it — invited, embedded, for people making work that needs a place like this to be made in.',
-    ],
-    open: [
-      'Munduk and Punakha are announced. Dates, rooms and rates arrive when they are settled, and none of them is.',
-      'Aura publishes no occupancy, rates or guest numbers. When the sanctuaries open properly, those belong here.',
+      'Munduk and Punakha are announced and not open. Dates, rooms and rates arrive when they are settled.',
+      'No occupancy, rates or guest numbers are published. When the sanctuaries open properly, those belong here.',
     ],
     related: [
       { label: 'Mudigere', href: '/mudigere' },

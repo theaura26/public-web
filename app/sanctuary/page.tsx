@@ -162,7 +162,7 @@ export default function SanctuaryPage() {
       <TwoCol id="why-network" heading="Why a network at all.">
         <p className="p1">
           One sanctuary is a project. Two is a comparison. Four is a system. The reason to grow
-          the network past two is not scale — it is correction. A practice run only in one
+          the network past two is correction. A practice run only in one
           climate, on one soil, with one lineage of people, slowly persuades itself it is the
           practice. Two climates check each other. Four make the practice harder to confuse with
           its setting.

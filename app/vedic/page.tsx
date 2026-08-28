@@ -53,7 +53,7 @@ export default function VedicPage() {
         <p className="p1">
           Industrial agriculture inherited the{' '}
           <Term tip="Nitrogen, phosphorus, potassium — the three macronutrients isolated by nineteenth-century agricultural chemistry. Not wrong. Narrow.">NPK</Term>{' '}
-          rulebook from nineteenth-century chemistry. It is not wrong; it is narrow — three letters
+          rulebook from nineteenth-century chemistry. It is a narrow rulebook — three letters
           cannot describe a forest floor. To be a tree servant is the older posture: observe the
           tree, let it show what it wants, and act on the land&apos;s permission rather than the
           calendar&apos;s. Observation comes first, sometimes by a whole season.
@@ -73,8 +73,8 @@ export default function VedicPage() {
           <Term tip="A small indigenous cattle breed of the Malnad region of Karnataka, adapted to this altitude, soil, and monsoon over centuries. Low-yield, hardy, low-input.">Malnad Gidda</Term>,
           the small indigenous cattle of these hills. The five products of the cow — dung, urine,
           milk, curd, ghee — are the base of every ferment, and their dung and urine are the raw
-          material of the soil work. The herd is not livestock kept beside the farm; it is the engine
-          inside it.
+          material of the soil work. The herd is the engine inside the farm rather than livestock kept
+          beside it.
         </p>
         <p className="p1">
           You cannot make these preparations with an imported breed, and you cannot buy them. The
@@ -146,7 +146,7 @@ export default function VedicPage() {
           The estate keeps every observation, every block it was applied to, and every microbial read
           that followed. Over seasons that becomes something rare — a record of one valley&apos;s own
           soil, grown from the ground rather than borrowed from a textbook written for another. A
-          different valley would need a different record. That is not a flaw; it is the point.
+          different valley would need a different record, and that is the point.
         </p>
         <p className="p1">
           This is a generational instrument. The knowledge is old and the measurement is ours, and

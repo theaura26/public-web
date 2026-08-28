@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Circular Intelligence',
     description:
-      'Compost is not fertiliser. It is a biological communication network — how a landscape keeps the loop closed.',
+      'Compost is a biological communication network — how a landscape keeps its loop closed.',
     type: 'article',
     images: [{ url: '/aura-mudigere-landscape.jpg', width: 1600, height: 900, alt: 'Aura — compost as circular intelligence' }],
   },

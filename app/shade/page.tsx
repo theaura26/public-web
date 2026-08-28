@@ -67,7 +67,7 @@ export default function ShadePage() {
 
       <TwoCol id="stories" heading="Four stories, one canopy.">
         <p className="p1">
-          The canopy is not a uniform blanket — it is a four-story architecture, and every tree in it has
+          The canopy is a four-story architecture, and every tree in it has
           been counted, tagged, and mapped. An emergent layer of silver oak, fig, and jackfruit regulates
           temperature and holds carbon. Beneath it, areca palm and native hardwoods carry the mid-level
           shade and trellis the pepper. The coffee — Arabica Sln.9 and 795 — sits in the understory,

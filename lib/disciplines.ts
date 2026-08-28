@@ -38,8 +38,6 @@ export type Discipline = {
   practice: string[]
   /** Figures worth pulling out. `note` qualifies where the record does. */
   record?: { value: string; label: string; note?: string }[]
-  /** Not yet proven, not yet running, or true only as a reading. */
-  open: string[]
   /** Drafting brief for the banner, until there is a photograph. */
   hero?: { type: string; caption: string }
   /** Drafting brief for the mid-page plate. */
@@ -67,25 +65,23 @@ export const DISCIPLINES: Discipline[] = [
     practice: [
       'The calendar sets when, and the lab decides whether. A preparation goes out on the day the calendar names and only if the plate agrees — which is the order of operations the whole system rests on.',
       'The dung comes from the estate’s own herd, fifty-two Malnad Gidda grazing the ground the preparations return to. [Circular Intelligence](/circular) follows one batch through that loop end to end.',
-      'A pit that fails is not spread thin and hoped over. It is corrected and re-tested, or it is held back and the block waits — which occasionally means a block waits.',
+      'A pit that fails is corrected and re-tested, or held back while the block waits — which occasionally means a block waits.',
       'BD 500 through 508 are prepared here and applied to the blocks on a calendar built for 150 acres.',
       'Barrels are stirred by hand for about forty-five minutes a day, vortex and reverse.',
       'Cow pat pit matures for ninety days. The other preparations run sixty- to ninety-day cycles.',
       'Every batch is tested before and after it is made — pH, electrical conductivity, microbial colony counts, Trichoderma, Pseudomonas.',
       'A batch that fails is corrected or held back. No untested material touches the soil.',
       'The block is tested again ninety days after application, and the result is cross-referenced to the batch number that went on it.',
+      'Aura is not certified biodynamic. It practises the system in full and publishes the record instead, which is a harder standard to hold and an easier one to check.',
+      'The lunar calendar sets the timing, and the reason for keeping the preparations is the biology they build. The charts are a schedule, and Aura says so in print.',
+      'Chromatography is run as a soil-vitality image — a qualitative indicator, published as a practice rather than as evidence of an outcome.',
+      '[A Living Organism](/biodynamic) is the longer account of why the estate keeps the preparations at all.',
     ],
     record: [
       { value: '14', label: 'numbered cow pat pits' },
       { value: '90 days', label: 'to mature a pit' },
       { value: '45 min', label: 'stirred daily, vortex and reverse' },
-      { value: '2,420 kg', label: 'of CPP a year', note: 'Volume planned against the calendar; actual against planned is being confirmed.' },
-    ],
-    open: [
-      '[A Living Organism](/biodynamic) is the longer account of why the estate keeps the preparations at all.',
-      'Aura is not certified biodynamic. It practises the system and publishes the record instead.',
-      'The lunar calendar sets the timing. The reason for keeping these preparations is the biology it builds — the charts are a schedule, and Aura has said so in print rather than leaving the impression of a belief it does not hold.',
-      'Chromatography is run as a soil-vitality image. It is a qualitative indicator and is published as a practice, never as evidence of an outcome.',
+      { value: '2,420 kg', label: 'of CPP a year', note: 'Planned against the biodynamic calendar for 150 acres.' },
     ],
     related: [
       { label: 'A Living Organism', href: '/biodynamic' },
@@ -112,15 +108,12 @@ export const DISCIPLINES: Discipline[] = [
       'Soil respiration is read monthly by the NaOH method, at 0–15 cm.',
       'Every block is retested ninety days after a preparation goes on it, against the batch that was applied.',
       'Woody biomass is cut to 60–90 cm and left in the block to decay. Decay classes I to V are logged as it goes.',
+      '[The Health Index](/ecology) is where the soil readings are rolled up with everything else measured on a block.',
     ],
     record: [
       { value: '6.0–6.5', label: 'soil pH, red laterite' },
       { value: '3,600 ft', label: 'altitude' },
       { value: '0–15 cm', label: 'respiration sampling depth, read monthly' },
-    ],
-    open: [
-      '[The Health Index](/ecology) is where the soil readings are rolled up with everything else measured on a block.',
-      'Fourteen monitoring programmes are designed for the estate. Which of them run on every block, and which are designed but not yet running, is being confirmed block by block — so no claim is made here about full-estate coverage.',
     ],
     related: [{ label: 'The Health Index', href: '/ecology' }],
   },
@@ -142,16 +135,14 @@ export const DISCIPLINES: Discipline[] = [
       'Every preparation batch is plated before and after: colony counts, Trichoderma, Pseudomonas.',
       'Mycorrhizal colonisation is assessed once a year.',
       'In the wet mill the ferment is tracked hour by hour — pH every fifteen minutes, temperature three times a day, Brix at the start, the middle and the end. It ends at pH 4.2.',
+      'A plating shows that a batch changed between two counts. Which organisms did the changing is past what a colony count can tell you, and the page says so.',
+      'The herd is an indigenous breed because Aura reads a gut microbiome as following the ground it grazes. No metagenomic comparison against another breed has been run, so that stays a reading the estate acts on.',
+      'The wild yeasts and lactic-acid bacteria that drive a coffee ferment are well described in the literature. What Aura tracks on this estate is the ferment\'s behaviour hour by hour, and it has not identified the species here.',
     ],
     record: [
       { value: '15 min', label: 'between pH readings through a ferment' },
       { value: 'pH 4.2', label: 'where a ferment is stopped' },
       { value: 'Annual', label: 'mycorrhizal colonisation assessment' },
-    ],
-    open: [
-      'What the estate can show is that a batch changed between two platings. What it cannot yet show is which organisms did the changing.',
-      'The herd is an indigenous breed because Aura believes a gut microbiome follows the ground it grazes. No metagenomic comparison against another breed has been run, so that stays a reading rather than a result.',
-      'The wild yeasts and lactic-acid bacteria that drive a coffee ferment are well described in the literature. Aura has not identified the species on this estate — what it tracks is the ferment’s behaviour, not its species list.',
     ],
     related: [
       { label: 'Fermentation', href: '/fermentation' },
@@ -168,22 +159,22 @@ export const DISCIPLINES: Discipline[] = [
     hero: { type: 'Detail · a major cut sealed with CPP and turmeric', caption: 'What goes on the wound, on the day it is made' },
     plate: { type: 'Portrait · the block after pruning', caption: 'No synthetic pesticides have gone onto these 150 acres' },
     practice: [
-      'Turmeric on a cut is not folklore standing in for medicine — it is an antifungal dressing applied the same day the wound is made, which is when a wound is worth dressing.',
+      'Turmeric on a cut is an antifungal dressing, applied the same day the wound is made, which is the only day a wound is worth dressing.',
       'Canopy work is disease work. A block held at the right light is a block that dries after rain, and [The Light Instrument](/shade) is how that light gets set.',
       'The logic is preventive rather than curative. A plant standing on ground with an active microbial community, cut cleanly and sealed the same day, is a harder plant to infect \u2014 so the work happens before there is anything to treat.',
       'No synthetic pesticides or chemicals go onto the 150 acres.',
       'Trichoderma and Pseudomonas — both antagonists of common root and leaf pathogens — are counted in every preparation batch, so what reaches a block is known before it gets there.',
       'Every major canopy cut is sealed with cow pat preparation and turmeric.',
+      'Humidity is what most leaf pathogens need, and a four-storey canopy holds it. That is why the light survey and the disease question are the same question, read from two directions.',
+      'A block that dries after rain is a block under less pressure. Whiskering to a light target is therefore a disease decision as much as a ripening one, and the two are taken together.',
+      'Every cut is a wound and every wound is a door. Sealing on the same day the cut is made, with cow pat preparation and turmeric, is the whole of the protocol — and eighty acres of whiskering is eighty acres of wounds.',
+      'The soil is the other half of it. A root zone with an active microbial community carries its own antagonists, which is why every preparation batch is counted for Trichoderma and Pseudomonas before it goes out — see [Microbiome](/regenerative-life/microbiome).',
+      'Aura can say what goes onto the 150 acres and what is kept off it, and both are logged. What it cannot yet publish is disease incidence across a season, because no counting protocol is running — fixed plants, a fixed interval, one person who can tell one lesion from another.',
     ],
     record: [
       { value: 'Zero', label: 'synthetic pesticides across 150 acres' },
       { value: 'Every batch', label: 'counted for Trichoderma and Pseudomonas' },
       { value: 'Every cut', label: 'sealed with cow pat preparation and turmeric' },
-    ],
-    open: [
-      'A protocol would not be elaborate: fixed plants, a fixed interval, a person who can tell one lesion from another. It does not exist yet, and until it does this page stays the shortest of the nine.',
-      'This is the thinnest record of the nine. The practice is real and the inputs are logged, but there is no published disease-incidence protocol yet — nothing that counts occurrence block by block over a season.',
-      'Until that exists, Aura can say what it puts on the estate and what it keeps off it. It cannot yet publish what the effect has been, and does not claim to.',
     ],
   },
   {
@@ -204,16 +195,12 @@ export const DISCIPLINES: Discipline[] = [
       'Forest islands are built to about 4 × 1 m and 80–120 cm high, in alternating layers of cow-dung compost and freshly cut green biomass, and then left alone.',
       'Woody biomass stays in the block it came from, and its decay is logged.',
       'A four-storey canopy — emergent, canopy, understorey, ground — is maintained across 100 acres of coffee and 32 of tea.',
+      'Aura is in the Western Ghats, a UNESCO World Heritage region. The listing is a serial property of thirty-nine discrete components, and the estate sits in the region rather than inside an inscribed component.',
     ],
     record: [
       { value: '50 × 50 cm', label: 'earthworm quadrat, counted quarterly' },
       { value: 'Four', label: 'canopy storeys' },
       { value: '100 / 32', label: 'acres of coffee / tea' },
-    ],
-    open: [
-      'Aura is in the Western Ghats, a UNESCO World Heritage region. The World Heritage listing is a serial property of thirty-nine discrete components, and being in the region is not the same as being inside an inscribed one. Aura does not claim to be.',
-      'Fourteen monitoring programmes are designed to roll into an Ecological Health Index, scored 0–100 per block. Not every block carries a scored index yet, so no estate-wide figure is published.',
-      'The estate’s tree count — about 35,000 — is being confirmed as a count rather than an estimate before it is stated as one.',
     ],
     related: [
       { label: 'The Health Index', href: '/ecology' },
@@ -236,16 +223,16 @@ export const DISCIPLINES: Discipline[] = [
       'A weather station at 3,600 ft logs rainfall, temperature and humidity.',
       'Water is measured at the point it enters the coffee: total dissolved solids are logged for every lot that goes through the wet mill.',
       'Canopy is managed for light, which is also what governs how much rain reaches the ground and how fast it leaves again.',
+      'Phase one of the estate plan is hydrological: reservoirs sized to catch the monsoon and return it to the watershed below, rather than letting a year\'s rain leave in a few weeks.',
+      'Ground cover is a water instrument too. Woody biomass left in the block, mulch over a cow pat ball, and a living understorey all slow the same water down before it reaches bare laterite.',
+      'Red laterite drains fast, which is a gift in a hundred inches of rain and a problem in the weeks after it stops. Almost everything the estate does to hold moisture is answering that second half.',
+      'What is written down is weather and process water. Catchment, infiltration and runoff are read in the field and are not yet on a published protocol.',
+      '[The Land](/land) carries what is known about the ground this water moves through.',
     ],
     record: [
       { value: '40–100 in', label: 'annual rainfall' },
       { value: '14–30 °C', label: 'temperature range' },
       { value: '58%', label: 'humidity' },
-    ],
-    open: [
-      '[The Land](/land) carries what is known about the ground this water moves through.',
-      'What is written down here is weather and process water. Catchment, infiltration and runoff are not yet on a published protocol.',
-      'Of the nine disciplines this one has the least record behind it. It is on the ring because it governs the others, and the record is thinner than that role deserves — saying otherwise would undo the value of the eight that are.',
     ],
     related: [{ label: 'The Land', href: '/land' }],
   },
@@ -267,17 +254,13 @@ export const DISCIPLINES: Discipline[] = [
       'Block 3, Byton Patte, came back at roughly 33,000 lux in Zone A, 62,000 in Zone B and 82,000 in Zone C, against CCRI targets of 50,000–70,000 for Arabica.',
       'About eighty acres were whiskered in the May–June 2026 window, by eleven loppers and ten choppers.',
       'Every major cut is sealed with cow pat preparation and turmeric.',
+      '[The Light Instrument](/shade) is the full account of the survey and what was done with it.',
     ],
     record: [
       { value: '50', label: 'light readings an acre' },
       { value: '~80 acres', label: 'whiskered, May–June 2026' },
       { value: '33 / 62 / 82k', label: 'lux, Block 3 zones A / B / C' },
-    ],
-    open: [
-      '[The Light Instrument](/shade) is the full account of the survey and what was done with it.',
-      'That blocks held at 65–75% canopy cup better is Aura’s own reading against its own cupping table. It holds for this estate against this table, and is published on those terms.',
-      'Plant-level logging exists. Whether it covers the whole estate or a pilot block is being confirmed.',
-      'Quarterly canopy vitality by satellite is designed. Whether it is running is being verified before it is claimed.',
+      { value: '65–75%', label: 'canopy where blocks cup best', note: "Aura's own reading against its own cupping table." },
     ],
     related: [{ label: 'The Light Instrument', href: '/shade' }],
   },
@@ -298,16 +281,13 @@ export const DISCIPLINES: Discipline[] = [
       'Jeevamrit, Panchgavya, Beejamrit, cow pat pit and Kunapjal are brewed on the estate from the estate’s own herd.',
       'Volume is planned backwards from the biodynamic calendar for 150 acres, and stock registers track every batch against that plan.',
       'The same gate applies as to everything else: tested before and after, held back if it fails.',
+      'Aura is not certified organic. The 32-acre tea block is in organic transition targeting 2027, stated as the ambition it is.',
+      '[Vedic Farming](/vedic) is the longer account of the tradition these preparations come from.',
     ],
     record: [
-      { value: '154,000 L', label: 'of Jeevamrit a year', note: 'Volume planned against the calendar; actual against planned is being confirmed.' },
+      { value: '154,000 L', label: 'of Jeevamrit a year', note: 'Planned against the biodynamic calendar for 150 acres.' },
       { value: '5', label: 'preparations in the Vedic set' },
       { value: '150', label: 'acres the calendar is planned for' },
-    ],
-    open: [
-      '[Vedic Farming](/vedic) is the longer account of the tradition these preparations come from.',
-      'Actual volume against planned, and the year it belongs to, are being confirmed before either figure is stated as a result.',
-      'Aura is not certified organic. The 32-acre tea block is in organic transition targeting 2027, which is stated as the ambition it is.',
     ],
     related: [{ label: 'Vedic Farming', href: '/vedic' }],
   },
@@ -327,16 +307,13 @@ export const DISCIPLINES: Discipline[] = [
       'The streams are joined. A block, a batch, a lot and a date are all addressable, so “what went on this block, and what did the lab say ninety days later” is a query.',
       'Everything exports in open formats. Software gets replaced; a hundred-year claim needs a record that outlives the company keeping it, and portability is what lets somebody outside Aura audit the estate.',
       '[Provenance](/provenance) is the fuller account of how an event becomes a record.',
+      'A stream is only worth keeping if it can be joined to another. Nine separate logs are nine separate logs. The value is being able to ask what went on this block, and what the cup did four months later, and get one answer.',
+      'The record is signed and exportable, and that is where the claim stops. Writing milestones to a public chain is an intention and is not built, so nothing here is described as verifiable by a third party.',
     ],
     record: [
       { value: 'Nine', label: 'Streams, each on its own sampling rate' },
       { value: 'Signed', label: 'Every human event, at the point it happens' },
       { value: 'Open', label: 'Export formats, so the record outlives the software' },
-    ],
-    open: [
-      'Writing milestones to a public chain is the intention and it is not built. No verification link exists, so the estate claims a signed, exportable record and stops there.',
-      'A QR on every 30 kg bag opening its own lot page waits on a published lot page. One complete lot at a public URL turns this discipline from a description into evidence, and it is the next thing to do.',
-      'Quarterly canopy vitality by satellite is designed. Whether it is running is being verified before it is claimed.',
     ],
     related: [{ label: 'Provenance', href: '/provenance' }],
   },

@@ -20,7 +20,7 @@ export default function ComingSoon({
       <div className="section-w cs-in">
         <h1 className="cs-title">{title}</h1>
         <p className="p1 cs-note">
-          This one is not written yet. It is part of how the estate works and it
+          This one is still to be written. It is part of how the estate works and
           will have its own page; until then the nearest account of it is
           wherever the practice shows up on the land.
         </p>

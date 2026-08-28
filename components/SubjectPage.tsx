@@ -3,6 +3,9 @@
 import { RelatedLane } from '@/components/Swimlanes'
 import { ExpandingBanner } from '@/components/ExpandingBanner'
 import {
+  DataGrid,
+  DataCard,
+  ScrollHighlight,
   HeroBanner,
   OneCol,
   TwoCol,
@@ -47,6 +50,14 @@ export type Movement = {
   heading: string
   lines: string[]
   after?: { kind: 'banner' | 'plate' | 'portrait'; type: string; caption: string; alt?: string; ratio?: string }
+  /** Revealing text: a stanza that fades up line by line as it is
+   *  scrolled through. Newline-separated. Used where a page wants to
+   *  land an idea rather than explain another one — not on every page,
+   *  and never more than once on any of them. */
+  reveal?: string
+  /** A grid of short cards. Nine on Biodiversity, which is the one page
+   *  whose subject is a list of living things. */
+  tiles?: { value: string; note: string }[]
 }
 
 export type Subject = {
@@ -200,11 +211,21 @@ export default function SubjectPage({
             <p className="p1" key={line}>{withLinks(line)}</p>
           ))}
           {i === specAt && measured && (
-            <div style={{ marginTop: 'var(--space-6)' }}>{measured}</div>
+            <div style={{ marginTop: 'var(--space-7)' }}>{measured}</div>
           )}
         </Col>,
       )
+      if (m.tiles?.length) {
+        movements.push(
+          <DataGrid key={`mv${i}-tiles`} cols={3} standalone tightTop>
+            {m.tiles.map((t) => (
+              <DataCard key={t.value} value={t.value}>{t.note}</DataCard>
+            ))}
+          </DataGrid>,
+        )
+      }
       if (m.after) movements.push(visual(m.after, `mv${i}-after`))
+      if (m.reveal) movements.push(<ScrollHighlight key={`mv${i}-reveal`}>{m.reveal}</ScrollHighlight>)
     })
   }
 

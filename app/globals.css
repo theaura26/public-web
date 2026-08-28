@@ -1563,11 +1563,16 @@ section.one-col + section.one-col {
    p1 lead and the p2 body lines breathe. Without this, consecutive
    <p> blocks inside <TwoCol>/<OneCol> stack with zero space because
    `.p1` / `.p2` carry their type spec but no margin. */
+/* Paragraph rhythm inside a body block. It was clamp(12px, 1.4vh, 20px),
+   which is tighter than the leading it sits between — at 17px over 158%
+   a line is ~27px, so a 20px gap read as one dense slab rather than
+   separate paragraphs. Set above the line height so the break is
+   legible. */
 .article-body > p + p,
 .article-body > p + div,
 .article-body > div + p,
 .article-body p + p {
-  margin-top: clamp(12px, 1.4vh, 20px) !important;
+  margin-top: clamp(20px, 2.2vh, 30px) !important;
 }
 
 /* Mobile: trim the section rhythm by ~30% so the journals don't feel

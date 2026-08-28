@@ -102,6 +102,13 @@ ledger records what the site currently says and what backs it.
 | Claim | Where | Source | Confidence |
 |---|---|---|---|
 | Nine data streams, each on its own clock | `/provenance`, `/regenerative-life/aura-intelligence` | System record | Estate record |
+| Capture runs through WhatsApp workflows — field work, fertiliser, cow work, estate walks — as text, photographs and voice | `/regenerative-life/aura-intelligence` | `AURA-NaturalIntelligence.pdf`, Farm Brain architecture v2, July 2026 | Estate record — described as the current way of working, deliberately unchanged |
+| Base data labels every tree, plant and animal with an ID, photograph and zone | `/regenerative-life/aura-intelligence` | Same | Estate record — a designed schema, partially populated |
+| Two daily logs: an observation log and an intervention log | `/regenerative-life/aura-intelligence` | Same | Estate record |
+| The estate is described across seven domains: crop, weather, fauna, flora, soil, fungal network, geology | `/regenerative-life/aura-intelligence` | Same | Estate record — a design statement about the schema |
+| A memory layer sliced into mini-brains | `/regenerative-life/aura-intelligence` | Same, work item 2 | **Ambition** — worded "in build now", never as running |
+| A digital twin answering what is here / what is happening / what happened last time / what is likely next | `/regenerative-life/aura-intelligence` | Same, work item 3 | **Ambition** — worded as a limited pilot being built. The five twin layers in the deck are a design, and the page claims none of them as live |
+| Three technologies converged — foundation models, robotics, cheap sensors | `/regenerative-life/aura-intelligence` | Aura's own reading | **Reading** — an argument about why now, published as one |
 | Every human event signed by the person who did it | `/provenance`, disciplines | Event log | Estate record |
 | Example: BD 501, Block 07, 06:14, waning moon, humidity 78%, by Rao, dung batch G-03 | `/provenance`, `/rta`, `/regenerative-coffee/transparency`, disciplines | Event log | Estate record — Rao is cleared for publication. Cleared names are Pulkit (biodiversity), Rao (herd) and Chander (director), to be used sparingly. *Raju* was never cleared and is gone |
 | Records exportable in open formats | `/regenerative-life/aura-intelligence` | System architecture | Estate record |

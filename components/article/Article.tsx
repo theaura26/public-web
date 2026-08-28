@@ -1224,7 +1224,9 @@ export function Portrait({
   poster?: string
   alt?: string
   caption?: string
-  /** CSS aspect-ratio string matching the image so nothing is cropped. */
+  /** Space reserved before the file loads, so the page does not jump.
+   *  Once the image is in, its own proportions take over — nothing is
+   *  cropped to this. */
   ratio?: string
   align?: 'left' | 'center' | 'right'
 }) {
@@ -1255,11 +1257,20 @@ export function Portrait({
             </div>
             {caption && <figcaption className="label portrait__caption">{caption}</figcaption>}
             <style jsx>{`
+              /* Full rail. It used to be clamp(300px, 46vw, 560px), which
+                 put the picture at half the width of the text and the
+                 spec table beside it — it read as undersized rather than
+                 as a deliberate inset. */
               .portrait {
                 margin: 0;
-                width: clamp(300px, 46vw, 560px);
+                width: 100%;
                 max-width: 100%;
               }
+              /* No forced ratio and no crop: the box takes whatever shape
+                 the picture is. --pt-ratio is kept only to reserve space
+                 before the file loads, so the page does not jump; once it
+                 is in, the image's own proportions win. A 16:9 photograph
+                 stays 16:9 and a tall one stays tall. */
               .portrait__media {
                 position: relative;
                 width: 100%;
@@ -1268,13 +1279,15 @@ export function Portrait({
                 border-radius: var(--radius-1);
                 background: var(--bg-card);
               }
+              .portrait__media:has(:global(img)),
+              .portrait__media:has(:global(video)) {
+                aspect-ratio: auto;
+              }
               .portrait__media :global(img),
               .portrait__media :global(video) {
-                position: absolute;
-                inset: 0;
+                position: static;
                 width: 100%;
-                height: 100%;
-                object-fit: cover;
+                height: auto;
                 display: block;
               }
               /* Caption sits BELOW the image (outside the visual), as a muted

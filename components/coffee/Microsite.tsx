@@ -451,7 +451,7 @@ export function Panel({
           min-height: 100svh;
           display: flex; align-items: center;
           padding: calc(var(--nav-h) + var(--space-9)) 0 var(--space-9);
-          background: transparent; color: #fff;
+          background: #000; color: #fff;
           overflow: hidden;
         }
         .p-bg { position: absolute; inset: 0; }
@@ -1123,7 +1123,6 @@ export function LoopDiagram({
           position: relative; z-index: 1;
           background: #000; color: #fff;
           padding: clamp(104px, 16vh, 196px) 0;
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
         .ld-ring {
           position: relative;
@@ -1620,7 +1619,7 @@ export function Scene({
           position: relative; z-index: 1; min-height: 100svh;
           display: flex; align-items: flex-end;
           padding: 0 0 clamp(72px, 12vh, 144px);
-          background: transparent; color: #fff; overflow: hidden;
+          background: #000; color: #fff; overflow: hidden;
         }
         /* A scene never carries its own picture now — the chapter's
            backdrop is behind all of them. This only governs the balance:
@@ -1656,7 +1655,36 @@ export function Scene({
           );
         }
         .sc-in { position: relative; z-index: 1; width: 100%; }
-        .sc-t { max-width: 40rem; }
+        /* The words carry their own ground.
+           A scene sits over whatever is behind it — the chapter backdrop,
+           or on the hub the particle artwork — and neither is a reliable
+           contrast. A soft wash under the text column keeps the paragraph
+           readable without boxing it in. */
+        .sc-t {
+          max-width: 40rem;
+          position: relative;
+          isolation: isolate;
+        }
+        .sc-t::before {
+          content: '';
+          position: absolute;
+          inset: -30px -36px -26px -36px;
+          z-index: -1;
+          background: radial-gradient(
+            125% 105% at 22% 50%,
+            rgba(0, 0, 0, 0.78) 0%,
+            rgba(0, 0, 0, 0.62) 52%,
+            rgba(0, 0, 0, 0) 100%
+          );
+        }
+        .is-centre .sc-t::before {
+          background: radial-gradient(
+            110% 100% at 50% 50%,
+            rgba(0, 0, 0, 0.78) 0%,
+            rgba(0, 0, 0, 0.6) 55%,
+            rgba(0, 0, 0, 0) 100%
+          );
+        }
         .is-centre .sc-t { margin-inline: auto; text-align: center; }
 
         /* the discipline's mark, sitting above its own heading — the same
@@ -1713,8 +1741,7 @@ export function Chapter({
           position: relative; z-index: 1;
           display: flex; align-items: center; justify-content: center;
           padding: clamp(128px, 21vh, 248px) 0;
-          background: transparent; color: #fff; text-align: center;
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
+          background: #000; color: #fff; text-align: center;
         }
         .ch.is-tight { padding-bottom: clamp(40px, 6vh, 72px); }
         .ch-h {

@@ -2260,3 +2260,18 @@ html.lenis, html.lenis body { height: auto; }
 
 /* closing */
 .rm-portrait { max-width: 68%; margin: 0 auto; aspect-ratio: 430 / 506; } /* match desktop closing crop */
+
+
+/* ── Regenerative Coffee: the chapter backdrop ───────────────────────
+   A chapter carries one fixed layer of photographs behind its scenes
+   (components/coffee/ChapterBackdrop.tsx). The microsite's sections
+   paint their own black, which is right on every page that has no
+   backdrop — the Festival page among them — and wrong on the four that
+   do, where it sits on top of the pictures and hides them.
+
+   So the component marks the document and only then do the grounds step
+   aside. Scoping this was not optional: transparent everywhere left the
+   Festival page as white text on a white body. */
+[data-rc-backdrop] :is(.sc, .p, .ch, .cl, .ld, .lots, .bx) {
+  background: transparent !important;
+}

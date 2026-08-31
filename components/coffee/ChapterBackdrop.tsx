@@ -37,6 +37,15 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
   const [started, setStarted] = useState(false)
   const wrap = useRef<HTMLDivElement>(null)
 
+  /* Marks the document so the microsite's own black grounds step aside
+     for this chapter. Scoped rather than global: the Festival page has no
+     backdrop, and making its sections transparent everywhere left white
+     text on the white body. */
+  useEffect(() => {
+    document.documentElement.dataset.rcBackdrop = 'on'
+    return () => { delete document.documentElement.dataset.rcBackdrop }
+  }, [])
+
   useEffect(() => {
     if (!frames.length) return
     /* Every full-screen beat on the page, in document order. The scene

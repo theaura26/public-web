@@ -409,9 +409,11 @@ export function LotCards({ title, intro, lots }: {
 
       <style jsx>{`
         .lots {
+          /* Transparent, above the chapter backdrop. A black ground here
+             sat on top of the photographs and broke the run. */
+          position: relative; z-index: 1;
           background: #000; color: #fff;
           padding: clamp(104px, 16vh, 196px) 0;
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
         .lots-h {
           font-family: var(--font-grotesque), sans-serif; font-weight: 400;
@@ -496,9 +498,11 @@ export function BlockExplorer() {
 
       <style jsx>{`
         .bx {
+          /* Transparent, above the chapter backdrop. A black ground here
+             sat on top of the photographs and broke the run. */
+          position: relative; z-index: 1;
           background: #000; color: #fff;
           padding: clamp(104px, 16vh, 196px) 0;
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
         .bx-h {
           font-family: var(--font-grotesque), sans-serif; font-weight: 400;

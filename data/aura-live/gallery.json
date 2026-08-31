@@ -1,0 +1,346 @@
+{
+  "$comment": [
+    "AURA Live — the editorial image gallery.",
+    "To add an asset: put the file in /public, give it honest alt text, list the Now subjects it may illustrate, and state its real aspect ratio. Leave `subjects` off unless the picture is specifically about that thing — an untagged asset is the general pool for its subjects.",
+    "To add an asset: put the file in /public, give it honest alt text, list the taxonomy categories it may illustrate, and state its real aspect ratio. Leave `subjects` off unless the picture is specifically about that thing — an untagged asset is the general pool for its categories.",
+    "To retire an asset: delete its entry. Cards already published keep the media recorded on them, so nothing breaks; the next card that would have used it picks from what remains."
+  ],
+  "version": 1,
+  "assets": [
+    {
+      "id": "eco-mushroom-cluster",
+      "src": "/ecology/images/aura-white-mushroom-cluster.jpg",
+      "alt": "A cluster of white mushrooms on the forest floor at Aura Estate",
+      "categories": [
+        "biodiversity",
+        "field-activities"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "eco-mushrooms-mulch",
+      "src": "/ecology/images/aura-white-mushrooms-mulch.jpg",
+      "alt": "White mushrooms growing through leaf mulch",
+      "categories": [
+        "biodiversity",
+        "seasons"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "eco-funnel-mushroom",
+      "src": "/ecology/images/aura-brown-funnel-mushroom.jpg",
+      "alt": "A brown funnel mushroom on the estate floor",
+      "categories": [
+        "biodiversity"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "eco-millipede-leaf",
+      "src": "/ecology/images/aura-pill-millipede-on-leaf.jpg",
+      "alt": "A pill millipede on a leaf",
+      "categories": [
+        "biodiversity"
+      ],
+      "subjects": [
+        "millipede",
+        "insect",
+        "beetle",
+        "caterpillar",
+        "moth",
+        "bee"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "eco-millipede-hand",
+      "src": "/ecology/images/aura-coiled-millipede-hand.jpg",
+      "alt": "A coiled millipede held in an open hand",
+      "categories": [
+        "biodiversity"
+      ],
+      "subjects": [
+        "millipede"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "eco-lichen-bark",
+      "src": "/ecology/images/aura-lichen-on-bark.jpg",
+      "alt": "Lichen spreading across tree bark",
+      "categories": [
+        "biodiversity",
+        "field-activities"
+      ],
+      "ratio": "1920:2703",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "eco-mossy-hollow",
+      "src": "/ecology/images/aura-mossy-tree-hollow.jpg",
+      "alt": "A moss-covered hollow in an old estate tree",
+      "categories": [
+        "field-activities",
+        "biodiversity"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "eco-termite-soil",
+      "src": "/ecology/images/aura-termite-burrow-soil.jpg",
+      "alt": "Termite burrows worked into estate soil",
+      "categories": [
+        "seasons",
+        "biodiversity"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "eco-forest-seedling",
+      "src": "/ecology/images/aura-forest-floor-seedling.jpg",
+      "alt": "A seedling coming up through the forest floor",
+      "categories": [
+        "field-activities"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "circ-cpp",
+      "src": "/circular/images/aura-cpp.jpg",
+      "alt": "Cow pat pit preparation at the estate shed",
+      "categories": [
+        "sprays",
+        "fertiliser-prep"
+      ],
+      "subjects": [
+        "cpp",
+        "cow pat",
+        "compost"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "circ-jeevamrut",
+      "src": "/circular/images/aura-jeevamrut.jpg",
+      "alt": "Jeevamrit brewing in an estate tank",
+      "categories": [
+        "sprays",
+        "fertiliser-prep"
+      ],
+      "subjects": [
+        "jeevamrit",
+        "jeevamrut",
+        "buttermilk",
+        "slurry"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "circ-bd507",
+      "src": "/circular/images/aura-bd507.jpg",
+      "alt": "Biodynamic preparation 507 being made on the estate",
+      "categories": [
+        "sprays",
+        "fertiliser-prep"
+      ],
+      "subjects": [
+        "bd 500",
+        "bd500",
+        "bd 501",
+        "bd 507",
+        "valerian",
+        "preparation"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "circ-valerian",
+      "src": "/circular/images/aura-valerian.jpg",
+      "alt": "Valerian flowers gathered for a biodynamic preparation",
+      "categories": [
+        "fertiliser-prep"
+      ],
+      "subjects": [
+        "valerian"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "circ-shed",
+      "src": "/circular/images/aura-shed.jpg",
+      "alt": "The preparation shed at Aura Estate",
+      "categories": [
+        "fertiliser-prep",
+        "field-activities"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "circ-dung",
+      "src": "/circular/images/aura-dung.jpg",
+      "alt": "Cow dung being handled for a preparation",
+      "categories": [
+        "sprays",
+        "cows"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "circ-microbe",
+      "src": "/circular/images/aura-microbe.jpg",
+      "alt": "A microbial culture from the estate laboratory",
+      "categories": [
+        "fertiliser-prep",
+        "seasons"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "shade-canopy-lookup",
+      "src": "/shade/images/aura-tree-canopy-lookup.jpg",
+      "alt": "Looking up into the shade canopy at Aura Estate",
+      "categories": [
+        "sprays",
+        "field-activities"
+      ],
+      "subjects": [
+        "shade",
+        "lopping",
+        "canopy",
+        "tree"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "shade-dense-forest",
+      "src": "/shade/images/aura-dense-forest-interior.jpg",
+      "alt": "The interior of dense forest on the estate",
+      "categories": [
+        "field-activities"
+      ],
+      "subjects": [
+        "jungle",
+        "forest",
+        "uprooting",
+        "clearing"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "shade-misty-forest",
+      "src": "/shade/images/aura-misty-mountain-forest.jpg",
+      "alt": "Mist across the forested slopes above Mudigere",
+      "categories": [
+        "seasons",
+        "field-activities"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "shade-sunlit-moss",
+      "src": "/shade/images/aura-sunlit-moss-ground.jpg",
+      "alt": "Sunlight reaching moss on the estate floor",
+      "categories": [
+        "seasons",
+        "field-activities"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "herd-calf",
+      "src": "/herd/images/aura-calf1.jpg",
+      "alt": "A Malnad Gidda calf at Aura Estate",
+      "categories": [
+        "cows"
+      ],
+      "subjects": [
+        "calf",
+        "cow",
+        "bovine",
+        "heifer"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "herd-grassland",
+      "src": "/herd/images/aura-grassland1.jpg",
+      "alt": "The herd grazing estate grassland",
+      "categories": [
+        "cows",
+        "field-activities"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "coffee-block",
+      "src": "/aura-coffee.jpg",
+      "alt": "Coffee growing under shade at Aura Estate",
+      "categories": [
+        "field-activities",
+        "harvest"
+      ],
+      "subjects": [
+        "coffee",
+        "arabica",
+        "robusta"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "estate-grown",
+      "src": "/aura-grown.jpg",
+      "alt": "Growth on the estate, close up",
+      "categories": [
+        "field-activities",
+        "harvest"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "estate-landscape",
+      "src": "/aura-mudigere-landscape.jpg",
+      "alt": "The Aura Estate landscape at Mudigere",
+      "categories": [
+        "field-activities",
+        "seasons",
+        "people"
+      ],
+      "ratio": "1500:842",
+      "credit": "Aura visual archive"
+    },
+    {
+      "id": "estate-land",
+      "src": "/aura-land.jpg",
+      "alt": "Aura Estate land under the Western Ghats sky",
+      "categories": [
+        "field-activities"
+      ],
+      "ratio": "16:9",
+      "credit": "Aura visual archive"
+    }
+  ]
+}

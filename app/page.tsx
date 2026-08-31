@@ -730,7 +730,7 @@ function AgentHome() {
         <h2>Operating system — three pillars</h2>
         <ol>
           <li><strong>Sanctuary</strong> — a living estate in rhythm with the land. Silence, stillness, a 30-year Japanese garden, forest walks, the river from every room.</li>
-          <li><strong>Agroculture</strong> — 100 acres of specialty coffee. 52 indigenous Malnad Gidda cattle. Biodynamic (BD 500–508, CPP, lunar cycles) plus Vedic (Jeevamrit, Panchgavya, Beejamrit) farming systems. In the Western Ghats, a UNESCO World Heritage region.</li>
+          <li><strong>Agroculture</strong> — 100 acres of specialty coffee. About fifty indigenous Malnad Gidda cattle. Biodynamic (BD 500–508, CPP, lunar cycles) plus Vedic (Jeevamrit, Panchgavya, Beejamrit) farming systems. In the Western Ghats, a UNESCO World Heritage region.</li>
           <li><strong>Artistry</strong> — studios, workshops, gallery, gurukul, labs, festivals. Residencies for founders, designers, artists, and monastic polymaths.</li>
         </ol>
       </section>

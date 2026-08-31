@@ -84,7 +84,10 @@ export function Programme() {
       <style jsx>{`
         .pg {
           background: #000; color: #fff;
-          padding: 0 0 clamp(96px, 15vh, 176px);
+          /* Air above as well as below. With no top padding the first day
+             sat flush against the rule that closes the section before it,
+             which read as the two being one block. */
+          padding: clamp(96px, 15vh, 176px) 0;
         }
 
         .pg-days {

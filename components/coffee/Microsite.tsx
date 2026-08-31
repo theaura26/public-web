@@ -1655,36 +1655,7 @@ export function Scene({
           );
         }
         .sc-in { position: relative; z-index: 1; width: 100%; }
-        /* The words carry their own ground.
-           A scene sits over whatever is behind it — the chapter backdrop,
-           or on the hub the particle artwork — and neither is a reliable
-           contrast. A soft wash under the text column keeps the paragraph
-           readable without boxing it in. */
-        .sc-t {
-          max-width: 40rem;
-          position: relative;
-          isolation: isolate;
-        }
-        .sc-t::before {
-          content: '';
-          position: absolute;
-          inset: -30px -36px -26px -36px;
-          z-index: -1;
-          background: radial-gradient(
-            125% 105% at 22% 50%,
-            rgba(0, 0, 0, 0.78) 0%,
-            rgba(0, 0, 0, 0.62) 52%,
-            rgba(0, 0, 0, 0) 100%
-          );
-        }
-        .is-centre .sc-t::before {
-          background: radial-gradient(
-            110% 100% at 50% 50%,
-            rgba(0, 0, 0, 0.78) 0%,
-            rgba(0, 0, 0, 0.6) 55%,
-            rgba(0, 0, 0, 0) 100%
-          );
-        }
+        .sc-t { max-width: 40rem; }
         .is-centre .sc-t { margin-inline: auto; text-align: center; }
 
         /* the discipline's mark, sitting above its own heading — the same

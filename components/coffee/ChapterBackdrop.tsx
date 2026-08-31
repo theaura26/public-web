@@ -154,16 +154,13 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           position: absolute;
           inset: 0;
           transition: opacity 600ms var(--ease-out, ease);
-          /* Heavy. The scenes set long paragraphs in white directly on
-             the photograph, and at half strength the type fought the
-             picture wherever the frame was bright. The pictures still
-             read; they are ground, not subject. */
-          background: linear-gradient(
-            to bottom,
-            rgba(0, 0, 0, 0.78) 0%,
-            rgba(0, 0, 0, 0.68) 45%,
-            rgba(0, 0, 0, 0.86) 100%
-          );
+          /* The only thing carrying contrast on these pages.
+             The scenes set long paragraphs in white directly on the
+             photograph, so the picture is dimmed hard and evenly rather
+             than each block of text drawing a panel behind itself — a
+             local wash reads as a box, which is worse than a dark
+             picture. The photographs still read; they are ground. */
+          background: rgba(0, 0, 0, 0.72);
         }
         @media (prefers-reduced-motion: reduce) {
           .cb-frame { transition: none; }

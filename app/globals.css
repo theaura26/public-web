@@ -2272,6 +2272,9 @@ html.lenis, html.lenis body { height: auto; }
    So the component marks the document and only then do the grounds step
    aside. Scoping this was not optional: transparent everywhere left the
    Festival page as white text on a white body. */
-[data-rc-backdrop] :is(.sc, .p, .ch, .cl, .ld, .lots, .bx) {
+/* .cl, .bn and .rb are deliberately absent: they sit after the last
+   scene, where the backdrop has already faded, and a transparent ground
+   there is white text on the white body. */
+[data-rc-backdrop] :is(.sc, .p, .ch, .ld, .lots, .bx) {
   background: transparent !important;
 }

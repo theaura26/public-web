@@ -497,6 +497,11 @@ p.journal-hero__caption {
 [data-view="agent"] main .expanding-banner-wrap,
 [data-view="agent"] main .expanding-banner-inner,
 [data-view="agent"] main .expanding-banner-card,
+/* Regenerative Coffee's chapter backdrop — a fixed stack of photographs
+   behind the scenes. Its frames are already covered by `main img` and
+   `main video` above; this takes the wrapper and its scrim, which would
+   otherwise flatten into a black block in the text view. */
+[data-view="agent"] main .cb,
 /* Crossfade scroller — the runs of decorative full-bleed banners and the
    wordmark / film-play overlay held over the length of a run. */
 [data-view="agent"] main .story2__run,

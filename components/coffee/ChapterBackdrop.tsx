@@ -110,10 +110,13 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           className="cb-frame"
           key={f.src + i}
           data-on={i === active ? 'true' : undefined}
-          /* Recency is the z-order. Anything not yet shown stays at the
-             bottom; the frame directly under the active one is whatever
-             was showing last. */
-          style={{ zIndex: i === active ? 40 : seen.indexOf(i) + 1 }}
+          data-seen={seen.includes(i) ? 'true' : undefined}
+          /* Recency is the z-order, and `seen` already ends with the
+             active frame, so this puts it on top without a special case.
+             The special case is what broke it: lifting the active frame
+             to 40 put it over the scrim, and every darkening change after
+             that dimmed only the frames nobody could see. */
+          style={{ zIndex: seen.indexOf(i) + 1 }}
         >
           {f.video ? (
             <video className="cb-media" poster={f.src} muted loop playsInline autoPlay preload="metadata">
@@ -143,7 +146,11 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
              enough that a fast scroll does not lag behind the words. */
           transition: opacity 900ms var(--ease-out, ease);
         }
-        .cb-frame[data-on] { opacity: 1; z-index: 2; }
+        /* Anything already shown stays opaque underneath. Only the
+           incoming frame animates, and it animates over a solid stack. */
+        .cb-frame[data-seen] { opacity: 1; }
+        .cb-frame[data-on] { animation: cb-in 900ms var(--ease-out, ease) both; }
+        @keyframes cb-in { from { opacity: 0; } to { opacity: 1; } }
         /* Chapter over: everything fades and the ground beneath shows. */
         .cb[data-past] .cb-frame { opacity: 0; }
         .cb[data-past] .cb-scrim,
@@ -151,9 +158,6 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
         /* Nothing at all until the first scene is reached. */
         .cb:not([data-started]) { opacity: 0; }
         .cb { transition: opacity 500ms var(--ease-out, ease); }
-        /* Held at full opacity below the incoming frame, and not
-           transitioned — it is covered before it is ever removed. */
-        .cb-frame[data-under] { opacity: 1; z-index: 1; transition: none; }
         .cb-media {
           width: 100%;
           height: 100%;
@@ -162,11 +166,11 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
         }
         /* The words sit on this, so it carries the contrast rather than
            the type having to fight the photograph. */
-        /* Above the frames. The active frame is lifted to z-index 2 so it
-           crossfades over the outgoing one — which also lifted it over
-           the scrim, and every dimming change made no difference at all
-           until this line existed. */
-        .cb-scrim, .cb-tint { z-index: 3; }
+        /* Above every frame. The frames are stacked by recency and a
+           chapter has at most a dozen, so 50 clears them all — a number
+           the frame stack cannot reach rather than one it happens to sit
+           under today. */
+        .cb-scrim, .cb-tint { z-index: 50; }
         .cb-scrim {
           position: absolute;
           inset: 0;
@@ -177,7 +181,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
              than each block of text drawing a panel behind itself — a
              local wash reads as a box, which is worse than a dark
              picture. The photographs still read; they are ground. */
-          /* 0.68 under a 0.25 tint, compositing to 0.76. The layers
+          /* 0.63 under a 0.25 tint, compositing to 0.72. The layers
              compound, so both numbers are solved for the figure rather
              than scaled — easing each by the same percentage lands short
              of it every time.
@@ -185,7 +189,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
              The floor is set by the brightest frames — the canopy at
              noon and the wet mill in daylight — where white type and the
              accent eyebrows have the least to hold on to. */
-          background: rgba(0, 0, 0, 0.68);
+          background: rgba(0, 0, 0, 0.63);
         }
         .cb-tint {
           position: absolute;

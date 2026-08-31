@@ -179,28 +179,11 @@ export function MicroNav() {
           box-shadow: none !important;
         }
 
-        /* Liquid glass on the sub-nav — enhancement only. The bar's own
-           rule paints a solid fallback first, so browsers without
-           backdrop-filter (older Firefox, any engine with it disabled)
-           keep a legible bar instead of a transparent one. */
-        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-          /* doubled class + tag so this outranks the scoped fallback rule */
-          nav.ln.ln {
-            background:
-              linear-gradient(
-                to bottom,
-                rgba(255, 255, 255, 0.10) 0%,
-                rgba(255, 255, 255, 0.03) 42%,
-                rgba(255, 255, 255, 0.00) 100%
-              ),
-              rgba(12, 12, 12, 0.55);
-            -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.06);
-            backdrop-filter: blur(22px) saturate(180%) brightness(1.06);
-            box-shadow:
-              inset 0 1px 0 0 rgba(255, 255, 255, 0.16),
-              inset 0 -1px 0 0 rgba(255, 255, 255, 0.04);
-          }
-        }
+        /* The bar is plain dark. It used to be liquid glass — a blur
+           with a light gradient over a translucent ground — which meant
+           its colour was whatever photograph happened to be scrolling
+           under it, and on the bright frames the labels sat on cream. A
+           flat ground is the same bar on every scene. */
       `}</style>
 
       <style jsx>{`
@@ -215,8 +198,7 @@ export function MicroNav() {
              of backdrop beside the open menu. */
           position: fixed; left: 0; right: 0; z-index: 39;
           height: 56px;
-          /* Fallback first: a solid bar every browser can draw. */
-          background: rgba(10, 10, 10, 0.94);
+          background: #0B0B0B;
           top: var(--nav-h);
           opacity: 0; pointer-events: none;
           transform: translateY(calc(-1 * var(--nav-h)));

@@ -87,12 +87,17 @@ export const STEPS: Record<string, number[]> = {
      for them */
   hub: [0, 1, 7, 9, 2, 4, 5, 6, 2, 8, 3],
 
-  /* better ground: animal, then soil, then the loop, then the canopy */
-  biodynamic: [0, 7, 8, 2, 3, 4, 6, 5, 1, 9, 9, 9, 10, 0],
+  /* better ground: the canopy, the herd, the dung, the brews, the pits,
+     the light meter, the cut, and the loop closing. One frame per beat —
+     the chapters used to run to fourteen scenes, most of them a sentence
+     long, and the pairing repeated frames to cover them. */
+  biodynamic: [0, 8, 2, 4, 6, 5, 9, 10, 1],
 
-  /* flavours: cherry, ferment, the night, then the table */
-  flavour: [0, 1, 2, 2, 5, 3, 4, 8, 8, 8, 7, 4, 6, 2],
+  /* flavours: the cherry, the tagged tree, the ferment, the night, the
+     grading table, the award, Robusta, the drying beds, the lab */
+  flavour: [0, 2, 3, 5, 7, 8, 1, 6, 4],
 
-  /* transparency: the signature, the clocks, the bench, the cup */
-  transparency: [1, 0, 0, 0, 2, 2, 2, 4, 6, 3, 5, 5, 7, 7],
+  /* transparency: hands on a sensor, the signature, the clocks, the
+     bench, the block re-read, the assay, the cup */
+  transparency: [1, 0, 2, 3, 6, 4, 7],
 }

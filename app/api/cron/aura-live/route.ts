@@ -43,8 +43,11 @@ export async function GET(request: Request) {
   try {
     const outcome = await runFeedGeneration({ force })
 
-    /* Only bust the page cache when the page actually changed. */
-    if (outcome.published || outcome.updated) revalidatePath('/live')
+    /* Only bust the page cache when the page actually changed.
+       The feed page is /now — it moved, and this line kept revalidating
+       /live, which is a redirect. A run could publish and the page would
+       go on serving the version without the entry in it. */
+    if (outcome.published || outcome.updated) revalidatePath('/now')
 
     console.log(JSON.stringify({
       evt: 'aura-live.run',

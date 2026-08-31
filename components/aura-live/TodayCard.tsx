@@ -311,7 +311,11 @@ function Delta({ value, format }: { value: number | null; format: (v: number) =>
   if (value == null || !Number.isFinite(value)) return null
   const flat = Math.abs(value) < 0.05
   return (
-    <p className="delta label">
+    /* A span, not a p: this sits inside the figure's own <p>, and a
+       nested <p> is invalid HTML — the browser closes the outer one
+       early, so the server markup and the client tree disagree and
+       hydration fails for the whole page. */
+    <span className="delta label">
       <span aria-hidden="true">{flat ? '–' : value > 0 ? '↑' : '↓'}</span>
       {flat ? 'level' : format(value)}
       <style jsx>{`
@@ -327,6 +331,6 @@ function Delta({ value, format }: { value: number | null; format: (v: number) =>
           color: rgba(255, 255, 255, 0.8);
         }
       `}</style>
-    </p>
+    </span>
   )
 }

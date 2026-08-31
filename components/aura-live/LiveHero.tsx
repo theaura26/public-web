@@ -84,7 +84,10 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
              the cards can run off the right edge. The title and stamp
              carry the gutter themselves. */
           padding: calc(var(--nav-h) + var(--space-10, 96px)) 0 var(--space-9);
-          min-height: 86vh;
+          /* The site's hero measure, same as the microsite chapters:
+             svh rather than vh, so a mobile browser collapsing its
+             chrome does not change the height under the reader. */
+          min-height: min(92svh, 900px);
           text-align: center;
         }
 
@@ -165,7 +168,7 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
         }
 
         @media (max-width: 640px) {
-          .hero { min-height: 54vh; gap: var(--space-7); }
+          .hero { min-height: min(88svh, 720px); gap: var(--space-7); }
         }
       `}</style>
     </header>

@@ -40,34 +40,28 @@ export default function BiodynamicPage() {
 
       <Scene>
         Coffee does not begin with coffee. It begins with an animal, a metre
-        of soil, and somebody awake before the light.
-      </Scene>
-
-      <Scene>
-        A hundred and fifty acres at 3,600 feet, in the
-        Western Ghats above Mudigere. Four storeys of shade — pepper and
-        silver oak, then jackfruit, then coffee, then the ground. From the air
-        it reads as forest. It happens to make coffee.
+        of soil, and somebody awake before the light. A hundred and fifty
+        acres at 3,600 feet, in the Western Ghats above Mudigere, under four
+        storeys of shade — pepper and silver oak, then jackfruit, then coffee,
+        then the ground. From the air it reads as forest. It happens to make
+        coffee.
       </Scene>
 
       <Scene title="Our best farmers have four legs.">
         About fifty Malnad Gidda. Small, hardy, native to these hills, and
         grazing them for centuries before anybody thought to write it down.
+        The herd is also the whole fertiliser supply — everything this soil is
+        ever given comes out of them, which is why nothing has been sprayed on
+        the grass they eat. What goes into the animal comes back out into the
+        ground the coffee is standing in.
       </Scene>
 
-      <Scene>
-        The herd is the whole fertiliser supply. Everything this soil is ever
-        given comes out of them — which is why nothing has been sprayed on the
-        grass they eat.
-        What goes into the animal comes back out into the ground the coffee is
-        standing in.
-      </Scene>
-
-      <Scene>
-        So the day starts at twenty to six, in the dark, with a bucket. What
-        they left overnight is gathered while it is still warm, weighed,
-        written down, and split three ways — into the pits, into the brews,
-        into the horns.
+      <Scene title="The day starts at twenty to six.">
+        In the dark, with a bucket. What the herd left overnight is gathered
+        while it is still warm, weighed, written down, and split three ways —
+        into the pits, into the brews, into the horns. It is the most valuable
+        raw material on the estate and it is collected by hand, every morning,
+        before anything else happens.
       </Scene>
 
       <Scene title="We do not buy fertility. We make it.">
@@ -77,43 +71,31 @@ export default function BiodynamicPage() {
         rather the point.
       </Scene>
 
-      <Scene>
-        Fourteen numbered pits, ninety days apiece. Horn manure buried through
-        the cool months and put out at dusk. Quartz buried through the summer,
-        misted over the canopy at first light. Yarrow, chamomile, nettle, oak
-        bark, dandelion, valerian — in doses small enough to look like
-        superstition, into a heap the size of a room.
-      </Scene>
-
-      <Scene>
-        None of it arrives on a lorry.
+      <Scene title="Fourteen pits, ninety days apiece.">
+        Horn manure buried through the cool months and put out at dusk. Quartz
+        buried through the summer, misted over the canopy at first light.
+        Yarrow, chamomile, nettle, oak bark, dandelion, valerian — in doses
+        small enough to look like superstition, into a heap the size of a
+        room. None of it arrives on a lorry.
       </Scene>
 
       <Chapter>Then we stopped guessing.</Chapter>
 
-      <Scene>
-        Shade on estates like this one has been read by eye for three hundred
-        years. A contractor stands under a tree, decides it is too dark, and
-        directs the cut. It works until it doesn’t, and a cut made on a
-        feeling is still the wrong shape fifty years later.
+      <Scene title="Three hundred years of reading it by eye.">
+        A contractor stands under a tree, decides it is too dark, and directs
+        the cut. It works until it doesn’t, and a cut made on a feeling is
+        still the wrong shape fifty years later. So in 2026 we took a lux
+        meter into Block 3 and took fifty readings an acre. The block turned
+        out to be three blocks: one reading 33,000 lux with two-thirds of the
+        light gone, one 62,000, one 82,000 and far too bright. Arabica wants
+        50,000 to 70,000. One zone in three was where we had assumed all of it
+        was.
       </Scene>
 
-      <Scene>
-        So in 2026 we took a lux meter into Block 3 and took fifty readings an
-        acre. The block turned out to be three blocks. One read 33,000 lux
-        with two-thirds of the light gone. One read 62,000. One read 82,000,
-        wide open and far too bright.
-      </Scene>
-
-      <Scene>
-        Arabica wants 50,000 to 70,000. One zone in three was where we had
-        assumed all of it was.
-      </Scene>
-
-      <Scene>
-        So we cut to the number instead of the feeling. Every wound dressed
-        with dung and turmeric, every cut logged, and the whole block read
-        again ninety days later to find out whether we had been right.
+      <Scene title="So we cut to the number.">
+        Every wound dressed with dung and turmeric, every cut logged, and the
+        whole block read again ninety days later to find out whether we had
+        been right. Recording what was done is the easy half.
       </Scene>
 
       <Scene title="Nothing comes in. Nothing leaves.">

@@ -18,7 +18,13 @@ export default function MoonDisc({ phase, size = 44 }: { phase: number; size?: n
      new and full, and negative when the terminator bulges the other way. */
   const k = Math.cos(2 * Math.PI * phase)
   const waxing = phase < 0.5
-  const rx = Math.abs(k) * r
+  /* Rounded, and not for tidiness: this number is interpolated into the
+     path, and Node and the browser can print the same double with a
+     different number of digits — 15.383279273857486 against
+     15.38327927385749 — which React reports as a hydration mismatch on
+     every page load. Three decimals is far finer than a 44px disc can
+     draw, and it prints identically on both sides. */
+  const rx = Math.round(Math.abs(k) * r * 1000) / 1000
   /* The lit side is a half-disc plus or minus the terminator lobe. */
   const sweepOuter = waxing ? 1 : 0
   const sweepInner = k > 0 === waxing ? 0 : 1

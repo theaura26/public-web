@@ -36,17 +36,12 @@ export default function RegenerativeCoffeePage() {
       <Panel
         id="manifesto"
         title="Every season, this ground is worth more than it was."
-        lede="The herd feeds the soil, the soil feeds the trees. Nothing is bought in, and nothing is trucked away."
+        lede="The herd feeds the soil, the soil feeds the trees. Nothing is bought in and nothing is trucked away. Nine disciplines read the same hundred and fifty acres; the estate is where they overlap."
       />
 
       {/* ── The Remarkable Loop ─────────────────────────────────── */}
 
       <Chapter>What enters the mind shapes what the hands build.</Chapter>
-
-      <Scene title="The Remarkable Loop.">
-        Nine ways of paying attention to the same hundred and fifty acres.
-        Each one is a lens. The estate is where they overlap.
-      </Scene>
 
       <Scene
         id="biodynamic"

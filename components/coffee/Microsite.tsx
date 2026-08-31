@@ -179,7 +179,7 @@ export function MicroNav() {
           box-shadow: none !important;
         }
 
-        /* The bar is plain dark. It used to be liquid glass — a blur
+        /* The bar is a flat white. It used to be liquid glass — a blur
            with a light gradient over a translucent ground — which meant
            its colour was whatever photograph happened to be scrolling
            under it, and on the bright frames the labels sat on cream. A
@@ -198,7 +198,11 @@ export function MicroNav() {
              of backdrop beside the open menu. */
           position: fixed; left: 0; right: 0; z-index: 39;
           height: 56px;
-          background: #0B0B0B;
+          /* White, matching the site bar directly above it, so the two
+             read as one header rather than a light bar with a dark strip
+             hung under it. */
+          background: #fff;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
           top: var(--nav-h);
           opacity: 0; pointer-events: none;
           transform: translateY(calc(-1 * var(--nav-h)));
@@ -276,7 +280,7 @@ export function MicroNav() {
           position: relative; flex-shrink: 0;
           font-size: 13px;
           display: inline-flex; align-items: center; height: 100%;
-          color: rgba(255, 255, 255, 0.72);
+          color: rgba(0, 0, 0, 0.66);
           text-decoration: none; white-space: nowrap;
           transition: color var(--dur-base) var(--ease);
         }

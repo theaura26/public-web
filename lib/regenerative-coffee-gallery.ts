@@ -84,8 +84,10 @@ export const TRANSPARENCY: Frame[] = [
  * the same picture rather than cutting to another and back. */
 export const STEPS: Record<string, number[]> = {
   /* the hub: the scenes are the disciplines, and the frames are named
-     for them */
-  hub: [0, 1, 7, 9, 2, 4, 5, 6, 2, 8, 3],
+     for them. Ten beats against ten photographs, one each — the loop's
+     own opening line moved into the manifesto lede so that nothing has
+     to appear twice. */
+  hub: [0, 7, 9, 2, 4, 5, 6, 1, 8, 3],
 
   /* better ground: the canopy, the herd, the dung, the brews, the pits,
      the light meter, the cut, and the loop closing. One frame per beat —

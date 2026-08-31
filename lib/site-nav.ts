@@ -152,8 +152,10 @@ export const SECTIONS: NavSection[] = [
         soon: true,
         children: [
           { label: 'Art', href: '/from-aura/art', soon: true },
+          { label: 'Craft', href: '/from-aura/craft', soon: true },
           { label: 'Fashion', href: '/from-aura/fashion', soon: true },
           { label: 'Stationery', href: '/from-aura/stationery', soon: true },
+          { label: 'Limited Editions', href: '/from-aura/editions', soon: true },
         ],
       },
       {
@@ -161,7 +163,7 @@ export const SECTIONS: NavSection[] = [
         href: '/from-aura/experiences',
         soon: true,
         children: [
-          { label: 'Artist residencies', href: '/residency' },
+          { label: 'Artist residencies', href: '/from-aura/residencies', soon: true },
           { label: 'Farm tours', href: '/from-aura/farm-tours', soon: true },
           { label: 'Harvest tours', href: '/from-aura/harvest-tours', soon: true },
         ],

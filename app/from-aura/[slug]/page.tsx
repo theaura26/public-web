@@ -77,9 +77,11 @@ function product(slug: string) {
     title: entry?.title ?? (navLabel!.split(' — ').slice(1).join(' — ') || navLabel!),
     lane: entry?.lane.label ?? SECTION,
     description: entry?.description ?? null,
-    /* The rest of its own lane. A buyer looking at one season of coffee
-       is more likely to want another season than a bar of soapnut. */
-    siblings: (entry?.lane.items ?? []).filter((i) => i.href !== `${PREFIX}/${slug}`),
+    /* Everything else in the shop, not just the rest of this lane. A
+       product page is the end of a path, and the lane it belongs to is
+       the one set of things the reader has already seen — showing them
+       the other four categories is the point of putting a lane here. */
+    siblings: FROM_AURA.flatMap((l) => l.items).filter((i) => i.href !== `${PREFIX}/${slug}`),
   }
 }
 
@@ -172,7 +174,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           display: grid;
           grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
           gap: clamp(32px, 5vw, 96px);
-          align-items: start;
+          /* The column reads off the middle of the picture rather than
+             its top edge — the plate is 4:5 and the copy is four short
+             paragraphs, so top-aligning left the text stranded against a
+             tall image. */
+          align-items: center;
         }
         @media (max-width: 768px) {
           .pd-in { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }

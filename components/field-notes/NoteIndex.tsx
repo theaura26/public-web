@@ -15,13 +15,11 @@ import { CATEGORIES, type CategoryId, type NoteEntry } from '@/lib/field-notes'
 export function NoteIndex({
   title,
   lede,
-  standfirst,
   active,
   notes,
 }: {
   title: string
   lede: string
-  standfirst?: string
   /** Highlights the current category in the filter row. */
   active?: CategoryId | 'all'
   notes: NoteEntry[]
@@ -32,7 +30,6 @@ export function NoteIndex({
         <header className="fn-head">
           <h1 className="fn-h">{title}</h1>
           <p className="fn-lede">{lede}</p>
-          {standfirst && <p className="fn-standfirst">{standfirst}</p>}
         </header>
 
         <nav className="fn-filters" aria-label="Field Notes categories">
@@ -103,16 +100,17 @@ export function NoteIndex({
            says what a category is takes the label role. */
         /* Body measure, centred under the mono lede. The lede names the
            shelf; this says what is on it. */
-        .fn .fn-standfirst {
-          margin: var(--space-4) auto 0;
-          max-width: 62ch;
-          text-align: center;
-          color: var(--text-body);
-        }
+
+        /* Body type, not the label role. This is a sentence about the
+           shelf, and the mono uppercase setting is for eyebrows and data
+           keys — at 11px caps it read as a caption on its own heading.
+           Wider, too: 42ch was cutting it to three short lines. */
         .fn .fn-lede {
-          font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; line-height: normal;
-          margin: 0; max-width: 42ch;
-          color: var(--text-muted);
+          font-family: var(--font-sans), sans-serif;
+          font-size: 17px; line-height: 1.5; letter-spacing: normal;
+          text-transform: none;
+          margin: 0; max-width: 68ch;
+          color: var(--text-body);
         }
 
         /* ── category filters ── */
@@ -125,14 +123,21 @@ export function NoteIndex({
         .fn .fn-filter {
           font-family: var(--font-mono), monospace;
           font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
-          color: var(--text-muted); text-decoration: none;
-          padding: 7px 14px; border: 1px solid var(--border);
+          /* --text-muted on --border was two low-contrast values at
+             once and the row all but disappeared. Body ink on the
+             stronger hairline is the design system's own pairing for a
+             control that has to be read. */
+          color: var(--text-body); text-decoration: none;
+          padding: 7px 14px; border: 1px solid var(--border-strong);
           border-radius: 999px;
           transition: color var(--dur-base) var(--ease),
                       border-color var(--dur-base) var(--ease);
         }
-        .fn .fn-filter:hover { color: var(--text); border-color: var(--border-strong); }
-        .fn .fn-filter.is-on { color: var(--brand-accent); border-color: var(--brand-accent); }
+        .fn .fn-filter:hover { color: var(--text); border-color: var(--text); }
+        .fn .fn-filter.is-on {
+          color: var(--contrast-text); background: var(--contrast-bg);
+          border-color: var(--contrast-bg);
+        }
 
         /* ── the cards ──
            Two across, image over text. A note is chosen by the look of

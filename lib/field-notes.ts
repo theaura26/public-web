@@ -32,12 +32,6 @@ export type Category = {
   label: string
   /** Shown under the heading on the category page. */
   lede: string
-  /** A short second paragraph saying what belongs on this shelf.
-   *
-   *  Without it a category page was a one-line lede over a grid of
-   *  tiles — 31 to 42 words, which the crawler flags as thin and which
-   *  tells a reader nothing the tiles do not already say. */
-  standfirst: string
 }
 
 /* Seven, in this order, which is the order the menu has always shown
@@ -49,50 +43,36 @@ export const CATEGORIES: Category[] = [
     id: 'biodynamic',
     label: 'Biodynamic',
     lede: 'Preparations buried and exhumed on a calendar, fourteen numbered pits, and a herd that makes the fertility the ground is fed with.',
-    standfirst:
-      'Seven notes, from the worldview down to the pit. Steiner’s preparations and the Vedic ones are kept here together because the estate makes no distinction between them in practice — both are judged on whether the biology in them survives the lab.',
   },
   {
     id: 'biodiversity',
     label: 'Biodiversity',
     lede: 'Four storeys of canopy across 150 acres, and the count of what lives in them — earthworms quarterly, light in lux, dead wood by decay class.',
-    standfirst:
-      'Eight notes on what lives in the four storeys, and what is being done to make room for more of it. Counting comes first: earthworms by quadrat, light in lux, dead wood by decay class. The interventions — forest islands, bug hotels, taking six introduced plants back out — follow the count rather than the other way round.',
   },
   {
     id: 'labs',
     label: 'Labs',
     lede: 'Where a claim gets tested. Ferment logs at fifteen-minute intervals, colony counts before and after, and the number that decides when a tank comes off.',
-    standfirst:
-      'Where a claim is tested before it is published. Ferment logs at fifteen-minute intervals, colony counts before and after a treatment, and the pH that ends a batch whatever the clock says. If a number on this site has a method behind it, the method is described in one of these.',
   },
   {
     id: 'art-culture',
     label: 'Art & Culture',
     lede: 'Six studios, an invited residency, and the lamp lit at the Gau Angan every morning before anyone starts work.',
-    standfirst:
-      'The making side of the estate, and the thinking that governs it. Six studios, an invited residency, and the refusals — the things Aura will not do — set down in writing so they can be held to. The craft and the farming are not separate programmes: the kiln burns the canopy’s own offcuts, and the residency runs on the estate’s clock rather than the resident’s.',
   },
   {
     id: 'land-ecology',
     label: 'Land & Ecology',
     lede: 'Red laterite at 3,600 ft, forest islands built inside the planting, and six introduced plants being taken back out of the understorey.',
-    standfirst:
-      'The ground itself, in two valleys. Red laterite at 3,600 ft under monsoon, and a Japanese valley an hour north of Kyoto that keeps its own time. These notes are about what the land was before the farming, and what the farming is doing to it.',
   },
   {
     id: 'coffee-fermentation',
     label: 'Coffee & Fermentation',
     lede: 'One harvest split into many lots, and the hours of controlled decay — stopped at pH 4.2 — that decide what reaches the cup.',
-    standfirst:
-      'One harvest split into many lots, and the controlled decay that decides what reaches the cup. The variety is held constant and the process is the variable, which is the only way the differences between the lots mean anything. Pepper sits here too: the vine climbs the same shade trees and is cured on the same yard, by people doing both jobs in the same week.',
   },
   {
     id: 'animals',
     label: 'Animals',
     lede: 'About fifty Malnad Gidda carrying a number each, the insects a plantation forgets to house, and the pollinators nobody has counted yet.',
-    standfirst:
-      'The herd, and everything else on the estate with a heartbeat. About fifty Malnad Gidda carrying a number issued once, the insects a plantation forgets to house, and the pollinators nobody has counted yet. The herd is the reason the fertility system works at all, and it is read here as an animal rather than as an input — a different set of questions, and a different standard of care.',
   },
 ]
 
@@ -223,6 +203,9 @@ export type NoteEntry = {
   title: string
   description: string
   img?: string
+  /** A second frame of the same subject, shown on hover. Supplied for
+   *  the products that were photographed twice. */
+  imgHover?: string
   /** Published, or written but not yet released. */
   status: 'live' | 'soon'
   /** Set when the page's canonical home is another section. */

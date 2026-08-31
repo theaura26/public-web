@@ -47,7 +47,7 @@ function product(slug: string) {
   if (!entry && !navLabel) return null
   /* A parent — Coffee, Pepper, Farm Goods — lists what sits under it.
      A reader on Coffee wants the seasons, and a paragraph about the
-     estate's philosophy is in the way of that. */
+     estate’s philosophy is in the way of that. */
   const shop = SECTIONS.find((x) => x.id === 'shop')
   const parent = shop?.items.find((x) => x.href === `${PREFIX}/${slug}`)
 

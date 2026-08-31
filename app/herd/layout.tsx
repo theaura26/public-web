@@ -7,7 +7,7 @@ import type { ReactNode } from 'react'
 export const metadata: Metadata = {
   title: 'Ecosystem Engineers',
   description:
-    'Not livestock — infrastructure. Why a grazing herd, moved and rested, is one of the oldest ecosystem engineers on Earth, and why Aura keeps cattle to maintain the intelligence of the land. Evidence-backed; honest about what the science does not yet know.',
+    'Infrastructure with a heartbeat. Why a grazing herd, moved and rested, is one of the oldest ecosystem engineers on earth — and why Aura keeps about fifty.',
   alternates: { canonical: '/herd' },
   openGraph: {
     title: 'The Oldest Engineer — Aura',

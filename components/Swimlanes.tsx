@@ -8,7 +8,7 @@ import { FROM_AURA, type Lane } from '@/lib/from-aura'
 export type { Lane }
 
 /* ── Lanes ────────────────────────────────────────────────────────
-   A section's whole contents, one lane per group, each scrolling
+   A section’s whole contents, one lane per group, each scrolling
    sideways off the right edge. Everything is visible in a handful of
    gestures rather than one long column, and a reader who only wants one
    group never scrolls past the others.
@@ -52,7 +52,7 @@ function LaneStyles() {
            <Link>, and the cards are Links. Every selector is therefore
            nested under .sw by hand so nothing escapes this page. */
         /* A single lane at the foot of another page carries none of the
-           index page's own framing. */
+           index page’s own framing. */
         .sw.is-strip {
           min-height: 0;
           padding: var(--section-gap) 0 var(--space-8);
@@ -132,7 +132,7 @@ function LaneStyles() {
           margin-left: calc(50% - 50vw);
         }
         /* The row dissolves off the right rather than hard-cropping —
-           the same gesture as the homepage slider and the menu's
+           the same gesture as the homepage slider and the menu’s
            bottom vignette. */
         /* Flush to the edge, and no clipping ancestor. An overflow:hidden
            parent gives backdrop-filter nothing to sample — the element
@@ -151,7 +151,7 @@ function LaneStyles() {
         .sw .lane-scroll {
           overflow-x: auto;
           /* No scroll-snap. Snapping pulls the first card flush to the
-             container edge, which scrolls straight past the track's rail
+             container edge, which scrolls straight past the track’s rail
              padding and lands it at x=0 instead of on the heading. */
           padding: var(--space-4) 0 var(--space-7);
           scrollbar-width: none; -ms-overflow-style: none;
@@ -262,16 +262,16 @@ export function Swimlanes({
               <h2 className="lane-h" id={`lane-${cat.id}`}>{cat.label}</h2>
             </div>
             {/* The rail belongs to the wrapper. A narrow max-width on
-                the same element that carries section-w's padding fights
+                the same element that carries section-w’s padding fights
                 it, and the lede lands 40px left of every other line. */}
             <div className="section-w">
               <p className="lane-lede">{cat.lede}</p>
             </div>
 
             {/* Full-bleed, so the row runs off the right edge instead of
-                stopping at the rail. The track's own padding reproduces
+                stopping at the rail. The track’s own padding reproduces
                 the rail on the left so the first card still starts on
-                the heading's line. */}
+                the heading’s line. */}
             <div className="lane-bleed">
               <div className="lane-scroll">
                 <div className="lane-track">

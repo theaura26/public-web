@@ -6,7 +6,7 @@ import {
 export const metadata: Metadata = {
   title: 'Better Ground — Regenerative Coffee',
   description:
-    'Fifty-two cattle, 154,000 litres of Jeevamrit a year, and a canopy cut to a light reading instead of a feeling. Sampigekhan Estate, Mudigere.',
+    'About fifty cattle, 154,000 litres of Jeevamrit a year, and a canopy cut to a light reading instead of a feeling. Sampigekhan Estate, Mudigere.',
   alternates: { canonical: '/regenerative-coffee/biodynamic' },
 }
 
@@ -42,7 +42,7 @@ export default function BiodynamicPage() {
       </Scene>
 
       <Scene title="Our best farmers have four legs.">
-        Fifty-two Malnad Gidda. Small, hardy, native to these hills, and
+        About fifty Malnad Gidda. Small, hardy, native to these hills, and
         grazing them for centuries before anybody thought to write it down.
       </Scene>
 

@@ -22,7 +22,7 @@ export default function LandPage() {
 
       <TwoCol heading="Land is ancestry.">
         <p className="p1">
-          Aura Estate sits in the <Term tip="A mountain range down India's west coast — older than the Himalaya, and one of the world's eight 'hottest' biodiversity hotspots, with over 7,000 plant species.">Western Ghats</Term> of Karnataka, on red{' '}
+          Aura Estate sits in the <Term tip="A mountain range down India’s west coast — older than the Himalaya, and one of the world’s eight 'hottest' biodiversity hotspots, with over 7,000 plant species.">Western Ghats</Term> of Karnataka, on red{' '}
           <Term tip="Iron- and aluminium-rich soil formed by deep tropical weathering — not a volcanic rock itself, but the long residue of one, the Deccan basalt, broken down over ages of monsoon.">laterite</Term>:
           soil that is itself the record of a very long weathering, under a monsoon
           older than agriculture and a four-story canopy older than any of us.
@@ -80,7 +80,7 @@ export default function LandPage() {
           flowering seasons. 35,000 individual trees across the estate.
         </p>
         <p className="p1">
-          And 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle — an indigenous breed native to this
+          And about fifty <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle — an indigenous breed native to this
           altitude, rotating through blocks timed to cherry development stages.
           Their dung drives the biodynamic programme. Their presence shapes the
           soil biology season by season.
@@ -141,7 +141,7 @@ export default function LandPage() {
           value="Mudigere · Karnataka."
         >
           150 acres, 3,600 ft, laterite soil, in the Western Ghats — a UNESCO World Heritage region. Four-
-          story polyculture. 52 Malnad Gidda cattle. The agricultural engine.
+          story polyculture. About fifty Malnad Gidda cattle. The agricultural engine.
         </DataCard>
         <DataCard
           img="/journals/land/aura-ohara.jpg"

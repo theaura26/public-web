@@ -32,9 +32,13 @@ export const FROM_AURA: Lane[] = [
     label: 'From the Land',
     lede: 'Coffee, tea, pepper, areca and seasonal produce — and the fertility the estate brews to grow them.',
     items: [
-      soon('/from-aura/coffee-25-26', 'Coffee 25/26', 'Nine lots from one harvest, each with its own wet mill file.'),
-      soon('/from-aura/coffee-26-27', 'Coffee 26/27', 'By block and by zone, sold against the canopy reading that shaped it.'),
-      soon('/from-aura/coffee-27-28', 'Coffee 27/28', 'Pre-book, before the cherry is on the tree.'),
+      /* Same four the menu carries. This lane and lib/site-nav.ts had
+         drifted apart on coffee — the lane still ran a 27/28 pre-book
+         the menu had already replaced. */
+      soon('/from-aura/coffee-25-26', '2025–26 Lots', 'Nine lots from one harvest, each with its own wet mill file.'),
+      soon('/from-aura/coffee-experimental', 'No.1 Experimental Coffee in India', 'The lot the estate is proudest of, and the file behind it.'),
+      soon('/from-aura/coffee-26-27', 'Pre-book 2026–27', 'Reserved before the cherry is on the tree.'),
+      soon('/from-aura/coffee-blocks-and-zones', 'Book Block & Zone', 'By block and by zone, sold against the canopy reading that shaped it.'),
       soon('/from-aura/tea-27-28', 'Tea 27/28', 'Thirty-two acres, in organic transition targeting 2027. Pre-book.'),
       soon('/from-aura/pepper-25-26', 'Pepper 25/26', 'Malabar, black and white, off the vines that climb the shade trees.'),
       soon('/from-aura/pepper-26-27', 'Pepper 26/27', 'By block and by zone.'),

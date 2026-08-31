@@ -250,7 +250,7 @@ export default function MudigerePage() {
 
   return (
     <>
-      {/* Hide the kit's default back link — /mudigere is reached by
+      {/* Hide the kit’s default back link — /mudigere is reached by
           direct invitation, not from another journal. */}
       <style jsx global>{`
         .hero-banner__back,
@@ -302,7 +302,7 @@ export default function MudigerePage() {
 
         /* Forest pull-quote — doesn't just fade: the blur clears, it rises and
            scales up, then breathes gently so it feels alive. Triggered off the
-           parent Reveal's .visible class. */
+           parent Reveal’s .visible class. */
         .forest-mark {
           opacity: 0;
           transform: scale(0.93) translateY(14px);
@@ -333,7 +333,7 @@ export default function MudigerePage() {
         }
 
         /* Spec section transitions in card-by-card. The Reveal container
-           itself doesn't move (so there's no double-animation); each card
+           itself doesn’t move (so there’s no double-animation); each card
            fades + rises with a staggered delay once the section is in view. */
         .reveal.mud-cascade { opacity: 1; transform: none; }
         .mud-cascade .stat-card {
@@ -392,7 +392,7 @@ export default function MudigerePage() {
         <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 55% 45% at 0% 100%, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 35%, rgba(0, 0, 0, 0) 75%)', pointerEvents: 'none', zIndex: 4 }} />
         {/* Wordmark — replaces the type, parallaxes over the video.
             Rendered solid white (filter forces white regardless of the
-            SVG's own fill); no mix-blend. */}
+            SVG’s own fill); no mix-blend. */}
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', zIndex: 5 }}>
           <h1 aria-label="Mudigere" style={{ margin: 0 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -418,7 +418,7 @@ export default function MudigerePage() {
           Four centuries ago, seven coffee seeds crossed from Yemen into
           the hills above Chikmagalur and took root — the cradle of Indian
           coffee, held in the{' '}
-          <Term tip="Mountain range along India's west coast. A UNESCO World Heritage site and one of the world's eight 'hottest hotspots' of biological diversity. Older than the Himalayas.">Western Ghats</Term>, a range older than the Himalayas
+          <Term tip="Mountain range along India’s west coast. A UNESCO World Heritage site and one of the world’s eight 'hottest hotspots' of biological diversity. Older than the Himalayas.">Western Ghats</Term>, a range older than the Himalayas
           and among the eight most biodiverse places on Earth.
         </p>
         <p className="p1">
@@ -485,7 +485,7 @@ export default function MudigerePage() {
                 ['32 acres', 'Tea, in organic transition.', 'tea'],
                 ['3,000 mm', 'Annual monsoon rainfall.', 'rain'],
                 ['35,000', 'Trees, across four canopy layers.', 'trees'],
-                ['52', 'Malnad Gidda cattle.', 'cows'],
+                ['~50', 'Malnad Gidda cattle.', 'cows'],
               ] as const).map(([value, label, thumb]) => (
                 <div key={value} className="stat-card">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -658,7 +658,7 @@ export default function MudigerePage() {
         <DataCard
           img="/journals/living-systems/aura-cow.jpg"
           alt="Malnad Gidda grazing through the coffee blocks"
-          value="52 cattle, in rotation."
+          value="~50 cattle, in rotation."
         >
           Their movement through the coffee IS the rotation. Their dung is
           the input.
@@ -751,7 +751,7 @@ export default function MudigerePage() {
 
       <Continue
         items={[
-          { href: '/herd', label: 'Ecosystem Engineers', description: 'The estate’s biological engine — fifty-two Malnad Gidda, cared for by hand, each passported.', img: '/herd/images/aura-grassland1.jpg' },
+          { href: '/herd', label: 'Ecosystem Engineers', description: 'The estate’s biological engine — about fifty Malnad Gidda, cared for by hand, each passported.', img: '/herd/images/aura-grassland1.jpg' },
           { href: '/circular', label: 'Circular Intelligence', description: 'What the herd makes — CPP and Jeevamrit, by hand, tested before the soil.', img: '/circular/images/aura-shed.jpg' },
           { href: '/shade', label: 'The Light Instrument', description: 'The canopy above the estate — shade whiskering, measured in lux and cut to prescription.', img: '/aura-land.jpg' },
         ]}

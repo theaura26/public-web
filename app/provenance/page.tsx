@@ -58,7 +58,7 @@ export default function ProvenancePage() {
         <p className="p1">
           Nothing on the plant is decorative. Nine streams of data run off the estate, each on its own
           clock — some every fifteen minutes, some once a quarter, some once a year. Together they are
-          the estate&apos;s pulse, printed.
+          the estate&rsquo;s pulse, printed.
         </p>
         <DataGrid cols={3}>
           <DataCard value="Fermentation">
@@ -76,10 +76,10 @@ export default function ProvenancePage() {
           </DataCard>
           <DataCard value="Canopy">
             <Term tip="Normalized Difference Vegetation Index — a satellite or drone measure of how much live, photosynthesising leaf a patch of land is carrying.">NDVI</Term> per
-            block, quarterly. The forest&apos;s vigour, measured from above.
+            block, quarterly. The forest&rsquo;s vigour, measured from above.
           </DataCard>
           <DataCard value="Cattle &amp; dung">
-            The herd&apos;s rotation, and each dung batch traced to the animals that gave it — the first
+            The herd&rsquo;s rotation, and each dung batch traced to the animals that gave it — the first
             link in every preparation.
           </DataCard>
           <DataCard value="Understorey">
@@ -138,7 +138,7 @@ export default function ProvenancePage() {
       />
 
       <DataGrid cols={3} standalone>
-        <DataCard value="15 min">The interval a fermenting lot&apos;s pH is read at, start to finish.</DataCard>
+        <DataCard value="15 min">The interval a fermenting lot&rsquo;s pH is read at, start to finish.</DataCard>
         <DataCard value="9 streams">Of estate data, each on its own clock — from every quarter-hour to once a year.</DataCard>
         <DataCard value="4–5×">Estimated carbon held per acre by the four-storey polyculture over monoculture coffee.</DataCard>
       </DataGrid>

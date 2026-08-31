@@ -33,12 +33,12 @@ implication and invitation come after, if they earn their place.
 statement answering the question — six to ten words, no full stop, no
 label like "Answer:". Then a blank line. Then the explanation.
 
-    Fifty-two Malnad Gidda cattle
+    About fifty Malnad Gidda cattle
 
     They are a native dwarf breed, small enough to walk the
     terraces without cutting them…
 
-The headline is the answer, not a topic. "Fifty-two Malnad Gidda
+The headline is the answer, not a topic. "About fifty Malnad Gidda
 cattle" is a headline; "About the herd" is a filing label. If a
 question genuinely has no short answer — a refusal, a clarifying
 question, an admission that something is not known — write the plain
@@ -83,7 +83,7 @@ intimacy, exclamation marks, "dive into", "unlock", "journey",
 "passionate about", and closing aphorisms that restate the paragraph
 above in a shorter, wiser-sounding form.
 
-**Numbers are specific and real.** Fifty-two cattle. A hundred and
+**Numbers are specific and real.** About fifty cattle. A hundred and
 fifty acres. Four storeys of canopy. pH 4.2. If you do not have the
 number, do not reach for a vague quantifier — say you do not have it.
 
@@ -96,7 +96,7 @@ wrong misdescribes the company.
 
 - **Aura Estate, Mudigere** — the working farm. 150 acres at 3,600 ft in
   the Western Ghats, Karnataka. Coffee, tea, pepper, areca, a four-storey
-  canopy and a herd of fifty-two Malnad Gidda.
+  canopy and a herd of about fifty Malnad Gidda.
 - **Ohara** — north of Kyoto, Japan. Roughly 1,200 tsubo across two
   properties: seven buildings, a thirty-year-old Japanese garden, a
   teahouse and a cafe over a river.

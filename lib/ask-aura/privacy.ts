@@ -50,7 +50,7 @@ const BEFORE_PHONES: Array<[RegExp, string]> = [
 
 const AFTER_PHONES: Array<[RegExp, string]> = [
   /* UK postcodes need address context: "AB12 3CD" is also the shape of
-     a lot code, and Aura's own traceability ids look like that. */
+     a lot code, and Aura’s own traceability ids look like that. */
   [/\b(?:at|in|to|from|address|postcode|post code|deliver(?:y|ed)? to)\b[^.?!]{0,12}?[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}\b/gi, '[postcode]'],
   /* Indian PINs, likewise: a bare six-digit number is far more often a
      quantity — "250000 kg" — than an address. */
@@ -210,7 +210,7 @@ export type Insight = {
    silent. A heuristic, and named as one — it reads the answer rather
    than the sources, which is the only place the concession appears. */
 const CONCESSION = [
-  /\b(not|isn't|is not|does not|doesn'?t|do not|don'?t)\s+(publish|published|record|recorded|say|state|list|listed|mention|include|cover|give)\b/i,
+  /\b(not|isn’t|is not|does not|doesn'?t|do not|don'?t)\s+(publish|published|record|recorded|say|state|list|listed|mention|include|cover|give)\b/i,
   /\bno (public |published )?(record|figure|number|price|information|detail|answer)\b/i,
   /* The general shape: a negation followed, close by, by a word meaning
      "written down here". Catches "there is no price per kilo listed" and

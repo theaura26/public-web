@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 /* ═══════════════════════════════════════════════════════════════════
-   THE REMARKABLE CIRCLE — the microsite's masthead.
+   THE REMARKABLE CIRCLE — the microsite’s masthead.
 
    Eight disciplines on a slowly turning ring, drawn on white. The ring
    rotates; each glyph counter-rotates at the same rate so it stays
@@ -13,7 +13,7 @@ import React, { useEffect, useRef, useState } from 'react'
    up and pull; the two strings tied to it stretch to follow, and a
    loose spring throws it back when you let go. Click a glyph and the
    page anchors to that discipline — unless you were dragging, in which
-   case it doesn't.
+   case it doesn’t.
 
    Hovering anywhere over the circle opens it out ten per cent.
    Hovering the centre also swaps the wordmark for what the circle
@@ -153,8 +153,8 @@ export function RemarkableCircle() {
      One loop drives everything: eight node springs (the glyphs) and
      eight string springs (the gaps between them).
 
-     All of it happens in the ring's own rotating frame. The pointer is
-     un-rotated by the layer's live angle before any distance is
+     All of it happens in the ring’s own rotating frame. The pointer is
+     un-rotated by the layer’s live angle before any distance is
      measured, which is why a string reacts to where the cursor
      actually is — and why a glyph you are holding stays under your
      cursor while the ring keeps turning underneath it. */
@@ -233,7 +233,7 @@ export function RemarkableCircle() {
       let local: { x: number; y: number } | null = null
       if (pointer && box.width) {
         const m = new DOMMatrixReadOnly(getComputedStyle(spin).transform)
-        const cos = m.a, sin = m.b                     // the layer's live angle
+        const cos = m.a, sin = m.b                     // the layer’s live angle
         const dx = pointer.x - box.width / 2
         const dy = pointer.y - box.height / 2
         local = {
@@ -270,7 +270,7 @@ export function RemarkableCircle() {
 
       /* The strings have no life of their own — they are geometry hung
          between two glyphs. The control point rides along with both
-         ends, which keeps each arc's curvature while it stretches. */
+         ends, which keeps each arc’s curvature while it stretches. */
       for (let i = 0; i < N; i++) {
         const j = (i + 1) % N
         const cx = REST[i].x + ((node[i].x - NODES[i].x) + (node[j].x - NODES[j].x)) / 2
@@ -351,7 +351,7 @@ export function RemarkableCircle() {
             </div>
           </div>
 
-          {/* The centre, and the page's H1. The drawn mark is decorative;
+          {/* The centre, and the page’s H1. The drawn mark is decorative;
               the words underneath it are the real heading, sitting at
               opacity 0 until hover. That keeps one element doing the job
               for everybody — a reader sees the wordmark, a screen reader
@@ -382,9 +382,9 @@ export function RemarkableCircle() {
 
       <style jsx global>{`
         /* The hero is white whatever the theme is, so the bar's marks have
-           to go dark above the fold. Keyed off the header's own marker
+           to go dark above the fold. Keyed off the header’s own marker
            rather than a class set on mount, so the bar is right on the
-           very first paint. One class more specific than MicroNav's
+           very first paint. One class more specific than MicroNav’s
            force-light rule, which is what makes this win. */
         body:has(.rc-hero):not(.mn-below) .aura-nav {
           --text: #131719;
@@ -429,7 +429,7 @@ export function RemarkableCircle() {
 
            Scaling this layer rather than the stage keeps the wordmark
            at its own size — and keeps the physics honest, since this
-           element's rect is what the loop measures. */
+           element’s rect is what the loop measures. */
         .rc-ring {
           position: absolute; inset: 0;
           transform: scale(1);
@@ -463,7 +463,7 @@ export function RemarkableCircle() {
         }
 
         /* The button is exactly the glyph puck, so the orbit line passes
-           through the glyph's own centre. The label hangs beneath it,
+           through the glyph’s own centre. The label hangs beneath it,
            out of flow, and never shifts the puck off the ring. */
         .rc-item {
           position: relative;

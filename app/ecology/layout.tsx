@@ -7,7 +7,7 @@ import type { ReactNode } from 'react'
 export const metadata: Metadata = {
   title: 'The Health Index',
   description:
-    'Aura reads its estate as one living system — canopy to root, dead wood to fungus to earthworm — and folds fifteen ecological monitoring programmes into a single Ecological Health Index for each block. Regeneration measured, not assumed.',
+    'The estate read as one living system, canopy to root: dead wood, fungi and earthworms counted, and fifteen monitoring programmes folded into one index.',
   alternates: { canonical: '/ecology' },
   openGraph: {
     title: 'The Health Index — Aura',

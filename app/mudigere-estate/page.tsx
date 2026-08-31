@@ -28,11 +28,11 @@ import Reveal from '@/components/RevealOnScroll'
 /* /mudigere-estate — private briefing for architects and landscape designers.
    Built entirely from the journal kit (JournalHero, OneCol, TwoCol,
    Placeholder, DataGrid, DataCard, PullQuote, ScrollHighlight, Term)
-   and the kit's typography tokens. No bespoke components. Light mode
+   and the kit’s typography tokens. No bespoke components. Light mode
    to match the rest of theaura.life; the global Navbar + Footer wrap
    this page. Throughline mirrors the reference briefing HTML — hero,
    stats, location, land, agroforestry layers, coffee + tea, living
-   systems, the architect's brief, the design pillars, invitation. */
+   systems, the architect’s brief, the design pillars, invitation. */
 
 export default function MudigerePage() {
   const heroWrapRef = useRef<HTMLDivElement>(null)
@@ -203,7 +203,7 @@ export default function MudigerePage() {
               video AND the light beige map. Title uses the existing
               `.section-w` rail + `.atelier-title` letter-spread
               typography; the sub-caption sits directly beneath it,
-              centred, in the kit's `.label` token. */}
+              centred, in the kit’s `.label` token. */}
           <div
             style={{
               position: 'absolute',
@@ -250,7 +250,7 @@ export default function MudigerePage() {
               Pill chip with a soft backdrop blur + 1px border so it
               reads as a confident CTA against either layer of the
               crossfade. `left: 50%` + `translateX(-50%)` anchors it
-              to the viewport's horizontal centre. */}
+              to the viewport’s horizontal centre. */}
           <a
             href="/mudigere-estate-map.pdf"
             download
@@ -292,7 +292,7 @@ export default function MudigerePage() {
           background: rgba(0, 0, 0, 0.55);
           border-color: #ffffff;
           /* Compose the centring translate with a 1 px lift so the
-             hover doesn't snap off-centre. */
+             hover doesn’t snap off-centre. */
           transform: translate(-50%, -1px);
         }
         @media (max-width: 600px) {
@@ -328,7 +328,7 @@ export default function MudigerePage() {
         </p>
       </TwoCol>
 
-      {/* Macro-context Google Maps — pinned to the briefing's
+      {/* Macro-context Google Maps — pinned to the briefing’s
           coordinates so the architect can scan the drive in from
           Chikmagalur, the proximity to Bhadra Reserve, and the
           surrounding ghats. The Download PDF affordance lives up in
@@ -346,7 +346,7 @@ export default function MudigerePage() {
                 background: 'var(--bg-elev, #f4f4f4)',
               }}
             >
-              {/* Place-name embed — lets Google's geocoder resolve
+              {/* Place-name embed — lets Google’s geocoder resolve
                   the actual estate location rather than a hand-
                   typed coordinate (the previous pb URL was pinning
                   slightly off). `?output=embed` is the no-API-key
@@ -396,7 +396,7 @@ export default function MudigerePage() {
           <DataCard value="100 acres">Shade-grown Arabica.</DataCard>
           <DataCard value="3,000 mm">Annual rainfall.</DataCard>
           <DataCard value="14 – 30 °C">Year-round temperature.</DataCard>
-          <DataCard value="52">Malnad Gidda cattle.</DataCard>
+          <DataCard value="~50">Malnad Gidda cattle.</DataCard>
           <DataCard value="20 acres">Protected forest, eastern boundary.</DataCard>
           <DataCard value="13.1686° · 75.4340°">Coordinates · N, E.</DataCard>
           <DataCard value="Western Ghats">A UNESCO World Heritage region.</DataCard>
@@ -407,7 +407,7 @@ export default function MudigerePage() {
           that swaps in the YouTube embed on click. Plain section-w
           composition (no ExpandingBanner, no scroll-driven blur) so
           the still reads sharp and the play affordance is obvious.
-          The .label caption beneath uses the kit's typography. */}
+          The .label caption beneath uses the kit’s typography. */}
       <section style={{ padding: 'var(--section-gap) 0' }}>
         <div className="section-w">
           <Reveal>
@@ -650,14 +650,14 @@ export default function MudigerePage() {
         mediaType="video"
         poster="/journals/living-systems/aura-cow-eye.jpg"
         alt="Close on the eye of a Malnad Gidda — indigenous Karnataka breed"
-        caption="52 Malnad Gidda · indigenous Karnataka breed"
+        caption="The herd · Malnad Gidda, an indigenous Karnataka breed"
       />
 
-      <TwoCol id="living" heading="52 cattle. Native bees. 35,000 trees. One living system.">
+      <TwoCol id="living" heading="Around fifty cattle. Native bees. 35,000 trees. One living system.">
         <p className="p1">
           The <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries. Small, dark, hardy.">Malnad Gidda</Term> is an indigenous breed adapted
           to this altitude and soil. Their dung and urine feed the
-          biodynamic preparations (<Term tip="Rudolf Steiner's biodynamic preparations — eight numbered field and compost sprays applied at precise lunar and seasonal timings.">BD 500–508</Term>) applied at precise
+          biodynamic preparations (<Term tip="Rudolf Steiner’s biodynamic preparations — eight numbered field and compost sprays applied at precise lunar and seasonal timings.">BD 500–508</Term>) applied at precise
           lunar and seasonal timings. Steiner&rsquo;s methods — adopted
           over the past 12–16 months alongside Vedic practices — guide
           every soil intervention.
@@ -676,7 +676,7 @@ export default function MudigerePage() {
         <DataCard
           img="/journals/living-systems/aura-cow.jpg"
           alt="Malnad Gidda grazing through the coffee blocks"
-          value="52 cattle, in rotation."
+          value="~50 cattle, in rotation."
         >
           Their movement through the coffee IS the rotation. Their dung
           is the input.
@@ -712,7 +712,7 @@ export default function MudigerePage() {
         Grow STRUCTURES around the LANDSCAPE, not THROUGH it. Formless form. What we BUILD should be INVISIBLE in 30 YEARS.
       </PullQuote>
 
-      {/* Architect's brief — inline section so the heading + intro
+      {/* Architect’s brief — inline section so the heading + intro
           can centre-align while the 9-card grid spans the full
           section-w rail. (OneCol would have capped the whole block
           at 760 px left-aligned.) Composed from the standard kit
@@ -788,7 +788,7 @@ export default function MudigerePage() {
         </p>
         <DataGrid cols={3}>
           <DataCard value="01 — Biodynamic plantation ecosystem.">
-            52 Malnad Gidda cattle, biodynamic composting, closed-loop
+            About fifty Malnad Gidda cattle, biodynamic composting, closed-loop
             nutrient cycle. Steiner + Vedic methods. One organism.
           </DataCard>
           <DataCard value="02 — Biodiversity &amp; native nursery.">
@@ -818,7 +818,7 @@ export default function MudigerePage() {
       {/* Foot-of-page film — second YouTube. Same click-to-play
           pattern as the top walkthrough: sharp still + centred play
           pill swaps in the embed (autoplay=1) on click. Poster is
-          YouTube's own maxres thumbnail so the frame matches the
+          YouTube’s own maxres thumbnail so the frame matches the
           actual film content rather than a generic estate still. */}
       <section style={{ padding: 'var(--section-gap) 0' }}>
         <div className="section-w">
@@ -843,11 +843,11 @@ export default function MudigerePage() {
                 />
               ) : (
                 <>
-                  {/* Poster: try YouTube's maxres thumbnail first
+                  {/* Poster: try YouTube’s maxres thumbnail first
                       (1280×720, present only on HD-uploaded videos);
                       fall back to hqdefault (480×360, always present);
                       final safety net is a local estate still so we
-                      NEVER ship a broken image even if YouTube's CDN
+                      NEVER ship a broken image even if YouTube’s CDN
                       is unreachable. */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img

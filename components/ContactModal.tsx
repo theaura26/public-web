@@ -4,10 +4,10 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { track, identify } from '@/lib/analytics'
 
 /* ── ContactModal ────────────────────────────────────────────────
-   Small popup that replicates the /contact page's form — same four
+   Small popup that replicates the /contact page’s form — same four
    fields (name · email · topic · message), same validation rules,
-   same POST to /api/contact. Used by the Navbar's "Contact us" link
-   on /mudigere so the architect doesn't have to navigate away
+   same POST to /api/contact. Used by the Navbar’s "Contact us" link
+   on /mudigere so the architect doesn’t have to navigate away
    from the briefing to send a note.
 
    - Backdrop click closes
@@ -15,8 +15,8 @@ import { track, identify } from '@/lib/analytics'
    - Body scroll locked while open
    - Focus trap is intentionally light — the first field auto-focuses
      and the close button is reachable via Tab/Shift+Tab — but we
-     don't bind a full trap (the form is short enough that the
-     browser's natural cycle is fine).
+     don’t bind a full trap (the form is short enough that the
+     browser’s natural cycle is fine).
 */
 
 const TOPICS: Record<string, string> = {
@@ -184,7 +184,7 @@ export default function ContactModal({
       >
         {/* Close — two-line X, same recipe the navbar / menu-close
             button uses (22 × 1.5 px lines rotated to form the
-            cross). Matches the kit's existing close gesture. */}
+            cross). Matches the kit’s existing close gesture. */}
         <button
           type="button"
           aria-label="Close"
@@ -275,7 +275,7 @@ export default function ContactModal({
               id="cm-message"
               className={`ph-no-capture cm-input${touched.message && errors.message ? ' has-error' : ''}`}
               rows={4}
-              placeholder="Tell us what you're thinking…"
+              placeholder="Tell us what you’re thinking…"
               value={fields.message}
               onChange={e => set('message', e.target.value)}
               onBlur={() => blur('message')}

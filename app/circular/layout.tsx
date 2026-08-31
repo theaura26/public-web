@@ -7,7 +7,7 @@ import type { ReactNode } from 'react'
 export const metadata: Metadata = {
   title: 'Circular Intelligence',
   description:
-    'Circular intelligence, told through compost. Nature produces no waste — only relationships. How manure becomes a biological network that rebuilds soil, water, carbon and resilience, and why Aura composts to restore relationships rather than add nutrients. Evidence-first; honest about what the science is still settling.',
+    'Nature produces no waste, only relationships. How the herd’s dung and urine become 154,000 litres of Jeevamrit a year, tested before it touches soil.',
   alternates: { canonical: '/circular' },
   openGraph: {
     title: 'Circular Intelligence',

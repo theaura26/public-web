@@ -41,7 +41,7 @@ export default function LandSpiritSoulPage() {
         </p>
         <p className="p2">
           Beginning the day at the Gaushala with prayer acknowledges that relationship directly.
-          On this estate it is also a plain statement of fact about the fertility system: fifty-two
+          On this estate it is also a plain statement of fact about the fertility system: about fifty
           animals are the reason there is anything to spread on 150 acres.
         </p>
       </OneCol>

@@ -126,7 +126,7 @@ export default function AskAura() {
 
   /* The invitation names the page it is sitting on. The generated
      openers carry a line and three questions per route but no short
-     subject, and the page's own title is exactly that — so it is read
+     subject, and the page’s own title is exactly that — so it is read
      from the document rather than kept in a second list that would drift
      from the first. Read on open as well as on navigation, because Next
      applies title metadata in its own commit and the dock is opened long
@@ -270,7 +270,7 @@ export default function AskAura() {
      bottom. Yanking them back while they are reading an earlier answer
      is the rudest thing a transcript can do.
 
-     Which is why this is read from the reader's own scrolling rather
+     Which is why this is read from the reader’s own scrolling rather
      than measured after new content lands. Sources and follow-ups do not
      stream in a line at a time — they arrive together as one block a few
      hundred pixels tall, so a measurement taken afterwards always
@@ -462,7 +462,7 @@ export default function AskAura() {
     } finally {
       /* Only the request that still owns the controller may clear the
          busy flag. Stopping one answer and immediately asking another
-         used to let the first one's teardown switch off the second's
+         used to let the first one’s teardown switch off the second’s
          Stop button, leaving a live stream nobody could abort. */
       if (abortRef.current === ctl) {
         abortRef.current = null
@@ -527,7 +527,7 @@ export default function AskAura() {
           className={`aa-panel ph-no-capture ${closing ? 'is-closing' : ''}`}
           /* backdrop-filter is set inline: styled-jsx drops it from the
              emitted rules on this build, the same way it does for the
-             article slider's fade and the menu vignette. Below 768px the
+             article slider’s fade and the menu vignette. Below 768px the
              site kills backdrop-filter globally for scroll cost, and an
              !important stylesheet rule beats an inline one — so mobile
              loses the blur automatically and takes the heavier scrim
@@ -539,7 +539,7 @@ export default function AskAura() {
           aria-label="Ask Aura"
         >
           <header className="aa-head">
-            {/* The mark as drawn: a white outline on the panel's own
+            {/* The mark as drawn: a white outline on the panel’s own
                 dark ground. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="aa-mark" src="/ask-aura.svg" alt="" aria-hidden />
@@ -743,7 +743,7 @@ export default function AskAura() {
            a place to type, showing one of the questions this page can
            actually answer and changing it every few seconds. A pill that
            says "Ask Aura" asks to be clicked; a bar that says "How do you
-           compost the herd's dung?" tells the reader what they would get.
+           compost the herd’s dung?" tells the reader what they would get.
 
            It floats over whatever the page happens to be — a dark hero
            video, a white editorial spread — so it cannot borrow theme
@@ -796,9 +796,9 @@ export default function AskAura() {
         /* The outline is a light travelling round the pill rather than a
            border sitting on it. A conic gradient is painted into a ring
            — two masks, one clipped to the padding box, composited to
-           leave only the 1px edge — and the gradient's own angle is
+           leave only the 1px edge — and the gradient’s own angle is
            animated, which needs @property to interpolate rather than
-           jump. Colours are the estate's: the brand orange, a leaf
+           jump. Colours are the estate’s: the brand orange, a leaf
            green, a mist teal and a dusk violet, back to orange. */
         .aa-launch::before {
           content: '';
@@ -934,7 +934,7 @@ export default function AskAura() {
 
         .aa-panel {
           /* Glass, and dark on purpose. This panel floats over hero
-             video as often as over white, so it cannot borrow the page's
+             video as often as over white, so it cannot borrow the page’s
              ground and stay readable. A dark scrim with heavy blur and
              lifted saturation takes its colour from whatever is behind
              it — warm over the estate photography, cool over the forest
@@ -948,7 +948,7 @@ export default function AskAura() {
 
           --aa-ink: rgba(255, 255, 255, 0.96);
           /* The explanation sits back from the headline. Still 9.7:1 on
-             the panel's ground, so quieter without being harder to read. */
+             the panel’s ground, so quieter without being harder to read. */
           --aa-body: rgba(255, 255, 255, 0.72);
           --aa-meta: rgba(255, 255, 255, 0.62);
           --aa-line: rgba(255, 255, 255, 0.08);
@@ -957,7 +957,7 @@ export default function AskAura() {
           /* Centred horizontally, anchored by its bottom edge. Centring
              vertically meant the panel grew in both directions, so its
              foot moved every time an answer arrived and the composer
-             crept up the screen under the reader's hand. Fixed at the
+             crept up the screen under the reader’s hand. Fixed at the
              bottom it grows upward only, and the thing you type into
              stays where you left it.
              6dvh is where the centred panel already sat at full height,
@@ -979,8 +979,8 @@ export default function AskAura() {
           /* Paired with the inline blur above, which does the tinting:
              the panel still takes its colour from the page, warm over the
              estate photographs and green over the forest.
-             The alpha is higher than the reference's because this site
-             is not the reference's. Aura's pages open with display type
+             The alpha is higher than the reference’s because this site
+             is not the reference’s. Aura’s pages open with display type
              at a hundred points, and a panel blur does almost nothing to
              a letterform that size — at 0.72 alone the word CIRCULAR read
              straight through the answer. The scrim behind the dock is
@@ -1039,7 +1039,7 @@ export default function AskAura() {
         @keyframes aa-scrim-out { from { opacity: 1; } to { opacity: 0; } }
 
         /* Each turn arrives rather than appearing. The delay is on the
-           assistant's block only — the reader's own words should be
+           assistant’s block only — the reader’s own words should be
            there the instant they press send. */
         .aa-msg { animation: aa-rise var(--dur-base) var(--ease-out) both; }
         @keyframes aa-rise {
@@ -1372,7 +1372,7 @@ export default function AskAura() {
           font-family: var(--font-mono), monospace;
           max-width: 46ch;
           /* .label from the design system — mono 11px, 1px tracking,
-             uppercase — at the panel's own quiet weight. */
+             uppercase — at the panel’s own quiet weight. */
           font-size: 11px; line-height: 1.6;
           font-weight: 400;
           letter-spacing: 1px; text-transform: uppercase;

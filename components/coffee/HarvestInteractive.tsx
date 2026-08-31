@@ -8,8 +8,8 @@ import { CaretDown } from '@phosphor-icons/react'
 
    Ported from aura_roaster_v1.html: the "tap for lot data" flip cards
    and the eight-block estate map. Same black ground and hairline
-   grammar as the Scene pages; the interaction is the roaster draft's,
-   the clothes are the microsite's.
+   grammar as the Scene pages; the interaction is the roaster draft’s,
+   the clothes are the microsite’s.
 ═══════════════════════════════════════════════════════════════════ */
 
 /* ── data ───────────────────────────────────────────────────────── */

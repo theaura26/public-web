@@ -23,7 +23,7 @@ export default function LivingSystemsPage() {
 
       <TwoCol heading="A forest that produces crops.">
         <p className="p1">
-          150 acres of four-story polyculture in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>, read as a
+          150 acres of four-story polyculture in the <Term tip="Mountain range along India’s west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>, read as a
           single living dataset.
         </p>
         <p className="p1">
@@ -39,7 +39,7 @@ export default function LivingSystemsPage() {
           <DataCard value="150">Acres under care.</DataCard>
           <DataCard value="3,600 ft">Altitude in the Western Ghats.</DataCard>
           <DataCard value="35,000">Individual trees.</DataCard>
-          <DataCard value="52">Malnad Gidda cattle, indigenous.</DataCard>
+          <DataCard value="~50">Malnad Gidda cattle, indigenous.</DataCard>
           <DataCard value="4–5×">Estimated carbon sequestration vs monoculture.</DataCard>
           <DataCard value="Western Ghats">A UNESCO World Heritage region.</DataCard>
         </DataGrid>
@@ -111,7 +111,7 @@ export default function LivingSystemsPage() {
 
       <TwoCol id="herd" heading="The herd is biological infrastructure.">
         <p className="p1">
-          Fifty-two Malnad Gidda cattle — an indigenous Karnataka breed adapted
+          About fifty Malnad Gidda cattle — an indigenous Karnataka breed adapted
           to this altitude, soil, and climate over centuries.
         </p>
         <p className="p1">
@@ -191,7 +191,7 @@ export default function LivingSystemsPage() {
         src="/journals/living-systems/aura-cow-eye.mp4"
         mediaType="video"
         poster="/journals/living-systems/aura-cow-eye.jpg"
-        alt="Close-up of a Malnad Gidda's eye — the indigenous Karnataka breed reading the land"
+        alt="Close-up of a Malnad Gidda’s eye — the indigenous Karnataka breed reading the land"
         caption="The eye that reads the signals — Malnad Gidda"
       />
 

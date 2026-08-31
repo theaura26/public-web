@@ -147,7 +147,7 @@ export function MicroNav() {
       <style jsx global>{`
         /* Above the fold the header rides transparent on the hero, its
            marks forced light so they read against the black ground.
-           Below the fold it becomes the site's own themed bar — day or
+           Below the fold it becomes the site’s own themed bar — day or
            night — and peekaboos: away on the way down, back on the way up. */
         .aura-nav {
           transition: transform var(--dur-base) var(--ease),
@@ -1332,7 +1332,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     },
     biodynamic: {
       title: 'What the record is recording.',
-      sub: 'Fifty-two cattle, fourteen numbered pits, and a canopy cut to a light reading instead of a feeling.',
+      sub: 'About fifty cattle, fourteen numbered pits, and a canopy cut to a light reading instead of a feeling.',
       cta: 'Better Ground',
     },
     hub: {
@@ -1344,7 +1344,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
   experience: {
     biodynamic: {
       title: 'What you would be standing in.',
-      sub: 'Fifty-two cattle, a closed loop, and a canopy cut to a light reading instead of a feeling.',
+      sub: 'About fifty cattle, a closed loop, and a canopy cut to a light reading instead of a feeling.',
       cta: 'Better Ground',
     },
     transparency: {
@@ -1366,7 +1366,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
   flavour: {
     biodynamic: {
       title: 'It started in the ground.',
-      sub: 'Fifty-two cattle, a closed loop, and a canopy cut to a number.',
+      sub: 'About fifty cattle, a closed loop, and a canopy cut to a number.',
       cta: 'Better Ground',
     },
     transparency: {

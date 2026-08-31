@@ -17,7 +17,8 @@ import {
 
 /* One page shape for every subject the site explains.
  *
- * The nine disciplines use it, and so do the three pillars of The Reason.
+ * The Regenerative Life chapters are rendered with it. The nine
+ * disciplines and the Natural Intelligence pillars feed those chapters.
  * It is assembled entirely out of the journal kit — the same openers and
  * blocks the field notes and Mudigere are built from — so a reader moving
  * from a note about Bug Hotels to the Biodiversity discipline stays in

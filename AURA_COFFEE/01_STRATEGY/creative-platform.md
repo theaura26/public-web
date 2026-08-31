@@ -77,7 +77,7 @@ The work below sharpens that instinct rather than replacing it.
 29. This coffee is mostly cow.
 30. The most important ingredient never reaches the cup.
 31. Our best farmers have four legs.
-32. Fifty-two employees, no payslips.
+32. About fifty employees, no payslips.
 33. The soil eats first.
 
 ### Understated

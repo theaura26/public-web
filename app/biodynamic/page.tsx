@@ -140,7 +140,7 @@ export default function BiodynamicPage() {
 
       <TwoCol id="herd" heading="The herd as engine.">
         <p className="p1">
-          Everything begins with the cattle. The 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> are the
+          Everything begins with the cattle. The <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> are the
           small indigenous cattle of these hills, grazing at this altitude for
           centuries. Their gut has adapted to the estate&rsquo;s grasses and
           soil over generations, and the reasoning here is that the dung

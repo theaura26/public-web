@@ -112,7 +112,7 @@ export function normalise(raw: unknown, cap: number): string {
 
 /* ── patterns ───────────────────────────────────────────────────────
    Deliberately narrow. These are cheap pre-filters for the unambiguous
-   cases; anything subtler is the prompt's job, and a broad regex here
+   cases; anything subtler is the prompt’s job, and a broad regex here
    would refuse legitimate questions about how the assistant works. */
 
 const INJECTION = [
@@ -388,7 +388,7 @@ export function isCitableSource(url: string): boolean {
 export function fenceContext(label: string, text: string): string {
   /* The delimiter is part of the defence, so the content may not spell
      it. Anything resembling an opening or closing marker is defanged
-     before it goes inside — otherwise a reader's selection can close
+     before it goes inside — otherwise a reader’s selection can close
      the fence early and everything after it reads as instruction. */
   const safe = text
     .replace(/```/g, "'''")

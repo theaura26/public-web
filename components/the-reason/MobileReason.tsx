@@ -181,7 +181,7 @@ export default function MobileReason() {
       {/* ── Where land / disciplines map ── */}
       <section className="rm-sec rm-warm">
         <div ref={discRef} className="rm-disc rm-fadein">
-          <img className="rm-art" src={`${A}/aura-aboutus.png`} alt="A constellation of Aura's disciplines radiating from one centre." loading="lazy" decoding="async" />
+          <img className="rm-art" src={`${A}/aura-aboutus.png`} alt="A constellation of Aura’s disciplines radiating from one centre." loading="lazy" decoding="async" />
           <img className="rm-whereland" src={`${A}/aura-whereland.svg`} alt="Where land becomes a framework for how to live generationally." loading="lazy" decoding="async" />
         </div>
       </section>

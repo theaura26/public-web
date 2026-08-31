@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 /* ═══════════════════════════════════════════════════════════════════
    ARTICLE SLIDER — a left-anchored, horizontally-scrollable row of the
-   estate's editorials, under a small section label.
+   estate’s editorials, under a small section label.
 
    The first card is the anchor (larger); the rest follow in a row that
    runs off the right edge and scrolls. Vertical mouse-wheel is mapped to
@@ -28,8 +28,8 @@ const ARTICLES: Article[] = [
   { href: '/wisdom',         title: 'Moral Spine',           img: '/journals/wisdom/aura-moral-spine.jpg', size: 'lg' },
   { href: '/living-systems', title: 'Living Systems',        img: '/journals/living-systems/aura-living-systems.jpg', size: 'sm' },
   { href: '/coffee',         title: 'Our Bean Story',       img: '/journals/coffee/aura-our-coffee-story.jpg', size: 'md' },
-  { href: '/rta',            title: 'Rta',                   img: '/journals/rta/aura-rta.jpg', size: 'lg' },
-  { href: '/fermentation',   title: 'Fermentation',          img: '/journals/fermentation/aura-fermentation.jpg', size: 'sm' },
+  { href: '/regenerative-life/rta',            title: 'Rta',                   img: '/journals/rta/aura-rta.jpg', size: 'lg' },
+  { href: '/regenerative-life/food-and-fermentation',   title: 'Fermentation',          img: '/journals/fermentation/aura-fermentation.jpg', size: 'sm' },
   { href: '/land',           title: 'The Land',              img: '/journals/land/aura-the-land.jpg', size: 'md' },
   { href: '/biodynamic',     title: 'A Living Organism',    img: '/journals/biodynamic/aura-biodynamic.jpg', size: 'lg' },
   { href: '/residency',      title: 'Monastic Polymaths',    img: '/journals/residency/aura-monastic-polymath.jpg', size: 'sm' },

@@ -258,7 +258,7 @@ export async function search(query: string, opts: SearchOptions = {}): Promise<H
      and every slot fills with coffee. The reader is then told about the
      herd by a model that was shown nothing about the herd.
 
-     A multiplier cannot fix this — the page's passages lose on score, so
+     A multiplier cannot fix this — the page’s passages lose on score, so
      scaling their score still loses. What is needed is a seat kept for
      them: the best passage from the page in view goes into the evidence
      whether or not it earned a place on rank alone. */

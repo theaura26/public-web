@@ -1,4 +1,5 @@
-import { DISCIPLINES } from './disciplines'
+import { CHAPTERS, chapterHref } from './chapters'
+import { CATEGORIES, notesIn } from './field-notes'
 
 /* The site's structure, in one place.
  *
@@ -16,6 +17,12 @@ import { DISCIPLINES } from './disciplines'
 export type NavLeaf = {
   label: string
   href: string
+  /** Set beside the label where the label alone is not enough — a
+      translation, or the thing the word actually means. Shown on the
+      section index; the menu lists labels only. */
+  note?: string
+  /** Open a space above this leaf, grouping the list it sits in. */
+  breakBefore?: boolean
   /** No page written yet. Renders a stub at `href`. */
   soon?: boolean
   /** Named in the structure, but with no page at all — not even a stub.
@@ -46,60 +53,27 @@ export type NavSection = {
 
 export const SECTIONS: NavSection[] = [
   {
-    id: 'reason',
-    label: 'The Reason',
-    href: '/reason',
-    note: 'Why any of this exists.',
-    /* The sitemap indents Agroculture, Hospitality and Atelier under
-       Natural Intelligence, and the places under Sanctuaries. They are
-       tiers, not siblings. */
-    items: [
-      /* The existing Reason page answers "why", so it keeps that
-         question as its name. Natural Intelligence is the idea the page
-         argues for, and gets its own place above its three parts. */
-      { label: 'Why Aura?', href: '/reason' },
-      {
-        label: 'Natural Intelligence',
-        href: '/reason/natural-intelligence',
-        children: [
-          { label: 'Agroculture', href: '/reason/agroculture' },
-          { label: 'Hospitality', href: '/reason/hospitality' },
-          { label: 'Atelier', href: '/atelier' },
-        ],
-      },
-      {
-        label: 'Sanctuaries',
-        href: '/sanctuary',
-        children: [
-          { label: 'Mudigere', href: '/mudigere' },
-          { label: 'Ohara', href: '/ohara' },
-          { label: 'Munduk', href: '/sanctuary/munduk', soon: true, disabled: true },
-          { label: 'Punakha', href: '/sanctuary/punakha', soon: true, disabled: true },
-        ],
-      },
-      { label: 'Moral Spine', href: '/wisdom' },
-    ],
-  },
-  {
     id: 'life',
     label: 'Regenerative Life',
-    href: '/regenerative-life',
-    note: 'The nine disciplines the estate is farmed by.',
-    /* These are the nine glyphs on the Remarkable Circle. Same nine, same
-       order, so the menu and the mark agree. */
-    /* The nine, in the order they sit on the Remarkable Circle rather
-       than an order of their own. Generated from lib/disciplines.ts so
-       the ring, the menu and the nine pages cannot come to disagree
-       about what the nine are — which they already had, the menu running
-       a different sequence from the glyphs.
-
-       Two of them used to point at a journal: Biodynamic at /biodynamic
-       and Vedic Farming at /vedic. A discipline is how the estate is
-       farmed; a field note is something the estate learned. The essays
-       stay under Field Notes, and each discipline links to them. */
-    items: DISCIPLINES.map((d) => ({
-      label: d.label,
-      href: `/regenerative-life/${d.slug}`,
+    /* No landing page. The section is eight chapters, and an index in
+       front of them was a page whose only content was the menu the
+       reader had just used. `sectionFor` still marks the tab on a
+       chapter page — it matches the leaves before it looks at the
+       section, and every chapter is a leaf. */
+    note: 'The estate in eight chapters.',
+    /* Generated from lib/chapters.ts so the menu, the index page and the
+       eleven pages cannot come to disagree about what the chapters are.
+       No children: each chapter is one page, and where it has a fuller
+       treatment elsewhere on the site the page links out to it. */
+    /* chapterHref, not a built path: five of the nine ARE pages the site
+       already had — The Reason is /reason, RTA is /rta — and the menu
+       sends a reader to the real one rather than to a shorter retelling
+       of it under /regenerative-life. */
+    items: CHAPTERS.map((c) => ({
+      label: c.label,
+      href: chapterHref(c),
+      note: c.subtitle,
+      breakBefore: c.breakBefore,
     })),
   },
 
@@ -108,81 +82,22 @@ export const SECTIONS: NavSection[] = [
     label: 'Field Notes',
     href: '/field-notes',
     note: 'What the estate has learned, written down.',
-    /* The journals are Field Notes now, filed under the category they
-       belong to. A note may sit in more than one — the taxonomy in
-       lib/field-notes.ts already treats categories as tags rather than
-       folders, and repeating a note is cheaper than hiding it. */
+    /* Generated from lib/field-notes.ts, which files every note under a
+       Regenerative Life chapter. This list used to be maintained by hand
+       beside that one and had already drifted from it — /areca and
+       /pepper were listed here as live children while the taxonomy had
+       them as unwritten. Two lists of the same thing is one list too
+       many. */
     items: [
-      {
-        label: 'Biodynamic',
-        href: '/field-notes/biodynamic',
-        children: [
-          { label: 'A Living Organism', href: '/biodynamic' },
-          { label: 'Circular Intelligence', href: '/circular' },
-          { label: 'Rta', href: '/rta' },
-          { label: 'Vedic Farming', href: '/vedic' },
-        ],
-      },
-      {
-        label: 'Biodiversity',
-        href: '/field-notes/biodiversity',
-        children: [
-          { label: 'The Health Index', href: '/ecology' },
-          { label: 'The Light Instrument', href: '/shade' },
-          { label: 'Living Systems', href: '/living-systems' },
-          { label: 'The Sentinel Palm', href: '/areca' },
-        ],
-      },
-      {
-        label: 'Labs',
-        href: '/field-notes/labs',
-        children: [
-          { label: 'Fermentation', href: '/fermentation' },
-          { label: 'Provenance', href: '/provenance' },
-        ],
-      },
-      {
-        label: 'Art & Culture',
-        href: '/field-notes/art-culture',
-        children: [
-          { label: 'Artistry', href: '/artistry' },
-          { label: 'Monastic Polymaths', href: '/residency' },
-          { label: 'Moral Spine', href: '/wisdom' },
-          { label: 'Land, Spirit, Soul', href: '/land-spirit-soul' },
-        ],
-      },
-      {
-        label: 'Land & Ecology',
-        href: '/field-notes/land-ecology',
-        children: [
-          { label: 'The Land', href: '/land' },
-          { label: 'Forest Islands', href: '/forest-islands' },
-          { label: 'Mudigere', href: '/mudigere' },
-          { label: 'Asa. Niwa.', href: '/ohara' },
-        ],
-      },
-      {
-        label: 'Coffee & Fermentation',
-        href: '/field-notes/coffee-fermentation',
-        children: [
-          { label: 'Our Bean Story', href: '/coffee' },
-          { label: 'Fermentation', href: '/fermentation' },
-          { label: 'Malabar Pepper', href: '/pepper' },
-        ],
-      },
-      {
-        label: 'Animals',
-        href: '/field-notes/animals',
-        children: [
-          { label: 'Ecosystem Engineers', href: '/herd' },
-          /* A note is a page in its own right, not a slice of its
-             category — /field-notes/<id> is where the category index
-             lives, and these three were pointing at it. */
-          { label: 'Cows of Aura', href: '/cows-of-aura' },
-          { label: 'Pollinators', href: '/pollinators' },
-          { label: 'Bug Hotels', href: '/bug-hotels' },
-        ],
-      },
+      ...CATEGORIES.map((c) => ({
+        label: c.label,
+        href: `/field-notes/${c.id}`,
+        children: notesIn(c.id).map((n) => ({
+          label: n.title,
+          href: n.href,
+          soon: n.status === 'soon',
+        })),
+      })),
       { label: 'View all', href: '/field-notes' },
     ],
   },
@@ -195,16 +110,17 @@ export const SECTIONS: NavSection[] = [
        buying — the land, the atelier, the trade desk — and that reading
        works on a page with room to explain it. In a menu a reader is
        looking for a thing, not a relationship, so the menu lists things.
-       lib/from-aura.ts holds the page's grouping. */
+       lib/from-aura.ts holds the page’s grouping. */
     items: [
       {
         label: 'Coffee',
         href: '/from-aura/coffee',
         soon: true,
         children: [
-          { label: '25/26 — nine lots', href: '/from-aura/coffee-25-26', soon: true },
-          { label: '26/27 — blocks and zones', href: '/from-aura/coffee-26-27', soon: true },
-          { label: '27/28 — pre-book', href: '/from-aura/coffee-27-28', soon: true },
+          { label: '2025–26 Lots', href: '/from-aura/coffee-25-26', soon: true },
+          { label: 'No.1 Experimental Coffee in India', href: '/from-aura/coffee-experimental', soon: true },
+          { label: 'Pre-book 2026–27', href: '/from-aura/coffee-26-27', soon: true },
+          { label: 'Book Block & Zone', href: '/from-aura/coffee-blocks-and-zones', soon: true },
         ],
       },
       {
@@ -215,28 +131,18 @@ export const SECTIONS: NavSection[] = [
           { label: '27/28 — pre-book', href: '/from-aura/tea-27-28', soon: true },
         ],
       },
+      /* Pepper, areca and the farm goods were three headings for one
+         thing: what the land grows besides the two crops the estate is
+         named for. Their season variants came off with them — the menu
+         renders two tiers, and a crop’s years are a third. They belong
+         on the crop’s own page. */
       {
-        label: 'Pepper',
-        href: '/from-aura/pepper',
+        label: 'From the Farm',
+        href: '/from-aura/from-the-farm',
         soon: true,
         children: [
-          { label: '25/26 — black and white', href: '/from-aura/pepper-25-26', soon: true },
-          { label: '26/27 — blocks and zones', href: '/from-aura/pepper-26-27', soon: true },
-        ],
-      },
-      {
-        label: 'Areca nut',
-        href: '/from-aura/areca',
-        soon: true,
-        children: [
-          { label: '27/28 — pre-book', href: '/from-aura/areca-27-28', soon: true },
-        ],
-      },
-      {
-        label: 'Farm Goods',
-        href: '/from-aura/farm-goods',
-        soon: true,
-        children: [
+          { label: 'Pepper', href: '/from-aura/pepper', soon: true },
+          { label: 'Areca nut', href: '/from-aura/areca', soon: true },
           { label: 'Avocado', href: '/from-aura/avocado', soon: true },
           { label: 'Cardamom', href: '/from-aura/cardamom', soon: true },
           { label: 'Soapnut', href: '/from-aura/soapnut', soon: true },
@@ -272,21 +178,12 @@ export const SECTIONS: NavSection[] = [
     offTabs: true,
     href: '/now',
     note: 'Mudigere, as it is today.',
-    items: [
-      { label: 'Seasons', href: '/now/seasons', soon: true },
-      { label: 'Lunar rhythm', href: '/now/lunar-rhythm', soon: true },
-      { label: 'Sprays', href: '/now/sprays', soon: true },
-      { label: 'Fertiliser prep', href: '/now/fertiliser-prep', soon: true },
-      { label: 'Labs', href: '/now/labs', soon: true },
-      { label: 'Biodiversity', href: '/now/biodiversity', soon: true },
-      { label: 'Bees', href: '/now/bees', soon: true },
-      { label: 'Cows', href: '/now/cows', soon: true },
-      { label: 'Field activities', href: '/now/field-activities', soon: true },
-      { label: 'Harvest', href: '/now/harvest', soon: true },
-      { label: 'Fermentation', href: '/now/fermentation', soon: true },
-      { label: 'People & gatherings', href: '/now/people', soon: true },
-      { label: 'Prayers', href: '/now/prayers', soon: true },
-    ],
+    /* No items. Now is not an index any more — it is the Aura Live feed
+       itself, generated from the estate record on a schedule. It used to
+       list thirteen subjects, none of which were ever written, and a
+       reader clicking "what is happening today" wants the feed rather
+       than a menu in front of it. */
+    items: [],
   },
 ]
 

@@ -4,16 +4,18 @@ import { SECTIONS, ALL_LEAVES } from '@/lib/site-nav'
 import { CATEGORIES } from '@/lib/field-notes'
 
 /* Public pages the navigation does not carry. Contact lives in the
-   menu's corner rather than in a section list; the coffee microsite has
-   its own sub-nav; /brand and /idea are linked from within pages. All
+   menu’s corner rather than in a section list; the coffee microsite has
+   its own sub-nav; /brand is linked from within pages. All
    are indexable, so all belong here — a page being absent from the menu
    is not a reason to hide it from search.
 
    /mudigere-estate is deliberately absent: it is noindex. */
 const OFF_MENU = [
   '/contact',
+  /* Privacy is reached from the footer rather than the menu. It is
+     index:true, so it belongs here. */
+  '/privacy',
   '/brand',
-  '/idea',
   '/regenerative-coffee',
   '/regenerative-coffee/biodynamic',
   '/regenerative-coffee/transparency',
@@ -40,7 +42,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entry = (href: string, priority: number) => ({
     url: `${base}${href}`,
     lastModified: now,
-    changeFrequency: 'monthly' as const,
+    /* Everything on this site is written and then left alone, except the
+       live feed, which the scheduled job rewrites. */
+    changeFrequency: (href === '/now' ? 'daily' : 'monthly') as 'daily' | 'monthly',
     priority,
   })
 
@@ -63,7 +67,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const categories = CATEGORIES.map((c) => `/field-notes/${c.id}`)
 
   /* One entry per URL. A note cross-listed in three categories is still
-     one page, and the coffee microsite's pages appear in the nav and in
+     one page, and the coffee microsite’s pages appear in the nav and in
      journals both. */
   const seen = new Set<string>(['/', '/mudigere', ...sections.map((s) => s.url.replace(base, ''))])
   const pages: MetadataRoute.Sitemap = []

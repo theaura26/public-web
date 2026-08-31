@@ -15,11 +15,13 @@ import { CATEGORIES, type CategoryId, type NoteEntry } from '@/lib/field-notes'
 export function NoteIndex({
   title,
   lede,
+  standfirst,
   active,
   notes,
 }: {
   title: string
   lede: string
+  standfirst?: string
   /** Highlights the current category in the filter row. */
   active?: CategoryId | 'all'
   notes: NoteEntry[]
@@ -30,6 +32,7 @@ export function NoteIndex({
         <header className="fn-head">
           <h1 className="fn-h">{title}</h1>
           <p className="fn-lede">{lede}</p>
+          {standfirst && <p className="fn-standfirst">{standfirst}</p>}
         </header>
 
         <nav className="fn-filters" aria-label="Field Notes categories">
@@ -98,6 +101,14 @@ export function NoteIndex({
         }
         /* Mono and centred, matching the Field Notes index — a lede that
            says what a category is takes the label role. */
+        /* Body measure, centred under the mono lede. The lede names the
+           shelf; this says what is on it. */
+        .fn .fn-standfirst {
+          margin: var(--space-4) auto 0;
+          max-width: 62ch;
+          text-align: center;
+          color: var(--text-body);
+        }
         .fn .fn-lede {
           font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; line-height: normal;
           margin: 0; max-width: 42ch;

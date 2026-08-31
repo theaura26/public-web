@@ -50,6 +50,7 @@ export default async function CategoryPage(
     <NoteIndex
       title={cat.label}
       lede={cat.lede}
+      standfirst={cat.standfirst}
       active={cat.id as CategoryId}
       notes={notesIn(cat.id)}
     />

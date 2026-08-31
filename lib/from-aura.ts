@@ -11,6 +11,7 @@
  */
 
 import type { NoteEntry } from './field-notes'
+import { SECTIONS } from './site-nav'
 
 export type Lane = {
   id: string
@@ -19,76 +20,73 @@ export type Lane = {
   items: NoteEntry[]
 }
 
-/* `img` is the card's plate on /from-aura. Everything under
-   public/from-aura was supplied as 864×1080, which is the 4:5 the lane
-   cards are cut to, so nothing is cropped. An item with no picture keeps
-   the muted plate — a missing photograph is not a missing product. */
-const soon = (href: string, title: string, description: string, img?: string): NoteEntry => ({
-  href,
-  title,
-  description,
-  img,
-  status: 'soon',
-})
+/* One description per product, and one picture where there is one.
+   Everything under public/from-aura is 864×1080 — the 4:5 the lane cards
+   are cut to — so nothing is cropped. */
+const COPY: Record<string, { title: string; description: string; img?: string }> = {
+  '/from-aura/areca': { title: 'Areca nut', description: 'From the tallest storey of the canopy.', img: '/from-aura/areca-nut/areca-nut.webp' },
+  '/from-aura/areca-27-28': { title: 'Areca 27/28', description: 'From the tallest storey of the canopy. Pre-book.', img: '/from-aura/areca-nut/prebook.webp' },
+  '/from-aura/art': { title: 'Art', description: 'Work made on the estate, and work made about it.', img: '/from-aura/objects/art.webp' },
+  '/from-aura/avocado': { title: 'Avocado', description: 'Seasonal, and only when the season gives it.', img: '/from-aura/farm-goods/avocados.webp' },
+  '/from-aura/cardamom': { title: 'Cardamom', description: 'Grown in the understorey, under everything else.', img: '/from-aura/farm-goods/cardamom.webp' },
+  '/from-aura/coffee-25-26': { title: '2025–26 Lots', description: 'Nine lots from one harvest, each with its own wet mill file.', img: '/from-aura/coffee/nine-lots.webp' },
+  '/from-aura/coffee-26-27': { title: 'Pre-book 2026–27', description: 'Reserved before the cherry is on the tree.', img: '/from-aura/coffee/prebook.webp' },
+  '/from-aura/coffee-blocks-and-zones': { title: 'Book Block & Zone', description: 'By block and by zone, sold against the canopy reading that shaped it.', img: '/from-aura/coffee/blocks-and-zones.webp' },
+  '/from-aura/coffee-experimental': { title: 'No.1 Experimental Coffee in India', description: 'The lot the estate is proudest of, and the file behind it.', img: '/from-aura/coffee/coffee.webp' },
+  '/from-aura/collaborations': { title: 'Institutional Collaborations', description: 'Research on a working estate — monitoring, trials, and access to the record.' },
+  '/from-aura/cow-pat-pit': { title: 'Cow Pat Pit', description: 'Ninety days in a numbered pit, hand-turned, and lab-tested before it leaves.' },
+  '/from-aura/craft': { title: 'Craft', description: 'Six studios, and the disciplines they keep in use.', img: '/from-aura/objects/craft.webp' },
+  '/from-aura/editions': { title: 'Limited Editions', description: 'Made once, numbered, and not made again.', img: '/from-aura/objects/limited.webp' },
+  '/from-aura/experiences': { title: 'The Festival', description: 'Three days, twenty places, and a lot that ships under your own name.', img: '/from-aura/experiences/experiences.webp' },
+  '/from-aura/farm-tours': { title: 'Farm Tours', description: 'The estate mid-morning, with whatever the day was already doing.', img: '/from-aura/experiences/farm-tour.webp' },
+  '/from-aura/fashion': { title: 'Fashion', description: 'Cloth and wear, made slowly and in small numbers.', img: '/from-aura/objects/fashion.webp' },
+  '/from-aura/funding': { title: 'Funding Partnerships', description: 'Capital for land meant to be worth more in a hundred years than it is now.' },
+  '/from-aura/harvest-tours': { title: 'Harvest Tours', description: 'Picking, pulping and the wet mill, in the weeks it all happens at once.', img: '/from-aura/experiences/harvest-tour.webp' },
+  '/from-aura/honey': { title: 'Honey', description: 'From colonies recovering on ground that carries no pesticide.', img: '/from-aura/farm-goods/honey.webp' },
+  '/from-aura/jeevamrit': { title: 'Jeevamrit', description: 'Brewed from the herd, tested before and after, to volume against the calendar.' },
+  '/from-aura/objects': { title: 'Objects', description: 'Things for the hand, cut from what the land already grows.', img: '/from-aura/objects/objects.webp' },
+  '/from-aura/pepper': { title: 'Pepper', description: 'Malabar, black and white, off the vines that climb the shade trees.', img: '/from-aura/pepper/pepper.webp' },
+  '/from-aura/pepper-25-26': { title: 'Pepper 25/26', description: 'Malabar, black and white, off the vines that climb the shade trees.', img: '/from-aura/pepper/black-and-white.webp' },
+  '/from-aura/pepper-26-27': { title: 'Pepper 26/27', description: 'By block and by zone.', img: '/from-aura/pepper/blocks-and-zones.webp' },
+  '/from-aura/residency': { title: 'Artist residencies', description: 'Invited, embedded, and run on the estate’s clock.' },
+  '/from-aura/soapnut': { title: 'Soapnut', description: 'What the estate washes with, and what it can spare.', img: '/from-aura/farm-goods/soapnut.webp' },
+  '/from-aura/stationery': { title: 'Stationery', description: 'Paper, ink and the things a residency runs on.', img: '/from-aura/objects/stationery.webp' },
+  '/from-aura/tea-27-28': { title: 'Tea 27/28', description: 'Thirty-two acres, in organic transition targeting 2027. Pre-book.', img: '/from-aura/tea/prebook.webp' },
+  '/from-aura/trade': { title: 'Trade', description: 'For roasters and buyers who want the block as well as the bag.' },
+}
 
-export const FROM_AURA: Lane[] = [
-  {
-    id: 'land',
-    label: 'From the Land',
-    lede: 'Coffee, tea, pepper, areca and seasonal produce — and the fertility the estate brews to grow them.',
-    items: [
-      /* Same four the menu carries. This lane and lib/site-nav.ts had
-         drifted apart on coffee — the lane still ran a 27/28 pre-book
-         the menu had already replaced. */
-      soon('/from-aura/coffee-25-26', '2025–26 Lots', 'Nine lots from one harvest, each with its own wet mill file.', '/from-aura/coffee/nine-lots.jpg'),
-      soon('/from-aura/coffee-experimental', 'No.1 Experimental Coffee in India', 'The lot the estate is proudest of, and the file behind it.'),
-      soon('/from-aura/coffee-26-27', 'Pre-book 2026–27', 'Reserved before the cherry is on the tree.', '/from-aura/coffee/prebook.jpg'),
-      soon('/from-aura/coffee-blocks-and-zones', 'Book Block & Zone', 'By block and by zone, sold against the canopy reading that shaped it.', '/from-aura/coffee/blocks-and-zones.jpg'),
-      soon('/from-aura/tea-27-28', 'Tea 27/28', 'Thirty-two acres, in organic transition targeting 2027. Pre-book.', '/from-aura/tea/prebook.jpg'),
-      soon('/from-aura/pepper-25-26', 'Pepper 25/26', 'Malabar, black and white, off the vines that climb the shade trees.', '/from-aura/pepper/black-and-white.jpg'),
-      soon('/from-aura/pepper-26-27', 'Pepper 26/27', 'By block and by zone.', '/from-aura/pepper/blocks-and-zones.jpg'),
-      soon('/from-aura/areca-27-28', 'Areca 27/28', 'From the tallest storey of the canopy. Pre-book.', '/from-aura/areca-nut/prebook.jpg'),
-      soon('/from-aura/avocado', 'Avocado', 'Seasonal, and only when the season gives it.', '/from-aura/farm-goods/avocados.jpg'),
-      soon('/from-aura/cardamom', 'Cardamom', 'Grown in the understorey, under everything else.', '/from-aura/farm-goods/cardamom.jpg'),
-      soon('/from-aura/soapnut', 'Soapnut', 'What the estate washes with, and what it can spare.', '/from-aura/farm-goods/soapnut.jpg'),
-      soon('/from-aura/honey', 'Honey', 'From colonies recovering on ground that carries no pesticide.', '/from-aura/farm-goods/honey.jpg'),
-      soon('/from-aura/jeevamrit', 'Jeevamrit', 'Brewed from the herd, tested before and after, to volume against the calendar.'),
-      soon('/from-aura/cow-pat-pit', 'Cow Pat Pit', 'Ninety days in a numbered pit, hand-turned, and lab-tested before it leaves.'),
-    ],
-  },
-  {
-    id: 'atelier',
-    label: 'From the Atelier',
-    lede: 'Objects, art, craft and limited editions — what the estate makes when it is not farming.',
-    items: [
-      soon('/from-aura/art', 'Art', 'Work made on the estate, and work made about it.', '/from-aura/objects/art.jpg'),
-      soon('/from-aura/objects', 'Objects', 'Things for the hand, cut from what the land already grows.', '/from-aura/objects/objects.jpg'),
-      soon('/from-aura/craft', 'Craft', 'Six studios, and the disciplines they keep in use.', '/from-aura/objects/craft.jpg'),
-      soon('/from-aura/fashion', 'Fashion', 'Cloth and wear, made slowly and in small numbers.', '/from-aura/objects/fashion.jpg'),
-      soon('/from-aura/stationery', 'Stationery', 'Paper, ink and the things a residency runs on.', '/from-aura/objects/stationery.jpg'),
-      soon('/from-aura/editions', 'Limited Editions', 'Made once, numbered, and not made again.', '/from-aura/objects/limited.jpg'),
-    ],
-  },
-  {
-    id: 'experiences',
-    label: 'Experiences',
-    lede: 'Days on the estate — walking the blocks while the work is happening, and the harvest when it comes.',
-    items: [
-      soon('/from-aura/farm-tours', 'Farm Tours', 'The estate mid-morning, with whatever the day was already doing.', '/from-aura/experiences/farm-tour.jpg'),
-      soon('/from-aura/harvest-tours', 'Harvest Tours', 'Picking, pulping and the wet mill, in the weeks it all happens at once.', '/from-aura/experiences/harvest-tour.jpg'),
-      soon('/from-aura/experiences', 'The Festival', 'Three days, twenty places, and a lot that ships under your own name.', '/from-aura/experiences/experiences.jpg'),
-    ],
-  },
-  {
-    id: 'partners',
-    label: 'For Our Partners',
-    lede: 'Green coffee, trade, institutional collaborations and funding partnerships.',
-    items: [
-      soon('/from-aura/green-coffee', 'Green Coffee', 'Lot-level, at volume, with the wet mill record attached.', '/from-aura/coffee/coffee.jpg'),
-      soon('/from-aura/trade', 'Trade', 'For roasters and buyers who want the block as well as the bag.'),
-      soon('/from-aura/collaborations', 'Institutional Collaborations', 'Research on a working estate — monitoring, trials, and access to the record.'),
-      soon('/from-aura/funding', 'Funding Partnerships', 'Capital for land meant to be worth more in a hundred years than it is now.'),
-    ],
-  },
-]
-
+/* The lanes are the menu.
+ *
+ * This page used to group by who was buying — From the Land, From the
+ * Atelier, For Our Partners — while the menu grouped by product. Two
+ * shapes for one shop, and a reader crossing between them had to work
+ * out that they were the same things twice. The lanes are generated
+ * from lib/site-nav.ts now, so the page and the menu cannot disagree.
+ *
+ * Only products with a photograph are listed. A lane of grey plates is
+ * a list of things that do not exist yet, and the index is where a
+ * reader comes to see what there is. Everything unphotographed still
+ * has its page, and the menu still carries it. */
+export const FROM_AURA: Lane[] = (SECTIONS.find((s) => s.id === 'shop')?.items ?? [])
+  .filter((parent) => parent.children?.length)
+  .map((parent): Lane => {
+    const items: NoteEntry[] = []
+    for (const child of parent.children ?? []) {
+      const c = COPY[child.href]
+      if (!c?.img) continue
+      items.push({
+        href: child.href,
+        title: c.title || child.label,
+        description: c.description,
+        img: c.img,
+        status: 'soon',
+      })
+    }
+    return {
+      id: parent.href.replace('/from-aura/', ''),
+      label: parent.label,
+      lede: COPY[parent.href]?.description ?? '',
+      items,
+    }
+  })
+  .filter((lane) => lane.items.length > 0)

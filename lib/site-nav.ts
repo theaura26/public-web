@@ -21,8 +21,6 @@ export type NavLeaf = {
       translation, or the thing the word actually means. Shown on the
       section index; the menu lists labels only. */
   note?: string
-  /** Open a space above this leaf, grouping the list it sits in. */
-  breakBefore?: boolean
   /** No page written yet. Renders a stub at `href`. */
   soon?: boolean
   /** Named in the structure, but with no page at all — not even a stub.
@@ -73,7 +71,6 @@ export const SECTIONS: NavSection[] = [
       label: c.label,
       href: chapterHref(c),
       note: c.subtitle,
-      breakBefore: c.breakBefore,
     })),
   },
 

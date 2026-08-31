@@ -52,13 +52,13 @@ function product(slug: string) {
      its own — it is a heading over seasons — so its picture is named
      here rather than carried on an item. */
   const COVERS: Record<string, string> = {
-    coffee: '/from-aura/coffee/coffee.jpg',
-    tea: '/from-aura/tea/tea.jpg',
-    pepper: '/from-aura/pepper/pepper.jpg',
-    areca: '/from-aura/areca-nut/areca-nut.jpg',
-    'from-the-farm': '/from-aura/farm-goods/farm-goods.jpg',
-    objects: '/from-aura/objects/objects.jpg',
-    experiences: '/from-aura/experiences/experiences.jpg',
+    coffee: '/from-aura/coffee/coffee.webp',
+    tea: '/from-aura/tea/tea.webp',
+    pepper: '/from-aura/pepper/pepper.webp',
+    areca: '/from-aura/areca-nut/areca-nut.webp',
+    'from-the-farm': '/from-aura/farm-goods/farm-goods.webp',
+    objects: '/from-aura/objects/objects.webp',
+    experiences: '/from-aura/experiences/experiences.webp',
   }
   const shop = SECTIONS.find((x) => x.id === 'shop')
   const parent = shop?.items.find((x) => x.href === `${PREFIX}/${slug}`)
@@ -163,7 +163,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       )}
 
       <style>{`
-        .pd { padding: calc(var(--nav-h) + var(--head-top)) 0 var(--space-9); background: var(--bg); }
+        /* Flush to the nav at every width. --head-top is air for a page
+           that opens on its title; this one opens on a full-bleed
+           picture, and the picture starts where the header stops. The
+           mobile rule below used to be the only place that was true. */
+        .pd { padding: var(--nav-h) 0 var(--space-9); background: var(--bg); }
         .pd-in {
           display: grid;
           grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -209,10 +213,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
            the whole of it. */
         @media (max-width: 768px) {
           .pd-plate { width: calc(100% + 2 * var(--pd-rail)); }
-          /* Flush to the header line. --head-top is air for a page that
-             opens on its title; this one opens on a full-bleed picture,
-             and the picture should start where the header stops. */
-          .pd { padding-top: var(--nav-h); }
         }
 
         .pd-body { display: flex; flex-direction: column; gap: var(--space-4); }
@@ -220,8 +220,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           margin: 0 0 var(--space-3);
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 600; text-transform: uppercase;
-          font-size: clamp(48px, 7.2vw, 106px);
-          line-height: 1; letter-spacing: -0.03em;
+          /* The h2 size, not the page-title size. These names run from
+             "Tea" to "No.1 Experimental Coffee in India", and at 106px
+             the long one broke out of its column and off the page. The
+             h2 scale holds both. */
+          font-size: clamp(32px, 5.5vw, 60px);
+          line-height: 1.06; letter-spacing: -0.03em;
+          overflow-wrap: break-word;
           color: var(--text); text-wrap: balance;
         }
         .pd-lede { margin: 0; color: var(--text); max-width: 42ch; }

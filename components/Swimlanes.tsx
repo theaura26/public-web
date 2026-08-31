@@ -183,7 +183,11 @@ function LaneStyles() {
         /* Announced, not open. Dimmed and inert, and unlabelled — the
            same treatment the menu gives Munduk and Punakha. The stamp
            said in words what the grey already says. */
-        .sw .lane-card.is-soon { cursor: default; opacity: 0.55; }
+        /* Unreleased, not unreadable. The card is no longer dimmed as a
+             whole — that multiplied against the plate's own dimming and
+             took a photograph down to about a tenth of its opacity. The
+             muted label and the flat plate carry the meaning instead. */
+        .sw .lane-card.is-soon { cursor: default; }
 
         .sw .lane-plate {
           position: relative; display: block;
@@ -200,7 +204,10 @@ function LaneStyles() {
         /* An unwritten note has no photograph — a flat plate, not an
            empty box. */
         .sw .lane-plate[data-noimg='true'] { background: var(--text-muted); opacity: 0.16; }
-        .sw .lane-card.is-soon .lane-plate {
+        /* Only the empty plate is dimmed. A plate holding a picture keeps
+           it; the photograph is the whole reason the card is worth
+           showing before the product is released. */
+        .sw .lane-card.is-soon .lane-plate[data-noimg='true'] {
           background: var(--text-muted); opacity: 0.18;
         }
 

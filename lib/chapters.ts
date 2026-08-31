@@ -51,12 +51,6 @@ export type Chapter = Omit<Discipline, 'glyph'> & {
    *  The six without it are composed from the audited disciplines in
    *  lib/disciplines.ts and exist nowhere else on the site. */
   href?: string
-  /** Start a new group in the menu above this chapter. The eight read as
-   *  four movements — why it exists and how it keeps time; where you
-   *  stay and what is made; what is grown and how; and the layer that
-   *  reads all of it — and a line of eight with no breaks in it reads as
-   *  a list of equal things instead. */
-  breakBefore?: boolean
 }
 
 /** The chapters that own a page under /regenerative-life. */
@@ -273,7 +267,6 @@ export const CHAPTERS: Chapter[] = [
     id: 'sanctuary',
     label: 'Sanctuary & Stay',
     slug: 'sanctuary-and-stay',
-    breakBefore: true,
     href: '/regenerative-life/sanctuary-and-stay',
     lede: 'What happens when a piece of land is tended long enough that it begins to tend the people standing on it.',
     hero: {
@@ -387,7 +380,6 @@ export const CHAPTERS: Chapter[] = [
     id: 'plantation',
     label: 'The Plantation',
     slug: 'the-plantation',
-    breakBefore: true,
     lede: 'A hundred and fifty acres of four-storey canopy, read from a metre underground to the top of the shade trees.',
     /* Six disciplines, because Proof and Climate Resilience were dropped
        as chapters and their audited figures exist nowhere else on the
@@ -481,7 +473,6 @@ export const CHAPTERS: Chapter[] = [
     id: 'intelligence',
     label: 'Aura Intelligence',
     slug: 'aura-intelligence',
-    breakBefore: true,
     lede: d('intelligence').lede,
     ...(() => {
       const base = body('intelligence')

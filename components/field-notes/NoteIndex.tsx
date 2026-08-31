@@ -153,7 +153,9 @@ export function NoteIndex({
           .fn .fn-list { grid-template-columns: minmax(0, 1fr); }
         }
         /* Matches the menu: dimmed, inert, unlabelled. */
-        .fn .fn-item.is-soon { cursor: default; opacity: 0.55; }
+        /* See Swimlanes: dimming the whole item multiplied against the
+             plate and hid the picture. */
+        .fn .fn-item.is-soon { cursor: default; }
 
         .fn .fn-plate {
           position: relative; display: block;
@@ -168,7 +170,7 @@ export function NoteIndex({
         }
         .fn .fn-item:hover .fn-plate img { transform: scale(1.04); }
         .fn .fn-plate[data-noimg='true'] { background: var(--text-muted); opacity: 0.16; }
-        .fn .fn-item.is-soon .fn-plate { background: var(--text-muted); opacity: 0.18; }
+        .fn .fn-item.is-soon .fn-plate[data-noimg='true'] { background: var(--text-muted); opacity: 0.18; }
 
         .fn .fn-text { display: flex; flex-direction: column; gap: var(--space-3); }
         .fn .fn-t {

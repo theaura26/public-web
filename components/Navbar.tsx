@@ -726,7 +726,6 @@ export default function Navbar() {
                       <li
                         key={item.href + item.label}
                         className={`mn-row ${item.children ? 'has-more' : ''}`}
-                        data-break={item.breakBefore ? 'true' : undefined}
                       >
                         {/* Something announced but not yet a place is
                             plain text, not a dead link — the marker says
@@ -1140,10 +1139,7 @@ export default function Navbar() {
              nothing at all. The symptom is not a wrong style but an
              absent one: these have been rendering at the inherited 16px
              the whole time. Same reason .mn-sub-leaf is global below. */
-          /* A group break. A full line of space above the row: at half a
-             line the four movements read as uneven leading rather than
-             as groups. */
-          .mn-row[data-break='true'] { margin-top: 1.35em; }
+
           :global(.mn-leaf) {
             display: block;
             padding: 5px 0;

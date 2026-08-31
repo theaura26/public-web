@@ -296,7 +296,7 @@ function LotCard({ lot }: { lot: Lot }) {
            underneath. */
         .lc {
           display: flex; flex-direction: column; gap: var(--space-5);
-          background: rgba(12, 14, 15, 0.58); color: #fff;
+          background: rgba(12, 14, 15, 0.74); color: #fff;
           border: 1px solid rgba(255, 255, 255, 0.14);
           border-radius: var(--radius-1);
           padding: clamp(22px, 2.4vw, 32px);
@@ -305,7 +305,7 @@ function LotCard({ lot }: { lot: Lot }) {
         }
         .lc:hover {
           border-color: rgba(255, 255, 255, 0.3);
-          background: rgba(12, 14, 15, 0.68);
+          background: rgba(12, 14, 15, 0.82);
         }
 
         /* name, grade and method read as one lock-up */
@@ -321,7 +321,8 @@ function LotCard({ lot }: { lot: Lot }) {
             /* Matches .bx-de: an eyebrow above the name, in the accent,
                rather than a pill beside it. */
             font-family: var(--font-mono), monospace;
-            font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+            font-size: 11px; font-weight: 500;
+            letter-spacing: 1px; text-transform: uppercase;
             color: var(--brand-accent);
             display: block; margin: 0 0 var(--space-3);
         }

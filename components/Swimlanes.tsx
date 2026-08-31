@@ -103,14 +103,23 @@ function LaneStyles() {
           font-family: var(--font-mono), monospace;
           font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
           line-height: normal;
-          color: var(--text-muted);
-          margin: 0; max-width: 42ch;
+          /* Page ink, like the homepage's opening lines. Muted put a
+             sentence that carries the whole section into the same weight
+             as a caption. */
+          color: var(--text);
+          margin: 0; max-width: 46ch;
         }
 
         .sw .lane-bar { padding-bottom: 0; }
         /* The lane heading stays h3. The cards beneath it stepped down
            to p1 so a card title no longer competes with the name of the
            lane it sits in. */
+        /* One line under the lane heading saying what is in it. The p1
+           class carries the type; this only places it. */
+        .sw .lane-lede {
+          margin: 6px 0 0; max-width: 56ch;
+          color: var(--text-body);
+        }
         .sw .lane-h {
           font-family: var(--font-grotesque), sans-serif; font-weight: 400;
           font-size: clamp(24px, 3vw, 32px); line-height: 1.15; letter-spacing: -0.03em;
@@ -212,8 +221,11 @@ function LaneStyles() {
           background: var(--text-muted); opacity: 0.18;
         }
 
+        /* p1, the body role. Set here rather than by adding the class to
+           the span, because the lane also animates its colour. */
         .sw .lane-t {
-          font-family: var(--font-sans); font-size: 16px; line-height: 1.55; letter-spacing: normal;
+          font-family: var(--font-sans); font-size: 16px; line-height: 1.55;
+          letter-spacing: normal; font-weight: 400;
           transition: color var(--dur-base) var(--ease);
           color: var(--text);
         }
@@ -359,7 +371,7 @@ export function FromAuraSwimlanes() {
   return (
     <Swimlanes
       title="From Aura"
-      lede="Three directions out of one estate — what the land grows, what the atelier makes, and what is offered to the people who buy at volume. Nothing here is for sale yet."
+      lede="What the estate grows, what its studios make, and the days it opens to people from outside it. Nothing here is for sale yet — the record is published before the price."
       lanes={FROM_AURA}
       ratio="4 / 5"
     />

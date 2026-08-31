@@ -253,8 +253,11 @@ export function NoteIndex({
         .fn .fn-item.is-soon .fn-plate[data-noimg='true'] { background: var(--text-muted); opacity: 0.18; }
 
         .fn .fn-text { display: flex; flex-direction: column; gap: var(--space-3); }
+        /* The label role, matching the lane cards on /from-aura. */
         .fn .fn-t {
-          font-family: var(--font-sans); font-size: 16px; line-height: 1.55; letter-spacing: normal;
+          font-family: var(--font-mono), monospace;
+          font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+          line-height: normal;
           transition: color var(--dur-base) var(--ease);
           color: var(--text);
         }

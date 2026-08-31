@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { stubSlugs, labelFor, SECTIONS } from '@/lib/site-nav'
 import { FROM_AURA } from '@/lib/from-aura'
-import EnquiryForm from '@/components/from-aura/EnquiryForm'
 import { RelatedLane } from '@/components/Swimlanes'
 
 /* A product page.
@@ -194,7 +193,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           )}
 
           <p className="pd-act">
-            <EnquiryForm product={p.title} />
+            <Link className="pd-cta" href="/contact">Get in touch</Link>
           </p>
         </div>
       </div>
@@ -212,7 +211,14 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
            that opens on its title; this one opens on a full-bleed
            picture, and the picture starts where the header stops. The
            mobile rule below used to be the only place that was true. */
-        .pd { padding: var(--nav-h) 0 var(--space-9); background: var(--bg); }
+        /* Dark ground. The plate is a photograph and the copy is short;
+           on white the picture floated, and on the inverted surface the
+           product is the only lit thing on the page. */
+        .pd {
+          padding: var(--nav-h) 0 var(--space-9);
+          background: var(--contrast-bg);
+          color: var(--contrast-text);
+        }
         .pd-in {
           display: grid;
           grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -276,26 +282,31 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           font-size: clamp(32px, 5.5vw, 60px);
           line-height: 1.06; letter-spacing: -0.03em;
           overflow-wrap: break-word;
-          color: var(--text); text-wrap: balance;
+          color: var(--contrast-text); text-wrap: balance;
         }
-        .pd-lede { margin: 0; color: var(--text); max-width: 42ch; }
+        .pd-lede { margin: 0; color: var(--contrast-text); max-width: 42ch; }
         /* .p1 entire — colour as well as size. Moving to the p1 size
            while keeping p2's --text-body was half a change: the text
            still read as secondary next to the line above it, which is
            the thing that was wrong in the first place. */
-        .pd-p { margin: 0; max-width: 46ch; }
+        .pd-p {
+          margin: 0; max-width: 46ch;
+          /* .p1 colours from --text, which on this inverted ground is the
+             ground itself — the paragraphs were painting dark on dark. */
+          color: var(--contrast-text-body, rgba(255, 255, 255, 0.72));
+        }
 
         /* The seasons under a parent, as a plain list. */
         .pd-list {
           list-style: none; margin: 0; padding: 0;
           display: flex; flex-direction: column;
         }
-        .pd-list li { border-top: 1px solid var(--border); }
-        .pd-list li:last-child { border-bottom: 1px solid var(--border); }
+        .pd-list li { border-top: 1px solid var(--contrast-border, rgba(255, 255, 255, 0.14)); }
+        .pd-list li:last-child { border-bottom: 1px solid var(--contrast-border, rgba(255, 255, 255, 0.14)); }
         .pd-child {
           display: block; padding: var(--space-4) 0;
           font-family: var(--font-sans); font-size: 16px; line-height: 1.55;
-          color: var(--text); text-decoration: none;
+          color: var(--contrast-text); text-decoration: none;
         }
 
         .pd-act { margin: var(--space-4) 0 0; }
@@ -304,8 +315,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         .pd-cta {
           font-family: var(--font-sans);
           font-size: 16px; line-height: 1.55; letter-spacing: normal;
-          color: var(--text); text-decoration: none;
+          color: var(--contrast-text); text-decoration: underline;
+          text-underline-offset: var(--rule-offset);
+          text-decoration-thickness: var(--rule-weight);
         }
+        .pd-cta:hover { text-decoration-color: var(--brand-accent); }
       `}</style>
     </main>
   )

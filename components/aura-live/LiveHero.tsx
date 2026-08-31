@@ -162,10 +162,13 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
            mobile. */
         .dot {
           display: inline-block;
-          width: 0.1em;
-          height: 0.1em;
-          margin-left: 0.09em;
-          vertical-align: 0.58em;
+          width: 0.16em;
+          height: 0.16em;
+          margin-left: 0.1em;
+          /* Centred on the word, not perched above it: the dot's bottom
+             sits 0.28em over the baseline, which puts its middle on the
+             middle of the cap height. */
+          vertical-align: 0.28em;
           border-radius: 50%;
           background: var(--brand-accent);
           box-shadow:

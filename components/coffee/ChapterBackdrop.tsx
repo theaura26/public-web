@@ -104,6 +104,11 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
 
   if (!frames.length) return null
 
+  /* The stack as it must render *now*: everything shown so far, with the
+     active frame on top. Derived rather than stored, so the z-order can
+     never be a render behind the frame that is fading in. */
+  const stack = [...seen.filter((x) => x !== active), active]
+
   return (
     <div className="cb" ref={wrap} aria-hidden
       data-past={past ? 'true' : undefined}
@@ -114,13 +119,14 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           className="cb-frame"
           key={f.src + i}
           data-on={i === active ? 'true' : undefined}
-          data-seen={seen.includes(i) ? 'true' : undefined}
-          /* Recency is the z-order, and `seen` already ends with the
-             active frame, so this puts it on top without a special case.
-             The special case is what broke it: lifting the active frame
-             to 40 put it over the scrim, and every darkening change after
-             that dimmed only the frames nobody could see. */
-          style={{ zIndex: seen.indexOf(i) + 1 }}
+          data-seen={stack.includes(i) ? 'true' : undefined}
+          /* Recency is the z-order. Read off `stack`, which puts the
+             active frame on top in the same render that starts its fade
+             — `seen` is maintained by an effect and lands a commit later,
+             so ordering by it animated the incoming frame while it was
+             still buried, and the moment the z-index caught up the page
+             cut to a half-transparent top layer. That is the flash. */
+          style={{ zIndex: stack.indexOf(i) + 1 }}
         >
           {f.video ? (
             <video className="cb-media" poster={f.src} muted loop playsInline autoPlay preload="metadata">
@@ -189,7 +195,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
              than each block of text drawing a panel behind itself — a
              local wash reads as a box, which is worse than a dark
              picture. The photographs still read; they are ground. */
-          /* 0.63 under a 0.25 tint, compositing to 0.72. The layers
+          /* 0.69 under a 0.25 tint, compositing to 0.77. The layers
              compound, so both numbers are solved for the figure rather
              than scaled — easing each by the same percentage lands short
              of it every time.
@@ -197,7 +203,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
              The floor is set by the brightest frames — the canopy at
              noon and the wet mill in daylight — where white type and the
              accent eyebrows have the least to hold on to. */
-          background: rgba(0, 0, 0, 0.63);
+          background: rgba(0, 0, 0, 0.69);
         }
         .cb-tint {
           position: absolute;

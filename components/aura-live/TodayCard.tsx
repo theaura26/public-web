@@ -328,7 +328,7 @@ function Delta({ value, format }: { value: number | null; format: (v: number) =>
              descent and bottom padding hanging below the number. Lift it
              by exactly that, so the pill's bottom edge sits on the
              number's baseline. A transform, so nothing reflows. */
-          transform: translateY(calc(-3px - 0.46em));
+          transform: translateY(calc(-1px - 0.46em));
           padding: 3px 8px;
           width: fit-content;
           border-radius: 999px;

@@ -531,6 +531,18 @@ export function BlockExplorer() {
           gap: var(--grid-gap); margin-top: var(--space-9);
           align-items: start;
         }
+        /* The block's detail on the left, the map on the right. Reordered
+           here rather than in the markup so the map still comes first in
+           the document — it is the control, and a keyboard reaches it
+           before the panel it fills. */
+        .bx-map { order: 2; }
+        :global(.bx-panel) { order: 1; }
+        @media (max-width: 860px) {
+          /* Stacked, the map leads again: you cannot read a panel about a
+             block you have not been shown yet. */
+          .bx-map { order: 1; }
+          :global(.bx-panel) { order: 2; }
+        }
 
         .bx-map { width: 100%; aspect-ratio: 4 / 3; overflow: visible; }
         :global(.bx-zone) {

@@ -324,6 +324,11 @@ function Delta({ value, format }: { value: number | null; format: (v: number) =>
           align-items: baseline;
           gap: 6px;
           margin: 0;
+          /* The figure aligns baselines, which leaves the pill's own
+             descent and bottom padding hanging below the number. Lift it
+             by exactly that, so the pill's bottom edge sits on the
+             number's baseline. A transform, so nothing reflows. */
+          transform: translateY(calc(-3px - 0.46em));
           padding: 3px 8px;
           width: fit-content;
           border-radius: 999px;

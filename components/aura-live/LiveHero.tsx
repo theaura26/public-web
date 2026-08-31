@@ -47,10 +47,11 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           title, the stamp and the dark cards all hold against it. */}
       <span className="veil" aria-hidden="true" />
 
-      <h1 className="title">Now</h1>
+      <h1 className={`title state-${state}`}>
+        Now<span className="dot" aria-hidden="true" />
+      </h1>
 
       <p className={`fresh label state-${state}`}>
-        <span className="dot" aria-hidden="true" />
         Last updated{' '}
         {lastCheckedAt ? <time dateTime={lastCheckedAt}>{stamp}</time> : stamp}
       </p>
@@ -153,18 +154,39 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           margin: 0;
           color: rgba(255, 255, 255, 0.72);
         }
+        /* On the title rather than beside the timestamp. Six pixels next
+           to a line of 11px mono was a detail nobody found; at the top of
+           a 128px word it is the first thing on the page, which is right
+           for the one element whose whole job is to say "this is
+           current". It is sized in em, so it tracks the title down to
+           mobile. */
         .dot {
-          width: 6px;
-          height: 6px;
+          display: inline-block;
+          width: 0.1em;
+          height: 0.1em;
+          margin-left: 0.09em;
+          vertical-align: 0.58em;
           border-radius: 50%;
           background: var(--brand-accent);
-          flex: none;
+          box-shadow:
+            0 0 0.06em var(--brand-accent),
+            0 0 0.3em rgba(227, 113, 40, 0.85),
+            0 0 0.7em rgba(227, 113, 40, 0.45);
+          animation: live-pulse 2.6s var(--ease, ease-in-out) infinite;
         }
-        /* Behind, or unknown: the mark hollows out. Nothing about a
-           filled dot should survive the source going quiet. */
+        @keyframes live-pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.55; }
+        }
+        /* Behind, or unknown: the mark hollows out and stops glowing.
+           Nothing about a lit dot should survive the source going quiet. */
         .state-stale .dot, .state-unknown .dot {
           background: transparent;
-          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+          box-shadow: inset 0 0 0 0.02em rgba(255, 255, 255, 0.5);
+          animation: none;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .dot { animation: none; }
         }
 
         @media (max-width: 640px) {

@@ -11,6 +11,9 @@ export const metadata: Metadata = {
     title: 'Aura Live',
     description: 'What is happening on the land at Mudigere, taken from the estate record.',
     url: '/now',
+    /* Same reason as the chapters: this block replaces the root
+       layout's, so the image is restated rather than inherited. */
+    images: ['/aura-land.jpg'],
   },
 }
 

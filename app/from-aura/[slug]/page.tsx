@@ -53,7 +53,15 @@ function product(slug: string) {
 
   return {
     children: parent?.children ?? [],
-    title: entry?.title ?? navLabel!.split(' — ').slice(1).join(' — ') ?? navLabel!,
+    /* labelFor returns "Coffee" for a top-level product and "Coffee —
+       2025–26 Lots" for one of its children. Take the child half when
+       there is one, the whole label when there is not.
+
+       This was `?? navLabel!`, and `??` does not fall back on an empty
+       string — so every top-level product (Coffee, Tea, From the Farm,
+       Experiences) got a blank title and a description reading
+       " — not released yet." */
+    title: entry?.title ?? (navLabel!.split(' — ').slice(1).join(' — ') || navLabel!),
     lane: entry?.lane.label ?? SECTION,
     description: entry?.description ?? null,
     /* The rest of its own lane. A buyer looking at one season of coffee

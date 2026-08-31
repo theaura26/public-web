@@ -600,8 +600,3 @@ export const DISCIPLINES: Discipline[] = [
     related: [{ label: 'Provenance', href: '/provenance' }],
   },
 ]
-
-
-export function disciplineBySlug(slug: string): Discipline | undefined {
-  return DISCIPLINES.find((d) => d.slug === slug)
-}

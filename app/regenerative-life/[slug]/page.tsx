@@ -13,6 +13,13 @@ import { CHAPTERS, CHAPTER_PAGES, chapterBySlug, chapterHref } from '@/lib/chapt
  * `dynamicParams = false` keeps anything not a chapter from resolving.
  */
 
+/** One card image per chapter, chosen for the subject. */
+const OG: Record<string, string> = {
+  'the-plantation': '/aura-agroculture.jpg',
+  'vedic-and-biodynamic': '/aura-biodynamic.jpg',
+  'aura-intelligence': '/aura-land.jpg',
+}
+
 export const dynamicParams = false
 
 export function generateStaticParams() {
@@ -29,7 +36,15 @@ export async function generateMetadata(
     title: `${d.label} — The Regenerative Life`,
     description: d.lede,
     alternates: { canonical: `/regenerative-life/${d.slug}` },
-    openGraph: { type: 'article', title: `${d.label} — Aura`, description: d.lede },
+    /* Declaring openGraph here replaces the root layout's block, so the
+       image has to be restated or the card shares with none. */
+    openGraph: {
+      type: 'article',
+      title: `${d.label} — Aura`,
+      description: d.lede,
+      url: `/regenerative-life/${d.slug}`,
+      images: [OG[d.slug] ?? '/og-hello.jpg'],
+    },
   }
 }
 

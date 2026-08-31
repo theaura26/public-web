@@ -159,7 +159,3 @@ export const PILLARS: Pillar[] = [
     ],
   },
 ]
-
-export function pillarBySlug(slug: string): Pillar | undefined {
-  return PILLARS.find((p) => p.slug === slug)
-}

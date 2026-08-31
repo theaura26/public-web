@@ -333,12 +333,12 @@
     ]
   },
   "/now": {
-    "hash": "f92d68fd32c1c3b3",
-    "line": "Here’s the latest from the estate — what do you want to know?",
+    "hash": "995e37a85c5cd102",
+    "line": "Here's the latest from the estate — what would you like to know?",
     "prompts": [
       "How much rain fell this monsoon?",
       "What’s the current soil temperature?",
-      "How is moon phase relevant here?"
+      "How is the moon phase relevant here?"
     ]
   },
   "/pollinators": {
@@ -369,12 +369,12 @@
     ]
   },
   "/regenerative-coffee/flavour": {
-    "hash": "540b286a6e642d68",
-    "line": "This is where we decide the coffee’s final flavour — ask me anything.",
+    "hash": "8791a26debc55d5b",
+    "line": "This is where our coffee’s unique flavours come alive — ask me anything.",
     "prompts": [
-      "How do decisions affect flavour?",
-      "What is Appassimento Maceration?",
-      "Why is the ferment number important?"
+      "How do you decide flavour lots?",
+      "What happens during fermentation?",
+      "Why are some lots award-winning?"
     ]
   },
   "/regenerative-coffee/transparency": {

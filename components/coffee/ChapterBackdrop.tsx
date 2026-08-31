@@ -22,10 +22,17 @@ import type { Frame } from '@/lib/regenerative-coffee-gallery'
  */
 export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps?: number[] }) {
   const [active, setActive] = useState(0)
-  /* The frame that was showing. It stays fully opaque beneath the
-     incoming one until the fade finishes — cross-dissolving both at once
-     dips through to the scrim, which reads as a flash between scenes. */
-  const [prev, setPrev] = useState(0)
+  /* Which frames have been shown, oldest first. Every frame sits at full
+     opacity and the stack is ordered by recency, so the only one that
+     ever animates is the incoming top layer fading in over a solid one
+     beneath.
+     
+     Holding a single `prev` was not enough: scrolling fast starts a new
+     fade before the last has finished, so neither the incoming nor the
+     outgoing frame is opaque and the scrim shows through — which is the
+     flash. With the whole stack opaque there is nothing to show
+     through. */
+  const [seen, setSeen] = useState<number[]>([0])
   /* Past the last scene the chapter is over. The crosslinks and the
      festival banner are their own ground, so the backdrop lets go
      rather than sitting a photograph behind them. */
@@ -71,7 +78,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
             ? Math.min(frames.length - 1, map[i])
             : Math.min(frames.length - 1, Math.floor((i * frames.length) / steps.length))
         setActive((cur) => {
-          if (cur !== next) setPrev(cur)
+          if (cur !== next) setSeen((o) => [...o.filter((x) => x !== next), next])
           return next
         })
       },
@@ -103,7 +110,10 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           className="cb-frame"
           key={f.src + i}
           data-on={i === active ? 'true' : undefined}
-          data-under={i === prev && i !== active ? 'true' : undefined}
+          /* Recency is the z-order. Anything not yet shown stays at the
+             bottom; the frame directly under the active one is whatever
+             was showing last. */
+          style={{ zIndex: i === active ? 40 : seen.indexOf(i) + 1 }}
         >
           {f.video ? (
             <video className="cb-media" poster={f.src} muted loop playsInline autoPlay preload="metadata">
@@ -183,9 +193,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           background: rgba(0, 0, 0, 0.25);
           transition: opacity 600ms var(--ease-out, ease);
         }
-        @media (prefers-reduced-motion: reduce) {
-          .cb-frame { transition: none; }
-        }
+
       `}</style>
     </div>
   )

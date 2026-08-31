@@ -257,10 +257,8 @@ function LotCard({ lot }: { lot: Lot }) {
        this build, the same way it does for the menu vignette. */
     <article className={`lc ${open ? 'is-open' : ''}`} style={{ backdropFilter: 'blur(18px) saturate(120%)', WebkitBackdropFilter: 'blur(18px) saturate(120%)' }}>
       <span className="lc-head">
-        <span className="lc-top">
-          <h3 className="lc-n">{lot.name}</h3>
-          <span className="lc-badge">{lot.eyebrow}</span>
-        </span>
+        <span className="lc-badge">{lot.eyebrow}</span>
+        <h3 className="lc-n">{lot.name}</h3>
         <p className="lc-m">{lot.method}</p>
       </span>
 
@@ -312,10 +310,6 @@ function LotCard({ lot }: { lot: Lot }) {
 
         /* name, grade and method read as one lock-up */
         .lc-head { display: flex; flex-direction: column; gap: 6px; }
-        .lc-top {
-          display: flex; align-items: flex-start;
-          justify-content: space-between; gap: var(--space-4);
-        }
         .lc-n {
           flex: 1 1 auto; min-width: 0;
           font-family: var(--font-grotesque), sans-serif;
@@ -324,15 +318,12 @@ function LotCard({ lot }: { lot: Lot }) {
           letter-spacing: -0.03em; margin: 0;
         }
         .lc-badge {
-          font-family: var(--font-mono), monospace;
-          font-size: 9px; line-height: 1.4;
-          letter-spacing: 0.8px; text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.72);
-          border: 1px solid rgba(255, 255, 255, 0.24);
-          border-radius: 999px;
-          padding: 4px 10px;
-          text-align: right; flex: 0 1 auto; max-width: 52%;
-          margin-top: 4px;
+            /* Matches .bx-de: an eyebrow above the name, in the accent,
+               rather than a pill beside it. */
+            font-family: var(--font-mono), monospace;
+            font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--brand-accent);
+            display: block; margin: 0 0 var(--space-3);
         }
         .lc-m {
           font-family: var(--font-mono), monospace;

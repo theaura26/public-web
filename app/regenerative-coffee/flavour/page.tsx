@@ -41,12 +41,12 @@ export default function FlavourPage() {
         hero
         align="centre"
         title="Nine lots. One harvest."
-        lede="They come off the same trees on the same morning. What happens after that is decided in a shed, over about a week."
+        lede="Nine lots come off the same trees on the same morning. What separates them happens afterwards, in the wet mill, over about a week."
       />
 
       {/* ── the ferment ─────────────────────────────────────────── */}
 
-      <Chapter>It is decided in the wet mill.</Chapter>
+      <Chapter>The wet mill decides it.</Chapter>
 
       <Scene title="Four decisions, over about a week.">
         Oxygen: sealed, or open. Time: twenty-four hours, or forty-eight.
@@ -57,45 +57,48 @@ export default function FlavourPage() {
         every floater is pulled out.
       </Scene>
 
-      <Scene title="Flavour is cultured, in the dark.">
-        Grown, by things too small to see. Wild yeasts and lactic acid
-        bacteria eat the mucilage while the pH falls, and the alcohols and
-        acids they leave behind are what a taster later calls fruit.
+      <Scene title="Wild yeasts do most of the work.">
+        Yeasts and lactic acid bacteria eat the mucilage off the bean while
+        the pH falls. The alcohols and acids they leave behind are what a
+        taster later calls fruit. Nobody adds flavour to coffee here — they
+        set the conditions and let the microbes get on with it.
       </Scene>
 
       {/* ── the lab ─────────────────────────────────────────────── */}
 
       <Chapter>The ferment ends on a number.</Chapter>
 
-      <Scene title="Someone is awake for it.">
-        The meter gets read every fifteen minutes, through the night.
-        Temperature is written down three times a day, Brix at the start, the
-        middle and the end. At pH 4.2 the tank comes off, whatever the shed
-        smells like. That same reading is what a roaster gets handed months
-        later, because the data does not average across the harvest — it
-        follows each lot as an individual, which is the only reason nine lots
-        off one farm can be told apart at all.
+      <Scene title="The tank is read every fifteen minutes, all night.">
+        A member of the mill team takes the pH by hand, on the quarter hour,
+        for as long as the ferment runs — which is where the twenty-four and
+        forty-eight hour lots stop being an abstraction and start being
+        somebody’s night. Temperature goes down three times a day, Brix at the
+        start, the middle and the end. At pH 4.2 the tank comes off, whatever
+        the shed smells like. Those readings follow each lot as an individual
+        rather than averaging across the harvest, which is the only reason
+        nine lots off one farm can be told apart at all — and they are what a
+        roaster is handed, months later, with the coffee.
       </Scene>
 
       {/* ── what specialty means here ───────────────────────────── */}
 
-      <Chapter>Then it goes on the table.</Chapter>
+      <Chapter>Then somebody tastes it.</Chapter>
 
-      <Scene title="August 2026, on the cupping table.">
-        Four of the Arabica lots were cupped to SCA protocol on the estate’s
-        own table. They came back between 82.25 and 85.25. Every one scored a
-        perfect ten on uniformity, clean cup and sweetness. The note against
-        them said the ceiling was the roast, and the coffee underneath it had
-        further to go.
+      <Scene title="Four lots scored between 82.25 and 85.25.">
+        In August 2026 four of the Arabica lots were cupped to SCA protocol on
+        the estate’s own table. Anything at 80 or above is specialty grade;
+        every one of the four scored a perfect ten on uniformity, clean cup
+        and sweetness. The grader’s note said the ceiling was the roast, which
+        is a polite way of saying the coffee has further to go than the
+        roasting has taken it.
       </Scene>
 
-      <Scene title="Then people with no stake in it scored it.">
+      <Scene title="Then a national panel scored it, blind.">
         The Robusta went to the Coffee Board of India’s Flavour of India Fine
-        Cup Awards, judged nationally. At the 2026 awards Aura Estate took
-        first place in Robusta Experimental and second in Robusta Washed. Our
-        own table and a national one, pointing the same way: the ground is
-        doing the work, and the ferment decides how much of it reaches the
-        cup.
+        Cup Awards, judged nationally by people with no stake in the result.
+        At the 2026 awards Aura Estate took first place in Robusta
+        Experimental and second in Robusta Washed. Two tables, one of them
+        ours and one of them not, agreeing about the same coffee.
       </Scene>
 
       {/* ── Robusta — three lots, open ──────────────────────────── */}

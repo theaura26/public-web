@@ -30,7 +30,7 @@ export default function TransparencyPage() {
         hero
         align="centre"
         title="Sensors and hands, one record."
-        lede="Machines take their own readings. People sign theirs. The record is both halves together."
+        lede="Machines log what they measure. People sign what they did. The estate record is both halves, and neither one is allowed to fill in for the other."
       />
 
       <Scene title="One row, out of millions.">
@@ -46,13 +46,13 @@ export default function TransparencyPage() {
         caption="Observe, remember, learn, act — then observe what the acting changed. Sensors hold the parts no person can watch continuously; people hold the judgment no sensor has. The loop only closes because both are in it."
       />
 
-      <Scene title="Nine streams, nine clocks.">
-        Fermentation is read every fifteen minutes. Temperature three times a
-        day. Brix at the start, the middle and the end. Soil chemistry
-        quarterly, at 5 cm and at 20 cm. Earthworms counted by hand, inside a
-        square of string. A machine writes its own numbers and a person signs
-        theirs; nobody enters a reading for work they did not do. A ledger
-        cannot forget, and it cannot flatter.
+      <Scene title="Nine streams, each on its own clock.">
+        Fermentation every fifteen minutes. Temperature three times a day.
+        Brix at the start, the middle and the end. Soil chemistry quarterly,
+        at 5 cm and at 20 cm. Earthworms counted by hand, inside a square of
+        string laid on the ground. Sensors write their own numbers; the person
+        who did the work signs for theirs, by name, and nobody signs for work
+        somebody else did.
       </Scene>
 
       <Scene title="No untested material touches the soil.">
@@ -62,22 +62,25 @@ export default function TransparencyPage() {
         wrong is corrected, or it is held.
       </Scene>
 
-      <Scene title="Then the block is read again at ninety days.">
-        Which is the part most people skip. Recording what was done is easy.
-        Recording whether it worked is the harder half, and it is the only
-        half that can tell you to stop.
+      <Scene title="The block is read again ninety days later.">
+        This is the part most farms skip. Writing down what you applied takes
+        a minute; going back a season later to measure whether it changed
+        anything is the harder half, and it is the only half that can tell you
+        to stop doing something.
       </Scene>
 
       <Chapter>Here is what we cannot prove.</Chapter>
 
-      <Scene title="The solera, which we cannot prove.">
-        We carry a fraction of a fermenting batch forward into the next
+      <Scene title="The solera we cannot prove yet.">
+        We carry a fraction of one fermenting batch forward into the next
         harvest’s cherry, the way a sherry bodega carries a barrel forward
-        across decades. We think it builds continuity. We would like it to be
-        true. But nobody has shown a coffee strain that survives that gap — a
-        coffee ferment runs in days, a solera runs in decades, and the
-        metaphor is doing work the science has not done yet. So we are testing
-        it, year on year, and we will publish it either way.
+        across decades. We think it builds continuity between harvests. We
+        would like that to be true. What we can say is that nobody has yet
+        shown a coffee microbe surviving a twelve-month gap between ferments —
+        a coffee ferment runs in days, a sherry solera runs in decades, and
+        right now the comparison is doing work the evidence has not done. We
+        are testing it harvest by harvest and will publish the result either
+        way.
       </Scene>
 
       <Scene title="There is no certificate.">

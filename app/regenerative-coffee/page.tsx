@@ -81,14 +81,13 @@ export default function RegenerativeCoffeePage() {
         glyph="aura-observation-glyph.svg"
         title="Tree-level observation."
       >
-        Before the cherry becomes coffee, we read the tree. A harvest does
-        not begin with picking — it begins with observation, tree by tree,
-        canopy by canopy: how much light reaches the coffee, how the leaves
-        hold, when flowers arrive, what the soil is saying beneath the
-        roots. Every tree tells a slightly different story, and its light,
-        flowering, ripening and condition become part of the record that
-        follows its cherries into the wet mill — and eventually into the
-        cup.
+        A harvest starts months before anyone picks anything, by standing
+        under the trees and looking up. How much light gets through four
+        storeys of shade to the coffee. How the leaves are holding. When the
+        flowers arrive, and what the soil is doing under the roots. Every tree
+        reads slightly differently, and its light, flowering, ripening and
+        condition go into the record that follows its cherries into the wet
+        mill and eventually into the cup.
       </Scene>
 
       <Chapter>Attention is a moral choice.</Chapter>
@@ -112,14 +111,13 @@ export default function RegenerativeCoffeePage() {
       </Scene>
 
       <Scene id="hydrology" glyph="aura-hydrology-glyph.svg" title="Hydrology.">
-        These hills take the Western Ghats monsoon in full, and none of it
-        runs off unused. The four-storey canopy breaks the force of the
-        rain before it reaches soil; what doesn’t sink into this ground
-        eventually reaches the Hemavathi, one of the rivers this range
-        feeds. Nothing here is irrigated. The coffee grows on rainfall
-        alone, and the processing follows what the air gives it — each lot
-        finding its own clock rather than a fixed one. Water decides more
-        of this harvest than we do.
+        These hills take the Western Ghats monsoon in full, most days from
+        June onward. The canopy breaks the force of the rain before it
+        reaches soil, so it soaks in rather than running off and taking the
+        topsoil with it; what the ground does not keep eventually reaches the
+        Hemavathi, one of the rivers this range feeds. Not one tree here is
+        irrigated. The coffee grows on rainfall alone, and drying follows
+        whatever the air gives it, so each lot ends up on its own clock.
       </Scene>
 
       <Chapter>Every layer talks to every other layer.</Chapter>
@@ -137,15 +135,14 @@ export default function RegenerativeCoffeePage() {
       </Scene>
 
       <Scene id="pathology" glyph="aura-pathology-glyph.svg" title="Plant pathology.">
-        Coffee leaf rust and berry disease move fast through a monoculture
-        — same clone, same canopy gap, same humidity trap, and one infected
-        block becomes the whole harvest. The four-storey canopy breaks that
-        pattern here: airflow, shade variation and a mixed planting mean no
-        single pathogen finds identical conditions twice. A plant grown in
-        living soil resists disease the way a well-rested body resists
-        illness. No synthetic fungicides — just soil biology, airflow, and
-        a herd’s worth of compost doing the slower, harder work of
-        prevention.
+        Coffee leaf rust and berry disease move fast across a monoculture:
+        same clone, same canopy gap, same humidity trap, and one infected
+        block takes the whole estate with it. A four-storey mixed canopy
+        breaks that up. Airflow and shade vary from one block to the next, so
+        a pathogen never finds the same conditions twice in a row, and an
+        outbreak stays where it started. There are no synthetic fungicides
+        here — the work is done by soil biology, moving air, and a great deal
+        of compost.
       </Scene>
 
       <Chapter>Generational impact.</Chapter>

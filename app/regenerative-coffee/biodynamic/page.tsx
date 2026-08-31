@@ -35,7 +35,7 @@ export default function BiodynamicPage() {
         hero
         align="centre"
         title="Grown in a closed loop."
-        lede="Nothing comes in. Nothing leaves."
+        lede="No fertiliser is bought in, and no waste is trucked out. The herd, the soil and the trees feed each other, and the estate’s job is to keep the loop turning."
       />
 
       <Scene>
@@ -56,12 +56,12 @@ export default function BiodynamicPage() {
         ground the coffee is standing in.
       </Scene>
 
-      <Scene title="The day starts at twenty to six.">
-        In the dark, with a bucket. What the herd left overnight is gathered
-        while it is still warm, weighed, written down, and split three ways —
-        into the pits, into the brews, into the horns. It is the most valuable
-        raw material on the estate and it is collected by hand, every morning,
-        before anything else happens.
+      <Scene title="The day starts at twenty to six, with a bucket.">
+        What the herd left overnight is gathered while it is still warm,
+        weighed, written down, and split three ways — into the compost pits,
+        into the Jeevamrit brews, and into the horns for BD 500. It is the
+        most valuable raw material on the estate, and it is collected by hand,
+        every morning, before anything else happens.
       </Scene>
 
       <Scene title="We do not buy fertility. We make it.">
@@ -71,31 +71,33 @@ export default function BiodynamicPage() {
         rather the point.
       </Scene>
 
-      <Scene title="Fourteen pits, ninety days apiece.">
-        Horn manure buried through the cool months and put out at dusk. Quartz
-        buried through the summer, misted over the canopy at first light.
-        Yarrow, chamomile, nettle, oak bark, dandelion, valerian — in doses
-        small enough to look like superstition, into a heap the size of a
-        room. None of it arrives on a lorry.
+      <Scene title="Fourteen compost pits, ninety days apiece.">
+        Horn manure is buried through the cool months and sprayed at dusk;
+        ground quartz is buried through the summer and misted over the canopy
+        at first light. Yarrow, chamomile, nettle, oak bark, dandelion and
+        valerian go into a heap the size of a room, in doses small enough that
+        a soil scientist would raise an eyebrow. All of it is made here. None
+        of it arrives on a lorry.
       </Scene>
 
       <Chapter>Then we stopped guessing.</Chapter>
 
-      <Scene title="Three hundred years of reading it by eye.">
+      <Scene title="Shade has been judged by eye here for three hundred years.">
         A contractor stands under a tree, decides it is too dark, and directs
-        the cut. It works until it doesn’t, and a cut made on a feeling is
-        still the wrong shape fifty years later. So in 2026 we took a lux
-        meter into Block 3 and took fifty readings an acre. The block turned
-        out to be three blocks: one reading 33,000 lux with two-thirds of the
-        light gone, one 62,000, one 82,000 and far too bright. Arabica wants
-        50,000 to 70,000. One zone in three was where we had assumed all of it
+        the cut. That works until it doesn’t, and a tree cut on a hunch is
+        still the wrong shape fifty years later. So in 2026 we walked Block 3
+        with a lux meter, fifty readings to the acre. The block turned out to
+        be three blocks: one at 33,000 lux with two-thirds of the light gone,
+        one at 62,000, one at 82,000 and wide open. Arabica wants 50,000 to
+        70,000. One zone in three was where we had assumed the whole block
         was.
       </Scene>
 
-      <Scene title="So we cut to the number.">
-        Every wound dressed with dung and turmeric, every cut logged, and the
-        whole block read again ninety days later to find out whether we had
-        been right. Recording what was done is the easy half.
+      <Scene title="So we cut to the number instead.">
+        Every wound was dressed with cow dung and turmeric, every cut was
+        logged against the tree it came off, and the whole block was read
+        again with the meter ninety days later to find out whether we had been
+        right. Recording what you did is the easy half.
       </Scene>
 
       <Scene title="Nothing comes in. Nothing leaves.">

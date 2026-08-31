@@ -53,6 +53,13 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
     return () => { delete document.documentElement.dataset.rcBackdrop }
   }, [])
 
+  /* Recency, kept in an effect rather than inside the setActive updater.
+     A setState nested in another setState's updater makes that updater
+     impure, and Strict Mode runs it twice to check exactly that. */
+  useEffect(() => {
+    setSeen((o) => (o[o.length - 1] === active ? o : [...o.filter((x) => x !== active), active]))
+  }, [active])
+
   useEffect(() => {
     if (!frames.length) return
     /* Every full-screen beat on the page, in document order. The scene
@@ -77,10 +84,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           map && map[i] != null
             ? Math.min(frames.length - 1, map[i])
             : Math.min(frames.length - 1, Math.floor((i * frames.length) / steps.length))
-        setActive((cur) => {
-          if (cur !== next) setSeen((o) => [...o.filter((x) => x !== next), next])
-          return next
-        })
+        setActive(next)
       },
       { threshold: [0.35, 0.6] },
     )
@@ -151,8 +155,12 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
         .cb-frame[data-seen] { opacity: 1; }
         .cb-frame[data-on] { animation: cb-in 900ms var(--ease-out, ease) both; }
         @keyframes cb-in { from { opacity: 0; } to { opacity: 1; } }
-        /* Chapter over: everything fades and the ground beneath shows. */
-        .cb[data-past] .cb-frame { opacity: 0; }
+        /* Chapter over: everything fades and the ground beneath shows.
+           The animation has to be cancelled, not just overridden — a
+           filled animation holds its end value at animation priority,
+           which outranks any declaration here, so the photograph would
+           stay at full opacity under a scrim that had faded out. */
+        .cb[data-past] .cb-frame { animation: none; opacity: 0; }
         .cb[data-past] .cb-scrim,
         .cb[data-past] .cb-tint { opacity: 0; }
         /* Nothing at all until the first scene is reached. */

@@ -154,7 +154,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   return (
     <main className="pd">
-      <div className="section-w pd-in">
+      <div className="pd-band">
+        <div className="section-w pd-in">
         {/* 4:5, and grey until there is a photograph of the thing. */}
         <div className="pd-plate" data-noimg={p.img ? undefined : 'true'} aria-hidden>
           {p.img && (
@@ -195,6 +196,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <p className="pd-act">
             <Link className="pd-cta" href="/contact">Get in touch</Link>
           </p>
+          </div>
         </div>
       </div>
 
@@ -211,13 +213,17 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
            that opens on its title; this one opens on a full-bleed
            picture, and the picture starts where the header stops. The
            mobile rule below used to be the only place that was true. */
-        /* Dark ground. The plate is a photograph and the copy is short;
-           on white the picture floated, and on the inverted surface the
-           product is the only lit thing on the page. */
-        .pd {
-          padding: var(--nav-h) 0 var(--space-9);
+        .pd { padding: var(--nav-h) 0 var(--space-9); background: var(--bg); }
+
+        /* The dark belongs to the product, not to the page. The plate is
+           a photograph and the copy is short; on white the picture
+           floated, and on the inverted band the product is the only lit
+           thing. The lane below it sits back on the page's own ground. */
+        .pd-band {
           background: var(--contrast-bg);
           color: var(--contrast-text);
+          padding: var(--space-9) 0;
+          margin-bottom: var(--space-9);
         }
         .pd-in {
           display: grid;

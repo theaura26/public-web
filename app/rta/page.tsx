@@ -16,7 +16,7 @@ export default function RtaPage() {
   return (
     <>
       <HeroBanner
-        currentHref="/regenerative-life/rta"
+        currentHref="/rta"
         title="Rta"
         type="Ritual · prayer and incense at dusk"
         caption="Right time, right action — the Vedic order that runs every decision on the estate"
@@ -205,7 +205,7 @@ export default function RtaPage() {
         </p>
       </OneCol>
 
-      <Continue currentHref="/regenerative-life/rta" />
+      <Continue currentHref="/rta" />
     </>
   )
 }

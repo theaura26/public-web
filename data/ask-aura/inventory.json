@@ -925,14 +925,14 @@
       "issue": ""
     },
     {
-      "url": "http://localhost:3100/regenerative-life/food-and-fermentation",
+      "url": "http://localhost:3100/fermentation",
       "id": "regenerative-life-food-and-fermentation",
       "status": 200,
       "state": "ok",
       "seenAt": "2026-08-31T10:50:21.682Z",
       "hash": "927cd0f5c08b4bb1",
       "title": "Fermentation — Aura",
-      "canonical": "https://theaura.life/regenerative-life/food-and-fermentation",
+      "canonical": "https://theaura.life/fermentation",
       "description": "Three fermentation disciplines on one estate: coffee, pepper and cow dung. pH every fifteen minutes, temperature three times a day, and a number that ends it.",
       "image": "https://theaura.life/journals/fermentation/aura-fermentation.jpg",
       "words": 817,
@@ -950,14 +950,14 @@
       "issue": ""
     },
     {
-      "url": "http://localhost:3100/regenerative-life/rta",
+      "url": "http://localhost:3100/rta",
       "id": "regenerative-life-rta",
       "status": 200,
       "state": "ok",
       "seenAt": "2026-08-31T10:50:21.682Z",
       "hash": "3bb217a2776d1984",
       "title": "Ṛta — Aura",
-      "canonical": "https://theaura.life/regenerative-life/rta",
+      "canonical": "https://theaura.life/rta",
       "description": "Right time, right action. The Vedic principle behind every decision on the estate: when to spray, when to seal a tank, when to wait for the land.",
       "image": "https://theaura.life/journals/rta/aura-rta.jpg",
       "words": 760,

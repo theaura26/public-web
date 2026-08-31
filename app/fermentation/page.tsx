@@ -15,7 +15,7 @@ export default function FermentationPage() {
   return (
     <>
       <HeroBanner
-        currentHref="/regenerative-life/food-and-fermentation"
+        currentHref="/fermentation"
         title="Fermentation"
         type="Detail · fine foam on cherry ferment"
         caption="Foam lifting and collapsing on a coffee cherry ferment"
@@ -207,7 +207,7 @@ export default function FermentationPage() {
         </p>
       </OneCol>
 
-      <Continue currentHref="/regenerative-life/food-and-fermentation" />
+      <Continue currentHref="/fermentation" />
     </>
   )
 }

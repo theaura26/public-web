@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Fermentation',
   description:
     'Three fermentation disciplines on one estate: coffee, pepper and cow dung. pH every fifteen minutes, temperature three times a day, and a number that ends it.',
-  alternates: { canonical: '/regenerative-life/food-and-fermentation' },
+  alternates: { canonical: '/fermentation' },
   openGraph: {
     type: 'article',
     title: 'Fermentation — Aura',

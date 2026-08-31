@@ -201,7 +201,7 @@ export const DISCIPLINES: Discipline[] = [
       {
         heading: 'The ferment is the other half.',
         lines: [
-          'In the wet mill the ferment is tracked hour by hour: pH every fifteen minutes, temperature three times a day, Brix at the start, the middle and the end. It ends at pH 4.2. [Fermentation](/regenerative-life/food-and-fermentation) sets out how a tank is read and what stops it.',
+          'In the wet mill the ferment is tracked hour by hour: pH every fifteen minutes, temperature three times a day, Brix at the start, the middle and the end. It ends at pH 4.2. [Fermentation](/fermentation) sets out how a tank is read and what stops it.',
           'The wild yeasts and lactic-acid bacteria that drive a coffee ferment are well described in the literature. What Aura tracks on this estate is the ferment’s behaviour, and it has not identified the species here.',
           'The herd is an indigenous breed because Aura reads a gut microbiome as following the ground it grazes. No metagenomic comparison against another breed has been run, so that stays a reading the estate acts on.',
         ],
@@ -215,7 +215,7 @@ export const DISCIPLINES: Discipline[] = [
       { value: 'Annual', label: 'mycorrhizal colonisation assessment' },
     ],
     related: [
-      { label: 'Fermentation', href: '/regenerative-life/food-and-fermentation' },
+      { label: 'Fermentation', href: '/fermentation' },
       { label: 'Circular Intelligence', href: '/circular' },
     ],
   },

@@ -179,17 +179,17 @@ export const SITEMAP: SitemapEntry[] = [
     label: 'Our Bean Story',
     topic: 'Six lots, one harvest — one Arabica, six fermentations',
     summary: 'One harvest of a single Arabica taken through six distinct fermentation methods — six separate lots and six cups — the estate’s coffee read as an experiment in method.',
-    related: ['/regenerative-life/food-and-fermentation', '/circular', '/mudigere'],
+    related: ['/fermentation', '/circular', '/mudigere'],
   },
   {
-    href: '/regenerative-life/rta',
+    href: '/rta',
     label: 'Rta',
     topic: 'Right time, right action — the Vedic order behind each decision',
     summary: 'Ṛta — the Vedic principle of right time and right action — as the ordering logic behind estate decisions, timed to season, moon and the state of the ground rather than the calendar.',
     related: ['/biodynamic', '/circular'],
   },
   {
-    href: '/regenerative-life/food-and-fermentation',
+    href: '/fermentation',
     label: 'Fermentation',
     topic: 'Three fermentation disciplines — coffee, pepper, cow dung',
     summary: 'Three fermentation disciplines worked on one estate — coffee, pepper and cow dung — each a controlled microbial process feeding a different part of the system, from cup to soil.',
@@ -210,7 +210,7 @@ export const SITEMAP: SitemapEntry[] = [
     facts: [
       { label: 'Preparations', value: 'BD 500–508 · Jeevamrit · Panchgavya' },
     ],
-    related: ['/circular', '/herd', '/regenerative-life/rta'],
+    related: ['/circular', '/herd', '/rta'],
   },
   {
     href: '/regenerative-life/artistry',
@@ -265,7 +265,7 @@ export const SITEMAP: SitemapEntry[] = [
       { label: 'Types', value: 'Black · White · Green' },
       { label: 'Processing', value: 'Water-retted; experimentally anaerobic' },
     ],
-    related: ['/areca', '/regenerative-life/food-and-fermentation', '/mudigere'],
+    related: ['/areca', '/fermentation', '/mudigere'],
   },
   {
     href: '/residency',

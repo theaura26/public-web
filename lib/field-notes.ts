@@ -88,7 +88,7 @@ const ASSIGNMENT: Record<string, CategoryId[]> = {
   /* The preparations, and the calendar they run on. */
   '/biodynamic': ['biodynamic'],
   '/circular': ['biodynamic', 'labs'],
-  '/regenerative-life/rta': ['biodynamic'],
+  '/rta': ['biodynamic'],
   '/vedic': ['biodynamic'],
 
   /* The herd, and everything else with a heartbeat. */
@@ -113,7 +113,7 @@ const ASSIGNMENT: Record<string, CategoryId[]> = {
 
   /* One harvest, many lots. */
   '/coffee': ['coffee-fermentation', 'labs'],
-  '/regenerative-life/food-and-fermentation': ['coffee-fermentation', 'labs'],
+  '/fermentation': ['coffee-fermentation', 'labs'],
   '/pepper': ['coffee-fermentation', 'biodiversity'],
 }
 

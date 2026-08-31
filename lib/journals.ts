@@ -78,13 +78,13 @@ export const ACTIVE_JOURNALS: Journal[] = [
     img: '/journals/coffee/aura-our-coffee-story.jpg',
   },
   {
-    href: '/regenerative-life/rta',
+    href: '/rta',
     title: 'Rta',
     description: 'Right time, right action. The Vedic order that governs every decision on the estate.',
     img: '/journals/rta/aura-rta.jpg',
   },
   {
-    href: '/regenerative-life/food-and-fermentation',
+    href: '/fermentation',
     title: 'Fermentation',
     description: 'Three fermentation disciplines, one estate. Coffee, pepper, and cow dung.',
     img: '/journals/fermentation/aura-fermentation.jpg',

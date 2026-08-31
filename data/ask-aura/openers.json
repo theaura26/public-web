@@ -80,7 +80,7 @@
       "How does soil breathing get measured?"
     ]
   },
-  "/regenerative-life/food-and-fermentation": {
+  "/fermentation": {
     "hash": "927cd0f5c08b4bb1",
     "line": "This is where fermentation shapes our coffee and soil—ask me anything.",
     "prompts": [
@@ -179,7 +179,7 @@
       "How do forest islands help here?"
     ]
   },
-  "/regenerative-life/rta": {
+  "/rta": {
     "hash": "3bb217a2776d1984",
     "line": "This is Ṛta, the rhythm guiding all we do — ask me anything.",
     "prompts": [

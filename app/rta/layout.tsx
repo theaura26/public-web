@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Ṛta',
   description:
     'Right time, right action. The Vedic principle behind every decision on the estate: when to spray, when to seal a tank, when to wait for the land.',
-  alternates: { canonical: '/regenerative-life/rta' },
+  alternates: { canonical: '/rta' },
   openGraph: {
     type: 'article',
     title: 'Ṛta — Aura',

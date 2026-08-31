@@ -202,7 +202,6 @@ export const CHAPTERS: Chapter[] = [
     label: 'RTA',
     subtitle: 'Right Time, Right Action',
     slug: 'rta',
-    href: '/regenerative-life/rta',
     lede: 'The old word for the order that keeps time. On this estate it is a working rule: do the thing when the land is ready for it, not when the calendar is free.',
     hero: {
       type: 'Landscape · Mudigere before the work starts',
@@ -257,8 +256,8 @@ export const CHAPTERS: Chapter[] = [
       { value: 'Buffer days', label: 'built into every plan, because the land keeps its own calendar' },
     ],
     related: [
-      { label: 'Rta, in full', href: '/regenerative-life/rta' },
-      { label: 'Fermentation', href: '/regenerative-life/food-and-fermentation' },
+      { label: 'Rta, in full', href: '/rta' },
+      { label: 'Fermentation', href: '/fermentation' },
     ],
   },
 
@@ -413,7 +412,6 @@ export const CHAPTERS: Chapter[] = [
     id: 'fermentation',
     label: 'Food & Fermentation',
     slug: 'food-and-fermentation',
-    href: '/regenerative-life/food-and-fermentation',
     lede: 'Three fermentation disciplines on one estate — coffee, pepper and cow dung. The same process, doing three different jobs.',
     hero: {
       type: 'Detail · foam lifting on a cherry ferment',
@@ -463,7 +461,7 @@ export const CHAPTERS: Chapter[] = [
       { value: 'Six', label: 'methods applied to the same Arabica' },
     ],
     related: [
-      { label: 'Fermentation, in full', href: '/regenerative-life/food-and-fermentation' },
+      { label: 'Fermentation, in full', href: '/fermentation' },
       { label: 'Our bean story', href: '/coffee' },
     ],
   },

@@ -1,4 +1,4 @@
-import { Gallery } from '@/components/article/Gallery'
+import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
 import { TRANSPARENCY } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
@@ -19,17 +19,19 @@ export default function TransparencyPage() {
       <MicroNav />
       <ArrowLinkStyles />
 
+      {/* One ground for the whole chapter, dissolving between the
+
+          photographs as the scenes scroll over it. */}
+
+      <ChapterBackdrop frames={TRANSPARENCY} />
+
+
       <Panel
         hero
         align="centre"
         title="Sensors and hands, one record."
         lede="Machines take their own readings. People sign theirs. The record is both halves together."
       />
-
-      {/* The chapter's pictures as one full-bleed band: a reader takes
-          the set at their own pace rather than scrolling past ten
-          stacked banners to reach the next sentence. */}
-      <Gallery frames={TRANSPARENCY} label="The record, in eight frames" />
 
       <Scene>
         Everything on the last page is easy to claim and hard to check. This

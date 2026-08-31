@@ -1966,7 +1966,7 @@ Awake.`}</ScrollHighlight>
             {[
               {
                 title: 'Agroculture',
-                href: '/regenerative-life/the-reason/agroculture',
+                href: '/regenerative-life/the-plantation',
                 lead: 'Farming as though the land has to be worth more in a century',
                 desc: 'A hundred and fifty acres of forest that produces crops — coffee, tea, pepper and areca under four storeys of canopy, fed by fertility the estate makes from its own herd.',
                 video: '/aura-agroculture.mp4',
@@ -1975,7 +1975,7 @@ Awake.`}</ScrollHighlight>
               },
               {
                 title: 'Sanctuary',
-                href: '/regenerative-life/the-reason/hospitality',
+                href: '/regenerative-life/sanctuary-and-stay',
                 lead: 'Places that hold the right kind of attention',
                 desc: 'Two sanctuaries open and two more named — architecture, kitchen and residency, built to run for decades on a farm that would be working anyway.',
                 video: '/aura-hospitality.mp4',

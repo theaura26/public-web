@@ -168,7 +168,7 @@ export const CHAPTERS: Chapter[] = [
         heading: 'There are three intelligences.',
         lines: [
           'Machine intelligence, which is new and very loud. Human intelligence, which is old and getting scarcer in the places that need it. And the oldest one, which is the land itself.',
-          'The land has been computing longer than any machine. What stopped was not the computation but the reading of it — and that is the gap this whole estate is an argument about. [Natural Intelligence](/regenerative-life/the-reason/natural-intelligence) is the fuller version of the argument.',
+          'The land has been computing longer than any machine. What stopped was not the computation but the reading of it — and that is the gap this whole estate is an argument about. [Natural Intelligence](/regenerative-life/aura-intelligence) is the fuller version of the argument.',
         ],
         after: {
           kind: 'banner',
@@ -187,7 +187,7 @@ export const CHAPTERS: Chapter[] = [
     ],
     related: [
       { label: 'The full reason', href: '/regenerative-life/the-reason' },
-      { label: 'Natural Intelligence', href: '/regenerative-life/the-reason/natural-intelligence' },
+      { label: 'Aura Intelligence', href: '/regenerative-life/aura-intelligence' },
       { label: 'Moral Spine', href: '/wisdom' },
     ],
   },

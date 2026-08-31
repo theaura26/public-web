@@ -1,4 +1,4 @@
-import { Gallery } from '@/components/article/Gallery'
+import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
 import { BETTER_GROUND } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
@@ -24,17 +24,19 @@ export default function BiodynamicPage() {
       <MicroNav />
       <ArrowLinkStyles />
 
+      {/* One ground for the whole chapter, dissolving between the
+
+          photographs as the scenes scroll over it. */}
+
+      <ChapterBackdrop frames={BETTER_GROUND} />
+
+
       <Panel
         hero
         align="centre"
         title="Grown in a closed loop."
         lede="Nothing comes in. Nothing leaves."
       />
-
-      {/* The chapter's pictures as one full-bleed band: a reader takes
-          the set at their own pace rather than scrolling past ten
-          stacked banners to reach the next sentence. */}
-      <Gallery frames={BETTER_GROUND} label="The closed loop, in eleven frames" />
 
       <Scene>
         Coffee does not begin with coffee. It begins with an animal, a metre

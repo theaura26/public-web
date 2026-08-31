@@ -70,8 +70,8 @@ export const PILLARS: Pillar[] = [
           'It runs through three studios and the places they work in. Each takes the same posture into a different material.',
         ],
         tiles: [
-          { value: 'Agroculture', note: 'Works it into 150 acres — canopy read in lux, fertility made on the estate, every event signed. [Agroculture](/regenerative-life/the-reason/agroculture).' },
-          { value: 'Hospitality', note: 'Builds the rooms where a person can meet it, and runs them on the same clock as the farm. [Hospitality](/regenerative-life/the-reason/hospitality).' },
+          { value: 'Agroculture', note: 'Works it into 150 acres — canopy read in lux, fertility made on the estate, every event signed. [Agroculture](/regenerative-life/the-plantation).' },
+          { value: 'Hospitality', note: 'Builds the rooms where a person can meet it, and runs them on the same clock as the farm. [Hospitality](/regenerative-life/sanctuary-and-stay).' },
           { value: 'The Atelier', note: 'The taste layer: what is worth making at all, and what is good enough to leave here carrying the name. [The Atelier](/regenerative-life/artistry).' },
         ],
       },

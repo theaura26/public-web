@@ -1,4 +1,12 @@
-import type { Frame } from '@/components/article/Gallery'
+export type Frame = {
+  /** Still, or the poster when `video` is set. */
+  src: string
+  /** Optional MP4. `src` is its fallback — shown before it can play, on
+   *  reduced motion, and if it never loads at all. */
+  video?: string
+  /** Describes the frame for somebody who cannot see it. */
+  alt?: string
+}
 
 /* The pictures for the four Regenerative Coffee chapters.
  *

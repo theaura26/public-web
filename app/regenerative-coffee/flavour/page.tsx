@@ -1,4 +1,4 @@
-import { Gallery } from '@/components/article/Gallery'
+import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
 import { FLAVOURS } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
@@ -30,17 +30,19 @@ export default function FlavourPage() {
       <MicroNav />
       <ArrowLinkStyles />
 
+      {/* One ground for the whole chapter, dissolving between the
+
+          photographs as the scenes scroll over it. */}
+
+      <ChapterBackdrop frames={FLAVOURS} />
+
+
       <Panel
         hero
         align="centre"
         title="Nine lots. One harvest."
         lede="They come off the same trees on the same morning. What happens after that is decided in a shed, over about a week."
       />
-
-      {/* The chapter's pictures as one full-bleed band: a reader takes
-          the set at their own pace rather than scrolling past ten
-          stacked banners to reach the next sentence. */}
-      <Gallery frames={FLAVOURS} label="One harvest, in nine frames" />
 
       <Scene>
         Two pages of system — the loop, the ledger. This page is what all

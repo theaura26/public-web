@@ -161,9 +161,13 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
           margin: 0 0 var(--space-7);
           padding: 10px 22px;
           border-radius: 999px;
-          background: var(--bg);
-          border: 1px solid var(--border-strong);
-          color: var(--text);
+          /* Inverted: the pill is the one solid mark in the column, so
+             it reads as a break in the line rather than as a label
+             floating near it. --contrast-* is always the opposite of the
+             page theme, so it holds in day and night alike. */
+          background: var(--contrast-bg);
+          border: 1px solid var(--contrast-bg);
+          color: var(--contrast-text);
           font-weight: 600;
           text-transform: uppercase;
           font-size: 13px;
@@ -178,7 +182,10 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
           grid-template-columns: var(--tl-node) minmax(0, 1fr);
           gap: var(--space-5);
           align-items: start;
-          padding: var(--space-6);
+          /* More room under the content than over it: the last thing in
+             the card is a "Show more" summary set at label size, and an
+             even inset left it sitting on the edge. */
+          padding: var(--space-6) var(--space-6) var(--space-7);
           background: var(--bg-card);
           border: 1px solid var(--border);
           border-radius: var(--radius-1);
@@ -222,7 +229,7 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
         @media (max-width: 760px) {
           .tl { --tl-node: 48px; }
           .card {
-            padding: var(--space-5);
+            padding: var(--space-5) var(--space-5) var(--space-6);
             gap: var(--space-4);
           }
         }

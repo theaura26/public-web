@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import type { ReactNode } from 'react'
+import { Continue } from '@/components/article/Article'
 
 /* The page's frame: a full-bleed hero, then the timeline in the rail.
  *
@@ -17,30 +17,29 @@ export default function LiveShell({
       {hero}
       <div className="section-w body">{children}</div>
 
-      {/* Where the feed stops and the argument starts. The entries say
-          what was done; these are the pages that say why, and what the
-          numbers in them mean. */}
-      <nav className="section-w outbound" aria-label="Read on">
-        <p className="out-label label">Where this comes from</p>
-        <ul className="out-list">
-          <li>
-            <Link href="/regenerative-life/the-plantation">The Plantation</Link>
-            <span>The hundred and fifty acres these entries are logged against.</span>
-          </li>
-          <li>
-            <Link href="/regenerative-life/vedic-and-biodynamic">Vedic &amp; Biodynamic</Link>
-            <span>The preparations most of this feed is an application of.</span>
-          </li>
-          <li>
-            <Link href="/regenerative-life/aura-intelligence">Aura Intelligence</Link>
-            <span>How the estate is read, and why every event carries a name.</span>
-          </li>
-          <li>
-            <Link href="/field-notes">Field Notes</Link>
-            <span>What the estate has learned, written down at length.</span>
-          </li>
-        </ul>
-      </nav>
+      {/* Where the feed stops and the argument starts. Same three-up
+          grid the journals close with, so the foot of this page looks
+          like the foot of every other page. */}
+      <Continue
+        heading="Where this comes from"
+        items={[
+          {
+            href: '/regenerative-life/the-plantation',
+            label: 'The Plantation',
+            description: 'The hundred and fifty acres these entries are logged against.',
+          },
+          {
+            href: '/regenerative-life/vedic-and-biodynamic',
+            label: 'Vedic & Biodynamic',
+            description: 'The preparations most of this feed is an application of.',
+          },
+          {
+            href: '/field-notes',
+            label: 'Field Notes',
+            description: 'What the estate has learned, written down at length.',
+          },
+        ]}
+      />
 
       <style jsx>{`
         /* The hero breaks the rail, so the rail cannot wrap it. */
@@ -49,43 +48,6 @@ export default function LiveShell({
         .body {
           padding-top: var(--space-10, 96px);
           padding-bottom: var(--space-10, 96px);
-        }
-
-        .outbound {
-          padding-bottom: var(--space-11, 120px);
-          display: flex;
-          flex-direction: column;
-          gap: var(--space-6);
-        }
-        .out-label { margin: 0; color: var(--text-muted); }
-        .out-list {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          border-top: 1px solid var(--border-strong);
-        }
-        .out-list li {
-          display: grid;
-          grid-template-columns: minmax(0, 5fr) minmax(0, 11fr);
-          gap: clamp(16px, 3vw, 48px);
-          align-items: baseline;
-          padding: 18px 0;
-          border-bottom: 1px solid var(--border);
-        }
-        .out-list :global(a) {
-          font-weight: 600;
-          letter-spacing: -0.01em;
-          text-decoration: none;
-          color: var(--text);
-        }
-        .out-list :global(a):hover {
-          text-decoration: underline;
-          text-decoration-color: var(--brand-accent);
-          text-underline-offset: var(--rule-offset);
-        }
-        .out-list span { color: var(--text-body); }
-        @media (max-width: 700px) {
-          .out-list li { grid-template-columns: 1fr; gap: 6px; }
         }
 
         .body :global(.state) {

@@ -1,6 +1,5 @@
 'use client'
 
-import { RelatedLane } from '@/components/Swimlanes'
 import { ExpandingBanner } from '@/components/ExpandingBanner'
 import {
   DataGrid,
@@ -13,6 +12,7 @@ import {
   SpecTable,
   Placeholder,
   Portrait,
+  Continue,
 } from '@/components/article/Article'
 
 /* One page shape for every subject the site explains.
@@ -273,8 +273,19 @@ export default function SubjectPage({
       {opener}
       {movements}
       {tail}
+      {/* The three-up grid the journals close with, not a scrolling lane.
+          A lane is for a set a reader browses; this is a short list of
+          named siblings, and putting the first three in view beats
+          hiding six behind a horizontal scroll. */}
       {!!s.siblings?.length && (
-        <RelatedLane label={s.siblingsLabel ?? 'Read on'} items={s.siblings} />
+        <Continue
+          heading={s.siblingsLabel ?? 'Read on'}
+          items={s.siblings.slice(0, 3).map((x) => ({
+            href: x.href,
+            label: x.title,
+            description: x.description,
+          }))}
+        />
       )}
     </>
   )

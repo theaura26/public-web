@@ -167,16 +167,20 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
              than each block of text drawing a panel behind itself — a
              local wash reads as a box, which is worse than a dark
              picture. The photographs still read; they are ground. */
-          /* 0.72, and a further 35% over it — the second layer is what
-             takes the bright frames (canopy at noon, the wet mill in
-             daylight) down to where white type holds without any block
-             of text needing a panel of its own. */
-          background: rgba(0, 0, 0, 0.72);
+          /* 0.57 under a 0.29 tint, which composites to 0.70 — 15% less
+             dark than the 0.82 it was. The two layers compound, so easing
+             each by 15% would only have taken 11% off the total; these
+             are solved for the figure rather than scaled.
+
+             Enough that white type holds on the bright frames — the
+             canopy at noon, the wet mill in daylight — without the
+             photographs going to mud. */
+          background: rgba(0, 0, 0, 0.57);
         }
         .cb-tint {
           position: absolute;
           inset: 0;
-          background: rgba(0, 0, 0, 0.35);
+          background: rgba(0, 0, 0, 0.29);
           transition: opacity 600ms var(--ease-out, ease);
         }
         @media (prefers-reduced-motion: reduce) {

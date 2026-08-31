@@ -232,20 +232,19 @@ type Block = {
   /* Map geometry, lifted from the roaster draft's own SVG so the
      estate reads as a shape rather than a list. viewBox 0 0 600 450. */
   d: string
-  fill: string
   lx: number
   ly: number
 }
 
 const BLOCKS: Block[] = [
-  { id: 'nagarakatte', d: 'M54,62 C62,34 142,22 200,36 C224,64 226,106 206,134 C184,170 118,188 72,168 C48,142 46,92 54,62 Z', fill: '#5B7F5B', lx: 130, ly: 100, name: 'Nagarakatte', varietal: 'Arabica Selection 9', lots: 'AM01 — Appassimento Maceration', brix: '20%', shade: 'Silver Oak, Rosewood, Fig', trees: '~4,500', desc: 'The Appassimento block. Cold-fermented below 10 °C, dried in a dark room for 25 days — the block that produced the SCA 84.25 lot. High canopy density, cool microclimate.' },
-  { id: 'byton', d: 'M212,36 C246,16 344,14 386,28 C406,54 404,92 388,122 C368,158 292,168 240,146 C214,120 202,66 212,36 Z', fill: '#6B8F4B', lx: 300, ly: 80, name: 'Byton Patte', varietal: 'Arabica Selection 9', lots: 'DO01 — Dry Osmosis · SMN01 — Solera Maceration', brix: '20–20.5%', shade: 'Silver Oak, Jackfruit, Wild Fig', trees: '~5,200', desc: 'Two flagship lots from a single block. The 85.25 Dry Osmosis and the Solera Maceration both draw from Byton’s dense shade canopy and well-drained laterite soil. The estate’s highest-scoring Arabica zone.' },
-  { id: 'tenginamara', d: 'M404,28 C444,14 526,32 552,58 C568,88 566,124 556,152 C516,146 452,128 412,110 C398,84 396,50 404,28 Z', fill: '#4B7F6B', lx: 480, ly: 85, name: 'Tenginamara Patte', varietal: 'Arabica Selection 9', lots: 'SMW01 — Solera Wash', brix: '20%', shade: 'Silver Oak, Teak, native canopy', trees: '~3,800', desc: 'The Solera Wash block. 48-hour anaerobic, Solera carry-forward, 3-day soak, hand-washed. Minimal intervention — the cleanest expression of the cherry, and the rarest lot on the estate.' },
-  { id: 'charandi', d: 'M64,180 C96,182 152,190 182,200 C200,228 202,262 194,284 C160,300 110,306 84,296 C64,264 58,214 64,180 Z', fill: '#7B8F5B', lx: 130, ly: 240, name: 'Charandi Patte', varietal: 'Arabica Selection 9', lots: 'RH01 — Red Honey Anaerobic', brix: '20%', shade: 'Mixed native, Silver Oak', trees: '~4,100', desc: 'The Red Honey block. Mucilage-on drying after an anaerobic ferment. The Q grader notes a citrus core with room to climb as the roast develops. Zero defects, perfect clean cup.' },
-  { id: 'onegida', d: 'M196,196 C244,178 330,172 372,178 C386,204 384,240 376,262 C330,286 254,294 214,286 C196,258 190,220 196,196 Z', fill: '#5B8F7B', lx: 280, ly: 230, name: 'One Gida Patte', varietal: 'Arabica Selection 9', lots: 'BW01 — Banana Wash', brix: '21%', shade: 'Banana, Silver Oak, mixed native', trees: '~4,800', desc: 'The Banana Wash block. Estate-grown banana leaves layered with pulped cherries for 48 hours. The highest Brix among the Arabica lots, and the most distinctly Indian process on the estate.' },
-  { id: 'tline', d: 'M388,178 C438,164 522,162 560,170 C574,198 572,240 562,268 C516,278 436,276 396,266 C384,238 382,202 388,178 Z', fill: '#8B6F4B', lx: 470, ly: 220, name: 'T Line Robusta Patte', varietal: 'Robusta Old Peridenia', lots: 'AM01 — Appassimento Maceration (Robusta)', brix: '28%', shade: 'Dense four-storey canopy', trees: '~3,600', desc: 'National winner — Robusta Experimental. Brix 28%, the highest of any lot on the estate. Heritage Old Peridenia under dense shade, transformed by the same cold-ferment Appassimento technique.' },
-  { id: 'shed', d: 'M86,318 C118,304 178,300 208,308 C226,336 230,372 222,394 C186,412 130,414 104,402 C84,374 80,340 86,318 Z', fill: '#7B6F5B', lx: 155, ly: 355, name: 'Shed Patte', varietal: 'Robusta Old Peridenia', lots: 'G01 — Grappa', brix: '26%', shade: 'Mixed canopy, estate infrastructure', trees: '~3,200', desc: 'The Grappa block. Home of the proprietary G1 bacterial strain cultured from wet coffee cascara, applied layer-by-layer through a six-day fermentation. Available for allocation.' },
-  { id: 'gida', d: 'M226,308 C270,288 358,284 396,292 C414,320 418,358 408,382 C362,404 288,408 246,398 C228,370 220,332 226,308 Z', fill: '#6B7F4B', lx: 310, ly: 340, name: 'Gida Patte', varietal: 'Robusta Old Peridenia', lots: 'VW01 — Volcanic Wash', brix: '27%', shade: 'Dense mixed canopy', trees: '~3,400', desc: 'National winner — Robusta Washed. Pulped after a 48-hour anaerobic ferment, soaked three days with daily water changes. Clean, structured, deeply sweet.' },
+  { id: 'nagarakatte', d: 'M204,132 C196,147 170,160 149,166 C129,171 96,175 80,167 C63,158 52,132 50,114 C49,96 55,71 69,60 C83,49 113,47 135,49 C157,51 188,57 199,71 C211,85 212,116 204,132 Z', lx: 126, ly: 108, name: 'Nagarakatte', varietal: 'Arabica Selection 9', lots: 'AM01 — Appassimento Maceration', brix: '20%', shade: 'Silver Oak, Rosewood, Fig', trees: '~4,500', desc: 'The Appassimento block. Cold-fermented below 10 °C, dried in a dark room for 25 days — the block that produced the SCA 84.25 lot. High canopy density, cool microclimate.' },
+  { id: 'byton', d: 'M383,86 C388,102 387,130 373,142 C359,154 324,158 300,158 C276,157 242,151 230,139 C218,126 220,101 226,84 C232,67 245,43 264,36 C284,29 321,34 340,42 C360,50 377,69 383,86 Z', lx: 302, ly: 98, name: 'Byton Patte', varietal: 'Arabica Selection 9', lots: 'DO01 — Dry Osmosis · SMN01 — Solera Maceration', brix: '20–20.5%', shade: 'Silver Oak, Jackfruit, Wild Fig', trees: '~5,200', desc: 'Two flagship lots from a single block. The 85.25 Dry Osmosis and the Solera Maceration both draw from Byton’s dense shade canopy and well-drained laterite soil. The estate’s highest-scoring Arabica zone.' },
+  { id: 'tenginamara', d: 'M541,146 C529,160 499,167 478,168 C457,169 426,163 414,151 C402,138 402,112 405,94 C408,75 417,48 433,40 C450,31 483,36 503,44 C522,51 543,68 550,85 C556,102 553,132 541,146 Z', lx: 474, ly: 104, name: 'Tenginamara Patte', varietal: 'Arabica Selection 9', lots: 'SMW01 — Solera Wash', brix: '20%', shade: 'Silver Oak, Teak, native canopy', trees: '~3,800', desc: 'The Solera Wash block. 48-hour anaerobic, Solera carry-forward, 3-day soak, hand-washed. Minimal intervention — the cleanest expression of the cherry, and the rarest lot on the estate.' },
+  { id: 'charandi', d: 'M183,223 C192,239 199,266 191,281 C184,295 156,309 136,312 C116,316 86,314 72,304 C58,293 52,268 52,250 C52,232 57,207 71,196 C86,185 118,180 137,184 C155,189 174,207 183,223 Z', lx: 120, ly: 250, name: 'Charandi Patte', varietal: 'Arabica Selection 9', lots: 'RH01 — Red Honey Anaerobic', brix: '20%', shade: 'Mixed native, Silver Oak', trees: '~4,100', desc: 'The Red Honey block. Mucilage-on drying after an anaerobic ferment. The Q grader notes a citrus core with room to climb as the roast develops. Zero defects, perfect clean cup.' },
+  { id: 'onegida', d: 'M385,254 C381,270 357,286 337,295 C317,304 284,312 265,307 C246,301 227,278 221,262 C215,245 216,221 228,208 C240,196 270,188 292,187 C315,185 347,188 362,199 C378,211 389,238 385,254 Z', lx: 298, ly: 244, name: 'One Gida Patte', varietal: 'Arabica Selection 9', lots: 'BW01 — Banana Wash', brix: '21%', shade: 'Banana, Silver Oak, mixed native', trees: '~4,800', desc: 'The Banana Wash block. Estate-grown banana leaves layered with pulped cherries for 48 hours. The highest Brix among the Arabica lots, and the most distinctly Indian process on the estate.' },
+  { id: 'tline', d: 'M533,204 C547,218 560,244 556,260 C552,276 527,293 507,301 C488,309 458,315 441,309 C423,302 407,280 401,262 C396,244 394,216 406,202 C418,189 451,179 472,180 C493,180 519,191 533,204 Z', lx: 474, ly: 246, name: 'T Line Robusta Patte', varietal: 'Robusta Old Peridenia', lots: 'AM01 — Appassimento Maceration (Robusta)', brix: '28%', shade: 'Dense four-storey canopy', trees: '~3,600', desc: 'National winner — Robusta Experimental. Brix 28%, the highest of any lot on the estate. Heritage Old Peridenia under dense shade, transformed by the same cold-ferment Appassimento technique.' },
+  { id: 'shed', d: 'M242,404 C232,417 205,427 185,430 C164,433 132,431 118,422 C104,412 100,388 101,371 C102,355 110,332 125,323 C140,314 173,313 192,318 C212,323 235,336 243,351 C251,365 251,390 242,404 Z', lx: 172, ly: 374, name: 'Shed Patte', varietal: 'Robusta Old Peridenia', lots: 'G01 — Grappa', brix: '26%', shade: 'Mixed canopy, estate infrastructure', trees: '~3,200', desc: 'The Grappa block. Home of the proprietary G1 bacterial strain cultured from wet coffee cascara, applied layer-by-layer through a six-day fermentation. Available for allocation.' },
+  { id: 'gida', d: 'M430,355 C437,371 439,396 426,409 C414,422 381,431 357,433 C332,434 296,429 281,417 C266,406 265,380 269,363 C273,347 286,326 305,317 C324,308 363,305 384,311 C405,317 423,338 430,355 Z', lx: 350, ly: 372, name: 'Gida Patte', varietal: 'Robusta Old Peridenia', lots: 'VW01 — Volcanic Wash', brix: '27%', shade: 'Dense mixed canopy', trees: '~3,400', desc: 'National winner — Robusta Washed. Pulped after a 48-hour anaerobic ferment, soaked three days with daily water changes. Clean, structured, deeply sweet.' },
 ]
 
 /* ── lot cards — tap for lot data ───────────────────────────────── */
@@ -463,7 +462,6 @@ export function BlockExplorer() {
                   <path
                     className={`bx-zone ${on ? 'is-on' : ''}`}
                     d={b.d}
-                    fill={b.fill}
                     tabIndex={0}
                     role="button"
                     aria-pressed={on}
@@ -473,7 +471,7 @@ export function BlockExplorer() {
                       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSel(b) }
                     }}
                   />
-                  <text className="bx-zl" x={b.lx} y={b.ly}>{b.name}</text>
+                  <text className={`bx-zl ${on ? 'is-on' : ''}`} x={b.lx} y={b.ly}>{b.name}</text>
                 </g>
               )
             })}
@@ -537,22 +535,32 @@ export function BlockExplorer() {
         }
 
         .bx-map { width: 100%; aspect-ratio: 4 / 3; overflow: visible; }
+        /* All one white. The blocks used to each carry their own green or
+           brown, which read as a data encoding — eight colours implying
+           eight categories that do not exist. They are the same kind of
+           thing, so they are the same colour, and selection is the only
+           state the map has to show. */
         :global(.bx-zone) {
           cursor: pointer;
-          stroke: #000; stroke-width: 2;
-          opacity: 0.62;
-          transition: opacity var(--dur-base) var(--ease),
+          fill: #fff;
+          fill-opacity: 0.14;
+          stroke: rgba(255, 255, 255, 0.55);
+          stroke-width: 1.5;
+          transition: fill-opacity var(--dur-base) var(--ease),
                       stroke var(--dur-base) var(--ease);
         }
-        :global(.bx-zone):hover { opacity: 0.85; stroke: rgba(255,255,255,0.5); }
+        :global(.bx-zone):hover { fill-opacity: 0.3; stroke: #fff; }
         :global(.bx-zone):focus-visible { outline: none; stroke: #fff; stroke-width: 2.5; }
-        :global(.bx-zone.is-on) { opacity: 1; stroke: #fff; stroke-width: 2.5; }
+        /* Selected reads as solid, so the label inverts to sit on it. */
+        :global(.bx-zone.is-on) { fill-opacity: 1; stroke: #fff; stroke-width: 2; }
         :global(.bx-zl) {
           font-family: var(--font-mono), monospace;
           font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase;
           fill: rgba(255, 255, 255, 0.92);
           pointer-events: none; text-anchor: middle; dominant-baseline: central;
+          transition: fill var(--dur-base) var(--ease);
         }
+        :global(.bx-zl.is-on) { fill: #0B0B0B; }
 
         .bx-panel {
           border: 1px solid rgba(255, 255, 255, 0.16);

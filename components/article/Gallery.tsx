@@ -5,14 +5,15 @@ import { useEffect, useRef, useState } from 'react'
 /* A chapter's pictures, as one full-bleed run.
  *
  * The shape is the Patagonia company-history one: a heading, then a
- * horizontal band of full-width frames, then a single caption belonging
- * to whichever frame is in view. A stack of banners makes a reader
- * scroll past ten pictures to reach the next sentence; a band lets them
- * take the set at their own pace and carries one caption instead of ten.
+ * horizontal band of full-width frames. Nothing is printed under them —
+ * the pictures carry the chapter and the prose below says the rest. A
+ * stack of banners would make a reader scroll past ten pictures to
+ * reach the next sentence; a band lets them take the set at their own
+ * pace, or skip it in one movement.
  *
  * Scroll-snap does the work, so it functions with no JavaScript at all —
- * the observer only keeps the caption and the counter honest. Arrow keys
- * and the buttons move it; the track is focusable and labelled.
+ * the observer only keeps the counter honest. Arrow keys and the buttons
+ * move it; the track is focusable and labelled.
  */
 
 export type Frame = {
@@ -21,8 +22,9 @@ export type Frame = {
   /** Optional MP4. `src` is its fallback — shown before it can play, on
    *  reduced motion, and if it never loads at all. */
   video?: string
+  /** Describes the frame for somebody who cannot see it. Not a caption —
+   *  nothing is printed under the band. */
   alt?: string
-  caption?: string
 }
 
 export function Gallery({ frames, label }: { frames: Frame[]; label: string }) {
@@ -53,8 +55,6 @@ export function Gallery({ frames, label }: { frames: Frame[]; label: string }) {
     if (slide) track.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' })
   }
 
-  const current = frames[active]
-
   return (
     <section className="gl" aria-label={label}>
       <div
@@ -78,7 +78,7 @@ export function Gallery({ frames, label }: { frames: Frame[]; label: string }) {
                 loop
                 playsInline
                 preload="none"
-                aria-label={f.alt || f.caption || ''}
+                aria-label={f.alt || ''}
               >
                 <source src={f.video} type="video/mp4" />
               </video>
@@ -87,7 +87,7 @@ export function Gallery({ frames, label }: { frames: Frame[]; label: string }) {
               <img
                 className="gl-media"
                 src={f.src}
-                alt={f.alt || f.caption || ''}
+                alt={f.alt || ''}
                 loading={i === 0 ? 'eager' : 'lazy'}
                 decoding="async"
               />
@@ -97,7 +97,6 @@ export function Gallery({ frames, label }: { frames: Frame[]; label: string }) {
       </div>
 
       <div className="gl-bar section-w">
-        <p className="gl-cap label">{current?.caption ?? ''}</p>
         <div className="gl-nav">
           <button type="button" onClick={() => go(Math.max(active - 1, 0))} disabled={active === 0} aria-label="Previous image">←</button>
           <span className="gl-count label" aria-live="polite">{active + 1} / {frames.length}</span>
@@ -130,13 +129,9 @@ export function Gallery({ frames, label }: { frames: Frame[]; label: string }) {
         }
         .gl-media { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        .gl-bar {
-          display: flex;
-          align-items: baseline;
-          justify-content: space-between;
-          gap: var(--space-6);
-        }
-        .gl-cap { margin: 0; color: var(--text-muted); max-width: 64ch; }
+        /* Nothing under the band but the counter, so it sits at the
+           right edge where the next frame comes from. */
+        .gl-bar { display: flex; justify-content: flex-end; }
         .gl-nav { display: flex; align-items: center; gap: var(--space-4); flex: none; }
         .gl-nav button {
           background: none; border: 0; cursor: pointer; padding: 4px 6px;

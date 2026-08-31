@@ -48,11 +48,24 @@ function product(slug: string) {
   /* A parent — Coffee, Pepper, Farm Goods — lists what sits under it.
      A reader on Coffee wants the seasons, and a paragraph about the
      estate’s philosophy is in the way of that. */
+  /* Covers for the top-level products. A parent has no lane entry of
+     its own — it is a heading over seasons — so its picture is named
+     here rather than carried on an item. */
+  const COVERS: Record<string, string> = {
+    coffee: '/from-aura/coffee/coffee.jpg',
+    tea: '/from-aura/tea/tea.jpg',
+    pepper: '/from-aura/pepper/pepper.jpg',
+    areca: '/from-aura/areca-nut/areca-nut.jpg',
+    'from-the-farm': '/from-aura/farm-goods/farm-goods.jpg',
+    objects: '/from-aura/objects/objects.jpg',
+    experiences: '/from-aura/experiences/experiences.jpg',
+  }
   const shop = SECTIONS.find((x) => x.id === 'shop')
   const parent = shop?.items.find((x) => x.href === `${PREFIX}/${slug}`)
 
   return {
     children: parent?.children ?? [],
+    img: entry?.img ?? COVERS[slug] ?? null,
     /* labelFor returns "Coffee" for a top-level product and "Coffee —
        2025–26 Lots" for one of its children. Take the child half when
        there is one, the whole label when there is not.
@@ -95,7 +108,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     <main className="pd">
       <div className="section-w pd-in">
         {/* 4:5, and grey until there is a photograph of the thing. */}
-        <div className="pd-plate" aria-hidden />
+        <div className="pd-plate" data-noimg={p.img ? undefined : 'true'} aria-hidden>
+          {p.img && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={p.img} alt="" loading="lazy" decoding="async" />
+          )}
+        </div>
 
         <div className="pd-body">
           <h1 className="pd-title">{p.title}</h1>
@@ -173,6 +191,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
              as an empty column. --bg-card is near-white and vanished. */
           background: #d6d6d6;
           border-radius: var(--radius-1);
+          overflow: hidden;
+        }
+        /* The grey is the drafting state, so it is painted only when
+           there is nothing over it. */
+        .pd-plate:not([data-noimg]) { background: none; }
+        .pd-plate img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
 
         /* Edge to edge on a phone: with one column there is no middle

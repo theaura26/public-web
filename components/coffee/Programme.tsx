@@ -130,8 +130,8 @@ export function Programme() {
            site has no bullet convention to borrow — inventing one here
            would have made this the only page with it. */
         .pg-b {
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           font-family: var(--font-sans);
-          font-size: 16px; line-height: 1.55;
           color: rgba(255, 255, 255, 0.78);
           margin: 0; text-wrap: pretty;
         }

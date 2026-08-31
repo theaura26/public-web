@@ -1284,10 +1284,20 @@ h3 {
 }
 
 /* P1 — primary body, full-strength text */
+/* P1's measurements, as values rather than only as a class. The coffee
+   microsite sets its body copy on a dark photograph and has to own its own
+   colour, so it cannot simply wear .p1 — but it can be the same size, and
+   these are the only two numbers that decide that. Change them here and the
+   class and every rule borrowing them move together. */
+:root { --p1-size: 16px; --p1-lh: 1.55; }
+@media (max-width: 768px) {
+  :root { --p1-size: 15px; --p1-lh: 1.5; }
+}
+
 .p1 {
   font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: var(--p1-size);
+  line-height: var(--p1-lh);
   color: var(--text);
   font-weight: 400;
 }
@@ -1305,7 +1315,6 @@ h3 {
 
 /* Mobile body sizing */
 @media (max-width: 768px) {
-  .p1 { font-size: 15px; line-height: 1.5; }
   .p2 { font-size: 14px; line-height: 1.5; }
 }
 

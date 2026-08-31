@@ -63,7 +63,7 @@ export default function RegenerativeCoffeePage() {
       <Scene
         id="intelligence"
         glyph="aura-intelligence-glyph.svg"
-        title="Aura intelligence."
+        title="Aura Intelligence."
         href="/regenerative-coffee/transparency"
         cta="Explore transparency"
       >

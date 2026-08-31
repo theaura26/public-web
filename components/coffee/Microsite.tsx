@@ -604,7 +604,7 @@ export function Intro({
           display: flex; flex-direction: column; gap: var(--space-4);
         }
         .m-intro-b :global(p) {
-          font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: var(--text-body); margin: 0;
         }
         .m-intro-b :global(p:first-child) { color: var(--text); }
@@ -677,7 +677,7 @@ export function Pillar({
         .m-pillar-h { margin: 0; }
         .m-pillar-act { margin: var(--space-7) 0 0; }
         .m-pillar-lede {
-          font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: var(--text-body); margin: var(--space-5) 0 0; max-width: 46ch;
         }
         .m-pillar-list {
@@ -743,7 +743,7 @@ export function Cards({
           letter-spacing: -0.02em; margin: 0 0 var(--space-3);
         }
         .m-card-b {
-          font-size: 15px; line-height: 1.6; color: var(--text-body); margin: 0;
+          font-size: var(--p1-size); line-height: var(--p1-lh); color: var(--text-body); margin: 0;
         }
       `}</style>
     </section>
@@ -875,7 +875,8 @@ export function Numbered({
           font-size: clamp(19px, 1.8vw, 24px); line-height: 1.2;
           letter-spacing: -0.02em; margin: 0 0 var(--space-3);
         }
-        .nb-cb { font-size: 15px; line-height: 1.6; color: var(--text-body); margin: 0; }
+        .nb-cb {
+          font-size: var(--p1-size); line-height: var(--p1-lh); color: var(--text-body); margin: 0; }
       `}</style>
     </section>
   )
@@ -944,7 +945,7 @@ export function Goals({
           letter-spacing: -0.02em; margin: 0;
         }
         .gl-b {
-          font-size: 15px; line-height: 1.65; color: var(--text-body);
+          font-size: var(--p1-size); line-height: var(--p1-lh); color: var(--text-body);
           margin: 0; max-width: 60ch;
         }
         @media (max-width: 760px) {
@@ -1028,7 +1029,7 @@ export function Statement({
         }
         .has-img .m-say-h, .has-img .m-say-s { color: #fff; }
         .m-say-s {
-          font-size: clamp(15px, 1.5vw, 18px); line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: var(--text-body); margin: var(--space-6) auto 0; max-width: 52ch;
         }
       `}</style>
@@ -1443,7 +1444,7 @@ export function ReserveBanner() {
           color: #1d0f05; margin: 0 auto; max-width: 18ch;
         }
         .rb-p {
-          font-size: clamp(15px, 1.4vw, 18px); line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: rgba(29, 15, 5, 0.78);
           margin: var(--space-5) auto 0; max-width: 48ch;
         }
@@ -1524,7 +1525,8 @@ export function NextUp({
           letter-spacing: -0.035em; margin-bottom: var(--space-4);
         }
         .m-next-b {
-          display: block; font-size: 16px; line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
+          display: block;
           color: var(--text-body); max-width: 46ch;
         }
         .m-next-a {
@@ -1660,8 +1662,7 @@ export function Scene({
         .is-centre .sc-h { margin-inline: auto; }
 
         .sc-p {
-          font-size: clamp(18px, 1.55vw, 22px);
-          line-height: 1.62;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: rgba(255, 255, 255, 0.92);
           margin: 0; text-wrap: pretty;
         }
@@ -1734,7 +1735,7 @@ export function Invite({
         .m-inv-a { display: inline-flex; }
         .m-inv-h { margin: 0 auto; max-width: 18ch; }
         .m-inv-b {
-          font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: var(--text-body); margin: var(--space-6) auto var(--space-7);
           max-width: 50ch;
         }

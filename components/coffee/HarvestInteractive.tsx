@@ -331,7 +331,7 @@ function LotCard({ lot }: { lot: Lot }) {
           color: rgba(255, 255, 255, 0.6); margin: 0;
         }
         .lc-b {
-          font-size: 15px; line-height: 1.55;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: rgba(255, 255, 255, 0.8); margin: 0;
         }
 
@@ -419,7 +419,7 @@ export function LotCards({ title, intro, lots }: {
           letter-spacing: -0.04em; color: #fff; margin: 0; max-width: 18ch;
         }
         .lots-i {
-          font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: rgba(255, 255, 255, 0.72);
           margin: var(--space-5) 0 0; max-width: 52ch;
         }
@@ -511,7 +511,7 @@ export function BlockExplorer() {
           letter-spacing: -0.04em; color: #fff; margin: 0; max-width: 18ch;
         }
         .bx-i {
-          font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: rgba(255, 255, 255, 0.72);
           margin: var(--space-5) 0 0; max-width: 52ch;
         }
@@ -603,7 +603,7 @@ export function BlockExplorer() {
           color: rgba(255, 255, 255, 0.92);
         }
         .bx-db {
-          font-size: 15px; line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: rgba(255, 255, 255, 0.78); margin: 0;
         }
 

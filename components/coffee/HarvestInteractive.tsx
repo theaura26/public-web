@@ -253,7 +253,9 @@ const BLOCKS: Block[] = [
 function LotCard({ lot }: { lot: Lot }) {
   const [open, setOpen] = useState(false)
   return (
-    <article className={`lc ${open ? 'is-open' : ''}`}>
+    /* backdrop-filter inline: styled-jsx drops it from emitted rules on
+       this build, the same way it does for the menu vignette. */
+    <article className={`lc ${open ? 'is-open' : ''}`} style={{ backdropFilter: 'blur(18px) saturate(120%)', WebkitBackdropFilter: 'blur(18px) saturate(120%)' }}>
       <span className="lc-head">
         <span className="lc-top">
           <h3 className="lc-n">{lot.name}</h3>
@@ -289,9 +291,14 @@ function LotCard({ lot }: { lot: Lot }) {
       )}
 
       <style jsx>{`
+        /* A ground of their own. These sit over the chapter's
+           photograph, and a transparent card left the type fighting
+           whatever was behind it. The blur separates the card from the
+           picture without hiding it — you can still see the frame move
+           underneath. */
         .lc {
           display: flex; flex-direction: column; gap: var(--space-5);
-          background: transparent; color: #fff;
+          background: rgba(12, 14, 15, 0.58); color: #fff;
           border: 1px solid rgba(255, 255, 255, 0.14);
           border-radius: var(--radius-1);
           padding: clamp(22px, 2.4vw, 32px);
@@ -300,7 +307,7 @@ function LotCard({ lot }: { lot: Lot }) {
         }
         .lc:hover {
           border-color: rgba(255, 255, 255, 0.3);
-          background: rgba(255, 255, 255, 0.03);
+          background: rgba(12, 14, 15, 0.68);
         }
 
         /* name, grade and method read as one lock-up */
@@ -476,7 +483,7 @@ export function BlockExplorer() {
             })}
           </svg>
 
-          <div className="bx-panel" aria-live="polite">
+          <div className="bx-panel" aria-live="polite" style={{ backdropFilter: 'blur(18px) saturate(120%)', WebkitBackdropFilter: 'blur(18px) saturate(120%)' }}>
             {sel ? (
               <div className="bx-d">
                 <p className="bx-de">{sel.varietal} · 1,127 m</p>

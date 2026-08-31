@@ -1220,6 +1220,11 @@ export default function Navbar() {
             display: flex; flex-direction: column;
             align-items: flex-start; gap: 0;
           }
+          /* Both columns sit at bottom: 44px, but every mark here carries
+             12px of padding for its touch target — which floated the last
+             line above the icons opposite. Dropping it on the last one
+             lands the two columns on the same bottom edge. */
+          .menu-corner > :last-child { padding-bottom: 0; }
           /* h3, the same as Live above it — they are two marks of the
              same standing, not a heading with a footnote. */
           :global(.mn-corner-link) {

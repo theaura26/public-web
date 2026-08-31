@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect, useRef, useState } from 'react'
 import { CATEGORIES, type CategoryId, type NoteEntry } from '@/lib/field-notes'
 
 /* ── Field Notes listing ──────────────────────────────────────────
@@ -11,6 +12,41 @@ import { CATEGORIES, type CategoryId, type NoteEntry } from '@/lib/field-notes'
    A commissioned-but-unwritten note renders on a flat grey plate and
    is not a link — same treatment as the menu feed, so the two agree.
 */
+
+/* The sliding indicator behind the filter row. One element that moves
+   between pills rather than a background painted on whichever is
+   current — the row is a set of siblings, and a moving mark says so. */
+function useBlob(active: string) {
+  const filterRef = useRef<HTMLElement | null>(null)
+  const [blob, setBlob] = useState<React.CSSProperties>({ opacity: 0 })
+
+  const moveTo = (el: HTMLElement | null) => {
+    if (!filterRef.current || !el) return
+    setBlob({
+      ['--blob-x' as string]: `${el.offsetLeft}px`,
+      ['--blob-w' as string]: `${el.offsetWidth}px`,
+      top: el.offsetTop,
+      height: el.offsetHeight,
+      opacity: 1,
+    })
+  }
+  const settle = () =>
+    moveTo(filterRef.current?.querySelector<HTMLElement>('.fn-filter.is-on') ?? null)
+
+  /* Settle on load, and again whenever the row reflows — the pills wrap
+     at narrow widths, so a resize moves the target. */
+  useEffect(() => {
+    settle()
+    const nav = filterRef.current
+    if (!nav) return
+    const ro = new ResizeObserver(settle)
+    ro.observe(nav)
+    return () => ro.disconnect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active])
+
+  return { filterRef, blob, moveTo, settle }
+}
 
 export function NoteIndex({
   title,
@@ -24,6 +60,7 @@ export function NoteIndex({
   active?: CategoryId | 'all'
   notes: NoteEntry[]
 }) {
+  const { filterRef, blob, moveTo, settle } = useBlob(active ?? 'all')
   return (
     <main className="fn">
       <div className="section-w">
@@ -32,11 +69,24 @@ export function NoteIndex({
           <p className="fn-lede">{lede}</p>
         </header>
 
-        <nav className="fn-filters" aria-label="Field Notes categories">
+        <nav
+          className="fn-filters"
+          aria-label="Field Notes categories"
+          ref={filterRef}
+          onMouseLeave={settle}
+          onBlur={settle}
+        >
+          {/* The blob. One element that slides between pills rather than
+              a background painted on whichever is current — the row is a
+              set of siblings, and the moving mark says so. It follows the
+              pointer and settles back on the current category. */}
+          <span className="fn-blob" style={blob} aria-hidden />
           <Link
             href="/field-notes"
             className={`fn-filter ${active === 'all' ? 'is-on' : ''}`}
             aria-current={active === 'all' ? 'page' : undefined}
+            onMouseEnter={(e) => moveTo(e.currentTarget)}
+            onFocus={(e) => moveTo(e.currentTarget)}
           >
             All
           </Link>
@@ -46,6 +96,8 @@ export function NoteIndex({
               href={`/field-notes/${c.id}`}
               className={`fn-filter ${active === c.id ? 'is-on' : ''}`}
               aria-current={active === c.id ? 'page' : undefined}
+              onMouseEnter={(e) => moveTo(e.currentTarget)}
+              onFocus={(e) => moveTo(e.currentTarget)}
             >
               {c.label}
             </Link>
@@ -115,12 +167,34 @@ export function NoteIndex({
 
         /* ── category filters ── */
         .fn .fn-filters {
+          position: relative;
           display: flex; flex-wrap: wrap; gap: 10px;
           margin: var(--head-bottom) 0 clamp(38px, 6vh, 67px);
           padding-bottom: var(--space-6);
           border-bottom: 1px solid var(--border);
         }
+        /* Sits under the pills and slides between them. Transform and
+           width are animated together; opacity keeps it hidden until the
+           first measurement lands, so it never flashes at 0,0. */
+        .fn .fn-blob {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 29px;
+          border-radius: 999px;
+          background: var(--contrast-bg);
+          transform: translateX(var(--blob-x, 0px));
+          width: var(--blob-w, 0px);
+          transition: transform 420ms var(--ease-out), width 420ms var(--ease-out),
+                      opacity 200ms var(--ease);
+          pointer-events: none;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .fn .fn-blob { transition: opacity 200ms var(--ease); }
+        }
+
         .fn .fn-filter {
+          position: relative;
           font-family: var(--font-mono), monospace;
           font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
           /* --text-muted on --border was two low-contrast values at
@@ -134,10 +208,11 @@ export function NoteIndex({
                       border-color var(--dur-base) var(--ease);
         }
         .fn .fn-filter:hover { color: var(--text); border-color: var(--text); }
-        .fn .fn-filter.is-on {
-          color: var(--contrast-text); background: var(--contrast-bg);
-          border-color: var(--contrast-bg);
-        }
+        /* The blob paints the ground; the pill only changes its ink and
+           drops its hairline so the two do not double up. */
+        .fn .fn-filter.is-on { color: var(--contrast-text); border-color: transparent; }
+        .fn .fn-filters:hover .fn-filter.is-on { color: var(--text-body); }
+        .fn .fn-filter:hover { color: var(--contrast-text); border-color: transparent; }
 
         /* ── the cards ──
            Two across, image over text. A note is chosen by the look of

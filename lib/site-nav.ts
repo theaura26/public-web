@@ -120,14 +120,6 @@ export const SECTIONS: NavSection[] = [
           { label: 'Book Block & Zone', href: '/from-aura/coffee-blocks-and-zones', soon: true },
         ],
       },
-      {
-        label: 'Tea',
-        href: '/from-aura/tea',
-        soon: true,
-        children: [
-          { label: '27/28 — pre-book', href: '/from-aura/tea-27-28', soon: true },
-        ],
-      },
       /* Pepper, areca and the farm goods were three headings for one
          thing: what the land grows besides the two crops the estate is
          named for. Their season variants came off with them — the menu
@@ -138,6 +130,7 @@ export const SECTIONS: NavSection[] = [
         href: '/from-aura/from-the-farm',
         soon: true,
         children: [
+          { label: 'Tea', href: '/from-aura/tea', soon: true },
           { label: 'Pepper', href: '/from-aura/pepper', soon: true },
           { label: 'Areca nut', href: '/from-aura/areca', soon: true },
           { label: 'Avocado', href: '/from-aura/avocado', soon: true },

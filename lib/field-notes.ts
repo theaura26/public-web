@@ -203,9 +203,6 @@ export type NoteEntry = {
   title: string
   description: string
   img?: string
-  /** A second frame of the same subject, shown on hover. Supplied for
-   *  the products that were photographed twice. */
-  imgHover?: string
   /** Published, or written but not yet released. */
   status: 'live' | 'soon'
   /** Set when the page's canonical home is another section. */

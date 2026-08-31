@@ -29,13 +29,6 @@ function Card({ note }: { note: NoteEntry }) {
           // eslint-disable-next-line @next/next/no-img-element
           <img src={note.img} alt="" loading="lazy" decoding="async" />
         ) : null}
-        {/* A second frame of the same subject, where one was shot. It
-            crossfades in on hover, so the card answers a pointer with
-            the product rather than with a scale transform. */}
-        {note.imgHover ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img className="lane-alt" src={note.imgHover} alt="" loading="lazy" decoding="async" />
-        ) : null}
       </span>
       <span className="lane-t">{note.title}</span>
       {note.from && <span className="lane-from">In {note.from}</span>}
@@ -208,20 +201,6 @@ function LaneStyles() {
         }
         .sw .lane-card:hover .lane-plate img { transform: scale(1.04); }
 
-        /* The second frame sits over the first and is revealed rather
-           than swapped, so there is no flash between them. A card with
-           only one photograph is unaffected. */
-        .sw .lane-plate .lane-alt {
-          position: absolute;
-          inset: 0;
-          opacity: 0;
-          transition: opacity var(--dur-slow) var(--ease-out),
-                      transform var(--dur-slow) var(--ease-out);
-        }
-        .sw .lane-card:hover .lane-plate .lane-alt { opacity: 1; }
-        @media (prefers-reduced-motion: reduce) {
-          .sw .lane-plate .lane-alt { transition: none; }
-        }
 
         /* An unwritten note has no photograph — a flat plate, not an
            empty box. */

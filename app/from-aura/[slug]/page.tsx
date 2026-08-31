@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { stubSlugs, labelFor, SECTIONS } from '@/lib/site-nav'
 import { FROM_AURA } from '@/lib/from-aura'
+import EnquiryForm from '@/components/from-aura/EnquiryForm'
 import { RelatedLane } from '@/components/Swimlanes'
 
 /* A product page.
@@ -75,6 +76,9 @@ function product(slug: string) {
        Experiences) got a blank title and a description reading
        " — not released yet." */
     title: entry?.title ?? (navLabel!.split(' — ').slice(1).join(' — ') || navLabel!),
+    /* The lane's id, not its label — UNRELEASED is keyed by it. For a
+       top-level product the slug IS the lane id. */
+    laneId: entry?.lane.id ?? slug,
     lane: entry?.lane.label ?? SECTION,
     description: entry?.description ?? null,
     /* Everything else in the shop, not just the rest of this lane. A
@@ -99,6 +103,49 @@ export async function generateMetadata(
     alternates: { canonical: `${PREFIX}/${slug}` },
     robots: { index: false, follow: true },
   }
+}
+
+/* What "not released yet" means depends on what the thing is.
+ *
+ * One paragraph used to serve all of them, and it was written for
+ * coffee — it promised a residency "the ferment, the drying, and the lab
+ * record that closed it", which is not what a residency has. Each lane
+ * gets the sentence that is true for it. */
+const UNRELEASED: Record<string, React.ReactElement> = {
+  coffee: (
+    <p className="p1 pd-p">
+      Nothing from this harvest is released yet. When it is, this page carries what the
+      estate already keeps on it — the block it came from, the ferment, the drying, and
+      the lab record that closed the tank.
+    </p>
+  ),
+  'from-the-farm': (
+    <p className="p1 pd-p">
+      Not released yet. What the estate can spare of this depends on the season, and the
+      page will say how much there is and where on the land it came from before it says
+      a price.
+    </p>
+  ),
+  objects: (
+    <p className="p1 pd-p">
+      Not released yet. These are made in the studios on the estate, in small numbers,
+      from material the land already grows — so the run is as long as the material allows
+      and no longer.
+    </p>
+  ),
+  experiences: (
+    <p className="p1 pd-p">
+      Not open for booking yet. When it is, this page carries the dates, how many places
+      there are, and what the days actually consist of — the estate&rsquo;s working day is
+      the thing on offer, so it is described rather than dressed.
+    </p>
+  ),
+  default: (
+    <p className="p1 pd-p">
+      Not released yet. When it is, this page carries the record the estate already keeps
+      on it.
+    </p>
+  ),
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
@@ -138,11 +185,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             </>
           ) : (
             <>
-              <p className="p1 pd-p">
-                Nothing from this lot is released yet. When it is, this page carries what the
-                estate already keeps on it — the block it came from, the ferment, the drying,
-                and the lab record that closed it.
-              </p>
+              {UNRELEASED[p.laneId] ?? UNRELEASED.default}
               <p className="p1 pd-p">
                 Aura publishes the record before it publishes a price, and that holds at the
                 point of sale as much as anywhere else.
@@ -151,7 +194,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           )}
 
           <p className="pd-act">
-            <Link className="pd-cta" href="/contact">Get in touch</Link>
+            <EnquiryForm product={p.title} />
           </p>
         </div>
       </div>

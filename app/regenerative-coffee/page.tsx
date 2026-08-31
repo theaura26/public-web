@@ -1,3 +1,5 @@
+import { Gallery } from '@/components/article/Gallery'
+import { OVERVIEW } from '@/lib/regenerative-coffee-gallery'
 import {
   MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner, ArrowLinkStyles,
 } from '@/components/coffee/Microsite'
@@ -32,6 +34,11 @@ export default function RegenerativeCoffeePage() {
         title="Every season, this ground is worth more than it was."
         lede="The herd feeds the soil, the soil feeds the trees. Nothing is bought in, and nothing is trucked away."
       />
+
+      {/* The chapter's pictures as one full-bleed band: a reader takes
+          the set at their own pace rather than scrolling past ten
+          stacked banners to reach the next sentence. */}
+      <Gallery frames={OVERVIEW} label="The estate, in ten frames" />
 
       {/* ── The Remarkable Loop ─────────────────────────────────── */}
 

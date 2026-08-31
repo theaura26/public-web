@@ -33,8 +33,11 @@ export default async function LivePage() {
   return (
     <main>
       <LiveShell
-        hero={<LiveHero freshness={freshness} />}
-        today={<TodayCard today={today} />}
+        hero={
+          <LiveHero freshness={freshness}>
+            <TodayCard today={today} />
+          </LiveHero>
+        }
       >
         {failed ? (
           <p className="state">

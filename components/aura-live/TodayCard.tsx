@@ -203,10 +203,10 @@ export default function TodayCard({ today }: { today: Today }) {
           display: flex;
           gap: var(--space-5);
           width: max-content;
-          /* Starts at the screen's edge rather than the page rail — the
-             row is meant to run off both sides, and an inset first card
-             makes it look contained. */
-          padding-left: 0;
+          /* The first card lands on the page rail — the same x as the
+             title above it and every heading below — and the row still
+             runs off the right, which is the cue that it scrolls. */
+          padding-left: max(var(--gutter), calc(50vw - var(--max-w) / 2 + var(--gutter)));
           padding-right: var(--gutter);
         }
 
@@ -232,7 +232,9 @@ export default function TodayCard({ today }: { today: Today }) {
         /* The one carrying a chart needs the room to draw it — three
            weeks of daily bars at 344px put each day under 10px, which
            is a texture rather than a reading. */
-        .lead { width: 460px; }
+        /* The rain card is the lead and carries a chart, so it takes a
+           fifth more width than the readings beside it. */
+        .lead { width: 552px; }
         .cap {
           margin: 0;
           color: rgba(255, 255, 255, 0.45);

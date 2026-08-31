@@ -18,7 +18,7 @@ import type { FeedFreshness } from '@/lib/aura-live/feed'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-export default function LiveHero({ freshness }: { freshness: FeedFreshness }) {
+export default function LiveHero({ freshness, children }: { freshness: FeedFreshness; children?: React.ReactNode }) {
   const { state, lastCheckedAt } = freshness
 
   let stamp = 'estate record unavailable'
@@ -29,13 +29,37 @@ export default function LiveHero({ freshness }: { freshness: FeedFreshness }) {
 
   return (
     <header className="hero">
-      <h1 className="title">Mudigere Live</h1>
+      {/* The estate, moving, behind the readings. Muted, looped and
+          inline so it behaves as a ground rather than as media; the
+          poster carries it on reduced motion and before it buffers. */}
+      <video
+        className="film"
+        src="/aura-mudigere.mp4"
+        poster="/aura-mudigere.jpg"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+      />
+      {/* The film is a ground, not a picture: it is dimmed hard so the
+          title, the stamp and the dark cards all hold against it. */}
+      <span className="veil" aria-hidden="true" />
+
+      <h1 className="title">Now</h1>
 
       <p className={`fresh label state-${state}`}>
         <span className="dot" aria-hidden="true" />
         Last updated{' '}
         {lastCheckedAt ? <time dateTime={lastCheckedAt}>{stamp}</time> : stamp}
       </p>
+
+      {/* The land today, on the same black. The readings and the stamp
+          above them are one statement — what the estate is like right
+          now — and splitting them across two grounds made the cards read
+          as a separate module that happened to follow. */}
+      {children && <div className="band-slot">{children}</div>}
 
       <style jsx>{`
         .hero {
@@ -50,14 +74,55 @@ export default function LiveHero({ freshness }: { freshness: FeedFreshness }) {
 
           background: #000;
           color: #fff;
+          overflow: hidden;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: clamp(var(--space-9), 9vh, 128px);
-          padding: calc(var(--nav-h) + var(--space-11, 120px)) var(--gutter) var(--space-11, 120px);
-          min-height: 62vh;
+          gap: clamp(var(--space-8), 6vh, 88px);
+          /* No horizontal padding: the band inside sets its own rail so
+             the cards can run off the right edge. The title and stamp
+             carry the gutter themselves. */
+          padding: calc(var(--nav-h) + var(--space-10, 96px)) 0 var(--space-9);
+          min-height: 86vh;
           text-align: center;
+        }
+
+        .film {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: 0;
+        }
+        .veil {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.55) 0%,
+            rgba(0, 0, 0, 0.45) 45%,
+            rgba(0, 0, 0, 0.78) 100%
+          );
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .film { display: none; }
+          .hero { background: #000 url('/aura-mudigere.jpg') center / cover; }
+        }
+
+        /* Title and stamp keep the page gutter, and sit above the film. */
+        .title, .fresh { padding: 0 var(--gutter); position: relative; z-index: 2; }
+        .band-slot { position: relative; z-index: 2; }
+
+        /* The band is the full width of the hero and starts on the page
+           rail, so the first card sits on the same x as every heading on
+           the page. It still runs off the right, which is the cue that
+           the row scrolls. */
+        .band-slot {
+          width: 100%;
+          margin-top: auto;
         }
 
         .title {

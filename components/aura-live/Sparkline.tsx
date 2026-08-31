@@ -151,7 +151,10 @@ export default function Sparkline({
         .dot { fill: #fff; }
         .bar { fill: rgba(255, 255, 255, 0.28); }
         /* Today, told apart from the fortnight behind it. */
-        .bar.last { fill: rgba(255, 255, 255, 0.85); }
+        /* Today, in the one colour the page allows itself. It carries
+           the same meaning as the dot in the hero — this is current —
+           and nothing else on the card competes for it. */
+        .bar.last { fill: var(--brand-accent); }
         .bar.on { fill: #fff; }
         .readout {
           margin: 0;

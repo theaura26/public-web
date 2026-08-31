@@ -9,8 +9,9 @@ import type { PublicEntry } from '@/lib/aura-live/feed'
 
 /* The timeline.
  *
- * A dashed line down the page, months named to the left of it, and the
- * feed hanging to the right. Each entry sits on a circular mark carrying
+ * A dashed line down the middle of the page, cards centred on it, and
+ * the month set as a pill that sits on the line and breaks the run.
+ * Each card carries a circular mark with
  * its subject's picture — the same picture on every entry in that
  * subject, which is what keeps it reading as an icon rather than as a
  * photograph of the event. It is decorative and hidden from screen
@@ -84,15 +85,10 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
           const shown = Math.min(row.days, MAX_TICKS)
           return (
             <li key={row.key} className="row r-gap" aria-hidden="true">
-              <span className="month" />
-              <span className="mark">
-                <span className="ticks">
-                  {Array.from({ length: shown }, (_, i) => <span key={i} className="tick" />)}
-                </span>
+              <span className="ticks">
+                {Array.from({ length: shown }, (_, i) => <span key={i} className="tick" />)}
               </span>
-              <span className="slot">
-                {row.days > MAX_TICKS && <span className="elapsed label">{row.days} days</span>}
-              </span>
+              {row.days > MAX_TICKS && <span className="elapsed label">{row.days} days</span>}
             </li>
           )
         }
@@ -102,21 +98,21 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
 
         return (
           <li key={row.key} className="row r-entry">
-            <h2 className="month">{row.monthLabel}</h2>
+            {row.monthLabel && <h2 className="month">{row.monthLabel}</h2>}
 
-            <span className="mark">
+            <div className="card">
               <span className="node">
                 {thumb ? (
-                  <Image className="thumb" src={thumb} alt="" fill sizes="88px" aria-hidden="true" />
+                  <Image className="thumb" src={thumb} alt="" fill sizes="64px" aria-hidden="true" />
                 ) : (
-                  <CategoryGlyph category={entry.category} size={22} />
+                  <CategoryGlyph category={entry.category} size={20} />
                 )}
                 <span className="sr-only">{CATEGORY_LABEL[entry.category]}</span>
               </span>
-            </span>
 
-            <div className="slot">
-              <FeedEntry entry={entry} index={position.get(entry.id) ?? 0} />
+              <div className="slot">
+                <FeedEntry entry={entry} index={position.get(entry.id) ?? 0} />
+              </div>
             </div>
           </li>
         )
@@ -124,64 +120,69 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
 
       <style jsx>{`
         .tl {
-          --tl-month: 200px;
-          --tl-node: 78px;
-          --tl-gap-a: var(--space-6);
-          --tl-gap-b: var(--space-8);
+          --tl-card: 660px;
+          --tl-node: 64px;
 
           position: relative;
           list-style: none;
           margin: 0;
-          padding: 0;
+          padding: var(--space-9) 0 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
 
-        /* One dashed line for the whole feed, drawn once behind the marks
-           rather than per row, so it never restarts at an entry. */
+        /* One dashed line down the centre of the page, drawn once behind
+           everything rather than per row, so it never restarts. */
         .tl::before {
           content: '';
           position: absolute;
-          left: calc(var(--tl-month) + var(--tl-gap-a) + var(--tl-node) / 2);
+          left: 50%;
           top: 0;
           bottom: 0;
           border-left: 1px dashed var(--border-strong);
+          transform: translateX(-0.5px);
         }
 
         .row {
-          display: grid;
-          grid-template-columns: var(--tl-month) var(--tl-node) minmax(0, 1fr);
-          column-gap: var(--tl-gap-a);
-          /* Baseline, not top: the month and the entry's stamp are two
-             pieces of the same line and should read off one another.
-             Guessed padding got them close and drifted every time the
-             type changed. */
-          align-items: baseline;
+          position: relative;
+          z-index: 1;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
-        /* The mark has no text, so it has no baseline worth aligning —
-           it stays pinned to the top of its row. */
-        .mark { align-self: start; }
-        .r-entry { padding-bottom: var(--space-11, 120px); }
-        .r-entry:last-child { padding-bottom: var(--space-9); }
+        .r-entry { padding-bottom: var(--space-8); }
 
-        /* The month names the moment the feed arrives in it, set beside
-           its first mark rather than floating above the column. */
-        /* An h2, because it heads a month of the feed in the document
-           outline. Set at the h3 size, the same call the store’s lane
-           headings make: a 60px month would out-shout the entries it
-           labels, and the design system’s rule is that the element is
-           chosen for the outline and the size for the context. */
+        /* The month rides on the line and breaks it. The page background
+           is what does the breaking — the pill is opaque, so the dash
+           stops at its edge and starts again below. */
         .month {
-          margin: 0;
-          text-align: right;
+          margin: 0 0 var(--space-7);
+          padding: 10px 22px;
+          border-radius: 999px;
+          background: var(--bg);
+          border: 1px solid var(--border-strong);
+          color: var(--text);
           font-weight: 600;
           text-transform: uppercase;
-          font-size: clamp(20px, 2vw, 28px);
-          letter-spacing: -0.02em;
-          line-height: 1.15;
-          color: var(--text);
+          font-size: 13px;
+          letter-spacing: 0.08em;
+          line-height: 1;
         }
 
-        .mark { position: relative; display: block; }
-
+        /* The card sits on the line and hides it. */
+        .card {
+          width: min(100%, var(--tl-card));
+          display: grid;
+          grid-template-columns: var(--tl-node) minmax(0, 1fr);
+          gap: var(--space-5);
+          align-items: start;
+          padding: var(--space-6);
+          background: var(--bg-card);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-1);
+        }
 
         .node {
           position: relative;
@@ -191,53 +192,39 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
           height: var(--tl-node);
           border-radius: 50%;
           overflow: hidden;
-          background: color-mix(in srgb, var(--text) 6%, var(--bg));
-          color: var(--text-muted);
-          /* Sits on the dashes, and the line runs behind it. */
-          z-index: 1;
+          background: var(--bg);
+          border: 1px solid var(--border);
         }
         .node :global(.thumb) { object-fit: cover; }
 
-        .slot { min-width: 0; padding-top: 18px; padding-left: var(--space-5); }
+        .slot { min-width: 0; }
 
-        /* ── gaps ──────────────────────────────────────────────────── */
-
-        .r-gap { padding-bottom: var(--space-8); }
-        .r-gap .ticks {
-          position: relative;
-          z-index: 1;
+        /* A run of empty days, drawn at the same scale as the entries so
+           a quiet fortnight looks like a fortnight. Centred on the line
+           like everything else. */
+        .r-gap {
+          gap: var(--space-4);
+          padding-bottom: var(--space-8);
+        }
+        .ticks {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 7px;
-          padding: var(--space-4) 0;
-          background: var(--bg);
+          gap: 6px;
         }
-        .r-gap .tick {
-          display: block;
-          width: 13px;
-          height: 1px;
+        .tick {
+          width: 1px;
+          height: 10px;
           background: var(--border-strong);
         }
-        .elapsed { display: block; padding: var(--space-6) 0 0 var(--space-5); color: var(--text-dim); }
+        .elapsed { color: var(--text-muted); }
 
-        /* ── narrow ────────────────────────────────────────────────── */
-
-        @media (max-width: 900px) {
-          /* Below this there is no room for a month column beside an
-             axis. The rail keeps its marks; the month moves above the
-             entry it names. */
-          .tl { --tl-month: 0px; --tl-node: 50px; --tl-gap-a: var(--space-4); }
-          .row { grid-template-columns: var(--tl-node) minmax(0, 1fr); }
-          .tl::before { left: calc(var(--tl-node) / 2); }
-          .month {
-            grid-column: 1 / -1;
-            text-align: left;
-            padding: 0 0 var(--space-5);
+        @media (max-width: 760px) {
+          .tl { --tl-node: 48px; }
+          .card {
+            padding: var(--space-5);
+            gap: var(--space-4);
           }
-          .month:empty { display: none; }
-          .slot { padding-left: var(--space-4); padding-top: 12px; }
-          .r-entry { padding-bottom: var(--space-9); }
         }
       `}</style>
     </ol>

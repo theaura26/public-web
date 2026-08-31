@@ -116,6 +116,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
         </div>
       ))}
       <div className="cb-scrim" />
+      <div className="cb-tint" />
 
       <style jsx>{`
         .cb {
@@ -135,7 +136,8 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
         .cb-frame[data-on] { opacity: 1; z-index: 2; }
         /* Chapter over: everything fades and the ground beneath shows. */
         .cb[data-past] .cb-frame { opacity: 0; }
-        .cb[data-past] .cb-scrim { opacity: 0; }
+        .cb[data-past] .cb-scrim,
+        .cb[data-past] .cb-tint { opacity: 0; }
         /* Nothing at all until the first scene is reached. */
         .cb:not([data-started]) { opacity: 0; }
         .cb { transition: opacity 500ms var(--ease-out, ease); }
@@ -150,6 +152,11 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
         }
         /* The words sit on this, so it carries the contrast rather than
            the type having to fight the photograph. */
+        /* Above the frames. The active frame is lifted to z-index 2 so it
+           crossfades over the outgoing one — which also lifted it over
+           the scrim, and every dimming change made no difference at all
+           until this line existed. */
+        .cb-scrim, .cb-tint { z-index: 3; }
         .cb-scrim {
           position: absolute;
           inset: 0;
@@ -160,7 +167,17 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
              than each block of text drawing a panel behind itself — a
              local wash reads as a box, which is worse than a dark
              picture. The photographs still read; they are ground. */
+          /* 0.72, and a further 35% over it — the second layer is what
+             takes the bright frames (canopy at noon, the wet mill in
+             daylight) down to where white type holds without any block
+             of text needing a panel of its own. */
           background: rgba(0, 0, 0, 0.72);
+        }
+        .cb-tint {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.35);
+          transition: opacity 600ms var(--ease-out, ease);
         }
         @media (prefers-reduced-motion: reduce) {
           .cb-frame { transition: none; }

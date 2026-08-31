@@ -79,14 +79,14 @@ export const ACTIVE_JOURNALS: Journal[] = [
   },
   {
     href: '/rta',
-    title: 'Rta',
-    description: 'Right time, right action. The Vedic order that governs every decision on the estate.',
+    title: 'The Land Decides the Hour',
+    description: 'Waiting for the window rather than the calendar — and the buffer days a plan carries because of it.',
     img: '/journals/rta/aura-rta.jpg',
   },
   {
     href: '/fermentation',
-    title: 'Fermentation',
-    description: 'Three fermentation disciplines, one estate. Coffee, pepper, and cow dung.',
+    title: 'Controlled Decay',
+    description: 'Desired microbial activity, held to a number. Coffee, pepper and cow dung, stopped when the reading says so.',
     img: '/journals/fermentation/aura-fermentation.jpg',
   },
   {

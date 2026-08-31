@@ -84,11 +84,16 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
         if (row.kind === 'gap') {
           const shown = Math.min(row.days, MAX_TICKS)
           return (
-            <li key={row.key} className="row r-gap" aria-hidden="true">
+            <li key={row.key} className="row r-gap" aria-hidden="true" title={`${row.days} days with nothing published`}>
               <span className="ticks">
                 {Array.from({ length: shown }, (_, i) => <span key={i} className="tick" />)}
               </span>
-              {row.days > MAX_TICKS && <span className="elapsed label">{row.days} days</span>}
+              {/* "23 days" on its own read as a measurement of something,
+                  not as an absence. The gap is the argument — a quiet
+                  fortnight should look like one — so it says what it is. */}
+              {row.days > MAX_TICKS && (
+                <span className="elapsed label">{row.days} days, nothing to report</span>
+              )}
             </li>
           )
         }

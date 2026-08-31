@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Ṛta',
+  title: 'The Land Decides the Hour',
   description:
-    'Right time, right action. The Vedic principle behind every decision on the estate: when to spray, when to seal a tank, when to wait for the land.',
+    'Waiting for the window rather than the calendar — right time, right action, and the buffer days a plan carries because of it.',
   alternates: { canonical: '/rta' },
   openGraph: {
     type: 'article',

@@ -1713,7 +1713,7 @@ export function Chapter({
           position: relative; z-index: 1;
           display: flex; align-items: center; justify-content: center;
           padding: clamp(128px, 21vh, 248px) 0;
-          background: #000; color: #fff; text-align: center;
+          background: transparent; color: #fff; text-align: center;
           border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
         .ch.is-tight { padding-bottom: clamp(40px, 6vh, 72px); }

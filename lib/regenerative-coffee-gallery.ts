@@ -71,3 +71,28 @@ export const TRANSPARENCY: Frame[] = [
   { src: `${B}/transparency/aura-block-retest.webp`, alt: 'The same block, re-read ninety days later' },
   { src: `${B}/transparency/aura-cupping.webp`, alt: 'Where the record ends: a cup' },
 ]
+
+/* Which frame stands behind which scene.
+ *
+ * One entry per scene, in document order, holding the index of the frame
+ * that belongs to it. Spreading the pictures evenly got the order right
+ * and the meaning wrong — "Someone is awake for it" was given a tagged
+ * tree, and the cupping table got a fermenting tank. These are paired by
+ * hand against what each scene actually says.
+ *
+ * A repeated index is deliberate: consecutive scenes on one subject hold
+ * the same picture rather than cutting to another and back. */
+export const STEPS: Record<string, number[]> = {
+  /* the hub: the scenes are the disciplines, and the frames are named
+     for them */
+  hub: [0, 1, 7, 9, 2, 4, 5, 6, 2, 8, 3],
+
+  /* better ground: animal, then soil, then the loop, then the canopy */
+  biodynamic: [0, 7, 8, 2, 3, 4, 6, 5, 1, 9, 9, 9, 10, 0],
+
+  /* flavours: cherry, ferment, the night, then the table */
+  flavour: [0, 1, 2, 2, 5, 3, 4, 8, 8, 8, 7, 4, 6, 2],
+
+  /* transparency: the signature, the clocks, the bench, the cup */
+  transparency: [1, 0, 0, 0, 2, 2, 2, 4, 6, 3, 5, 5, 7, 7],
+}

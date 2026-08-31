@@ -20,7 +20,7 @@ import type { Frame } from '@/lib/regenerative-coffee-gallery'
  * Fixed rather than scroll-linked: no rAF loop, no work per frame. The
  * observer fires once per scene boundary and sets an index.
  */
-export function ChapterBackdrop({ frames }: { frames: Frame[] }) {
+export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps?: number[] }) {
   const [active, setActive] = useState(0)
   /* The frame that was showing. It stays fully opaque beneath the
      incoming one until the fade finishes — cross-dissolving both at once
@@ -30,6 +30,11 @@ export function ChapterBackdrop({ frames }: { frames: Frame[] }) {
      festival banner are their own ground, so the backdrop lets go
      rather than sitting a photograph behind them. */
   const [past, setPast] = useState(false)
+  /* And held back at the start. The hub opens on the white Remarkable
+     Circle header; a fixed photograph behind it from the first paint
+     would cover the thing the page opens on. The pictures arrive with
+     the first scene, which is after the fold. */
+  const [started, setStarted] = useState(false)
   const wrap = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -47,7 +52,15 @@ export function ChapterBackdrop({ frames }: { frames: Frame[] }) {
         if (!top) return
         const i = steps.indexOf(top.target as HTMLElement)
         if (i < 0) return
-        const next = i % frames.length
+        setStarted(true)
+        /* The hand-written pairing where there is one, and an even
+           spread otherwise. Cycling with modulo made a chapter with nine
+           photographs and fourteen scenes show the first five again,
+           which reads as a mistake rather than a rhythm. */
+        const next =
+          map && map[i] != null
+            ? Math.min(frames.length - 1, map[i])
+            : Math.min(frames.length - 1, Math.floor((i * frames.length) / steps.length))
         setActive((cur) => {
           if (cur !== next) setPrev(cur)
           return next
@@ -72,7 +85,10 @@ export function ChapterBackdrop({ frames }: { frames: Frame[] }) {
   if (!frames.length) return null
 
   return (
-    <div className="cb" ref={wrap} aria-hidden data-past={past ? 'true' : undefined}>
+    <div className="cb" ref={wrap} aria-hidden
+      data-past={past ? 'true' : undefined}
+      data-started={started ? 'true' : undefined}
+    >
       {frames.map((f, i) => (
         <div
           className="cb-frame"
@@ -111,6 +127,9 @@ export function ChapterBackdrop({ frames }: { frames: Frame[] }) {
         /* Chapter over: everything fades and the ground beneath shows. */
         .cb[data-past] .cb-frame { opacity: 0; }
         .cb[data-past] .cb-scrim { opacity: 0; }
+        /* Nothing at all until the first scene is reached. */
+        .cb:not([data-started]) { opacity: 0; }
+        .cb { transition: opacity 500ms var(--ease-out, ease); }
         /* Held at full opacity below the incoming frame, and not
            transitioned — it is covered before it is ever removed. */
         .cb-frame[data-under] { opacity: 1; z-index: 1; transition: none; }
@@ -126,11 +145,15 @@ export function ChapterBackdrop({ frames }: { frames: Frame[] }) {
           position: absolute;
           inset: 0;
           transition: opacity 600ms var(--ease-out, ease);
+          /* Heavy. The scenes set long paragraphs in white directly on
+             the photograph, and at half strength the type fought the
+             picture wherever the frame was bright. The pictures still
+             read; they are ground, not subject. */
           background: linear-gradient(
             to bottom,
-            rgba(0, 0, 0, 0.62) 0%,
-            rgba(0, 0, 0, 0.52) 45%,
-            rgba(0, 0, 0, 0.72) 100%
+            rgba(0, 0, 0, 0.78) 0%,
+            rgba(0, 0, 0, 0.68) 45%,
+            rgba(0, 0, 0, 0.86) 100%
           );
         }
         @media (prefers-reduced-motion: reduce) {

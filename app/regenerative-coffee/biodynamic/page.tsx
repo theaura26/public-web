@@ -1,5 +1,5 @@
 import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
-import { BETTER_GROUND } from '@/lib/regenerative-coffee-gallery'
+import { BETTER_GROUND, STEPS } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
   MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner, ArrowLinkStyles,
@@ -28,7 +28,7 @@ export default function BiodynamicPage() {
 
           photographs as the scenes scroll over it. */}
 
-      <ChapterBackdrop frames={BETTER_GROUND} />
+      <ChapterBackdrop frames={BETTER_GROUND} steps={STEPS.biodynamic} />
 
 
       <Panel

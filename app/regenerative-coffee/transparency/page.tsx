@@ -1,5 +1,5 @@
 import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
-import { TRANSPARENCY } from '@/lib/regenerative-coffee-gallery'
+import { TRANSPARENCY, STEPS } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
   MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner,
@@ -23,7 +23,7 @@ export default function TransparencyPage() {
 
           photographs as the scenes scroll over it. */}
 
-      <ChapterBackdrop frames={TRANSPARENCY} />
+      <ChapterBackdrop frames={TRANSPARENCY} steps={STEPS.transparency} />
 
 
       <Panel

@@ -1,5 +1,5 @@
 import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
-import { FLAVOURS } from '@/lib/regenerative-coffee-gallery'
+import { FLAVOURS, STEPS } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
   MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner, ArrowLinkStyles,
@@ -34,7 +34,7 @@ export default function FlavourPage() {
 
           photographs as the scenes scroll over it. */}
 
-      <ChapterBackdrop frames={FLAVOURS} />
+      <ChapterBackdrop frames={FLAVOURS} steps={STEPS.flavour} />
 
 
       <Panel

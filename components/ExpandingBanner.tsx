@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /* ═══════════════════════════════════════════════════════════════════
    EXPANDING BANNER — scroll-driven blur → clarity reveal.
@@ -45,9 +45,56 @@ export type ExpandingBannerProps = {
    *  with `mix-blend-mode: difference` so it inverts against whatever
    *  is behind it (grey drafting card or a real photo). */
   titleOverlay?: React.ReactNode
+  /** Two or more frames sharing one banner stage, crossfading in place.
+   *
+   *  Stacking two banners meant 320vh of scroll through two grey cards
+   *  to deliver what is really one beat — the four valleys, the four
+   *  soils. As frames they occupy one stage and one scroll reveal, and
+   *  the reader gets both without paying twice for them. */
+  frames?: BannerFrame[]
 }
 
-export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption, type, titleOverlay }: ExpandingBannerProps) {
+export type BannerFrame = {
+  src?: string
+  mediaType?: 'image' | 'video'
+  poster?: string
+  alt?: string
+  caption?: string
+  type?: string
+}
+
+/** How long each frame holds, and how long the fade between them takes. */
+const FRAME_MS = 4600
+const FADE_MS = 900
+
+export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption, type, titleOverlay, frames }: ExpandingBannerProps) {
+  const multi = (frames?.length ?? 0) > 1
+  const [active, setActive] = useState(0)
+  /* Reduced motion stops the rotation dead — the reader steps through
+     with the dots instead, and nothing moves on its own. */
+  const [autoplay, setAutoplay] = useState(true)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    setAutoplay(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  }, [])
+  useEffect(() => {
+    if (!multi || !autoplay) return
+    const id = window.setInterval(
+      () => setActive((i) => (i + 1) % (frames as BannerFrame[]).length),
+      FRAME_MS,
+    )
+    return () => window.clearInterval(id)
+  }, [multi, autoplay, frames])
+
+  /* With frames, the active one supplies what the single-media props
+     would have. The scroll machinery below is untouched: it drives one
+     wrapper, and the frames crossfade inside it. */
+  const f = multi ? (frames as BannerFrame[])[active] : undefined
+  if (f) {
+    src = f.src; mediaType = f.mediaType ?? 'image'; poster = f.poster
+    alt = f.alt; caption = f.caption; type = f.type
+  }
+
   const wrapRef = useRef<HTMLDivElement>(null)
   const innerRef = useRef<HTMLDivElement>(null)
   const cardRef = useRef<HTMLDivElement>(null)
@@ -222,7 +269,7 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
             background: src ? 'var(--bg)' : '#d6d6d6',
           }}
         >
-          {src && mediaType === 'video' && (
+          {!multi && src && mediaType === 'video' && (
             <video
               ref={mediaRef as React.RefObject<HTMLVideoElement>}
               muted
@@ -245,7 +292,7 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
               <source src={src} type="video/mp4" />
             </video>
           )}
-          {src && mediaType === 'image' && (
+          {!multi && src && mediaType === 'image' && (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               ref={mediaRef as React.RefObject<HTMLImageElement>}
@@ -268,7 +315,7 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
               }}
             />
           )}
-          {!src && draftingLabel && (
+          {!multi && !src && draftingLabel && (
             <div
               ref={mediaRef as React.RefObject<HTMLDivElement>}
               style={{
@@ -283,6 +330,103 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
               }}
             >
               <div className="label" style={{ opacity: 0.9, maxWidth: 'min(80%, 720px)' }}>{draftingLabel}</div>
+            </div>
+          )}
+          {/* Every frame stacked in one wrapper, crossfading on opacity.
+              The wrapper takes mediaRef, so the scroll reveal blurs and
+              scales the stack as a single object exactly as it does a
+              single image. */}
+          {multi && (
+            <div
+              ref={mediaRef as React.RefObject<HTMLDivElement>}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                transform: 'scale(1.04)',
+                willChange: 'filter, transform',
+              }}
+            >
+              {(frames as BannerFrame[]).map((fr, i) => (
+                <div
+                  key={i}
+                  aria-hidden={i !== active}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    opacity: i === active ? 1 : 0,
+                    transition: `opacity ${FADE_MS}ms ease`,
+                    background: fr.src ? undefined : '#d6d6d6',
+                  }}
+                >
+                  {fr.src && (fr.mediaType ?? 'image') === 'video' ? (
+                    <video
+                      muted
+                      loop
+                      playsInline
+                      autoPlay
+                      preload="none"
+                      poster={fr.poster}
+                      aria-label={fr.alt}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    >
+                      <source src={fr.src} type="video/mp4" />
+                    </video>
+                  ) : fr.src ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={fr.src}
+                      alt={fr.alt ?? fr.caption ?? ''}
+                      loading="lazy"
+                      decoding="async"
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 24,
+                        textAlign: 'center',
+                        color: '#5a5a5a',
+                      }}
+                    >
+                      <div className="label" style={{ opacity: 0.9, maxWidth: 'min(80%, 720px)' }}>
+                        {[fr.type, fr.caption].filter(Boolean).join(' · ')}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+          {/* One dot per frame. They are the only signal that the banner
+              holds more than one thing, and the only way through it when
+              the reader has asked for reduced motion. */}
+          {multi && (
+            <div
+              style={{
+                position: 'absolute',
+                right: 'clamp(20px, 4vw, 48px)',
+                bottom: 'clamp(20px, 4vh, 48px)',
+                display: 'flex',
+                gap: 8,
+                zIndex: 3,
+              }}
+            >
+              {(frames as BannerFrame[]).map((fr, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => { setActive(i); setAutoplay(false) }}
+                  aria-label={fr.caption ?? `Frame ${i + 1}`}
+                  aria-current={i === active ? 'true' : undefined}
+                  className="eb-dot"
+                  data-on={i === active ? 'true' : undefined}
+                />
+              ))}
             </div>
           )}
           {/* Corner vignette — soft radial shadow anchored at bottom-left
@@ -345,6 +489,16 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
       </div>
 
       <style jsx>{`
+        .eb-dot {
+          width: 7px; height: 7px; padding: 0;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 255, 255, 0.55);
+          background: transparent;
+          cursor: pointer;
+          transition: background 240ms ease, border-color 240ms ease;
+        }
+        .eb-dot[data-on] { background: #ffffff; border-color: #ffffff; }
+        .eb-dot:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
         .expanding-banner-wrap {
           /* 100vh stage + 60vh of reveal. Pinned span == animation
              distance, so the card is never held after it lands. */

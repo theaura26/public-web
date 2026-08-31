@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Fermentation',
+  title: 'Controlled Decay',
   description:
-    'Three fermentation disciplines, one estate. Coffee, pepper, and cow dung — pH every fifteen minutes, temperature three times daily, Brix start to end. Every lot is tracked as an individual and carries its own record.',
+    'Desired microbial activity, held to a number — coffee, pepper and cow dung, each stopped when the reading says so.',
   alternates: { canonical: '/fermentation' },
   openGraph: {
     type: 'article',

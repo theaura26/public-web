@@ -486,7 +486,7 @@ function LocationModal({ open, onClose, label, bleed, children }: { open: boolea
     >
       <div ref={scrollRef} style={{ width: '100%', height: '100%', overflow: 'auto', WebkitOverflowScrolling: 'touch' }}>
         {/* ── Header ── full viewport width. Desktop uses 10vw rails to
-            mirror the navbar's logo + hamburger axis. Mobile collapses to
+            mirror the navbar’s logo + hamburger axis. Mobile collapses to
             auto-sized end columns with var(--gutter) padding so the X sits
             at the same inset as the hamburger. */}
         <div className="loc-header" data-bleed={bleed ? 'true' : 'false'} style={{ position: bleed ? 'absolute' : 'sticky', top: 0, left: 0, right: 0, zIndex: 10 }}>
@@ -677,7 +677,7 @@ function MudigereModal({ open, onClose }: { open: boolean; onClose: () => void }
 /* ═══════════════════════════════════════════
    AGENT HOME — plain-text view for crawlers / LLMs / screen readers.
    Activated by viewMode === 'agent' (toggle in the menu). Renders the
-   entire site's homepage information as a structured DM Mono document
+   entire site’s homepage information as a structured DM Mono document
    with proper semantic HTML — headings, lists, definition lists, links.
    No images, no animations, no overlays. CSS in globals.css does the
    typography (forces mono everywhere, normalises heading sizes, etc.).
@@ -690,7 +690,7 @@ function AgentHome() {
         <p className="label">AURA · theaura.life · agent view</p>
         <ul className="agent-nav__list">
           <li><a href="/">Home</a></li>
-          <li><a href="/reason">Reason</a></li>
+          <li><a href="/regenerative-life/the-reason">Reason</a></li>
           <li><a href="/brand">Brand</a></li>
           <li><a href="/contact">Contact</a></li>
           <li><a href="/mudigere">Mudigere</a></li>
@@ -730,7 +730,7 @@ function AgentHome() {
         <h2>Operating system — three pillars</h2>
         <ol>
           <li><strong>Sanctuary</strong> — a living estate in rhythm with the land. Silence, stillness, a 30-year Japanese garden, forest walks, the river from every room.</li>
-          <li><strong>Agroculture</strong> — 100 acres of specialty coffee. 52 indigenous Malnad Gidda cattle. Biodynamic (BD 500–508, CPP, lunar cycles) plus Vedic (Jeevamrit, Panchgavya, Beejamrit) farming systems. In the Western Ghats, a UNESCO World Heritage region.</li>
+          <li><strong>Agroculture</strong> — 100 acres of specialty coffee. About fifty indigenous Malnad Gidda cattle. Biodynamic (BD 500–508, CPP, lunar cycles) plus Vedic (Jeevamrit, Panchgavya, Beejamrit) farming systems. In the Western Ghats, a UNESCO World Heritage region.</li>
           <li><strong>Artistry</strong> — studios, workshops, gallery, gurukul, labs, festivals. Residencies for founders, designers, artists, and monastic polymaths.</li>
         </ol>
       </section>
@@ -749,7 +749,7 @@ function AgentHome() {
           <dt>Soil</dt><dd>Laterite, pH 6.0–6.5</dd>
           <dt>Zone</dt><dd>Western Ghats, a UNESCO World Heritage region</dd>
           <dt>Climate</dt><dd>14–30°C, humidity 58%, wind 5 km/h</dd>
-          <dt>Herd</dt><dd>52 Malnad Gidda cattle (indigenous breed)</dd>
+          <dt>Herd</dt><dd>~50 Malnad Gidda cattle (indigenous breed)</dd>
         </dl>
 
         <h3>Aura Ohara — active</h3>
@@ -894,10 +894,14 @@ type Sanctuary = {
   bgVideo?: string
   bgColor?: string
   comingSoon?: boolean
+  /** A drawn wordmark, used in place of setting the name in type. Only
+   *  the two working valleys have one. */
+  wordmark?: string
 }
 
 const MUDIGERE: Sanctuary = {
   name: 'Mudigere',
+  wordmark: '/mudigere/aura-mudigere-wordmark.svg',
   tagline: 'Regenerative plantation sanctuary',
   region: 'KARNATAKA, INDIA',
   coords: '13.17°N · 75.43°E',
@@ -906,6 +910,7 @@ const MUDIGERE: Sanctuary = {
 }
 const OHARA_S: Sanctuary = {
   name: 'Ohara',
+  wordmark: '/ohara/aura-ohara-wordmark.svg',
   tagline: 'Retreats and slow living in nature',
   region: 'KYOTO PREFECTURE, JAPAN',
   coords: '35.13°N · 135.83°E',
@@ -1047,7 +1052,7 @@ function SanctuaryBg({ s }: { s: Sanctuary }) {
 function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large?: boolean; onExplore?: () => void }) {
   /* Always h2. The size is set inline below and does not follow from
      the element — these are section banners inside the homepage, and
-     the page's one h1 is the hero above them. Keying the element off
+     the page’s one h1 is the hero above them. Keying the element off
      `large` gave the homepage three h1s. */
   const Heading = 'h2'
   return (
@@ -1088,7 +1093,37 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
           fontWeight: large ? 600 : 400,
           textShadow: '0 2px 24px rgba(0, 0, 0, 0.35)',
         }}>
-          {s.name}
+          {s.wordmark ? (
+            <>
+              {/* Both wordmarks are drawn in their own colours — Ohara’s
+                  carries a red mark. brightness(0) flattens whatever is
+                  in the file to black and invert(1) lifts it to white, so
+                  one rule renders either of them full white against the
+                  photograph. */}
+              <img
+                src={s.wordmark}
+                alt=""
+                aria-hidden
+                style={{
+                  display: 'block',
+                  width: 'auto',
+                  /* Sized by height rather than width: the two marks have
+                     very different proportions — Mudigere is 2.4:1 and
+                     Ohara close to square — and matching their heights is
+                     what makes them read at the same weight. */
+                  height: large ? 'clamp(80px, 19vw, 290px)' : 'clamp(34px, 5.6vw, 62px)',
+                  maxWidth: '82vw',
+                  filter: 'brightness(0) invert(1)',
+                  /* The type it replaces carried a shadow for legibility
+                     against a highlight in the photograph. */
+                  WebkitFilter: 'brightness(0) invert(1)',
+                }}
+              />
+              <span className="sr-only">{s.name}</span>
+            </>
+          ) : (
+            s.name
+          )}
         </Heading>
         <p className="p1" style={{ color: '#ffffff', margin: 0, maxWidth: 'min(260px, 80vw)', textShadow: '0 1px 12px rgba(0, 0, 0, 0.4)' }}>{s.tagline}</p>
       </div>
@@ -1096,7 +1131,7 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
       {/* Bottom-anchored meta. For large (Mudigere/Ohara): region/coords pinned
           bottom-left, "Explore Sanctuary" pinned bottom-right — mirrors the
           aura-hero banner CTA pattern. For 2-col (Munduk/Punakha): keep the
-          centered stack — those panels aren't clickable, just announce
+          centered stack — those panels aren’t clickable, just announce
           "coming soon". */}
       {large ? (
         <div className="sanctuary-meta" style={{
@@ -1115,7 +1150,7 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
           </div>
           {/* Explore CTA — the whole panel is now clickable, but the
               CTA stays as a visible affordance. stopPropagation so we
-              don't double-fire when the user clicks the button. */}
+              don’t double-fire when the user clicks the button. */}
           <button
             type="button"
             onClick={(e) => { e.stopPropagation(); onExplore?.() }}
@@ -1162,7 +1197,7 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
         /* Bottom labels — same rhythm as the large-banner Ohara/Mudigere
            meta: bottom inset matches `.sanctuary-meta` (clamp 24-56), and
            the two labels sit 6px apart in a column. Centred (not left-
-           anchored) because the 2-col panels don't carry an Explore CTA on
+           anchored) because the 2-col panels don’t carry an Explore CTA on
            the opposite side. */
         <div style={{ position: 'absolute', bottom: 'clamp(24px, 5vh, 56px)', left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
           <p className="label" style={{ color: '#ffffff', margin: 0 }}>{s.region}</p>
@@ -1200,8 +1235,8 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
      3. Panel is clear and admired
      4. Next panel slides up over it (this panel stays clear underneath)
 
-   Each panel computes its own blur from the PARENT container's scroll
-   position. Panel z's "stick start" is at scrollIntoParent = (z-1)*vh.
+   Each panel computes its own blur from the PARENT container’s scroll
+   position. Panel z’s "stick start" is at scrollIntoParent = (z-1)*vh.
    Blur lifts during the next 0.4 × vh of scroll past that point.
    ────────────────────────────────────────────────────────────── */
 
@@ -1217,7 +1252,7 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
 
    Hook: drives 1..N blur refs. Blur is heavy (BLUR_MAX) while the panel is
    sliding up from below + at the moment it sticks, then lifts smoothly over
-   the next BLUR_LIFT_RANGE of scroll. Stays at 0 for the rest of the panel's
+   the next BLUR_LIFT_RANGE of scroll. Stays at 0 for the rest of the panel’s
    topmost window (the clarity hold) until the next panel covers it. */
 const PANEL_STRIDE_VH = 2 // 200vh per panel slot (100vh panel + 100vh spacer)
 const BLUR_MAX = 24       // heavier initial blur than before (was 16)
@@ -1317,7 +1352,7 @@ function SanctuaryStackPanel({ s, z, onClick }: { s: Sanctuary; z: number; onCli
   return (
     <div ref={wrapRef} className="sanctuary-panel" style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', zIndex: z }}>
       <SanctuaryBg s={s} />
-      {/* Backdrop-filter blur layer — extended 200px past the panel's
+      {/* Backdrop-filter blur layer — extended 200px past the panel’s
           left edge so the blur falloff feathers further into the dark
           margin on the left. The panel itself is `overflow: hidden`,
           so the visible extension is clipped at the panel boundary;
@@ -1357,7 +1392,7 @@ function SanctuaryStackPanel2Col({ left, right, z }: { left: Sanctuary; right: S
         <div style={{ position: 'relative', overflow: 'hidden', marginRight: -1 }}>
           <SanctuaryBg s={left} />
           {/* Same +200px left extension as the single-panel variant
-              above — softens the leftmost column's blur falloff into
+              above — softens the leftmost column’s blur falloff into
               the dark margin. */}
           <div ref={blurLeftRef} style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: -200, backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
         </div>
@@ -1409,7 +1444,7 @@ export default function Home() {
 
       {/* Hero — display row / metadata row / display row / 3 CTA tiles.
           data-hero-ready flips to "true" after first paint; CSS uses this to
-          gate animation-name on .hero-anim children so they can't run until
+          gate animation-name on .hero-anim children so they can’t run until
           React is fully mounted. */}
       <section className="hero-section" data-hero-ready={heroReady ? 'true' : 'false'}>
         <div className="hero-section-w">
@@ -1446,16 +1481,16 @@ export default function Home() {
             </div>
             {/* 4. Think label */}
             <p className="label hero-mid__think hero-anim hero-anim--fade" style={{ opacity: 0, animationDuration: '500ms', animationDelay: '480ms' }}>
-              Our ateliers and sanctuaries invite leaders, creators, and organisations into inspiration and flow
+              A regenerative coffee &amp; tea estate in Mudigere, India, and a sanctuary in Ohara, Kyoto—as one living system.
             </p>
             {/* 5. Copy label */}
             <p className="label hero-mid__copy hero-anim hero-anim--fade" style={{ opacity: 0, animationDuration: '500ms', animationDelay: '640ms' }}>
-              We combine ancestral wisdom with creative capital to make what the future cannot automate
+              We grow, host, make and measure in public: what we tried, what changed, what the land taught us.
             </p>
           </div>
 
           {/* 2. Bottom display: GENERATIONAL IMPACT (justified edge-to-edge).
-              "FOR" was trimmed at the user's request — the cleaner two-word
+              "FOR" was trimmed at the user’s request — the cleaner two-word
               cadence reads stronger as a manifesto line. */}
           {/* Styled identically to the h1 above, but a <p> so the hero has a
               single primary heading (SEO). "Natural Intelligence." is the h1. */}
@@ -1471,9 +1506,9 @@ export default function Home() {
                 · aura-contact.jpg — Contact (right) */}
           <div className="hero-tiles">
             {[
-              { href: '/reason',  l1: 'Aura is not built,',     l2: 'it is grown',     pill: 'The Reason', img: '/aura-grown.jpg',   video: '/aura-grown.mp4', symbol: '/aura-symbol-1.png', alt: 'Aura — patient, grown systems'              },
+              { href: '/regenerative-life/the-reason',  l1: 'Aura is not built,',     l2: 'it is grown',     pill: 'The Reason', img: '/aura-grown.jpg',   video: '/aura-grown.mp4', symbol: '/aura-symbol-1.png', alt: 'Aura — patient, grown systems'              },
               { href: '/brand',   l1: 'Rhythm over speed,',     l2: 'depth and width', pill: 'Our Brand',  img: '/aura-depth.jpg',   video: '/aura-depth.mp4', symbol: '/aura-symbol-2.png', alt: 'Aura — rhythm, depth and breadth of practice' },
-              { href: '/atelier',  l1: 'Regenerative innovation',l2: 'and craft',       pill: 'Atelier',    img: '/aura-contact.jpg', video: undefined, symbol: '/aura-symbol-3.png', alt: 'Aura Atelier — natural intelligence applied to story, systems, and place' },
+              { href: '/regenerative-life/artistry',  l1: 'Regenerative innovation',l2: 'and craft',       pill: 'Atelier',    img: '/aura-contact.jpg', video: undefined, symbol: '/aura-symbol-3.png', alt: 'Aura Atelier — natural intelligence applied to story, systems, and place' },
             ].map((tile, i) => (
               <Link
                 key={tile.href}
@@ -1485,7 +1520,7 @@ export default function Home() {
                   {tile.video ? (
                     /* Tile with motion: autoplay + loop, jpg poster as
                        fallback while it buffers (or for browsers that
-                       can't decode). */
+                       can’t decode). */
                     <video
                       autoPlay
                       muted
@@ -1522,9 +1557,9 @@ export default function Home() {
           }
           .hero-section-w {
             /* Line the content up with the navbar's logo + hamburger. The nav
-               centres both marks inside 10vw rails, so the logo's LEFT edge is
+               centres both marks inside 10vw rails, so the logo’s LEFT edge is
                at 5vw − 16px (the emblem is 32px wide) — NOT at 5vw, which is the
-               mark's centre. Insetting the content by that amount lands its left
+               mark’s centre. Insetting the content by that amount lands its left
                edge on the logo and its right edge on the hamburger. */
             width: calc(100% - 10vw + 32px);
             margin: 0 calc(5vw - 16px);
@@ -1557,7 +1592,7 @@ export default function Home() {
             display: inline-flex;
             align-items: center;
             /* Minimal indent — just enough to nudge the wordmark off the
-               column's left edge without losing alignment with the heading. */
+               column’s left edge without losing alignment with the heading. */
             padding-left: 8px;
             /* The aūra wordmark reads visually low (the macron weights the
                top), so nudge it up to optically centre it in the row. */
@@ -1603,7 +1638,7 @@ export default function Home() {
           /* Justify the three 80% media blocks to mirror the edge-to-edge
              FOR / GENERATIONAL / IMPACT row above: left / centre / right.
              Both align-items AND an explicit margin force the layout for
-             each child so it's bullet-proof against flex quirks. */
+             each child so it’s bullet-proof against flex quirks. */
           .hero-tiles > .hero-tile:nth-child(1) { align-items: flex-start; }
           .hero-tiles > .hero-tile:nth-child(1) :global(.hero-tile__media),
           .hero-tiles > .hero-tile:nth-child(1) :global(.hero-tile__caption) {
@@ -1720,7 +1755,7 @@ export default function Home() {
             /* Headlines — Bricolage 44/46 semibold, watermark grey (the same
                #F2F2F2 the desktop hero uses). Block layout + text-align
                justify so each line spreads edge-to-edge inside a column
-               that matches the paragraph's larger side margin below. The
+               that matches the paragraph’s larger side margin below. The
                orphan last line stays centred. */
             /* Headlines fill the gutter-bounded content area (full width
                minus var(--gutter) on each side), so left/right text-align
@@ -1864,7 +1899,7 @@ export default function Home() {
 We create ideas, products and cultures that become regenerative systems.`}</ScrollHighlight>
 
         {/* The journals, framed by the manifesto above — a left-anchored,
-            horizontally-scrollable row of the estate's editorials, under a
+            horizontally-scrollable row of the estate’s editorials, under a
             small section label (place pages excluded). */}
         <div style={{ marginTop: 'clamp(28px, 5vh, 64px)' }}>
           <InfiniteArticleSlider />
@@ -1899,7 +1934,7 @@ We create ideas, products and cultures that become regenerative systems.`}</Scro
           rhythm of every other top-level section on the page. */}
       <InvertOnScroll style={{ padding: 'var(--section-gap) 0', position: 'relative', zIndex: 1, background: 'var(--bg)' }}>
         {/* Operating-system intro — `align="left"` keeps the headline
-            block flush with the pillar grid's left edge. Each line
+            block flush with the pillar grid’s left edge. Each line
             breaks at a sentence so the four principles stack as a
             stanza. The four-principle list still spells out A·U·R·A
             down the column (first letters), but no special
@@ -1914,15 +1949,15 @@ Attention.
 Unhurried.
 Rooted.
 Awake.`}</ScrollHighlight>
-        {/* Pillar grid mirrors ExpandingBanner's starting frame:
+        {/* Pillar grid mirrors ExpandingBanner’s starting frame:
             48 px outer rail, then a 16/9-derived max-width that the
             inline banners use as their starting size. Without the
-            max-width the grid would extend past the banner's left
-            edge — so the grid's left rail lines up with the banner's
+            max-width the grid would extend past the banner’s left
+            edge — so the grid’s left rail lines up with the banner’s
             top-of-section start rather than the page gutter.
 
             Outer padding tracks `var(--gutter)` (clamp 20→48px) so
-            the grid's left edge aligns with the rest of the page's
+            the grid’s left edge aligns with the rest of the page’s
             body text on mobile (20px) instead of indenting 48px in
             from the gutter, which produced a visible offset against
             the surrounding reveal-text stanzas. */}
@@ -1931,7 +1966,7 @@ Awake.`}</ScrollHighlight>
             {[
               {
                 title: 'Agroculture',
-                href: '/reason/agroculture',
+                href: '/regenerative-life/the-plantation',
                 lead: 'Farming as though the land has to be worth more in a century',
                 desc: 'A hundred and fifty acres of forest that produces crops — coffee, tea, pepper and areca under four storeys of canopy, fed by fertility the estate makes from its own herd.',
                 video: '/aura-agroculture.mp4',
@@ -1940,7 +1975,7 @@ Awake.`}</ScrollHighlight>
               },
               {
                 title: 'Sanctuary',
-                href: '/reason/hospitality',
+                href: '/regenerative-life/sanctuary-and-stay',
                 lead: 'Places that hold the right kind of attention',
                 desc: 'Two sanctuaries open and two more named — architecture, kitchen and residency, built to run for decades on a farm that would be working anyway.',
                 video: '/aura-hospitality.mp4',
@@ -1949,7 +1984,7 @@ Awake.`}</ScrollHighlight>
               },
               {
                 title: 'Atelier',
-                href: '/atelier',
+                href: '/regenerative-life/artistry',
                 lead: 'The taste layer — what is worth making at all',
                 desc: 'Origin, Engine and Hospitality. Three studios deciding what the estate makes, and what is good enough to leave here carrying the name.',
                 video: '/aura-labs.mp4',
@@ -2005,7 +2040,7 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
                      calc(var(--section-gap) + clamp(40px, 6vh, 80px));
           }
           /* ScrollHighlight renders its own <section> with
-             padding: var(--section-gap) 0 — strip it so the lede's
+             padding: var(--section-gap) 0 — strip it so the lede’s
              own padding owns the spacing top + bottom. */
           .sanctuary-lede > :global(section) {
             padding: 0 !important;
@@ -2031,7 +2066,7 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
           Parent is 600vh: 3 panels (100vh each) + 2 inter-panel spacers
           (100vh each) + 1 trailing buffer (100vh). The trailing buffer is
           critical — without it the last panel has ZERO stuck time (its
-          sticky range collapses to a single point because the parent's
+          sticky range collapses to a single point because the parent’s
           bottom releases it the instant it hits top:0). Adding 100vh of
           buffer gives panel 3 a full 100vh of stuck time: ~30vh for the
           blur to lift, ~70vh of held clarity, then it scrolls out as a
@@ -2059,7 +2094,7 @@ Places shaped for slower living and deeper restoration.`}</ScrollHighlight>
 /* Markdown-style plain text view of the home page for agent mode.
    Drawn from the visual page + the source decks/manifesto in /Info
    (Aura_Website_v3.html, Reason.pdf, AURA-Story-2026, brand book).
-   Gives an LLM agent the full picture: what Aura is, why, how it's
+   Gives an LLM agent the full picture: what Aura is, why, how it’s
    organised, what the practice rests on. Agent CSS prefixes headings
    with #/##/###, bullets with `- `, and renders <hr> as `---`. */
 function AgentHomeView() {
@@ -2119,7 +2154,7 @@ function AgentHomeView() {
       <p>Aura unfolds through sanctuary, land, and practice. Each sanctuary belongs to a larger living ecosystem — where land, craft, hospitality, and culture exist in rhythm. Places shaped for slower living and deeper restoration.</p>
 
       <h3>Mudigere — Regenerative plantation sanctuary</h3>
-      <p>Karnataka, India · 13.17°N · 75.43°E. 150 acres at 3,600 feet in the Western Ghats, a UNESCO World Heritage region. Biodiversity zone. Coffee, tea, pepper, areca. 52 indigenous cattle. Bees. Native canopy nursery. Forest-to-table kitchen. Coffee festivals.</p>
+      <p>Karnataka, India · 13.17°N · 75.43°E. 150 acres at 3,600 feet in the Western Ghats, a UNESCO World Heritage region. Biodiversity zone. Coffee, tea, pepper, areca. ~50 indigenous cattle. Bees. Native canopy nursery. Forest-to-table kitchen. Coffee festivals.</p>
 
       <h3>Ohara — Retreats and slow living in nature</h3>
       <p>Kyoto Prefecture, Japan · 35.13°N · 135.83°E. A quiet valley north of Kyoto. Cedar forests, rivers, temples. A 30-year Japanese garden. Teahouse. Café on the river. Studios. Ki no Ie. Workshops. Gallery. Weekend restaurant. Wellbeing retreat.</p>
@@ -2169,7 +2204,7 @@ function AgentHomeView() {
 
       <h2>Site Index</h2>
       <ul>
-        <li><a href="/reason">/reason</a> — the founder&rsquo;s story, in 14 chapters.</li>
+        <li><a href="/regenerative-life/the-reason">/reason</a> — the founder&rsquo;s story, in 14 chapters.</li>
         <li><a href="/brand">/brand</a> — brand identity, principles, colours, type.</li>
         <li><a href="/mudigere">/mudigere</a> — Aura Estate, the Indian land.</li>
         <li><a href="/ohara">/ohara</a> — the Kyoto estate. Asa and Niwa.</li>

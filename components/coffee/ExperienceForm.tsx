@@ -5,7 +5,7 @@ import { Minus, Plus } from '@phosphor-icons/react'
 import { track, identify } from '@/lib/analytics'
 
 /* ── The Aura Festival form ──────────────────────────────────────
-   The site's one ask, and it lives on its own page rather than in a
+   The site’s one ask, and it lives on its own page rather than in a
    pop-up: the nav CTA and the clay banner at the foot of every page
    both link straight here.
 

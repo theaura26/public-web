@@ -1,3 +1,5 @@
+import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
+import { OVERVIEW, STEPS } from '@/lib/regenerative-coffee-gallery'
 import {
   MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner, ArrowLinkStyles,
 } from '@/components/coffee/Microsite'
@@ -27,6 +29,10 @@ export default function RegenerativeCoffeePage() {
       <RemarkableCircle />
 
       {/* 02 — Manifesto */}
+      {/* One ground for the whole chapter, dissolving between the
+          photographs as the scenes scroll over it. */}
+      <ChapterBackdrop frames={OVERVIEW} steps={STEPS.hub} />
+
       <Panel
         id="manifesto"
         title="Every season, this ground is worth more than it was."

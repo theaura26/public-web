@@ -122,7 +122,7 @@ export default function FermentationPage() {
         </p>
         <p className="p1">
           <Term tip="Horn manure. Cow dung packed in a cow horn, buried over the cool months, then stirred into water and applied to soil.">BD 500</Term> begins as fresh dung from the estate&rsquo;s
-          52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term>, packed into a horn and buried. What we
+          About fifty <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term>, packed into a horn and buried. What we
           claim for it is the microbiology: a decomposition shaped by the breed, the
           season, and the soil it lies in. The cosmology around it — the lunar
           timing, the talk of the earth breathing — is poetry a century old, and
@@ -146,7 +146,7 @@ export default function FermentationPage() {
           alt="Black peppercorns retting in water — the first stage of pepper fermentation"
           value="Retted. Released."
         >
-          Pepper&apos;s first stage. Water softens the pericarp, microbial
+          Pepper&rsquo;s first stage. Water softens the pericarp, microbial
           activity loosens the skin, and the discipline that scheduled it
           waits on the BD calendar to clear.
         </DataCard>

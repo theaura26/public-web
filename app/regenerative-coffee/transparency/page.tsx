@@ -1,3 +1,5 @@
+import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
+import { TRANSPARENCY, STEPS } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
   MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner,
@@ -16,6 +18,13 @@ export default function TransparencyPage() {
     <>
       <MicroNav />
       <ArrowLinkStyles />
+
+      {/* One ground for the whole chapter, dissolving between the
+
+          photographs as the scenes scroll over it. */}
+
+      <ChapterBackdrop frames={TRANSPARENCY} steps={STEPS.transparency} />
+
 
       <Panel
         hero

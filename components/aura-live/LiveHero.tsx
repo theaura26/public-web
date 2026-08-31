@@ -1,0 +1,173 @@
+'use client'
+
+import { estateParts, clockLabel } from '@/lib/aura-live/time'
+import type { FeedFreshness } from '@/lib/aura-live/feed'
+
+/* The opener.
+ *
+ * A black field with the place on it, and one fact: when the estate
+ * record was last read. That phrasing holds in every state — the source
+ * synced eleven minutes ago or eleven hours ago, and the sentence is true
+ * either way — so the page never has to choose between claiming to be
+ * live and admitting it is not. The mark beside it hollows out when the
+ * source is behind.
+ *
+ * The dot is the only colour on the page. It earns it by being the one
+ * element whose whole job is to say "this is current".
+ */
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+export default function LiveHero({ freshness, children }: { freshness: FeedFreshness; children?: React.ReactNode }) {
+  const { state, lastCheckedAt } = freshness
+
+  let stamp = 'estate record unavailable'
+  if (lastCheckedAt) {
+    const p = estateParts(lastCheckedAt)
+    stamp = `${clockLabel(p.minuteOfDay)}, ${p.day} ${MONTHS[p.month - 1]} ${p.year}`
+  }
+
+  return (
+    <header className="hero">
+      {/* The estate, moving, behind the readings. Muted, looped and
+          inline so it behaves as a ground rather than as media; the
+          poster carries it on reduced motion and before it buffers. */}
+      <video
+        className="film"
+        src="/aura-mudigere.mp4"
+        poster="/aura-mudigere.jpg"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+      />
+      {/* The film is a ground, not a picture: it is dimmed hard so the
+          title, the stamp and the dark cards all hold against it. */}
+      <span className="veil" aria-hidden="true" />
+
+      <h1 className="title">Now</h1>
+
+      <p className={`fresh label state-${state}`}>
+        <span className="dot" aria-hidden="true" />
+        Last updated{' '}
+        {lastCheckedAt ? <time dateTime={lastCheckedAt}>{stamp}</time> : stamp}
+      </p>
+
+      {/* The land today, on the same black. The readings and the stamp
+          above them are one statement — what the estate is like right
+          now — and splitting them across two grounds made the cards read
+          as a separate module that happened to follow. */}
+      {children && <div className="band-slot">{children}</div>}
+
+      <style jsx>{`
+        .hero {
+          /* Full bleed out of the page rail. The black has to reach both
+             edges or it reads as a card rather than as ground. */
+          position: relative;
+          left: 50%;
+          right: 50%;
+          margin-left: -50vw;
+          margin-right: -50vw;
+          width: 100vw;
+
+          background: #000;
+          color: #fff;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: clamp(var(--space-8), 6vh, 88px);
+          /* No horizontal padding: the band inside sets its own rail so
+             the cards can run off the right edge. The title and stamp
+             carry the gutter themselves. */
+          padding: calc(var(--nav-h) + var(--space-10, 96px)) 0 var(--space-9);
+          min-height: 86vh;
+          text-align: center;
+        }
+
+        .film {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: 0;
+        }
+        .veil {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.55) 0%,
+            rgba(0, 0, 0, 0.45) 45%,
+            rgba(0, 0, 0, 0.78) 100%
+          );
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .film { display: none; }
+          .hero { background: #000 url('/aura-mudigere.jpg') center / cover; }
+        }
+
+        /* Title and stamp keep the page gutter, and sit above the film. */
+        .title, .fresh { padding: 0 var(--gutter); position: relative; z-index: 2; }
+        .band-slot { position: relative; z-index: 2; }
+
+        /* The band is the full width of the hero and starts on the page
+           rail, so the first card sits on the same x as every heading on
+           the page. It still runs off the right, which is the cue that
+           the row scrolls. */
+        .band-slot {
+          width: 100%;
+          margin-top: auto;
+        }
+
+        .title {
+          margin: 0;
+          /* globals.css sets h1 to var(--text), which on a black field in
+             day theme is near-black on black. The hero owns its own
+             ground, so it owns its own ink. */
+          color: #fff;
+          /* The place, at the largest size the page has. Bricolage at
+             weight 600 uppercase is the site’s display setting; the only
+             change here is that it runs on black. */
+          font-family: var(--font-grotesque), sans-serif;
+          font-weight: 600;
+          text-transform: uppercase;
+          font-size: clamp(44px, 8.6vw, 128px);
+          line-height: 0.92;
+          letter-spacing: -0.035em;
+          text-wrap: balance;
+        }
+
+        .fresh {
+          display: inline-flex;
+          align-items: center;
+          gap: var(--space-2);
+          margin: 0;
+          color: rgba(255, 255, 255, 0.72);
+        }
+        .dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--brand-accent);
+          flex: none;
+        }
+        /* Behind, or unknown: the mark hollows out. Nothing about a
+           filled dot should survive the source going quiet. */
+        .state-stale .dot, .state-unknown .dot {
+          background: transparent;
+          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 640px) {
+          .hero { min-height: 54vh; gap: var(--space-7); }
+        }
+      `}</style>
+    </header>
+  )
+}

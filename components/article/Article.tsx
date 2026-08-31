@@ -22,16 +22,16 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { Children, isValidElement, ReactNode, useEffect, useRef, useState } from 'react'
 import Reveal from '@/components/RevealOnScroll'
-import { ExpandingBanner } from '@/components/ExpandingBanner'
+import { ExpandingBanner, type BannerFrame } from '@/components/ExpandingBanner'
 import { ACTIVE_JOURNALS, nextActiveJournals, type Journal } from '@/lib/journals'
 
 /* ── Shared "← Back" handler used by all three hero variants.
    The visible <Link> still carries a real `href` (so right-click
    "open in new tab", screen readers, no-JS fallback all behave),
    but the onClick swaps in router.back() so the affordance reads
-   as a true browser-back instead of always routing to the kit's
+   as a true browser-back instead of always routing to the kit’s
    default destination. The `href` becomes the fallback for the
    case where the user direct-loaded the page (history length 1)
    and pressing Back would otherwise leave them stranded. */
@@ -55,10 +55,10 @@ function useBackOrFallback(fallbackHref: string) {
       caption` hint; once `src` is set, the card holds the photo or video
       with a 10% black tint overlay (legibility floor) and the caption
       pinned bottom-left. Title style is chosen *per image*: a hidden
-      canvas samples the loaded image; if it's uniformly dark we use plain
+      canvas samples the loaded image; if it’s uniformly dark we use plain
       white text (reads cleanly against a low-key photo), otherwise we use
       `mix-blend-mode: difference` (inverts cleanly against varied or
-      light scenes). Same logic drives the back link while it's over the
+      light scenes). Same logic drives the back link while it’s over the
       banner; once past the banner the back switches to var(--text). */
 export function HeroBanner({
   title,
@@ -552,7 +552,7 @@ export function JournalHero({
           padding-right: var(--gutter);
         }
         /* One consistent size, matching the HeroBanner journals — left
-           aligned (JournalHero's own identity), wrapping to about two
+           aligned (JournalHero’s own identity), wrapping to about two
            lines rather than spreading edge-to-edge across the rail. */
         .journal-hero__title {
           margin: 0;
@@ -591,9 +591,9 @@ export function JournalHero({
           margin-left: calc(50% - 50vw);
           /* Clip the scroll-driven blur so its 20px halo doesn't bleed
              onto the surrounding white plate. overflow:hidden alone
-             isn't enough in Chrome (filter creates its own stacking
+             isn’t enough in Chrome (filter creates its own stacking
              context that can paint past the box); contain:paint locks
-             the paint region to the element's box. */
+             the paint region to the element’s box. */
           overflow: hidden;
           contain: paint;
         }
@@ -752,8 +752,8 @@ export function OneCol({
       <div className="section-w">
         <Reveal>
           {/* Flush-left within section-w (margin: 0, not 0 auto) so a
-              OneCol's heading + body line up with adjacent
-              ScrollHighlight stanzas (which also sit at section-w's
+              OneCol’s heading + body line up with adjacent
+              ScrollHighlight stanzas (which also sit at section-w’s
               left edge). Previously the OneCol block was centered
               within section-w, producing a visible indent mismatch
               between consecutive sections on /rta and elsewhere. */}
@@ -886,6 +886,14 @@ export function Term({ tip, children }: { tip: string; children: ReactNode }) {
       video moments. Renders an image (default), a video, or — when
       `src` is empty — a grey drafting card with a centred type +
       caption label, all sharing the same expanding gesture. */
+/* ── CrossfadeBanner — two or more frames, one banner stage ─────────
+      Stacked <Placeholder>s each own a 160vh scroll stage, so a pair
+      cost 320vh to deliver one beat. As frames they share a stage and
+      crossfade in place, with a dot per frame. */
+export function CrossfadeBanner({ frames }: { frames: BannerFrame[] }) {
+  return <ExpandingBanner frames={frames} />
+}
+
 export function Placeholder({
   src,
   alt,
@@ -944,20 +952,49 @@ export function DataGrid({
   rule?: boolean
   children: ReactNode
 }) {
+  /* Text cards read as a list; picture cards stay a grid.
+   *
+   * Three columns of prose forces every card to a ~20-character measure,
+   * which broke words mid-line and made three short paragraphs harder to
+   * read than three rows would be. A tile has an image doing the work of
+   * the column, so those keep the grid. The distinction is read off the
+   * children rather than passed in, so every existing call site gets the
+   * right one without being touched. */
+  const isList = !Children.toArray(children).some(
+    (c) => isValidElement<{ img?: string; video?: string; type?: string }>(c)
+      && (c.props.img || c.props.video || c.props.type),
+  )
+
   const grid = (
     <div
-      className="data-grid"
+      className={`data-grid${isList ? ' is-list' : ''}`}
       style={{
         display: 'grid',
-        gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-        gap: 'clamp(24px, 3vw, 48px)',
+        gridTemplateColumns: isList ? '1fr' : `repeat(${cols}, minmax(0, 1fr))`,
+        gap: isList ? '0' : 'clamp(24px, 3vw, 48px)',
         marginTop: standalone ? 0 : 'clamp(24px, 4vh, 40px)',
       }}
     >
       {children}
       <style jsx>{`
+        /* Label left, body right, on one rule. Below 700 the two stack
+           and the rule still separates the rows. */
+        .data-grid.is-list :global(.data-row) {
+          display: grid;
+          grid-template-columns: minmax(0, 5fr) minmax(0, 11fr);
+          gap: clamp(16px, 3vw, 48px);
+          align-items: baseline;
+          padding: 18px 0;
+        }
+        .data-grid.is-list :global(.data-row:last-child) { border-bottom: 1px solid var(--border); }
+        @media (max-width: 700px) {
+          .data-grid.is-list :global(.data-row) {
+            grid-template-columns: 1fr;
+            gap: 8px;
+          }
+        }
         @media (max-width: 768px) {
-          .data-grid {
+          .data-grid:not(.is-list) {
             grid-template-columns: 1fr !important;
             /* Stacked tiles on mobile need real breathing room — match
                the homepage .pillar-grid rhythm. */
@@ -1086,9 +1123,12 @@ export function DataCard({
       </div>
     )
   }
+  /* A row of the list. The hairline sits above each row and the grid
+     closes the last one, so the set reads as a table of rows rather than
+     as three cards that happen to be adjacent. */
   return (
-    <div style={{ borderTop: '1.5px solid var(--border-strong)', paddingTop: 16 }}>
-      {value && <p className="p1" style={{ margin: 0, marginBottom: 12 }}>{value}</p>}
+    <div className="data-row" style={{ borderTop: '1px solid var(--border)' }}>
+      {value && <p className="p1" style={{ margin: 0 }}>{value}</p>}
       {children && <div className="p1" style={{ color: 'var(--text-body)' }}>{children}</div>}
     </div>
   )
@@ -1212,7 +1252,7 @@ export function SpecTable({
 /* ── Portrait — a CONTAINED tall image (or video), for visuals that are
       intentionally portrait and should stay that way rather than being
       cropped into a full-bleed landscape strip. Sits inside the content
-      column at a comfortable width, holds the image's own tall ratio, and
+      column at a comfortable width, holds the image’s own tall ratio, and
       carries a bottom-left mono caption. Default ratio 5 / 7. */
 export function Portrait({
   src,

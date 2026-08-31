@@ -31,14 +31,14 @@ export default function PepperPage() {
         </p>
         <p className="p1">
           The vines sit at <strong>3,600 ft</strong> on the red{' '}
-          <Term tip="Iron- and aluminium-rich red soil weathered in the wet tropics. Free-draining and acidic — the ground the estate's coffee and pepper both root into.">laterite</Term>{' '}
+          <Term tip="Iron- and aluminium-rich red soil weathered in the wet tropics. Free-draining and acidic — the ground the estate’s coffee and pepper both root into.">laterite</Term>{' '}
           the coffee roots into, under the same four-story shade. The monsoon arrives in June and leaves
           in September. Flowering follows the first rain; the pick runs through the dry months that
           follow, by hand, cluster by cluster, never stripped.
         </p>
         <DataGrid cols={3}>
           <DataCard value="Areca palm">The living trellis — one vine to a trunk, in the mid-canopy.</DataCard>
-          <DataCard value="3,600 ft">The coffee&apos;s elevation, the coffee&apos;s laterite, the coffee&apos;s shade.</DataCard>
+          <DataCard value="3,600 ft">The coffee&rsquo;s elevation, the coffee&rsquo;s laterite, the coffee&rsquo;s shade.</DataCard>
           <DataCard value="By hand">Picked cluster by cluster through the dry months, never stripped.</DataCard>
         </DataGrid>
       </TwoCol>
@@ -77,7 +77,7 @@ export default function PepperPage() {
 
       <TwoCol id="retting" heading="Retted, not rushed.">
         <p className="p1">
-          Pepper is one of the estate&apos;s ferments, alongside the coffee and the cattle dung that feeds
+          Pepper is one of the estate&rsquo;s ferments, alongside the coffee and the cattle dung that feeds
           them both. Aura{' '}
           <Term tip="Soaking the ripe berry in water until its outer skin softens and lifts away, leaving the pale corn beneath. The step that makes white pepper.">rets</Term>{' '}
           its white pepper in spring water from the estate catchment, changed daily and run cooler than
@@ -104,7 +104,7 @@ export default function PepperPage() {
         </p>
         <p className="p1">
           Every lot is labelled with the block it grew in, the month it was picked, and the palm the vine
-          climbed. That record — kept the same way the coffee&apos;s is — is the whole appellation: the
+          climbed. That record — kept the same way the coffee&rsquo;s is — is the whole appellation: the
           altitude, the laterite, the shade, and the microbiome of one strip of the Ghats, written down so
           a buyer can read it back.
         </p>
@@ -116,7 +116,7 @@ export default function PepperPage() {
 
       <OneCol id="close" heading="The vine outlives the year.">
         <p className="p1">
-          A pepper vine crops for decades on the same palm, so Aura works it on a decade&apos;s horizon —
+          A pepper vine crops for decades on the same palm, so Aura works it on a decade&rsquo;s horizon —
           feed the soil the vine roots into, hold the shade above it, and let the block deepen season after
           season. The oldest method in the Ghats, worked with modern measurement: Natural Intelligence,
           applied to a vine.

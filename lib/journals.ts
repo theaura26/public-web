@@ -15,14 +15,18 @@ export type Journal = {
 
 /* The published journal set — the reworked editorials/places plus the
    journals live on theaura.life. These drive the "Continue" footer and
-   sitemap.xml, each on its own banner (hero) image. Two not-yet-published
-   journals (idea, vedic) show as "coming soon" tiles in the slide-out menu
-   (components/Navbar.tsx) but stay out of Continue and the sitemap. */
+   sitemap.xml, each on its own banner (hero) image.
+
+   The note about idea and vedic being unpublished was years out of date:
+   both render full pages, as do /areca, /pepper and /provenance. They
+   were listed as coming-soon in the menu while the pages sat written,
+   and were absent from Continue and the sitemap entirely. Registered
+   below, which is what makes them reachable. */
 export const ACTIVE_JOURNALS: Journal[] = [
   {
     href: '/herd',
     title: 'Ecosystem Engineers',
-    description: 'Fifty-two Malnad Gidda as the estate’s biological engine — each passported, grazing the ground it feeds.',
+    description: 'About fifty Malnad Gidda as the estate’s biological engine — each passported, grazing the ground it feeds.',
     img: '/herd/images/aura-relationship2.jpg',
   },
   {
@@ -75,14 +79,14 @@ export const ACTIVE_JOURNALS: Journal[] = [
   },
   {
     href: '/rta',
-    title: 'Rta',
-    description: 'Right time, right action. The Vedic order that governs every decision on the estate.',
+    title: 'The Land Decides the Hour',
+    description: 'Waiting for the window rather than the calendar — and the buffer days a plan carries because of it.',
     img: '/journals/rta/aura-rta.jpg',
   },
   {
     href: '/fermentation',
-    title: 'Fermentation',
-    description: 'Three fermentation disciplines, one estate. Coffee, pepper, and cow dung.',
+    title: 'Controlled Decay',
+    description: 'Desired microbial activity, held to a number. Coffee, pepper and cow dung, stopped when the reading says so.',
     img: '/journals/fermentation/aura-fermentation.jpg',
   },
   {
@@ -133,8 +137,31 @@ export const ACTIVE_JOURNALS: Journal[] = [
     description: 'The lamp at the Gau Angan is lit with ghee from the herd it is lit for — the closed loop, said in one gesture.',
     img: '/aura-placeholder.svg',
   },
+  {
+    href: '/vedic',
+    title: 'Vedic Farming',
+    description: 'Knowledge older than the written word, kept alive by staying in use.',
+    img: '/aura-vedic.jpg',
+  },
+  {
+    href: '/areca',
+    title: 'The Sentinel Palm',
+    description: 'The tallest storey of the canopy, and what it does for everything beneath it.',
+    img: '/aura-areca.jpg',
+  },
+  {
+    href: '/pepper',
+    title: 'Malabar Pepper',
+    description: 'The vine that climbs the shade trees, and earns its place doing it.',
+    img: '/aura-pepper.jpg',
+  },
+  {
+    href: '/provenance',
+    title: 'Provenance',
+    description: 'Where a thing came from, with the record to prove it.',
+    img: '/aura-provenance.jpg',
+  },
 ]
-
 /** The next N journals after `currentHref`, wrapping around. Excludes
  *  the current page itself. Used by the `<Continue>` footer. */
 export function nextActiveJournals(currentHref: string | undefined, count = 3): Journal[] {

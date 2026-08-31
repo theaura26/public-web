@@ -100,7 +100,7 @@ export default function RtaPage() {
 
       <TwoCol id="herd" heading="In the herd.">
         <p className="p1">
-          Fifty-two <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle rotate through blocks timed to coffee
+          About fifty <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle rotate through blocks timed to coffee
           cherry development stages. The cattle enrich soil biology for the
           next season — but only if they are in the right block at the right
           time.
@@ -115,7 +115,7 @@ export default function RtaPage() {
         src="/journals/rta/aura-mudigere.mp4"
         mediaType="video"
         poster="/journals/rta/aura-mudigere.jpg"
-        alt="Mudigere valley rolling under monsoon light — the estate's rhythm read across a single day"
+        alt="Mudigere valley rolling under monsoon light — the estate’s rhythm read across a single day"
         caption="Mudigere — the valley keeps its own timing"
       />
 

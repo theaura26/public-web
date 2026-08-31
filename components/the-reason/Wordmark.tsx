@@ -7,7 +7,7 @@ import { useStatic } from '@/components/the-reason/Motion'
    Per-letter wordmark — each glyph (an SVG <path>) POPS in one by one, left
    to right: scales up from ~0.65 about its own centre with a small overshoot,
    while fading in. The SVG is fetched and inlined so its individual paths can
-   be staggered (an <img> can't expose its internals). The pop fires when the
+   be staggered (an <img> can’t expose its internals). The pop fires when the
    mark scrolls into view, so it works both above the fold (THE REASON) and
    below it (THE BALANCE). Degrades to fully-visible for reduced-motion / agent.
    ─────────────────────────────────────────────────────────────────────── */
@@ -43,7 +43,7 @@ export function ReasonWordmark({
 
     // collapsed start — set WITHOUT a transition so it doesn't animate on setup
     ordered.forEach(({ p }) => {
-      p.style.setProperty('transform-box', 'fill-box') // scale about each glyph's own centre
+      p.style.setProperty('transform-box', 'fill-box') // scale about each glyph’s own centre
       p.style.transformOrigin = 'center'
       p.style.transition = 'none'
       p.style.opacity = '0'

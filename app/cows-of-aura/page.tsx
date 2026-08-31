@@ -25,7 +25,7 @@ export default function CowsOfAuraPage() {
 
       <TwoCol id="premise" heading="An ear tag can fall out. A name is not a record.">
         <p className="p1">
-          Fifty-two Malnad Gidda graze these 150 acres, and the estate has always known them by
+          About fifty Malnad Gidda graze these 150 acres, and the estate has always known them by
           name. Names are how people work. They are not how a farm remembers.
         </p>
         <p className="p2">
@@ -69,7 +69,7 @@ export default function CowsOfAuraPage() {
       />
 
       <ScrollHighlight>
-        {`Fifty-two animals.\n   Fifty-two rows.\n   One number each, issued once.`}
+        {`One animal.\n   One row.\n   One number, issued once.`}
       </ScrollHighlight>
 
       <TwoCol id="role" heading="Every animal has a job written down.">
@@ -104,7 +104,7 @@ export default function CowsOfAuraPage() {
         src="/aura-placeholder.svg"
         ratio="5 / 7"
         alt="A Malnad Gidda in the shed at Sampigekhan Estate"
-        caption="Fifty-two animals, each one a row that outlives its ear tag"
+        caption="Every animal a row, and the row outlives the ear tag"
       />
 
       <TwoCol id="grazing" heading="Where they are, and how they are kept.">
@@ -118,7 +118,7 @@ export default function CowsOfAuraPage() {
           Feeding regime is recorded as grazing only, grazing with fodder, stall fed, or a
           recovery ration. Body condition is scored one to five, monthly. Health risk is carried
           as a plain flag — low, stable, watch, medium, high, critical — so an exception can be
-          found without reading fifty-two rows.
+          found without reading every row.
         </p>
         <p className="p2">
           Breed and breed type are both held, because the herd is not uniform. Malnad Gidda is

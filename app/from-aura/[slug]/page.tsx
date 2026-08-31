@@ -47,18 +47,44 @@ function product(slug: string) {
   if (!entry && !navLabel) return null
   /* A parent — Coffee, Pepper, Farm Goods — lists what sits under it.
      A reader on Coffee wants the seasons, and a paragraph about the
-     estate's philosophy is in the way of that. */
+     estate’s philosophy is in the way of that. */
+  /* Covers for the top-level products. A parent has no lane entry of
+     its own — it is a heading over seasons — so its picture is named
+     here rather than carried on an item. */
+  const COVERS: Record<string, string> = {
+    coffee: '/from-aura/coffee/coffee.webp',
+    tea: '/from-aura/tea/tea.webp',
+    pepper: '/from-aura/pepper/pepper.webp',
+    areca: '/from-aura/areca-nut/areca-nut.webp',
+    'from-the-farm': '/from-aura/farm-goods/farm-goods.webp',
+    objects: '/from-aura/objects/objects.webp',
+    experiences: '/from-aura/experiences/experiences.webp',
+  }
   const shop = SECTIONS.find((x) => x.id === 'shop')
   const parent = shop?.items.find((x) => x.href === `${PREFIX}/${slug}`)
 
   return {
     children: parent?.children ?? [],
-    title: entry?.title ?? navLabel!.split(' — ').slice(1).join(' — ') ?? navLabel!,
+    img: entry?.img ?? COVERS[slug] ?? null,
+    /* labelFor returns "Coffee" for a top-level product and "Coffee —
+       2025–26 Lots" for one of its children. Take the child half when
+       there is one, the whole label when there is not.
+
+       This was `?? navLabel!`, and `??` does not fall back on an empty
+       string — so every top-level product (Coffee, Tea, From the Farm,
+       Experiences) got a blank title and a description reading
+       " — not released yet." */
+    title: entry?.title ?? (navLabel!.split(' — ').slice(1).join(' — ') || navLabel!),
+    /* The lane's id, not its label — UNRELEASED is keyed by it. For a
+       top-level product the slug IS the lane id. */
+    laneId: entry?.lane.id ?? slug,
     lane: entry?.lane.label ?? SECTION,
     description: entry?.description ?? null,
-    /* The rest of its own lane. A buyer looking at one season of coffee
-       is more likely to want another season than a bar of soapnut. */
-    siblings: (entry?.lane.items ?? []).filter((i) => i.href !== `${PREFIX}/${slug}`),
+    /* Everything else in the shop, not just the rest of this lane. A
+       product page is the end of a path, and the lane it belongs to is
+       the one set of things the reader has already seen — showing them
+       the other four categories is the point of putting a lane here. */
+    siblings: FROM_AURA.flatMap((l) => l.items).filter((i) => i.href !== `${PREFIX}/${slug}`),
   }
 }
 
@@ -78,6 +104,49 @@ export async function generateMetadata(
   }
 }
 
+/* What "not released yet" means depends on what the thing is.
+ *
+ * One paragraph used to serve all of them, and it was written for
+ * coffee — it promised a residency "the ferment, the drying, and the lab
+ * record that closed it", which is not what a residency has. Each lane
+ * gets the sentence that is true for it. */
+const UNRELEASED: Record<string, React.ReactElement> = {
+  coffee: (
+    <p className="p1 pd-p">
+      Nothing from this harvest is released yet. When it is, this page carries what the
+      estate already keeps on it — the block it came from, the ferment, the drying, and
+      the lab record that closed the tank.
+    </p>
+  ),
+  'from-the-farm': (
+    <p className="p1 pd-p">
+      Not released yet. What the estate can spare of this depends on the season, and the
+      page will say how much there is and where on the land it came from before it says
+      a price.
+    </p>
+  ),
+  objects: (
+    <p className="p1 pd-p">
+      Not released yet. These are made in the studios on the estate, in small numbers,
+      from material the land already grows — so the run is as long as the material allows
+      and no longer.
+    </p>
+  ),
+  experiences: (
+    <p className="p1 pd-p">
+      Not open for booking yet. When it is, this page carries the dates, how many places
+      there are, and what the days actually consist of — the estate&rsquo;s working day is
+      the thing on offer, so it is described rather than dressed.
+    </p>
+  ),
+  default: (
+    <p className="p1 pd-p">
+      Not released yet. When it is, this page carries the record the estate already keeps
+      on it.
+    </p>
+  ),
+}
+
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const p = product(slug)
@@ -85,9 +154,15 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   return (
     <main className="pd">
-      <div className="section-w pd-in">
+      <div className="pd-band">
+        <div className="section-w pd-in">
         {/* 4:5, and grey until there is a photograph of the thing. */}
-        <div className="pd-plate" aria-hidden />
+        <div className="pd-plate" data-noimg={p.img ? undefined : 'true'} aria-hidden>
+          {p.img && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={p.img} alt="" loading="lazy" decoding="async" />
+          )}
+        </div>
 
         <div className="pd-body">
           <h1 className="pd-title">{p.title}</h1>
@@ -110,11 +185,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             </>
           ) : (
             <>
-              <p className="p1 pd-p">
-                Nothing from this lot is released yet. When it is, this page carries what the
-                estate already keeps on it — the block it came from, the ferment, the drying,
-                and the lab record that closed it.
-              </p>
+              {UNRELEASED[p.laneId] ?? UNRELEASED.default}
               <p className="p1 pd-p">
                 Aura publishes the record before it publishes a price, and that holds at the
                 point of sale as much as anywhere else.
@@ -125,24 +196,48 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <p className="pd-act">
             <Link className="pd-cta" href="/contact">Get in touch</Link>
           </p>
+          </div>
         </div>
       </div>
 
       {p.siblings.length > 0 && (
         <RelatedLane
-          label="More from the store"
+          label="More From Aura"
           items={p.siblings}
           ratio="4 / 5"
         />
       )}
 
       <style>{`
-        .pd { padding: calc(var(--nav-h) + var(--head-top)) 0 var(--space-9); background: var(--bg); }
+        /* Flush to the nav at every width. --head-top is air for a page
+           that opens on its title; this one opens on a full-bleed
+           picture, and the picture starts where the header stops. The
+           mobile rule below used to be the only place that was true. */
+        /* No bottom padding: the band ends where its picture ends, and
+           the lane below brings its own space. */
+        .pd { padding: var(--nav-h) 0 0; background: var(--bg); }
+
+        /* The dark belongs to the product, not to the page. The plate is
+           a photograph and the copy is short; on white the picture
+           floated, and on the inverted band the product is the only lit
+           thing. The lane below it sits back on the page's own ground. */
+        .pd-band {
+          background: var(--contrast-bg);
+          color: var(--contrast-text);
+          /* Flush. The picture reaches the top and bottom of the dark,
+             which is the point of putting it on a band rather than in a
+             box — padding here left it floating in a field of black. */
+          padding: 0;
+        }
         .pd-in {
           display: grid;
           grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
           gap: clamp(32px, 5vw, 96px);
-          align-items: start;
+          /* The column reads off the middle of the picture rather than
+             its top edge — the plate is 4:5 and the copy is four short
+             paragraphs, so top-aligning left the text stranded against a
+             tall image. */
+          align-items: center;
         }
         @media (max-width: 768px) {
           .pd-in { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
@@ -165,6 +260,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
              as an empty column. --bg-card is near-white and vanished. */
           background: #d6d6d6;
           border-radius: var(--radius-1);
+          overflow: hidden;
+        }
+        /* The grey is the drafting state, so it is painted only when
+           there is nothing over it. */
+        .pd-plate:not([data-noimg]) { background: none; }
+        .pd-plate img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
 
         /* Edge to edge on a phone: with one column there is no middle
@@ -173,10 +278,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
            the whole of it. */
         @media (max-width: 768px) {
           .pd-plate { width: calc(100% + 2 * var(--pd-rail)); }
-          /* Flush to the header line. --head-top is air for a page that
-             opens on its title; this one opens on a full-bleed picture,
-             and the picture should start where the header stops. */
-          .pd { padding-top: var(--nav-h); }
         }
 
         .pd-body { display: flex; flex-direction: column; gap: var(--space-4); }
@@ -184,28 +285,38 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           margin: 0 0 var(--space-3);
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 600; text-transform: uppercase;
-          font-size: clamp(48px, 7.2vw, 106px);
-          line-height: 1; letter-spacing: -0.03em;
-          color: var(--text); text-wrap: balance;
+          /* The h2 size, not the page-title size. These names run from
+             "Tea" to "No.1 Experimental Coffee in India", and at 106px
+             the long one broke out of its column and off the page. The
+             h2 scale holds both. */
+          font-size: clamp(32px, 5.5vw, 60px);
+          line-height: 1.06; letter-spacing: -0.03em;
+          overflow-wrap: break-word;
+          color: var(--contrast-text); text-wrap: balance;
         }
-        .pd-lede { margin: 0; color: var(--text); max-width: 42ch; }
+        .pd-lede { margin: 0; color: var(--contrast-text); max-width: 42ch; }
         /* .p1 entire — colour as well as size. Moving to the p1 size
            while keeping p2's --text-body was half a change: the text
            still read as secondary next to the line above it, which is
            the thing that was wrong in the first place. */
-        .pd-p { margin: 0; max-width: 46ch; }
+        .pd-p {
+          margin: 0; max-width: 46ch;
+          /* .p1 colours from --text, which on this inverted ground is the
+             ground itself — the paragraphs were painting dark on dark. */
+          color: var(--contrast-text-body, rgba(255, 255, 255, 0.72));
+        }
 
         /* The seasons under a parent, as a plain list. */
         .pd-list {
           list-style: none; margin: 0; padding: 0;
           display: flex; flex-direction: column;
         }
-        .pd-list li { border-top: 1px solid var(--border); }
-        .pd-list li:last-child { border-bottom: 1px solid var(--border); }
+        .pd-list li { border-top: 1px solid var(--contrast-border, rgba(255, 255, 255, 0.14)); }
+        .pd-list li:last-child { border-bottom: 1px solid var(--contrast-border, rgba(255, 255, 255, 0.14)); }
         .pd-child {
           display: block; padding: var(--space-4) 0;
           font-family: var(--font-sans); font-size: 16px; line-height: 1.55;
-          color: var(--text); text-decoration: none;
+          color: var(--contrast-text); text-decoration: none;
         }
 
         .pd-act { margin: var(--space-4) 0 0; }
@@ -214,8 +325,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         .pd-cta {
           font-family: var(--font-sans);
           font-size: 16px; line-height: 1.55; letter-spacing: normal;
-          color: var(--text); text-decoration: none;
+          color: var(--contrast-text); text-decoration: underline;
+          text-underline-offset: var(--rule-offset);
+          text-decoration-thickness: var(--rule-weight);
         }
+        .pd-cta:hover { text-decoration-color: var(--brand-accent); }
       `}</style>
     </main>
   )

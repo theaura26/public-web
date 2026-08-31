@@ -121,7 +121,16 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${instrumentSerif.variable} ${dmMono.variable} ${pixelifySans.variable} ${mynerve.variable}`}>
+    <html lang="en" className={`${bricolage.variable} ${instrumentSerif.variable} ${dmMono.variable} ${pixelifySans.variable} ${mynerve.variable}`}
+      /* The inline script below adds a `js` class to <html> while the
+         head is still parsing, which is before React hydrates. React
+         then finds an attribute it did not render and reports a
+         hydration mismatch (#418) on every page. The class is
+         deliberate — it is what lets the no-JS fallback work — so the
+         element opts out of the attribute check rather than the script
+         being removed. */
+      suppressHydrationWarning
+    >
       <head>
         {/* Two lines, before first paint, and both are about the page
             being readable rather than pretty.

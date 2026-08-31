@@ -8,7 +8,7 @@ import { FROM_AURA, type Lane } from '@/lib/from-aura'
 export type { Lane }
 
 /* ── Lanes ────────────────────────────────────────────────────────
-   A section's whole contents, one lane per group, each scrolling
+   A section’s whole contents, one lane per group, each scrolling
    sideways off the right edge. Everything is visible in a handful of
    gestures rather than one long column, and a reader who only wants one
    group never scrolls past the others.
@@ -52,7 +52,7 @@ function LaneStyles() {
            <Link>, and the cards are Links. Every selector is therefore
            nested under .sw by hand so nothing escapes this page. */
         /* A single lane at the foot of another page carries none of the
-           index page's own framing. */
+           index page’s own framing. */
         .sw.is-strip {
           min-height: 0;
           padding: var(--section-gap) 0 var(--space-8);
@@ -103,14 +103,23 @@ function LaneStyles() {
           font-family: var(--font-mono), monospace;
           font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
           line-height: normal;
-          color: var(--text-muted);
-          margin: 0; max-width: 42ch;
+          /* Page ink, like the homepage's opening lines. Muted put a
+             sentence that carries the whole section into the same weight
+             as a caption. */
+          color: var(--text);
+          margin: 0; max-width: 46ch;
         }
 
         .sw .lane-bar { padding-bottom: 0; }
         /* The lane heading stays h3. The cards beneath it stepped down
            to p1 so a card title no longer competes with the name of the
            lane it sits in. */
+        /* One line under the lane heading saying what is in it. The p1
+           class carries the type; this only places it. */
+        .sw .lane-lede {
+          margin: 6px 0 0; max-width: 56ch;
+          color: var(--text-body);
+        }
         .sw .lane-h {
           font-family: var(--font-grotesque), sans-serif; font-weight: 400;
           font-size: clamp(24px, 3vw, 32px); line-height: 1.15; letter-spacing: -0.03em;
@@ -131,27 +140,27 @@ function LaneStyles() {
           width: 100vw;
           margin-left: calc(50% - 50vw);
         }
-        /* The row dissolves off the right rather than hard-cropping —
-           the same gesture as the homepage slider and the menu's
-           bottom vignette. */
-        /* Flush to the edge, and no clipping ancestor. An overflow:hidden
-           parent gives backdrop-filter nothing to sample — the element
-           renders as a blank plate instead of a blur — so the overhang
-           that clip was there to hide had to go with it. The mask alone
-           carries the fade. */
+        /* The row dissolves off the right rather than hard-cropping.
+           A gradient to the page ground, not a backdrop blur: the blur
+           was its own promoted layer, rasterised separately, so its edge
+           never met the mask cleanly and it flickered as the lane
+           scrolled. A gradient has no layer and no edge. */
         .sw .lane-fade {
           position: absolute;
           top: 0; bottom: 0; right: 0;
           width: clamp(64px, 12vw, 200px);
           pointer-events: none;
           z-index: 2;
-          -webkit-mask-image: linear-gradient(to right, transparent, #000 55%);
-          mask-image: linear-gradient(to right, transparent, #000 55%);
+          background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0) 0%,
+            var(--bg) 92%
+          );
         }
         .sw .lane-scroll {
           overflow-x: auto;
           /* No scroll-snap. Snapping pulls the first card flush to the
-             container edge, which scrolls straight past the track's rail
+             container edge, which scrolls straight past the track’s rail
              padding and lands it at x=0 instead of on the heading. */
           padding: var(--space-4) 0 var(--space-7);
           scrollbar-width: none; -ms-overflow-style: none;
@@ -183,7 +192,11 @@ function LaneStyles() {
         /* Announced, not open. Dimmed and inert, and unlabelled — the
            same treatment the menu gives Munduk and Punakha. The stamp
            said in words what the grey already says. */
-        .sw .lane-card.is-soon { cursor: default; opacity: 0.55; }
+        /* Unreleased, not unreadable. The card is no longer dimmed as a
+             whole — that multiplied against the plate's own dimming and
+             took a photograph down to about a tenth of its opacity. The
+             muted label and the flat plate carry the meaning instead. */
+        .sw .lane-card.is-soon { cursor: default; }
 
         .sw .lane-plate {
           position: relative; display: block;
@@ -197,15 +210,22 @@ function LaneStyles() {
         }
         .sw .lane-card:hover .lane-plate img { transform: scale(1.04); }
 
+
         /* An unwritten note has no photograph — a flat plate, not an
            empty box. */
         .sw .lane-plate[data-noimg='true'] { background: var(--text-muted); opacity: 0.16; }
-        .sw .lane-card.is-soon .lane-plate {
+        /* Only the empty plate is dimmed. A plate holding a picture keeps
+           it; the photograph is the whole reason the card is worth
+           showing before the product is released. */
+        .sw .lane-card.is-soon .lane-plate[data-noimg='true'] {
           background: var(--text-muted); opacity: 0.18;
         }
 
+        /* p1, the body role. Set here rather than by adding the class to
+           the span, because the lane also animates its colour. */
         .sw .lane-t {
-          font-family: var(--font-sans); font-size: 16px; line-height: 1.55; letter-spacing: normal;
+          font-family: var(--font-sans); font-size: 16px; line-height: 1.55;
+          letter-spacing: normal; font-weight: 400;
           transition: color var(--dur-base) var(--ease);
           color: var(--text);
         }
@@ -262,30 +282,28 @@ export function Swimlanes({
               <h2 className="lane-h" id={`lane-${cat.id}`}>{cat.label}</h2>
             </div>
             {/* The rail belongs to the wrapper. A narrow max-width on
-                the same element that carries section-w's padding fights
+                the same element that carries section-w’s padding fights
                 it, and the lede lands 40px left of every other line. */}
             <div className="section-w">
               <p className="lane-lede">{cat.lede}</p>
             </div>
 
             {/* Full-bleed, so the row runs off the right edge instead of
-                stopping at the rail. The track's own padding reproduces
+                stopping at the rail. The track’s own padding reproduces
                 the rail on the left so the first card still starts on
-                the heading's line. */}
+                the heading’s line. */}
             <div className="lane-bleed">
               <div className="lane-scroll">
                 <div className="lane-track">
                   {notes.map((n) => <Card key={`${cat.id}-${n.href}`} note={n} />)}
                 </div>
               </div>
-              {/* backdrop-filter inline: styled-jsx drops it from emitted
-                  rules on this build, the same way it does for the menu
-                  vignette and the homepage slider. */}
-              <div
-                className="lane-fade"
-                aria-hidden
-                style={{ backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
-              />
+              {/* A gradient to the page ground, not a backdrop blur. The
+                  blur composited as a hard-edged rectangle over the
+                  cards — its own layer, promoted and rasterised
+                  separately, so its edge never met the mask cleanly and
+                  it flickered while the lane scrolled. */}
+              <div className="lane-fade" aria-hidden />
             </div>
           </section>
         )
@@ -320,11 +338,7 @@ export function RelatedLane({
               {items.map((n) => <Card key={n.href} note={n} />)}
             </div>
           </div>
-          <div
-            className="lane-fade"
-            aria-hidden
-            style={{ backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
-          />
+          <div className="lane-fade" aria-hidden />
         </div>
       </div>
       <LaneStyles />
@@ -351,7 +365,7 @@ export function FromAuraSwimlanes() {
   return (
     <Swimlanes
       title="From Aura"
-      lede="Three directions out of one estate — what the land grows, what the atelier makes, and what is offered to the people who buy at volume. Nothing here is for sale yet."
+      lede="What the estate grows, what its studios make, and the days it opens to people from outside it. Nothing here is for sale yet — the record is published before the price."
       lanes={FROM_AURA}
       ratio="4 / 5"
     />

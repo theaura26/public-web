@@ -117,7 +117,7 @@ Everything in **bold** is on the slide. Everything else is for the speaker and t
 
 ## 10
 
-**Fifty-two Malnad Gidda.**
+**About fifty Malnad Gidda.**
 
 *Indigenous to these hills. Grazing them for centuries before anyone thought to write it down.*
 

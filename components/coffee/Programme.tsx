@@ -44,7 +44,7 @@ const DAYS: Day[] = [
       'A hike before the light, up through all four layers to where the shade thins out.',
       'Down to the wet mill at five, before the pickers come in, to watch a fermentation being read — and to take the Brix yourself.',
       'Biodynamic agriculture from the people who actually practise it: the horn buried through winter, the fourteen compost pits, the quartz that goes in at midsummer. You bury one with your own hands.',
-      'The herd, all fifty-two Malnad Gidda, and they will meet you back.',
+      'The herd, all about fifty Malnad Gidda, and they will meet you back.',
       'The long table again, later and louder than the first one.',
     ],
   },
@@ -84,7 +84,10 @@ export function Programme() {
       <style jsx>{`
         .pg {
           background: #000; color: #fff;
-          padding: 0 0 clamp(96px, 15vh, 176px);
+          /* Air above as well as below. With no top padding the first day
+             sat flush against the rule that closes the section before it,
+             which read as the two being one block. */
+          padding: clamp(96px, 15vh, 176px) 0;
         }
 
         .pg-days {

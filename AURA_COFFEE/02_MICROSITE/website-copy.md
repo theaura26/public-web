@@ -125,7 +125,7 @@ Four stories. Silver oak and fig above. Areca and hardwood beneath. Coffee in th
 
 ## Our best farmers have four legs.
 
-Fifty-two Malnad Gidda — small, hardy, indigenous to these hills, and grazing them for centuries before anyone thought to write it down.
+About fifty Malnad Gidda — small, hardy, indigenous to these hills, and grazing them for centuries before anyone thought to write it down.
 
 They eat the same one hundred and fifty acres the coffee grows in. What they take from a block, they give back to it.
 
@@ -156,7 +156,7 @@ Health, milk and urine — logged daily. Dung — logged per herd, every morning
 ---
 
 **Caption**
-Fifty-two, on their own ground.
+About fifty, on their own ground.
 
 **Link**
 The herd, in full → theaura.life/herd

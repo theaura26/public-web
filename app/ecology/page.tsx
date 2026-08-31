@@ -18,7 +18,7 @@ import { ExpandingBanner } from '@/components/ExpandingBanner'
 
    Where herd is the animal and circular is the fertility loop, this
    page zooms out to the whole living system, above ground and below:
-   retained wood and the fungi that eat it, forest islands, the soil's
+   retained wood and the fungi that eat it, forest islands, the soil’s
    pulse, and the single Ecological Health Index that draws it all
    together. Editorial and exact — measuring what regeneration is
    actually doing, block by block.
@@ -104,8 +104,8 @@ export default function EcologyPage() {
           Where a natural forest concentrates biology in undisturbed pockets, Aura builds them on purpose.
           A <strong>forest island</strong> is a mound — roughly five metres by one, sixty centimetres high
           — of five alternating layers of green biomass and mature cow-dung compost, inoculated with the
-          herd&apos;s{' '}
-          <Term tip="Cow Pat Pit — a fermented, microbially rich compost made from the herd's dung. Used to seed a forest island with a diverse microbial community.">CPP</Term>{' '}
+          herd&rsquo;s{' '}
+          <Term tip="Cow Pat Pit — a fermented, microbially rich compost made from the herd’s dung. Used to seed a forest island with a diverse microbial community.">CPP</Term>{' '}
           and then left completely alone. No turning, no watering: a microbial sanctuary that colonises
           itself and slowly seeds the soil around it.
         </p>
@@ -154,9 +154,9 @@ export default function EcologyPage() {
           Deeper still, the estate reads the roots — the{' '}
           <Term tip="The biologically active zone around a root, where the plant trades carbon-rich exudates with fungi and bacteria.">rhizosphere</Term>{' '}
           and its{' '}
-          <Term tip="Arbuscular mycorrhizal fungi — fungi that extend the root system far beyond its own reach, trading water and nutrients for the plant's carbon. Measured as percent of root length colonised.">mycorrhizal colonisation</Term> —
+          <Term tip="Arbuscular mycorrhizal fungi — fungi that extend the root system far beyond its own reach, trading water and nutrients for the plant’s carbon. Measured as percent of root length colonised.">mycorrhizal colonisation</Term> —
           alongside water infiltration, aggregate stability, ground vegetation, decomposer insects, birds,
-          and the estate&apos;s own indigenous fungal library. Fourteen living readings of one system, each
+          and the estate&rsquo;s own indigenous fungal library. Fourteen living readings of one system, each
           taken on its own clock.
         </p>
       </TwoCol>
@@ -246,7 +246,7 @@ export default function EcologyPage() {
           litter before the fungi finish it.
         </DataCard>
         <DataCard img="/ecology/images/aura-white-mushroom-cluster.jpg" value="Indigenous fungi">
-          The estate&apos;s own fungi, surveyed and — where labs allow — cultured into a living library of
+          The estate&rsquo;s own fungi, surveyed and — where labs allow — cultured into a living library of
           Western Ghats strains.
         </DataCard>
       </DataGrid>
@@ -266,7 +266,7 @@ export default function EcologyPage() {
         items={[
           { href: '/shade', label: 'The Light Instrument', description: 'The canopy above the system — shade whiskering, measured in lux and cut to prescription.', img: '/aura-land.jpg' },
           { href: '/circular', label: 'Circular Intelligence', description: 'The fertility below it — CPP and Jeevamrit, made by hand and tested before the soil.', img: '/circular/images/aura-shed.jpg' },
-          { href: '/herd', label: 'Ecosystem Engineers', description: 'The biological engine at the centre — fifty-two Malnad Gidda, cared for by hand, each passported.', img: '/herd/images/aura-relationship2.jpg' },
+          { href: '/herd', label: 'Ecosystem Engineers', description: 'The biological engine at the centre — about fifty Malnad Gidda, cared for by hand, each passported.', img: '/herd/images/aura-relationship2.jpg' },
         ]}
       />
     </>

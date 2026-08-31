@@ -3,15 +3,18 @@ import Reveal from '@/components/RevealOnScroll'
 
 /* Privacy.
  *
- * Written the way the rest of the site is written: say what is true,
- * publish the edge of it, and do not dress an unresolved question as a
- * settled one. Every statement here was read out of the code that ships
- * — app/providers.tsx for analytics, lib/ask-aura/privacy.ts and
- * app/api/ask-aura/route.ts for the assistant — rather than out of a
- * template. Where a decision has not been made, the page says so.
+ * A functional policy, in the order these documents are normally
+ * written: what is collected, why, who it goes to, how long it is kept,
+ * and what you can ask for. Plain register rather than the site's
+ * editorial voice — someone reading this wants an answer, not prose.
  *
- * It uses the journal kit and no components of its own.
+ * Every factual statement is read out of the code that ships:
+ * app/providers.tsx for analytics, app/api/ask-aura/route.ts and
+ * lib/ask-aura/privacy.ts for the assistant. If either changes, this
+ * page changes with it.
  */
+
+const UPDATED = '31 August 2026'
 
 export default function PrivacyPage() {
   return (
@@ -19,134 +22,159 @@ export default function PrivacyPage() {
       <section style={{ paddingTop: 'calc(var(--nav-h) + var(--head-top))', paddingBottom: 'var(--head-bottom)' }}>
         <div className="section-w">
           <Reveal>
-            <h1 style={{ maxWidth: 900 }}>Privacy.</h1>
+            <h1 style={{ maxWidth: 900 }}>Privacy Policy</h1>
           </Reveal>
           <Reveal delay={120}>
             <p className="p1" style={{ maxWidth: '46ch', marginTop: 'var(--space-5)' }}>
-              What this site collects, what leaves it, and what Aura keeps. An estate that
-              publishes its soil tests should be willing to publish this too.
+              How this website handles your data. Last updated {UPDATED}.
             </p>
           </Reveal>
         </div>
       </section>
 
-      <TwoCol id="short" heading="The short version.">
+      <TwoCol id="summary" heading="Summary">
         <p className="p1">
-          You can read every page here without telling us anything. Nothing on this site asks
-          you to make an account, and nothing is sold to anyone.
+          You can read this site without giving us any personal information. There are no
+          accounts, and we do not sell or share data with advertisers.
         </p>
         <p className="p1">
-          Two things do collect data. Analytics, which measures how the site is used. And Ask
-          Aura, the assistant, which sends your question to a model run by OpenAI in order to
-          answer it. Both are described below in the detail they deserve.
-        </p>
-      </TwoCol>
-
-      <TwoCol id="analytics" heading="Analytics.">
-        <p className="p1">
-          The site uses PostHog. It runs only on the live site — a developer working locally
-          sends nothing. Requests go through a path on this domain rather than straight to
-          PostHog, so an ad blocker will usually not see them; that is a reliability choice, and
-          it is fair that you know about it.
+          Two things collect data: analytics, which measures how the site is used, and Ask
+          Aura, which sends your question to OpenAI to generate an answer. Both are described
+          below.
         </p>
       </TwoCol>
 
-      <SpecTable
-        title="What analytics records"
-        rows={[
-          { label: 'Pages', value: 'Every page you visit, and whether you read the human or the agent view' },
-          { label: 'Clicks', value: 'Interactions across the site, captured automatically' },
-          { label: 'Session replay', value: 'A recording of your visit, with every form field masked' },
-          { label: 'Errors', value: 'What the site throws, so it can be fixed' },
-          { label: 'A profile', value: 'Held in a cookie and in local storage, linking your visits together' },
-        ]}
-        note="The profile is the row worth pausing on: it means return visits are recognised as the same visitor. Clearing your browser's cookies and site data for this domain ends that, and a browser set to block third-party storage will limit it further."
-      />
-
-      <TwoCol id="ask" heading="Ask Aura.">
+      <TwoCol id="who" heading="Who we are">
         <p className="p1">
-          The assistant answers questions about the estate. To do that, your question is sent to
-          OpenAI, which runs the model that writes the answer. It travels with a set of passages
-          from this site and nothing about you.
-        </p>
-        <p className="p1">
-          Your question is never sent to analytics. That is a deliberate piece of engineering
-          rather than a promise: a free-text box collects whatever a person types, including the
-          things you asked them not to type, and no filter can prove a string is clean. So no
-          free text leaves that module at all. What is recorded instead is the shape of the
-          question — its topic, whether an answer was found — and the panel itself is excluded
-          from click capture and from session recording, so your typing is not in the replay
-          either.
-        </p>
-        <p className="p1">
-          The conversation you can see in the panel is held in your own browser, not on a server.
-          Clearing it clears it. To limit abuse, the number of questions from one address is
-          counted for a short period; that count lives in memory and disappears when the server
-          restarts.
+          This site is operated by Aura. For any privacy question, or to make any of the
+          requests described below, write to{' '}
+          <a href="mailto:hello@theaura.life">hello@theaura.life</a>.
         </p>
       </TwoCol>
 
       <SpecTable
-        title="What goes where"
+        title="What we collect"
         rows={[
-          { label: 'Pages, clicks, replays', value: 'PostHog' },
-          { label: 'Your question to the assistant', value: 'OpenAI' },
-          { label: 'The topic of your question', value: 'PostHog, without the text' },
-          { label: 'Your conversation history', value: 'Your browser only' },
-          { label: 'Anything at all', value: 'Never sold, never brokered' },
+          { label: 'Usage data', value: 'Pages visited, clicks, and errors — collected automatically by analytics' },
+          { label: 'Session recordings', value: 'A replay of your visit. All form and text inputs are masked' },
+          { label: 'Device data', value: 'Browser type, screen size, approximate location from IP, and referring page' },
+          { label: 'Assistant questions', value: 'The text of questions you type into Ask Aura' },
+          { label: 'Email', value: 'Your name, address and message, if you contact us' },
         ]}
-        note="Both are processors acting on Aura's instructions. Each keeps its own privacy terms, and this page does not override them."
+        note="We do not collect payment details, and we do not ask you to create an account."
       />
 
-      <TwoCol id="email" heading="If you write to us.">
+      <TwoCol id="why" heading="Why we collect it">
         <p className="p1">
-          The contact form and the address on this site reach a mailbox Aura reads. What you send
-          is kept as long as the conversation is useful and is not added to a marketing list. If
-          you would like it deleted, ask, and it will be.
+          Usage data and session recordings are used to understand which pages are read and to
+          find things that are broken. Assistant questions are used to generate an answer and
+          to see which topics are being asked about. Email is used to reply to you.
+        </p>
+        <p className="p1">
+          Where the law requires a basis for processing, ours is legitimate interest in
+          operating and improving the site, and for email, taking steps at your request.
         </p>
       </TwoCol>
 
-      <TwoCol id="rights" heading="What you can ask for.">
+      <TwoCol id="analytics" heading="Analytics">
         <p className="p1">
-          You can ask what is held about you, ask for it to be corrected, ask for it to be
-          deleted, and object to it being collected at all. Write to{' '}
-          <a href="mailto:hello@theaura.life">hello@theaura.life</a> and say which. There is no
-          form to fill in and no account to close.
+          We use PostHog, hosted in the European Union. It runs only on the live site. Analytics
+          requests are routed through a path on this domain rather than directly to PostHog,
+          which means an ad blocker will usually not block them.
         </p>
         <p className="p1">
-          Depending on where you live, some of those are rights rather than courtesies. Aura
-          treats them the same way either way.
+          PostHog assigns you an identifier so that repeat visits are recognised as the same
+          visitor. This site sets no cookies; the identifier is stored in your browser&rsquo;s
+          local storage. Clearing site data for this domain removes it.
         </p>
       </TwoCol>
 
-      <OneCol id="unsettled" heading="What is not settled yet.">
+      <TwoCol id="assistant" heading="Ask Aura">
         <p className="p1">
-          Two things on this page are honest gaps rather than decisions, and it is better to
-          publish them than to write around them.
+          Ask Aura answers questions about the estate. Your question is sent to OpenAI, together
+          with passages from this site, in order to generate an answer. It is not sent with any
+          identifier for you.
         </p>
         <p className="p1">
-          <strong>How long analytics data is kept.</strong> Aura has not set a retention period.
-          Until it does, the data sits under the analytics provider&rsquo;s own default, which is
-          not a period Aura chose. A period will be set and stated here.
+          The text of your question is never sent to analytics. The assistant panel is excluded
+          from click tracking and from session recording, so what you type does not appear in a
+          replay. Analytics receives only the topic of the question and whether an answer was
+          found.
         </p>
         <p className="p1">
-          <strong>Consent for non-essential cookies.</strong> This site sets an analytics cookie
-          and records sessions without asking first. Where you are reading from may require it to
-          ask. That is being resolved, and until it is, the paragraph above tells you how to opt
-          out by hand.
+          Your conversation history is stored in your browser, not on our servers. Clearing it
+          removes it. We count requests per IP address for a short period to limit abuse; that
+          count is held in memory and is not stored.
+        </p>
+      </TwoCol>
+
+      <SpecTable
+        title="Who receives your data"
+        rows={[
+          { label: 'PostHog', value: 'Usage data, session recordings, device data. Hosted in the EU' },
+          { label: 'OpenAI', value: 'The text of questions asked through Ask Aura' },
+          { label: 'Vercel', value: 'Hosting. Serves the site and processes requests to it' },
+          { label: 'Advertisers, brokers', value: 'None. We do not sell or share data for advertising' },
+        ]}
+        note="These providers act on our instructions and under their own privacy terms. Data may be processed outside your country, including in the United States."
+      />
+
+      <TwoCol id="cookies" heading="Cookies and local storage">
+        <p className="p1">
+          This site sets no cookies. It does store data in your browser&rsquo;s local storage:
+          the analytics identifier described above, and your theme and view preferences.
+        </p>
+        <p className="p1">
+          Analytics and session recording currently start when the page loads, without asking
+          you first. Some jurisdictions treat local storage the way they treat cookies and
+          require consent for this. We have not yet added a consent step. In the meantime,
+          clearing site data for this domain removes what is stored, and browser
+          &ldquo;do not track&rdquo; settings are not currently acted on.
+        </p>
+      </TwoCol>
+
+      <TwoCol id="retention" heading="How long we keep it">
+        <p className="p1">
+          Email is kept for as long as the conversation is useful, and is not added to a
+          marketing list.
+        </p>
+        <p className="p1">
+          For analytics data we have not set our own retention period, so it is held under
+          PostHog&rsquo;s defaults rather than a period we chose. When we set one, it will be
+          stated here.
+        </p>
+      </TwoCol>
+
+      <TwoCol id="rights" heading="Your rights">
+        <p className="p1">
+          Depending on where you live, you may have the right to access the data we hold about
+          you, to have it corrected or deleted, to object to or restrict how it is used, and to
+          receive a copy of it. You also have the right to complain to your local data
+          protection authority.
+        </p>
+        <p className="p1">
+          To make any of these requests, email{' '}
+          <a href="mailto:hello@theaura.life">hello@theaura.life</a> and say what you want. There
+          is no form and no account to close. We will respond within one month.
+        </p>
+      </TwoCol>
+
+      <TwoCol id="children" heading="Children">
+        <p className="p1">
+          This site is not directed at children and we do not knowingly collect data from
+          anyone under 16. If you believe we have, write to us and we will delete it.
+        </p>
+      </TwoCol>
+
+      <OneCol id="changes" heading="Changes to this policy">
+        <p className="p1">
+          We update this page when what it describes changes. The date at the top shows when it
+          was last updated. There is no notification and no archive of previous versions.
+        </p>
+        <p className="p1">
+          Questions: <a href="mailto:hello@theaura.life">hello@theaura.life</a>.
         </p>
       </OneCol>
-
-      <TwoCol id="changes" heading="Changes.">
-        <p className="p1">
-          When this page changes, it changes here. There is no notification and no version
-          history — the current text is what is true today, which is the same standard the rest
-          of the site is held to.
-        </p>
-        <p className="p1">
-          Questions about any of it: <a href="mailto:hello@theaura.life">hello@theaura.life</a>.
-        </p>
-      </TwoCol>
     </main>
   )
 }

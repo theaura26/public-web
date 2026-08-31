@@ -37,7 +37,7 @@ ledger records what the site currently says and what backs it.
 
 | Claim | Where | Source | Confidence |
 |---|---|---|---|
-| 52 Malnad Gidda cattle | `/herd`, `/reason/agroculture` | Herd register, ear tags | Estate record |
+| ~50 Malnad Gidda cattle | `/herd`, `/regenerative-life/the-plantation` | Herd register, ear tags | Estate record — published as an approximation on purpose: a herd is a living population and an exact figure implies a census date the site does not carry |
 | Malnad Gidda is an indigenous Karnataka breed of these hills | `/herd`, `/circular` | Breed literature | External — NBAGR breed registry |
 | Per-animal record: health, milk, urine daily; dung per herd each morning | `/herd`, `/cows-of-aura` | Herd records | Estate record |
 | Cow ID is stable for life, independent of the ear tag | `/cows-of-aura` | `Aura_Brain_Cow_Base_Data.xlsm`, data-discipline sheet | Estate record — the register is a designed schema, partially populated |

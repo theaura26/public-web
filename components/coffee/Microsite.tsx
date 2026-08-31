@@ -147,7 +147,7 @@ export function MicroNav() {
       <style jsx global>{`
         /* Above the fold the header rides transparent on the hero, its
            marks forced light so they read against the black ground.
-           Below the fold it becomes the site's own themed bar — day or
+           Below the fold it becomes the site’s own themed bar — day or
            night — and peekaboos: away on the way down, back on the way up. */
         .aura-nav {
           transition: transform var(--dur-base) var(--ease),
@@ -207,6 +207,8 @@ export function MicroNav() {
         /* Persistent: always on screen. It sits under the main bar, and
            rides up to the viewport top while that bar is hidden. */
         .ln {
+          /* Above the chapter backdrop, which is fixed at z-index 0. */
+          position: relative; z-index: 1;
           /* 39, deliberately: the hamburger's backdrop is z-40 and the
              site bar and menu panel are z-50. At 40 this bar tied with
              the backdrop, won on DOM order, and showed through the strip
@@ -445,15 +447,13 @@ export function Panel({
 
       <style jsx>{`
         .p {
-          position: relative;
+          position: relative; z-index: 1;
           min-height: 100svh;
           display: flex; align-items: center;
           padding: calc(var(--nav-h) + var(--space-9)) 0 var(--space-9);
           background: #000; color: #fff;
-          border-top: 1px solid rgba(255, 255, 255, 0.08);
           overflow: hidden;
         }
-        .p:first-child { border-top: 0; }
         .p-bg { position: absolute; inset: 0; }
         .p-bg :global(.m-media) {
           width: 100%; height: 100%; object-fit: cover; display: block;
@@ -1066,6 +1066,8 @@ export function Closing({ children }: { children: string }) {
       </div>
       <style jsx>{`
         .cl {
+          /* Above the chapter backdrop, which is fixed at z-index 0. */
+          position: relative; z-index: 1;
           display: flex; align-items: center;
           background: #000;
           padding: clamp(112px, 18vh, 216px) 0;
@@ -1117,9 +1119,10 @@ export function LoopDiagram({
 
       <style jsx>{`
         .ld {
+          /* Above the chapter backdrop, which is fixed at z-index 0. */
+          position: relative; z-index: 1;
           background: #000; color: #fff;
           padding: clamp(104px, 16vh, 196px) 0;
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
         .ld-ring {
           position: relative;
@@ -1204,6 +1207,8 @@ export function Banner({
 
       <style jsx>{`
         .bn {
+          /* Above the chapter backdrop, which is fixed at z-index 0. */
+          position: relative; z-index: 1;
           min-height: 88svh;
           display: flex; align-items: center;
           background: #000; color: #fff;
@@ -1332,7 +1337,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     },
     biodynamic: {
       title: 'What the record is recording.',
-      sub: 'Fifty-two cattle, fourteen numbered pits, and a canopy cut to a light reading instead of a feeling.',
+      sub: 'About fifty cattle, fourteen numbered pits, and a canopy cut to a light reading instead of a feeling.',
       cta: 'Better Ground',
     },
     hub: {
@@ -1344,7 +1349,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
   experience: {
     biodynamic: {
       title: 'What you would be standing in.',
-      sub: 'Fifty-two cattle, a closed loop, and a canopy cut to a light reading instead of a feeling.',
+      sub: 'About fifty cattle, a closed loop, and a canopy cut to a light reading instead of a feeling.',
       cta: 'Better Ground',
     },
     transparency: {
@@ -1366,7 +1371,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
   flavour: {
     biodynamic: {
       title: 'It started in the ground.',
-      sub: 'Fifty-two cattle, a closed loop, and a canopy cut to a number.',
+      sub: 'About fifty cattle, a closed loop, and a canopy cut to a number.',
       cta: 'Better Ground',
     },
     transparency: {
@@ -1383,6 +1388,16 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
 }
 
 /** The three hand-offs that close every page, in reading order. */
+/* The first photograph of each chapter, so a crosslink shows the place
+   it leads to rather than an empty plate. */
+const BANNER_THUMB: Record<PageKey, string | undefined> = {
+  hub: '/regenerative-coffee/overview/aura-regenerative-coffee.webp',
+  biodynamic: '/regenerative-coffee/better-ground/aura-closed-loop-01.webp',
+  flavour: '/regenerative-coffee/flavours/aura-cherry-morning.webp',
+  transparency: '/regenerative-coffee/transparency/aura-signing-field.webp',
+  experience: undefined,
+}
+
 export function NextBanners({ from }: { from: PageKey }) {
   return (
     <>
@@ -1396,6 +1411,8 @@ export function NextBanners({ from }: { from: PageKey }) {
             sub={copy.sub}
             cta={copy.cta}
             href={PAGE_HREF[k]}
+            src={BANNER_THUMB[k]}
+            alt=""
           />
         )
       })}
@@ -1424,6 +1441,8 @@ export function ReserveBanner() {
       </div>
       <style jsx>{`
         .rb {
+          /* Above the chapter backdrop, which is fixed at z-index 0. */
+          position: relative; z-index: 1;
           display: flex; align-items: center;
           padding: clamp(128px, 20vh, 240px) 0;
           background: var(--brand-accent); color: #1d0f05;
@@ -1592,19 +1611,23 @@ export function Scene({
       </div>
 
       <style jsx>{`
+        /* Transparent, not black. A chapter carries one fixed backdrop
+           that dissolves between photographs as the scenes scroll over
+           it (components/coffee/ChapterBackdrop.tsx); a black ground here
+           would sit on top of it and hide the whole thing. */
         .sc {
-          position: relative; min-height: 100svh;
+          position: relative; z-index: 1; min-height: 100svh;
           display: flex; align-items: flex-end;
           padding: 0 0 clamp(72px, 12vh, 144px);
           background: #000; color: #fff; overflow: hidden;
         }
-        /* A scene with no picture yet is simply black — the words carry it.
+        /* A scene never carries its own picture now — the chapter's
+           backdrop is behind all of them. This only governs the balance:
            Bottom-weighting exists to keep text off a photograph; with no
            photograph it only throws the page out of balance, so a blank
            scene centres instead and takes equal space above and below.
            That is what makes the chapter cards sit evenly between them. */
         .is-blank {
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
           align-items: center;
           padding: clamp(72px, 12vh, 144px) 0;
         }
@@ -1685,10 +1708,11 @@ export function Chapter({
         /* Symmetric padding rather than a min-height, so the space above
            and below is identical however many lines the card runs to. */
         .ch {
+          /* Above the chapter backdrop, which is fixed at z-index 0. */
+          position: relative; z-index: 1;
           display: flex; align-items: center; justify-content: center;
           padding: clamp(128px, 21vh, 248px) 0;
           background: #000; color: #fff; text-align: center;
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
         .ch.is-tight { padding-bottom: clamp(40px, 6vh, 72px); }
         .ch-h {

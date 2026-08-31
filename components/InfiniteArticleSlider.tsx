@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 /* ═══════════════════════════════════════════════════════════════════
    ARTICLE SLIDER — a left-anchored, horizontally-scrollable row of the
-   estate's editorials, under a small section label.
+   estate’s editorials, under a small section label.
 
    The first card is the anchor (larger); the rest follow in a row that
    runs off the right edge and scrolls. Vertical mouse-wheel is mapped to

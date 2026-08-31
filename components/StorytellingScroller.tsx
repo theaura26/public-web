@@ -15,7 +15,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
    rather than scrolling away with the first frame.
 
    The change is a cross-dissolve THROUGH BLACK, which is what the dark
-   ground is for. Across each frame's screen of scroll the outgoing
+   ground is for. Across each frame’s screen of scroll the outgoing
    frame falls away while the incoming one comes up, and the two cross
    at about a quarter each — so you never see a ghosted double exposure,
    you see one image sink into the dark and the next rise out of it.
@@ -199,7 +199,7 @@ export function StorytellingScroller({
         }
         .story2__layer { position: absolute; inset: 0; }
         /* Pre-hydration the stack is opaque and the last frame would win.
-           GSAP's inline autoAlpha overrides this the moment it runs. */
+           GSAP’s inline autoAlpha overrides this the moment it runs. */
         .story2__layer:not(:first-child) { opacity: 0; visibility: hidden; }
         .story2__layer :global(video),
         .story2__layer :global(img) {

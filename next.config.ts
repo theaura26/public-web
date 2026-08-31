@@ -3,9 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* Note: previous versions pinned `turbopack: { root: path.resolve(__dirname) }`
      to silence a workspace-root warning during local `next dev`. But
-     `__dirname` is a CommonJS global — undefined in Vercel's ESM
+     `__dirname` is a CommonJS global — undefined in Vercel’s ESM
      module loader — and `path.resolve(undefined)` throws, which is
-     exactly what's been failing every prod deploy since PR #16. The
+     exactly what’s been failing every prod deploy since PR #16. The
      fix lives in PR #13 (and is being re-applied here). If the
      workspace-root warning returns and starts mattering, swap to
      ESM-safe `path.dirname(fileURLToPath(import.meta.url))`. */
@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
      designing. Production builds never render it. */
   devIndicators: false,
   /* Next 16 only honours qualities declared here — anything else is
-     ignored with a warning at request time. /brand's slide deck asks for
+     ignored with a warning at request time. /brand’s slide deck asks for
      78, so declare it alongside the 75 default rather than let ~90 images
      silently fall back. */
   images: { qualities: [75, 78] },
@@ -36,17 +36,17 @@ const nextConfig: NextConfig = {
      ranking signals across rather than serving a 404. */
   async redirects() {
     return [
-      { source: '/studios', destination: '/atelier', permanent: true },
+      { source: '/studios', destination: '/regenerative-life/artistry', permanent: true },
     ]
   },
   /* No redirect from /mudigere-estate → /mudigere: they are intentionally
      separate pages for different audiences. /mudigere is the public flagship
-     (indexed, in the sitemap); /mudigere-estate is the architect's briefing,
+     (indexed, in the sitemap); /mudigere-estate is the architect’s briefing,
      reached by direct URL only (noindex, not in the sitemap). */
   /* Belt-and-braces on the noindex meta the signature page already carries:
      an X-Robots-Tag header, so crawlers are told noindex at the HTTP level
      too. The path is deliberately NOT disallowed in robots.txt — a blocked
-     crawler can't read the noindex, which is what actually keeps it out. */
+     crawler can’t read the noindex, which is what actually keeps it out. */
   async headers() {
     const isPreview = process.env.VERCEL_ENV === 'preview';
     return [

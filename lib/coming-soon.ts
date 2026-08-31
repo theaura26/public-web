@@ -14,7 +14,7 @@ export function guardComingSoon() {
 }
 
 /* Shared robots fragment for coming-soon page metadata. Spread into
-   each layout's `metadata` export:
+   each layout’s `metadata` export:
 
      export const metadata: Metadata = {
        title: '…',

@@ -8,7 +8,7 @@ import { Programme } from '@/components/coffee/Programme'
 export const metadata: Metadata = {
   title: 'Aura Festival — Regenerative Coffee',
   description:
-    'Three days on the estate at Mudigere — the wet mill at five, the lab bench, the blocks and the cupping table. November or December, in small groups, and you go home with a lot of your own.',
+    'Three days at Mudigere — the wet mill at five, the lab bench, the blocks and the cupping table. November or December, small groups, and a lot of your own.',
   alternates: { canonical: '/regenerative-coffee/experience' },
 }
 

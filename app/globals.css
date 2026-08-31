@@ -497,6 +497,11 @@ p.journal-hero__caption {
 [data-view="agent"] main .expanding-banner-wrap,
 [data-view="agent"] main .expanding-banner-inner,
 [data-view="agent"] main .expanding-banner-card,
+/* Regenerative Coffee's chapter backdrop — a fixed stack of photographs
+   behind the scenes. Its frames are already covered by `main img` and
+   `main video` above; this takes the wrapper and its scrim, which would
+   otherwise flatten into a black block in the text view. */
+[data-view="agent"] main .cb,
 /* Crossfade scroller — the runs of decorative full-bleed banners and the
    wordmark / film-play overlay held over the length of a run. */
 [data-view="agent"] main .story2__run,
@@ -2255,3 +2260,21 @@ html.lenis, html.lenis body { height: auto; }
 
 /* closing */
 .rm-portrait { max-width: 68%; margin: 0 auto; aspect-ratio: 430 / 506; } /* match desktop closing crop */
+
+
+/* ── Regenerative Coffee: the chapter backdrop ───────────────────────
+   A chapter carries one fixed layer of photographs behind its scenes
+   (components/coffee/ChapterBackdrop.tsx). The microsite's sections
+   paint their own black, which is right on every page that has no
+   backdrop — the Festival page among them — and wrong on the four that
+   do, where it sits on top of the pictures and hides them.
+
+   So the component marks the document and only then do the grounds step
+   aside. Scoping this was not optional: transparent everywhere left the
+   Festival page as white text on a white body. */
+/* .cl, .bn and .rb are deliberately absent: they sit after the last
+   scene, where the backdrop has already faded, and a transparent ground
+   there is white text on the white body. */
+[data-rc-backdrop] :is(.sc, .p, .ch, .ld, .lots, .bx) {
+  background: transparent !important;
+}

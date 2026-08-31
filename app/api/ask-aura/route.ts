@@ -24,7 +24,7 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 /* Generous for a question, far below anything that could be used to
-   make the server do work on an attacker's behalf. */
+   make the server do work on an attacker’s behalf. */
 const MAX_BODY_BYTES = 32 * 1024
 
 const CHAT_MODEL = 'gpt-4.1'
@@ -34,7 +34,7 @@ const SUGGEST_MODEL = 'gpt-4.1-nano'
    editorial act, not a deploy.
    Cached for the life of the process in production, and deliberately not
    cached in development: editing the prompt and seeing no change is a
-   trap worth an hour of anyone's afternoon, and the read is a few
+   trap worth an hour of anyone’s afternoon, and the read is a few
    kilobytes off local disk. */
 let promptCache: string | null = null
 async function systemPrompt(): Promise<string> {

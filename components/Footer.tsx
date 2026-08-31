@@ -62,11 +62,24 @@ export default function Footer() {
           </div>
           <div className="footer-col-4">
             <p className="label" style={{ marginBottom: 'var(--space-4)' }}>Locations</p>
-            <div className="flex flex-wrap gap-6">
+            {/* Three across, two below. Five clocks wrapping freely made a
+                row of four and a widow; a fixed three-column grid gives
+                the block a shape. */}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, minmax(0, max-content))',
+                gap: 'var(--space-5) var(--space-6)',
+                justifyContent: 'start',
+              }}
+            >
               {[
                 { city: 'SGP', tz: 'Asia/Singapore' },
                 { city: 'IND', tz: 'Asia/Kolkata' },
                 { city: 'BTN', tz: 'Asia/Thimphu' },
+                /* Munduk sits in Bali, which keeps Central Indonesian
+                   time — Asia/Makassar, not Asia/Jakarta. */
+                { city: 'IDN', tz: 'Asia/Makassar' },
                 { city: 'JPN', tz: 'Asia/Tokyo' },
               ].map((loc) => (
                 <div key={loc.city} className="flex flex-col items-center" style={{ gap: 'var(--space-2)' }}>
@@ -80,7 +93,7 @@ export default function Footer() {
               clocks, which is where it belongs when the footer is a
               list. On four columns it is placed back into column one and
               aligned to the foot of the row, level with the clocks and
-              on the manifesto's left edge. */}
+              on the manifesto’s left edge. */}
           <Link href="/privacy" className="label footer-privacy">Privacy Policy</Link>
         </div>
 
@@ -117,7 +130,7 @@ export default function Footer() {
              lives in globals.css. See DESIGN-SYSTEM.md section 13. */
           /* The column stretches to the row height, so space-between
              holds the title block at the top and drops the legal link to
-             the foot — level with the clocks, on the manifesto's own
+             the foot — level with the clocks, on the manifesto’s own
              left edge. */
 
           .footer-manifesto-title {

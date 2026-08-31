@@ -72,7 +72,7 @@ export default function ArtistryPage() {
           remains could not be cut further without breaking.
         </p>
         <p className="p1">
-          The estate teaches this before the studio does. A kiln burns the canopy&apos;s own offcuts
+          The estate teaches this before the studio does. A kiln burns the canopy&rsquo;s own offcuts
           and nothing flown in. A dye vat takes its heat from the kitchen. A ledger is written for
           this soil by the person who will keep it running. Every one of them carries the same
           lesson: use what is already here, and take away the rest. This is a skill of the present —
@@ -127,7 +127,7 @@ export default function ArtistryPage() {
       <ScrollHighlight>
         {`Start with more than you need.
          Take away what the world already does.
-         Take away what the next hand can't keep.
+         Take away what the next hand can’t keep.
          What remains is the work.`}
       </ScrollHighlight>
 
@@ -137,7 +137,7 @@ export default function ArtistryPage() {
           the hands and needs no thought.
         </DataCard>
         <DataCard value="Ha 破">
-          Adapt it, once the form is in the body: local oxides, this soil&apos;s clay, a system
+          Adapt it, once the form is in the body: local oxides, this soil&rsquo;s clay, a system
           written for this estate and no other.
         </DataCard>
         <DataCard value="Ri 離">
@@ -171,7 +171,7 @@ export default function ArtistryPage() {
       <Fragment key="a1">
       <DataGrid cols={3} standalone rule>
         <DataCard img="/artistry/images/aura-painted-frog-tin.jpg" value="Painted by hand">
-          Salvaged tin, painted by hand with the estate&apos;s own fauna — a frog, a flower, a bird read
+          Salvaged tin, painted by hand with the estate&rsquo;s own fauna — a frog, a flower, a bird read
           straight from the canopy — then returned to the trees exactly where it was found. Nothing is
           bought new: the material is already here, and the work simply gives it a second life in the
           open air.

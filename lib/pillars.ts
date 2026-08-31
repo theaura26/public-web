@@ -1,9 +1,15 @@
-/* Natural Intelligence, and the three things it is practised as.
+/* Natural Intelligence, and what it is practised as.
  *
- * The Reason argues the idea; these pages say what the idea does on a
- * Tuesday. Same shape as lib/disciplines.ts and rendered by the same
- * component, because a reader moving from Agroculture to Biodynamic
- * should not feel they have changed websites.
+ * These had pages of their own under /reason. They no longer do:
+ * Natural Intelligence opens the Aura Intelligence chapter and
+ * Agroculture opens The Plantation, both composed off this file by
+ * lib/chapters.ts. Hospitality is gone from here entirely — it moved
+ * into app/regenerative-life/sanctuary-and-stay/page.tsx as prose,
+ * because that page is written rather than generated.
+ *
+ * Same shape as lib/disciplines.ts and rendered by the same component,
+ * because a reader moving from Agroculture to Biodynamic should not
+ * feel they have changed websites.
  *
  * Held to AURA_COFFEE/01_STRATEGY/claims-and-proof.md like everything
  * else: facts stated plainly, readings published as readings, and
@@ -64,9 +70,9 @@ export const PILLARS: Pillar[] = [
           'It runs through three studios and the places they work in. Each takes the same posture into a different material.',
         ],
         tiles: [
-          { value: 'Agroculture', note: 'Works it into 150 acres — canopy read in lux, fertility made on the estate, every event signed. [Agroculture](/reason/agroculture).' },
-          { value: 'Hospitality', note: 'Builds the rooms where a person can meet it, and runs them on the same clock as the farm. [Hospitality](/reason/hospitality).' },
-          { value: 'The Atelier', note: 'The taste layer: what is worth making at all, and what is good enough to leave here carrying the name. [The Atelier](/atelier).' },
+          { value: 'Agroculture', note: 'Works it into 150 acres — canopy read in lux, fertility made on the estate, every event signed. [Agroculture](/regenerative-life/the-plantation).' },
+          { value: 'Hospitality', note: 'Builds the rooms where a person can meet it, and runs them on the same clock as the farm. [Hospitality](/regenerative-life/sanctuary-and-stay).' },
+          { value: 'The Atelier', note: 'The taste layer: what is worth making at all, and what is good enough to leave here carrying the name. [The Atelier](/regenerative-life/artistry).' },
         ],
       },
       {
@@ -98,8 +104,8 @@ export const PILLARS: Pillar[] = [
       },
     ],
     related: [
-      { label: 'Why Aura?', href: '/reason' },
-      { label: 'The Atelier', href: '/atelier' },
+      { label: 'Why Aura?', href: '/regenerative-life/the-reason' },
+      { label: 'The Atelier', href: '/regenerative-life/artistry' },
       { label: 'The Moral Spine', href: '/wisdom' },
     ],
   },
@@ -109,7 +115,7 @@ export const PILLARS: Pillar[] = [
     slug: 'agroculture',
     lede: 'Farming as though the land has to be worth more in a century.',
     hero: { type: 'Aerial · 150 acres at first light', caption: 'Sampigekhan Estate, Mudigere, at 3,600 ft in the Western Ghats' },
-    plate: { type: 'Portrait · animal · the herd going out at dawn', caption: 'Fifty-two Malnad Gidda on the ground the coffee grows in' },
+    plate: { type: 'Portrait · animal · the herd going out at dawn', caption: 'About fifty Malnad Gidda on the ground the coffee grows in' },
     breaker: { caption: 'A hundred and fifty acres, tended in decades', alt: 'The estate at Mudigere seen from the ridge' },
     quote: 'We do not buy fertility. We keep the animals that make it.',
     movements: [
@@ -124,10 +130,10 @@ export const PILLARS: Pillar[] = [
       {
         heading: 'Fertility is made here.',
         lines: [
-          'Fifty-two Malnad Gidda graze the ground the coffee grows in, and their dung becomes the biodynamic preparations and the Vedic brews — BD 500 through 508, Jeevamrit, Panchgavya, Beejamrit, cow pat pit, Kunapjal. All of it is brewed here, from here.',
+          'About fifty Malnad Gidda graze the ground the coffee grows in, and their dung becomes the biodynamic preparations and the Vedic brews — BD 500 through 508, Jeevamrit, Panchgavya, Beejamrit, cow pat pit, Kunapjal. All of it is brewed here, from here.',
           'The loop that is closed is the fertility loop. Fuel, tools, packaging and labour come from outside, so the estate is described as closed on fertility rather than closed outright.',
         ],
-        after: { kind: 'plate', type: 'Process · the herd going out at dawn', caption: 'Fifty-two Malnad Gidda, grazing the ground the coffee grows in', ratio: '16 / 9' },
+        after: { kind: 'plate', type: 'Process · the herd going out at dawn', caption: 'About fifty Malnad Gidda, grazing the ground the coffee grows in', ratio: '16 / 9' },
       },
       {
         heading: 'Measured before, measured after.',
@@ -152,56 +158,4 @@ export const PILLARS: Pillar[] = [
       { label: 'The Land', href: '/land' },
     ],
   },
-  {
-    id: 'hospitality',
-    label: 'Hospitality',
-    slug: 'hospitality',
-    lede: 'Places that hold the right kind of attention.',
-    hero: { type: 'Architecture · a room open to the mist', caption: 'Morning at Mudigere, with nothing on the calendar' },
-    plate: { type: 'Landscape · Asa. Niwa. at Ohara', caption: 'The second sanctuary, an hour north of Kyoto' },
-    breaker: { caption: 'Nobody owns a mountain. You arrive as its guest', alt: 'Mist over the ridge at Mudigere' },
-    quote: 'Morning mist. Nothing on the calendar. A cup of coffee that grew within sight of where you slept.',
-    movements: [
-      {
-        heading: 'Places that hold the right kind of attention.',
-        lines: [
-          'Aura builds and runs sanctuaries. Two are open: Aura Estate at Mudigere, a working coffee farm in the Western Ghats, and Asa. Niwa. at Ohara, an hour north of Kyoto.',
-          'The work is the room and everything under it — architecture, kitchen, the residency programme, and the operations that keep all three running for decades. The soil under the building is part of the brief.',
-        ],
-        after: { kind: 'banner', type: 'Architecture · a room open to the mist', caption: 'Morning at Mudigere, with nothing on the calendar', ratio: '16 / 9' },
-      },
-      {
-        heading: 'The working day, as it happens.',
-        lines: [
-          'What a guest gets is the day the estate was going to have anyway. The barrels being stirred at dawn, the herd going out, the lamp lit at the Gau Angan before anyone starts.',
-          'The room sits in the middle of a farm that would be doing all of this whether or not anybody had come to watch — which is the only reason watching it is worth anything.',
-        ],
-        after: { kind: 'plate', type: 'Wide · the barrels at first light, guests at the edge of it', caption: 'The day the estate was going to have anyway', ratio: '16 / 9' },
-      },
-      {
-        heading: 'Three days, twenty places.',
-        lines: [
-          'Three times a year the estate opens properly, for the festival. Three days, twenty places, and a guest leaves having set the protocol for a lot of coffee that is then built and shipped under their own name.',
-          'The residency runs alongside it — invited, embedded, for people making work that needs a place like this to be made in. [Monastic Polymaths](/residency) is the fuller account.',
-        ],
-        after: { kind: 'portrait', type: 'Detail · a guest at the wet mill, setting a protocol', caption: 'Twenty places, and a lot that ships under the guest’s own name', ratio: '4 / 5' },
-      },
-      {
-        heading: 'Two open, two named.',
-        lines: [
-          'Munduk in Bali and Punakha in Bhutan are named and not built. Dates, rooms and rates arrive when they are settled, and no occupancy, rates or guest numbers are published until there is something to publish.',
-        ],
-        reveal: 'A cup of coffee that grew\nwithin sight of where you slept.',
-      },
-    ],
-    related: [
-      { label: 'Mudigere', href: '/mudigere' },
-      { label: 'Asa. Niwa.', href: '/ohara' },
-      { label: 'Monastic Polymaths', href: '/residency' },
-    ],
-  },
 ]
-
-export function pillarBySlug(slug: string): Pillar | undefined {
-  return PILLARS.find((p) => p.slug === slug)
-}

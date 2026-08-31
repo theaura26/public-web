@@ -6,7 +6,7 @@ import type { ReactNode } from 'react'
 export const metadata: Metadata = {
   title: 'Moral Spine',
   description:
-    'The things we will not do. Attention as a moral choice, restraint as intelligence. The fourfold self-check, the seven decision filters, and the six field rules that govern every action on the estate.',
+    'The things we will not do. Attention as a moral choice and restraint as intelligence: the fourfold self-check, seven decision filters, six refusals.',
   alternates: { canonical: '/wisdom' },
   openGraph: {
     type: 'article',

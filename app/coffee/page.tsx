@@ -36,7 +36,7 @@ export default function CoffeePage() {
           Six lots. One harvest. No two cups the same.
         </p>
         <p className="p1">
-          Arabica grown at 3,600 feet in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>, beneath a four-story
+          Arabica grown at 3,600 feet in the <Term tip="Mountain range along India’s west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>, beneath a four-story
           canopy. Two cultivars — <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>. Every lot is a document
           of place and method.
         </p>

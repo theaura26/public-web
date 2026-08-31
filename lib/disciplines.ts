@@ -86,7 +86,7 @@ export const DISCIPLINES: Discipline[] = [
       {
         heading: 'Made here, from this herd.',
         lines: [
-          'BD 500 through 508 are prepared on the estate and applied on a calendar built for 150 acres. The dung comes from fifty-two Malnad Gidda grazing the ground the preparations return to — [Circular Intelligence](/circular) follows one batch through that loop end to end.',
+          'BD 500 through 508 are prepared on the estate and applied on a calendar built for 150 acres. The dung comes from about fifty Malnad Gidda grazing the ground the preparations return to — [Circular Intelligence](/circular) follows one batch through that loop end to end.',
           'Barrels are stirred by hand for about forty-five minutes a day, vortex and reverse. Cow pat pit matures ninety days; the rest run sixty- to ninety-day cycles.',
         ],
         after: { kind: 'plate', type: 'Process · barrels mid-stir, vortex and reverse', caption: 'Forty-five minutes a day, by hand' },
@@ -249,7 +249,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'Every cut is a door.',
         lines: [
           'Every cut is a wound and every wound is a door. Every major canopy cut is sealed the same day it is made, with cow pat preparation and turmeric — an antifungal dressing applied on the only day a wound is worth dressing. Eighty acres of whiskering is eighty acres of wounds.',
-          'The soil is the other half of it. A root zone with an active microbial community carries its own antagonists, which is why every preparation batch is counted for Trichoderma and Pseudomonas before it goes out — see [Microbiome](/regenerative-life/microbiome).',
+          'The soil is the other half of it. A root zone with an active microbial community carries its own antagonists, which is why every preparation batch is counted for Trichoderma and Pseudomonas before it goes out — see [Microbiome](/regenerative-life/the-plantation).',
         ],
         after: { kind: 'portrait', type: 'Detail · a major cut sealed with cow pat and turmeric', caption: 'Sealed the same day it is made' },
         reveal: 'Keep the plant well,\nand there is nothing to treat.',
@@ -293,7 +293,7 @@ export const DISCIPLINES: Discipline[] = [
           { value: 'Earthworms', note: 'Counted quarterly in a fixed quadrat. The one invertebrate on the estate with a number.' },
           { value: 'Fungi', note: 'Mycorrhizal networks in the root zone, and the decomposers working through the forest islands.' },
           { value: 'Birds', note: 'Cavity nesters a managed landscape stops housing once the old wood is tidied away.' },
-          { value: 'Cattle', note: 'Fifty-two Malnad Gidda, grazing the ground the preparations return to.' },
+          { value: 'Cattle', note: 'About fifty Malnad Gidda, grazing the ground the preparations return to.' },
           { value: 'Microorganisms', note: 'Counted by name in every batch — Trichoderma and Pseudomonas — before anything reaches a block.' },
         ],
       },
@@ -413,7 +413,7 @@ export const DISCIPLINES: Discipline[] = [
       { value: '50', label: 'light readings an acre' },
       { value: '~80 acres', label: 'whiskered, May–June 2026' },
       { value: '33 / 62 / 82k', label: 'lux, Block 3 zones A / B / C' },
-      { value: '65–75%', label: 'canopy where blocks cup best', note: "Aura's own reading against its own cupping table." },
+      { value: '65–75%', label: 'canopy where blocks cup best', note: "Aura’s own reading against its own cupping table." },
     ],
     related: [{ label: 'The Light Instrument', href: '/shade' }],
   },
@@ -486,7 +486,7 @@ export const DISCIPLINES: Discipline[] = [
       {
         heading: 'Why this is possible now.',
         lines: [
-          'What changed is that a landscape can now be made machine-readable — foundation models to read it, robotics to work it, and sensors cheap enough to leave in a block through a monsoon. [Natural Intelligence](/reason/natural-intelligence) is the fuller argument for why that matters.',
+          'What changed is that a landscape can now be made machine-readable — foundation models to read it, robotics to work it, and sensors cheap enough to leave in a block through a monsoon. [Natural Intelligence](/regenerative-life/aura-intelligence) is the fuller argument for why that matters.',
           'Machine intelligence sits inside that rather than above it. There is a living layer, a human layer, and a physical layer of sensors and machines — natural intelligence is all of them read together.',
           'Three things make it hard here in particular: 150 acres of four-storey canopy is a difficult thing to capture at scale, the people who can read it are fewer every year, and nothing about listening is automatic.',
         ],
@@ -585,7 +585,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'One estate, then a network.',
         lines: [
           'Mudigere is the first, and one place is a sample of one. Ohara — the second sanctuary, north of Kyoto — tests whether a way of working that held in the Western Ghats holds in a valley with a different climate, a different soil and no crop on it.',
-          'What passes between them is the point. A reading confirmed in two valleys is worth more than one confirmed in one, and the same record is what makes robotics, universities, hospitality and agriculture able to build on it. [Natural Intelligence](/reason/natural-intelligence) is the fuller argument; [Provenance](/provenance) is how a single event becomes a record.',
+          'What passes between them is the point. A reading confirmed in two valleys is worth more than one confirmed in one, and the same record is what makes robotics, universities, hospitality and agriculture able to build on it. [Natural Intelligence](/regenerative-life/aura-intelligence) is the fuller argument; [Provenance](/provenance) is how a single event becomes a record.',
         ],
         after: { kind: 'banner', type: 'Wide · two valleys, one practice', caption: 'Mudigere in the Western Ghats, Ohara north of Kyoto', ratio: '16 / 9' },
       },
@@ -600,8 +600,3 @@ export const DISCIPLINES: Discipline[] = [
     related: [{ label: 'Provenance', href: '/provenance' }],
   },
 ]
-
-
-export function disciplineBySlug(slug: string): Discipline | undefined {
-  return DISCIPLINES.find((d) => d.slug === slug)
-}

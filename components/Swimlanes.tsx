@@ -140,22 +140,22 @@ function LaneStyles() {
           width: 100vw;
           margin-left: calc(50% - 50vw);
         }
-        /* The row dissolves off the right rather than hard-cropping —
-           the same gesture as the homepage slider and the menu’s
-           bottom vignette. */
-        /* Flush to the edge, and no clipping ancestor. An overflow:hidden
-           parent gives backdrop-filter nothing to sample — the element
-           renders as a blank plate instead of a blur — so the overhang
-           that clip was there to hide had to go with it. The mask alone
-           carries the fade. */
+        /* The row dissolves off the right rather than hard-cropping.
+           A gradient to the page ground, not a backdrop blur: the blur
+           was its own promoted layer, rasterised separately, so its edge
+           never met the mask cleanly and it flickered as the lane
+           scrolled. A gradient has no layer and no edge. */
         .sw .lane-fade {
           position: absolute;
           top: 0; bottom: 0; right: 0;
           width: clamp(64px, 12vw, 200px);
           pointer-events: none;
           z-index: 2;
-          -webkit-mask-image: linear-gradient(to right, transparent, #000 55%);
-          mask-image: linear-gradient(to right, transparent, #000 55%);
+          background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0) 0%,
+            var(--bg) 92%
+          );
         }
         .sw .lane-scroll {
           overflow-x: auto;
@@ -298,14 +298,12 @@ export function Swimlanes({
                   {notes.map((n) => <Card key={`${cat.id}-${n.href}`} note={n} />)}
                 </div>
               </div>
-              {/* backdrop-filter inline: styled-jsx drops it from emitted
-                  rules on this build, the same way it does for the menu
-                  vignette and the homepage slider. */}
-              <div
-                className="lane-fade"
-                aria-hidden
-                style={{ backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
-              />
+              {/* A gradient to the page ground, not a backdrop blur. The
+                  blur composited as a hard-edged rectangle over the
+                  cards — its own layer, promoted and rasterised
+                  separately, so its edge never met the mask cleanly and
+                  it flickered while the lane scrolled. */}
+              <div className="lane-fade" aria-hidden />
             </div>
           </section>
         )
@@ -340,11 +338,7 @@ export function RelatedLane({
               {items.map((n) => <Card key={n.href} note={n} />)}
             </div>
           </div>
-          <div
-            className="lane-fade"
-            aria-hidden
-            style={{ backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
-          />
+          <div className="lane-fade" aria-hidden />
         </div>
       </div>
       <LaneStyles />

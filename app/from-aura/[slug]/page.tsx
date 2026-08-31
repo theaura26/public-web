@@ -202,7 +202,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
       {p.siblings.length > 0 && (
         <RelatedLane
-          label="More from the store"
+          label="More From Aura"
           items={p.siblings}
           ratio="4 / 5"
         />
@@ -213,7 +213,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
            that opens on its title; this one opens on a full-bleed
            picture, and the picture starts where the header stops. The
            mobile rule below used to be the only place that was true. */
-        .pd { padding: var(--nav-h) 0 var(--space-9); background: var(--bg); }
+        /* No bottom padding: the band ends where its picture ends, and
+           the lane below brings its own space. */
+        .pd { padding: var(--nav-h) 0 0; background: var(--bg); }
 
         /* The dark belongs to the product, not to the page. The plate is
            a photograph and the copy is short; on white the picture
@@ -222,8 +224,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         .pd-band {
           background: var(--contrast-bg);
           color: var(--contrast-text);
-          padding: var(--space-9) 0;
-          margin-bottom: var(--space-9);
+          /* Flush. The picture reaches the top and bottom of the dark,
+             which is the point of putting it on a band rather than in a
+             box — padding here left it floating in a field of black. */
+          padding: 0;
         }
         .pd-in {
           display: grid;

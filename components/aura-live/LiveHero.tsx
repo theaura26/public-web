@@ -176,7 +176,12 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           gap: var(--space-2);
           /* Close under the title — it is the title's timestamp, and it
              used to sit 88px away, reading as its own thing. */
-          margin: var(--space-6) 0 auto;
+          /* Only the space above the pair is auto. Setting this one to a
+             measure and letting the other take the remainder drops the
+             title and its stamp below the middle of the clear space,
+             which is where they sit better — the band is closer under
+             them than it is far from the top. */
+          margin: var(--space-6) 0 clamp(96px, 14vh, 150px);
           /* Solid, not 72%. At 11px over this film it was reading 3.34:1
              even under the heavier veil it used to have — under AA, and
              the reason the veil had to be as dark as it was. */

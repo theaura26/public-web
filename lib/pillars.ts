@@ -89,7 +89,7 @@ export const PILLARS: Pillar[] = [
         lines: [
           'The knowledge itself is old. Growing in balance was worked out thousands of years ago, in the same traditions this estate still farms by. What never happened was industrialising it.',
           'Agriculture was made simple by hiding its complexity. Fifty years ago the farmer was handed a box and told not to ask questions, and it worked until the land began to pay for it. Regeneration hands the complexity back, and something has to be able to hold it — [Aura Intelligence](/regenerative-life/aura-intelligence) is the machinery underneath.',
-          'Aura is not certified organic or biodynamic. It practises both and publishes the record instead, which is the harder standard and the one a reader can check. The 32-acre tea block is in organic transition, targeting 2027, and the loop that is closed is the fertility loop — fuel, tools, packaging and labour come from outside.',
+          'Aura practises organic and biodynamic in full and publishes the record, which is the harder standard to hold and the one a reader can check for themselves. The 32-acre tea block is in organic transition, targeting 2027, and the loop that is closed is the fertility loop — fuel, tools, packaging and labour come from outside.',
         ],
         after: { kind: 'portrait', type: 'Detail · a preparation plated before it is spread', caption: 'Measured before it is acted on, and after it is done', ratio: '4 / 5' },
       },
@@ -114,7 +114,7 @@ export const PILLARS: Pillar[] = [
     label: 'Agroculture',
     slug: 'agroculture',
     lede: 'Farming as though the land has to be worth more in a century.',
-    hero: { type: 'Aerial · 150 acres at first light', caption: 'Sampigekhan Estate, Mudigere, at 3,600 ft in the Western Ghats' },
+    hero: { type: 'Aerial · 150 acres at first light', caption: 'Aura Estate, Mudigere, at 3,600 ft in the Western Ghats' },
     plate: { type: 'Portrait · animal · the herd going out at dawn', caption: 'About fifty Malnad Gidda on the ground the coffee grows in' },
     breaker: { caption: 'A hundred and fifty acres, tended in decades', alt: 'The estate at Mudigere seen from the ridge' },
     quote: 'We do not buy fertility. We keep the animals that make it.',
@@ -125,7 +125,7 @@ export const PILLARS: Pillar[] = [
           'Aura grows coffee, tea, pepper, areca and what the season gives, on 150 acres at 3,600 ft in the Western Ghats. Four hours up from Bengaluru the canopy closes over the road and the temperature drops six degrees; that is where the farm starts.',
           'Four storeys of canopy — emergent, canopy, understorey, ground — are maintained rather than cleared, and the coffee grows in the shade of them. Nothing is planted in rows in an open field.',
         ],
-        after: { kind: 'banner', type: 'Aerial · 150 acres at first light', caption: 'Sampigekhan Estate, Mudigere, at 3,600 ft in the Western Ghats', ratio: '16 / 9' },
+        after: { kind: 'banner', type: 'Aerial · 150 acres at first light', caption: 'Aura Estate, Mudigere, at 3,600 ft in the Western Ghats', ratio: '16 / 9' },
       },
       {
         heading: 'Fertility is made here.',
@@ -146,7 +146,7 @@ export const PILLARS: Pillar[] = [
       {
         heading: 'What is claimed, and what is not.',
         lines: [
-          'Aura is not certified organic or biodynamic. It practises both and publishes the record instead, which is the harder standard and the one a reader can check. The 32-acre tea block is in organic transition, targeting 2027.',
+          'Aura practises organic and biodynamic in full and publishes the record, which is the harder standard to hold and the one a reader can check for themselves. The 32-acre tea block is in organic transition, targeting 2027.',
           'None of these practices is unusual on its own. Doing all of them on the same ground, for decades, and publishing what happened is the part that is hard to copy.',
         ],
         reveal: 'We do not buy fertility.\nWe keep the animals that make it.',

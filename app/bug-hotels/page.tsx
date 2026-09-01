@@ -19,7 +19,7 @@ export default function BugHotelsPage() {
       <HeroBanner
         title="Bug Hotels"
         type="Detail · drilled logs, varied bore"
-        caption="Wooden logs with holes of different sizes, mounted in the block — Sampigekhan Estate, Mudigere"
+        caption="Wooden logs with holes of different sizes, mounted in the block — Aura Estate, Mudigere"
         alt="A bug hotel mounted under the coffee canopy at Mudigere"
       />
 

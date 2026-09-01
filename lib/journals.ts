@@ -121,14 +121,8 @@ export const ACTIVE_JOURNALS: Journal[] = [
   },
   {
     href: '/pollinators',
-    title: 'Pollinators',
-    description: 'Six invasive plants are taking the flowering understorey. What is being done about it, and what nobody has counted yet.',
-    img: '/aura-placeholder.svg',
-  },
-  {
-    href: '/cows-of-aura',
-    title: 'Cows of Aura',
-    description: 'An ear tag can fall out and a name is not a record. Every animal carries a number issued once, and a job written down.',
+    title: 'The Larder',
+    description: 'Coffee flowers for about three days a year. What feeds everything else for the other fifty-one weeks is the flowering ground layer, and six invasive plants are taking it.',
     img: '/aura-placeholder.svg',
   },
   {
@@ -160,6 +154,28 @@ export const ACTIVE_JOURNALS: Journal[] = [
     title: 'Provenance',
     description: 'Where a thing came from, with the record to prove it.',
     img: '/aura-provenance.jpg',
+  },
+]
+
+/* Held back deliberately, page and all.
+ *
+ * Nothing here is unfinished — /cows-of-aura renders in full. It is out
+ * of the menu, the field-note categories and the sitemap while it waits,
+ * and its layout carries robots: noindex so nothing indexes it in the
+ * meantime. Moving an entry back into ACTIVE_JOURNALS above, restoring
+ * its line in lib/field-notes.ts and its Navbar card, and dropping the
+ * robots block puts it back exactly as it was.
+ *
+ * `categories` is the assignment lib/field-notes.ts had for it, kept here
+ * so restoring does not mean guessing.
+ */
+export const PARKED_JOURNALS: (Journal & { categories: string[] })[] = [
+  {
+    href: '/cows-of-aura',
+    title: 'Cows of Aura',
+    description: 'An ear tag can fall out and a name is not a record. Every animal carries a number issued once, and a job written down.',
+    img: '/aura-placeholder.svg',
+    categories: ['animals', 'biodynamic'],
   },
 ]
 /** The next N journals after `currentHref`, wrapping around. Excludes

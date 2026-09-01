@@ -20,7 +20,7 @@ export default function CowsOfAuraPage() {
         title="Cows of Aura"
         type="Portrait · animal, morning light"
         caption="COW-0001 is Litty, dark brown with white marks, born to Lulu at the estate"
-        alt="A Malnad Gidda cow at Sampigekhan Estate, Mudigere"
+        alt="A Malnad Gidda cow at Aura Estate, Mudigere"
       />
 
       <TwoCol id="premise" heading="An ear tag can fall out. A name is not a record.">
@@ -103,7 +103,7 @@ export default function CowsOfAuraPage() {
       <Portrait
         src="/aura-placeholder.svg"
         ratio="5 / 7"
-        alt="A Malnad Gidda in the shed at Sampigekhan Estate"
+        alt="A Malnad Gidda in the shed at Aura Estate"
         caption="Every animal a row, and the row outlives the ear tag"
       />
 

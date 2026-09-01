@@ -262,7 +262,7 @@ Ten chapters. This sequence drives the film, the deck, and the scroll.
 **Hero line:**
 > Coffee doesn't begin with coffee. It begins about a metre underground.
 
-**Supporting story:** Sampigekhan Estate. 150 acres in the Western Ghats of Karnataka, at 3,600 feet, on red laterite that is itself the record of a very long weathering. Monsoon older than agriculture. A four-story canopy older than anyone working under it.
+**Supporting story:** Aura Estate. 150 acres in the Western Ghats of Karnataka, at 3,600 feet, on red laterite that is itself the record of a very long weathering. Monsoon older than agriculture. A four-story canopy older than anyone working under it.
 
 This is the chapter that earns the right to talk about soil at all — by framing it as the origin of flavour rather than a virtue.
 

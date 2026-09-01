@@ -23,7 +23,7 @@ ledger records what the site currently says and what backs it.
 
 | Claim | Where | Source | Confidence |
 |---|---|---|---|
-| 150 acres, Sampigekhan Estate, Mudigere, Chikmagalur, Karnataka | `/land`, `/mudigere`, `/reason/agroculture` | Estate record | Estate record |
+| 150 acres, Aura Estate, Mudigere, Chikmagalur, Karnataka | `/land`, `/mudigere`, `/reason/agroculture` | Estate record | Estate record |
 | 3,600 ft altitude | `/land`, `/mudigere`, discipline pages | Estate record | Estate record |
 | Red laterite, pH 6.0–6.5 | `/regenerative-life/soil`, `/land` | Estate soil tests | Estate record — lab report not attached |
 | 40–100 in rainfall; 14–30 °C; 58% humidity | `/regenerative-life/hydrology`, `/land` | Estate weather station | Estate record |

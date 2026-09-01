@@ -550,6 +550,12 @@ export function BlockExplorer() {
                       stroke var(--dur-base) var(--ease);
         }
         :global(.bx-zone):hover { fill-opacity: 0.3; stroke: #fff; }
+        /* The UA focus ring draws a rectangle, which on an organic shape
+           reads as a selection box somebody left behind. Suppressed on
+           :focus so a click leaves nothing; :focus-visible still marks
+           the block for anyone arriving by keyboard, with the same white
+           stroke selection uses. */
+        :global(.bx-zone):focus { outline: none; }
         :global(.bx-zone):focus-visible { outline: none; stroke: #fff; stroke-width: 2.5; }
         /* Selected reads as solid, so the label inverts to sit on it. */
         :global(.bx-zone.is-on) { fill-opacity: 1; stroke: #fff; stroke-width: 2; }

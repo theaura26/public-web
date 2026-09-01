@@ -130,7 +130,7 @@ export default function SubjectPage({
       title={s.label}
       type={s.hero?.type ?? 'Landscape · Mudigere'}
       caption={s.hero?.caption ?? s.lede}
-      alt={`${s.label} — Aura, Sampigekhan Estate, Mudigere`}
+      alt={`${s.label} — Aura, Aura Estate, Mudigere`}
     />
   )
 
@@ -277,6 +277,26 @@ export default function SubjectPage({
           A lane is for a set a reader browses; this is a short list of
           named siblings, and putting the first three in view beats
           hiding six behind a horizontal scroll. */}
+      {/* The chapter's own onward links.
+          These were authored per chapter — RTA to /rta and /fermentation,
+          Artistry to /atelier and the residency — under a design where a
+          chapter is the doorway and the fuller page is the room. The prop
+          was declared and never rendered, so every one of those pointers
+          was dead: a reader finished a deliberately short chapter with no
+          route to the long one. They sit above the siblings because going
+          deeper on this subject comes before going sideways to the next. */}
+      {!!s.related?.length && (
+        <OneCol heading="Go deeper">
+          <p className="p1">
+            {s.related.map((r, i) => (
+              <span key={r.href}>
+                {i > 0 && ' · '}
+                <a href={r.href}>{r.label}</a>
+              </span>
+            ))}
+          </p>
+        </OneCol>
+      )}
       {!!s.siblings?.length && (
         <Continue
           heading={s.siblingsLabel ?? 'Read on'}

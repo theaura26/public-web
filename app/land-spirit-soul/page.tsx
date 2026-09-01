@@ -18,7 +18,7 @@ export default function LandSpiritSoulPage() {
         title="Land, Spirit, Soul"
         type="Detail · a lit diya at first light"
         caption="The lamp at the Gau Angan, lit with ghee from the herd it is lit for"
-        alt="The morning lamp at the Gau Angan, Sampigekhan Estate"
+        alt="The morning lamp at the Gau Angan, Aura Estate"
       />
 
       <TwoCol id="premise" heading="The day starts with a lamp.">

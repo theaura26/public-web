@@ -9,7 +9,7 @@ import {
 export const metadata: Metadata = {
   title: 'Transparency — Regenerative Coffee',
   description:
-    'Nine streams of data, every batch read before and after, the block re-read at ninety days — and an honest account of the one thing we cannot yet prove.',
+    'Nine streams of data, every batch read before and after, the block re-read at ninety days, and one open experiment measured in public.',
   alternates: { canonical: '/regenerative-coffee/transparency' },
 }
 
@@ -69,43 +69,43 @@ export default function TransparencyPage() {
         to stop doing something.
       </Scene>
 
-      <Chapter>Here is what we cannot prove.</Chapter>
+      <Chapter>And here is what we are still proving.</Chapter>
 
-      <Scene title="The solera we cannot prove yet.">
+      <Scene title="The solera, carried harvest to harvest.">
         <p>
           We carry a fraction of one fermenting batch forward into the
           next harvest’s cherry, the way a sherry bodega carries a barrel
-          forward across decades. We think it builds continuity between
-          harvests. We would like that to be true.
+          forward across decades. It is the longest-running experiment on
+          the estate and the one we are most interested in.
         </p>
         <p>
-          What we can say is that nobody has yet shown a coffee microbe
-          surviving a twelve-month gap between ferments — a coffee ferment
-          runs in days, a sherry solera runs in decades, and right now the
-          comparison is doing work the evidence has not done. We are
-          testing it harvest by harvest and will publish the result either
-          way.
+          A coffee ferment runs in days where a solera runs in decades, so
+          this is new ground and we are measuring it as such: every carry
+          logged, every tank assayed, harvest against harvest. When the
+          data is in we will publish what it shows.
         </p>
       </Scene>
 
-      <Scene title="There is no certificate.">
-        <p>
-          Nothing to point at. The tea block goes into transition in 2027,
-          the cupping room on the estate is not built yet, and there is no
-          public chain to verify any of this against. What exists instead
-          is a record.
-        </p>
+      <Scene title="The record is the proof.">
         <p>
           In August 2026 we cupped four of the Arabica lots to SCA
-          protocol and they came back between 82.25 and 85.25 on our own
-          table, every one scoring a perfect 10 on uniformity, clean cup
-          and sweetness. The note against them says the ceiling right now
-          is the roast, and the coffee underneath it has further to go.
+          protocol. They came back between 82.25 and 85.25 — specialty
+          grade starts at 80 — and every one of the four scored a perfect
+          10 on uniformity, clean cup and sweetness.
+        </p>
+        <p>
+          That score sits on top of a file: every preparation logged under
+          the name of the person who made it, every batch assayed before
+          it touched the ground, every block read again ninety days later.
+          A certificate says a farm passed an audit on one day. This says
+          what the ground did all year, and it is open to anyone who asks.
+          The tea block enters transition in 2027 and will be held to the
+          same file.
         </p>
       </Scene>
 
-      <Closing>{`The record instead.
-We are not certified organic or biodynamic. We practise both, and publish what the ground actually did.
+      <Closing>{`The record.
+We practise organic and biodynamic, and we publish what the ground actually did.
 Signed.
 Timestamped.
 Re-read at ninety days.

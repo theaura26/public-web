@@ -71,7 +71,7 @@ export const DISCIPLINES: Discipline[] = [
     glyph: 'aura-biodynamic-glyph.svg',
     lede: 'The preparations are made on the estate, and tested before they are allowed to touch the soil.',
     breaker: { caption: 'Ninety days underground, then a number against a block', alt: 'A cow pat pit opened at ninety days' },
-    hero: { type: 'Process · stirring the barrel at dawn', caption: 'Forty-five minutes a day, vortex and reverse — Sampigekhan Estate' },
+    hero: { type: 'Process · stirring the barrel at dawn', caption: 'Forty-five minutes a day, vortex and reverse — Aura Estate' },
     plate: { type: 'Detail · a numbered pit opened at ninety days', caption: 'Fourteen pits, each one numbered, each batch traceable to the block it went on' },
     quote: 'A batch that fails is corrected or held. No untested material touches the soil.',
     movements: [
@@ -110,7 +110,7 @@ export const DISCIPLINES: Discipline[] = [
         lines: [
           'Every batch is tested before and after it is made: pH, electrical conductivity, colony counts, Trichoderma, Pseudomonas. A batch that fails is corrected or held back, and the block waits — which occasionally means a block waits.',
           'Ninety days after application the block is tested again, cross-referenced to the batch number that went onto it. Chromatography runs alongside as a soil-vitality image: a qualitative indicator, published as a practice rather than as evidence of an outcome.',
-          'Aura is not certified biodynamic. It practises the system in full and publishes the record instead, which is the harder standard to hold and the easier one to check.',
+          'Aura practises the biodynamic system in full and publishes the record, which is the harder standard to hold and the easier one to check.',
         ],
         after: { kind: 'portrait', type: 'Detail · a numbered pit, opened at ninety days', caption: 'Corrected and re-tested, or held back while the block waits' },
         reveal: 'No untested material\ntouches the soil.',
@@ -144,7 +144,7 @@ export const DISCIPLINES: Discipline[] = [
           'The ground here is old, iron-rich and free-draining. In a hundred inches of monsoon that is a gift: water moves through rather than sitting on the roots. In the dry weeks that follow it is the problem, because the same openness lets moisture go.',
           'Almost everything the estate does to the ground is an answer to that second half. It is held between pH 6.0 and 6.5 — inside that band the nutrients already in the soil stay available to a plant; outside it they lock up and the fertility is there on paper and nowhere else.',
         ],
-        after: { kind: 'banner', type: 'Detail · red laterite, wet and dry in the same frame', caption: 'Free-draining is a gift in the monsoon and a problem in the weeks after it', alt: 'Red laterite soil at Sampigekhan Estate, 3,600 ft' },
+        after: { kind: 'banner', type: 'Detail · red laterite, wet and dry in the same frame', caption: 'Free-draining is a gift in the monsoon and a problem in the weeks after it', alt: 'Red laterite soil at Aura Estate, 3,600 ft' },
       },
       {
         heading: 'How the soil is read.',
@@ -233,7 +233,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'Keeping a plant well, so there is nothing to treat.',
         lines: [
           'The logic is preventive. A plant standing on ground with an active microbial community, cut cleanly and sealed the same day, is a harder plant to infect — so the work happens before there is anything to treat. No synthetic pesticides or chemicals go onto the 150 acres.',
-          'Aura can say what goes onto those acres and what is kept off them, and both are logged. What it cannot yet publish is disease incidence across a season: that needs fixed plants, a fixed interval, and one person who can tell one lesion from another.',
+          'Aura can say what goes onto those acres and what is kept off them, and both are logged. Disease incidence across a season is the next measurement to stand up: it needs fixed plants, a fixed interval, and one person who can tell one lesion from another.',
         ],
         after: { kind: 'banner', type: 'Wide · a block after rain, drying', caption: 'Preventive rather than curative, and the difference shows after rain' },
       },
@@ -249,7 +249,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'Every cut is a door.',
         lines: [
           'Every cut is a wound and every wound is a door. Every major canopy cut is sealed the same day it is made, with cow pat preparation and turmeric — an antifungal dressing applied on the only day a wound is worth dressing. Eighty acres of whiskering is eighty acres of wounds.',
-          'The soil is the other half of it. A root zone with an active microbial community carries its own antagonists, which is why every preparation batch is counted for Trichoderma and Pseudomonas before it goes out — see [Microbiome](/regenerative-life/the-plantation).',
+          'The soil is the other half of it. A root zone with an active microbial community carries its own antagonists, which is why every preparation batch is counted for Trichoderma and Pseudomonas before it goes out.',
         ],
         after: { kind: 'portrait', type: 'Detail · a major cut sealed with cow pat and turmeric', caption: 'Sealed the same day it is made' },
         reveal: 'Keep the plant well,\nand there is nothing to treat.',
@@ -308,7 +308,7 @@ export const DISCIPLINES: Discipline[] = [
       {
         heading: 'Six plants, taken back out.',
         lines: [
-          'Six introduced plants are being taken back out of the understorey so the native ground layer has somewhere to return to. [Pollinators](/pollinators) names them and what each one does.',
+          'Six introduced plants are being taken back out of the understorey so the native ground layer has somewhere to return to. [The Larder](/pollinators) names them and what each one does.',
         ],
         after: { kind: 'portrait', type: 'Detail · Lantana pulled from the understorey', caption: 'So the native ground layer has somewhere to return to' },
       },
@@ -423,7 +423,7 @@ export const DISCIPLINES: Discipline[] = [
     slug: 'vedic-farming',
     glyph: 'aura-vedic-glyph.svg',
     lede: 'The Indian preparations, kept for the same reason as the European ones — the biology.',
-    breaker: { caption: 'Brewed from the herd that grazes the ground it returns to', alt: 'Jeevamrit in the shed at Sampigekhan Estate' },
+    breaker: { caption: 'Brewed from the herd that grazes the ground it returns to', alt: 'Jeevamrit in the shed at Aura Estate' },
     hero: { type: 'Process · Jeevamrit brewing in the shed', caption: 'Volume planned backwards from the calendar, for 150 acres' },
     plate: { type: 'Detail · the five preparations', caption: 'Jeevamrit, Panchgavya, Beejamrit, cow pat pit, Kunapjal' },
     movements: [
@@ -445,7 +445,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'Planned backwards from the calendar.',
         lines: [
           'Volume is planned backwards from the biodynamic calendar for 150 acres, and stock registers track every batch against that plan. The same gate applies as to everything else: tested before and after, held back if it fails.',
-          'Aura is not certified organic. The 32-acre tea block is in organic transition targeting 2027, stated as the ambition it is. [Vedic Farming](/vedic) is the longer account of the tradition these preparations come from.',
+          'The 32-acre tea block is in organic transition, targeting 2027. [Vedic Farming](/vedic) is the longer account of the tradition these preparations come from.',
         ],
         after: { kind: 'portrait', type: 'Detail · a stock register against the biodynamic calendar', caption: 'Volume planned for 150 acres, batch by batch' },
       },
@@ -486,7 +486,7 @@ export const DISCIPLINES: Discipline[] = [
       {
         heading: 'Why this is possible now.',
         lines: [
-          'What changed is that a landscape can now be made machine-readable — foundation models to read it, robotics to work it, and sensors cheap enough to leave in a block through a monsoon. [Natural Intelligence](/regenerative-life/aura-intelligence) is the fuller argument for why that matters.',
+          'What changed is that a landscape can now be made machine-readable — foundation models to read it, robotics to work it, and sensors cheap enough to leave in a block through a monsoon.',
           'Machine intelligence sits inside that rather than above it. There is a living layer, a human layer, and a physical layer of sensors and machines — natural intelligence is all of them read together.',
           'Three things make it hard here in particular: 150 acres of four-storey canopy is a difficult thing to capture at scale, the people who can read it are fewer every year, and nothing about listening is automatic.',
         ],
@@ -585,7 +585,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'One estate, then a network.',
         lines: [
           'Mudigere is the first, and one place is a sample of one. Ohara — the second sanctuary, north of Kyoto — tests whether a way of working that held in the Western Ghats holds in a valley with a different climate, a different soil and no crop on it.',
-          'What passes between them is the point. A reading confirmed in two valleys is worth more than one confirmed in one, and the same record is what makes robotics, universities, hospitality and agriculture able to build on it. [Natural Intelligence](/regenerative-life/aura-intelligence) is the fuller argument; [Provenance](/provenance) is how a single event becomes a record.',
+          'What passes between them is the point. A reading confirmed in two valleys is worth more than one confirmed in one, and the same record is what makes robotics, universities, hospitality and agriculture able to build on it. [Provenance](/provenance) is how a single event becomes a record.',
         ],
         after: { kind: 'banner', type: 'Wide · two valleys, one practice', caption: 'Mudigere in the Western Ghats, Ohara north of Kyoto', ratio: '16 / 9' },
       },

@@ -84,7 +84,7 @@ The herd feeds the soil. The soil feeds the trees. Nothing comes in and nothing 
 
 ## It begins about a metre underground.
 
-Sampigekhan Estate. One hundred and fifty acres in the Western Ghats of Karnataka, at three thousand six hundred feet, on red laterite — soil that is itself the record of a very long weathering.
+Aura Estate. One hundred and fifty acres in the Western Ghats of Karnataka, at three thousand six hundred feet, on red laterite — soil that is itself the record of a very long weathering.
 
 Monsoon older than agriculture. A canopy older than anyone working under it.
 
@@ -607,7 +607,7 @@ Not this time
 ---
 
 **Aura**
-Sampigekhan Estate · Mudigere · Chikmagalur · Karnataka · India
+Aura Estate · Mudigere · Chikmagalur · Karnataka · India
 13.16° N, 75.43° E `[NEEDS PROOF — confirm coordinates]`
 
 **Coffee** coffee@theaura.life

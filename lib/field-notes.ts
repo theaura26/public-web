@@ -93,7 +93,6 @@ const ASSIGNMENT: Record<string, CategoryId[]> = {
 
   /* The herd, and everything else with a heartbeat. */
   '/herd': ['biodynamic', 'animals'],
-  '/cows-of-aura': ['animals', 'biodynamic'],
   '/bug-hotels': ['animals', 'biodiversity'],
   '/pollinators': ['animals', 'biodiversity'],
 

@@ -72,7 +72,6 @@ const ARTICLES: Article[] = [
   /* Commissioned, not yet written. No image on purpose — these render
      on a flat grey plate rather than borrowing a photograph that is
      not theirs. */
-  { href: '/cows-of-aura', title: 'Cows of Aura', size: 'sm', img: '/aura-placeholder.svg' },
   { href: '/bug-hotels', title: 'Bug Hotels', size: 'sm', img: '/aura-placeholder.svg' },
   { href: '/pollinators', title: 'Pollinators', size: 'lg', img: '/aura-placeholder.svg' },
   { href: '/forest-islands', title: 'Forest Islands', size: 'lg', img: '/aura-placeholder.svg' },

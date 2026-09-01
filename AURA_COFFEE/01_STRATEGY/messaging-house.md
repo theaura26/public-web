@@ -90,7 +90,7 @@ These sit beneath all three pillars and can be used anywhere.
 
 | | |
 |---|---|
-| **One estate** | Sampigekhan, Mudigere, Chikmagalur district, Karnataka. 150 acres. 100 in coffee. |
+| **One estate** | Aura Estate, Mudigere, Chikmagalur district, Karnataka. 150 acres. 100 in coffee. |
 | **One harvest a year** | Small by choice. Every decision made by someone who walks the land. |
 | **Altitude & ground** | 3,600 ft. Red laterite, pH 6.0–6.5. 40–100 in of monsoon rain. |
 | **The Western Ghats** | Older than the Himalaya. One of the world's recognised biodiversity hotspots, over 7,000 plant species. |
@@ -172,5 +172,5 @@ Same proposition, different entry point. Never a different story.
    └──────────────┴────────────────────┴──────────────────┘
 
         One estate · One harvest · 150 acres · 3,600 ft
-              Sampigekhan, Mudigere, Karnataka
+              Aura Estate, Mudigere, Karnataka
 ```

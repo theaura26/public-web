@@ -75,12 +75,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
         if (!top) return
         const i = steps.indexOf(top.target as HTMLElement)
         if (i < 0) return
-        /* True once the first beat is reached, and false again above it:
-           the hub opens on the white Remarkable Circle and the chapters on
-           their own header, and a photograph belongs on neither. Latching
-           this on meant the backdrop stayed lit over the opening once the
-           reader had been down the page and come back. */
-        setStarted(i > 0 || top.intersectionRatio > 0.6)
+
         /* The hand-written pairing where there is one, and an even
            spread otherwise. Cycling with modulo made a chapter with nine
            photographs and fourteen scenes show the first five again,
@@ -99,6 +94,21 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
     )
     steps.forEach((s) => io.observe(s))
 
+    /* One observer on the first beat, deciding whether the backdrop is
+       lit at all. The hub opens on the white Remarkable Circle and the
+       chapters on their own header, and a photograph belongs on neither —
+       but the moment the first beat is on screen the ground has to be
+       there, because the scenes are transparent and their type is white.
+       Reading the ratio inside the main observer was wrong for exactly
+       that reason: a half-visible panel turned the ground off underneath
+       its own white heading. */
+    const first = steps[0]
+    const head = new IntersectionObserver(
+      ([e]) => setStarted(e.isIntersecting || e.boundingClientRect.top < 0),
+      { threshold: 0 },
+    )
+    head.observe(first)
+
     /* One more observer on the last beat: once its bottom is above the
        viewport, the chapter has ended. */
     const last = steps[steps.length - 1]
@@ -108,7 +118,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
     )
     tail.observe(last)
 
-    return () => { io.disconnect(); tail.disconnect() }
+    return () => { io.disconnect(); head.disconnect(); tail.disconnect() }
   }, [frames])
 
   if (!frames.length) return null

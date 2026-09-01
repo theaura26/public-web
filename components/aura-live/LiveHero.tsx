@@ -176,7 +176,7 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           gap: var(--space-2);
           /* Close under the title — it is the title's timestamp, and it
              used to sit 88px away, reading as its own thing. */
-          margin: var(--space-5) 0 auto;
+          margin: var(--space-6) 0 auto;
           /* Solid, not 72%. At 11px over this film it was reading 3.34:1
              even under the heavier veil it used to have — under AA, and
              the reason the veil had to be as dark as it was. */

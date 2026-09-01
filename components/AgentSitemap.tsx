@@ -213,7 +213,7 @@ export const SITEMAP: SitemapEntry[] = [
     related: ['/circular', '/herd', '/rta'],
   },
   {
-    href: '/regenerative-life/artistry',
+    href: '/atelier',
     label: 'Atelier',
     topic: 'The studios — Natural Intelligence applied to story, systems and place',
     summary: 'Origin, Engine, Hospitality. Three studios applying Natural Intelligence to story, systems, and place — built on regenerative land in Mudigere, Karnataka and Ohara, Kyoto. For monastic polymaths and crazy misfits.',

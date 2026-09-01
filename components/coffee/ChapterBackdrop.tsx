@@ -21,7 +21,14 @@ import type { Frame } from '@/lib/regenerative-coffee-gallery'
  * observer fires once per scene boundary and sets an index.
  */
 export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps?: number[] }) {
-  const [active, setActive] = useState(0)
+  /* One piece of state, not two. The frame on top and the order the
+     frames are stacked in are the same fact, and splitting them let the
+     order land a render after the frame it describes — the incoming
+     picture began its fade while still buried, and the page cut to a
+     half-transparent layer when the z-index caught up. That was the
+     flash. Updated together, in one pure updater. */
+  const [view, setView] = useState<{ active: number; seen: number[] }>({ active: 0, seen: [0] })
+  const { active, seen } = view
   /* Which frames have been shown, oldest first. Every frame sits at full
      opacity and the stack is ordered by recency, so the only one that
      ever animates is the incoming top layer fading in over a solid one
@@ -32,7 +39,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
      outgoing frame is opaque and the scrim shows through — which is the
      flash. With the whole stack opaque there is nothing to show
      through. */
-  const [seen, setSeen] = useState<number[]>([0])
+
   /* Past the last scene the chapter is over. The crosslinks and the
      festival banner are their own ground, so the backdrop lets go
      rather than sitting a photograph behind them. */
@@ -52,13 +59,6 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
     document.documentElement.dataset.rcBackdrop = 'on'
     return () => { delete document.documentElement.dataset.rcBackdrop }
   }, [])
-
-  /* Recency, kept in an effect rather than inside the setActive updater.
-     A setState nested in another setState's updater makes that updater
-     impure, and Strict Mode runs it twice to check exactly that. */
-  useEffect(() => {
-    setSeen((o) => (o[o.length - 1] === active ? o : [...o.filter((x) => x !== active), active]))
-  }, [active])
 
   useEffect(() => {
     if (!frames.length) return
@@ -89,7 +89,11 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           map && map[i] != null
             ? Math.min(frames.length - 1, map[i])
             : Math.min(frames.length - 1, Math.floor((i * frames.length) / steps.length))
-        setActive(next)
+        setView((v) =>
+          v.active === next
+            ? v
+            : { active: next, seen: [...v.seen.filter((x) => x !== next), next] },
+        )
       },
       { threshold: [0.35, 0.6] },
     )
@@ -109,11 +113,6 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
 
   if (!frames.length) return null
 
-  /* The stack as it must render *now*: everything shown so far, with the
-     active frame on top. Derived rather than stored, so the z-order can
-     never be a render behind the frame that is fading in. */
-  const stack = [...seen.filter((x) => x !== active), active]
-
   return (
     <div className="cb" ref={wrap} aria-hidden
       data-past={past ? 'true' : undefined}
@@ -124,14 +123,14 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           className="cb-frame"
           key={f.src + i}
           data-on={i === active ? 'true' : undefined}
-          data-seen={stack.includes(i) ? 'true' : undefined}
+          data-seen={seen.includes(i) ? 'true' : undefined}
           /* Recency is the z-order. Read off `stack`, which puts the
              active frame on top in the same render that starts its fade
              — `seen` is maintained by an effect and lands a commit later,
              so ordering by it animated the incoming frame while it was
              still buried, and the moment the z-index caught up the page
              cut to a half-transparent top layer. That is the flash. */
-          style={{ zIndex: stack.indexOf(i) + 1, ['--dim' as string]: String(f.dim ?? 0.45) }}
+          style={{ zIndex: seen.indexOf(i) + 1, ['--dim' as string]: String(f.dim ?? 0.45) }}
         >
           {f.video ? (
             <video className="cb-media" poster={f.src} muted loop playsInline autoPlay preload="metadata">

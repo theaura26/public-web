@@ -36,7 +36,7 @@ const nextConfig: NextConfig = {
      ranking signals across rather than serving a 404. */
   async redirects() {
     return [
-      { source: '/studios', destination: '/regenerative-life/artistry', permanent: true },
+      { source: '/studios', destination: '/atelier', permanent: true },
     ]
   },
   /* No redirect from /mudigere-estate → /mudigere: they are intentionally

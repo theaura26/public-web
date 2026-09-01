@@ -16,6 +16,9 @@ const OFF_MENU = [
      index:true, so it belongs here. */
   '/privacy',
   '/brand',
+  /* The Atelier is linked from the footer under the brand rather than
+     from the menu, so ALL_LEAVES does not carry it. It is index:true. */
+  '/atelier',
   '/regenerative-coffee',
   '/regenerative-coffee/biodynamic',
   '/regenerative-coffee/transparency',

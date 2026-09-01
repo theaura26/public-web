@@ -121,8 +121,8 @@ export const ACTIVE_JOURNALS: Journal[] = [
   },
   {
     href: '/pollinators',
-    title: 'Pollinators',
-    description: 'Six invasive plants are taking the flowering understorey. What is being done about it, and what nobody has counted yet.',
+    title: 'The Larder',
+    description: 'Coffee flowers for about three days a year. What feeds everything else for the other fifty-one weeks is the flowering ground layer, and six invasive plants are taking it.',
     img: '/aura-placeholder.svg',
   },
   {

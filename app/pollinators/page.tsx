@@ -13,13 +13,13 @@ import {
   Continue,
 } from '@/components/article/Article'
 
-export default function PollinatorsPage() {
+export default function LarderPage() {
   return (
     <>
       <HeroBanner
-        title="Pollinators"
+        title="The Larder"
         type="Detail · a solitary bee on a native herb"
-        caption="The ground layer is the larder — Sampigekhan Estate, Mudigere"
+        caption="What flowers under the coffee — Sampigekhan Estate, Mudigere"
         alt="A pollinator on flowering understorey at Mudigere"
       />
 

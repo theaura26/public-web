@@ -213,11 +213,12 @@ export default function CoffeePage() {
           into freshly harvested cherries, hoping to seed the same continuity.
         </p>
         <p className="p1">
-          Can a coffee ferment actually hold a &ldquo;house culture&rdquo; across
-          seasons, the way a sherry cask does? We do not know yet, and we will not
-          pretend otherwise — coffee ferments are short, and no one has shown a
-          strain that lasts from one season into the next. We are testing it, year
-          by year. We would rather tell you that than sell you the metaphor.
+          Can a coffee ferment hold a &ldquo;house culture&rdquo; across seasons,
+          the way a sherry cask does? It is the most interesting question on the
+          estate, and we are the ones running the experiment: every carry logged,
+          every tank assayed, year against year. Coffee ferments are short and
+          this is new ground, which is exactly why it is worth measuring rather
+          than asserting.
         </p>
       </TwoCol>
 

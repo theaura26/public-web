@@ -362,7 +362,7 @@ export const CHAPTERS: Chapter[] = [
         heading: 'Where science and art cross.',
         lines: [
           'The estate seats a coffee fermenter next to a ceramicist and a soil biologist next to a maker. The friction between disciplines is the point — it is where the work nobody else can make gets made.',
-          'It is also, plainly, an argument that has not been proved. It is how the residency is designed, and what comes out of it is the evidence.',
+          'That is a conviction rather than a finding, and it is why the residency is built the way it is — what comes out of it is the evidence.',
         ],
       },
     ],

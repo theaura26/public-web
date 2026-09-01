@@ -143,15 +143,18 @@ export default function PollinatorsPage() {
         </p>
       </TwoCol>
 
-      <TwoCol id="unknown" heading="Aura has not surveyed its pollinators.">
+      <TwoCol id="unknown" heading="The survey is the next piece of work.">
         <p className="p1">
-          Aura has not surveyed its pollinators. There is no species list, no count, and no
-          season-by-season record of who is visiting what.
+          Everything above is habitat work — native herbs and shrubs into the
+          opened ground, no synthetic pesticide on the 150 acres, nesting
+          cavities in the bug hotels — and it is what the evidence says to do
+          first.
         </p>
         <p className="p2">
-          Everything above is habitat work, and habitat work is a reasonable thing to do on the
-          evidence. It is not the same as showing that the pollinator community has responded,
-          and this page will not imply that it has.
+          A species list, a count and a season-by-season record of who visits
+          what is what turns that work into a measured result, and it is the
+          next thing to build. Until it exists this page describes the habitat
+          rather than the response to it.
         </p>
         <p className="p2">
           What would settle it is ordinary and unglamorous: fixed transects, walked on a

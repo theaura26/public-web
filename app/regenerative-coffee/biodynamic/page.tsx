@@ -75,9 +75,9 @@ export default function BiodynamicPage() {
         Horn manure is buried through the cool months and sprayed at dusk;
         ground quartz is buried through the summer and misted over the canopy
         at first light. Yarrow, chamomile, nettle, oak bark, dandelion and
-        valerian go into a heap the size of a room, in doses small enough that
-        a soil scientist would raise an eyebrow. All of it is made here. None
-        of it arrives on a lorry.
+        valerian go into a heap the size of a room, in doses measured in
+        grams rather than sacks. All of it is made here. None of it arrives
+        on a lorry.
       </Scene>
 
       <Chapter>Then we stopped guessing.</Chapter>

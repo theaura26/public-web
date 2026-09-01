@@ -110,7 +110,7 @@ export const DISCIPLINES: Discipline[] = [
         lines: [
           'Every batch is tested before and after it is made: pH, electrical conductivity, colony counts, Trichoderma, Pseudomonas. A batch that fails is corrected or held back, and the block waits — which occasionally means a block waits.',
           'Ninety days after application the block is tested again, cross-referenced to the batch number that went onto it. Chromatography runs alongside as a soil-vitality image: a qualitative indicator, published as a practice rather than as evidence of an outcome.',
-          'Aura is not certified biodynamic. It practises the system in full and publishes the record instead, which is the harder standard to hold and the easier one to check.',
+          'Aura practises the biodynamic system in full and publishes the record, which is the harder standard to hold and the easier one to check.',
         ],
         after: { kind: 'portrait', type: 'Detail · a numbered pit, opened at ninety days', caption: 'Corrected and re-tested, or held back while the block waits' },
         reveal: 'No untested material\ntouches the soil.',
@@ -233,7 +233,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'Keeping a plant well, so there is nothing to treat.',
         lines: [
           'The logic is preventive. A plant standing on ground with an active microbial community, cut cleanly and sealed the same day, is a harder plant to infect — so the work happens before there is anything to treat. No synthetic pesticides or chemicals go onto the 150 acres.',
-          'Aura can say what goes onto those acres and what is kept off them, and both are logged. What it cannot yet publish is disease incidence across a season: that needs fixed plants, a fixed interval, and one person who can tell one lesion from another.',
+          'Aura can say what goes onto those acres and what is kept off them, and both are logged. Disease incidence across a season is the next measurement to stand up: it needs fixed plants, a fixed interval, and one person who can tell one lesion from another.',
         ],
         after: { kind: 'banner', type: 'Wide · a block after rain, drying', caption: 'Preventive rather than curative, and the difference shows after rain' },
       },
@@ -445,7 +445,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'Planned backwards from the calendar.',
         lines: [
           'Volume is planned backwards from the biodynamic calendar for 150 acres, and stock registers track every batch against that plan. The same gate applies as to everything else: tested before and after, held back if it fails.',
-          'Aura is not certified organic. The 32-acre tea block is in organic transition targeting 2027, stated as the ambition it is. [Vedic Farming](/vedic) is the longer account of the tradition these preparations come from.',
+          'The 32-acre tea block is in organic transition, targeting 2027. [Vedic Farming](/vedic) is the longer account of the tradition these preparations come from.',
         ],
         after: { kind: 'portrait', type: 'Detail · a stock register against the biodynamic calendar', caption: 'Volume planned for 150 acres, batch by batch' },
       },

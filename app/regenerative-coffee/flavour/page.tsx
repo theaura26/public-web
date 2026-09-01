@@ -93,9 +93,9 @@ export default function FlavourPage() {
         In August 2026 four of the Arabica lots were cupped to SCA protocol on
         the estate’s own table. Anything at 80 or above is specialty grade;
         every one of the four scored a perfect ten on uniformity, clean cup
-        and sweetness. The grader’s note said the ceiling was the roast, which
-        is a polite way of saying the coffee has further to go than the
-        roasting has taken it.
+        and sweetness. The grader’s note put the ceiling at the roast — the
+        coffee is already ahead of what anyone has so far got out of it in a
+        roaster.
       </Scene>
 
       <Scene title="Then a national panel scored it, blind.">

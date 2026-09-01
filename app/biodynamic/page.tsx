@@ -206,10 +206,10 @@ export default function BiodynamicPage() {
           a block can be traced back to the batch that made it.
         </p>
         <p className="p1">
-          Writing those milestones to a public chain is the intention, and it is
-          not done yet. There is no verification link to give you, so this page
-          claims a signed record and nothing more. When there is a lot page
-          anyone can open and check, that is what will appear here.
+          Every one of those milestones is signed and timestamped in the
+          estate&rsquo;s own record, which is what this page stands on. Writing
+          them to a public chain is the next step, and when a lot page is open
+          for anyone to check, it will be linked from here.
         </p>
       </TwoCol>
 

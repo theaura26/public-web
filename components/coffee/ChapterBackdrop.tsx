@@ -21,24 +21,12 @@ import type { Frame } from '@/lib/regenerative-coffee-gallery'
  * observer fires once per scene boundary and sets an index.
  */
 export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps?: number[] }) {
-  /* One piece of state, not two. The frame on top and the order the
-     frames are stacked in are the same fact, and splitting them let the
-     order land a render after the frame it describes — the incoming
-     picture began its fade while still buried, and the page cut to a
-     half-transparent layer when the z-index caught up. That was the
-     flash. Updated together, in one pure updater. */
-  const [view, setView] = useState<{ active: number; seen: number[] }>({ active: 0, seen: [0] })
-  const { active, seen } = view
-  /* Which frames have been shown, oldest first. Every frame sits at full
-     opacity and the stack is ordered by recency, so the only one that
-     ever animates is the incoming top layer fading in over a solid one
-     beneath.
-     
-     Holding a single `prev` was not enough: scrolling fast starts a new
-     fade before the last has finished, so neither the incoming nor the
-     outgoing frame is opaque and the scrim shows through — which is the
-     flash. With the whole stack opaque there is nothing to show
-     through. */
+  /* Where the reader is, as a beat index. Everything else — which frame
+     is on top, which are stacked under it, and the order they sit in —
+     is derived from this during render, so no two of those facts can
+     ever be a render out of step with each other. */
+  const [beat, setBeat] = useState(0)
+  const [stepCount, setStepCount] = useState(0)
 
   /* Past the last scene the chapter is over. The crosslinks and the
      festival banner are their own ground, so the backdrop lets go
@@ -66,6 +54,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
        in the middle of the viewport owns the backdrop. */
     const steps = [...document.querySelectorAll<HTMLElement>('.sc, .p')]
     if (!steps.length) return
+    setStepCount(steps.length)
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -80,15 +69,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
            spread otherwise. Cycling with modulo made a chapter with nine
            photographs and fourteen scenes show the first five again,
            which reads as a mistake rather than a rhythm. */
-        const next =
-          map && map[i] != null
-            ? Math.min(frames.length - 1, map[i])
-            : Math.min(frames.length - 1, Math.floor((i * frames.length) / steps.length))
-        setView((v) =>
-          v.active === next
-            ? v
-            : { active: next, seen: [...v.seen.filter((x) => x !== next), next] },
-        )
+        setBeat(i)
       },
       { threshold: [0.35, 0.6] },
     )
@@ -123,6 +104,24 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
 
   if (!frames.length) return null
 
+  /* Which frame a beat draws. */
+  const frameAt = (i: number) =>
+    map && map[i] != null
+      ? Math.min(frames.length - 1, map[i])
+      : Math.min(frames.length - 1, Math.floor((i * frames.length) / Math.max(1, stepCount)))
+
+  /* Every frame the reader has reached, in the order they were reached,
+     most recent last. Derived from the beat rather than accumulated, so
+     scrolling back up takes frames off the stack again — which is what
+     lets them fade out and reveal the one beneath instead of cutting. */
+  const shown: number[] = []
+  for (let i = 0; i <= beat; i++) {
+    const f = frameAt(i)
+    const at = shown.indexOf(f)
+    if (at !== -1) shown.splice(at, 1)
+    shown.push(f)
+  }
+
   return (
     <div className="cb" ref={wrap} aria-hidden
       data-past={past ? 'true' : undefined}
@@ -132,15 +131,11 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
         <div
           className="cb-frame"
           key={f.src + i}
-          data-on={i === active ? 'true' : undefined}
-          data-seen={seen.includes(i) ? 'true' : undefined}
-          /* Recency is the z-order. Read off `stack`, which puts the
-             active frame on top in the same render that starts its fade
-             — `seen` is maintained by an effect and lands a commit later,
-             so ordering by it animated the incoming frame while it was
-             still buried, and the moment the z-index caught up the page
-             cut to a half-transparent top layer. That is the flash. */
-          style={{ zIndex: seen.indexOf(i) + 1, ['--dim' as string]: String(f.dim ?? 0.45) }}
+          data-shown={shown.includes(i) ? 'true' : undefined}
+          /* Order of arrival is the z-order, and the frame the reader has
+             just reached is always last in it — so it is on top in the
+             same render that starts its fade. */
+          style={{ zIndex: shown.indexOf(i) + 1, ['--dim' as string]: String(f.dim ?? 0.45) }}
         >
           {f.video ? (
             <video className="cb-media" poster={f.src} muted loop playsInline autoPlay preload="metadata">
@@ -164,33 +159,33 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           position: absolute;
           inset: 0;
           opacity: 0;
-          /* No transition. This is the flash.
-             The fade-in is an animation now, and when a frame stops being
-             the active one that animation is removed — its opacity should
-             snap straight back to the 1 that [data-seen] gives it. A
-             transition here made it *ramp* back instead, from wherever the
-             animation had got to. So on a fast scroll the outgoing frame
-             sat at 0.4 climbing to 1 while the incoming one climbed from
-             0 on top of it, neither opaque, and the ground showed through
-             both. */
+          /* A transition, not an animation. An animation cannot be
+             interrupted gracefully: when the reader scrolls on before a
+             fade has finished, the incoming frame stops being the active
+             one, its animation is removed, and its opacity jumps from
+             wherever it had got to straight to full. Eight of those jumps
+             in one fast scroll, 0.05 to 1.0 between two frames — a cut in
+             the middle of a dissolve, which is the glitch.
+             A transition interpolates from the value on screen, so an
+             interrupted fade simply carries on from where it was. */
+          transition: opacity 900ms var(--ease-out, ease);
         }
-        /* Anything already shown stays opaque underneath. Only the
-           incoming frame animates, and it animates over a solid stack. */
-        .cb-frame[data-seen] { opacity: 1; }
-        .cb-frame[data-on] { animation: cb-in 900ms var(--ease-out, ease) both; }
-        @keyframes cb-in { from { opacity: 0; } to { opacity: 1; } }
+        /* Everything the reader has reached is opaque; the newest one
+           fades up over a solid stack. Scrolling back up takes frames off
+           the stack, so they fade back out and reveal the one beneath
+           rather than cutting to it. */
+        .cb-frame[data-shown] { opacity: 1; }
         /* Chapter over: everything fades and the ground beneath shows.
            The animation has to be cancelled, not just overridden — a
            filled animation holds its end value at animation priority,
            which outranks any declaration here, so the photograph would
            stay at full opacity under a scrim that had faded out. */
-        /* The one place a transition belongs: the chapter ending, where
-           there is nothing arriving to cover the frame that leaves. */
-        .cb[data-past] .cb-frame {
-          animation: none;
-          opacity: 0;
-          transition: opacity 600ms var(--ease-out, ease);
-        }
+        /* The chapter ending fades the whole layer, not each frame
+           inside it. Zeroing the frames meant that scrolling back up from
+           the crosslinks left every one of them climbing from nothing at
+           once, with the ground bare underneath — measured at 1% covered.
+           Fading .cb leaves the stack intact behind it. */
+        .cb[data-past] { opacity: 0; }
         /* Nothing at all until the first scene is reached. */
         .cb:not([data-started]) { opacity: 0; }
         .cb { transition: opacity 500ms var(--ease-out, ease); }

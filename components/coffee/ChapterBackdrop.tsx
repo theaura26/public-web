@@ -126,7 +126,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
              so ordering by it animated the incoming frame while it was
              still buried, and the moment the z-index caught up the page
              cut to a half-transparent top layer. That is the flash. */
-          style={{ zIndex: stack.indexOf(i) + 1 }}
+          style={{ zIndex: stack.indexOf(i) + 1, ['--dim' as string]: String(f.dim ?? 0.45) }}
         >
           {f.video ? (
             <video className="cb-media" poster={f.src} muted loop playsInline autoPlay preload="metadata">
@@ -138,8 +138,6 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           )}
         </div>
       ))}
-      <div className="cb-scrim" />
-      <div className="cb-tint" />
 
       <style jsx>{`
         .cb {
@@ -167,8 +165,6 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
            which outranks any declaration here, so the photograph would
            stay at full opacity under a scrim that had faded out. */
         .cb[data-past] .cb-frame { animation: none; opacity: 0; }
-        .cb[data-past] .cb-scrim,
-        .cb[data-past] .cb-tint { opacity: 0; }
         /* Nothing at all until the first scene is reached. */
         .cb:not([data-started]) { opacity: 0; }
         .cb { transition: opacity 500ms var(--ease-out, ease); }
@@ -178,40 +174,26 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           object-fit: cover;
           display: block;
         }
+        /* The frame's own darkening, carried inside the frame so it
+           crossfades with the picture it belongs to. A single scrim over
+           all of them could not work: these photographs run from a mean
+           luminance of 31 to 162, and one multiplier keeps that ratio, so
+           the value that suited the cupping table left five frames at a
+           brightness of 11 — a black screen with words on it. Each frame
+           now gets only what it needs to bring its own highlights to the
+           grey where white type clears AA. */
+        .cb-frame::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, var(--dim, 0.45));
+        }
         /* The words sit on this, so it carries the contrast rather than
            the type having to fight the photograph. */
         /* Above every frame. The frames are stacked by recency and a
            chapter has at most a dozen, so 50 clears them all — a number
            the frame stack cannot reach rather than one it happens to sit
            under today. */
-        .cb-scrim, .cb-tint { z-index: 50; }
-        .cb-scrim {
-          position: absolute;
-          inset: 0;
-          transition: opacity 600ms var(--ease-out, ease);
-          /* The only thing carrying contrast on these pages.
-             The scenes set long paragraphs in white directly on the
-             photograph, so the picture is dimmed hard and evenly rather
-             than each block of text drawing a panel behind itself — a
-             local wash reads as a box, which is worse than a dark
-             picture. The photographs still read; they are ground. */
-          /* 0.63 under a 0.25 tint, compositing to 0.72. The layers
-             compound, so both numbers are solved for the figure rather
-             than scaled — easing each by the same percentage lands short
-             of it every time.
-
-             The floor is set by the brightest frames — the canopy at
-             noon and the wet mill in daylight — where white type and the
-             accent eyebrows have the least to hold on to. */
-          background: rgba(0, 0, 0, 0.63);
-        }
-        .cb-tint {
-          position: absolute;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.25);
-          transition: opacity 600ms var(--ease-out, ease);
-        }
-
       `}</style>
     </div>
   )

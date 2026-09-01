@@ -154,9 +154,15 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           position: absolute;
           inset: 0;
           opacity: 0;
-          /* Long enough to read as a dissolve rather than a cut, short
-             enough that a fast scroll does not lag behind the words. */
-          transition: opacity 900ms var(--ease-out, ease);
+          /* No transition. This is the flash.
+             The fade-in is an animation now, and when a frame stops being
+             the active one that animation is removed — its opacity should
+             snap straight back to the 1 that [data-seen] gives it. A
+             transition here made it *ramp* back instead, from wherever the
+             animation had got to. So on a fast scroll the outgoing frame
+             sat at 0.4 climbing to 1 while the incoming one climbed from
+             0 on top of it, neither opaque, and the ground showed through
+             both. */
         }
         /* Anything already shown stays opaque underneath. Only the
            incoming frame animates, and it animates over a solid stack. */
@@ -168,7 +174,13 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
            filled animation holds its end value at animation priority,
            which outranks any declaration here, so the photograph would
            stay at full opacity under a scrim that had faded out. */
-        .cb[data-past] .cb-frame { animation: none; opacity: 0; }
+        /* The one place a transition belongs: the chapter ending, where
+           there is nothing arriving to cover the frame that leaves. */
+        .cb[data-past] .cb-frame {
+          animation: none;
+          opacity: 0;
+          transition: opacity 600ms var(--ease-out, ease);
+        }
         /* Nothing at all until the first scene is reached. */
         .cb:not([data-started]) { opacity: 0; }
         .cb { transition: opacity 500ms var(--ease-out, ease); }

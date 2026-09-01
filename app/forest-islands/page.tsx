@@ -16,9 +16,14 @@ import {
 export default function ForestIslandsPage() {
   return (
     <>
+      {/* The film, with its own still as the poster. The two were separate
+          visuals — the page opened on the frame and then played it again
+          two beats later. */}
       <HeroBanner
         title="Forest Islands"
-        src="/forest-islands/images/aura-forest-islands-01.webp"
+        src="/forest-islands/videos/aura-forest-islands-01.mp4"
+        mediaType="video"
+        poster="/forest-islands/images/aura-forest-islands-01.webp"
         caption="Four metres by one, built of dung and green cuttings, then left alone — Aura Estate, Mudigere"
         alt="An estate worker laying green cuttings over a forest island between cut poles"
       />
@@ -53,16 +58,6 @@ export default function ForestIslandsPage() {
           compost heap is built to be taken away; this one is built to stay.
         </p>
       </TwoCol>
-
-      {/* The only moving frame in the set, and it is the build itself —
-          which is what this slot was written for. */}
-      <Placeholder
-        src="/forest-islands/videos/aura-forest-islands-01.mp4"
-        mediaType="video"
-        poster="/forest-islands/images/aura-forest-islands-01.webp"
-        alt="An island being built up in alternating courses of cuttings and compost"
-        caption="Cow-dung compost and fresh green biomass, laid in alternating courses"
-      />
 
       <Placeholder
         src="/forest-islands/images/aura-forest-islands-04.webp"

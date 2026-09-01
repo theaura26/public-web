@@ -1142,11 +1142,14 @@ export function LoopDiagram({
         .ld-c {
           display: flex; flex-direction: column; text-align: center;
           font-family: var(--font-grotesque), sans-serif;
-          font-weight: 600;
-          font-size: clamp(17px, 3vw, 36px);
-          line-height: 1.14; letter-spacing: -0.035em;
+          /* The same setting as an H2, uppercase. It is the heading of
+             this section — it was two thirds the size of every other
+             heading on the page and read as a caption sitting in a ring. */
+          font-weight: 400;
+          font-size: clamp(24px, 4vw, 58px);
+          line-height: 1.04; letter-spacing: -0.04em;
           text-transform: uppercase;
-          max-width: 62%;
+          max-width: 84%;
         }
 
         .ld-cap {

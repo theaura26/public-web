@@ -195,7 +195,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
              than each block of text drawing a panel behind itself — a
              local wash reads as a box, which is worse than a dark
              picture. The photographs still read; they are ground. */
-          /* 0.65 under a 0.25 tint, compositing to 0.74. The layers
+          /* 0.63 under a 0.25 tint, compositing to 0.72. The layers
              compound, so both numbers are solved for the figure rather
              than scaled — easing each by the same percentage lands short
              of it every time.
@@ -203,7 +203,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
              The floor is set by the brightest frames — the canopy at
              noon and the wet mill in daylight — where white type and the
              accent eyebrows have the least to hold on to. */
-          background: rgba(0, 0, 0, 0.65);
+          background: rgba(0, 0, 0, 0.63);
         }
         .cb-tint {
           position: absolute;

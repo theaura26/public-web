@@ -72,26 +72,36 @@ export default function TransparencyPage() {
       <Chapter>Here is what we cannot prove.</Chapter>
 
       <Scene title="The solera we cannot prove yet.">
-        We carry a fraction of one fermenting batch forward into the next
-        harvest’s cherry, the way a sherry bodega carries a barrel forward
-        across decades. We think it builds continuity between harvests. We
-        would like that to be true. What we can say is that nobody has yet
-        shown a coffee microbe surviving a twelve-month gap between ferments —
-        a coffee ferment runs in days, a sherry solera runs in decades, and
-        right now the comparison is doing work the evidence has not done. We
-        are testing it harvest by harvest and will publish the result either
-        way.
+        <p>
+          We carry a fraction of one fermenting batch forward into the
+          next harvest’s cherry, the way a sherry bodega carries a barrel
+          forward across decades. We think it builds continuity between
+          harvests. We would like that to be true.
+        </p>
+        <p>
+          What we can say is that nobody has yet shown a coffee microbe
+          surviving a twelve-month gap between ferments — a coffee ferment
+          runs in days, a sherry solera runs in decades, and right now the
+          comparison is doing work the evidence has not done. We are
+          testing it harvest by harvest and will publish the result either
+          way.
+        </p>
       </Scene>
 
       <Scene title="There is no certificate.">
-        Nothing to point at. The tea block goes into transition in 2027, the
-        cupping room on the estate is not built yet, and there is no public
-        chain to verify any of this against. What exists instead is a record.
-        In August 2026 we cupped four of the Arabica lots to SCA protocol and
-        they came back between 82.25 and 85.25 on our own table, every one
-        scoring a perfect 10 on uniformity, clean cup and sweetness. The note
-        against them says the ceiling right now is the roast, and the coffee
-        underneath it has further to go.
+        <p>
+          Nothing to point at. The tea block goes into transition in 2027,
+          the cupping room on the estate is not built yet, and there is no
+          public chain to verify any of this against. What exists instead
+          is a record.
+        </p>
+        <p>
+          In August 2026 we cupped four of the Arabica lots to SCA
+          protocol and they came back between 82.25 and 85.25 on our own
+          table, every one scoring a perfect 10 on uniformity, clean cup
+          and sweetness. The note against them says the ceiling right now
+          is the roast, and the coffee underneath it has further to go.
+        </p>
       </Scene>
 
       <Closing>{`The record instead.

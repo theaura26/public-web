@@ -1591,7 +1591,11 @@ export function Scene({
             </span>
           )}
           {title && <h2 className="sc-h">{title}</h2>}
-          <p className="sc-p">{children}</p>
+          {/* A container rather than the paragraph itself, so a scene can
+              break its copy into more than one block. Bare text still
+              renders here with the same typography; a scene that passes
+              <p> elements gets the spacing between them. */}
+          <div className="sc-p">{children}</div>
           {href && cta && (
             <p className="sc-act"><ArrowLink href={href}>{cta}</ArrowLink></p>
           )}
@@ -1662,10 +1666,17 @@ export function Scene({
         .is-centre .sc-h { margin-inline: auto; }
 
         .sc-p {
-          font-size: var(--p1-size); line-height: var(--p1-lh);
+          /* The microsite is a deliberate exception to the P1 body size.
+             Everywhere else a paragraph shares the page with other things;
+             here it is the only text on screen, set over a photograph at
+             arm's length, and 16px is too quiet to carry a whole beat. */
+          font-size: 18px; line-height: 1.6;
           color: rgba(255, 255, 255, 0.92);
           margin: 0; text-wrap: pretty;
         }
+        .sc-p :global(p) { margin: 0 0 1.1em; }
+        .sc-p :global(p:last-child) { margin-bottom: 0; }
+        @media (max-width: 768px) { .sc-p { font-size: 16px; } }
 
         .sc-act { margin: var(--space-6) 0 0; }
         .is-centre .sc-act { display: flex; justify-content: center; }

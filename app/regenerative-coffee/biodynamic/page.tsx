@@ -83,14 +83,18 @@ export default function BiodynamicPage() {
       <Chapter>Then we stopped guessing.</Chapter>
 
       <Scene title="Shade has been judged by eye here for three hundred years.">
-        A contractor stands under a tree, decides it is too dark, and directs
-        the cut. That works until it doesn’t, and a tree cut on a hunch is
-        still the wrong shape fifty years later. So in 2026 we walked Block 3
-        with a lux meter, fifty readings to the acre. The block turned out to
-        be three blocks: one at 33,000 lux with two-thirds of the light gone,
-        one at 62,000, one at 82,000 and wide open. Arabica wants 50,000 to
-        70,000. One zone in three was where we had assumed the whole block
-        was.
+        <p>
+          A contractor stands under a tree, decides it is too dark, and
+          directs the cut. That works until it doesn’t, and a tree cut on
+          a hunch is still the wrong shape fifty years later. So in 2026
+          we walked Block 3 with a lux meter, fifty readings to the acre.
+        </p>
+        <p>
+          The block turned out to be three blocks: one at 33,000 lux with
+          two-thirds of the light gone, one at 62,000, one at 82,000 and
+          wide open. Arabica wants 50,000 to 70,000. One zone in three was
+          where we had assumed the whole block was.
+        </p>
       </Scene>
 
       <Scene title="So we cut to the number instead.">

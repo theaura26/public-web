@@ -69,15 +69,20 @@ export default function FlavourPage() {
       <Chapter>The ferment ends on a number.</Chapter>
 
       <Scene title="The tank is read every fifteen minutes, all night.">
-        A member of the mill team takes the pH by hand, on the quarter hour,
-        for as long as the ferment runs — which is where the twenty-four and
-        forty-eight hour lots stop being an abstraction and start being
-        somebody’s night. Temperature goes down three times a day, Brix at the
-        start, the middle and the end. At pH 4.2 the tank comes off, whatever
-        the shed smells like. Those readings follow each lot as an individual
-        rather than averaging across the harvest, which is the only reason
-        nine lots off one farm can be told apart at all — and they are what a
-        roaster is handed, months later, with the coffee.
+        <p>
+          A member of the mill team takes the pH by hand, on the quarter
+          hour, for as long as the ferment runs — which is where the
+          twenty-four and forty-eight hour lots stop being an abstraction
+          and start being somebody’s night. Temperature goes down three
+          times a day, Brix at the start, the middle and the end.
+        </p>
+        <p>
+          At pH 4.2 the tank comes off, whatever the shed smells like.
+          Those readings follow each lot as an individual rather than
+          averaging across the harvest, which is the only reason nine lots
+          off one farm can be told apart at all — and they are what a
+          roaster is handed, months later, with the coffee.
+        </p>
       </Scene>
 
       {/* ── what specialty means here ───────────────────────────── */}
@@ -144,13 +149,18 @@ export default function FlavourPage() {
       <BlockExplorer />
 
       <Scene title="A block of their own.">
-        The estate is open to roasters who want more than a purchase order.
-        A roaster picks a block, sets the varietal focus, the processing
-        method and the drying protocol, and the estate builds a lot that
-        exists nowhere else. Every tree in it is tagged. Brix, pH, ripeness,
-        soil moisture and shade cover are tracked at zone level, and the
-        roaster reads the same numbers the estate does. Harvest decisions
-        get made together, in the week they matter.
+        <p>
+          The estate is open to roasters who want more than a purchase
+          order. A roaster picks a block, sets the varietal focus, the
+          processing method and the drying protocol, and the estate builds
+          a lot that exists nowhere else.
+        </p>
+        <p>
+          Every tree in it is tagged. Brix, pH, ripeness, soil moisture
+          and shade cover are tracked at zone level, and the roaster reads
+          the same numbers the estate does. Harvest decisions get made
+          together, in the week they matter.
+        </p>
       </Scene>
 
       <Closing>{`The harder half.

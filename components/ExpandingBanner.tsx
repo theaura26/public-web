@@ -75,21 +75,24 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
   const usable = (frames ?? []).filter((fr) => fr.src)
   const multi = usable.length > 1
   const [active, setActive] = useState(0)
-  /* Reduced motion stops the rotation dead — the reader steps through
-     with the dots instead, and nothing moves on its own. */
-  const [autoplay, setAutoplay] = useState(true)
+  /* Reduced motion used to stop the rotation dead, because the dots were
+     there to step through it by hand. Without them that would strand the
+     reader on the first frame and hide the rest, so the rotation runs
+     either way and reduced motion cuts between frames instead of fading:
+     every frame is seen, nothing animates. */
+  const [reduced, setReduced] = useState(false)
   useEffect(() => {
     if (typeof window === 'undefined') return
-    setAutoplay(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   }, [])
   useEffect(() => {
-    if (!multi || !autoplay) return
+    if (!multi) return
     const id = window.setInterval(
       () => setActive((i) => (i + 1) % usable.length),
       FRAME_MS,
     )
     return () => window.clearInterval(id)
-  }, [multi, autoplay, usable.length])
+  }, [multi, usable.length])
 
   /* With frames, the active one supplies what the single-media props
      would have. The scroll machinery below is untouched: it drives one
@@ -345,7 +348,7 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
                     position: 'absolute',
                     inset: 0,
                     opacity: i === active ? 1 : 0,
-                    transition: `opacity ${FADE_MS}ms ease`,
+                    transition: reduced ? 'none' : `opacity ${FADE_MS}ms ease`,
                   }}
                 >
                   {fr.src && (fr.mediaType ?? 'image') === 'video' ? (
@@ -389,33 +392,6 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
                     </div>
                   )}
                 </div>
-              ))}
-            </div>
-          )}
-          {/* One dot per frame. They are the only signal that the banner
-              holds more than one thing, and the only way through it when
-              the reader has asked for reduced motion. */}
-          {multi && (
-            <div
-              style={{
-                position: 'absolute',
-                right: 'clamp(20px, 4vw, 48px)',
-                bottom: 'clamp(20px, 4vh, 48px)',
-                display: 'flex',
-                gap: 8,
-                zIndex: 3,
-              }}
-            >
-              {usable.map((fr, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => { setActive(i); setAutoplay(false) }}
-                  aria-label={fr.caption ?? `Frame ${i + 1}`}
-                  aria-current={i === active ? 'true' : undefined}
-                  className="eb-dot"
-                  data-on={i === active ? 'true' : undefined}
-                />
               ))}
             </div>
           )}
@@ -479,16 +455,6 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
       </div>
 
       <style jsx>{`
-        .eb-dot {
-          width: 7px; height: 7px; padding: 0;
-          border-radius: 50%;
-          border: 1px solid rgba(255, 255, 255, 0.55);
-          background: transparent;
-          cursor: pointer;
-          transition: background 240ms ease, border-color 240ms ease;
-        }
-        .eb-dot[data-on] { background: #ffffff; border-color: #ffffff; }
-        .eb-dot:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
         .expanding-banner-wrap {
           /* 100vh stage + 60vh of reveal. Pinned span == animation
              distance, so the card is never held after it lands. */

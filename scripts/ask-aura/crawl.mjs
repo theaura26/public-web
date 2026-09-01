@@ -100,7 +100,13 @@ function extract(html, pageUrl) {
     .map((m) => m[1])
     .filter((src) => !/\.svg(\?|$)/i.test(src))
     .filter((src) => !/(logo|wordmark|icon|aura-dark|aura-animated)/i.test(src))
-  const base = pageUrl || ORIGIN
+  /* Resolve against the page's own canonical URL, not the host that
+     happened to serve it. The record's `url` is already canonicalised
+     this way; `image` was not, so a corpus built from a local build or
+     from staging stored 32 of 47 image URLs pointing at localhost:3200 —
+     every citation card broken for every reader. Falls back to the crawl
+     URL for a page with no canonical link. */
+  const base = (canonM && canonM[1]) || pageUrl || ORIGIN
   /* Several pages open with the same shared photograph, so "the first
      content image" is not reliably about the page. An image filed under
      the page's own slug is; anything else defers to og:image, which is

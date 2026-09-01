@@ -3,7 +3,6 @@ import {
   TwoCol,
   OneCol,
   Placeholder,
-  CrossfadeBanner,
   DataGrid,
   DataCard,
   PullQuote,
@@ -17,11 +16,9 @@ export default function SanctuaryPage() {
       <HeroBanner
         currentHref="/regenerative-life/sanctuary-and-stay"
         title="Sanctuary"
-        src="/aura-sanctuary.mp4"
-        mediaType="video"
-        poster="/aura-sanctuary.jpg"
+        src="/regenerative-life/sanctuary-and-stay/images/santuary-hero-banner.webp"
         caption="A network of valleys — two in practice, two more in listening"
-        alt="Aura Sanctuary — the four-valley sanctuary network"
+        alt="Someone sitting at the rail of a deck above a valley filling with cloud"
       />
 
       <TwoCol id="posture" heading="A sanctuary is a posture a place takes.">
@@ -38,15 +35,10 @@ export default function SanctuaryPage() {
         </p>
       </TwoCol>
 
-      <CrossfadeBanner
-        frames={[
-          { src: '/regenerative-life/sanctuary-and-stay/images/santuary-2.webp', alt: 'Cloud lying in the valley over terraces and forest',
-            caption: 'The four-valley map — Mudigere, Ohara, Munduk, Punakha' },
-          { src: '/regenerative-life/sanctuary-and-stay/images/santuary-hero-banner.webp', alt: 'Someone sitting at the rail of a deck above a valley filling with cloud',
-            caption: 'Nothing on the calendar, and a valley doing the scheduling' },
-          { src: '/regenerative-life/sanctuary-and-stay/images/santuary-4.webp', alt: 'Seed pods hanging against a deep blue sky',
-            caption: 'The same posture, whichever valley it is standing in' },
-        ]}
+      <Placeholder
+        src="/regenerative-life/sanctuary-and-stay/images/santuary-1.webp"
+        alt="Two people planting a sapling into red earth, seen from above, with the estate dogs alongside"
+        caption="The day the estate was going to have anyway"
       />
 
       <PullQuote>
@@ -119,11 +111,12 @@ export default function SanctuaryPage() {
         </DataGrid>
       </TwoCol>
 
-      <CrossfadeBanner
-        frames={[
-          { type: 'Detail · shared practice', caption: 'The same observation posture, four different soils' },
-          { type: 'Portrait · the herd', caption: "A herd the land can carry — one valley’s version of the five-product economy" },
-        ]}
+      <Placeholder
+        src="/regenerative-life/sanctuary-and-stay/videos/santuary-2.mp4"
+        mediaType="video"
+        poster="/regenerative-life/sanctuary-and-stay/images/santuary-2.webp"
+        alt="Cloud lying in the valley over terraces and forest"
+        caption="The four-valley map — Mudigere, Ohara, Munduk, Punakha"
       />
 
       <TwoCol id="two-listening" heading="The two in listening.">
@@ -148,11 +141,10 @@ export default function SanctuaryPage() {
         </p>
       </TwoCol>
 
-      <CrossfadeBanner
-        frames={[
-          { type: 'Landscape · volcanic', caption: 'Munduk — volcanic highlands of north Bali, ~1,200 m, cloud forest and terraces' },
-          { type: 'Landscape · Himalayan valley', caption: 'Punakha — river confluence and terraced valley in western Bhutan, ~1,200 m' },
-        ]}
+      <Placeholder
+        src="/regenerative-life/sanctuary-and-stay/images/santuary-3.webp"
+        alt="A covered deck open on three sides, mist standing in it"
+        caption="Morning at Mudigere, with nothing on the calendar"
       />
 
       <TwoCol id="why-network" heading="Why a network at all.">
@@ -208,9 +200,11 @@ export default function SanctuaryPage() {
       </TwoCol>
 
       <Placeholder
-        src="/regenerative-life/sanctuary-and-stay/images/santuary-3.webp"
-        alt="A covered deck open on three sides, mist standing in it"
-        caption="Morning at Mudigere, with nothing on the calendar"
+        src="/regenerative-life/sanctuary-and-stay/videos/santuary-4.mp4"
+        mediaType="video"
+        poster="/regenerative-life/sanctuary-and-stay/images/santuary-4.webp"
+        alt="Seed pods hanging against a deep blue sky"
+        caption="The same posture, whichever valley it is standing in"
       />
 
       <TwoCol id="working-day" heading="The working day, as it happens.">
@@ -224,12 +218,6 @@ export default function SanctuaryPage() {
           anybody had come to watch — which is the only reason watching it is worth anything.
         </p>
       </TwoCol>
-
-      <Placeholder
-        src="/regenerative-life/sanctuary-and-stay/images/santuary-1.webp"
-        alt="Two people planting a sapling into red earth, seen from above, with the estate dogs alongside"
-        caption="The day the estate was going to have anyway"
-      />
 
       <TwoCol id="festival" heading="Three days, twenty places.">
         <p className="p1">

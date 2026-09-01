@@ -14,7 +14,7 @@
  *   node scripts/ask-aura/crawl.mjs [--origin https://theaura.life]
  */
 import { createHash } from 'node:crypto'
-import { writeFile, mkdir } from 'node:fs/promises'
+import { writeFile, mkdir, readdir, unlink } from 'node:fs/promises'
 import path from 'node:path'
 
 const ORIGIN = argOf('--origin') ?? 'https://theaura.life'
@@ -265,6 +265,28 @@ const records = await pool(urls, CONCURRENCY, async (url) => {
     return { url, status: 0, state: 'error', seenAt, issue: String(err?.message ?? err) }
   }
 })
+
+/* Prune pages this crawl did not discover.
+ *
+ * The page files are the ingest's only input — it reads the directory,
+ * not the inventory — so a page taken out of the sitemap stayed in Ask
+ * Aura's knowledge indefinitely. Four field notes parked out of
+ * circulation went on answering questions for a full crawl cycle after
+ * they were withdrawn, drafting captions and all.
+ *
+ * Only ever removes files this crawl could have written: a run that
+ * errored out on a URL keeps that page rather than dropping it on a
+ * transient 500. */
+const kept = new Set(records.filter((r) => r.state === 'ok').map((r) => `${r.id}.json`))
+const errored = records.some((r) => r.state === 'error')
+if (!errored) {
+  const onDisk = (await readdir(path.join(DATA_DIR, 'pages'))).filter((f) => f.endsWith('.json'))
+  const stale = onDisk.filter((f) => !kept.has(f))
+  for (const f of stale) await unlink(path.join(DATA_DIR, 'pages', f))
+  if (stale.length) console.log(`Pruned ${stale.length} page(s) no longer discoverable: ${stale.map((f) => f.replace('.json', '')).join(', ')}`)
+} else {
+  console.log('Crawl had errors — skipping the prune so a transient failure cannot drop a live page.')
+}
 
 await writeFile(path.join(DATA_DIR, 'inventory.json'), JSON.stringify({ origin: ORIGIN, started, records }, null, 2))
 

@@ -118,8 +118,8 @@ export default function ContactPage() {
           </Reveal>
           <Reveal delay={100}>
             <p className="p1" style={{ maxWidth: 520, marginTop: 32 }}>
-              Whether it&rsquo;s coffee, collaboration, or just a conversation —
-              we&rsquo;d love to hear from you.
+              Coffee, collaboration, or a conversation &mdash; write, and
+              somebody here reads it.
             </p>
           </Reveal>
         </div>

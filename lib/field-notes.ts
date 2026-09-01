@@ -177,6 +177,16 @@ const CROSS_LISTED: CrossListed[] = [
     from: 'Regenerative Coffee',
   },
   {
+    /* The site's fullest account of fermentation, and it was missing from
+       the fermentation category. Parking /pepper left that category with
+       two notes; this is the one that most obviously belonged in it. */
+    href: '/regenerative-life/food-and-fermentation',
+    title: 'Food & Fermentation',
+    description: 'Three fermentation disciplines on one estate — coffee, pepper and cow dung, one process doing three jobs.',
+    categories: ['coffee-fermentation'],
+    from: 'Regenerative Life',
+  },
+  {
     href: '/regenerative-coffee/transparency',
     title: 'Transparency',
     description: 'Nine streams of data, signed from the field, and re-read ninety days later.',

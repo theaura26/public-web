@@ -50,7 +50,17 @@ import {
 export type Movement = {
   heading: string
   lines: string[]
-  after?: { kind: 'banner' | 'plate' | 'portrait'; type: string; caption: string; alt?: string; ratio?: string }
+  after?: {
+    kind: 'banner' | 'plate' | 'portrait'
+    /** The drafting brief, shown only while `src` is empty. */
+    type: string
+    caption: string
+    alt?: string
+    ratio?: string
+    src?: string
+    mediaType?: 'image' | 'video'
+    poster?: string
+  }
   /** Revealing text: a stanza that fades up line by line as it is
    *  scrolled through. Newline-separated. Used where a page wants to
    *  land an idea rather than explain another one — not on every page,
@@ -76,8 +86,8 @@ export type Subject = {
   movements?: Movement[]
   record?: { value: string; label: string; note?: string }[]
   related?: { label: string; href: string }[]
-  /** Drafting hints for the banner, until there is a photograph. */
-  hero?: { type: string; caption: string }
+  /** The banner. `type` is the drafting hint, dropped once `src` is set. */
+  hero?: { type: string; caption: string; src?: string; mediaType?: 'image' | 'video'; poster?: string; alt?: string }
   /** One line worth setting on its own. Used at most once per page. */
   quote?: string
   /** Mid-page image slot, in its drafting state. */
@@ -124,13 +134,20 @@ export default function SubjectPage({
 }) {
   const v = (s.variant ?? 0) % 3
 
+  /* `type` only while there is no photograph. It is the brief for the
+     shot — "Detail · red laterite in the hand" — and once the shot
+     exists it is a note to the photographer sitting in the reader's
+     caption, and in the text every crawler and agent view reads. */
   const opener = (
     <HeroBanner
       key="hero"
       title={s.label}
-      type={s.hero?.type ?? 'Landscape · Mudigere'}
+      src={s.hero?.src}
+      mediaType={s.hero?.mediaType}
+      poster={s.hero?.poster}
+      type={s.hero?.src ? undefined : (s.hero?.type ?? 'Landscape · Mudigere')}
       caption={s.hero?.caption ?? s.lede}
-      alt={`${s.label} — Aura, Aura Estate, Mudigere`}
+      alt={s.hero?.alt ?? `${s.label} — Aura, Aura Estate, Mudigere`}
     />
   )
 
@@ -170,14 +187,27 @@ export default function SubjectPage({
      carrying what the picture is meant to be, so the page reads as
      'image to come' rather than as a hole. */
   function visual(after: NonNullable<Movement['after']>, key: string) {
+    /* Same rule as the banner: the brief is shown only while the picture
+       it describes does not exist. */
+    const brief = after.src ? undefined : after.type
     if (after.kind === 'plate') {
-      return <Placeholder key={key} type={after.type} caption={after.caption} />
+      return (
+        <Placeholder
+          key={key}
+          src={after.src}
+          mediaType={after.mediaType}
+          poster={after.poster}
+          type={brief}
+          alt={after.alt ?? after.caption}
+          caption={after.caption}
+        />
+      )
     }
     if (after.kind === 'portrait') {
       return (
         <Portrait
           key={key}
-          src="/aura-placeholder.svg"
+          src={after.src ?? '/aura-placeholder.svg'}
           /* The ratio the shot is to be delivered at. The box is set to
              it, so a matched picture is never cropped. */
           ratio={after.ratio ?? '4 / 5'}
@@ -189,7 +219,10 @@ export default function SubjectPage({
     return (
       <ExpandingBanner
         key={key}
-        type={after.type}
+        src={after.src}
+        mediaType={after.mediaType}
+        poster={after.poster}
+        type={brief}
         alt={after.alt ?? after.caption}
         caption={after.caption}
       />

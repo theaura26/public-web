@@ -419,6 +419,16 @@ export const CHAPTERS: Chapter[] = [
          this way, and the six disciplines under it are how. */
       return {
         ...base,
+        /* Its own banner, not the soil discipline's. A merged chapter
+           inherits hero from its first part, which was right while every
+           one of them was a grey drafting card and wrong the moment a
+           photograph existed for the chapter itself. */
+        hero: {
+          type: 'Detail · finished compost in the hand',
+          caption: 'What the estate makes before it grows anything — Aura Estate, Mudigere',
+          src: '/regenerative-life/the-plantation/images/aura-plantation-hero-banner.webp',
+          alt: 'Two hands cupping dark finished compost',
+        },
         movements: dedupeByHeading([...thinVisuals([ag]), ...(base.movements ?? [])]),
         record: [...ag.record, ...(base.record ?? [])],
         related: dedupeByHref([...ag.related, ...(base.related ?? [])]),

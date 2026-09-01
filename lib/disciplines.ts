@@ -50,10 +50,13 @@ export type Discipline = {
   }[]
   /** Figures worth pulling out. `note` qualifies where the record does. */
   record?: { value: string; label: string; note?: string }[]
-  /** Drafting brief for the banner, until there is a photograph. */
-  hero?: { type: string; caption: string }
-  /** Drafting brief for the mid-page plate. */
-  plate?: { type: string; caption: string }
+  /** The banner. `type` is the drafting brief and is dropped once `src`
+   *  is set — it is a note to whoever takes the shot, and while it was
+   *  the only thing here it was being read as caption text by anything
+   *  that flattens the page. */
+  hero?: { type: string; caption: string; src?: string; mediaType?: 'image' | 'video'; poster?: string; alt?: string }
+  /** The mid-page plate, same contract. */
+  plate?: { type: string; caption: string; src?: string; mediaType?: 'image' | 'video'; poster?: string; alt?: string }
   /** One line worth setting on its own. At most one per page. */
   quote?: string
   /** A tall breaker between the figures and the gaps. */

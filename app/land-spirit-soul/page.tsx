@@ -6,7 +6,7 @@ import {
   TwoCol,
   PullQuote,
   Placeholder,
-  Portrait,
+  CrossfadeBanner,
   ScrollHighlight,
   Continue,
 } from '@/components/article/Article'
@@ -73,22 +73,6 @@ export default function LandSpiritSoulPage() {
         </p>
       </TwoCol>
 
-      {/* Twenty-seven mornings in one frame. The page argues the point is
-          repetition rather than ceremony, and a grid of different people
-          at the same wall makes that argument without a sentence. */}
-      <Placeholder
-        src="/land-spirit-soul/images/aura-land-spirit-soul-03.webp"
-        alt="A grid of twenty-seven frames: different people lighting the same shrine lamp on different mornings"
-        caption="A moment of stillness before the day starts — every morning, not on occasion"
-      />
-
-      <Portrait
-        src="/land-spirit-soul/images/aura-land-spirit-soul-02.webp"
-        ratio="4 / 5"
-        alt="A man lighting incense at the shrine on the shed wall"
-        caption="What the cow gave, offered back to her as light"
-      />
-
       <ScrollHighlight>
         {`The diya brings light.\n   The prayer brings intention.\n   The cow gives nourishment.\n   The Gaushala is the care owed back.`}
       </ScrollHighlight>
@@ -112,14 +96,25 @@ export default function LandSpiritSoulPage() {
         </p>
       </TwoCol>
 
-      {/* The act itself, moving, under the section that argues it is the
-          repetition rather than the ceremony that matters. */}
-      <Placeholder
-        src="/land-spirit-soul/videos/aura-land-spirit-soul-02.mp4"
-        mediaType="video"
-        poster="/land-spirit-soul/images/aura-land-spirit-soul-02.webp"
-        alt="Someone lighting the shrine lamp on the shed wall before the day starts"
-        caption="Before anyone walks a block"
+      {/* One stage, two frames: the act, then the act twenty-seven times
+          over. They were two banners a screen apart making one argument,
+          and the still that opens the film was also standing on its own
+          as a portrait — the same picture three times on one page. */}
+      <CrossfadeBanner
+        frames={[
+          {
+            src: '/land-spirit-soul/videos/aura-land-spirit-soul-02.mp4',
+            mediaType: 'video',
+            poster: '/land-spirit-soul/images/aura-land-spirit-soul-02.webp',
+            alt: 'Someone lighting the shrine lamp on the shed wall before the day starts',
+            caption: 'Before anyone walks a block',
+          },
+          {
+            src: '/land-spirit-soul/images/aura-land-spirit-soul-03.webp',
+            alt: 'A grid of twenty-seven frames: different people lighting the same shrine lamp on different mornings',
+            caption: 'A moment of stillness before the day starts — every morning, not on occasion',
+          },
+        ]}
       />
 
       <TwoCol id="daily" heading="The significance is in the repetition.">

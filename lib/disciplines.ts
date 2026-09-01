@@ -42,7 +42,21 @@ export type Discipline = {
   movements?: {
     heading: string
     lines: string[]
-    after?: { kind: 'banner' | 'plate' | 'portrait'; type: string; caption: string; alt?: string; ratio?: string }
+    after?: {
+      kind: 'banner' | 'plate' | 'portrait'
+      /** The drafting brief — what the picture is meant to be. Shown on
+       *  the grey card while there is none, and dropped the moment `src`
+       *  is set: it is a note to whoever takes the shot, and it was being
+       *  read as caption text by everything that flattens the page. */
+      type?: string
+      caption: string
+      alt?: string
+      ratio?: string
+      /** The photograph, once it exists. */
+      src?: string
+      mediaType?: 'image' | 'video'
+      poster?: string
+    }
     /** Revealing text — a stanza that fades up line by line on scroll. */
     reveal?: string
     /** A grid of short cards. */
@@ -50,14 +64,17 @@ export type Discipline = {
   }[]
   /** Figures worth pulling out. `note` qualifies where the record does. */
   record?: { value: string; label: string; note?: string }[]
-  /** Drafting brief for the banner, until there is a photograph. */
-  hero?: { type: string; caption: string }
-  /** Drafting brief for the mid-page plate. */
-  plate?: { type: string; caption: string }
+  /** The banner. `type` is the drafting brief and is dropped once `src`
+   *  is set — it is a note to whoever takes the shot, and while it was
+   *  the only thing here it was being read as caption text by anything
+   *  that flattens the page. */
+  hero?: { type?: string; caption: string; src?: string; mediaType?: 'image' | 'video'; poster?: string; alt?: string }
+  /** The mid-page plate, same contract. */
+  plate?: { type?: string; caption: string; src?: string; mediaType?: 'image' | 'video'; poster?: string; alt?: string }
   /** One line worth setting on its own. At most one per page. */
   quote?: string
   /** A tall breaker between the figures and the gaps. */
-  breaker?: { caption: string; alt: string }
+  breaker?: { caption: string; alt: string; src?: string; ratio?: string }
   /** Where to read more, on pages that already exist. */
   related?: { label: string; href: string }[]
 }
@@ -81,7 +98,9 @@ export const DISCIPLINES: Discipline[] = [
           'A preparation goes out on the day the calendar names, and only if the plate agrees. That is the order of operations the whole system rests on.',
           'The lunar calendar sets the timing; the biology is the reason. The charts are a schedule, and Aura says so in print rather than leaving the impression of a belief it does not hold.',
         ],
-        after: { kind: 'banner', type: 'Wide · a preparation going out at first light', caption: 'The day the calendar names, and only if the plate agrees' },
+        after: {
+          src: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-01.webp',
+          alt: 'A vortex turned into a barrel of Jeevamrit', kind: 'banner', type: 'Wide · a preparation going out at first light', caption: 'The day the calendar names, and only if the plate agrees' },
       },
       {
         heading: 'Made here, from this herd.',
@@ -89,7 +108,6 @@ export const DISCIPLINES: Discipline[] = [
           'BD 500 through 508 are prepared on the estate and applied on a calendar built for 150 acres. The dung comes from about fifty Malnad Gidda grazing the ground the preparations return to — [Circular Intelligence](/circular) follows one batch through that loop end to end.',
           'Barrels are stirred by hand for about forty-five minutes a day, vortex and reverse. Cow pat pit matures ninety days; the rest run sixty- to ninety-day cycles.',
         ],
-        after: { kind: 'plate', type: 'Process · barrels mid-stir, vortex and reverse', caption: 'Forty-five minutes a day, by hand' },
       },
       {
         heading: 'BD 500 through 508.',
@@ -144,7 +162,9 @@ export const DISCIPLINES: Discipline[] = [
           'The ground here is old, iron-rich and free-draining. In a hundred inches of monsoon that is a gift: water moves through rather than sitting on the roots. In the dry weeks that follow it is the problem, because the same openness lets moisture go.',
           'Almost everything the estate does to the ground is an answer to that second half. It is held between pH 6.0 and 6.5 — inside that band the nutrients already in the soil stay available to a plant; outside it they lock up and the fertility is there on paper and nowhere else.',
         ],
-        after: { kind: 'banner', type: 'Detail · red laterite, wet and dry in the same frame', caption: 'Free-draining is a gift in the monsoon and a problem in the weeks after it', alt: 'Red laterite soil at Aura Estate, 3,600 ft' },
+        after: {
+          src: '/regenerative-life/the-plantation/images/aura-plantation-2.webp',
+          alt: 'A cut bank of red laterite with dark topsoil above it', kind: 'banner', type: 'Detail · red laterite, wet and dry in the same frame', caption: 'Free-draining is a gift in the monsoon and a problem in the weeks after it' },
       },
       {
         heading: 'How the soil is read.',
@@ -188,7 +208,9 @@ export const DISCIPLINES: Discipline[] = [
           'A colony count is a crude instrument and an honest one: it says how much is alive in a batch, before and after, on the same medium each time. Trends from a crude instrument used consistently beat one good reading.',
           'Trichoderma and Pseudomonas are counted by name in every batch. Both antagonise common root and leaf pathogens, so their presence is the nearest thing to a reading of what a preparation will do once it reaches a block.',
         ],
-        after: { kind: 'banner', type: 'Detail · plates on the bench, before and after', caption: 'A crude instrument, and an honest one' },
+        after: {
+          src: '/regenerative-life/the-plantation/images/aura-plantation-5.webp',
+          alt: 'Black finger fungi standing out of a rotting log', kind: 'banner', type: 'Detail · plates on the bench, before and after', caption: 'A crude instrument, and an honest one' },
       },
       {
         heading: 'Ninety days later, on the same medium.',
@@ -243,7 +265,9 @@ export const DISCIPLINES: Discipline[] = [
           'Humidity is what most leaf pathogens need, and a four-storey canopy holds it. A block held at the right light is a block that dries after rain, and a block that dries after rain is a block under less pressure.',
           'So whiskering to a light target is a disease decision as much as a ripening one, and the two are taken together. [The Light Instrument](/shade) is how that light gets set.',
         ],
-        after: { kind: 'plate', type: 'Detail · light through four storeys', caption: 'The light survey and the disease question, read from two directions' },
+        after: {
+          src: '/regenerative-life/the-plantation/images/aura-plantation-1.webp',
+          alt: 'The four-storey canopy seen from above', kind: 'portrait', ratio: '16 / 9', caption: 'The light survey and the disease question, read from two directions' },
       },
       {
         heading: 'Every cut is a door.',
@@ -278,7 +302,7 @@ export const DISCIPLINES: Discipline[] = [
           'A four-storey canopy — emergent, canopy, understorey, ground — is maintained across 100 acres of coffee and 32 of tea. Earthworms are counted quarterly in a 50 × 50 cm quadrat, in the same frames each time, counted and signed by Pulkit, who runs the biodiversity monitoring.',
           'Aura is in the Western Ghats, a UNESCO World Heritage region. The listing is a serial property of thirty-nine discrete components, and the estate sits in the region rather than inside an inscribed one.',
         ],
-        after: { kind: 'banner', type: 'Wide · the canopy read from below', caption: 'Emergent, canopy, understorey, ground — across 132 acres' },
+        after: { kind: 'banner', src: '/regenerative-life/the-plantation/images/aura-plantation-4.webp', alt: 'Light coming through four storeys of canopy onto a fallen limb', caption: 'Emergent, canopy, understorey, ground — across 132 acres' },
       },
       {
         heading: 'What lives in the four storeys.',
@@ -303,12 +327,14 @@ export const DISCIPLINES: Discipline[] = [
           'Bug hotels go up where a working landscape has stopped producing cavities — [Bug Hotels](/bug-hotels) explains what is drilled and why nothing is introduced. Forest islands are the other piece: built to about 4 × 1 m and 80–120 cm high, in alternating layers of cow-dung compost and freshly cut green biomass, then left alone.',
           'Woody biomass stays in the block it came from and its decay is logged, which is the same idea at a smaller scale.',
         ],
-        after: { kind: 'plate', type: 'Detail · a bug hotel, occupied', caption: 'Put up where a working landscape stopped producing cavities' },
+        after: {
+          src: '/regenerative-life/the-plantation/images/aura-plantation-6.webp',
+          alt: 'An insect at rest on the bark of a shade tree', kind: 'portrait', ratio: '16 / 9', caption: 'Put up where a working landscape stopped producing cavities' },
       },
       {
         heading: 'Six plants, taken back out.',
         lines: [
-          'Six introduced plants are being taken back out of the understorey so the native ground layer has somewhere to return to. [The Larder](/pollinators) names them and what each one does.',
+          'Six introduced plants are being taken back out of the understorey so the native ground layer has somewhere to return to. [The Flowering Understory](/pollinators) names them and what each one does.',
         ],
         after: { kind: 'portrait', type: 'Detail · Lantana pulled from the understorey', caption: 'So the native ground layer has somewhere to return to' },
       },
@@ -339,7 +365,9 @@ export const DISCIPLINES: Discipline[] = [
           'The rain does not arrive evenly. Most of the year’s hundred inches comes in a few monsoon months, so the question is never how much falls but how fast it leaves.',
           'Red laterite drains fast — a gift in a hundred inches of rain and a problem in the weeks after it stops. Almost everything the estate does to hold moisture is answering that second half.',
         ],
-        after: { kind: 'banner', type: 'Wide · monsoon coming up the valley', caption: 'A hundred inches, most of it in a few months' },
+        after: {
+          src: '/regenerative-life/the-plantation/images/aura-plantation-8.webp',
+          alt: 'Water running clear over stones in a stream bed', kind: 'banner', type: 'Wide · monsoon coming up the valley', caption: 'A hundred inches, most of it in a few months' },
       },
       {
         heading: 'The canopy is the first instrument.',
@@ -390,7 +418,9 @@ export const DISCIPLINES: Discipline[] = [
           'Managing at tree level means the unit of decision is one plant. Two trees in the same block can want opposite things, and a block-level instruction gives both the wrong one.',
           'Trees are tagged across the estate, and a cow pat ball can be logged to an individual plant.',
         ],
-        after: { kind: 'banner', type: 'Wide · two trees in one block, wanting opposite things', caption: 'A block-level instruction gets one of them wrong' },
+        after: {
+          src: '/regenerative-life/the-plantation/images/aura-plantation-3.webp',
+          alt: 'Pepper vine wound along the limbs of a shade tree', kind: 'plate', caption: 'A block-level instruction gets one of them wrong' },
       },
       {
         heading: 'Reading the light before anyone cuts.',
@@ -398,7 +428,9 @@ export const DISCIPLINES: Discipline[] = [
           'The 2026 pre-monsoon illuminance survey read five clusters an acre, ten readings each — fifty observations an acre, taken on two digital lux meters.',
           'Block 3, Byton Patte, came back at roughly 33,000 lux in Zone A, 62,000 in Zone B and 82,000 in Zone C, against CCRI targets of 50,000–70,000 for Arabica. [The Light Instrument](/shade) is the full account of the survey and what was done with it.',
         ],
-        after: { kind: 'plate', type: 'Process · a lux meter held at canopy height', caption: 'Five clusters an acre, ten readings each' },
+        after: {
+          src: '/regenerative-life/the-plantation/images/aura-plantation-7.webp',
+          alt: 'Moss and lichen banked along a trunk in shade', kind: 'portrait', ratio: '16 / 9', caption: 'Five clusters an acre, ten readings each' },
       },
       {
         heading: 'The cut itself.',
@@ -432,14 +464,18 @@ export const DISCIPLINES: Discipline[] = [
         lines: [
           'Each does a different job. Jeevamrit inoculates — a microbial culture brewed from dung, urine, jaggery, pulse flour and a handful of undisturbed soil. Beejamrit treats seed before it goes in. Panchgavya is the five cow products together, fed to the plant directly. Kunapjal is the old fermented liquid manure, for nitrogen. Cow pat pit carries composted biology into the soil.',
         ],
-        after: { kind: 'banner', type: 'Wide · the five, lined up on the shed bench', caption: 'Each doing a different job in the same system' },
+        after: {
+          src: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-03.webp',
+          alt: 'A handful of finished preparation held up and smelled', kind: 'plate', caption: 'Each doing a different job in the same system' },
       },
       {
         heading: 'None of it is bought.',
         lines: [
           'All five are brewed on the estate from the estate’s own herd, which is the reason the herd is indigenous and stays on the land it feeds. [Ecosystem Engineers](/herd) is the herd that makes it.',
         ],
-        after: { kind: 'plate', type: 'Detail · dung and urine from the estate’s own herd', caption: 'The reason the herd is indigenous and stays on the land it feeds' },
+        after: {
+          src: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-02.webp',
+          alt: 'Malnad Gidda cattle lying in the shed', kind: 'portrait', ratio: '16 / 9', caption: 'The reason the herd is indigenous and stays on the land it feeds' },
       },
       {
         heading: 'Planned backwards from the calendar.',
@@ -490,7 +526,9 @@ export const DISCIPLINES: Discipline[] = [
           'Machine intelligence sits inside that rather than above it. There is a living layer, a human layer, and a physical layer of sensors and machines — natural intelligence is all of them read together.',
           'Three things make it hard here in particular: 150 acres of four-storey canopy is a difficult thing to capture at scale, the people who can read it are fewer every year, and nothing about listening is automatic.',
         ],
-        after: { kind: 'plate', type: 'Detail · a leaf sensor in place', caption: 'Cheap enough to leave outdoors through a monsoon', ratio: '16 / 9' },
+        after: {
+          src: '/regenerative-life/aura-intelligence/images/aura-intelligence-01.webp',
+          alt: 'Culture plates from the estate lab', kind: 'plate', type: 'Detail · a leaf sensor in place', caption: 'Cheap enough to leave outdoors through a monsoon', ratio: '16 / 9' },
       },
       {
         heading: 'The knowledge is six thousand years old.',
@@ -505,7 +543,9 @@ export const DISCIPLINES: Discipline[] = [
           'Fifty years ago the farmer was handed a box and told not to ask questions. It worked, until the land began to pay for it.',
           'Regeneration hands the complexity back. Something has to be able to hold it, and that is the whole of the problem this discipline exists to solve.',
         ],
-        after: { kind: 'portrait', type: 'Detail · the box, and what it hid', caption: 'It worked until the land began to pay for it', ratio: '4 / 5' },
+        after: {
+          src: '/regenerative-life/aura-intelligence/images/aura-intelligence-05.webp',
+          alt: 'Moss and epiphytes established on a trunk', kind: 'portrait', type: 'Detail · the box, and what it hid', caption: 'It worked until the land began to pay for it', ratio: '4 / 5' },
       },
       {
         heading: 'From an old estate to a regenerative one.',
@@ -532,7 +572,9 @@ export const DISCIPLINES: Discipline[] = [
           'Capture happens where the work already happens. Field teams log through WhatsApp workflows — field work, fertiliser work, cow work, estate walks — as formatted text, photographs and voice, so the record gets built without asking anybody to work differently.',
           'A weather station at 3,600 ft and the estate lab are the other two live sources. Drones, a plant-sensor network and satellite are in the design and not yet running, and this page will say so until they are.',
         ],
-        after: { kind: 'banner', type: 'Detail · a field log entered on a phone, mid-block', caption: 'Formatted text, photographs and voice — without changing how anybody works', ratio: '16 / 9' },
+        after: {
+          src: '/regenerative-life/aura-intelligence/images/aura-intelligence-04.webp',
+          alt: 'A hand turning a coffee leaf to look at it', kind: 'banner', type: 'Detail · a field log entered on a phone, mid-block', caption: 'Formatted text, photographs and voice — without changing how anybody works', ratio: '16 / 9' },
       },
       {
         heading: 'Every tree. Every cow. Every season.',
@@ -549,7 +591,9 @@ export const DISCIPLINES: Discipline[] = [
           'Above them sits memory: base data, observations, interventions and outside knowledge in one governed system, sliced so a question about husbandry meets what the estate already knows about husbandry. That layer is in build now.',
           'Nine streams feed it, each sampling at its own interval, because soil moves in seasons and a ferment moves in minutes. Every human event is signed by the person who did it: BD 501, Block 07, 06:14, waning moon, humidity 78%, by Rao, dung batch G-03.',
         ],
-        after: { kind: 'plate', type: 'Detail · the estate database, queried', caption: 'A block, a batch, a lot and a date, all addressable', ratio: '16 / 9' },
+        after: {
+          src: '/regenerative-life/aura-intelligence/images/aura-intelligence-09.webp',
+          alt: 'A cow grazing with an egret walking beside her', kind: 'portrait', ratio: '16 / 9', caption: 'A block, a batch, a lot and a date, all addressable' },
       },
       {
         heading: 'Building the world model.',
@@ -564,7 +608,9 @@ export const DISCIPLINES: Discipline[] = [
           'The questions it exists to answer are ordinary ones: what is here and where, and what condition is it in. What is happening today and what needs attention. What has happened before under conditions like these. What is likely next, and what would happen if something changed.',
           'A limited pilot is being built. Predictions are validated against sensor readings, field observations and intervention outcomes, and fed back into the estate model.',
         ],
-        after: { kind: 'portrait', type: 'Detail · a predicted outcome beside the measured one', caption: 'The difference between them is what trains the model', ratio: '4 / 5' },
+        after: {
+          src: '/regenerative-life/aura-intelligence/images/aura-intelligence-02.webp',
+          alt: 'The estate from the air, a building among the canopy', kind: 'banner', caption: 'The difference between them is what trains the model' },
       },
       {
         heading: 'The next right step, in the hands of the person on the ground.',
@@ -573,6 +619,12 @@ export const DISCIPLINES: Discipline[] = [
           'The person stays responsible. Consequential decisions are approved by a human, and any move towards machines acting on their own is bounded by conditions written down in advance — a commitment rather than a limitation of the technology.',
           'The same data makes the estate a living laboratory: experiments that only this record makes possible, run on ground that is being farmed anyway.',
         ],
+        after: {
+          kind: 'portrait', ratio: '4 / 5',
+          src: '/regenerative-life/aura-intelligence/images/aura-intelligence-08.webp',
+          alt: 'An estate worker crossing a block, tool in hand',
+          caption: 'The reading goes to whoever is standing there',
+        },
       },
       {
         heading: 'Animal, preparation, soil, cherry, cup.',
@@ -580,6 +632,12 @@ export const DISCIPLINES: Discipline[] = [
           'The chain worth keeping runs from the animal through the preparation, into the soil, into the cherry, into the cup — and alongside it, observation, recommendation, approval, action, measured outcome. Holding all of it together is what would let somebody audit a claim instead of being asked to trust it.',
           'Everything exports in open formats, because software gets replaced and a hundred-year claim needs a record that outlives the company keeping it. Writing milestones to a public chain is an intention and is not built.',
         ],
+        after: {
+          kind: 'plate',
+          src: '/regenerative-life/aura-intelligence/images/aura-intelligence-07.webp',
+          alt: 'Coffee cherries ripening along the branch',
+          caption: 'One chain, and every link of it logged',
+        },
       },
       {
         heading: 'One estate, then a network.',
@@ -587,7 +645,9 @@ export const DISCIPLINES: Discipline[] = [
           'Mudigere is the first, and one place is a sample of one. Ohara — the second sanctuary, north of Kyoto — tests whether a way of working that held in the Western Ghats holds in a valley with a different climate, a different soil and no crop on it.',
           'What passes between them is the point. A reading confirmed in two valleys is worth more than one confirmed in one, and the same record is what makes robotics, universities, hospitality and agriculture able to build on it. [Provenance](/provenance) is how a single event becomes a record.',
         ],
-        after: { kind: 'banner', type: 'Wide · two valleys, one practice', caption: 'Mudigere in the Western Ghats, Ohara north of Kyoto', ratio: '16 / 9' },
+        after: {
+          src: '/regenerative-life/aura-intelligence/images/aura-intelligence-06.webp',
+          alt: 'The planted slopes running away into the hills', kind: 'banner', type: 'Wide · two valleys, one practice', caption: 'Mudigere in the Western Ghats, Ohara north of Kyoto', ratio: '16 / 9' },
       },
     ],
     record: [

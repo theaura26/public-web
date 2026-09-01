@@ -18,9 +18,9 @@ export default function BugHotelsPage() {
     <>
       <HeroBanner
         title="Bug Hotels"
-        type="Detail · drilled logs, varied bore"
-        caption="Wooden logs with holes of different sizes, mounted in the block — Aura Estate, Mudigere"
-        alt="A bug hotel mounted under the coffee canopy at Mudigere"
+        src="/bug-hotels/images/aura-bug-hotels-01.webp"
+        caption="Occupied — Aura Estate, Mudigere"
+        alt="Bees crowding the entrance slot of a hive box in the block"
       />
 
       <TwoCol id="premise" heading="A plantation can be full of plants and short of homes.">
@@ -53,7 +53,8 @@ export default function BugHotelsPage() {
       </OneCol>
 
       <Placeholder
-        type="Detail · occupancy, close"
+        src="/bug-hotels/images/aura-bug-hotels-03.webp"
+        alt="Bees packed along a bamboo tube inside the hotel"
         caption="Different bore sizes suit different bodies — the variation is the design"
       />
 
@@ -80,10 +81,10 @@ export default function BugHotelsPage() {
       </TwoCol>
 
       <Portrait
-        src="/aura-placeholder.svg"
-        ratio="5 / 7"
-        alt="Drilled logs of varied bore, mounted in the block"
-        caption="The holes a managed landscape stops producing"
+        src="/bug-hotels/images/aura-bug-hotel-02.webp"
+        ratio="4 / 5"
+        alt="A bug hotel on a stake in the undergrowth, wrapped against the rain and labelled in chalk"
+        caption="Wrapped against the monsoon, labelled by hand, and then left alone"
       />
 
       <TwoCol id="record" heading="Four things worth writing down.">
@@ -133,6 +134,16 @@ export default function BugHotelsPage() {
           The aim is simple: make room for the small lives that keep the large system running.
         </p>
       </TwoCol>
+
+      {/* Closes on a tenant that is not a bee. The section above argues
+          the hotels are one layer among several and that the point is
+          the small lives, plural — a moth on the fern layer says that
+          better than another frame of the structure would. */}
+      <Placeholder
+        src="/bug-hotels/images/aura-bug-hotels-04.webp"
+        alt="A large moth at rest on ferns in the understorey"
+        caption="The small lives that keep the large system running"
+      />
 
       <Continue currentHref="/bug-hotels" />
     </>

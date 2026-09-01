@@ -89,7 +89,6 @@ const ASSIGNMENT: Record<string, CategoryId[]> = {
   '/biodynamic': ['biodynamic'],
   '/circular': ['biodynamic', 'labs'],
   '/rta': ['biodynamic'],
-  '/vedic': ['biodynamic'],
 
   /* The herd, and everything else with a heartbeat. */
   '/herd': ['biodynamic', 'animals'],
@@ -105,15 +104,12 @@ const ASSIGNMENT: Record<string, CategoryId[]> = {
   '/ecology': ['biodiversity', 'land-ecology'],
   '/living-systems': ['biodiversity'],
   '/shade': ['biodiversity'],
-  '/areca': ['biodiversity'],
 
   /* Where a claim gets tested. */
-  '/provenance': ['labs'],
 
   /* One harvest, many lots. */
   '/coffee': ['coffee-fermentation', 'labs'],
   '/fermentation': ['coffee-fermentation', 'labs'],
-  '/pepper': ['coffee-fermentation', 'biodiversity'],
 }
 
 /* Notes announced but not yet published.
@@ -179,6 +175,16 @@ const CROSS_LISTED: CrossListed[] = [
     description: 'Three days on the estate, and a coffee that exists nowhere else.',
     categories: ['art-culture'],
     from: 'Regenerative Coffee',
+  },
+  {
+    /* The site's fullest account of fermentation, and it was missing from
+       the fermentation category. Parking /pepper left that category with
+       two notes; this is the one that most obviously belonged in it. */
+    href: '/regenerative-life/food-and-fermentation',
+    title: 'Food & Fermentation',
+    description: 'Three fermentation disciplines on one estate — coffee, pepper and cow dung, one process doing three jobs.',
+    categories: ['coffee-fermentation'],
+    from: 'Regenerative Life',
   },
   {
     href: '/regenerative-coffee/transparency',

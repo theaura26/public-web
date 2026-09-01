@@ -907,6 +907,17 @@ p.journal-hero__caption {
 [data-view="agent"] .aura-nav > a:first-child img { display: none !important; }
 [data-view="agent"] .nav-wordmark { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
 
+/* The bar stops floating. It is fixed with a fully transparent
+   background, which works over photography and fails completely over a
+   wall of monospace text: the wordmark and the word Menu sat on top of
+   whatever line happened to be scrolling past them, both legible and
+   neither readable. Static puts it at the top of the document where a
+   header belongs, and the overlap cannot happen. */
+[data-view="agent"] .aura-nav {
+  position: static !important;
+  background: var(--bg) !important;
+}
+
 /* Footer: simplified, no watermark. */
 [data-view="agent"] footer { background: var(--bg) !important; padding-bottom: var(--space-7) !important; }
 [data-view="agent"] footer > div:last-child { display: none !important; }
@@ -1047,10 +1058,20 @@ p.journal-hero__caption {
    plate waiting on a picture. None of it carries meaning as plain text. */
 [data-view="agent"] main :is(
   .rc-ring, .rc-orbit, .sc-bg, .sc-scrim, .p-bg, .p-scrim,
-  .ld-circle, .bn-m, .m-pillar-media, .m-next-m
-) {
+  .ld-circle, .bn-m, .m-pillar-media, .m-next-m,
+  .cb, .bx-map, .lc-toggle, .lc-panel
+),
+[data-view="agent"] nav.ln {
   display: none !important;
 }
+
+/* Controls, not content. The chapter sub-nav repeats on every microsite
+   page and duplicates the navigation AgentSitemap already provides; the
+   estate map is an SVG whose eight labels read as loose words once
+   flattened, so the block record is written out as text beside it; and
+   the lot-data toggle opens a panel that is likewise written out in
+   full for this view. A button reading "Show lot data" is an
+   instruction to click, and there is nothing here to click. */
 
 /* The circle's own layout: eight glyphs pinned around an orbit, each
    counter-rotating. Flattened to static they would still be sized off

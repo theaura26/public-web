@@ -1,13 +1,4 @@
 {
-  "/areca": {
-    "hash": "faadee0547d24695",
-    "line": "This is the palm the whole estate is built on — ask me anything.",
-    "prompts": [
-      "Why is the Sentinel Palm important?",
-      "How does it support coffee growth?",
-      "What role does Malabar Pepper play?"
-    ]
-  },
   "/artistry": {
     "hash": "1b5570e2270cb070",
     "line": "This is where we shape ideas into lasting craft — ask me anything.",
@@ -143,24 +134,6 @@
       "How do Shu, Ha, Ri shape Ohara?"
     ]
   },
-  "/pepper": {
-    "hash": "51edca26f91cb05b",
-    "line": "This is the pepper vine climbing our palms — ask me anything.",
-    "prompts": [
-      "How is Malabar pepper grown here?",
-      "What makes Malabar Black Gold special?",
-      "How do you process the pepper by hand?"
-    ]
-  },
-  "/provenance": {
-    "hash": "4683949ea7620c95",
-    "line": "This is how we track every step of our coffee's journey — ask me anything.",
-    "prompts": [
-      "How is each event recorded?",
-      "What does 'signed by the hand' mean?",
-      "How does the record outlast the sale?"
-    ]
-  },
   "/regenerative-life/the-reason": {
     "hash": "8b3c855987490542",
     "line": "This is why we do what we do — ask me anything.",
@@ -222,15 +195,6 @@
       "What is a bug hotel?",
       "How do bug hotels help pollinators?",
       "Why are drilled logs used here?"
-    ]
-  },
-  "/cows-of-aura": {
-    "hash": "439d643d7e3c4a34",
-    "line": "These cows are part of our family here — ask me anything.",
-    "prompts": [
-      "How do you track each cow?",
-      "What jobs do the cows have?",
-      "How is each cow cared for?"
     ]
   },
   "/field-notes/animals": {
@@ -402,15 +366,6 @@
       "What is Aura Intelligence?",
       "How does Aura read the land?",
       "Why is this possible now?"
-    ]
-  },
-  "/vedic": {
-    "hash": "679550d74a362ac5",
-    "line": "This is Vedic farming, the heart of our soil care — ask me anything.",
-    "prompts": [
-      "What is Vrikshayurveda exactly?",
-      "How do you read the plant?",
-      "Why start with the herd?"
     ]
   },
   "/privacy": {

@@ -116,6 +116,12 @@ export function NoteIndex({
                 </span>
                 <span className="fn-text">
                   <span className="fn-t">{n.title}</span>
+                  {/* The line that says what the note is. It was threaded
+                      from lib/journals.ts through notesIn() into this
+                      component and then dropped, so every category page
+                      was a column of titles — 30 to 42 words to a crawler,
+                      on a site whose robots.ts asks to be cited. */}
+                  {n.description && <span className="fn-d">{n.description}</span>}
                   {n.from && <span className="fn-from">In {n.from}</span>}
                 </span>
               </>
@@ -252,17 +258,30 @@ export function NoteIndex({
         .fn .fn-plate[data-noimg='true'] { background: var(--text-muted); opacity: 0.16; }
         .fn .fn-item.is-soon .fn-plate[data-noimg='true'] { background: var(--text-muted); opacity: 0.18; }
 
-        .fn .fn-text { display: flex; flex-direction: column; gap: var(--space-3); }
-        /* The label role, matching the lane cards on /from-aura. */
+        .fn .fn-text { display: flex; flex-direction: column; gap: 6px; }
+        /* The title role, matching .lane-t on the /from-aura lane cards
+           this listing was built to echo — 16px sans, sentence case. It
+           had been set as an 11px mono label, which read as an eyebrow
+           rather than as the name of the note, and once the description
+           was restored beneath it the title was the smaller of the two. */
         .fn .fn-t {
-          font-family: var(--font-mono), monospace;
-          font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
-          line-height: normal;
+          font-family: var(--font-sans), sans-serif;
+          font-size: 16px; line-height: 1.55;
+          letter-spacing: normal; text-transform: none; font-weight: 400;
           transition: color var(--dur-base) var(--ease);
           color: var(--text);
         }
+        /* A step under the title, so the row reads name-then-line. */
+        .fn .fn-d {
+          font-family: var(--font-sans), sans-serif;
+          font-size: 14px; line-height: 1.6; letter-spacing: normal;
+          text-transform: none;
+          color: var(--text-body);
+          max-width: 62ch;
+        }
         .fn .fn-item:hover .fn-t { color: var(--brand-accent); }
         .fn .fn-item.is-soon .fn-t { color: var(--text-muted); }
+        .fn .fn-item.is-soon .fn-d { color: var(--text-muted); }
         .fn .fn-from {
           font-family: var(--font-mono), monospace;
           font-size: 11px; letter-spacing: 1px; text-transform: uppercase;

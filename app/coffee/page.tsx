@@ -226,7 +226,9 @@ export default function CoffeePage() {
         <p className="p1">
           The on-estate lab tests every lot. Brix per zone on harvest day,
           moisture tracking through drying, screen grading and defect analysis
-          per SCA protocol. Every lot is cupped at the estate against a target of 80+ specialty. The scores are our own table; a third-party grading is not in yet, and until it is we publish ours as ours.
+          per SCA protocol. Every lot is cupped at the estate against a target of
+          80+ specialty, and the scores we publish are our own cupping table,
+          read lot by lot and printed as we read them.
         </p>
         <p className="p1">
           The next build adds caffeine and polyphenol profiling, on-site <Term tip="SCA-certified coffee grader.">Q-grader</Term>{' '}
@@ -251,8 +253,8 @@ export default function CoffeePage() {
           sanctuaries, and cellars that care about provenance.
         </p>
         <p className="p1">
-          Promise less, deliver more. We do not roadshow. If the cup
-          interests you, the estate is open.
+          Promise less, deliver more. The cup makes the case, and the estate
+          is open to anyone it interests.
         </p>
       </TwoCol>
 

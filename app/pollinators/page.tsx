@@ -17,10 +17,18 @@ export default function LarderPage() {
   return (
     <>
       <HeroBanner
-        title="The Larder"
-        type="Detail · a solitary bee on a native herb"
+        title="The Flowering Understory"
+        src="/pollinators/images/aura-the-flowering-understory-01.webp"
         caption="What flowers under the coffee — Aura Estate, Mudigere"
-        alt="A pollinator on flowering understorey at Mudigere"
+        alt="White and pink blossom opening on a shade tree above the coffee"
+      />
+
+      {/* The three days themselves. This slot had no picture and the
+          sentence above it is the page's opening claim. */}
+      <Placeholder
+        src="/pollinators/images/aura-the-flowering-understory-03.webp"
+        alt="Coffee branches in bud, flowers about to open along the wood"
+        caption="Three days a year, and everything that feeds on flowers has to be alive for the other fifty-one weeks"
       />
 
       <TwoCol id="premise" heading="Coffee flowers for about three days a year.">
@@ -110,14 +118,15 @@ export default function LarderPage() {
       </ScrollHighlight>
 
       <Placeholder
-        type="Wide · cleared understorey with native regeneration"
+        src="/pollinators/images/aura-the-flowering-understory-04.webp"
+        alt="Lichen and a single seedling on open red laterite"
         caption="Where invasives come out, natives go back in — an empty gap is an invitation"
       />
 
       <Portrait
-        src="/aura-placeholder.svg"
-        ratio="5 / 7"
-        alt="Native flowering herbs in the understorey at Mudigere"
+        src="/pollinators/images/aura-the-flowering-understory-02.webp"
+        ratio="4 / 5"
+        alt="A broad mushroom cap on a mossy fallen log in the understorey"
         caption="The layer six introduced plants are taking"
       />
 

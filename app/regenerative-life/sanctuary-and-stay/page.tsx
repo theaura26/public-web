@@ -40,8 +40,12 @@ export default function SanctuaryPage() {
 
       <CrossfadeBanner
         frames={[
-          { type: 'Aerial · two hemispheres', caption: 'The four-valley map — Mudigere, Ohara, Munduk, Punakha' },
-          { type: 'Detail · four soils', caption: 'Laterite, moss, volcanic basalt, granite — one from each valley, side by side' },
+          { src: '/regenerative-life/sanctuary-and-stay/images/santuary-2.webp', alt: 'Cloud lying in the valley over terraces and forest',
+            caption: 'The four-valley map — Mudigere, Ohara, Munduk, Punakha' },
+          { src: '/regenerative-life/sanctuary-and-stay/images/santuary-hero-banner.webp', alt: 'Someone sitting at the rail of a deck above a valley filling with cloud',
+            caption: 'Nothing on the calendar, and a valley doing the scheduling' },
+          { src: '/regenerative-life/sanctuary-and-stay/images/santuary-4.webp', alt: 'Seed pods hanging against a deep blue sky',
+            caption: 'The same posture, whichever valley it is standing in' },
         ]}
       />
 
@@ -204,7 +208,8 @@ export default function SanctuaryPage() {
       </TwoCol>
 
       <Placeholder
-        type="Architecture · a room open to the mist"
+        src="/regenerative-life/sanctuary-and-stay/images/santuary-3.webp"
+        alt="A covered deck open on three sides, mist standing in it"
         caption="Morning at Mudigere, with nothing on the calendar"
       />
 
@@ -221,7 +226,8 @@ export default function SanctuaryPage() {
       </TwoCol>
 
       <Placeholder
-        type="Wide · the barrels at first light, guests at the edge of it"
+        src="/regenerative-life/sanctuary-and-stay/images/santuary-1.webp"
+        alt="Two people planting a sapling into red earth, seen from above, with the estate dogs alongside"
         caption="The day the estate was going to have anyway"
       />
 

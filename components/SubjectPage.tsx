@@ -50,7 +50,18 @@ import {
 export type Movement = {
   heading: string
   lines: string[]
-  after?: { kind: 'banner' | 'plate' | 'portrait'; type: string; caption: string; alt?: string; ratio?: string }
+  after?: {
+    kind: 'banner' | 'plate' | 'portrait'
+    /** The drafting brief, shown only while `src` is empty. Optional: a
+     *  slot with its photograph has no brief left to carry. */
+    type?: string
+    caption: string
+    alt?: string
+    ratio?: string
+    src?: string
+    mediaType?: 'image' | 'video'
+    poster?: string
+  }
   /** Revealing text: a stanza that fades up line by line as it is
    *  scrolled through. Newline-separated. Used where a page wants to
    *  land an idea rather than explain another one — not on every page,
@@ -76,18 +87,18 @@ export type Subject = {
   movements?: Movement[]
   record?: { value: string; label: string; note?: string }[]
   related?: { label: string; href: string }[]
-  /** Drafting hints for the banner, until there is a photograph. */
-  hero?: { type: string; caption: string }
+  /** The banner. `type` is the drafting hint, dropped once `src` is set. */
+  hero?: { type?: string; caption: string; src?: string; mediaType?: 'image' | 'video'; poster?: string; alt?: string }
   /** One line worth setting on its own. Used at most once per page. */
   quote?: string
   /** Mid-page image slot, in its drafting state. */
-  plate?: { type: string; caption: string }
+  plate?: { type?: string; caption: string; src?: string; mediaType?: 'image' | 'video'; poster?: string; alt?: string }
   /** A tall breaker between the figures and the gaps — the beat where a
       reader looks up from a list of numbers before being told what the
       numbers do not cover. */
-  breaker?: { caption: string; alt: string }
+  breaker?: { caption: string; alt: string; src?: string; ratio?: string }
   /** The rest of the set, offered at the foot. */
-  siblings?: { href: string; title: string; description: string; status: 'live' | 'soon' }[]
+  siblings?: { href: string; title: string; description?: string; img?: string; status: 'live' | 'soon' }[]
   siblingsLabel?: string
   /** Which of the three arrangements this page takes. */
   variant?: number
@@ -124,13 +135,19 @@ export default function SubjectPage({
 }) {
   const v = (s.variant ?? 0) % 3
 
+  /* With a photograph the banner is the photograph; without one it is a
+     title card on the page's own ground. Either way the shot brief stays
+     out of it — it is a note to the photographer, and it was landing in
+     the reader's caption and in every crawler and agent view. */
   const opener = (
     <HeroBanner
       key="hero"
       title={s.label}
-      type={s.hero?.type ?? 'Landscape · Mudigere'}
+      src={s.hero?.src}
+      mediaType={s.hero?.mediaType}
+      poster={s.hero?.poster}
       caption={s.hero?.caption ?? s.lede}
-      alt={`${s.label} — Aura, Aura Estate, Mudigere`}
+      alt={s.hero?.alt ?? `${s.label} — Aura, Aura Estate, Mudigere`}
     />
   )
 
@@ -165,19 +182,38 @@ export default function SubjectPage({
     />
   ) : null
 
-  /* The visual after a movement. All three are in their drafting state
-     until there is a photograph: a banner and a plate render a grey card
-     carrying what the picture is meant to be, so the page reads as
-     'image to come' rather than as a hole. */
+  /* Does this page have any photography at all? Once it does, a slot
+     that is still empty is dropped rather than drawn.
+
+     The grey drafting card was right while nothing was shot: a page of
+     them reads as a page waiting for pictures, which is what it was. One
+     of them among eight photographs reads as a picture that failed to
+     load. So the card survives only on a page that has no photographs
+     yet, and the rule needs no maintenance — a chapter stops showing
+     them the moment its first real image lands. */
+  /* The visual after a movement. A slot with no photograph is a shot
+     nobody has taken, and a grey card standing in for it reads as an
+     image that failed to load. The slot is dropped; the brief stays in
+     the data as the shot list. */
   function visual(after: NonNullable<Movement['after']>, key: string) {
+    if (!after.src) return null
     if (after.kind === 'plate') {
-      return <Placeholder key={key} type={after.type} caption={after.caption} />
+      return (
+        <Placeholder
+          key={key}
+          src={after.src}
+          mediaType={after.mediaType}
+          poster={after.poster}
+          alt={after.alt ?? after.caption}
+          caption={after.caption}
+        />
+      )
     }
     if (after.kind === 'portrait') {
       return (
         <Portrait
           key={key}
-          src="/aura-placeholder.svg"
+          src={after.src}
           /* The ratio the shot is to be delivered at. The box is set to
              it, so a matched picture is never cropped. */
           ratio={after.ratio ?? '4 / 5'}
@@ -189,7 +225,9 @@ export default function SubjectPage({
     return (
       <ExpandingBanner
         key={key}
-        type={after.type}
+        src={after.src}
+        mediaType={after.mediaType}
+        poster={after.poster}
         alt={after.alt ?? after.caption}
         caption={after.caption}
       />
@@ -241,14 +279,26 @@ export default function SubjectPage({
   )
 
   const quote = s.quote ? <PullQuote key="quote">{s.quote}</PullQuote> : null
-  const plate = s.plate
-    ? <Placeholder key="plate" type={s.plate.type} caption={s.plate.caption} />
+  /* Both of these are pictures, and both are dropped until the picture
+     exists. The plate and the breaker used to stand in as a grey card and
+     a placeholder glyph. */
+  const plate = s.plate?.src
+    ? (
+      <Placeholder
+        key="plate"
+        src={s.plate.src}
+        mediaType={s.plate.mediaType}
+        poster={s.plate.poster}
+        alt={s.plate.alt ?? s.plate.caption}
+        caption={s.plate.caption}
+      />
+    )
     : null
-  const breaker = s.breaker ? (
+  const breaker = s.breaker?.src ? (
     <Portrait
       key="breaker"
-      src="/aura-placeholder.svg"
-      ratio="4 / 5"
+      src={s.breaker.src}
+      ratio={s.breaker.ratio ?? '4 / 5'}
       alt={s.breaker.alt}
       caption={s.breaker.caption}
     />
@@ -304,6 +354,7 @@ export default function SubjectPage({
             href: x.href,
             label: x.title,
             description: x.description,
+            img: x.img,
           }))}
         />
       )}

@@ -16,9 +16,9 @@ export default function LandSpiritSoulPage() {
     <>
       <HeroBanner
         title="Land, Spirit, Soul"
-        type="Detail · a lit diya at first light"
+        src="/land-spirit-soul/images/aura-land-spirit-soul-01.webp"
         caption="The lamp at the Gau Angan, lit with ghee from the herd it is lit for"
-        alt="The morning lamp at the Gau Angan, Aura Estate"
+        alt="Two brass lamps burning, close, at first light"
       />
 
       <TwoCol id="premise" heading="The day starts with a lamp.">
@@ -50,6 +50,12 @@ export default function LandSpiritSoulPage() {
         The lamp is lit with ghee from the cows it is lit for.
       </PullQuote>
 
+      <Placeholder
+        src="/land-spirit-soul/images/aura-land-spirit-soul-04.webp"
+        alt="The shrine dressed with marigold garlands, banana leaf and lights"
+        caption="Dressed for a festival — the same wall, the same lamp"
+      />
+
       <TwoCol id="diya" heading="What the flame is made of.">
         <p className="p1">
           The diya brings light into the space — the ordinary meaning, dispelling darkness,
@@ -67,21 +73,31 @@ export default function LandSpiritSoulPage() {
         </p>
       </TwoCol>
 
+      {/* Twenty-seven mornings in one frame. The page argues the point is
+          repetition rather than ceremony, and a grid of different people
+          at the same wall makes that argument without a sentence. */}
       <Placeholder
-        type="Wide · the Gau Angan before work begins"
+        src="/land-spirit-soul/images/aura-land-spirit-soul-03.webp"
+        alt="A grid of twenty-seven frames: different people lighting the same shrine lamp on different mornings"
         caption="A moment of stillness before the day starts — every morning, not on occasion"
       />
 
       <Portrait
-        src="/aura-placeholder.svg"
-        ratio="5 / 7"
-        alt="The diya at the Gau Angan, lit with cow ghee"
+        src="/land-spirit-soul/images/aura-land-spirit-soul-02.webp"
+        ratio="4 / 5"
+        alt="A man lighting incense at the shrine on the shed wall"
         caption="What the cow gave, offered back to her as light"
       />
 
       <ScrollHighlight>
         {`The diya brings light.\n   The prayer brings intention.\n   The cow gives nourishment.\n   The Gaushala is the care owed back.`}
       </ScrollHighlight>
+
+      <Placeholder
+        src="/land-spirit-soul/images/aura-land-spirit-soul-05.webp"
+        alt="A pooja laid out with marigolds, brass lamps, a garlanded coconut and incense smoke"
+        caption="The same address, on the days it is made at length"
+      />
 
       <TwoCol id="all-life" heading="Addressed to the whole system.">
         <p className="p1">
@@ -95,6 +111,16 @@ export default function LandSpiritSoulPage() {
           practice is a reminder to put something back with the same regularity.
         </p>
       </TwoCol>
+
+      {/* The act itself, moving, under the section that argues it is the
+          repetition rather than the ceremony that matters. */}
+      <Placeholder
+        src="/land-spirit-soul/videos/aura-land-spirit-soul-02.mp4"
+        mediaType="video"
+        poster="/land-spirit-soul/images/aura-land-spirit-soul-02.webp"
+        alt="Someone lighting the shrine lamp on the shed wall before the day starts"
+        caption="Before anyone walks a block"
+      />
 
       <TwoCol id="daily" heading="The significance is in the repetition.">
         <p className="p1">

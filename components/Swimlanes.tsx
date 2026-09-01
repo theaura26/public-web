@@ -141,21 +141,32 @@ function LaneStyles() {
           margin-left: calc(50% - 50vw);
         }
         /* The row dissolves off the right rather than hard-cropping.
-           A gradient to the page ground, not a backdrop blur: the blur
-           was its own promoted layer, rasterised separately, so its edge
-           never met the mask cleanly and it flickered as the lane
-           scrolled. A gradient has no layer and no edge. */
+           A blur, ramped in by a mask so there is no edge where it
+           starts. An earlier version flickered as the lane scrolled: the
+           blur is its own promoted layer, and a layer whose bounds change
+           every frame gets re-rasterised against a moving backdrop. The
+           two lines that fix it are transform: translateZ(0), which
+           promotes it once and keeps it promoted, and will-change, which
+           tells the compositor the same thing before the first frame
+           rather than after it. (No backticks in here: this is inside a
+           template literal and one would end it.)
+
+           No wash of the page ground behind it. A gradient to white is
+           what this used to be, and it read as the row being covered up
+           rather than running on past the edge. The mask does that job:
+           the blur ramps from nothing to full across the strip, so the
+           last card goes soft rather than going pale. */
         .sw .lane-fade {
           position: absolute;
           top: 0; bottom: 0; right: 0;
           width: clamp(64px, 12vw, 200px);
           pointer-events: none;
           z-index: 2;
-          background: linear-gradient(
-            to right,
-            rgba(255, 255, 255, 0) 0%,
-            var(--bg) 92%
-          );
+          transform: translateZ(0);
+          will-change: transform;
+          mask-image: linear-gradient(to right, transparent 0%, #000 62%);
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 62%);
+
         }
         .sw .lane-scroll {
           overflow-x: auto;
@@ -303,7 +314,13 @@ export function Swimlanes({
                   cards — its own layer, promoted and rasterised
                   separately, so its edge never met the mask cleanly and
                   it flickered while the lane scrolled. */}
-              <div className="lane-fade" aria-hidden />
+              {/* backdrop-filter inline: styled-jsx drops it from emitted rules
+              on this build. */}
+          <div
+            className="lane-fade"
+            aria-hidden
+            style={{ backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}
+          />
             </div>
           </section>
         )
@@ -338,7 +355,13 @@ export function RelatedLane({
               {items.map((n) => <Card key={n.href} note={n} />)}
             </div>
           </div>
-          <div className="lane-fade" aria-hidden />
+          {/* backdrop-filter inline: styled-jsx drops it from emitted rules
+              on this build. */}
+          <div
+            className="lane-fade"
+            aria-hidden
+            style={{ backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}
+          />
         </div>
       </div>
       <LaneStyles />

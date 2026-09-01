@@ -35,6 +35,10 @@ import { PILLARS } from '@/lib/pillars'
  *  it takes the same shape. `glyph` is dropped: it addressed a file in
  *  /public/glyphs/coffee, and only the nine have one. */
 export type Chapter = Omit<Discipline, 'glyph'> & {
+  /** The still that stands for this chapter in a row of cards. Defaults
+   *  to the hero photograph; set it where the hero is a video or where
+   *  the chapter's page is hand-built and has no hero in this file. */
+  card?: string
   /** Set beside the name where the name alone is not enough — a
    *  translation, or the thing the word actually means. */
   subtitle?: string
@@ -102,6 +106,11 @@ function thinVisuals(parts: { movements?: Movement[] }[]): Movement[] {
     let kept = false
     return (part.movements ?? []).map((mv) => {
       if (!mv.after) return mv
+      /* A real photograph is never thinned. The thinning exists because a
+         drafting card is a grey rectangle owning 160vh of scroll, and
+         fourteen of those is 2,240vh of nothing. A picture is the reason
+         the reader is here. */
+      if (mv.after.src) return mv
       if (kept) {
         const { after: _drop, ...rest } = mv
         return rest
@@ -135,14 +144,27 @@ function dedupeByHref(links: { label: string; href: string }[]) {
  *  twice under one heading twice. The first wins, because a merge lists
  *  its parts in the order it wants them read. */
 function dedupeByHeading(movements: Movement[]): Movement[] {
-  const seen = new Set<string>()
-  return movements.filter((mv) => {
+  const kept = new Map<string, Movement>()
+  const out: Movement[] = []
+  for (const mv of movements) {
     const key = (mv.heading ?? '').trim().toLowerCase()
-    if (!key) return true
-    if (seen.has(key)) return false
-    seen.add(key)
-    return true
-  })
+    if (!key) { out.push(mv); continue }
+    const first = kept.get(key)
+    if (!first) { kept.set(key, mv); out.push(mv); continue }
+    /* The heading is a duplicate, but the photograph under it might not
+       be. A pillar and a discipline both said "Why this is possible now",
+       the pillar came first with a shot brief, and dropping the
+       discipline's copy silently took a real photograph off the page
+       with it. The first wording wins; a picture the winner does not
+       have is carried across. */
+    if (mv.after?.src && !first.after?.src) {
+      const i = out.indexOf(first)
+      const merged = { ...first, after: mv.after }
+      kept.set(key, merged)
+      if (i !== -1) out[i] = merged
+    }
+  }
+  return out
 }
 
 /** Two disciplines read as one chapter. Movements run in the order given;
@@ -168,6 +190,7 @@ export const CHAPTERS: Chapter[] = [
     label: 'The Reason',
     slug: 'the-reason',
     href: '/regenerative-life/the-reason',
+    card: '/aura-mudigere-03.jpg',
     lede: 'Why any of this exists — and why it is being built on a timescale nobody gets to see the end of.',
     hero: {
       type: 'Landscape · the valley at first light',
@@ -234,8 +257,10 @@ export const CHAPTERS: Chapter[] = [
     slug: 'rta',
     lede: 'The old word for the order that keeps time. On this estate it is a working rule: do the thing when the land is ready for it, not when the calendar is free.',
     hero: {
-      type: 'Landscape · Mudigere before the work starts',
+      type: 'Detail · incense burning down on a stone step',
       caption: 'The land decides the hour',
+      src: '/regenerative-life/rta/images/rta-hero-banner.webp',
+      alt: 'Incense sticks burning on a mossy stone step, smoke rising',
     },
     quote: 'Right time. Right action. Everything else is noise.',
     movements: [
@@ -246,6 +271,8 @@ export const CHAPTERS: Chapter[] = [
           'Held as a working rule it produces one instruction, which is the hardest one to follow on a farm with a labour schedule: wait until the land is ready.',
         ],
         after: {
+            src: '/regenerative-life/rta/images/rta-3.webp',
+            alt: 'The night sky over the estate, framed by the canopy',
           kind: 'banner',
           type: 'Wide · the valley keeping its own timing',
           caption: 'Patience — waiting for the hour the land is ready',
@@ -266,6 +293,8 @@ export const CHAPTERS: Chapter[] = [
           'Drying follows the same logic on a longer beat: raised beds through the day, covered at night, following the day-night rhythm rather than a fixed count of hours.',
         ],
         after: {
+            src: '/regenerative-life/rta/images/rta-1.webp',
+            alt: 'Someone crossing open ground in heavy rain under a sheet',
           kind: 'plate',
           type: 'Detail · a pH meter in a ferment tank',
           caption: 'The reading closes the lot',
@@ -278,6 +307,12 @@ export const CHAPTERS: Chapter[] = [
           'Every biodynamic application is timestamped to the minute and tagged with the conditions it was made in. That is what makes right time a claim rather than a feeling: the record says what hour the work was done at and what the land was doing at that hour.',
           'A season later the two can be read against each other, which is the only way a rule about timing ever gets better.',
         ],
+        after: {
+          kind: 'portrait', ratio: '16 / 9',
+          src: '/regenerative-life/rta/images/rta-2.webp',
+          alt: 'A stockman reaching out to a cow in the mist at dawn',
+          caption: 'The hour the animal keeps',
+        },
       },
     ],
     record: [
@@ -297,6 +332,7 @@ export const CHAPTERS: Chapter[] = [
     label: 'Sanctuary & Stay',
     slug: 'sanctuary-and-stay',
     href: '/regenerative-life/sanctuary-and-stay',
+    card: '/regenerative-life/sanctuary-and-stay/images/santuary-hero-banner.webp',
     lede: 'What happens when a piece of land is tended long enough that it begins to tend the people standing on it.',
     hero: {
       type: 'Landscape · two hemispheres',
@@ -357,8 +393,10 @@ export const CHAPTERS: Chapter[] = [
     slug: 'artistry',
     lede: 'The making side of the estate: what gets built here, and the people who hold the knowledge of how.',
     hero: {
-      type: 'Portrait · a maker mid-task',
+      type: 'Interior · a made room at Ohara',
       caption: 'Built to outlast its builders',
+      src: '/regenerative-life/artistry/images/aura-artistry-hero-banner.webp',
+      alt: 'A woven bamboo lampshade hanging beside an open doorway at Ohara',
     },
     movements: [
       {
@@ -368,10 +406,10 @@ export const CHAPTERS: Chapter[] = [
           'The measure of a piece is whether it survives being used. Built to outlast its builders is the standard, and it is a hard one to meet.',
         ],
         after: {
-          kind: 'banner',
-          type: 'Wide · the atelier in use',
+          kind: 'portrait', ratio: '4 / 5',
+          src: '/regenerative-life/artistry/images/aura-artistry-3.webp',
+          alt: 'A cast-iron kettle on the hearth in the Ohara house',
           caption: 'Where the estate makes rather than exhibits',
-          ratio: '16 / 9',
         },
       },
       {
@@ -381,10 +419,10 @@ export const CHAPTERS: Chapter[] = [
           'That knowledge has a clock on it. It leaves when the person does, and writing it down is the part of this work that cannot wait.',
         ],
         after: {
-          kind: 'portrait',
-          type: 'Portrait · a craftsman at the wheel',
+          kind: 'plate',
+          src: '/regenerative-life/artistry/images/aura-artistry-2.webp',
+          alt: 'A maker being shown how, at the window',
           caption: 'Sit close to someone who has been listening to one craft for thirty years',
-          ratio: '4 / 5',
         },
       },
       {
@@ -393,6 +431,13 @@ export const CHAPTERS: Chapter[] = [
           'The estate seats a coffee fermenter next to a ceramicist and a soil biologist next to a maker. The friction between disciplines is the point — it is where the work nobody else can make gets made.',
           'That is a conviction rather than a finding, and it is why the residency is built the way it is — what comes out of it is the evidence.',
         ],
+        after: {
+          kind: 'banner',
+          src: '/regenerative-life/artistry/images/aura-artistry-1.webp',
+          alt: 'A carved stone water basin set into a garden',
+          type: '',
+          caption: 'Where a discipline shows in an object',
+        },
       },
     ],
     related: [
@@ -419,6 +464,16 @@ export const CHAPTERS: Chapter[] = [
          this way, and the six disciplines under it are how. */
       return {
         ...base,
+        /* Its own banner, not the soil discipline's. A merged chapter
+           inherits hero from its first part, which was right while every
+           one of them was a grey drafting card and wrong the moment a
+           photograph existed for the chapter itself. */
+        hero: {
+          type: 'Detail · finished compost in the hand',
+          caption: 'What the estate makes before it grows anything — Aura Estate, Mudigere',
+          src: '/regenerative-life/the-plantation/images/aura-plantation-hero-banner.webp',
+          alt: 'Two hands cupping dark finished compost',
+        },
         movements: dedupeByHeading([...thinVisuals([ag]), ...(base.movements ?? [])]),
         record: [...ag.record, ...(base.record ?? [])],
         related: dedupeByHref([...ag.related, ...(base.related ?? [])]),
@@ -433,6 +488,17 @@ export const CHAPTERS: Chapter[] = [
     slug: 'vedic-and-biodynamic',
     lede: 'Two preparation traditions, kept for the same reason: the biology. Made on the estate, from this herd, and tested before anything touches the soil.',
     ...merge('biodynamic', 'vedic'),
+    /* Its own banner, on the Plantation's precedent. A merged chapter
+       inherits its first part's hero, and the biodynamic discipline's was
+       a brief for a picture nobody had taken — so the chapter opened on a
+       grey field with four photographs below it. The stirring shot was
+       the brief, almost word for word, so it is promoted out of the body
+       and the movement it sat under runs on its prose. */
+    hero: {
+      caption: 'Forty-five minutes a day, vortex and reverse — Aura Estate',
+      src: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-04.webp',
+      alt: 'Stirring a row of barrels by hand with a wooden pole',
+    },
   },
 
   /* 06 ─────────────────────────────────────────────────────────────── */
@@ -442,8 +508,10 @@ export const CHAPTERS: Chapter[] = [
     slug: 'food-and-fermentation',
     lede: 'Three fermentation disciplines on one estate — coffee, pepper and cow dung. The same process, doing three different jobs.',
     hero: {
-      type: 'Detail · foam lifting on a cherry ferment',
+      type: 'Process · raking cherry on the drying beds',
       caption: 'Desired microbial activity, held to a number',
+      src: '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-01.webp',
+      alt: 'An estate worker turning drying cherry with a wooden rake',
     },
     quote: 'A number ends the ferment. It stops at pH 4.2, whatever the clock says.',
     movements: [
@@ -454,6 +522,10 @@ export const CHAPTERS: Chapter[] = [
           'Stripped to its definition, fermentation is only this: desired microbial activity, held long enough and stopped at the right point. What changes between the three is what "desired" means.',
         ],
         after: {
+            src: '/regenerative-life/food-and-fermentation/videos/aura-farm-fermentation-01.mp4',
+            mediaType: 'video',
+            poster: '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-01.webp',
+            alt: 'Cherry turned by hand across the drying beds',
           kind: 'banner',
           type: 'Wide · the fermentation yard',
           caption: 'Coffee, pepper and cow dung — the same process, three jobs',
@@ -467,6 +539,8 @@ export const CHAPTERS: Chapter[] = [
           'Red Honey is dried to 45% moisture first, then fermented 48 hours. The 25-day natural runs mucilage-on, five days thick drying then twenty-five thin, and the oxidation is what turns it. The Solera Maceration is multi-cycle carry-forward — the microbial culture of one batch seeds the next.',
         ],
         after: {
+            src: '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-02.webp',
+            alt: 'Drying beds side by side, each labelled with its date and method',
           kind: 'plate',
           type: 'Detail · six lots side by side, drying',
           caption: 'The variety held constant, the process the variable',
@@ -479,6 +553,12 @@ export const CHAPTERS: Chapter[] = [
           'pH every fifteen minutes, temperature three times a day, and a minimum of twenty-five days of drying. Each lot finds its own clock inside those rules.',
           'The third discipline is the one nobody drinks: the preparations. Cow pat pits are a controlled ferment too, and the same principle governs them — nothing untested goes out.',
         ],
+        after: {
+          kind: 'portrait', ratio: '16 / 9',
+          src: '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-03.webp',
+          alt: 'Cherry drying in raised beds under shade',
+          caption: 'Every lot, its own bed and its own file',
+        },
       },
     ],
     record: [
@@ -508,6 +588,17 @@ export const CHAPTERS: Chapter[] = [
          built to act on it. */
       return {
         ...base,
+        /* After the spread, not before it: `base` carries the
+           intelligence discipline's own hero, and a key declared ahead of
+           a spread is simply overwritten by it. */
+        hero: {
+          type: 'Diagram · the estate canopy, mapped',
+          caption: 'Every crown on a hundred and fifty acres, plotted — Aura Estate, Mudigere',
+          src: '/regenerative-life/aura-intelligence/videos/aura-intelligence-03.mp4',
+          mediaType: 'video',
+          poster: '/regenerative-life/aura-intelligence/images/aura-intelligence-03.webp',
+          alt: 'A canopy map of the estate: tree crowns plotted as green shapes on a plan',
+        },
         movements: dedupeByHeading([...thinVisuals([ni]), ...(base.movements ?? [])]),
         record: [...ni.record, ...(base.record ?? [])],
         related: dedupeByHref([...ni.related, ...(base.related ?? [])]),

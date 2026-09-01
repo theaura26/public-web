@@ -19,11 +19,11 @@ import { useEffect, useRef, useState } from 'react'
    finished card still while the reader kept scrolling, which is what
    reads as stuck.
 
-   Accepts either a video (`type="video"`, `src` is .mp4) or an image
-   (`type="image"`, `src` is a still). With no `src` the card renders as
-   a neutral grey drafting surface — same expanding gesture, with the
-   `caption` (and optional image-type hint) centred as a placeholder
-   label.
+   Accepts either a video (`mediaType="video"`, `src` is .mp4) or an
+   image (`mediaType="image"`, `src` is a still). With no `src` there is
+   nothing to expand and the banner renders nothing at all — a picture
+   slot with no picture used to be a grey card, which reads as an image
+   that failed rather than one nobody has taken.
 ═══════════════════════════════════════════════════════════════════ */
 
 export type ExpandingBannerProps = {
@@ -67,8 +67,13 @@ export type BannerFrame = {
 const FRAME_MS = 4600
 const FADE_MS = 900
 
-export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption, type, titleOverlay, frames }: ExpandingBannerProps) {
-  const multi = (frames?.length ?? 0) > 1
+export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption, titleOverlay, frames }: ExpandingBannerProps) {
+  /* A frame with no photograph is a shot that has not been taken. It used
+     to render as a grey drafting card, which reads as a picture that
+     failed to load rather than as a picture nobody has made yet, so an
+     unshot frame is dropped and the ones that exist rotate without it. */
+  const usable = (frames ?? []).filter((fr) => fr.src)
+  const multi = usable.length > 1
   const [active, setActive] = useState(0)
   /* Reduced motion stops the rotation dead — the reader steps through
      with the dots instead, and nothing moves on its own. */
@@ -80,19 +85,19 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
   useEffect(() => {
     if (!multi || !autoplay) return
     const id = window.setInterval(
-      () => setActive((i) => (i + 1) % (frames as BannerFrame[]).length),
+      () => setActive((i) => (i + 1) % usable.length),
       FRAME_MS,
     )
     return () => window.clearInterval(id)
-  }, [multi, autoplay, frames])
+  }, [multi, autoplay, usable.length])
 
   /* With frames, the active one supplies what the single-media props
      would have. The scroll machinery below is untouched: it drives one
      wrapper, and the frames crossfade inside it. */
-  const f = multi ? (frames as BannerFrame[])[active] : undefined
+  const f = usable.length ? usable[active % usable.length] : undefined
   if (f) {
     src = f.src; mediaType = f.mediaType ?? 'image'; poster = f.poster
-    alt = f.alt; caption = f.caption; type = f.type
+    alt = f.alt; caption = f.caption
   }
 
   const wrapRef = useRef<HTMLDivElement>(null)
@@ -239,7 +244,10 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
     return () => observer.disconnect()
   }, [mediaType])
 
-  const draftingLabel = [type, caption].filter(Boolean).join(' · ')
+
+  /* Nothing to show. Every hook above has already run, so the early
+     return is safe here and nowhere earlier. */
+  if (!src) return null
 
   return (
     <div ref={wrapRef} className="expanding-banner-wrap" style={{ position: 'relative', zIndex: 0 }}>
@@ -266,7 +274,7 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
             position: 'relative',
             overflow: 'hidden',
             borderRadius: 3,
-            background: src ? 'var(--bg)' : '#d6d6d6',
+            background: 'var(--bg)',
           }}
         >
           {!multi && src && mediaType === 'video' && (
@@ -315,23 +323,6 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
               }}
             />
           )}
-          {!multi && !src && draftingLabel && (
-            <div
-              ref={mediaRef as React.RefObject<HTMLDivElement>}
-              style={{
-                position: 'absolute',
-                inset: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 24,
-                textAlign: 'center',
-                color: '#5a5a5a',
-              }}
-            >
-              <div className="label" style={{ opacity: 0.9, maxWidth: 'min(80%, 720px)' }}>{draftingLabel}</div>
-            </div>
-          )}
           {/* Every frame stacked in one wrapper, crossfading on opacity.
               The wrapper takes mediaRef, so the scroll reveal blurs and
               scales the stack as a single object exactly as it does a
@@ -346,7 +337,7 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
                 willChange: 'filter, transform',
               }}
             >
-              {(frames as BannerFrame[]).map((fr, i) => (
+              {usable.map((fr, i) => (
                 <div
                   key={i}
                   aria-hidden={i !== active}
@@ -355,7 +346,6 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
                     inset: 0,
                     opacity: i === active ? 1 : 0,
                     transition: `opacity ${FADE_MS}ms ease`,
-                    background: fr.src ? undefined : '#d6d6d6',
                   }}
                 >
                   {fr.src && (fr.mediaType ?? 'image') === 'video' ? (
@@ -416,7 +406,7 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
                 zIndex: 3,
               }}
             >
-              {(frames as BannerFrame[]).map((fr, i) => (
+              {usable.map((fr, i) => (
                 <button
                   key={i}
                   type="button"

@@ -80,11 +80,20 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: clamp(var(--space-8), 6vh, 88px);
+          /* No shared gap: the stamp belongs to the title and the card
+             band does not, so the two distances are set separately below
+             rather than by one number that governs both. */
+          gap: 0;
           /* No horizontal padding: the band inside sets its own rail so
              the cards can run off the right edge. The title and stamp
              carry the gutter themselves. */
-          padding: calc(var(--nav-h) + var(--space-10, 96px)) 0 var(--space-9);
+          /* No top padding. The title and stamp centre themselves in the
+             space above the card band with a pair of auto margins, and
+             any padding here lands on one side of that pair only — it was
+             pushing them 152px below the middle. The auto space is far
+             larger than the nav at every height this hero can be, so the
+             bar is cleared without reserving for it. */
+          padding: 0 0 var(--space-9);
           /* The site's hero measure — the field notes index, the
              articles and the Remarkable Circle are all 100svh. The
              microsite's min(92svh, 900px) is the outlier and this used to
@@ -136,11 +145,13 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
            the row scrolls. */
         .band-slot {
           width: 100%;
-          margin-top: auto;
         }
 
         .title {
-          margin: 0;
+          /* This margin and the one under the stamp are both auto, which
+             centres the pair in whatever is left above the card band —
+             the clear part of the frame, rather than the whole hero. */
+          margin: auto 0 0;
           /* globals.css sets h1 to var(--text), which on a black field in
              day theme is near-black on black. The hero owns its own
              ground, so it owns its own ink. */
@@ -161,7 +172,9 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           display: inline-flex;
           align-items: center;
           gap: var(--space-2);
-          margin: 0;
+          /* Close under the title — it is the title's timestamp, and it
+             used to sit 88px away, reading as its own thing. */
+          margin: var(--space-5) 0 auto;
           color: rgba(255, 255, 255, 0.72);
         }
         /* On the title rather than beside the timestamp. Six pixels next

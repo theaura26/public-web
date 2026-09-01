@@ -273,6 +273,23 @@ function LotCard({ lot }: { lot: Lot }) {
         <CaretDown size={12} weight="bold" className="lc-caret" aria-hidden />
       </button>
 
+      {/* The same file, as text. `open` gates the panel below on state, so
+          the specification is not in the document at all until somebody
+          clicks — which means an agent reading this page saw nine lot
+          names and not one number behind them. Read off the same
+          lot.data, so the two cannot drift. */}
+      <div className="agent-only">
+        <dl>
+          {lot.data.map((r) => (
+            <div key={r.k}>
+              <dt>{r.k}</dt>
+              <dd>{r.v}</dd>
+            </div>
+          ))}
+        </dl>
+        <p>{lot.process}</p>
+      </div>
+
       {open && (
         <div className="lc-panel">
           <dl className="lc-dl">
@@ -495,6 +512,31 @@ export function BlockExplorer() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* The same eight blocks, as text.
+          The map is an SVG and the panel shows one block at a time, so an
+          agent reading this page learned about whichever block happened
+          to be selected and nothing about the other seven — the estate's
+          block-level record, invisible to exactly the readers the site
+          most wants citing it. Hidden from human view, revealed by the
+          agent stylesheet, and read off the same BLOCKS array so the two
+          cannot drift. */}
+      <div className="agent-only">
+        <h3>Estate blocks</h3>
+        {BLOCKS.map((b) => (
+          <div key={b.id}>
+            <h4>{b.name}</h4>
+            <p>{b.desc}</p>
+            <ul>
+              <li>Varietal: {b.varietal}</li>
+              <li>Lots: {b.lots}</li>
+              <li>Brix: {b.brix}</li>
+              <li>Shade: {b.shade}</li>
+              <li>Trees: {b.trees}</li>
+            </ul>
+          </div>
+        ))}
       </div>
 
       <style jsx>{`

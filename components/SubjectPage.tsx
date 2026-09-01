@@ -52,8 +52,9 @@ export type Movement = {
   lines: string[]
   after?: {
     kind: 'banner' | 'plate' | 'portrait'
-    /** The drafting brief, shown only while `src` is empty. */
-    type: string
+    /** The drafting brief, shown only while `src` is empty. Optional: a
+     *  slot with its photograph has no brief left to carry. */
+    type?: string
     caption: string
     alt?: string
     ratio?: string
@@ -87,11 +88,11 @@ export type Subject = {
   record?: { value: string; label: string; note?: string }[]
   related?: { label: string; href: string }[]
   /** The banner. `type` is the drafting hint, dropped once `src` is set. */
-  hero?: { type: string; caption: string; src?: string; mediaType?: 'image' | 'video'; poster?: string; alt?: string }
+  hero?: { type?: string; caption: string; src?: string; mediaType?: 'image' | 'video'; poster?: string; alt?: string }
   /** One line worth setting on its own. Used at most once per page. */
   quote?: string
   /** Mid-page image slot, in its drafting state. */
-  plate?: { type: string; caption: string }
+  plate?: { type?: string; caption: string; src?: string; mediaType?: 'image' | 'video'; poster?: string; alt?: string }
   /** A tall breaker between the figures and the gaps — the beat where a
       reader looks up from a list of numbers before being told what the
       numbers do not cover. */

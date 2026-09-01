@@ -102,6 +102,11 @@ function thinVisuals(parts: { movements?: Movement[] }[]): Movement[] {
     let kept = false
     return (part.movements ?? []).map((mv) => {
       if (!mv.after) return mv
+      /* A real photograph is never thinned. The thinning exists because a
+         drafting card is a grey rectangle owning 160vh of scroll, and
+         fourteen of those is 2,240vh of nothing. A picture is the reason
+         the reader is here. */
+      if (mv.after.src) return mv
       if (kept) {
         const { after: _drop, ...rest } = mv
         return rest
@@ -234,8 +239,10 @@ export const CHAPTERS: Chapter[] = [
     slug: 'rta',
     lede: 'The old word for the order that keeps time. On this estate it is a working rule: do the thing when the land is ready for it, not when the calendar is free.',
     hero: {
-      type: 'Landscape · Mudigere before the work starts',
+      type: 'Detail · incense burning down on a stone step',
       caption: 'The land decides the hour',
+      src: '/regenerative-life/rta/images/rta-hero-banner.webp',
+      alt: 'Incense sticks burning on a mossy stone step, smoke rising',
     },
     quote: 'Right time. Right action. Everything else is noise.',
     movements: [
@@ -246,6 +253,8 @@ export const CHAPTERS: Chapter[] = [
           'Held as a working rule it produces one instruction, which is the hardest one to follow on a farm with a labour schedule: wait until the land is ready.',
         ],
         after: {
+            src: '/regenerative-life/rta/images/rta-3.webp',
+            alt: 'The night sky over the estate, framed by the canopy',
           kind: 'banner',
           type: 'Wide · the valley keeping its own timing',
           caption: 'Patience — waiting for the hour the land is ready',
@@ -266,6 +275,8 @@ export const CHAPTERS: Chapter[] = [
           'Drying follows the same logic on a longer beat: raised beds through the day, covered at night, following the day-night rhythm rather than a fixed count of hours.',
         ],
         after: {
+            src: '/regenerative-life/rta/images/rta-1.webp',
+            alt: 'Someone crossing open ground in heavy rain under a sheet',
           kind: 'plate',
           type: 'Detail · a pH meter in a ferment tank',
           caption: 'The reading closes the lot',
@@ -278,6 +289,13 @@ export const CHAPTERS: Chapter[] = [
           'Every biodynamic application is timestamped to the minute and tagged with the conditions it was made in. That is what makes right time a claim rather than a feeling: the record says what hour the work was done at and what the land was doing at that hour.',
           'A season later the two can be read against each other, which is the only way a rule about timing ever gets better.',
         ],
+        after: {
+          kind: 'banner',
+          src: '/regenerative-life/rta/images/rta-2.webp',
+          alt: 'A stockman reaching out to a cow in the mist at dawn',
+          type: '',
+          caption: 'The hour the animal keeps',
+        },
       },
     ],
     record: [
@@ -357,8 +375,10 @@ export const CHAPTERS: Chapter[] = [
     slug: 'artistry',
     lede: 'The making side of the estate: what gets built here, and the people who hold the knowledge of how.',
     hero: {
-      type: 'Portrait · a maker mid-task',
+      type: 'Interior · a made room at Ohara',
       caption: 'Built to outlast its builders',
+      src: '/regenerative-life/artistry/images/aura-artistry-hero-banner.webp',
+      alt: 'A woven bamboo lampshade hanging beside an open doorway at Ohara',
     },
     movements: [
       {
@@ -368,6 +388,8 @@ export const CHAPTERS: Chapter[] = [
           'The measure of a piece is whether it survives being used. Built to outlast its builders is the standard, and it is a hard one to meet.',
         ],
         after: {
+            src: '/regenerative-life/artistry/images/aura-artistry-3.webp',
+            alt: 'A cast-iron kettle on the hearth in the Ohara house',
           kind: 'banner',
           type: 'Wide · the atelier in use',
           caption: 'Where the estate makes rather than exhibits',
@@ -381,6 +403,8 @@ export const CHAPTERS: Chapter[] = [
           'That knowledge has a clock on it. It leaves when the person does, and writing it down is the part of this work that cannot wait.',
         ],
         after: {
+            src: '/regenerative-life/artistry/images/aura-artistry-2.webp',
+            alt: 'A maker being shown how, at the window',
           kind: 'portrait',
           type: 'Portrait · a craftsman at the wheel',
           caption: 'Sit close to someone who has been listening to one craft for thirty years',
@@ -393,6 +417,13 @@ export const CHAPTERS: Chapter[] = [
           'The estate seats a coffee fermenter next to a ceramicist and a soil biologist next to a maker. The friction between disciplines is the point — it is where the work nobody else can make gets made.',
           'That is a conviction rather than a finding, and it is why the residency is built the way it is — what comes out of it is the evidence.',
         ],
+        after: {
+          kind: 'banner',
+          src: '/regenerative-life/artistry/images/aura-artistry-1.webp',
+          alt: 'A carved stone water basin set into a garden',
+          type: '',
+          caption: 'Where a discipline shows in an object',
+        },
       },
     ],
     related: [
@@ -452,8 +483,10 @@ export const CHAPTERS: Chapter[] = [
     slug: 'food-and-fermentation',
     lede: 'Three fermentation disciplines on one estate — coffee, pepper and cow dung. The same process, doing three different jobs.',
     hero: {
-      type: 'Detail · foam lifting on a cherry ferment',
+      type: 'Process · raking cherry on the drying beds',
       caption: 'Desired microbial activity, held to a number',
+      src: '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-01.webp',
+      alt: 'An estate worker turning drying cherry with a wooden rake',
     },
     quote: 'A number ends the ferment. It stops at pH 4.2, whatever the clock says.',
     movements: [
@@ -464,6 +497,10 @@ export const CHAPTERS: Chapter[] = [
           'Stripped to its definition, fermentation is only this: desired microbial activity, held long enough and stopped at the right point. What changes between the three is what "desired" means.',
         ],
         after: {
+            src: '/regenerative-life/food-and-fermentation/videos/aura-farm-fermentation-01.mp4',
+            mediaType: 'video',
+            poster: '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-01.webp',
+            alt: 'Cherry turned by hand across the drying beds',
           kind: 'banner',
           type: 'Wide · the fermentation yard',
           caption: 'Coffee, pepper and cow dung — the same process, three jobs',
@@ -477,6 +514,8 @@ export const CHAPTERS: Chapter[] = [
           'Red Honey is dried to 45% moisture first, then fermented 48 hours. The 25-day natural runs mucilage-on, five days thick drying then twenty-five thin, and the oxidation is what turns it. The Solera Maceration is multi-cycle carry-forward — the microbial culture of one batch seeds the next.',
         ],
         after: {
+            src: '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-02.webp',
+            alt: 'Drying beds side by side, each labelled with its date and method',
           kind: 'plate',
           type: 'Detail · six lots side by side, drying',
           caption: 'The variety held constant, the process the variable',
@@ -489,6 +528,13 @@ export const CHAPTERS: Chapter[] = [
           'pH every fifteen minutes, temperature three times a day, and a minimum of twenty-five days of drying. Each lot finds its own clock inside those rules.',
           'The third discipline is the one nobody drinks: the preparations. Cow pat pits are a controlled ferment too, and the same principle governs them — nothing untested goes out.',
         ],
+        after: {
+          kind: 'banner',
+          src: '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-03.webp',
+          alt: 'Cherry drying in raised beds under shade',
+          type: '',
+          caption: 'Every lot, its own bed and its own file',
+        },
       },
     ],
     record: [
@@ -518,6 +564,17 @@ export const CHAPTERS: Chapter[] = [
          built to act on it. */
       return {
         ...base,
+        /* After the spread, not before it: `base` carries the
+           intelligence discipline's own hero, and a key declared ahead of
+           a spread is simply overwritten by it. */
+        hero: {
+          type: 'Diagram · the estate canopy, mapped',
+          caption: 'Every crown on a hundred and fifty acres, plotted — Aura Estate, Mudigere',
+          src: '/regenerative-life/aura-intelligence/videos/aura-intelligence-03.mp4',
+          mediaType: 'video',
+          poster: '/regenerative-life/aura-intelligence/images/aura-intelligence-03.webp',
+          alt: 'A canopy map of the estate: tree crowns plotted as green shapes on a plan',
+        },
         movements: dedupeByHeading([...thinVisuals([ni]), ...(base.movements ?? [])]),
         record: [...ni.record, ...(base.record ?? [])],
         related: dedupeByHref([...ni.related, ...(base.related ?? [])]),

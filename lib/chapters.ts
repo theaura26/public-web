@@ -35,6 +35,10 @@ import { PILLARS } from '@/lib/pillars'
  *  it takes the same shape. `glyph` is dropped: it addressed a file in
  *  /public/glyphs/coffee, and only the nine have one. */
 export type Chapter = Omit<Discipline, 'glyph'> & {
+  /** The still that stands for this chapter in a row of cards. Defaults
+   *  to the hero photograph; set it where the hero is a video or where
+   *  the chapter's page is hand-built and has no hero in this file. */
+  card?: string
   /** Set beside the name where the name alone is not enough — a
    *  translation, or the thing the word actually means. */
   subtitle?: string
@@ -140,14 +144,27 @@ function dedupeByHref(links: { label: string; href: string }[]) {
  *  twice under one heading twice. The first wins, because a merge lists
  *  its parts in the order it wants them read. */
 function dedupeByHeading(movements: Movement[]): Movement[] {
-  const seen = new Set<string>()
-  return movements.filter((mv) => {
+  const kept = new Map<string, Movement>()
+  const out: Movement[] = []
+  for (const mv of movements) {
     const key = (mv.heading ?? '').trim().toLowerCase()
-    if (!key) return true
-    if (seen.has(key)) return false
-    seen.add(key)
-    return true
-  })
+    if (!key) { out.push(mv); continue }
+    const first = kept.get(key)
+    if (!first) { kept.set(key, mv); out.push(mv); continue }
+    /* The heading is a duplicate, but the photograph under it might not
+       be. A pillar and a discipline both said "Why this is possible now",
+       the pillar came first with a shot brief, and dropping the
+       discipline's copy silently took a real photograph off the page
+       with it. The first wording wins; a picture the winner does not
+       have is carried across. */
+    if (mv.after?.src && !first.after?.src) {
+      const i = out.indexOf(first)
+      const merged = { ...first, after: mv.after }
+      kept.set(key, merged)
+      if (i !== -1) out[i] = merged
+    }
+  }
+  return out
 }
 
 /** Two disciplines read as one chapter. Movements run in the order given;
@@ -173,6 +190,7 @@ export const CHAPTERS: Chapter[] = [
     label: 'The Reason',
     slug: 'the-reason',
     href: '/regenerative-life/the-reason',
+    card: '/aura-mudigere-03.jpg',
     lede: 'Why any of this exists — and why it is being built on a timescale nobody gets to see the end of.',
     hero: {
       type: 'Landscape · the valley at first light',
@@ -290,10 +308,9 @@ export const CHAPTERS: Chapter[] = [
           'A season later the two can be read against each other, which is the only way a rule about timing ever gets better.',
         ],
         after: {
-          kind: 'banner',
+          kind: 'portrait', ratio: '16 / 9',
           src: '/regenerative-life/rta/images/rta-2.webp',
           alt: 'A stockman reaching out to a cow in the mist at dawn',
-          type: '',
           caption: 'The hour the animal keeps',
         },
       },
@@ -315,6 +332,7 @@ export const CHAPTERS: Chapter[] = [
     label: 'Sanctuary & Stay',
     slug: 'sanctuary-and-stay',
     href: '/regenerative-life/sanctuary-and-stay',
+    card: '/regenerative-life/sanctuary-and-stay/images/santuary-hero-banner.webp',
     lede: 'What happens when a piece of land is tended long enough that it begins to tend the people standing on it.',
     hero: {
       type: 'Landscape · two hemispheres',
@@ -388,12 +406,10 @@ export const CHAPTERS: Chapter[] = [
           'The measure of a piece is whether it survives being used. Built to outlast its builders is the standard, and it is a hard one to meet.',
         ],
         after: {
-            src: '/regenerative-life/artistry/images/aura-artistry-3.webp',
-            alt: 'A cast-iron kettle on the hearth in the Ohara house',
-          kind: 'banner',
-          type: 'Wide · the atelier in use',
+          kind: 'portrait', ratio: '4 / 5',
+          src: '/regenerative-life/artistry/images/aura-artistry-3.webp',
+          alt: 'A cast-iron kettle on the hearth in the Ohara house',
           caption: 'Where the estate makes rather than exhibits',
-          ratio: '16 / 9',
         },
       },
       {
@@ -403,12 +419,10 @@ export const CHAPTERS: Chapter[] = [
           'That knowledge has a clock on it. It leaves when the person does, and writing it down is the part of this work that cannot wait.',
         ],
         after: {
-            src: '/regenerative-life/artistry/images/aura-artistry-2.webp',
-            alt: 'A maker being shown how, at the window',
-          kind: 'portrait',
-          type: 'Portrait · a craftsman at the wheel',
+          kind: 'plate',
+          src: '/regenerative-life/artistry/images/aura-artistry-2.webp',
+          alt: 'A maker being shown how, at the window',
           caption: 'Sit close to someone who has been listening to one craft for thirty years',
-          ratio: '4 / 5',
         },
       },
       {
@@ -474,6 +488,17 @@ export const CHAPTERS: Chapter[] = [
     slug: 'vedic-and-biodynamic',
     lede: 'Two preparation traditions, kept for the same reason: the biology. Made on the estate, from this herd, and tested before anything touches the soil.',
     ...merge('biodynamic', 'vedic'),
+    /* Its own banner, on the Plantation's precedent. A merged chapter
+       inherits its first part's hero, and the biodynamic discipline's was
+       a brief for a picture nobody had taken — so the chapter opened on a
+       grey field with four photographs below it. The stirring shot was
+       the brief, almost word for word, so it is promoted out of the body
+       and the movement it sat under runs on its prose. */
+    hero: {
+      caption: 'Forty-five minutes a day, vortex and reverse — Aura Estate',
+      src: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-04.webp',
+      alt: 'Stirring a row of barrels by hand with a wooden pole',
+    },
   },
 
   /* 06 ─────────────────────────────────────────────────────────────── */
@@ -529,10 +554,9 @@ export const CHAPTERS: Chapter[] = [
           'The third discipline is the one nobody drinks: the preparations. Cow pat pits are a controlled ferment too, and the same principle governs them — nothing untested goes out.',
         ],
         after: {
-          kind: 'banner',
+          kind: 'portrait', ratio: '16 / 9',
           src: '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-03.webp',
           alt: 'Cherry drying in raised beds under shade',
-          type: '',
           caption: 'Every lot, its own bed and its own file',
         },
       },

@@ -1659,7 +1659,7 @@ export default function Home() {
             position: relative;
             width: 100%;
             aspect-ratio: 16 / 9;
-            background: #d6d6d6;
+            background: var(--bg-card);
             border-radius: var(--radius-1);
             overflow: hidden;
             transition: opacity var(--dur-base) var(--ease);

@@ -93,7 +93,6 @@ export function HeroBanner({
     if (journal) src = journal.img
   }
   const words = title.split(/\s+/).filter(Boolean)
-  const draftingHint = [type, caption].filter(Boolean).join(' · ')
 
   // Pinned banner with scroll-driven blur clear — same gesture as the
   // homepage HeroVideo. The outer wrapper is 200vh; the inner stage is
@@ -220,8 +219,9 @@ export function HeroBanner({
         marginLeft: 'calc(50% - 50vw)',
         // 200vh wrapper holds the sticky stage in view for ~100vh of
         // scroll past first paint, giving the blur clear room to play
-        // before the banner releases and the next section enters.
-        height: '200vh',
+        // before the banner releases and the next section enters. A
+        // title card has no blur to clear, so it holds for one screen.
+        height: src ? '200vh' : '100vh',
       }}
     >
       {/* Back link removed site-wide — header logo/menu is the only nav. */}
@@ -232,7 +232,10 @@ export function HeroBanner({
           top: 0,
           width: '100%',
           height: '100vh',
-          background: src ? 'var(--bg)' : '#d6d6d6',
+          /* No photograph means a title card on the page's own ground,
+             not a grey field. A banner with nothing behind it is still
+             the opening of the chapter; it just opens in type. */
+          background: 'var(--bg)',
           overflow: 'hidden',
         }}
       >
@@ -318,22 +321,6 @@ export function HeroBanner({
         />
       )}
 
-      {/* Drafting hint — small mono label under the title while `src` is empty. */}
-      {!src && draftingHint && (
-        <div
-          className="hero-banner-drafting"
-          style={{
-            position: 'absolute',
-            left: 'clamp(20px, 4vw, 48px)',
-            bottom: 'clamp(20px, 4vh, 48px)',
-            color: '#5a5a5a',
-            pointerEvents: 'none',
-            zIndex: 2,
-          }}
-        >
-          <div className="label" style={{ opacity: 0.9 }}>{draftingHint}</div>
-        </div>
-      )}
 
       {/* Caption pinned bottom-left, on top of the photo. Always white —
           the bottom-left corner vignette (hero-banner-vignette) plus the
@@ -961,8 +948,8 @@ export function DataGrid({
    * children rather than passed in, so every existing call site gets the
    * right one without being touched. */
   const isList = !Children.toArray(children).some(
-    (c) => isValidElement<{ img?: string; video?: string; type?: string }>(c)
-      && (c.props.img || c.props.video || c.props.type),
+    (c) => isValidElement<{ img?: string; video?: string }>(c)
+      && (c.props.img || c.props.video),
   )
 
   const grid = (
@@ -1021,13 +1008,12 @@ export function DataCard({
   video,
   poster,
   alt,
-  type,
 }: {
   label?: string
   value?: ReactNode
   children?: ReactNode
-  /** When set (or when `type` is provided), the card renders as a
-   *  homepage-hero-style tile: 4:5 thumbnail above the heading and body. */
+  /** When set, the card renders as a homepage-hero-style tile: 4:5
+   *  thumbnail above the heading and body. */
   img?: string
   /** Optional 4:5 video. Renders as an autoplaying muted loop in the
    *  thumbnail slot, with `poster` as the still fallback. Promotes the
@@ -1037,12 +1023,15 @@ export function DataCard({
    *  on reduced-motion. */
   poster?: string
   alt?: string
-  /** Image-type suggestion shown in the grey placeholder when `img` is
-   *  empty — e.g. "Portrait", "Detail", "Landscape". Setting `type`
-   *  alone (without `img`) also promotes the card to tile mode. */
+  /** Shot brief for a picture nobody has taken yet — "Portrait",
+   *  "Detail", "Landscape". Kept so a call site can carry the note, but
+   *  it no longer renders: a card with no photograph is a row of text. */
   type?: string
 }) {
-  const isTile = !!img || !!video || !!type
+  /* A note about a photograph is not a photograph: `type` alone used to
+     promote the card to a 4:5 tile and fill it with grey. Only real media
+     makes a tile now; everything else is a row. */
+  const isTile = !!img || !!video
   /* Lazy-play DataCard videos via IntersectionObserver. autoPlay +
      preload="metadata" was enough to make every off-screen tile
      buffer ~1-2 MB on page load (a 3-card wisdom grid sitting ~9000
@@ -1063,7 +1052,6 @@ export function DataCard({
     return () => observer.disconnect()
   }, [video])
   if (isTile) {
-    const placeholderLabel = [type, typeof value === 'string' ? value : undefined].filter(Boolean).join(' · ')
     return (
       <div className="data-card">
         <div
@@ -1074,7 +1062,7 @@ export function DataCard({
             /* Portrait 4:5 — matches the homepage pillar grid so journal
                tiles share the same proportions as the home hero. */
             aspectRatio: '4 / 5',
-            background: '#d6d6d6',
+            background: 'var(--bg-card)',
             borderRadius: 'var(--radius-1)',
             overflow: 'hidden',
             marginBottom: 20,
@@ -1101,21 +1089,6 @@ export function DataCard({
               decoding="async"
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
-          ) : placeholderLabel ? (
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 16,
-                textAlign: 'center',
-                color: '#5a5a5a',
-              }}
-            >
-              <div className="label" style={{ opacity: 0.9 }}>{placeholderLabel}</div>
-            </div>
           ) : null}
         </div>
         {value && <h3 style={{ margin: 0, marginBottom: 12 }}>{value}</h3>}
@@ -1545,12 +1518,12 @@ export function Continue({
 }: {
   currentHref?: string
   count?: number
-  items?: { href: string; label: string; description: string; img?: string }[]
+  items?: { href: string; label: string; description?: string; img?: string }[]
   /** Eyebrow above the cards. Defaults to "Continue reading" (journals);
    *  company pages pass their own, e.g. "Explore". */
   heading?: string
 }) {
-  const resolved: { href: string; label: string; description: string; img?: string }[] =
+  const resolved: { href: string; label: string; description?: string; img?: string }[] =
     items ?? nextActiveJournals(currentHref, count).map(j => ({
       href: j.href,
       label: j.title,
@@ -1609,7 +1582,9 @@ export function Continue({
                   />
                 </div>
                 <h3 style={{ margin: 0, marginBottom: 12 }}>{item.label}</h3>
-                <div className="p1" style={{ color: 'var(--text-body)' }}>{item.description}</div>
+                {item.description && (
+                  <div className="p1" style={{ color: 'var(--text-body)' }}>{item.description}</div>
+                )}
               </Link>
             ))}
           </div>
@@ -1622,7 +1597,7 @@ export function Continue({
               position: relative;
               width: 100%;
               aspect-ratio: 16 / 9;
-              background: #d6d6d6;
+              background: var(--bg-card);
               border-radius: var(--radius-1);
               overflow: hidden;
               margin-bottom: 24px;

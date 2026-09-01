@@ -69,13 +69,13 @@ const ARTICLES: Article[] = [
   { href: '/pepper',         title: 'Malabar Pepper',                     size: 'lg', comingSoon: true, img: '/journals/fermentation/aura-pepper.jpg' },
   { href: '/provenance',     title: 'Provenance',                         size: 'sm', comingSoon: true, img: '/aura-provenance.jpg' },
   { href: '/regenerative-life/sanctuary-and-stay',      title: 'Sanctuary',                          size: 'lg', comingSoon: true, img: '/aura-sanctuary.jpg' },
-  /* Commissioned, not yet written. No image on purpose — these render
-     on a flat grey plate rather than borrowing a photograph that is
-     not theirs. */
-  { href: '/bug-hotels', title: 'Bug Hotels', size: 'sm', img: '/aura-placeholder.svg' },
-  { href: '/pollinators', title: 'Pollinators', size: 'lg', img: '/aura-placeholder.svg' },
-  { href: '/forest-islands', title: 'Forest Islands', size: 'lg', img: '/aura-placeholder.svg' },
-  { href: '/land-spirit-soul', title: 'Land, Spirit, Soul',                size: 'sm', img: '/aura-placeholder.svg' },
+  /* These four were commissioned and are now written and shot. Each
+     carries its own opening photograph rather than the flat grey plate
+     it sat on while it was still a brief. */
+  { href: '/bug-hotels', title: 'Bug Hotels', size: 'sm', img: '/bug-hotels/images/aura-bug-hotels-01.webp' },
+  { href: '/pollinators', title: 'The Flowering Understory', size: 'lg', img: '/pollinators/images/aura-the-flowering-understory-01.webp' },
+  { href: '/forest-islands', title: 'Forest Islands', size: 'lg', img: '/forest-islands/images/aura-forest-islands-01.webp' },
+  { href: '/land-spirit-soul', title: 'Land, Spirit, Soul',                size: 'sm', img: '/land-spirit-soul/images/aura-land-spirit-soul-01.webp' },
 ]
 
 /* ── The menu's information architecture ──────────────────────────

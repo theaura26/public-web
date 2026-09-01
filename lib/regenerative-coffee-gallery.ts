@@ -41,7 +41,7 @@ export const OVERVIEW: Frame[] = [
   { src: `${B}/overview/aura-soil.webp`, alt: 'Red laterite — where the coffee actually begins', dim: 0.45 },
   { src: `${B}/overview/aura-microbe.webp`, alt: 'The part of the farm nobody can see, counted anyway', dim: 0.45 },
   { src: `${B}/overview/aura-hydrology.webp`, video: `${B}/overview/aura-hydrology.mp4`, alt: 'Not how much rain falls, but how much of it the ground keeps', dim: 0.16 },
-  { src: `${B}/overview/aura-biodiversity.webp`, alt: 'What lives in the four storeys', dim: 0.0 },
+  { src: `${B}/overview/aura-biodiversity.webp`, alt: 'A bee working a flower — what lives in the four storeys', dim: 0.51 },
   { src: `${B}/overview/aura-horn-manure.webp`, alt: 'BD 500, packed into a horn and buried', dim: 0.26 },
   { src: `${B}/overview/aura-vedic-farming.webp`, alt: 'The Indian preparations, kept for the same reason as the European ones', dim: 0.54 },
   { src: `${B}/overview/aura-sensor-field.webp`, alt: 'A sensor left in a block through a monsoon', dim: 0.47 },

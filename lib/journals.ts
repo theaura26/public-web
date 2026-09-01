@@ -10,7 +10,7 @@ export type Journal = {
    *  page's hero subline. */
   description: string
   /** Thumbnail used by Continue cards and the slide-out journal feed. */
-  img: string
+  img?: string
 }
 
 /* The published journal set — the reworked editorials/places plus the
@@ -174,7 +174,6 @@ export const PARKED_JOURNALS: (Journal & { categories: string[] })[] = [
     href: '/cows-of-aura',
     title: 'Cows of Aura',
     description: 'An ear tag can fall out and a name is not a record. Every animal carries a number issued once, and a job written down.',
-    img: '/aura-placeholder.svg',
     categories: ['animals', 'biodynamic'],
   },
 ]

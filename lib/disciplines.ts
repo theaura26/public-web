@@ -74,7 +74,7 @@ export type Discipline = {
   /** One line worth setting on its own. At most one per page. */
   quote?: string
   /** A tall breaker between the figures and the gaps. */
-  breaker?: { caption: string; alt: string }
+  breaker?: { caption: string; alt: string; src?: string; ratio?: string }
   /** Where to read more, on pages that already exist. */
   related?: { label: string; href: string }[]
 }
@@ -108,9 +108,6 @@ export const DISCIPLINES: Discipline[] = [
           'BD 500 through 508 are prepared on the estate and applied on a calendar built for 150 acres. The dung comes from about fifty Malnad Gidda grazing the ground the preparations return to — [Circular Intelligence](/circular) follows one batch through that loop end to end.',
           'Barrels are stirred by hand for about forty-five minutes a day, vortex and reverse. Cow pat pit matures ninety days; the rest run sixty- to ninety-day cycles.',
         ],
-        after: {
-          src: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-04.webp',
-          alt: 'Stirring a row of barrels by hand with a wooden pole', kind: 'plate', type: 'Process · barrels mid-stir, vortex and reverse', caption: 'Forty-five minutes a day, by hand' },
       },
       {
         heading: 'BD 500 through 508.',
@@ -270,7 +267,7 @@ export const DISCIPLINES: Discipline[] = [
         ],
         after: {
           src: '/regenerative-life/the-plantation/images/aura-plantation-1.webp',
-          alt: 'The four-storey canopy seen from above', kind: 'plate', type: 'Detail · light through four storeys', caption: 'The light survey and the disease question, read from two directions' },
+          alt: 'The four-storey canopy seen from above', kind: 'portrait', ratio: '16 / 9', caption: 'The light survey and the disease question, read from two directions' },
       },
       {
         heading: 'Every cut is a door.',
@@ -332,7 +329,7 @@ export const DISCIPLINES: Discipline[] = [
         ],
         after: {
           src: '/regenerative-life/the-plantation/images/aura-plantation-6.webp',
-          alt: 'An insect at rest on the bark of a shade tree', kind: 'plate', type: 'Detail · a bug hotel, occupied', caption: 'Put up where a working landscape stopped producing cavities' },
+          alt: 'An insect at rest on the bark of a shade tree', kind: 'portrait', ratio: '16 / 9', caption: 'Put up where a working landscape stopped producing cavities' },
       },
       {
         heading: 'Six plants, taken back out.',
@@ -423,7 +420,7 @@ export const DISCIPLINES: Discipline[] = [
         ],
         after: {
           src: '/regenerative-life/the-plantation/images/aura-plantation-3.webp',
-          alt: 'Pepper vine wound along the limbs of a shade tree', kind: 'banner', type: 'Wide · two trees in one block, wanting opposite things', caption: 'A block-level instruction gets one of them wrong' },
+          alt: 'Pepper vine wound along the limbs of a shade tree', kind: 'plate', caption: 'A block-level instruction gets one of them wrong' },
       },
       {
         heading: 'Reading the light before anyone cuts.',
@@ -433,7 +430,7 @@ export const DISCIPLINES: Discipline[] = [
         ],
         after: {
           src: '/regenerative-life/the-plantation/images/aura-plantation-7.webp',
-          alt: 'Moss and lichen banked along a trunk in shade', kind: 'plate', type: 'Process · a lux meter held at canopy height', caption: 'Five clusters an acre, ten readings each' },
+          alt: 'Moss and lichen banked along a trunk in shade', kind: 'portrait', ratio: '16 / 9', caption: 'Five clusters an acre, ten readings each' },
       },
       {
         heading: 'The cut itself.',
@@ -469,7 +466,7 @@ export const DISCIPLINES: Discipline[] = [
         ],
         after: {
           src: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-03.webp',
-          alt: 'A handful of finished preparation held up and smelled', kind: 'banner', type: 'Wide · the five, lined up on the shed bench', caption: 'Each doing a different job in the same system' },
+          alt: 'A handful of finished preparation held up and smelled', kind: 'plate', caption: 'Each doing a different job in the same system' },
       },
       {
         heading: 'None of it is bought.',
@@ -478,7 +475,7 @@ export const DISCIPLINES: Discipline[] = [
         ],
         after: {
           src: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-02.webp',
-          alt: 'Malnad Gidda cattle lying in the shed', kind: 'plate', type: 'Detail · dung and urine from the estate’s own herd', caption: 'The reason the herd is indigenous and stays on the land it feeds' },
+          alt: 'Malnad Gidda cattle lying in the shed', kind: 'portrait', ratio: '16 / 9', caption: 'The reason the herd is indigenous and stays on the land it feeds' },
       },
       {
         heading: 'Planned backwards from the calendar.',
@@ -596,7 +593,7 @@ export const DISCIPLINES: Discipline[] = [
         ],
         after: {
           src: '/regenerative-life/aura-intelligence/images/aura-intelligence-09.webp',
-          alt: 'A cow grazing with an egret walking beside her', kind: 'plate', type: 'Detail · the estate database, queried', caption: 'A block, a batch, a lot and a date, all addressable', ratio: '16 / 9' },
+          alt: 'A cow grazing with an egret walking beside her', kind: 'portrait', ratio: '16 / 9', caption: 'A block, a batch, a lot and a date, all addressable' },
       },
       {
         heading: 'Building the world model.',
@@ -613,7 +610,7 @@ export const DISCIPLINES: Discipline[] = [
         ],
         after: {
           src: '/regenerative-life/aura-intelligence/images/aura-intelligence-02.webp',
-          alt: 'The estate from the air, a building among the canopy', kind: 'portrait', type: 'Detail · a predicted outcome beside the measured one', caption: 'The difference between them is what trains the model', ratio: '4 / 5' },
+          alt: 'The estate from the air, a building among the canopy', kind: 'banner', caption: 'The difference between them is what trains the model' },
       },
       {
         heading: 'The next right step, in the hands of the person on the ground.',
@@ -623,10 +620,9 @@ export const DISCIPLINES: Discipline[] = [
           'The same data makes the estate a living laboratory: experiments that only this record makes possible, run on ground that is being farmed anyway.',
         ],
         after: {
-          kind: 'banner',
+          kind: 'portrait', ratio: '4 / 5',
           src: '/regenerative-life/aura-intelligence/images/aura-intelligence-08.webp',
           alt: 'An estate worker crossing a block, tool in hand',
-          type: '',
           caption: 'The reading goes to whoever is standing there',
         },
       },
@@ -637,10 +633,9 @@ export const DISCIPLINES: Discipline[] = [
           'Everything exports in open formats, because software gets replaced and a hundred-year claim needs a record that outlives the company keeping it. Writing milestones to a public chain is an intention and is not built.',
         ],
         after: {
-          kind: 'banner',
+          kind: 'plate',
           src: '/regenerative-life/aura-intelligence/images/aura-intelligence-07.webp',
           alt: 'Coffee cherries ripening along the branch',
-          type: '',
           caption: 'One chain, and every link of it logged',
         },
       },

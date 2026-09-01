@@ -96,9 +96,9 @@ export type Subject = {
   /** A tall breaker between the figures and the gaps — the beat where a
       reader looks up from a list of numbers before being told what the
       numbers do not cover. */
-  breaker?: { caption: string; alt: string }
+  breaker?: { caption: string; alt: string; src?: string; ratio?: string }
   /** The rest of the set, offered at the foot. */
-  siblings?: { href: string; title: string; description: string; status: 'live' | 'soon' }[]
+  siblings?: { href: string; title: string; description?: string; img?: string; status: 'live' | 'soon' }[]
   siblingsLabel?: string
   /** Which of the three arrangements this page takes. */
   variant?: number
@@ -135,10 +135,10 @@ export default function SubjectPage({
 }) {
   const v = (s.variant ?? 0) % 3
 
-  /* `type` only while there is no photograph. It is the brief for the
-     shot — "Detail · red laterite in the hand" — and once the shot
-     exists it is a note to the photographer sitting in the reader's
-     caption, and in the text every crawler and agent view reads. */
+  /* With a photograph the banner is the photograph; without one it is a
+     title card on the page's own ground. Either way the shot brief stays
+     out of it — it is a note to the photographer, and it was landing in
+     the reader's caption and in every crawler and agent view. */
   const opener = (
     <HeroBanner
       key="hero"
@@ -146,7 +146,6 @@ export default function SubjectPage({
       src={s.hero?.src}
       mediaType={s.hero?.mediaType}
       poster={s.hero?.poster}
-      type={s.hero?.src ? undefined : (s.hero?.type ?? 'Landscape · Mudigere')}
       caption={s.hero?.caption ?? s.lede}
       alt={s.hero?.alt ?? `${s.label} — Aura, Aura Estate, Mudigere`}
     />
@@ -192,20 +191,12 @@ export default function SubjectPage({
      load. So the card survives only on a page that has no photographs
      yet, and the rule needs no maintenance — a chapter stops showing
      them the moment its first real image lands. */
-  const hasPhotography = Boolean(
-    s.hero?.src || s.plate?.src || s.movements?.some((mv) => mv.after?.src),
-  )
-
-  /* The visual after a movement. Where there is no photograph and no
-     photography anywhere on the page, a banner and a plate render a grey
-     card carrying what the picture is meant to be. */
+  /* The visual after a movement. A slot with no photograph is a shot
+     nobody has taken, and a grey card standing in for it reads as an
+     image that failed to load. The slot is dropped; the brief stays in
+     the data as the shot list. */
   function visual(after: NonNullable<Movement['after']>, key: string) {
-    /* Nothing at all for an empty slot on a page that is already
-       illustrated. */
-    if (!after.src && hasPhotography) return null
-    /* Same rule as the banner: the brief is shown only while the picture
-       it describes does not exist. */
-    const brief = after.src ? undefined : after.type
+    if (!after.src) return null
     if (after.kind === 'plate') {
       return (
         <Placeholder
@@ -213,7 +204,6 @@ export default function SubjectPage({
           src={after.src}
           mediaType={after.mediaType}
           poster={after.poster}
-          type={brief}
           alt={after.alt ?? after.caption}
           caption={after.caption}
         />
@@ -223,7 +213,7 @@ export default function SubjectPage({
       return (
         <Portrait
           key={key}
-          src={after.src ?? '/aura-placeholder.svg'}
+          src={after.src}
           /* The ratio the shot is to be delivered at. The box is set to
              it, so a matched picture is never cropped. */
           ratio={after.ratio ?? '4 / 5'}
@@ -238,7 +228,6 @@ export default function SubjectPage({
         src={after.src}
         mediaType={after.mediaType}
         poster={after.poster}
-        type={brief}
         alt={after.alt ?? after.caption}
         caption={after.caption}
       />
@@ -290,14 +279,26 @@ export default function SubjectPage({
   )
 
   const quote = s.quote ? <PullQuote key="quote">{s.quote}</PullQuote> : null
-  const plate = s.plate
-    ? <Placeholder key="plate" type={s.plate.type} caption={s.plate.caption} />
+  /* Both of these are pictures, and both are dropped until the picture
+     exists. The plate and the breaker used to stand in as a grey card and
+     a placeholder glyph. */
+  const plate = s.plate?.src
+    ? (
+      <Placeholder
+        key="plate"
+        src={s.plate.src}
+        mediaType={s.plate.mediaType}
+        poster={s.plate.poster}
+        alt={s.plate.alt ?? s.plate.caption}
+        caption={s.plate.caption}
+      />
+    )
     : null
-  const breaker = s.breaker ? (
+  const breaker = s.breaker?.src ? (
     <Portrait
       key="breaker"
-      src="/aura-placeholder.svg"
-      ratio="4 / 5"
+      src={s.breaker.src}
+      ratio={s.breaker.ratio ?? '4 / 5'}
       alt={s.breaker.alt}
       caption={s.breaker.caption}
     />
@@ -353,6 +354,7 @@ export default function SubjectPage({
             href: x.href,
             label: x.title,
             description: x.description,
+            img: x.img,
           }))}
         />
       )}

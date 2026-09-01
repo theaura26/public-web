@@ -100,13 +100,6 @@ export default function CowsOfAuraPage() {
         </p>
       </TwoCol>
 
-      <Portrait
-        src="/aura-placeholder.svg"
-        ratio="5 / 7"
-        alt="A Malnad Gidda in the shed at Aura Estate"
-        caption="Every animal a row, and the row outlives the ear tag"
-      />
-
       <TwoCol id="grazing" heading="Where they are, and how they are kept.">
         <p className="p1">
           Location is a mandatory field and it changes: cow shed, quarantine shed, treatment pen,

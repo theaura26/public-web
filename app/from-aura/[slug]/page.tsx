@@ -255,16 +255,17 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           margin-left: calc(-1 * var(--pd-rail));
           width: calc(100% + var(--pd-rail));
           aspect-ratio: 4 / 5;
-          /* The same grey the journal kit's drafting cards use, so an
-             unphotographed product reads as 'image to come' rather than
-             as an empty column. --bg-card is near-white and vanished. */
-          background: #d6d6d6;
+          /* A product with no photograph yet keeps its column as a card
+             on the page's own ground, not a grey plate: grey reads as a
+             picture that failed rather than one nobody has taken. */
+          background: var(--bg-card);
+          border: 1px solid var(--border);
           border-radius: var(--radius-1);
           overflow: hidden;
         }
         /* The grey is the drafting state, so it is painted only when
            there is nothing over it. */
-        .pd-plate:not([data-noimg]) { background: none; }
+        .pd-plate:not([data-noimg]) { background: none; border: 0; }
         .pd-plate img {
           display: block;
           width: 100%;

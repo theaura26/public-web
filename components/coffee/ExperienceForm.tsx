@@ -381,7 +381,7 @@ export function ExperienceBlock() {
         /* No heading and no rule of its own — the handwritten line above
            is the heading, and this reads straight on from it. */
         .xb {
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
           padding: 0 0 clamp(96px, 15vh, 176px);
         }
         /* The column is centred on the page; the fields inside it stay

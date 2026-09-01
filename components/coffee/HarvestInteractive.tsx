@@ -410,7 +410,7 @@ export function LotCards({ title, intro, lots }: {
           /* Transparent, above the chapter backdrop. A black ground here
              sat on top of the photographs and broke the run. */
           position: relative; z-index: 1;
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
           padding: clamp(104px, 16vh, 196px) 0;
         }
         .lots-h {
@@ -502,7 +502,7 @@ export function BlockExplorer() {
           /* Transparent, above the chapter backdrop. A black ground here
              sat on top of the photographs and broke the run. */
           position: relative; z-index: 1;
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
           padding: clamp(104px, 16vh, 196px) 0;
         }
         .bx-h {

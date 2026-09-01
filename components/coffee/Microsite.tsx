@@ -437,7 +437,7 @@ export function Panel({
           min-height: 100svh;
           display: flex; align-items: center;
           padding: calc(var(--nav-h) + var(--space-9)) 0 var(--space-9);
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
           overflow: hidden;
         }
         .p-bg { position: absolute; inset: 0; }
@@ -791,7 +791,7 @@ export function Index({
         .ix {
           min-height: 100svh; display: flex; align-items: center;
           padding: calc(var(--nav-h) + var(--space-9)) 0 var(--space-9);
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
         }
         .ix-in { width: 100%; }
         .ix-top { margin-bottom: var(--space-9); }
@@ -1056,7 +1056,7 @@ export function Closing({ children }: { children: string }) {
           /* Above the chapter backdrop, which is fixed at z-index 0. */
           position: relative; z-index: 1;
           display: flex; align-items: center;
-          background: #000;
+          background: var(--brand-green);
           padding: clamp(112px, 18vh, 216px) 0;
         }
         /* ScrollHighlight renders a plain h2, which the global rule
@@ -1108,12 +1108,12 @@ export function LoopDiagram({
         .ld {
           /* Above the chapter backdrop, which is fixed at z-index 0. */
           position: relative; z-index: 1;
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
           padding: clamp(104px, 16vh, 196px) 0;
         }
         .ld-ring {
           position: relative;
-          width: min(100%, 620px);
+          width: min(100%, 820px);
           aspect-ratio: 1;
           margin: 0 auto;
           display: grid; place-items: center;
@@ -1142,10 +1142,11 @@ export function LoopDiagram({
         .ld-c {
           display: flex; flex-direction: column; text-align: center;
           font-family: var(--font-grotesque), sans-serif;
-          /* The same setting as an H2, uppercase. It is the heading of
-             this section — it was two thirds the size of every other
-             heading on the page and read as a caption sitting in a ring. */
-          font-weight: 400;
+          /* The same setting as an H2, uppercase, and bold — it is the
+             heading of this section, and it was two thirds the size of
+             every other heading on the page, reading as a caption that
+             happened to be sitting inside a ring. */
+          font-weight: 700;
           font-size: clamp(24px, 4vw, 58px);
           line-height: 1.04; letter-spacing: -0.04em;
           text-transform: uppercase;
@@ -1201,7 +1202,7 @@ export function Banner({
           position: relative; z-index: 1;
           min-height: 88svh;
           display: flex; align-items: center;
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
           padding: clamp(112px, 18vh, 216px) 0;
           border-top: 1px solid rgba(255, 255, 255, 0.12);
         }
@@ -1535,7 +1536,9 @@ export function NextUp({
         .m-next-a {
           display: inline-block; margin-top: var(--space-6);
           font-family: var(--font-mono), monospace; font-size: 13px;
-          color: var(--brand-accent);
+          /* Lifted: this banner's ground is the brand green, where the
+             base accent reads 3.10:1 — under AA. */
+          color: var(--brand-accent-lift);
           transition: transform var(--dur-base) var(--ease);
         }
         :global(.m-next-c):hover .m-next-a { transform: translateX(5px); }
@@ -1614,7 +1617,7 @@ export function Scene({
           position: relative; z-index: 1; min-height: 100svh;
           display: flex; align-items: flex-end;
           padding: 0 0 clamp(72px, 12vh, 144px);
-          background: #000; color: #fff; overflow: hidden;
+          background: var(--brand-green); color: #fff; overflow: hidden;
         }
         /* A scene never carries its own picture now — the chapter's
            backdrop is behind all of them. This only governs the balance:
@@ -1713,7 +1716,7 @@ export function Chapter({
           position: relative; z-index: 1;
           display: flex; align-items: center; justify-content: center;
           padding: clamp(128px, 21vh, 248px) 0;
-          background: #000; color: #fff; text-align: center;
+          background: var(--brand-green); color: #fff; text-align: center;
         }
         .ch.is-tight { padding-bottom: clamp(40px, 6vh, 72px); }
         .ch-h {

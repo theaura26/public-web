@@ -75,7 +75,12 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
         if (!top) return
         const i = steps.indexOf(top.target as HTMLElement)
         if (i < 0) return
-        setStarted(true)
+        /* True once the first beat is reached, and false again above it:
+           the hub opens on the white Remarkable Circle and the chapters on
+           their own header, and a photograph belongs on neither. Latching
+           this on meant the backdrop stayed lit over the opening once the
+           reader had been down the page and come back. */
+        setStarted(i > 0 || top.intersectionRatio > 0.6)
         /* The hand-written pairing where there is one, and an even
            spread otherwise. Cycling with modulo made a chapter with nine
            photographs and fourteen scenes show the first five again,

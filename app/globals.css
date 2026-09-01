@@ -17,7 +17,14 @@
    spacing/radius/z step, add it here first.
 
    Section order:
-     1.  Brand palette                 --brand-accent, --error
+     1.  Brand palette                 --brand-accent, --brand-green, --error
+
+         The accent is an ink for dark grounds and it was chosen against
+         black, where it reads at 6.66:1. On --brand-green it falls to
+         3.10:1, which is under AA. --brand-accent-lift is the same hue
+         carried up to 4.88:1 on that ground; use it for accent-coloured
+         TEXT sitting on the green. Accent as a FILL (the festival pill,
+         with white type on it) is unaffected and stays --brand-accent.
      2.  Theme — Night (default)       --bg / --text / --border
      3.  Theme — Day
      4.  Spacing scale                 --space-2 → --space-9
@@ -32,6 +39,8 @@
 :root {
   /* ── 1. Brand palette (immutable across themes) ── */
   --brand-accent: #E37128;          /* primary action / hover */
+  --brand-green: #36483A;           /* the dark ground the estate pages sit on */
+  --brand-accent-lift: #F5A56B;     /* the accent, lifted for use ON --brand-green */
   --error: #E8421A;                 /* form validation, destructive UI */
   --success: #1F6B4B;               /* confirmed state — form sent, validation passed */
 

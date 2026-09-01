@@ -83,7 +83,7 @@ export function Programme() {
 
       <style jsx>{`
         .pg {
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
           /* Air above as well as below. With no top padding the first day
              sat flush against the rule that closes the section before it,
              which read as the two being one block. */

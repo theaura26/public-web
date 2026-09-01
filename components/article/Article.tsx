@@ -25,7 +25,7 @@ import { useRouter } from 'next/navigation'
 import { Children, isValidElement, ReactNode, useEffect, useRef, useState } from 'react'
 import Reveal from '@/components/RevealOnScroll'
 import { ExpandingBanner, type BannerFrame } from '@/components/ExpandingBanner'
-import { ACTIVE_JOURNALS, nextActiveJournals, type Journal } from '@/lib/journals'
+import { ACTIVE_JOURNALS, journalImage, nextActiveJournals, type Journal } from '@/lib/journals'
 
 /* ── Shared "← Back" handler used by all three hero variants.
    The visible <Link> still carries a real `href` (so right-click
@@ -88,10 +88,7 @@ export function HeroBanner({
 }) {
   // If src wasn't passed but currentHref was, derive it from the journal
   // index — the same thumbnail the navbar and Continue cards use.
-  if (!src && currentHref) {
-    const journal = ACTIVE_JOURNALS.find(j => j.href === currentHref)
-    if (journal) src = journal.img
-  }
+  if (!src && currentHref) src = journalImage(currentHref)
   const words = title.split(/\s+/).filter(Boolean)
 
   // Pinned banner with scroll-driven blur clear — same gesture as the
@@ -429,10 +426,7 @@ export function JournalHero({
   /** Where the back link goes. Defaults to /. */
   backHref?: string
 }) {
-  if (!src && currentHref) {
-    const journal = ACTIVE_JOURNALS.find(j => j.href === currentHref)
-    if (journal) src = journal.img
-  }
+  if (!src && currentHref) src = journalImage(currentHref)
   const words = title.split(/\s+/).filter(Boolean)
   const onBack = useBackOrFallback(backHref)
 

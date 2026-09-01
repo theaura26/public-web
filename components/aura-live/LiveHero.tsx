@@ -85,10 +85,12 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
              the cards can run off the right edge. The title and stamp
              carry the gutter themselves. */
           padding: calc(var(--nav-h) + var(--space-10, 96px)) 0 var(--space-9);
-          /* The site's hero measure, same as the microsite chapters:
-             svh rather than vh, so a mobile browser collapsing its
-             chrome does not change the height under the reader. */
-          min-height: min(92svh, 900px);
+          /* The site's hero measure — the field notes index, the
+             articles and the Remarkable Circle are all 100svh. The
+             microsite's min(92svh, 900px) is the outlier and this used to
+             follow it. svh rather than vh, so a mobile browser collapsing
+             its chrome does not change the height under the reader. */
+          min-height: 100svh;
           text-align: center;
         }
 
@@ -104,11 +106,19 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           position: absolute;
           inset: 0;
           z-index: 1;
+          /* The veil is only doing one job: keeping the title and the
+             stamp legible. The film is bright — its highlights sit at
+             242/255 — so white type needs about half of it held back
+             where the words are, and nothing at all anywhere else. It
+             used to run 0.78 at the foot, under cards that carry their
+             own dark ground, which darkened the film for no reason.
+             It holds through the text band and then lets go to 5%. */
           background: linear-gradient(
             to bottom,
-            rgba(0, 0, 0, 0.55) 0%,
-            rgba(0, 0, 0, 0.45) 45%,
-            rgba(0, 0, 0, 0.78) 100%
+            rgba(0, 0, 0, 0.54) 0%,
+            rgba(0, 0, 0, 0.54) 42%,
+            rgba(0, 0, 0, 0.14) 68%,
+            rgba(0, 0, 0, 0.05) 100%
           );
         }
         @media (prefers-reduced-motion: reduce) {
@@ -193,7 +203,7 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
         }
 
         @media (max-width: 640px) {
-          .hero { min-height: min(88svh, 720px); gap: var(--space-7); }
+          .hero { min-height: 100svh; gap: var(--space-7); }
         }
       `}</style>
     </header>

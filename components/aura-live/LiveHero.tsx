@@ -125,8 +125,10 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           background: linear-gradient(
             to bottom,
             rgba(0, 0, 0, 0.54) 0%,
-            rgba(0, 0, 0, 0.54) 42%,
-            rgba(0, 0, 0, 0.14) 68%,
+            rgba(0, 0, 0, 0.52) 30%,
+            rgba(0, 0, 0, 0.30) 46%,
+            rgba(0, 0, 0, 0.12) 62%,
+            rgba(0, 0, 0, 0.05) 78%,
             rgba(0, 0, 0, 0.05) 100%
           );
         }
@@ -175,7 +177,10 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           /* Close under the title — it is the title's timestamp, and it
              used to sit 88px away, reading as its own thing. */
           margin: var(--space-5) 0 auto;
-          color: rgba(255, 255, 255, 0.72);
+          /* Solid, not 72%. At 11px over this film it was reading 3.34:1
+             even under the heavier veil it used to have — under AA, and
+             the reason the veil had to be as dark as it was. */
+          color: #fff;
         }
         /* On the title rather than beside the timestamp. Six pixels next
            to a line of 11px mono was a detail nobody found; at the top of

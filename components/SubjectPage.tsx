@@ -183,11 +183,26 @@ export default function SubjectPage({
     />
   ) : null
 
-  /* The visual after a movement. All three are in their drafting state
-     until there is a photograph: a banner and a plate render a grey card
-     carrying what the picture is meant to be, so the page reads as
-     'image to come' rather than as a hole. */
+  /* Does this page have any photography at all? Once it does, a slot
+     that is still empty is dropped rather than drawn.
+
+     The grey drafting card was right while nothing was shot: a page of
+     them reads as a page waiting for pictures, which is what it was. One
+     of them among eight photographs reads as a picture that failed to
+     load. So the card survives only on a page that has no photographs
+     yet, and the rule needs no maintenance — a chapter stops showing
+     them the moment its first real image lands. */
+  const hasPhotography = Boolean(
+    s.hero?.src || s.plate?.src || s.movements?.some((mv) => mv.after?.src),
+  )
+
+  /* The visual after a movement. Where there is no photograph and no
+     photography anywhere on the page, a banner and a plate render a grey
+     card carrying what the picture is meant to be. */
   function visual(after: NonNullable<Movement['after']>, key: string) {
+    /* Nothing at all for an empty slot on a page that is already
+       illustrated. */
+    if (!after.src && hasPhotography) return null
     /* Same rule as the banner: the brief is shown only while the picture
        it describes does not exist. */
     const brief = after.src ? undefined : after.type

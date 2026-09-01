@@ -907,6 +907,17 @@ p.journal-hero__caption {
 [data-view="agent"] .aura-nav > a:first-child img { display: none !important; }
 [data-view="agent"] .nav-wordmark { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
 
+/* The bar stops floating. It is fixed with a fully transparent
+   background, which works over photography and fails completely over a
+   wall of monospace text: the wordmark and the word Menu sat on top of
+   whatever line happened to be scrolling past them, both legible and
+   neither readable. Static puts it at the top of the document where a
+   header belongs, and the overlap cannot happen. */
+[data-view="agent"] .aura-nav {
+  position: static !important;
+  background: var(--bg) !important;
+}
+
 /* Footer: simplified, no watermark. */
 [data-view="agent"] footer { background: var(--bg) !important; padding-bottom: var(--space-7) !important; }
 [data-view="agent"] footer > div:last-child { display: none !important; }

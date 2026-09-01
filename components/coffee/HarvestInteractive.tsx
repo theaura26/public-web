@@ -279,14 +279,16 @@ function LotCard({ lot }: { lot: Lot }) {
           names and not one number behind them. Read off the same
           lot.data, so the two cannot drift. */}
       <div className="agent-only">
-        <dl>
+        {/* "Label: value" on one line rather than a <dl>. Agent view sets
+            every element to display:block, which puts a dt and its dd on
+            separate lines with nothing to tell them apart — a column of
+            alternating words where "Brix at harvest" and "28%" look like
+            two facts. This is the same shape the estate blocks use. */}
+        <ul>
           {lot.data.map((r) => (
-            <div key={r.k}>
-              <dt>{r.k}</dt>
-              <dd>{r.v}</dd>
-            </div>
+            <li key={r.k}>{r.k}: {r.v}</li>
           ))}
-        </dl>
+        </ul>
         <p>{lot.process}</p>
       </div>
 

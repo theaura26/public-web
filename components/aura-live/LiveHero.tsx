@@ -47,10 +47,11 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           title, the stamp and the dark cards all hold against it. */}
       <span className="veil" aria-hidden="true" />
 
-      <h1 className="title">Now</h1>
+      <h1 className={`title state-${state}`}>
+        Now<span className="dot" aria-hidden="true" />
+      </h1>
 
       <p className={`fresh label state-${state}`}>
-        <span className="dot" aria-hidden="true" />
         Last updated{' '}
         {lastCheckedAt ? <time dateTime={lastCheckedAt}>{stamp}</time> : stamp}
       </p>
@@ -79,12 +80,26 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: clamp(var(--space-8), 6vh, 88px);
+          /* No shared gap: the stamp belongs to the title and the card
+             band does not, so the two distances are set separately below
+             rather than by one number that governs both. */
+          gap: 0;
           /* No horizontal padding: the band inside sets its own rail so
              the cards can run off the right edge. The title and stamp
              carry the gutter themselves. */
-          padding: calc(var(--nav-h) + var(--space-10, 96px)) 0 var(--space-9);
-          min-height: 86vh;
+          /* No top padding. The title and stamp centre themselves in the
+             space above the card band with a pair of auto margins, and
+             any padding here lands on one side of that pair only — it was
+             pushing them 152px below the middle. The auto space is far
+             larger than the nav at every height this hero can be, so the
+             bar is cleared without reserving for it. */
+          padding: 0 0 var(--space-9);
+          /* The site's hero measure — the field notes index, the
+             articles and the Remarkable Circle are all 100svh. The
+             microsite's min(92svh, 900px) is the outlier and this used to
+             follow it. svh rather than vh, so a mobile browser collapsing
+             its chrome does not change the height under the reader. */
+          min-height: 100svh;
           text-align: center;
         }
 
@@ -100,11 +115,21 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           position: absolute;
           inset: 0;
           z-index: 1;
+          /* The veil is only doing one job: keeping the title and the
+             stamp legible. The film is bright — its highlights sit at
+             242/255 — so white type needs about half of it held back
+             where the words are, and nothing at all anywhere else. It
+             used to run 0.78 at the foot, under cards that carry their
+             own dark ground, which darkened the film for no reason.
+             It holds through the text band and then lets go to 5%. */
           background: linear-gradient(
             to bottom,
-            rgba(0, 0, 0, 0.55) 0%,
-            rgba(0, 0, 0, 0.45) 45%,
-            rgba(0, 0, 0, 0.78) 100%
+            rgba(0, 0, 0, 0.54) 0%,
+            rgba(0, 0, 0, 0.52) 30%,
+            rgba(0, 0, 0, 0.30) 46%,
+            rgba(0, 0, 0, 0.12) 62%,
+            rgba(0, 0, 0, 0.05) 78%,
+            rgba(0, 0, 0, 0.05) 100%
           );
         }
         @media (prefers-reduced-motion: reduce) {
@@ -122,11 +147,13 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
            the row scrolls. */
         .band-slot {
           width: 100%;
-          margin-top: auto;
         }
 
         .title {
-          margin: 0;
+          /* This margin and the one under the stamp are both auto, which
+             centres the pair in whatever is left above the card band —
+             the clear part of the frame, rather than the whole hero. */
+          margin: auto 0 0;
           /* globals.css sets h1 to var(--text), which on a black field in
              day theme is near-black on black. The hero owns its own
              ground, so it owns its own ink. */
@@ -147,25 +174,59 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           display: inline-flex;
           align-items: center;
           gap: var(--space-2);
-          margin: 0;
-          color: rgba(255, 255, 255, 0.72);
+          /* Close under the title — it is the title's timestamp, and it
+             used to sit 88px away, reading as its own thing. */
+          /* Only the space above the pair is auto. Setting this one to a
+             measure and letting the other take the remainder drops the
+             title and its stamp below the middle of the clear space,
+             which is where they sit better — the band is closer under
+             them than it is far from the top. */
+          margin: var(--space-6) 0 clamp(96px, 14vh, 150px);
+          /* Solid, not 72%. At 11px over this film it was reading 3.34:1
+             even under the heavier veil it used to have — under AA, and
+             the reason the veil had to be as dark as it was. */
+          color: #fff;
         }
+        /* On the title rather than beside the timestamp. Six pixels next
+           to a line of 11px mono was a detail nobody found; at the top of
+           a 128px word it is the first thing on the page, which is right
+           for the one element whose whole job is to say "this is
+           current". It is sized in em, so it tracks the title down to
+           mobile. */
         .dot {
-          width: 6px;
-          height: 6px;
+          display: inline-block;
+          width: 0.16em;
+          height: 0.16em;
+          margin-left: 0.1em;
+          /* Centred on the word, not perched above it: the dot's bottom
+             sits 0.28em over the baseline, which puts its middle on the
+             middle of the cap height. */
+          vertical-align: 0.28em;
           border-radius: 50%;
           background: var(--brand-accent);
-          flex: none;
+          box-shadow:
+            0 0 0.06em var(--brand-accent),
+            0 0 0.3em rgba(227, 113, 40, 0.85),
+            0 0 0.7em rgba(227, 113, 40, 0.45);
+          animation: live-pulse 2.6s var(--ease, ease-in-out) infinite;
         }
-        /* Behind, or unknown: the mark hollows out. Nothing about a
-           filled dot should survive the source going quiet. */
+        @keyframes live-pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.55; }
+        }
+        /* Behind, or unknown: the mark hollows out and stops glowing.
+           Nothing about a lit dot should survive the source going quiet. */
         .state-stale .dot, .state-unknown .dot {
           background: transparent;
-          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+          box-shadow: inset 0 0 0 0.02em rgba(255, 255, 255, 0.5);
+          animation: none;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .dot { animation: none; }
         }
 
         @media (max-width: 640px) {
-          .hero { min-height: 54vh; gap: var(--space-7); }
+          .hero { min-height: 100svh; gap: var(--space-7); }
         }
       `}</style>
     </header>

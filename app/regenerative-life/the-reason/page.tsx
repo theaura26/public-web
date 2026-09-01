@@ -501,7 +501,7 @@ export default function TheReasonPage() {
           heading="Explore"
           items={[
             { href: '/brand', label: 'Our Brand', description: 'How the belief shows up — the identity, the voice, the way Aura carries itself.', img: '/aura-hero.jpg' },
-            { href: '/regenerative-life/artistry', label: 'Atelier', description: 'Where the thinking is made — Origin, Engine and Hospitality, three studios applying Natural Intelligence to story, systems and place.', img: '/aura-studios/aura-studios.jpg' },
+            { href: '/atelier', label: 'Atelier', description: 'Where the thinking is made — Origin, Engine and Hospitality, three studios applying Natural Intelligence to story, systems and place.', img: '/aura-studios/aura-studios.jpg' },
             { href: '/mudigere', label: 'Mudigere', description: 'Where it is grown — 150 acres in the Western Ghats, tended in decades.', img: '/aura-mudigere.jpg' },
           ]}
         />

@@ -115,5 +115,17 @@ export function getStore(cfg = loadConfig()): FeedStore {
     }
     return new BlobStore(cfg.storeKey)
   }
+  /* The file driver is for local development and tests. On a serverless
+     deploy the filesystem is read-only and per-invocation, so selecting
+     it there does not fail — it reads ENOENT as an empty ledger and
+     throws away every write. The page then reports that nothing has met
+     the bar, which is indistinguishable from the feed working and having
+     nothing to say. Refuse instead, so the run fails in the log. */
+  if (process.env.VERCEL && process.env.NODE_ENV === 'production') {
+    throw new Error(
+      'AURA Live has no durable store: the file driver cannot persist on Vercel. ' +
+      'Set BLOB_READ_WRITE_TOKEN (Vercel Blob) for this environment.',
+    )
+  }
   return new FileStore(cfg.storeFilePath)
 }

@@ -21,7 +21,14 @@ import type { Frame } from '@/lib/regenerative-coffee-gallery'
  * observer fires once per scene boundary and sets an index.
  */
 export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps?: number[] }) {
-  const [active, setActive] = useState(0)
+  /* One piece of state, not two. The frame on top and the order the
+     frames are stacked in are the same fact, and splitting them let the
+     order land a render after the frame it describes — the incoming
+     picture began its fade while still buried, and the page cut to a
+     half-transparent layer when the z-index caught up. That was the
+     flash. Updated together, in one pure updater. */
+  const [view, setView] = useState<{ active: number; seen: number[] }>({ active: 0, seen: [0] })
+  const { active, seen } = view
   /* Which frames have been shown, oldest first. Every frame sits at full
      opacity and the stack is ordered by recency, so the only one that
      ever animates is the incoming top layer fading in over a solid one
@@ -32,7 +39,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
      outgoing frame is opaque and the scrim shows through — which is the
      flash. With the whole stack opaque there is nothing to show
      through. */
-  const [seen, setSeen] = useState<number[]>([0])
+
   /* Past the last scene the chapter is over. The crosslinks and the
      festival banner are their own ground, so the backdrop lets go
      rather than sitting a photograph behind them. */
@@ -68,7 +75,12 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
         if (!top) return
         const i = steps.indexOf(top.target as HTMLElement)
         if (i < 0) return
-        setStarted(true)
+        /* True once the first beat is reached, and false again above it:
+           the hub opens on the white Remarkable Circle and the chapters on
+           their own header, and a photograph belongs on neither. Latching
+           this on meant the backdrop stayed lit over the opening once the
+           reader had been down the page and come back. */
+        setStarted(i > 0 || top.intersectionRatio > 0.6)
         /* The hand-written pairing where there is one, and an even
            spread otherwise. Cycling with modulo made a chapter with nine
            photographs and fourteen scenes show the first five again,
@@ -77,10 +89,11 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           map && map[i] != null
             ? Math.min(frames.length - 1, map[i])
             : Math.min(frames.length - 1, Math.floor((i * frames.length) / steps.length))
-        setActive((cur) => {
-          if (cur !== next) setSeen((o) => [...o.filter((x) => x !== next), next])
-          return next
-        })
+        setView((v) =>
+          v.active === next
+            ? v
+            : { active: next, seen: [...v.seen.filter((x) => x !== next), next] },
+        )
       },
       { threshold: [0.35, 0.6] },
     )
@@ -110,10 +123,14 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           className="cb-frame"
           key={f.src + i}
           data-on={i === active ? 'true' : undefined}
-          /* Recency is the z-order. Anything not yet shown stays at the
-             bottom; the frame directly under the active one is whatever
-             was showing last. */
-          style={{ zIndex: i === active ? 40 : seen.indexOf(i) + 1 }}
+          data-seen={seen.includes(i) ? 'true' : undefined}
+          /* Recency is the z-order. Read off `stack`, which puts the
+             active frame on top in the same render that starts its fade
+             — `seen` is maintained by an effect and lands a commit later,
+             so ordering by it animated the incoming frame while it was
+             still buried, and the moment the z-index caught up the page
+             cut to a half-transparent top layer. That is the flash. */
+          style={{ zIndex: seen.indexOf(i) + 1, ['--dim' as string]: String(f.dim ?? 0.45) }}
         >
           {f.video ? (
             <video className="cb-media" poster={f.src} muted loop playsInline autoPlay preload="metadata">
@@ -125,8 +142,6 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           )}
         </div>
       ))}
-      <div className="cb-scrim" />
-      <div className="cb-tint" />
 
       <style jsx>{`
         .cb {
@@ -143,57 +158,46 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
              enough that a fast scroll does not lag behind the words. */
           transition: opacity 900ms var(--ease-out, ease);
         }
-        .cb-frame[data-on] { opacity: 1; z-index: 2; }
-        /* Chapter over: everything fades and the ground beneath shows. */
-        .cb[data-past] .cb-frame { opacity: 0; }
-        .cb[data-past] .cb-scrim,
-        .cb[data-past] .cb-tint { opacity: 0; }
+        /* Anything already shown stays opaque underneath. Only the
+           incoming frame animates, and it animates over a solid stack. */
+        .cb-frame[data-seen] { opacity: 1; }
+        .cb-frame[data-on] { animation: cb-in 900ms var(--ease-out, ease) both; }
+        @keyframes cb-in { from { opacity: 0; } to { opacity: 1; } }
+        /* Chapter over: everything fades and the ground beneath shows.
+           The animation has to be cancelled, not just overridden — a
+           filled animation holds its end value at animation priority,
+           which outranks any declaration here, so the photograph would
+           stay at full opacity under a scrim that had faded out. */
+        .cb[data-past] .cb-frame { animation: none; opacity: 0; }
         /* Nothing at all until the first scene is reached. */
         .cb:not([data-started]) { opacity: 0; }
         .cb { transition: opacity 500ms var(--ease-out, ease); }
-        /* Held at full opacity below the incoming frame, and not
-           transitioned — it is covered before it is ever removed. */
-        .cb-frame[data-under] { opacity: 1; z-index: 1; transition: none; }
         .cb-media {
           width: 100%;
           height: 100%;
           object-fit: cover;
           display: block;
         }
+        /* The frame's own darkening, carried inside the frame so it
+           crossfades with the picture it belongs to. A single scrim over
+           all of them could not work: these photographs run from a mean
+           luminance of 31 to 162, and one multiplier keeps that ratio, so
+           the value that suited the cupping table left five frames at a
+           brightness of 11 — a black screen with words on it. Each frame
+           now gets only what it needs to bring its own highlights to the
+           grey where white type clears AA. */
+        .cb-frame::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, var(--dim, 0.45));
+        }
         /* The words sit on this, so it carries the contrast rather than
            the type having to fight the photograph. */
-        /* Above the frames. The active frame is lifted to z-index 2 so it
-           crossfades over the outgoing one — which also lifted it over
-           the scrim, and every dimming change made no difference at all
-           until this line existed. */
-        .cb-scrim, .cb-tint { z-index: 3; }
-        .cb-scrim {
-          position: absolute;
-          inset: 0;
-          transition: opacity 600ms var(--ease-out, ease);
-          /* The only thing carrying contrast on these pages.
-             The scenes set long paragraphs in white directly on the
-             photograph, so the picture is dimmed hard and evenly rather
-             than each block of text drawing a panel behind itself — a
-             local wash reads as a box, which is worse than a dark
-             picture. The photographs still read; they are ground. */
-          /* 0.68 under a 0.25 tint, compositing to 0.76. The layers
-             compound, so both numbers are solved for the figure rather
-             than scaled — easing each by the same percentage lands short
-             of it every time.
-
-             The floor is set by the brightest frames — the canopy at
-             noon and the wet mill in daylight — where white type and the
-             accent eyebrows have the least to hold on to. */
-          background: rgba(0, 0, 0, 0.68);
-        }
-        .cb-tint {
-          position: absolute;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.25);
-          transition: opacity 600ms var(--ease-out, ease);
-        }
-
+        /* Above every frame. The frames are stacked by recency and a
+           chapter has at most a dozen, so 50 clears them all — a number
+           the frame stack cannot reach rather than one it happens to sit
+           under today. */
       `}</style>
     </div>
   )

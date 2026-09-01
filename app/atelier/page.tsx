@@ -51,7 +51,7 @@ export const metadata = {
     'sensors and agents',
     'hospitality design',
   ],
-  alternates: { canonical: '/regenerative-life/artistry' },
+  alternates: { canonical: '/atelier' },
   openGraph: {
     type: 'website',
     url: 'https://theaura.life/atelier',

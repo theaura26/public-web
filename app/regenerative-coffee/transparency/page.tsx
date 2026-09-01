@@ -30,23 +30,15 @@ export default function TransparencyPage() {
         hero
         align="centre"
         title="Sensors and hands, one record."
-        lede="Machines take their own readings. People sign theirs. The record is both halves together."
+        lede="Machines log what they measure. People sign what they did. The estate record is both halves, and neither one is allowed to fill in for the other."
       />
 
-      <Scene>
-        Everything on the last page is easy to claim and hard to check. This
-        page is the checking.
-      </Scene>
-
       <Scene title="One row, out of millions.">
-        Somewhere in a file on this estate there is a row that reads: BD 501,
-        Block 07, 06:14, waning moon, humidity 78%, by Rao, dung batch
-        G-03.
-      </Scene>
-
-      <Scene>
-        The minute. The moon. The hand. The source. That one row is the unit
-        this whole system exists to protect.
+        Everything on the last page is easy to claim and hard to check. This
+        page is the checking. Somewhere in a file on this estate there is a
+        row that reads: BD 501, Block 07, 06:14, waning moon, humidity 78%, by
+        Rao, dung batch G-03. The minute. The moon. The hand. The source. That
+        one row is the unit this whole system exists to protect.
       </Scene>
 
       <LoopDiagram
@@ -54,20 +46,13 @@ export default function TransparencyPage() {
         caption="Observe, remember, learn, act — then observe what the acting changed. Sensors hold the parts no person can watch continuously; people hold the judgment no sensor has. The loop only closes because both are in it."
       />
 
-      <Scene title="Nine streams, nine clocks.">
-        Fermentation is read every fifteen minutes. Temperature three times
-        a day. Brix at the start, the middle and the end. Soil chemistry
-        quarterly, at 5 cm and at 20 cm. Earthworms counted by hand, inside
-        a square of string.
-      </Scene>
-
-      <Scene>
-        A machine writes its own numbers. A person signs theirs. Nobody enters
-        a reading for work they did not do.
-      </Scene>
-
-      <Scene>
-        A ledger cannot forget, and it cannot flatter.
+      <Scene title="Nine streams, each on its own clock.">
+        Fermentation every fifteen minutes. Temperature three times a day.
+        Brix at the start, the middle and the end. Soil chemistry quarterly,
+        at 5 cm and at 20 cm. Earthworms counted by hand, inside a square of
+        string laid on the ground. Sensors write their own numbers; the person
+        who did the work signs for theirs, by name, and nobody signs for work
+        somebody else did.
       </Scene>
 
       <Scene title="No untested material touches the soil.">
@@ -77,44 +62,46 @@ export default function TransparencyPage() {
         wrong is corrected, or it is held.
       </Scene>
 
-      <Scene>
-        Then the block is read again ninety days later, which is the part most
-        people skip. Recording what was done is easy. Recording whether it
-        worked is the harder half.
+      <Scene title="The block is read again ninety days later.">
+        This is the part most farms skip. Writing down what you applied takes
+        a minute; going back a season later to measure whether it changed
+        anything is the harder half, and it is the only half that can tell you
+        to stop doing something.
       </Scene>
 
       <Chapter>Here is what we cannot prove.</Chapter>
 
-      <Scene>
-        We carry a fraction of a fermenting batch forward into the next
-        harvest’s cherry, the way a sherry bodega carries a barrel forward
-        across decades. We think it builds continuity. We would like it to be
-        true.
-      </Scene>
-
-      <Scene>
-        Nobody has shown a coffee strain that survives that gap. A coffee
-        ferment runs in days; a solera runs in decades. The metaphor is doing
-        work the science has not done yet.
-      </Scene>
-
-      <Scene>
-        So we are testing it, year on year, and we will publish it either way.
+      <Scene title="The solera we cannot prove yet.">
+        <p>
+          We carry a fraction of one fermenting batch forward into the
+          next harvest’s cherry, the way a sherry bodega carries a barrel
+          forward across decades. We think it builds continuity between
+          harvests. We would like that to be true.
+        </p>
+        <p>
+          What we can say is that nobody has yet shown a coffee microbe
+          surviving a twelve-month gap between ferments — a coffee ferment
+          runs in days, a sherry solera runs in decades, and right now the
+          comparison is doing work the evidence has not done. We are
+          testing it harvest by harvest and will publish the result either
+          way.
+        </p>
       </Scene>
 
       <Scene title="There is no certificate.">
-        Nothing to point at. The tea block goes into
-        transition in 2027, the cupping room on the estate is not built yet,
-        and there is no public chain to verify any of this against.
-      </Scene>
-
-      <Scene title="What exists instead is a record.">
-        In August 2026 we cupped four of the
-        Arabica lots to SCA protocol. They came back between 82.25 and
-        85.25 on our own table. Every one scored a perfect 10 on
-        uniformity, clean cup and sweetness. The note against them says
-        the ceiling right now is the roast, and the coffee underneath it
-        has further to go.
+        <p>
+          Nothing to point at. The tea block goes into transition in 2027,
+          the cupping room on the estate is not built yet, and there is no
+          public chain to verify any of this against. What exists instead
+          is a record.
+        </p>
+        <p>
+          In August 2026 we cupped four of the Arabica lots to SCA
+          protocol and they came back between 82.25 and 85.25 on our own
+          table, every one scoring a perfect 10 on uniformity, clean cup
+          and sweetness. The note against them says the ceiling right now
+          is the roast, and the coffee underneath it has further to go.
+        </p>
       </Scene>
 
       <Closing>{`The record instead.

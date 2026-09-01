@@ -17,7 +17,14 @@
    spacing/radius/z step, add it here first.
 
    Section order:
-     1.  Brand palette                 --brand-accent, --error
+     1.  Brand palette                 --brand-accent, --brand-green, --error
+
+         The accent is an ink for dark grounds and it was chosen against
+         black, where it reads at 6.66:1. On --brand-green it falls to
+         3.10:1, which is under AA. --brand-accent-lift is the same hue
+         carried up to 4.88:1 on that ground; use it for accent-coloured
+         TEXT sitting on the green. Accent as a FILL (the festival pill,
+         with white type on it) is unaffected and stays --brand-accent.
      2.  Theme — Night (default)       --bg / --text / --border
      3.  Theme — Day
      4.  Spacing scale                 --space-2 → --space-9
@@ -32,6 +39,8 @@
 :root {
   /* ── 1. Brand palette (immutable across themes) ── */
   --brand-accent: #E37128;          /* primary action / hover */
+  --brand-green: #36483A;           /* the dark ground the estate pages sit on */
+  --brand-accent-lift: #F5A56B;     /* the accent, lifted for use ON --brand-green */
   --error: #E8421A;                 /* form validation, destructive UI */
   --success: #1F6B4B;               /* confirmed state — form sent, validation passed */
 
@@ -1284,10 +1293,20 @@ h3 {
 }
 
 /* P1 — primary body, full-strength text */
+/* P1's measurements, as values rather than only as a class. The coffee
+   microsite sets its body copy on a dark photograph and has to own its own
+   colour, so it cannot simply wear .p1 — but it can be the same size, and
+   these are the only two numbers that decide that. Change them here and the
+   class and every rule borrowing them move together. */
+:root { --p1-size: 16px; --p1-lh: 1.55; }
+@media (max-width: 768px) {
+  :root { --p1-size: 15px; --p1-lh: 1.5; }
+}
+
 .p1 {
   font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: var(--p1-size);
+  line-height: var(--p1-lh);
   color: var(--text);
   font-weight: 400;
 }
@@ -1305,7 +1324,6 @@ h3 {
 
 /* Mobile body sizing */
 @media (max-width: 768px) {
-  .p1 { font-size: 15px; line-height: 1.5; }
   .p2 { font-size: 14px; line-height: 1.5; }
 }
 

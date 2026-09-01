@@ -83,7 +83,7 @@ export function Programme() {
 
       <style jsx>{`
         .pg {
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
           /* Air above as well as below. With no top padding the first day
              sat flush against the rule that closes the section before it,
              which read as the two being one block. */
@@ -130,8 +130,8 @@ export function Programme() {
            site has no bullet convention to borrow — inventing one here
            would have made this the only page with it. */
         .pg-b {
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           font-family: var(--font-sans);
-          font-size: 16px; line-height: 1.55;
           color: rgba(255, 255, 255, 0.78);
           margin: 0; text-wrap: pretty;
         }

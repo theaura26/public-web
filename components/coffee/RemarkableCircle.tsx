@@ -399,7 +399,13 @@ export function RemarkableCircle() {
 
       <style jsx>{`
         .rc {
-          position: relative;
+          /* Above the chapter backdrop, which is fixed at z-index 0.
+             Without this the hero is positioned but z-auto, so it paints
+             in the same layer as the backdrop and loses on DOM order —
+             the photograph covers the circle the moment you scroll back
+             up to the top. Every other section on these pages carries
+             the same line. */
+          position: relative; z-index: 1;
           min-height: 100svh;
           display: flex; align-items: center; justify-content: center;
           background: #fff; color: #131719;

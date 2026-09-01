@@ -179,28 +179,11 @@ export function MicroNav() {
           box-shadow: none !important;
         }
 
-        /* Liquid glass on the sub-nav — enhancement only. The bar's own
-           rule paints a solid fallback first, so browsers without
-           backdrop-filter (older Firefox, any engine with it disabled)
-           keep a legible bar instead of a transparent one. */
-        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-          /* doubled class + tag so this outranks the scoped fallback rule */
-          nav.ln.ln {
-            background:
-              linear-gradient(
-                to bottom,
-                rgba(255, 255, 255, 0.10) 0%,
-                rgba(255, 255, 255, 0.03) 42%,
-                rgba(255, 255, 255, 0.00) 100%
-              ),
-              rgba(12, 12, 12, 0.55);
-            -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.06);
-            backdrop-filter: blur(22px) saturate(180%) brightness(1.06);
-            box-shadow:
-              inset 0 1px 0 0 rgba(255, 255, 255, 0.16),
-              inset 0 -1px 0 0 rgba(255, 255, 255, 0.04);
-          }
-        }
+        /* The bar is a flat white. It used to be liquid glass — a blur
+           with a light gradient over a translucent ground — which meant
+           its colour was whatever photograph happened to be scrolling
+           under it, and on the bright frames the labels sat on cream. A
+           flat ground is the same bar on every scene. */
       `}</style>
 
       <style jsx>{`
@@ -215,8 +198,11 @@ export function MicroNav() {
              of backdrop beside the open menu. */
           position: fixed; left: 0; right: 0; z-index: 39;
           height: 56px;
-          /* Fallback first: a solid bar every browser can draw. */
-          background: rgba(10, 10, 10, 0.94);
+          /* White, matching the site bar directly above it, so the two
+             read as one header rather than a light bar with a dark strip
+             hung under it. */
+          background: #fff;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
           top: var(--nav-h);
           opacity: 0; pointer-events: none;
           transform: translateY(calc(-1 * var(--nav-h)));
@@ -294,7 +280,7 @@ export function MicroNav() {
           position: relative; flex-shrink: 0;
           font-size: 13px;
           display: inline-flex; align-items: center; height: 100%;
-          color: rgba(255, 255, 255, 0.72);
+          color: rgba(0, 0, 0, 0.66);
           text-decoration: none; white-space: nowrap;
           transition: color var(--dur-base) var(--ease);
         }
@@ -451,7 +437,7 @@ export function Panel({
           min-height: 100svh;
           display: flex; align-items: center;
           padding: calc(var(--nav-h) + var(--space-9)) 0 var(--space-9);
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
           overflow: hidden;
         }
         .p-bg { position: absolute; inset: 0; }
@@ -618,7 +604,7 @@ export function Intro({
           display: flex; flex-direction: column; gap: var(--space-4);
         }
         .m-intro-b :global(p) {
-          font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: var(--text-body); margin: 0;
         }
         .m-intro-b :global(p:first-child) { color: var(--text); }
@@ -691,7 +677,7 @@ export function Pillar({
         .m-pillar-h { margin: 0; }
         .m-pillar-act { margin: var(--space-7) 0 0; }
         .m-pillar-lede {
-          font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: var(--text-body); margin: var(--space-5) 0 0; max-width: 46ch;
         }
         .m-pillar-list {
@@ -757,7 +743,7 @@ export function Cards({
           letter-spacing: -0.02em; margin: 0 0 var(--space-3);
         }
         .m-card-b {
-          font-size: 15px; line-height: 1.6; color: var(--text-body); margin: 0;
+          font-size: var(--p1-size); line-height: var(--p1-lh); color: var(--text-body); margin: 0;
         }
       `}</style>
     </section>
@@ -805,7 +791,7 @@ export function Index({
         .ix {
           min-height: 100svh; display: flex; align-items: center;
           padding: calc(var(--nav-h) + var(--space-9)) 0 var(--space-9);
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
         }
         .ix-in { width: 100%; }
         .ix-top { margin-bottom: var(--space-9); }
@@ -889,7 +875,8 @@ export function Numbered({
           font-size: clamp(19px, 1.8vw, 24px); line-height: 1.2;
           letter-spacing: -0.02em; margin: 0 0 var(--space-3);
         }
-        .nb-cb { font-size: 15px; line-height: 1.6; color: var(--text-body); margin: 0; }
+        .nb-cb {
+          font-size: var(--p1-size); line-height: var(--p1-lh); color: var(--text-body); margin: 0; }
       `}</style>
     </section>
   )
@@ -958,7 +945,7 @@ export function Goals({
           letter-spacing: -0.02em; margin: 0;
         }
         .gl-b {
-          font-size: 15px; line-height: 1.65; color: var(--text-body);
+          font-size: var(--p1-size); line-height: var(--p1-lh); color: var(--text-body);
           margin: 0; max-width: 60ch;
         }
         @media (max-width: 760px) {
@@ -1042,7 +1029,7 @@ export function Statement({
         }
         .has-img .m-say-h, .has-img .m-say-s { color: #fff; }
         .m-say-s {
-          font-size: clamp(15px, 1.5vw, 18px); line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: var(--text-body); margin: var(--space-6) auto 0; max-width: 52ch;
         }
       `}</style>
@@ -1069,7 +1056,7 @@ export function Closing({ children }: { children: string }) {
           /* Above the chapter backdrop, which is fixed at z-index 0. */
           position: relative; z-index: 1;
           display: flex; align-items: center;
-          background: #000;
+          background: var(--brand-green);
           padding: clamp(112px, 18vh, 216px) 0;
         }
         /* ScrollHighlight renders a plain h2, which the global rule
@@ -1121,12 +1108,12 @@ export function LoopDiagram({
         .ld {
           /* Above the chapter backdrop, which is fixed at z-index 0. */
           position: relative; z-index: 1;
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
           padding: clamp(104px, 16vh, 196px) 0;
         }
         .ld-ring {
           position: relative;
-          width: min(100%, 620px);
+          width: min(100%, 820px);
           aspect-ratio: 1;
           margin: 0 auto;
           display: grid; place-items: center;
@@ -1155,11 +1142,15 @@ export function LoopDiagram({
         .ld-c {
           display: flex; flex-direction: column; text-align: center;
           font-family: var(--font-grotesque), sans-serif;
-          font-weight: 600;
-          font-size: clamp(17px, 3vw, 36px);
-          line-height: 1.14; letter-spacing: -0.035em;
+          /* The same setting as an H2, uppercase, and bold — it is the
+             heading of this section, and it was two thirds the size of
+             every other heading on the page, reading as a caption that
+             happened to be sitting inside a ring. */
+          font-weight: 700;
+          font-size: clamp(24px, 4vw, 58px);
+          line-height: 1.04; letter-spacing: -0.04em;
           text-transform: uppercase;
-          max-width: 62%;
+          max-width: 84%;
         }
 
         .ld-cap {
@@ -1211,7 +1202,7 @@ export function Banner({
           position: relative; z-index: 1;
           min-height: 88svh;
           display: flex; align-items: center;
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
           padding: clamp(112px, 18vh, 216px) 0;
           border-top: 1px solid rgba(255, 255, 255, 0.12);
         }
@@ -1457,7 +1448,7 @@ export function ReserveBanner() {
           color: #1d0f05; margin: 0 auto; max-width: 18ch;
         }
         .rb-p {
-          font-size: clamp(15px, 1.4vw, 18px); line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: rgba(29, 15, 5, 0.78);
           margin: var(--space-5) auto 0; max-width: 48ch;
         }
@@ -1538,13 +1529,16 @@ export function NextUp({
           letter-spacing: -0.035em; margin-bottom: var(--space-4);
         }
         .m-next-b {
-          display: block; font-size: 16px; line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
+          display: block;
           color: var(--text-body); max-width: 46ch;
         }
         .m-next-a {
           display: inline-block; margin-top: var(--space-6);
           font-family: var(--font-mono), monospace; font-size: 13px;
-          color: var(--brand-accent);
+          /* Lifted: this banner's ground is the brand green, where the
+             base accent reads 3.10:1 — under AA. */
+          color: var(--brand-accent-lift);
           transition: transform var(--dur-base) var(--ease);
         }
         :global(.m-next-c):hover .m-next-a { transform: translateX(5px); }
@@ -1603,7 +1597,11 @@ export function Scene({
             </span>
           )}
           {title && <h2 className="sc-h">{title}</h2>}
-          <p className="sc-p">{children}</p>
+          {/* A container rather than the paragraph itself, so a scene can
+              break its copy into more than one block. Bare text still
+              renders here with the same typography; a scene that passes
+              <p> elements gets the spacing between them. */}
+          <div className="sc-p">{children}</div>
           {href && cta && (
             <p className="sc-act"><ArrowLink href={href}>{cta}</ArrowLink></p>
           )}
@@ -1619,7 +1617,7 @@ export function Scene({
           position: relative; z-index: 1; min-height: 100svh;
           display: flex; align-items: flex-end;
           padding: 0 0 clamp(72px, 12vh, 144px);
-          background: #000; color: #fff; overflow: hidden;
+          background: var(--brand-green); color: #fff; overflow: hidden;
         }
         /* A scene never carries its own picture now — the chapter's
            backdrop is behind all of them. This only governs the balance:
@@ -1674,11 +1672,17 @@ export function Scene({
         .is-centre .sc-h { margin-inline: auto; }
 
         .sc-p {
-          font-size: clamp(18px, 1.55vw, 22px);
-          line-height: 1.62;
+          /* The microsite is a deliberate exception to the P1 body size.
+             Everywhere else a paragraph shares the page with other things;
+             here it is the only text on screen, set over a photograph at
+             arm's length, and 16px is too quiet to carry a whole beat. */
+          font-size: 18px; line-height: 1.6;
           color: rgba(255, 255, 255, 0.92);
           margin: 0; text-wrap: pretty;
         }
+        .sc-p :global(p) { margin: 0 0 1.1em; }
+        .sc-p :global(p:last-child) { margin-bottom: 0; }
+        @media (max-width: 768px) { .sc-p { font-size: 16px; } }
 
         .sc-act { margin: var(--space-6) 0 0; }
         .is-centre .sc-act { display: flex; justify-content: center; }
@@ -1712,7 +1716,7 @@ export function Chapter({
           position: relative; z-index: 1;
           display: flex; align-items: center; justify-content: center;
           padding: clamp(128px, 21vh, 248px) 0;
-          background: #000; color: #fff; text-align: center;
+          background: var(--brand-green); color: #fff; text-align: center;
         }
         .ch.is-tight { padding-bottom: clamp(40px, 6vh, 72px); }
         .ch-h {
@@ -1748,7 +1752,7 @@ export function Invite({
         .m-inv-a { display: inline-flex; }
         .m-inv-h { margin: 0 auto; max-width: 18ch; }
         .m-inv-b {
-          font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: var(--text-body); margin: var(--space-6) auto var(--space-7);
           max-width: 50ch;
         }

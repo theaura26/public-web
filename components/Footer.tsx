@@ -59,6 +59,11 @@ export default function Footer() {
                 more of Aura rather than more of the estate is already
                 looking. Internal, so it uses next/link and opens in place. */}
             <Link href="/brand" className="p1" style={{ display: 'block', marginTop: 'var(--space-2)' }}>Our Brand</Link>
+            {/* The Atelier sits under the brand rather than in the menu:
+                it is what the brand is made of — three studios — and a
+                reader who has just followed "Our Brand" is the one who
+                wants it. */}
+            <Link href="/atelier" className="p1" style={{ display: 'block', marginTop: 'var(--space-2)' }}>Atelier</Link>
           </div>
           <div className="footer-col-4">
             <p className="label" style={{ marginBottom: 'var(--space-4)' }}>Locations</p>

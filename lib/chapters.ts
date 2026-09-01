@@ -326,7 +326,6 @@ export const CHAPTERS: Chapter[] = [
     id: 'craft',
     label: 'Artistry',
     slug: 'artistry',
-    href: '/regenerative-life/artistry',
     lede: 'The making side of the estate: what gets built here, and the people who hold the knowledge of how.',
     hero: {
       type: 'Portrait · a maker mid-task',
@@ -368,7 +367,7 @@ export const CHAPTERS: Chapter[] = [
       },
     ],
     related: [
-      { label: 'The Atelier', href: '/regenerative-life/artistry' },
+      { label: 'The Atelier', href: '/atelier' },
       { label: 'The residency', href: '/residency' },
       { label: 'Objects & Editions', href: '/from-aura/objects' },
     ],

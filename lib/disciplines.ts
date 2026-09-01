@@ -308,7 +308,7 @@ export const DISCIPLINES: Discipline[] = [
       {
         heading: 'Six plants, taken back out.',
         lines: [
-          'Six introduced plants are being taken back out of the understorey so the native ground layer has somewhere to return to. [The Larder](/pollinators) names them and what each one does.',
+          'Six introduced plants are being taken back out of the understorey so the native ground layer has somewhere to return to. [The Flowering Understory](/pollinators) names them and what each one does.',
         ],
         after: { kind: 'portrait', type: 'Detail · Lantana pulled from the understorey', caption: 'So the native ground layer has somewhere to return to' },
       },

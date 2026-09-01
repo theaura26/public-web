@@ -18,9 +18,9 @@ export default function ForestIslandsPage() {
     <>
       <HeroBanner
         title="Forest Islands"
-        type="Detail · a built island in its first season"
+        src="/forest-islands/images/aura-forest-islands-01.webp"
         caption="Four metres by one, built of dung and green cuttings, then left alone — Aura Estate, Mudigere"
-        alt="A forest island under the coffee canopy at Mudigere"
+        alt="An estate worker laying green cuttings over a forest island between cut poles"
       />
 
       <TwoCol id="premise" heading="Restoration usually means fencing something off.">
@@ -54,9 +54,20 @@ export default function ForestIslandsPage() {
         </p>
       </TwoCol>
 
+      {/* The only moving frame in the set, and it is the build itself —
+          which is what this slot was written for. */}
       <Placeholder
-        type="Process · building the layers"
+        src="/forest-islands/videos/aura-forest-islands-01.mp4"
+        mediaType="video"
+        poster="/forest-islands/images/aura-forest-islands-01.webp"
+        alt="An island being built up in alternating courses of cuttings and compost"
         caption="Cow-dung compost and fresh green biomass, laid in alternating courses"
+      />
+
+      <Placeholder
+        src="/forest-islands/images/aura-forest-islands-04.webp"
+        alt="Leaf litter, sticks and green cuttings part-rotted into each other"
+        caption="A year on, the courses have stopped being courses"
       />
 
       <TwoCol id="chain" heading="Organic matter, decomposition, habitat.">
@@ -78,10 +89,10 @@ export default function ForestIslandsPage() {
       </TwoCol>
 
       <Portrait
-        src="/aura-placeholder.svg"
-        ratio="5 / 7"
-        alt="A forest island in its first season, before anything has colonised it"
-        caption="A pile built to be left alone, photographed in its first season"
+        src="/forest-islands/images/aura-forest-islands-03.webp"
+        ratio="4 / 5"
+        alt="White bracket fungi stepping up the trunk of a tree beside ferns"
+        caption="Left alone long enough, the decomposers arrive on their own"
       />
 
       <PullQuote>
@@ -121,6 +132,12 @@ export default function ForestIslandsPage() {
           </DataCard>
         </DataGrid>
       </TwoCol>
+
+      <Placeholder
+        src="/forest-islands/images/aura-forest-islands-02.webp"
+        alt="Two estate workers cutting back invasive growth in dense understorey"
+        caption="Cleared by hand, block by block, because there is no other way to do it"
+      />
 
       <TwoCol id="scale" heading="A hundred and fifty acres cannot be restored at once.">
         <p className="p1">

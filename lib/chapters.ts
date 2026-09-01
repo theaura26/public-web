@@ -167,13 +167,39 @@ function dedupeByHeading(movements: Movement[]): Movement[] {
   return out
 }
 
+/** The pictures run in the order they were delivered.
+ *
+ *  Each chapter's photographs are numbered — aura-plantation-1 through 8,
+ *  rta-1 through 3 — and that numbering is the sequence the pictures were
+ *  edited into. The prose keeps its own order; this walks the visual slots
+ *  in document order and fills them with the photographs sorted by their
+ *  number, so a caption still travels with its own picture and the set
+ *  reads down the page the way it was sequenced.
+ *
+ *  A hero-banner file is not in the run — it is the chapter's opening and
+ *  is set on `hero`, not on a movement. */
+function sequenceVisuals(movements: Movement[]): Movement[] {
+  const num = (src: string) => {
+    const m = src.match(/-(\d+)\.[a-z0-9]+$/i)
+    return m ? Number(m[1]) : Number.MAX_SAFE_INTEGER
+  }
+  const shot = movements
+    .map((mv, i) => ({ i, after: mv.after }))
+    .filter((x): x is { i: number; after: NonNullable<Movement['after']> } => Boolean(x.after?.src))
+  if (shot.length < 2) return movements
+  const ordered = [...shot].sort((a, b) => num(a.after.src!) - num(b.after.src!))
+  const out = [...movements]
+  shot.forEach((slot, k) => { out[slot.i] = { ...out[slot.i], after: ordered[k].after } })
+  return out
+}
+
 /** Two disciplines read as one chapter. Movements run in the order given;
  *  figures are concatenated, and the first quote wins — a page carries at
  *  most one. */
 function merge(...ids: string[]) {
   const parts = ids.map(body)
   return {
-    movements: dedupeByHeading(thinVisuals(parts)),
+    movements: sequenceVisuals(dedupeByHeading(thinVisuals(parts))),
     record: parts.flatMap((p) => p.record ?? []),
     quote: parts.find((p) => p.quote)?.quote,
     hero: parts[0].hero,
@@ -257,13 +283,14 @@ export const CHAPTERS: Chapter[] = [
     slug: 'rta',
     lede: 'The old word for the order that keeps time. On this estate it is a working rule: do the thing when the land is ready for it, not when the calendar is free.',
     hero: {
-      type: 'Detail · incense burning down on a stone step',
       caption: 'The land decides the hour',
-      src: '/regenerative-life/rta/images/rta-hero-banner.webp',
+      src: '/regenerative-life/rta/videos/rta-hero-banner.mp4',
+      mediaType: 'video',
+      poster: '/regenerative-life/rta/images/rta-hero-banner.webp',
       alt: 'Incense sticks burning on a mossy stone step, smoke rising',
     },
     quote: 'Right time. Right action. Everything else is noise.',
-    movements: [
+    movements: sequenceVisuals([
       {
         heading: 'An order that keeps its own time.',
         lines: [
@@ -271,7 +298,9 @@ export const CHAPTERS: Chapter[] = [
           'Held as a working rule it produces one instruction, which is the hardest one to follow on a farm with a labour schedule: wait until the land is ready.',
         ],
         after: {
-            src: '/regenerative-life/rta/images/rta-3.webp',
+            src: '/regenerative-life/rta/videos/rta-3.mp4',
+          mediaType: 'video',
+          poster: '/regenerative-life/rta/images/rta-3.webp',
             alt: 'The night sky over the estate, framed by the canopy',
           kind: 'banner',
           type: 'Wide · the valley keeping its own timing',
@@ -314,7 +343,7 @@ export const CHAPTERS: Chapter[] = [
           caption: 'The hour the animal keeps',
         },
       },
-    ],
+    ]),
     record: [
       { value: 'To the minute', label: 'every biodynamic application is timestamped' },
       { value: 'pH 4.2', label: 'where a ferment is stopped, whatever the clock says' },
@@ -398,7 +427,7 @@ export const CHAPTERS: Chapter[] = [
       src: '/regenerative-life/artistry/images/aura-artistry-hero-banner.webp',
       alt: 'A woven bamboo lampshade hanging beside an open doorway at Ohara',
     },
-    movements: [
+    movements: sequenceVisuals([
       {
         heading: 'A working atelier.',
         lines: [
@@ -439,7 +468,7 @@ export const CHAPTERS: Chapter[] = [
           caption: 'Where a discipline shows in an object',
         },
       },
-    ],
+    ]),
     related: [
       { label: 'The Atelier', href: '/atelier' },
       { label: 'The residency', href: '/residency' },
@@ -474,7 +503,7 @@ export const CHAPTERS: Chapter[] = [
           src: '/regenerative-life/the-plantation/images/aura-plantation-hero-banner.webp',
           alt: 'Two hands cupping dark finished compost',
         },
-        movements: dedupeByHeading([...thinVisuals([ag]), ...(base.movements ?? [])]),
+        movements: sequenceVisuals(dedupeByHeading([...thinVisuals([ag]), ...(base.movements ?? [])])),
         record: [...ag.record, ...(base.record ?? [])],
         related: dedupeByHref([...ag.related, ...(base.related ?? [])]),
       }
@@ -507,30 +536,25 @@ export const CHAPTERS: Chapter[] = [
     label: 'Food & Fermentation',
     slug: 'food-and-fermentation',
     lede: 'Three fermentation disciplines on one estate — coffee, pepper and cow dung. The same process, doing three different jobs.',
+    /* 01 is a film with a still of its own; the still is its poster, not a
+       second picture. Held as two, the chapter opened on the frame and
+       then played it again one beat later. */
     hero: {
-      type: 'Process · raking cherry on the drying beds',
       caption: 'Desired microbial activity, held to a number',
-      src: '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-01.webp',
+      src: '/regenerative-life/food-and-fermentation/videos/aura-farm-fermentation-01.mp4',
+      mediaType: 'video',
+      poster: '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-01.webp',
       alt: 'An estate worker turning drying cherry with a wooden rake',
     },
     quote: 'A number ends the ferment. It stops at pH 4.2, whatever the clock says.',
-    movements: [
+    movements: sequenceVisuals([
       {
         heading: 'Three disciplines, one process.',
         lines: [
           'Coffee, pepper and cow dung. Each takes a raw material and lets microbial activity turn it into something the estate could not have made directly.',
           'Stripped to its definition, fermentation is only this: desired microbial activity, held long enough and stopped at the right point. What changes between the three is what "desired" means.',
         ],
-        after: {
-            src: '/regenerative-life/food-and-fermentation/videos/aura-farm-fermentation-01.mp4',
-            mediaType: 'video',
-            poster: '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-01.webp',
-            alt: 'Cherry turned by hand across the drying beds',
-          kind: 'banner',
-          type: 'Wide · the fermentation yard',
-          caption: 'Coffee, pepper and cow dung — the same process, three jobs',
-          ratio: '16 / 9',
-        },
+
       },
       {
         heading: 'Six methods, one Arabica.',
@@ -560,7 +584,7 @@ export const CHAPTERS: Chapter[] = [
           caption: 'Every lot, its own bed and its own file',
         },
       },
-    ],
+    ]),
     record: [
       { value: '15 min', label: 'between pH readings through a ferment' },
       { value: 'pH 4.2', label: 'where a ferment is stopped' },
@@ -599,7 +623,7 @@ export const CHAPTERS: Chapter[] = [
           poster: '/regenerative-life/aura-intelligence/images/aura-intelligence-03.webp',
           alt: 'A canopy map of the estate: tree crowns plotted as green shapes on a plan',
         },
-        movements: dedupeByHeading([...thinVisuals([ni]), ...(base.movements ?? [])]),
+        movements: sequenceVisuals(dedupeByHeading([...thinVisuals([ni]), ...(base.movements ?? [])])),
         record: [...ni.record, ...(base.record ?? [])],
         related: dedupeByHref([...ni.related, ...(base.related ?? [])]),
       }

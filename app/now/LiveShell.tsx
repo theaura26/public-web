@@ -26,17 +26,17 @@ export default function LiveShell({
           {
             href: '/regenerative-life/the-plantation',
             label: 'The Plantation',
-            description: 'The hundred and fifty acres these entries are logged against.',
+            img: '/regenerative-life/the-plantation/images/aura-plantation-hero-banner.webp',
           },
           {
             href: '/regenerative-life/vedic-and-biodynamic',
             label: 'Vedic & Biodynamic',
-            description: 'The preparations most of this feed is an application of.',
+            img: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-04.webp',
           },
           {
             href: '/field-notes',
             label: 'Field Notes',
-            description: 'What the estate has learned, written down at length.',
+            img: '/journals/wisdom/aura-moral-spine.jpg',
           },
         ]}
       />

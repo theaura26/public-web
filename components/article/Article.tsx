@@ -1544,6 +1544,7 @@ export function Continue({
               <Link
                 key={item.href}
                 href={item.href}
+                aria-label={item.description ? `${item.label} — ${item.description}` : undefined}
                 className="continue-card"
                 style={{
                   display: 'block',
@@ -1575,10 +1576,13 @@ export function Continue({
                     decoding="async"
                   />
                 </div>
-                <h3 style={{ margin: 0, marginBottom: 12 }}>{item.label}</h3>
-                {item.description && (
-                  <div className="p1" style={{ color: 'var(--text-body)' }}>{item.description}</div>
-                )}
+                {/* Picture and name. The lede under each card put a
+                    paragraph beneath every one of them, and three or four
+                    of those at the foot of a page read as a contents list
+                    rather than as a row of doors. The description is still
+                    accepted so a call site can carry it, and still used as
+                    the card's accessible name; it is not printed. */}
+                <h3 style={{ margin: 0 }}>{item.label}</h3>
               </Link>
             ))}
           </div>

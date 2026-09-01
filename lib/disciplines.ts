@@ -249,7 +249,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'Every cut is a door.',
         lines: [
           'Every cut is a wound and every wound is a door. Every major canopy cut is sealed the same day it is made, with cow pat preparation and turmeric — an antifungal dressing applied on the only day a wound is worth dressing. Eighty acres of whiskering is eighty acres of wounds.',
-          'The soil is the other half of it. A root zone with an active microbial community carries its own antagonists, which is why every preparation batch is counted for Trichoderma and Pseudomonas before it goes out — see [Microbiome](/regenerative-life/the-plantation).',
+          'The soil is the other half of it. A root zone with an active microbial community carries its own antagonists, which is why every preparation batch is counted for Trichoderma and Pseudomonas before it goes out.',
         ],
         after: { kind: 'portrait', type: 'Detail · a major cut sealed with cow pat and turmeric', caption: 'Sealed the same day it is made' },
         reveal: 'Keep the plant well,\nand there is nothing to treat.',
@@ -486,7 +486,7 @@ export const DISCIPLINES: Discipline[] = [
       {
         heading: 'Why this is possible now.',
         lines: [
-          'What changed is that a landscape can now be made machine-readable — foundation models to read it, robotics to work it, and sensors cheap enough to leave in a block through a monsoon. [Natural Intelligence](/regenerative-life/aura-intelligence) is the fuller argument for why that matters.',
+          'What changed is that a landscape can now be made machine-readable — foundation models to read it, robotics to work it, and sensors cheap enough to leave in a block through a monsoon.',
           'Machine intelligence sits inside that rather than above it. There is a living layer, a human layer, and a physical layer of sensors and machines — natural intelligence is all of them read together.',
           'Three things make it hard here in particular: 150 acres of four-storey canopy is a difficult thing to capture at scale, the people who can read it are fewer every year, and nothing about listening is automatic.',
         ],
@@ -585,7 +585,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'One estate, then a network.',
         lines: [
           'Mudigere is the first, and one place is a sample of one. Ohara — the second sanctuary, north of Kyoto — tests whether a way of working that held in the Western Ghats holds in a valley with a different climate, a different soil and no crop on it.',
-          'What passes between them is the point. A reading confirmed in two valleys is worth more than one confirmed in one, and the same record is what makes robotics, universities, hospitality and agriculture able to build on it. [Natural Intelligence](/regenerative-life/aura-intelligence) is the fuller argument; [Provenance](/provenance) is how a single event becomes a record.',
+          'What passes between them is the point. A reading confirmed in two valleys is worth more than one confirmed in one, and the same record is what makes robotics, universities, hospitality and agriculture able to build on it. [Provenance](/provenance) is how a single event becomes a record.',
         ],
         after: { kind: 'banner', type: 'Wide · two valleys, one practice', caption: 'Mudigere in the Western Ghats, Ohara north of Kyoto', ratio: '16 / 9' },
       },

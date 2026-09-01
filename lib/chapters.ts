@@ -114,19 +114,50 @@ function thinVisuals(parts: { movements?: Movement[] }[]): Movement[] {
 
 type Movement = NonNullable<Discipline['movements']>[number]
 
+/** Drop a link a earlier one already offered.
+ *
+ *  A merged chapter inherits the onward links of every discipline it
+ *  absorbs, and those overlap: The Plantation offered The Health Index,
+ *  Circular Intelligence and The Land twice each. Keyed on href, so the
+ *  same destination under two labels collapses too. */
+function dedupeByHref(links: { label: string; href: string }[]) {
+  const seen = new Set<string>()
+  return links.filter((l) => (seen.has(l.href) ? false : (seen.add(l.href), true)))
+}
+
+/** Drop a movement whose heading a earlier one already used.
+ *
+ *  Merging writes that were composed separately will sometimes bring two
+ *  passes at the same subject under the same title. Aura Intelligence had
+ *  exactly that: the Natural Intelligence pillar and the intelligence
+ *  discipline both opened a section "Why this is possible now." and both
+ *  named the same three technologies, so the chapter made the argument
+ *  twice under one heading twice. The first wins, because a merge lists
+ *  its parts in the order it wants them read. */
+function dedupeByHeading(movements: Movement[]): Movement[] {
+  const seen = new Set<string>()
+  return movements.filter((mv) => {
+    const key = (mv.heading ?? '').trim().toLowerCase()
+    if (!key) return true
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
+}
+
 /** Two disciplines read as one chapter. Movements run in the order given;
  *  figures are concatenated, and the first quote wins — a page carries at
  *  most one. */
 function merge(...ids: string[]) {
   const parts = ids.map(body)
   return {
-    movements: thinVisuals(parts),
+    movements: dedupeByHeading(thinVisuals(parts)),
     record: parts.flatMap((p) => p.record ?? []),
     quote: parts.find((p) => p.quote)?.quote,
     hero: parts[0].hero,
     plate: parts[0].plate,
     breaker: parts[0].breaker,
-    related: parts.flatMap((p) => p.related ?? []),
+    related: dedupeByHref(parts.flatMap((p) => p.related ?? [])),
   }
 }
 
@@ -186,7 +217,6 @@ export const CHAPTERS: Chapter[] = [
       },
     ],
     related: [
-      { label: 'The full reason', href: '/regenerative-life/the-reason' },
       { label: 'Aura Intelligence', href: '/regenerative-life/aura-intelligence' },
       { label: 'Moral Spine', href: '/wisdom' },
     ],
@@ -315,7 +345,6 @@ export const CHAPTERS: Chapter[] = [
       { value: '35.13°N', label: 'Ohara, Kyoto Prefecture, Japan' },
     ],
     related: [
-      { label: 'The sanctuary network', href: '/regenerative-life/sanctuary-and-stay' },
       { label: 'Mudigere', href: '/mudigere' },
       { label: 'Ohara', href: '/ohara' },
     ],
@@ -390,9 +419,9 @@ export const CHAPTERS: Chapter[] = [
          this way, and the six disciplines under it are how. */
       return {
         ...base,
-        movements: [...thinVisuals([ag]), ...(base.movements ?? [])],
+        movements: dedupeByHeading([...thinVisuals([ag]), ...(base.movements ?? [])]),
         record: [...ag.record, ...(base.record ?? [])],
-        related: [...ag.related, ...(base.related ?? [])],
+        related: dedupeByHref([...ag.related, ...(base.related ?? [])]),
       }
     })(),
   },
@@ -479,9 +508,9 @@ export const CHAPTERS: Chapter[] = [
          built to act on it. */
       return {
         ...base,
-        movements: [...thinVisuals([ni]), ...(base.movements ?? [])],
+        movements: dedupeByHeading([...thinVisuals([ni]), ...(base.movements ?? [])]),
         record: [...ni.record, ...(base.record ?? [])],
-        related: [...ni.related, ...(base.related ?? [])],
+        related: dedupeByHref([...ni.related, ...(base.related ?? [])]),
       }
     })(),
   },

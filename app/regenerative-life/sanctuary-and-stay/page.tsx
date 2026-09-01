@@ -252,6 +252,17 @@ export default function SanctuaryPage() {
         you slept.
       </PullQuote>
 
+      {/* The two named sanctuaries. This chapter's `related` in
+          lib/chapters.ts lists them, but this page is hand-written rather
+          than built from SubjectPage, so that array never reached it —
+          the chapter argued for four valleys and offered a reader no way
+          into either of the two that exist. */}
+      <OneCol heading="Go deeper">
+        <p className="p1">
+          <a href="/mudigere">Mudigere</a> · <a href="/ohara">Ohara</a>
+        </p>
+      </OneCol>
+
       <Continue currentHref="/regenerative-life/sanctuary-and-stay" />
     </>
   )

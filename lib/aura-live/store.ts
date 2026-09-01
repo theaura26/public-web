@@ -79,17 +79,31 @@ class BlobStore implements FeedStore {
   constructor(private readonly key: string) {}
 
   async read(): Promise<FeedDocument> {
-    const { head } = await import('@vercel/blob')
+    const { head, BlobNotFoundError } = await import('@vercel/blob')
     try {
       const meta = await head(this.key)
       /* Read through the CDN url rather than the API, and skip the edge
          cache: the job needs the ledger it just wrote, not a copy of it. */
       const res = await fetch(meta.url, { cache: 'no-store' })
-      if (!res.ok) throw new Error(`Blob read failed: ${res.status}`)
+      if (!res.ok) {
+        if (res.status === 404) return { ...EMPTY_DOCUMENT }
+        throw new Error(`Blob read failed: ${res.status}`)
+      }
       return validate(await res.json())
     } catch (err) {
-      const message = err instanceof Error ? err.message : String(err)
-      if (/not found|404|BlobNotFound/i.test(message)) return { ...EMPTY_DOCUMENT }
+      /* An empty store is the normal first state of a new environment,
+         and it is not a failure.
+         `head()` signals it with BlobNotFoundError, whose message reads
+         "Vercel Blob: The requested blob does not exist". This used to be
+         matched on the message against /not found|404|BlobNotFound/ — the
+         phrase is "does not exist", so it never matched, the error was
+         rethrown, and every environment that had a blob token but had not
+         yet had a ledger written reported the feed as unreadable. /now
+         then told readers the record could not be reached when the truth
+         was that nothing had been written to it yet.
+         Matched on the class now. Deliberately narrow: BlobStoreNotFound
+         and BlobServiceNotAvailable are real faults and still raise. */
+      if (err instanceof BlobNotFoundError) return { ...EMPTY_DOCUMENT }
       throw err
     }
   }

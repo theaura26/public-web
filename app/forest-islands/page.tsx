@@ -19,7 +19,7 @@ export default function ForestIslandsPage() {
       <HeroBanner
         title="Forest Islands"
         type="Detail · a built island in its first season"
-        caption="Four metres by one, built of dung and green cuttings, then left alone — Sampigekhan Estate, Mudigere"
+        caption="Four metres by one, built of dung and green cuttings, then left alone — Aura Estate, Mudigere"
         alt="A forest island under the coffee canopy at Mudigere"
       />
 

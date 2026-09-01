@@ -8,7 +8,7 @@ import {
 export const metadata: Metadata = {
   title: 'Better Ground — Regenerative Coffee',
   description:
-    'About fifty cattle, 154,000 litres of Jeevamrit a year, and a canopy cut to a light reading instead of a feeling. Sampigekhan Estate, Mudigere.',
+    'About fifty cattle, 154,000 litres of Jeevamrit a year, and a canopy cut to a light reading instead of a feeling. Aura Estate, Mudigere.',
   alternates: { canonical: '/regenerative-coffee/biodynamic' },
 }
 

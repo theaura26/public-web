@@ -71,7 +71,7 @@ export const DISCIPLINES: Discipline[] = [
     glyph: 'aura-biodynamic-glyph.svg',
     lede: 'The preparations are made on the estate, and tested before they are allowed to touch the soil.',
     breaker: { caption: 'Ninety days underground, then a number against a block', alt: 'A cow pat pit opened at ninety days' },
-    hero: { type: 'Process · stirring the barrel at dawn', caption: 'Forty-five minutes a day, vortex and reverse — Sampigekhan Estate' },
+    hero: { type: 'Process · stirring the barrel at dawn', caption: 'Forty-five minutes a day, vortex and reverse — Aura Estate' },
     plate: { type: 'Detail · a numbered pit opened at ninety days', caption: 'Fourteen pits, each one numbered, each batch traceable to the block it went on' },
     quote: 'A batch that fails is corrected or held. No untested material touches the soil.',
     movements: [
@@ -144,7 +144,7 @@ export const DISCIPLINES: Discipline[] = [
           'The ground here is old, iron-rich and free-draining. In a hundred inches of monsoon that is a gift: water moves through rather than sitting on the roots. In the dry weeks that follow it is the problem, because the same openness lets moisture go.',
           'Almost everything the estate does to the ground is an answer to that second half. It is held between pH 6.0 and 6.5 — inside that band the nutrients already in the soil stay available to a plant; outside it they lock up and the fertility is there on paper and nowhere else.',
         ],
-        after: { kind: 'banner', type: 'Detail · red laterite, wet and dry in the same frame', caption: 'Free-draining is a gift in the monsoon and a problem in the weeks after it', alt: 'Red laterite soil at Sampigekhan Estate, 3,600 ft' },
+        after: { kind: 'banner', type: 'Detail · red laterite, wet and dry in the same frame', caption: 'Free-draining is a gift in the monsoon and a problem in the weeks after it', alt: 'Red laterite soil at Aura Estate, 3,600 ft' },
       },
       {
         heading: 'How the soil is read.',
@@ -423,7 +423,7 @@ export const DISCIPLINES: Discipline[] = [
     slug: 'vedic-farming',
     glyph: 'aura-vedic-glyph.svg',
     lede: 'The Indian preparations, kept for the same reason as the European ones — the biology.',
-    breaker: { caption: 'Brewed from the herd that grazes the ground it returns to', alt: 'Jeevamrit in the shed at Sampigekhan Estate' },
+    breaker: { caption: 'Brewed from the herd that grazes the ground it returns to', alt: 'Jeevamrit in the shed at Aura Estate' },
     hero: { type: 'Process · Jeevamrit brewing in the shed', caption: 'Volume planned backwards from the calendar, for 150 acres' },
     plate: { type: 'Detail · the five preparations', caption: 'Jeevamrit, Panchgavya, Beejamrit, cow pat pit, Kunapjal' },
     movements: [

@@ -130,7 +130,7 @@ export default function SubjectPage({
       title={s.label}
       type={s.hero?.type ?? 'Landscape · Mudigere'}
       caption={s.hero?.caption ?? s.lede}
-      alt={`${s.label} — Aura, Sampigekhan Estate, Mudigere`}
+      alt={`${s.label} — Aura, Aura Estate, Mudigere`}
     />
   )
 

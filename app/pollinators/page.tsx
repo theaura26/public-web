@@ -19,7 +19,7 @@ export default function LarderPage() {
       <HeroBanner
         title="The Larder"
         type="Detail · a solitary bee on a native herb"
-        caption="What flowers under the coffee — Sampigekhan Estate, Mudigere"
+        caption="What flowers under the coffee — Aura Estate, Mudigere"
         alt="A pollinator on flowering understorey at Mudigere"
       />
 

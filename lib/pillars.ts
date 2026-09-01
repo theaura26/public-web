@@ -114,7 +114,7 @@ export const PILLARS: Pillar[] = [
     label: 'Agroculture',
     slug: 'agroculture',
     lede: 'Farming as though the land has to be worth more in a century.',
-    hero: { type: 'Aerial · 150 acres at first light', caption: 'Sampigekhan Estate, Mudigere, at 3,600 ft in the Western Ghats' },
+    hero: { type: 'Aerial · 150 acres at first light', caption: 'Aura Estate, Mudigere, at 3,600 ft in the Western Ghats' },
     plate: { type: 'Portrait · animal · the herd going out at dawn', caption: 'About fifty Malnad Gidda on the ground the coffee grows in' },
     breaker: { caption: 'A hundred and fifty acres, tended in decades', alt: 'The estate at Mudigere seen from the ridge' },
     quote: 'We do not buy fertility. We keep the animals that make it.',
@@ -125,7 +125,7 @@ export const PILLARS: Pillar[] = [
           'Aura grows coffee, tea, pepper, areca and what the season gives, on 150 acres at 3,600 ft in the Western Ghats. Four hours up from Bengaluru the canopy closes over the road and the temperature drops six degrees; that is where the farm starts.',
           'Four storeys of canopy — emergent, canopy, understorey, ground — are maintained rather than cleared, and the coffee grows in the shade of them. Nothing is planted in rows in an open field.',
         ],
-        after: { kind: 'banner', type: 'Aerial · 150 acres at first light', caption: 'Sampigekhan Estate, Mudigere, at 3,600 ft in the Western Ghats', ratio: '16 / 9' },
+        after: { kind: 'banner', type: 'Aerial · 150 acres at first light', caption: 'Aura Estate, Mudigere, at 3,600 ft in the Western Ghats', ratio: '16 / 9' },
       },
       {
         heading: 'Fertility is made here.',

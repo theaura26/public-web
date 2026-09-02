@@ -1491,6 +1491,15 @@ export function ScrollHighlight({
                     </span>
                   )
                 })}
+                {/* A line break carries no whitespace of its own. Each
+                    line is a display:block span, so the last word of one
+                    ran straight into the first of the next everywhere the
+                    text is read rather than looked at — "the small
+                    livesthat keep the large system alive". Screen
+                    readers, the Ask Aura corpus and every crawler saw it
+                    that way. A trailing space collapses to nothing on
+                    screen and separates the two everywhere else. */}
+                {!isLast ? ' ' : ''}
               </span>
             )
           })}

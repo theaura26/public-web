@@ -31,7 +31,7 @@ export default function ArecaPage() {
         <p className="p1">
           At Mudigere the{' '}
           <Term tip="Areca catechu — the slender upright palm of coastal South Asia, grown for its nut and, on regenerative estates, as the structural mid-canopy.">areca palm</Term>{' '}
-          is the tree the whole plantation stands on. It grows straight — <strong>15 – 20 m</strong> on a
+          is the tree the whole plantation stands on. It grows straight — <strong>15 – 20 m</strong>{' '}on a
           single vertical axis for its entire life — and Aura works it as the estate&rsquo;s mid-canopy,
           the layer every other crop hangs off. It never wins a cupping score and never shows up on a
           menu. It holds up the ones that do.

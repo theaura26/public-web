@@ -247,7 +247,7 @@ Impact measured in centuries.`}</ScrollHighlight>
       </section>
 
       <Continue
-        heading="Explore"
+        heading="More about Aura"
         items={[
           { href: '/artistry', label: 'Artistry', description: 'The studio and labs at work — making by subtraction, shu-ha-ri at the bench.', img: '/aura-artistry.jpg' },
           { href: '/regenerative-life/the-reason', label: 'The Reason', description: 'Why any of it exists — the belief that ties land, craft and technology together.', img: '/the-reason/aura-flowers-1.png' },

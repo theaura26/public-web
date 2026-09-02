@@ -69,7 +69,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   return (
     <SubjectPage
-      subject={{ ...d, siblings, siblingsLabel: 'The rest of the Regenerative Life', variant: i }}
+      subject={{ ...d, siblings, variant: i }}
       basePath="/regenerative-life"
     />
   )

@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Reveal from '@/components/RevealOnScroll'
 import FeedEntry from './FeedEntry'
 import CategoryGlyph from './CategoryGlyph'
 import { categoryThumbnail } from '@/lib/aura-live/gallery'
@@ -105,7 +106,9 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
           <li key={row.key} className="row r-entry">
             {row.monthLabel && <h2 className="month">{row.monthLabel}</h2>}
 
-            <div className="card">
+            {/* Each entry arrives as it comes into view, the same reveal
+                every other card set on the site uses. */}
+            <Reveal className="card">
               <span className="node">
                 {thumb ? (
                   <Image className="thumb" src={thumb} alt="" fill sizes="64px" aria-hidden="true" />
@@ -118,7 +121,7 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
               <div className="slot">
                 <FeedEntry entry={entry} index={position.get(entry.id) ?? 0} />
               </div>
-            </div>
+            </Reveal>
           </li>
         )
       })}

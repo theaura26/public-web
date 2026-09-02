@@ -43,7 +43,14 @@ export default function LiveShell({
 
       <style jsx>{`
         /* The hero breaks the rail, so the rail cannot wrap it. */
-        .page { overflow-x: clip; }
+        .page {
+          overflow-x: clip;
+          /* The feed's own ground. White made the cards read as paper on
+             a screen; this is the estate's paper colour, and it carries
+             below the last entry so the page ends on it. */
+          background: #F5F3ED;
+          min-height: 100vh;
+        }
 
         .body {
           padding-top: var(--space-10, 96px);

@@ -156,17 +156,27 @@ function LaneStyles() {
            rather than running on past the edge. The mask does that job:
            the blur ramps from nothing to full across the strip, so the
            last card goes soft rather than going pale. */
+        /* The mask has to sit on a wrapper, not on the blurred element.
+           A backdrop-filter is composited from what is behind the element
+           rather than painted as its content, so a mask on the same
+           element does not attenuate it — the blur came out as a hard
+           rectangle with a visible vertical seam down its left edge,
+           which is the opposite of a fade. Masking the parent clips the
+           child's composited result, so the blur ramps in properly. */
         .sw .lane-fade {
           position: absolute;
           top: 0; bottom: 0; right: 0;
           width: clamp(64px, 12vw, 200px);
           pointer-events: none;
           z-index: 2;
-          transform: translateZ(0);
-          will-change: transform;
           mask-image: linear-gradient(to right, transparent 0%, #000 62%);
           -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 62%);
-
+        }
+        .sw .lane-fade__blur {
+          position: absolute;
+          inset: 0;
+          transform: translateZ(0);
+          will-change: transform;
         }
         .sw .lane-scroll {
           overflow-x: auto;
@@ -316,11 +326,12 @@ export function Swimlanes({
                   it flickered while the lane scrolled. */}
               {/* backdrop-filter inline: styled-jsx drops it from emitted rules
               on this build. */}
-          <div
-            className="lane-fade"
-            aria-hidden
-            style={{ backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}
-          />
+          <div className="lane-fade" aria-hidden>
+            <div
+              className="lane-fade__blur"
+              style={{ backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}
+            />
+          </div>
             </div>
           </section>
         )
@@ -357,11 +368,12 @@ export function RelatedLane({
           </div>
           {/* backdrop-filter inline: styled-jsx drops it from emitted rules
               on this build. */}
-          <div
-            className="lane-fade"
-            aria-hidden
-            style={{ backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}
-          />
+          <div className="lane-fade" aria-hidden>
+            <div
+              className="lane-fade__blur"
+              style={{ backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}
+            />
+          </div>
         </div>
       </div>
       <LaneStyles />

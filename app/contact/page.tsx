@@ -270,7 +270,7 @@ export default function ContactPage() {
       </section>
 
       <Continue
-        heading="Explore"
+        heading="More about Aura"
         items={[
           { href: '/regenerative-life/the-reason', label: 'The Reason', description: 'Why Aura exists — the founder’s letter, grown over generations.', img: '/the-reason/aura-flowers-1.png' },
           { href: '/atelier', label: 'Atelier', description: 'The labs and workshops — clay, fibre, wood, sound, type, software.', img: '/aura-studios/aura-studios.jpg' },

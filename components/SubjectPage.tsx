@@ -14,6 +14,7 @@ import {
   Portrait,
   Continue,
 } from '@/components/article/Article'
+import { isParked, linkImage } from '@/lib/journals'
 
 /* One page shape for every subject the site explains.
  *
@@ -99,7 +100,6 @@ export type Subject = {
   breaker?: { caption: string; alt: string; src?: string; ratio?: string }
   /** The rest of the set, offered at the foot. */
   siblings?: { href: string; title: string; description?: string; img?: string; status: 'live' | 'soon' }[]
-  siblingsLabel?: string
   /** Which of the three arrangements this page takes. */
   variant?: number
 }
@@ -278,6 +278,18 @@ export default function SubjectPage({
     </Practice>
   )
 
+  /* Deeper reading on this subject, then the rest of the set. Three
+     cards, each with its own photograph. */
+  const onward = [
+    ...(s.related ?? [])
+      .filter((r) => !isParked(r.href))
+      .map((r) => ({ href: r.href, label: r.label, img: linkImage(r.href) })),
+    ...(s.siblings ?? []).map((x) => ({ href: x.href, label: x.title, img: x.img })),
+  ]
+    .filter((x) => x.img)
+    .filter((x, i, all) => all.findIndex((y) => y.href === x.href) === i)
+    .slice(0, 3)
+
   const quote = s.quote ? <PullQuote key="quote">{s.quote}</PullQuote> : null
   /* Both of these are pictures, and both are dropped until the picture
      exists. The plate and the breaker used to stand in as a grey card and
@@ -323,41 +335,15 @@ export default function SubjectPage({
       {opener}
       {movements}
       {tail}
-      {/* The three-up grid the journals close with, not a scrolling lane.
-          A lane is for a set a reader browses; this is a short list of
-          named siblings, and putting the first three in view beats
-          hiding six behind a horizontal scroll. */}
-      {/* The chapter's own onward links.
-          These were authored per chapter — RTA to /rta and /fermentation,
-          Artistry to /atelier and the residency — under a design where a
-          chapter is the doorway and the fuller page is the room. The prop
-          was declared and never rendered, so every one of those pointers
-          was dead: a reader finished a deliberately short chapter with no
-          route to the long one. They sit above the siblings because going
-          deeper on this subject comes before going sideways to the next. */}
-      {!!s.related?.length && (
-        <OneCol heading="Go deeper">
-          <p className="p1">
-            {s.related.map((r, i) => (
-              <span key={r.href}>
-                {i > 0 && ' · '}
-                <a href={r.href}>{r.label}</a>
-              </span>
-            ))}
-          </p>
-        </OneCol>
-      )}
-      {!!s.siblings?.length && (
-        <Continue
-          heading={s.siblingsLabel ?? 'Read on'}
-          items={s.siblings.slice(0, 3).map((x) => ({
-            href: x.href,
-            label: x.title,
-            description: x.description,
-            img: x.img,
-          }))}
-        />
-      )}
+      {/* One row of onward links, most relevant first.
+          The chapter's own deeper reading used to sit above this as a
+          "Go deeper" line of bare text links — a heading and a row of
+          words where every other page closes on pictures. They are the
+          links most worth taking, so they lead the row now and the rest
+          of the set fills it out. A link to a page that has been parked
+          is dropped: pointing a reader at something withdrawn is worse
+          than one card fewer. */}
+      {!!onward.length && <Continue heading="Continue reading" items={onward} />}
     </>
   )
 }

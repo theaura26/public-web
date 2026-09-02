@@ -186,6 +186,28 @@ export const PARKED_JOURNALS: (Journal & { categories: string[] })[] = [
     categories: ['animals', 'biodynamic'],
   },
 ]
+/* Pages that appear as an onward link but are not journals, so they have
+   no entry above to take a thumbnail from. A card with no picture renders
+   as an empty plate, so every href that can reach a card needs one. */
+const LINK_IMAGES: Record<string, string> = {
+  '/atelier': '/aura-studios/aura-studios.jpg',
+  '/mudigere': '/aura-mudigere.jpg',
+  '/from-aura/objects': '/from-aura/objects/objects.webp',
+  '/regenerative-life/the-reason': '/aura-mudigere-03.jpg',
+  '/regenerative-life/aura-intelligence': '/regenerative-life/aura-intelligence/images/aura-intelligence-03.webp',
+}
+
+/** True while a page is out of circulation. An onward link to one of
+ *  these points a reader at something the site has withdrawn. */
+export function isParked(href: string): boolean {
+  return PARKED_JOURNALS.some((j) => j.href === href)
+}
+
+/** The thumbnail for any onward link — journal, chapter or company page. */
+export function linkImage(href: string): string | undefined {
+  return journalImage(href) ?? LINK_IMAGES[href]
+}
+
 /** The photograph a page opens on, whether the journal is in circulation
  *  or parked. A parked page still renders in full for anyone with the
  *  URL, and it should still open on its own picture. */

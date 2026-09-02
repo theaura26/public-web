@@ -442,7 +442,7 @@ The brand should endure.`}
       {/* ═══ CROSS-LINKS ═══ */}
       <div className="human-only">
         <Continue
-          heading="Explore"
+          heading="More about Aura"
           items={[
             { href: '/regenerative-life/the-reason', label: 'The Reason', description: 'The belief beneath the brand — the founder’s letter, grown over generations.', img: '/the-reason/aura-flowers-1.png' },
             { href: '/atelier', label: 'Atelier', description: 'Where the brand is made real — three studios turning Natural Intelligence into story, systems and place.', img: '/aura-studios/aura-studios.jpg' },

@@ -9,6 +9,7 @@ import {
   ScrollHighlight,
   Continue,
 } from '@/components/article/Article'
+import { linkImage, nextActiveJournals } from '@/lib/journals'
 
 export default function SanctuaryPage() {
   return (
@@ -246,18 +247,20 @@ export default function SanctuaryPage() {
         you slept.
       </PullQuote>
 
-      {/* The two named sanctuaries. This chapter's `related` in
-          lib/chapters.ts lists them, but this page is hand-written rather
-          than built from SubjectPage, so that array never reached it —
-          the chapter argued for four valleys and offered a reader no way
-          into either of the two that exist. */}
-      <OneCol heading="Go deeper">
-        <p className="p1">
-          <a href="/mudigere">Mudigere</a> · <a href="/ohara">Ohara</a>
-        </p>
-      </OneCol>
-
-      <Continue currentHref="/regenerative-life/sanctuary-and-stay" />
+      {/* The two named sanctuaries lead the row. The chapter argues for
+          four valleys, so the two that exist are the links most worth
+          taking; they were a line of bare text links under a "Go deeper"
+          heading, which is the one place on the page that closed on words
+          rather than pictures. */}
+      <Continue
+        heading="Continue reading"
+        items={[
+          { href: '/mudigere', label: 'Mudigere', img: linkImage('/mudigere') },
+          { href: '/ohara', label: 'Ohara', img: linkImage('/ohara') },
+          ...nextActiveJournals('/regenerative-life/sanctuary-and-stay', 1)
+            .map((j) => ({ href: j.href, label: j.title, img: j.img })),
+        ]}
+      />
     </>
   )
 }

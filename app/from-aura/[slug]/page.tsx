@@ -226,11 +226,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           display: grid;
           grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
           gap: clamp(32px, 5vw, 96px);
-          /* The column reads off the middle of the picture rather than
-             its top edge — the plate is 4:5 and the copy is four short
-             paragraphs, so top-aligning left the text stranded against a
-             tall image. */
-          align-items: center;
+          /* Stretch, so the picture is as tall as the band whichever
+             column is the taller one. Centring it meant that once the
+             text column grew past the plate — which the column's own
+             padding does — the plate stopped reaching the band's edges
+             and the dark showed above and below it as two empty strips.
+             The copy is centred within its own column instead. */
+          align-items: stretch;
         }
         @media (max-width: 768px) {
           .pd-in { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
@@ -247,7 +249,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         .pd-plate {
           margin-left: calc(-1 * var(--pd-rail));
           width: calc(100% + var(--pd-rail));
+          /* The ratio is the floor, not the height: it sizes the band on
+             a page whose copy is short, and gives way to the row height
+             when the copy is long. */
           aspect-ratio: 4 / 5;
+          align-self: stretch;
           /* A product with no photograph yet keeps its column as a card
              on the page's own ground, not a grey plate: grey reads as a
              picture that failed rather than one nobody has taken. */
@@ -281,7 +287,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
            nav and losing its top edge. The padding goes on the column,
            not the band, so the picture still bleeds. */
         .pd-body {
-          display: flex; flex-direction: column; gap: var(--space-4);
+          display: flex; flex-direction: column; justify-content: center;
+          gap: var(--space-4);
           padding: clamp(72px, 9vh, 128px) 0;
         }
         .pd-title {

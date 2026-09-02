@@ -1447,10 +1447,19 @@ export function ScrollHighlight({
           {lines.map((line, lineIdx) => {
             const words = line.split(/\s+/).filter(Boolean)
             const isLast = lineIdx === lines.length - 1
+            /* The gap between lines is a paragraph gap, which is right when
+               each line is its own statement — "Picked by hand. / Dried in
+               the sun. / Released by the season." It is wrong when one
+               sentence is broken across two lines for the shape of it:
+               "The land has been computing / longer than any machine" came
+               out as two separate lines a paragraph apart. A line that does
+               not finish its sentence is continued by the next, so those two
+               sit on the leading instead. */
+            const continues = !isLast && !/[.!?:]["'’”]?$/.test(line.trim())
             return (
               <span
                 key={lineIdx}
-                style={{ display: 'block', marginBottom: isLast ? 0 : 'var(--space-6)' }}
+                style={{ display: 'block', marginBottom: isLast ? 0 : continues ? 0 : 'var(--space-6)' }}
               >
                 {words.map((w, i) => {
                   wordIndex++

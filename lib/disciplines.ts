@@ -160,7 +160,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'Red laterite, and what it does with rain.',
         lines: [
           'The ground here is old, iron-rich and free-draining. In a hundred inches of monsoon that is a gift: water moves through rather than sitting on the roots. In the dry weeks that follow it is the problem, because the same openness lets moisture go.',
-          'Almost everything the estate does to the ground is an answer to that second half. It is held between pH 6.0 and 6.5 — inside that band the nutrients already in the soil stay available to a plant; outside it they lock up and the fertility is there on paper and nowhere else.',
+          'Almost everything the estate does to the ground is an answer to that second half. The soil is held between pH 6.0 and 6.5 — inside that range, the nutrients already there stay available to a plant. Outside it, they lock up: the fertility exists on paper, but not in the ground.',
         ],
         after: {
           src: '/regenerative-life/the-plantation/images/aura-plantation-2.webp',

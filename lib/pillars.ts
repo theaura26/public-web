@@ -70,9 +70,9 @@ export const PILLARS: Pillar[] = [
           'It runs through three studios and the places they work in. Each takes the same posture into a different material.',
         ],
         tiles: [
-          { value: 'Agroculture', note: 'Works it into 150 acres — canopy read in lux, fertility made on the estate, every event signed. [Agroculture](/regenerative-life/the-plantation).' },
-          { value: 'Hospitality', note: 'Builds the rooms where a person can meet it, and runs them on the same clock as the farm. [Hospitality](/regenerative-life/sanctuary-and-stay).' },
-          { value: 'The Atelier', note: 'The taste layer: what is worth making at all, and what is good enough to leave here carrying the name. [The Atelier](/atelier).' },
+          { value: 'Agroculture', note: 'Works it into 150 acres — canopy read in lux, fertility made on the estate, every event signed.' },
+          { value: 'Hospitality', note: 'Builds the rooms where a person can meet it, and runs them on the same clock as the farm.' },
+          { value: 'The Atelier', note: 'The taste layer: what is worth making at all, and what is good enough to leave here carrying the name.' },
         ],
       },
       {
@@ -80,7 +80,7 @@ export const PILLARS: Pillar[] = [
         lines: [
           'Three technologies converged: foundation models, robotics, and sensors cheap enough to leave outdoors through a monsoon. For the first time a landscape can be made machine-readable.',
           'Machine intelligence sits inside that rather than above it. There is a living layer, a human layer, and a physical layer of sensors and machines; natural intelligence is all of them read together, which is a larger thing than any model sitting in the middle of it.',
-          'Three problems make it hard, and they are worth naming plainly. A landscape is difficult to capture at scale. Fewer people each year want to work in agriculture. And listening is a skill, so the open question is how a system learns to do it well.',
+          'Three problems make it hard, and each one is worth stating clearly. A landscape is difficult to capture at scale. Fewer people each year want to work in agriculture. And listening is a skill, so the open question is how a system learns to do it well.',
         ],
         after: { kind: 'plate', type: 'Detail · a sensor and a leaf in one frame', caption: 'Machine, human, and the one that came first', ratio: '16 / 9' },
       },

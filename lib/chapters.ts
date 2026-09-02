@@ -333,7 +333,7 @@ export const CHAPTERS: Chapter[] = [
       {
         heading: 'Timestamped, so the timing can be argued with.',
         lines: [
-          'Every biodynamic application is timestamped to the minute and tagged with the conditions it was made in. That is what makes right time a claim rather than a feeling: the record says what hour the work was done at and what the land was doing at that hour.',
+          'Every biodynamic application is timestamped to the minute and tagged with the conditions it was made in — what hour the work was done, and what the land was doing at that hour. That is what makes right time a claim rather than a feeling.',
           'A season later the two can be read against each other, which is the only way a rule about timing ever gets better.',
         ],
         after: {

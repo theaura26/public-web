@@ -107,8 +107,14 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
             {row.monthLabel && <h2 className="month">{row.monthLabel}</h2>}
 
             {/* Each entry arrives as it comes into view, the same reveal
-                every other card set on the site uses. */}
-            <Reveal className="card">
+                every other card set on the site uses.
+                The card stays its own element inside the wrapper: passing
+                "card" to Reveal as a className puts the class on a div
+                this component did not render, so styled-jsx never scoped
+                it and the card lost its ground, its border and its grid
+                all at once. */}
+            <Reveal>
+            <div className="card">
               <span className="node">
                 {thumb ? (
                   <Image className="thumb" src={thumb} alt="" fill sizes="64px" aria-hidden="true" />
@@ -121,6 +127,7 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
               <div className="slot">
                 <FeedEntry entry={entry} index={position.get(entry.id) ?? 0} />
               </div>
+            </div>
             </Reveal>
           </li>
         )
@@ -184,6 +191,14 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
         }
 
         /* The card sits on the line and hides it. */
+        /* The reveal wrapper is a pass-through: the row centres its
+           children and the card sizes itself, so the wrapper has to do
+           neither and get out of the way of both. */
+        .row :global(.reveal) {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
         .card {
           width: min(100%, var(--tl-card));
           display: grid;

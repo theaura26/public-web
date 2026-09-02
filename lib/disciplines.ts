@@ -99,8 +99,8 @@ export const DISCIPLINES: Discipline[] = [
           'The lunar calendar sets the timing; the biology is the reason. The charts are a schedule, and Aura says so in print rather than leaving the impression of a belief it does not hold.',
         ],
         after: {
-          src: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-01.webp',
-          alt: 'A vortex turned into a barrel of Jeevamrit', kind: 'banner', type: 'Wide · a preparation going out at first light', caption: 'The day the calendar names, and only if the plate agrees' },
+          src: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-04.webp',
+          alt: 'Stirring a row of barrels by hand with a wooden pole', kind: 'banner', caption: 'Forty-five minutes a day, vortex and reverse' },
       },
       {
         heading: 'Made here, from this herd.',
@@ -525,8 +525,10 @@ export const DISCIPLINES: Discipline[] = [
           'Three things make it hard here in particular: 150 acres of four-storey canopy is a difficult thing to capture at scale, the people who can read it are fewer every year, and nothing about listening is automatic.',
         ],
         after: {
-          src: '/regenerative-life/aura-intelligence/images/aura-intelligence-01.webp',
-          alt: 'Culture plates from the estate lab', kind: 'plate', type: 'Detail · a leaf sensor in place', caption: 'Cheap enough to leave outdoors through a monsoon', ratio: '16 / 9' },
+          src: '/regenerative-life/aura-intelligence/videos/aura-intelligence-03.mp4',
+          mediaType: 'video',
+          poster: '/regenerative-life/aura-intelligence/images/aura-intelligence-03.webp',
+          alt: 'A canopy map of the estate: tree crowns plotted as green shapes on a plan', kind: 'plate', caption: 'Every crown on a hundred and fifty acres, plotted', ratio: '16 / 9' },
       },
       {
         /* The Natural Intelligence pillar opens this chapter and already

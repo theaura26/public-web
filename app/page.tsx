@@ -1507,8 +1507,8 @@ export default function Home() {
           <div className="hero-tiles">
             {[
               { href: '/regenerative-coffee', l1: 'Nine disciplines,', l2: 'read into one cup', pill: 'Remarkable Circle', img: '/regenerative-coffee/flavours/aura-cherry-morning.webp', video: undefined, symbol: '/aura-symbol-1.png', alt: 'Aura — ripe coffee cherries on the branch at Mudigere' },
-              { href: '/now', l1: 'Now at the Aura Estate,', l2: 'Mudigere', pill: 'Aura Now', img: '/aura-depth.jpg', video: '/aura-depth.mp4', symbol: '/aura-symbol-2.png', alt: 'Aura — the estate\u2019s working record, kept as it happens' },
-              { href: '/atelier',  l1: 'Regenerative innovation',l2: 'and craft',       pill: 'Atelier',    img: '/aura-contact.jpg', video: undefined, symbol: '/aura-symbol-3.png', alt: 'Aura Atelier — natural intelligence applied to story, systems, and place' },
+              { href: '/now', l1: 'Now at the Aura Estate,', l2: 'Mudigere', pill: 'Aura Now', img: '/aura-grown.jpg', video: '/aura-grown.mp4', symbol: '/aura-symbol-2.png', alt: 'Aura — the night sky through the canopy at Mudigere' },
+              { href: '/regenerative-life/aura-intelligence', l1: 'Observe, remember,', l2: 'learn, act', pill: 'Aura Intelligence', img: '/aura-depth.jpg', video: '/aura-depth.mp4', symbol: '/aura-symbol-3.png', alt: 'Aura Intelligence — the estate read, remembered and acted on' },
             ].map((tile, i) => (
               <Link
                 key={tile.href}

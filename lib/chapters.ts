@@ -517,16 +517,15 @@ export const CHAPTERS: Chapter[] = [
     slug: 'vedic-and-biodynamic',
     lede: 'Two preparation traditions, kept for the same reason: the biology. Made on the estate, from this herd, and tested before anything touches the soil.',
     ...merge('biodynamic', 'vedic'),
-    /* Its own banner, on the Plantation's precedent. A merged chapter
-       inherits its first part's hero, and the biodynamic discipline's was
-       a brief for a picture nobody had taken — so the chapter opened on a
-       grey field with four photographs below it. The stirring shot was
-       the brief, almost word for word, so it is promoted out of the body
-       and the movement it sat under runs on its prose. */
+    /* Its own banner. A merged chapter inherits its first part's hero,
+       and the biodynamic discipline's was a brief for a picture nobody
+       had taken, so the chapter opened on a grey field with four
+       photographs below it. The delivery has no hero-banner file, so the
+       chapter opens on 01 and the rest run in their own order after it. */
     hero: {
-      caption: 'Forty-five minutes a day, vortex and reverse — Aura Estate',
-      src: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-04.webp',
-      alt: 'Stirring a row of barrels by hand with a wooden pole',
+      caption: 'The day the calendar names, and only if the plate agrees',
+      src: '/regenerative-life/vedic-and-biodynamic/images/aura-vedic-biodynamic-01.webp',
+      alt: 'A vortex turned into a barrel of Jeevamrit',
     },
   },
 
@@ -615,13 +614,12 @@ export const CHAPTERS: Chapter[] = [
         /* After the spread, not before it: `base` carries the
            intelligence discipline's own hero, and a key declared ahead of
            a spread is simply overwritten by it. */
+        /* The delivery carries no hero-banner file for this chapter, so it
+           opens on 01 and the rest run in their own order behind it. */
         hero: {
-          type: 'Diagram · the estate canopy, mapped',
-          caption: 'Every crown on a hundred and fifty acres, plotted — Aura Estate, Mudigere',
-          src: '/regenerative-life/aura-intelligence/videos/aura-intelligence-03.mp4',
-          mediaType: 'video',
-          poster: '/regenerative-life/aura-intelligence/images/aura-intelligence-03.webp',
-          alt: 'A canopy map of the estate: tree crowns plotted as green shapes on a plan',
+          caption: 'Cheap enough to leave outdoors through a monsoon',
+          src: '/regenerative-life/aura-intelligence/images/aura-intelligence-01.webp',
+          alt: 'Culture plates from the estate lab',
         },
         movements: sequenceVisuals(dedupeByHeading([...thinVisuals([ni]), ...(base.movements ?? [])])),
         record: [...ni.record, ...(base.record ?? [])],

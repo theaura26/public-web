@@ -1252,6 +1252,22 @@ a:hover, button:hover, [role="button"]:hover {
   text-decoration-thickness: var(--rule-weight);
 }
 
+/* Pillar cards: the whole card is the link, so the rule above drew one
+   underline across the title, the label and the body paragraph at once.
+   The title is the thing being followed, so the underline lands on it and
+   nowhere else in the card. */
+.pillar-card:hover,
+.pillar-card:focus-visible {
+  text-decoration: none;
+}
+.pillar-card:hover h3,
+.pillar-card:focus-visible h3 {
+  text-decoration: underline;
+  text-decoration-color: var(--brand-accent);
+  text-underline-offset: var(--rule-offset);
+  text-decoration-thickness: var(--rule-weight);
+}
+
 /* Sanctuary banner: hover affordance is the cursor pill (Explore X) — no
    text underline anywhere inside the clickable region. The parent rule above
    draws an underline across [role="button"]:hover; this kills it both on the

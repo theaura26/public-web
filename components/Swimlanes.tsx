@@ -400,7 +400,7 @@ export function FromAuraSwimlanes() {
   return (
     <Swimlanes
       title="From Aura"
-      lede="What the estate grows, what its studios make, and the days it opens to people from outside it. Nothing here is for sale yet — the record is published before the price."
+      lede="What the estate grows, what its studios make, and the days it opens to people from outside it. Every line here is arranged with the estate directly — write to us and tell us what you are after."
       lanes={FROM_AURA}
       ratio="4 / 5"
     />

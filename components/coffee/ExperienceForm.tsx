@@ -371,7 +371,7 @@ export function ExperienceBlock() {
         <div className="xb-col">
           <p className="xb-s">
             We build the three days around the answers, so say the thing
-            you actually want to see.
+            you want to see.
           </p>
           <ExperienceForm />
         </div>

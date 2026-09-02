@@ -102,7 +102,7 @@ export default function EcologyPage() {
       <TwoCol id="islands" heading="Forest islands, and the forest floor.">
         <p className="p1">
           Where a natural forest concentrates biology in undisturbed pockets, Aura builds them on purpose.
-          A <strong>forest island</strong> is a mound — roughly five metres by one, sixty centimetres high
+          A <strong>forest island</strong>{' '}is a mound — roughly five metres by one, sixty centimetres high
           — of five alternating layers of green biomass and mature cow-dung compost, inoculated with the
           herd&rsquo;s{' '}
           <Term tip="Cow Pat Pit — a fermented, microbially rich compost made from the herd’s dung. Used to seed a forest island with a diverse microbial community.">CPP</Term>{' '}

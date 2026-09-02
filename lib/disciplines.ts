@@ -276,7 +276,6 @@ export const DISCIPLINES: Discipline[] = [
           'The soil is the other half of it. A root zone with an active microbial community carries its own antagonists, which is why every preparation batch is counted for Trichoderma and Pseudomonas before it goes out.',
         ],
         after: { kind: 'portrait', type: 'Detail · a major cut sealed with cow pat and turmeric', caption: 'Sealed the same day it is made' },
-        reveal: 'Keep the plant well,\nand there is nothing to treat.',
       },
     ],
     record: [
@@ -391,7 +390,6 @@ export const DISCIPLINES: Discipline[] = [
           'A weather station at 3,600 ft logs rainfall, temperature and humidity. Water is measured again at the point it enters the coffee: total dissolved solids are logged for every lot that goes through the wet mill.',
           'That is weather and process water. Catchment, infiltration and runoff are read in the field and are not yet on a published protocol — [The Land](/land) carries what is known about the ground this water moves through.',
         ],
-        reveal: 'A hundred inches a year.\nThe question is how fast it leaves.',
       },
     ],
     record: [
@@ -531,21 +529,20 @@ export const DISCIPLINES: Discipline[] = [
           alt: 'Culture plates from the estate lab', kind: 'plate', type: 'Detail · a leaf sensor in place', caption: 'Cheap enough to leave outdoors through a monsoon', ratio: '16 / 9' },
       },
       {
-        heading: 'The knowledge is six thousand years old.',
+        /* The Natural Intelligence pillar opens this chapter and already
+           says both of these, in the same words: "Growing in balance was
+           worked out thousands of years ago, in the same traditions this
+           estate still farms by. What never happened was industrialising
+           it", and then the box the farmer was handed. This was the same
+           argument again, two sections later, under two headings. What is
+           left is the half the pillar does not say. */
+        heading: 'A recovery, put back to work.',
         lines: [
-          'Growing in balance was worked out a very long time ago, in the same traditions this estate still farms by. What never happened was industrialising it.',
-          'So this is less an invention than a recovery: remembering what was known, and putting it back to work with instruments behind it.',
-        ],
-      },
-      {
-        heading: 'Agriculture was made simple by hiding its complexity.',
-        lines: [
-          'Fifty years ago the farmer was handed a box and told not to ask questions. It worked, until the land began to pay for it.',
-          'Regeneration hands the complexity back. Something has to be able to hold it, and that is the whole of the problem this discipline exists to solve.',
+          'This is a recovery: remembering what was known, and putting it back to work with instruments behind it. Something has to be able to hold that complexity, and that is the whole of the problem this discipline exists to solve.',
         ],
         after: {
           src: '/regenerative-life/aura-intelligence/images/aura-intelligence-05.webp',
-          alt: 'Moss and epiphytes established on a trunk', kind: 'portrait', type: 'Detail · the box, and what it hid', caption: 'It worked until the land began to pay for it', ratio: '4 / 5' },
+          alt: 'Moss and epiphytes established on a trunk', kind: 'portrait', caption: 'It worked until the land began to pay for it', ratio: '4 / 5' },
       },
       {
         heading: 'From an old estate to a regenerative one.',

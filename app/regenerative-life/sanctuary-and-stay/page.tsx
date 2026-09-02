@@ -128,7 +128,7 @@ export default function SanctuaryPage() {
           listening, not what we&rsquo;ve built.
         </p>
         <p className="p1">
-          <strong>Munduk</strong> sits in the volcanic highlands of north Bali, where a sacred
+          <strong>Munduk</strong>{' '}sits in the volcanic highlands of north Bali, where a sacred
           lake half a ridge from the working one has banned motorboats for longer than anyone
           can date. It is where Aura&rsquo;s Indian soil philosophy meets a community that already
           drew its own line between use and reverence — before Aura had a name.

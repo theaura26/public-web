@@ -182,7 +182,7 @@ export default function CircularPage() {
       <Fragment key="c1">
       <DataGrid cols={3} standalone>
         <DataCard value="Cow Dung">
-          <em>The living culture.</em> Fresh dung from the estate&rsquo;s Malnad Gidda herd. The breed
+          <em>The living culture.</em>{' '}Fresh dung from the estate&rsquo;s Malnad Gidda herd. The breed
           matters, on a belief the estate has yet to test: that a gut adapted to this altitude and
           these grasses carries biology suited to the ground the dung returns to.
         </DataCard>
@@ -288,7 +288,7 @@ export default function CircularPage() {
           This is where the loop earns the word <em>measured</em>. Every collection and every batch is
           numbered — pit numbers for the dung, batch numbers for the brews — and every preparation runs a
           fixed cycle, sixty to ninety days depending on what it is. Each batch is tested{' '}
-          <strong>before and after</strong> preparation in the estate&rsquo;s own lab: pH, electrical
+          <strong>before and after</strong>{' '}preparation in the estate&rsquo;s own lab: pH, electrical
           conductivity, microbial colony counts, the beneficial organisms that matter most in this climate
           —{' '}
           <Term tip="A soil fungus that suppresses plant pathogens and promotes root growth. Counted in every batch.">Trichoderma</Term>{' '}

@@ -146,6 +146,25 @@ export default function Navbar() {
      moving. `openGroup` is what the reader has pointed at since. */
   const activeSection = openGroup ?? TABS[0].id
   const scrollRef = useRef<HTMLDivElement>(null)
+
+  /* The list above the corner marks reserved space for them with a fixed
+     number — 210px, 190 and 170 at the three widths. The marks are set in
+     clamp(22px, 3vw, 32px), so their real height moves with the viewport
+     and the number was a guess at it. It guessed short: 4px of overlap at
+     1440, 10 on a phone, and exactly flush at 1024, which is no margin at
+     all. Measured instead, so the two can never meet. */
+  const cornerRef = useRef<HTMLDivElement>(null)
+  const overlayRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const corner = cornerRef.current
+    const overlay = overlayRef.current
+    if (!corner || !overlay) return
+    const apply = () => overlay.style.setProperty('--menu-corner-h', `${Math.ceil(corner.getBoundingClientRect().height)}px`)
+    apply()
+    const ro = new ResizeObserver(apply)
+    ro.observe(corner)
+    return () => ro.disconnect()
+  }, [menuOpen])
   const tileRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
   useEffect(() => {
@@ -619,6 +638,7 @@ export default function Navbar() {
           panel un-transformed at rest, so the backdrop-filter behind it
           works as expected. */}
       <div
+        ref={overlayRef}
         className="menu-overlay fixed z-50"
         style={{
           top: 0,
@@ -786,7 +806,7 @@ export default function Navbar() {
         {/* Now, reached as it should be — the thing that is happening,
             not an item in a list of subjects. Bottom-left, where the
             panel’s other standing marks sit. */}
-        <div className="menu-corner">
+        <div className="menu-corner" ref={cornerRef}>
           <Link
             href="/now"
             className="mg-live"
@@ -1608,7 +1628,8 @@ export default function Navbar() {
                auto as well, so a negative margin on the list inside it
                was simply clipped off. */
             left: calc(var(--gutter) - 5px);
-            bottom: 210px;                /* clears the utility icon stack */
+            /* The marks below, their own 44px offset, and a gap. */
+            bottom: calc(var(--menu-corner-h, 170px) + 44px + var(--space-5));
             width: 345px;
             overflow-y: auto;
             padding-bottom: var(--space-5);
@@ -1728,7 +1749,6 @@ export default function Navbar() {
               /* Full width now that the tile lane is gone from this
                  breakpoint — the 260px rail existed to leave room for it. */
               width: auto;
-              bottom: 190px;
               overflow-y: auto;
               z-index: 3;
             }
@@ -1816,7 +1836,6 @@ export default function Navbar() {
               left: var(--gutter);
               right: var(--gutter);
               width: auto;
-              bottom: 170px;
               overflow-y: auto;
             }
             .menu-left :global(nav) {

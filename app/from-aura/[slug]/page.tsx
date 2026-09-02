@@ -246,7 +246,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           align-items: stretch;
         }
         @media (max-width: 768px) {
-          .pd-in { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
+          /* Stacked, the grid gap lands on top of the text column's own
+             padding and only on that side — 129px above the title against
+             81 below the last line. The column's padding is already
+             symmetrical, so it supplies the whole gap and the two edges
+             match. */
+          .pd-in { grid-template-columns: minmax(0, 1fr); gap: 0; }
         }
 
         /* The product runs off the left edge of the page. The rail is

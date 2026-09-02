@@ -195,7 +195,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               <p className="p1 pd-p">
                 Allocation is arranged with the estate directly. Tell us what you are after
                 and who it is for.{' '}
-                <Link className="pd-ask" href="/contact">Write to us</Link>
+                <Link className="pd-ask" href="/contact">Contact Us</Link>
               </p>
             </>
           )}

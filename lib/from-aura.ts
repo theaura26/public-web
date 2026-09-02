@@ -35,7 +35,7 @@ const COPY: Record<string, { title: string; description: string; img?: string }>
   '/from-aura/coffee-25-26': { title: '2025–26 Lots', description: 'Nine lots from one harvest, each with its own wet mill file.', img: '/from-aura/coffee/nine-lots.webp' },
   '/from-aura/coffee-26-27': { title: 'Pre-book 2026–27', description: 'Reserved before the cherry is on the tree.', img: '/from-aura/coffee/prebook.webp' },
   '/from-aura/coffee-blocks-and-zones': { title: 'Book Block & Zone', description: 'By block and by zone, sold against the canopy reading that shaped it.', img: '/from-aura/coffee/blocks-and-zones.webp' },
-  '/from-aura/coffee-experimental': { title: 'No.1 Experimental Coffee in India', description: 'The ferments the estate pushes furthest, and the file behind each one.', img: '/from-aura/coffee/coffee.webp' },
+  '/from-aura/coffee-experimental': { title: 'No.1 Experimental Coffee in India', description: 'First place in Robusta Experimental at the Coffee Board of India’s Flavour of India Fine Cup Awards, 2026.', img: '/from-aura/coffee/coffee.webp' },
   '/from-aura/collaborations': { title: 'Institutional Collaborations', description: 'Research on a working estate — monitoring, trials, and access to the record.' },
   '/from-aura/cow-pat-pit': { title: 'Cow Pat Pit', description: 'Ninety days in a numbered pit, hand-turned, and lab-tested before it leaves.' },
   '/from-aura/craft': { title: 'Craft', description: 'Six studios, and the disciplines they keep in use.', img: '/from-aura/objects/craft-1.webp' },

@@ -25,14 +25,14 @@ export default function SanctuaryPage() {
       <TwoCol id="posture" heading="A sanctuary is a posture a place takes.">
         <p className="p1">
           It is what happens when a piece of land is tended long enough that it begins to tend the
-          people who stand on it. You do not visit it so much as fall into step with it. The two we already run have a journal of their own — the geographies, the
-          coordinates, the year counts on the buildings — and that journal is{' '}
+          people who stand on it. The two we already run have a journal of their own — the
+          geographies, the coordinates, the year counts on the buildings — and that journal is{' '}
           <em>The Land</em>. This one is about what the network does.
         </p>
         <p className="p1">
           The Aura sanctuary system is four valleys in two hemispheres, held in one rhythm. Two
-          are in practice. Two are in the patient early conversations of being read. None of them
-          are destinations. All four are postures.
+          are in practice. Two are in the early conversations of being read. None of them are
+          destinations. All four are postures.
         </p>
       </TwoCol>
 

@@ -171,10 +171,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
           {p.children.length > 0 ? (
             <>
-              <p className="p1 pd-p">
-                What is under this, season by season. Each carries its own record when it
-                is released.
-              </p>
               <ul className="pd-list">
                 {p.children.map((c) => (
                   <li key={c.href}>
@@ -193,9 +189,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             </>
           )}
 
-          <p className="pd-act">
-            <Link className="pd-cta" href="/contact">Get in touch</Link>
-          </p>
           </div>
         </div>
       </div>
@@ -281,7 +274,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           .pd-plate { width: calc(100% + 2 * var(--pd-rail)); }
         }
 
-        .pd-body { display: flex; flex-direction: column; gap: var(--space-4); }
+        /* The band runs flush so the picture can reach its top and bottom
+           edge, which leaves the text column starting at y=0 of the band.
+           On a page where the band is the first thing after the header —
+           every product page — the title was rendering under the fixed
+           nav and losing its top edge. The padding goes on the column,
+           not the band, so the picture still bleeds. */
+        .pd-body {
+          display: flex; flex-direction: column; gap: var(--space-4);
+          padding: clamp(72px, 9vh, 128px) 0;
+        }
         .pd-title {
           margin: 0 0 var(--space-3);
           font-family: var(--font-grotesque), sans-serif;
@@ -320,17 +322,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           color: var(--contrast-text); text-decoration: none;
         }
 
-        .pd-act { margin: var(--space-4) 0 0; }
         /* .p1, like every other link set in running text. The accent
            rule on hover arrives from globals.css, same as anywhere. */
-        .pd-cta {
-          font-family: var(--font-sans);
-          font-size: 16px; line-height: 1.55; letter-spacing: normal;
-          color: var(--contrast-text); text-decoration: underline;
-          text-underline-offset: var(--rule-offset);
-          text-decoration-thickness: var(--rule-weight);
-        }
-        .pd-cta:hover { text-decoration-color: var(--brand-accent); }
       `}</style>
     </main>
   )

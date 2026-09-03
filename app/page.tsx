@@ -1976,6 +1976,9 @@ Awake.`}</ScrollHighlight>
               {
                 title: 'Sanctuary',
                 href: '/regenerative-life/sanctuary-and-stay',
+                /* Written and held back — see the `soon` flag in
+                   lib/chapters.ts. The card stays; the link goes. */
+                soon: true,
                 lead: 'Places that hold the right kind of attention',
                 desc: 'Two sanctuaries open and two more named — architecture, kitchen and residency, built to run for decades on a farm that would be working anyway.',
                 video: '/aura-hospitality.mp4',
@@ -1997,15 +2000,30 @@ Awake.`}</ScrollHighlight>
                     cards are where most readers first meet the three, so
                     they set the tone for Agroculture, Hospitality and the
                     Atelier and then take you to them. */}
-                <Link href={card.href} className="pillar-card no-underline">
-                  <PillarVideo src={card.video} poster={card.poster} alt={card.alt} />
-                  <h3 style={{ marginTop: 'var(--space-5)', marginBottom: 'var(--space-3)' }}>{card.title}</h3>
-                  {/* Lead reads as a meta caption underneath the title —
-                      mono uppercase via the global .label spec, matching
-                      every other meta caption on the page. */}
-                  <p className="label" style={{ marginBottom: 'var(--space-4)' }}>{card.lead}</p>
-                  <p className="p1">{card.desc}</p>
-                </Link>
+                {(() => {
+                  const body = (
+                    <>
+                      <PillarVideo src={card.video} poster={card.poster} alt={card.alt} />
+                      <h3 style={{ marginTop: 'var(--space-5)', marginBottom: 'var(--space-3)' }}>
+                        {card.title}
+                        {'soon' in card && card.soon ? <span className="pillar-soon">Coming Soon</span> : null}
+                      </h3>
+                      {/* Lead reads as a meta caption underneath the title —
+                          mono uppercase via the global .label spec, matching
+                          every other meta caption on the page. */}
+                      <p className="label" style={{ marginBottom: 'var(--space-4)' }}>{card.lead}</p>
+                      <p className="p1">{card.desc}</p>
+                    </>
+                  )
+                  /* A pillar that is written but held back keeps its card
+                     and loses its link. The reader still meets all three;
+                     the marker says why the third does not open yet. */
+                  return 'soon' in card && card.soon ? (
+                    <div className="pillar-card is-soon">{body}</div>
+                  ) : (
+                    <Link href={card.href} className="pillar-card no-underline">{body}</Link>
+                  )
+                })()}
               </Reveal>
             ))}
           </div>

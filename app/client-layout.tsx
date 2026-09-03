@@ -7,7 +7,6 @@ import AskAura from '@/components/ask-aura/AskAura'
 import Footer from '@/components/Footer'
 import { Analytics } from './providers'
 import { ScrollDepth } from '@/components/ScrollDepth'
-import ConsentBanner from '@/components/ConsentBanner'
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
   return (
@@ -65,7 +64,6 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
         }
       `}</style>
     </ModeProvider>
-      <ConsentBanner />
     </Analytics>
   )
 }

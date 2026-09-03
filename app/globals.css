@@ -1258,11 +1258,6 @@ a:hover, button:hover, [role="button"]:hover {
   text-decoration-thickness: var(--rule-weight);
 }
 
-/* The consent banner is a control, not content: agent mode flattens
-   everything in <main>, and this sits outside it deliberately so the
-   question still reads as a question. */
-[data-view="agent"] .cb { display: none !important; }
-
 /* Full-bleed rails in the plain-text view.
  *
  * A lane track, the From Aura plate and the Ohara wordmark all run off
@@ -1295,6 +1290,33 @@ a:hover, button:hover, [role="button"]:hover {
   text-decoration-color: var(--brand-accent);
   text-underline-offset: var(--rule-offset);
   text-decoration-thickness: var(--rule-weight);
+}
+
+/* A pillar that is written but held back. It is a div rather than a
+   Link, so it inherits none of the anchor styling and needs the cursor
+   said explicitly — the card looks identical to its two neighbours and
+   the marker beside the title is the only thing that differs. Colours
+   come from the local text tokens because this grid sits inside
+   InvertOnScroll and reads on either ground. */
+.pillar-card.is-soon {
+  cursor: default;
+  text-decoration: none;
+  color: inherit;
+}
+.pillar-soon {
+  display: inline-block;
+  margin-left: var(--space-3);
+  vertical-align: middle;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 400;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-muted);
 }
 
 /* Sanctuary banner: hover affordance is the cursor pill (Explore X) — no

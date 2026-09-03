@@ -66,8 +66,8 @@ export default function PrivacyPage() {
 
       <TwoCol id="why" heading="Why we collect it">
         <p className="p1">
-          Usage data and session recordings are used to understand which pages are read and to
-          find things that are broken. Assistant questions are used to generate an answer and
+          Usage data is used to understand which pages are read and to find things that are
+          broken. Assistant questions are used to generate an answer and
           to see which topics are being asked about. Email is used to reply to you.
         </p>
         <p className="p1">
@@ -88,9 +88,8 @@ export default function PrivacyPage() {
           local storage. Clearing site data for this domain removes it.
         </p>
         <p className="p1">
-          Session recording is off until you allow it. We ask once, and anything you type is
-          masked before it leaves your browser. Declining keeps it off, and clearing site data
-          asks again.
+          Session recording is switched off. PostHog can replay how a page was used; we do
+          not collect that, and nothing on the site turns it on.
         </p>
       </TwoCol>
 
@@ -102,9 +101,8 @@ export default function PrivacyPage() {
         </p>
         <p className="p1">
           The text of your question is never sent to analytics. The assistant panel is excluded
-          from click tracking and from session recording, so what you type does not appear in a
-          replay. Analytics receives only the topic of the question and whether an answer was
-          found.
+          from click tracking, so what you type does not appear in an event. Analytics receives
+          only the topic of the question and whether an answer was found.
         </p>
         <p className="p1">
           Your conversation history is stored in your browser, not on our servers. Clearing it
@@ -116,7 +114,7 @@ export default function PrivacyPage() {
       <SpecTable
         title="Who receives your data"
         rows={[
-          { label: 'PostHog', value: 'Usage data, device data, and session recordings where allowed. Hosted in the United States' },
+          { label: 'PostHog', value: 'Usage data and device data. Hosted in the United States' },
           { label: 'OpenAI', value: 'The text of questions asked through Ask Aura' },
           { label: 'Vercel', value: 'Hosting. Serves the site and processes requests to it' },
           { label: 'Advertisers, brokers', value: 'None. We do not sell or share data for advertising' },
@@ -130,8 +128,7 @@ export default function PrivacyPage() {
           the analytics identifier described above, and your theme and view preferences.
         </p>
         <p className="p1">
-          Analytics and session recording currently start when the page loads, without asking
-          you first. Some jurisdictions treat local storage the way they treat cookies and
+          Analytics starts when the page loads, without asking you first. Some jurisdictions treat local storage the way they treat cookies and
           require consent for this. We have not yet added a consent step. In the meantime,
           clearing site data for this domain removes what is stored, and browser
           &ldquo;do not track&rdquo; settings are not currently acted on.

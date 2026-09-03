@@ -57,15 +57,17 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
      so a reader carries on through the sequence rather than going back
      to an index. */
   const i = CHAPTERS.indexOf(d)
-  const siblings = [...CHAPTERS.slice(i + 1), ...CHAPTERS.slice(0, i)].map((x) => ({
-    href: chapterHref(x),
-    title: x.label,
-    /* The card is the chapter's own photograph and its name. The lede
-       under it made every card a paragraph, and eight of those read as a
-       contents page rather than as a row of doors. */
-    img: x.card ?? (x.hero?.mediaType === 'video' ? x.hero.poster : x.hero?.src),
-    status: 'live' as const,
-  }))
+  const siblings = [...CHAPTERS.slice(i + 1), ...CHAPTERS.slice(0, i)]
+    .filter((x) => !x.soon)
+    .map((x) => ({
+      href: chapterHref(x),
+      title: x.label,
+      /* The card is the chapter's own photograph and its name. The lede
+         under it made every card a paragraph, and eight of those read as a
+         contents page rather than as a row of doors. */
+      img: x.card ?? (x.hero?.mediaType === 'video' ? x.hero.poster : x.hero?.src),
+      status: 'live' as const,
+    }))
 
   return (
     <SubjectPage

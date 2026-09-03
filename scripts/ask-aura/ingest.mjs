@@ -18,6 +18,9 @@
 import { createHash } from 'node:crypto'
 import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises'
 import path from 'node:path'
+import { loadEnvLocal } from './env.mjs'
+
+loadEnvLocal()
 
 const DATA = 'data/ask-aura'
 const REBUILD = process.argv.includes('--rebuild')
@@ -270,7 +273,12 @@ if (key) {
   }
   for (const c of chunks) if (!c.vec && prevVec.has(c.hash)) c.vec = prevVec.get(c.hash)
 } else {
-  console.log('No OPENAI_API_KEY — building lexical index only.')
+  console.warn(
+    '\n  !! No OPENAI_API_KEY — writing a corpus with no embedding vectors.\n' +
+    '     Retrieval fuses BM25 with cosine over these vectors; with none\n' +
+    '     present the fusion has one list to work with and the semantic\n' +
+    '     half of search is simply off. Set it in .env.local.\n',
+  )
 }
 
 const index = buildIndex(chunks)

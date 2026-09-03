@@ -15,6 +15,9 @@
  */
 
 import { readFile } from 'node:fs/promises'
+import { loadEnvLocal } from '../../scripts/ask-aura/smoke/env.mjs'
+
+loadEnvLocal()
 
 const BASE = process.env.ASK_AURA_BASE ?? 'http://localhost:3000'
 const args = process.argv.slice(2)

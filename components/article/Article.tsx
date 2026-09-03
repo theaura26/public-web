@@ -1258,11 +1258,23 @@ export function Portrait({
           and the figure, and as a flex item with no width of its own it
           shrank to its content — the picture came out 365px wide inside a
           1200px rail, varying with the length of its own caption. As a
-          plain block child, width:100% on the figure resolves against the
-          rail. `align` is moot while the figure fills it. */}
+          plain block child, a percentage width on the figure resolves
+          against the rail.
+
+          align does something again now the figure is half the rail. It
+          was declared and then ignored for as long as the picture filled
+          the width, which is the kind of prop that quietly stops being
+          true. */}
       <div className="section-w">
         <Reveal>
-          <figure className="portrait" style={{ ['--pt-ratio' as string]: ratio }}>
+          <figure
+            className="portrait"
+            style={{
+              ['--pt-ratio' as string]: ratio,
+              marginLeft: align === 'left' ? 0 : 'auto',
+              marginRight: align === 'right' ? 0 : 'auto',
+            }}
+          >
             <div className="portrait__media">
               {video ? (
                 <video ref={videoRef} src={video} poster={poster} muted loop playsInline preload="none" aria-label={alt} />
@@ -1273,14 +1285,35 @@ export function Portrait({
             </div>
             {caption && <figcaption className="label portrait__caption">{caption}</figcaption>}
             <style jsx>{`
-              /* Full rail. It used to be clamp(300px, 46vw, 560px), which
-                 put the picture at half the width of the text and the
-                 spec table beside it — it read as undersized rather than
-                 as a deliberate inset. */
+              /* Half the rail, and half of the rail rather than half of
+                 the viewport.
+              
+                 It was clamp(300px, 46vw, 560px) once, which read as
+                 undersized, and the answer then was to fill the rail.
+                 Filling it costs the page its cadence: every picture the
+                 same width as every band of text turns a sequence of
+                 movements into one column of blocks at one measure.
+              
+                 50% is a fraction of the rail, so it holds its
+                 relationship to the text at every width instead of
+                 drifting against it the way a vw figure does — and the
+                 inset is legible as a decision rather than as a picture
+                 that came out small.
+              
+                 Full width below the point where half of it stops being
+                 a picture: 50% of a phone is 170px, which is a thumbnail
+                 of the thing rather than the thing. */
               .portrait {
-                margin: 0;
-                width: 100%;
-                max-width: 100%;
+                /* Vertical only. The horizontal pair is set inline from
+                   align, and a blanket margin: 0 here would win the
+                   cascade against it and pin every picture left. */
+                margin-top: 0;
+                margin-bottom: 0;
+                width: 50%;
+                max-width: 50%;
+              }
+              @media (max-width: 768px) {
+                .portrait { width: 100%; max-width: 100%; }
               }
               /* The box holds the ratio of the picture that goes in it,
                  which the caller declares. Getting that right is the

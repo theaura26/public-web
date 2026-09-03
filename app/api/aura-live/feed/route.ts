@@ -21,6 +21,12 @@ export async function GET() {
     {
       estate: 'mudigere',
       freshness: view.freshness,
+      /* Whether the ledger could be read at all. Without it an empty
+         feed has two meanings that look identical from here — a store
+         that could not be opened, and a store with nothing published in
+         it — and the caller has no way to tell a fault from a quiet day.
+         The page distinguishes them; a machine reading this could not. */
+      readable: !view.failed,
       entries: view.entries,
     },
     {

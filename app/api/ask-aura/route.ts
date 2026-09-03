@@ -121,7 +121,7 @@ function sse(event: string, data: unknown): string {
 }
 
 /** A fixed reply, delivered down the same channel the UI already reads. */
-function refusalStream(reply: string, kind: string, question = '') {
+function refusalStream(reply: string, kind: string, question = '', reason = '') {
   /* Even a refusal is worth counting: a run of high-stakes questions is
      a thing Aura would want to know about. The labels go out; the words
      that triggered them do not. */
@@ -135,6 +135,12 @@ function refusalStream(reply: string, kind: string, question = '') {
         citations: [],
         confidence: 'high',
         refusal: kind,
+        /* Why, where there is a why. A refusal the site chose needs no
+           explanation; one caused by something breaking underneath does,
+           and 'retrieval_unavailable' on its own does not say whether the
+           corpus was missing, the parse failed or the embedding timed
+           out. */
+        ...(reason ? { reason } : {}),
         ...(analytics ? { insight: analytics } : {}),
       })))
       c.enqueue(enc.encode(sse('done', {})))
@@ -250,7 +256,12 @@ async function followUps(
         label: s.label.slice(0, 60),
         intent: (s.intent ?? 'follow_up').slice(0, 40),
       }))
-  } catch {
+  } catch (err) {
+    /* Follow-ups are a courtesy and their absence is survivable, so the
+       reader gets an answer either way. It is still worth one line:
+       silently returning none is how a shape change upstream goes
+       unnoticed for a month. */
+    console.error(JSON.stringify({ evt: 'ask-aura.followups-failed', message: err instanceof Error ? err.message : String(err) }))
     return []
   }
 }
@@ -306,13 +317,20 @@ export async function POST(req: Request) {
   let hits: Hit[] = []
   try {
     hits = await search(message, { limit: 6, pageUrl: page.url, signal: req.signal })
-  } catch {
+  } catch (err) {
     /* Retrieval failure is not licence to invent — and telling the model
        to admit it is not enforcement. With no sources there is nothing
-       to ground an answer in, so no answer gets generated. */
+       to ground an answer in, so no answer gets generated.
+    
+       The error travels with the refusal. Discarding it meant a corpus
+       that failed to load, a parse that broke and an embedding call that
+       timed out all arrived as the same four words. */
+    console.error(JSON.stringify({ evt: 'ask-aura.retrieval-failed', requestId, message: err instanceof Error ? err.message : String(err) }))
     return refusalStream(
       'I could not reach my sources just then, and I would rather say so than answer from memory. Try again in a moment — the estate pages themselves are the better read anyway.',
       'retrieval_unavailable',
+      typeof body.message === 'string' ? body.message : '',
+      err instanceof Error ? `${err.name}: ${err.message}`.slice(0, 160) : 'unknown',
     )
   }
 

@@ -266,34 +266,62 @@ export default function AskAura() {
     return () => { clearTimeout(t); document.removeEventListener('keydown', onKey) }
   }, [open, close])
 
-  /* Follow the answer down only if the reader was already at the
-     bottom. Yanking them back while they are reading an earlier answer
-     is the rudest thing a transcript can do.
-
-     Which is why this is read from the reader’s own scrolling rather
-     than measured after new content lands. Sources and follow-ups do not
-     stream in a line at a time — they arrive together as one block a few
-     hundred pixels tall, so a measurement taken afterwards always
-     concludes the reader had scrolled away and leaves the block below
-     the fold. Below the fold is precisely where a follow-up is no use. */
-  const pinnedRef = useRef(true)
-  const onLogScroll = useCallback(() => {
+  /* The question goes to the top, once, and then nothing moves.
+   
+     This used to follow the answer down and settle at the bottom of the
+     transcript. Which sounds helpful and reads badly: an answer arrives
+     with its sources and its follow-ups underneath, several hundred
+     pixels of it, and landing at the bottom of all that puts the first
+     line of the answer above the fold. The reader is looking at the
+     citations for a paragraph they have not read.
+   
+     So the newest question is brought to the top of the log and left
+     there. The answer then fills the space beneath it, in the direction
+     English is read, and the reader goes down through it at their own
+     pace — including into the sources, which are where they belong
+     rather than where a scroll position happened to stop.
+   
+     Nothing scrolls while tokens arrive, and nothing scrolls when the
+     answer settles. One movement per question, at the moment the
+     question is asked, which is the only moment the reader has asked to
+     be taken anywhere. */
+  const anchorRef = useRef<string | null>(null)
+  useEffect(() => {
+    const id = anchorRef.current
+    if (!id) return
     const el = logRef.current
     if (!el) return
-    pinnedRef.current = el.scrollHeight - el.scrollTop - el.clientHeight < 120
-  }, [])
+    const q = el.querySelector<HTMLElement>(`[data-mid="${id}"]`)
+    if (!q) return
 
-  /* Settling is smooth and streaming is not: an answer arriving a token
-     at a time would restart a smooth scroll sixty times a second and
-     never reach the bottom. */
-  const settled = msgs[msgs.length - 1]?.pending === false
-  useEffect(() => {
-    const el = logRef.current
-    if (!el || !pinnedRef.current) return
-    const smooth = settled && !matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (smooth) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
-    else el.scrollTop = el.scrollHeight
-  }, [msgs, settled])
+    /* offsetTop, not a bounding rect. Rows animate in on aa-rise, and a
+       rect measured mid-animation reports where the row is being drawn
+       rather than where it sits — one run came back at zero, which both
+       satisfied the anchor and scrolled to the very top. offsetTop is
+       layout, so a transform cannot lie about it, and the log shares an
+       offsetParent with its rows, so the difference is the row's position
+       inside the log's content. Less a little air above it. */
+    const top = Math.max(0, q.offsetTop - el.offsetTop - 12)
+
+    /* Nothing happens until the target can actually be met.
+    
+       At the moment a question is sent it is the last thing in the log,
+       and there is nothing below it to scroll up against: the position
+       does not exist yet and the browser clamps to the bottom. Scrolling
+       there and correcting later is two movements to land one place.
+    
+       So it waits, and the answer growing underneath is what makes the
+       target reachable. One scroll, once, when it can be done properly —
+       and if the answer is too short to ever allow it, the question is
+       already in view and nothing needs to move at all. */
+    const reachable = el.scrollHeight - el.clientHeight
+    if (top > reachable) return
+
+    anchorRef.current = null
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) el.scrollTop = top
+    else el.scrollTo({ top, behavior: 'smooth' })
+  }, [msgs])
 
   /* History for the next request, read at send time. Depending on `msgs`
      directly would rebuild `send` on every token of every answer. */
@@ -319,10 +347,11 @@ export default function AskAura() {
        a timestamped trace of having done so. The single event fires
        once the outcome is known, below, and not at all for distress. */
 
-    /* Asking is a request to be shown the answer, wherever they had
-       scrolled to read the last one. */
-    pinnedRef.current = true
     const userMsg: Msg = { id: crypto.randomUUID(), role: 'user', text: question }
+    /* Asking is a request to be taken to the new question, wherever they
+       had scrolled to read the last one. The effect above does it once
+       the row exists. */
+    anchorRef.current = userMsg.id
     const replyId = crypto.randomUUID()
     setMsgs((m) => [...m, userMsg, { id: replyId, role: 'assistant', text: '', pending: true, question }])
     setInput('')
@@ -565,7 +594,7 @@ export default function AskAura() {
 
           <p className="aa-status" role="status" aria-live="polite">{announcement}</p>
 
-          <div className="aa-log" ref={logRef} onScroll={onLogScroll}>
+          <div className="aa-log" ref={logRef}>
             {msgs.length === 0 && (
               <div className="aa-intro">
                 <p className="aa-intro-line">{intro.line}</p>
@@ -593,7 +622,7 @@ export default function AskAura() {
             )}
 
             {msgs.map((m) => (
-              <div key={m.id} className={`aa-msg is-${m.role} ${m.failed ? 'is-failed' : ''}`}>
+              <div key={m.id} data-mid={m.id} className={`aa-msg is-${m.role} ${m.failed ? 'is-failed' : ''}`}>
                 {m.role === 'assistant' && m.pending && !m.text && (
                   <span className="aa-thinking" aria-label="Thinking">
                     <i /><i /><i />

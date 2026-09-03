@@ -479,7 +479,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'Planned backwards from the calendar.',
         lines: [
           'Volume is planned backwards from the biodynamic calendar for 150 acres, and stock registers track every batch against that plan. The same gate applies as to everything else: tested before and after, held back if it fails.',
-          'The 32-acre tea block is in organic transition, targeting 2027. [Vedic Farming](/vedic) is the longer account of the tradition these preparations come from.',
+          'The 32-acre tea block is in organic transition, targeting 2027. The preparations themselves come from the Vedic tradition, which is older than the standards now used to certify it.',
         ],
         after: { kind: 'portrait', type: 'Detail · a stock register against the biodynamic calendar', caption: 'Volume planned for 150 acres, batch by batch' },
       },
@@ -489,7 +489,6 @@ export const DISCIPLINES: Discipline[] = [
       { value: '5', label: 'preparations in the Vedic set' },
       { value: '150', label: 'acres the calendar is planned for' },
     ],
-    related: [{ label: 'Vedic Farming', href: '/vedic' }],
   },
   {
     id: 'intelligence',
@@ -642,7 +641,7 @@ export const DISCIPLINES: Discipline[] = [
         heading: 'One estate, then a network.',
         lines: [
           'Mudigere is the first, and one place is a sample of one. Ohara — the second sanctuary, north of Kyoto — tests whether a way of working that held in the Western Ghats holds in a valley with a different climate, a different soil and no crop on it.',
-          'What passes between them is the point. A reading confirmed in two valleys is worth more than one confirmed in one, and the same record is what makes robotics, universities, hospitality and agriculture able to build on it. [Provenance](/provenance) is how a single event becomes a record.',
+          'What passes between them is the point. A reading confirmed in two valleys is worth more than one confirmed in one, and the same record is what makes robotics, universities, hospitality and agriculture able to build on it. Signing each event where it happens is how a single event becomes a record.',
         ],
         after: {
           src: '/regenerative-life/aura-intelligence/images/aura-intelligence-06.webp',
@@ -656,6 +655,5 @@ export const DISCIPLINES: Discipline[] = [
       { value: 'Signed', label: 'Every human event, at the point it happens' },
       { value: 'Open', label: 'Export formats, so the record outlives the software' },
     ],
-    related: [{ label: 'Provenance', href: '/provenance' }],
   },
 ]

@@ -128,17 +128,12 @@ type PendingNote = {
   categories: CategoryId[]
 }
 
-const PENDING_NOTES: PendingNote[] = [
-  {
-    /* The page is written and renders; it is held back rather than
-       missing. Publishing is a two-line move: file it in ASSIGNMENT and
-       register it in lib/journals.ts. */
-    href: '/idea',
-    title: 'The 1000 Year Idea',
-    description: 'The standard every decision at Aura is measured against, and the seven filters it runs through.',
-    categories: ['art-culture'],
-  },
-]
+/* Empty on purpose. The 1000 Year Idea sat here and put a clickable
+   menu link on every page of the site, which is the opposite of held
+   back — the page is private and stays out of the navigation until it
+   is published. Announcing a note here is a promise the menu keeps, so
+   only add one that is meant to be seen. */
+const PENDING_NOTES: PendingNote[] = []
 
 /**
  * Pages that live elsewhere on the site but belong in a Field Notes

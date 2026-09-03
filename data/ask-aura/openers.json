@@ -90,12 +90,12 @@
     ]
   },
   "/": {
-    "hash": "cb47aaf37f838c74",
-    "line": "Welcome to Aura — ask me anything about our regenerative coffee journey.",
+    "hash": "29ed03e826be4804",
+    "line": "Welcome to Aura — ask me anything about our regenerative journey.",
     "prompts": [
-      "What is Aura’s regenerative conviction?",
-      "How do ancestral wisdom and creative capital combine?",
-      "What makes Aura’s sanctuaries unique?"
+      "What is Aura’s core mission?",
+      "How does Ṛta guide farming?",
+      "What are the Three Intelligences?"
     ]
   },
   "/land": {
@@ -288,12 +288,12 @@
     ]
   },
   "/now": {
-    "hash": "b05c2fbf2a93eb01",
-    "line": "This is where we track our estate's daily natural rhythms — ask me anything.",
+    "hash": "61db9280e1f831f1",
+    "line": "Here's the latest estate conditions and treatments — what would you like to know?",
     "prompts": [
       "How much rain fell this monsoon?",
-      "What’s the current soil temperature?",
-      "How lit is the moon today?"
+      "What treatments were applied recently?",
+      "How is soil temperature measured here?"
     ]
   },
   "/pollinators": {
@@ -396,12 +396,12 @@
     ]
   },
   "/regenerative-life/rta": {
-    "hash": "3921348ede88554b",
-    "line": "This is how we follow the land’s natural timing — ask me anything.",
+    "hash": "11b97e458241c390",
+    "line": "This land follows its own rhythm — ask me anything about RTA.",
     "prompts": [
-      "What does RTA stand for?",
-      "How does soil timing work?",
-      "Why is fermentation important?"
+      "What does RTA mean here?",
+      "Why avoid early soil compaction?",
+      "How is fermentation timed?"
     ]
   },
   "/atelier": {
@@ -411,6 +411,24 @@
       "What is natural intelligence here?",
       "How does craft meet technology?",
       "What makes Aura’s hospitality unique?"
+    ]
+  },
+  "/regenerative-life/sanctuary-and-stay": {
+    "hash": "24388ead96ace431",
+    "line": "This is where our sanctuary and stay come alive — what do you want to know?",
+    "prompts": [
+      "What are the four climates here?",
+      "How do the two valleys differ?",
+      "What happens during the working day?"
+    ]
+  },
+  "/sanctuaries": {
+    "hash": "5827f3ecb7fac918",
+    "line": "This is where we protect and nurture life — ask me anything.",
+    "prompts": [
+      "What makes a sanctuary here?",
+      "How do sanctuaries last generations?",
+      "What are the four valleys like?"
     ]
   }
 }

@@ -12,9 +12,6 @@ import { CATEGORIES } from '@/lib/field-notes'
    /mudigere-estate is deliberately absent: it is noindex. */
 const OFF_MENU = [
   '/contact',
-  /* The four valleys on one page. Public and index:true; the menu does
-     not carry it yet. */
-  '/sanctuaries',
   /* Privacy is reached from the footer rather than the menu. It is
      index:true, so it belongs here. */
   '/privacy',

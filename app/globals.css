@@ -1307,7 +1307,9 @@ a:hover, button:hover, [role="button"]:hover {
 .lane-card:hover .lane-t,
 .lane-card:focus-visible .lane-t,
 .m-next-c:hover .m-next-t,
-.m-next-c:focus-visible .m-next-t {
+.m-next-c:focus-visible .m-next-t,
+.sc-card:hover .sc-name,
+.sc-card:focus-visible .sc-name {
   text-decoration: underline;
   text-decoration-color: var(--brand-accent);
   text-underline-offset: var(--rule-offset);
@@ -1319,7 +1321,9 @@ a:hover, button:hover, [role="button"]:hover {
 .lane-card:hover,
 .lane-card:focus-visible,
 .m-next-c:hover,
-.m-next-c:focus-visible {
+.m-next-c:focus-visible,
+.sc-card:hover,
+.sc-card:focus-visible {
   text-decoration: none;
 }
 
@@ -2458,3 +2462,81 @@ html.lenis, html.lenis body { height: auto; }
 [data-rc-backdrop] :is(.sc, .p, .ch, .ld, .lots, .bx) {
   background: transparent !important;
 }
+
+
+/* ── /sanctuaries ────────────────────────────────────────────────────
+   Two place cards to a row, picture over name. The row is a list because
+   it is one: four valleys, two of which open and two of which do not.
+   The quiet pair get the same card and lose the link — see the note in
+   app/sanctuaries/page.tsx. */
+.sc-row {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  max-width: var(--max-w);
+  display: grid;
+  gap: clamp(28px, 4vw, 56px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 768px) {
+  .sc-row { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
+}
+.sc-card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.6vw, 20px);
+  color: inherit;
+  text-decoration: none;
+}
+/* Nothing to click, so nothing that suggests it. */
+.sc-card.is-quiet { cursor: default; }
+.sc-plate {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-1);
+  background: var(--bg-card);
+}
+.sc-plate img,
+.sc-plate video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.sc-text { display: flex; flex-direction: column; gap: 6px; }
+/* Same face and rhythm as a Field Notes card title, one step up in
+   size because a valley is the subject of this page rather than one
+   entry in a list. */
+.sc-name {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: var(--text);
+  transition: color var(--dur-base) var(--ease);
+}
+.sc-tag {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-body);
+  max-width: 48ch;
+}
+.sc-meta { color: var(--text-muted); }
+/* The quiet pair read one step back from the working pair. The picture
+   keeps its full strength — dimming the card multiplied against the
+   photograph and hid the valley, which is the one thing worth showing. */
+.sc-card.is-quiet .sc-name,
+.sc-card.is-quiet .sc-tag { color: var(--text-muted); }
+/* The closing beat. No heading — it is the last paragraph of the story
+   rather than a new section, and a heading over three sentences would
+   announce it as one. */
+.sc-close {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: var(--section-gap) var(--gutter);
+}
+.sc-close .p1 { max-width: 760px; }
+.sc-ask { margin-top: var(--space-5); }

@@ -2530,13 +2530,3 @@ html.lenis, html.lenis body { height: auto; }
    photograph and hid the valley, which is the one thing worth showing. */
 .sc-card.is-quiet .sc-name,
 .sc-card.is-quiet .sc-tag { color: var(--text-muted); }
-/* The closing beat. No heading — it is the last paragraph of the story
-   rather than a new section, and a heading over three sentences would
-   announce it as one. */
-.sc-close {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: var(--section-gap) var(--gutter);
-}
-.sc-close .p1 { max-width: 760px; }
-.sc-ask { margin-top: var(--space-5); }

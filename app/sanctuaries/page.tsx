@@ -1,12 +1,10 @@
 import {
   HeroBanner,
   TwoCol,
-  OneCol,
   ScrollHighlight,
   Continue,
 } from '@/components/article/Article'
 import Reveal from '@/components/RevealOnScroll'
-import ArrowCta from '@/components/ArrowCta'
 
 /* The four valleys, on one page.
  *
@@ -17,13 +15,15 @@ import ArrowCta from '@/components/ArrowCta'
  *
  * Two are working and two are being listened to. The page keeps that
  * distinction in its structure rather than in a badge: the working pair
- * open their pages, the coming pair do not open anything, and the
- * paragraph between the two rows says why the second pair is quiet.
+ * open their pages, the coming pair do not open anything, and the one
+ * piece of prose on the page says why the second pair is quiet.
  *
- * The rows carry their own introduction. A heading and a paragraph over
- * each one restated what the cards were about to show — the names, the
- * regions and the coordinates are already on the card, and a reader who
- * has them does not need to be told them first.
+ * Almost no prose, on purpose. Every heading-and-paragraph over a row
+ * restated what the row was about to show: the names, the regions and
+ * the coordinates are already on the cards, and a reader looking at them
+ * does not need to be told them first. What is left is the opening
+ * statement, the four valleys, and the one thing the pictures cannot
+ * say — why two of them are closed.
  */
 
 type Place = {
@@ -148,21 +148,6 @@ export default function SanctuariesPage() {
 Four valleys, two hemispheres, and the same question asked in each: what does this place want to become.
 Two of them are answering. Two are still being asked.`}</ScrollHighlight>
 
-      <OneCol id="first" heading="Mudigere came first.">
-        <p className="p1">
-          A hundred and fifty acres in the Western Ghats that had been farmed hard, and was
-          asked — for the first time in a long while — what it needed. The answer took years
-          and is still arriving: four storeys of canopy, a herd that makes the fertility the
-          soil runs on, and coffee that tastes like the block it grew in.
-        </p>
-        <p className="p1">
-          Ohara answered in another language. North of Kyoto, in a valley that keeps its own
-          time, the work is a garden, a house, and the discipline of leaving things alone
-          long enough to watch them change. Two valleys this far apart agree slowly, and
-          what survives the disagreement is worth keeping.
-        </p>
-      </OneCol>
-
       <ul className="sc-row">
         {WORKING.map((p) => (
           <PlaceCard key={p.name} p={p} />
@@ -188,17 +173,6 @@ Two of them are answering. Two are still being asked.`}</ScrollHighlight>
           <PlaceCard key={p.name} p={p} />
         ))}
       </ul>
-
-      <div className="sc-close">
-        <p className="p1">
-          What the four have in common is the order of the work: the land first, for as long
-          as the land takes, and everything else after it. Mudigere and Ohara are open to
-          anyone who wants that pace. Munduk and Punakha will be, when they are ready.
-        </p>
-        <ArrowCta className="sc-ask" href="/contact">
-          Contact Us
-        </ArrowCta>
-      </div>
 
       {/* Mudigere and Ohara are two cards up the page and their own
           entries here would be the third time of asking. These three go

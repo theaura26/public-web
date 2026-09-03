@@ -1,5 +1,9 @@
 /* Quick retrieval smoke test: node scripts/ask-aura/try-retrieval.mts "your question" */
 import { search } from '../../../lib/ask-aura/retrieve'
+import { requireEmbeddings } from './env.mjs'
+
+/* Both rankers, or no verdict — see env.mts. */
+requireEmbeddings()
 
 const custom = process.argv.slice(2).filter((a) => !a.startsWith('-'))
 const qs = custom.length ? custom : [
@@ -29,7 +33,13 @@ const PAGES: Array<[string, string | undefined]> = [
   ['How does this connect to the coffee?', 'https://theaura.life/herd'],
   ['What is this place?', 'https://theaura.life/ohara'],
   ['Why here?', 'https://theaura.life/mudigere'],
-  ['Tell me about the shade canopy.', 'https://theaura.life/pepper'],
+  /* /shade, not /pepper. Pepper is a held-back page: it is out of the
+     sitemap, so the crawler does not index it and no chunk of it exists
+     to seat. The case was asserting that a page absent from the corpus
+     appears in the evidence, which it cannot, and the suite reported 4/5
+     for as long as that was true. The shade canopy is written up on
+     /shade, which is public and indexed. */
+  ['Tell me about the shade canopy.', 'https://theaura.life/shade'],
   ['How many cattle are there?', undefined],
 ]
 let seated = 0

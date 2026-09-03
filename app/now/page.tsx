@@ -1,6 +1,7 @@
 import { readFeed } from '@/lib/aura-live/feed'
 import { readToday } from '@/lib/aura-live/today'
 import Timeline from '@/components/aura-live/Timeline'
+import FeedState from '@/components/aura-live/FeedState'
 import LiveHero from '@/components/aura-live/LiveHero'
 import TodayCard from '@/components/aura-live/TodayCard'
 import LiveShell from './LiveShell'
@@ -39,17 +40,12 @@ export default async function LivePage() {
           </LiveHero>
         }
       >
-        {failed ? (
-          <p className="state">
-            The feed could not be read just now. Nothing has been lost — this page is served from a
-            stored record, and it will return as soon as that record is reachable again.
-          </p>
-        ) : entries.length === 0 ? (
-          <p className="state">
-            Nothing has met the bar yet. Entries appear here when the estate record contains a
-            confirmed event with a date, a place and enough evidence to stand behind — which is not
-            every day, and this page would rather be empty than filled.
-          </p>
+        {entries.length === 0 ? (
+          /* Offline covers both a store that could not be read and a feed
+             whose source has gone quiet — from where a reader sits those
+             are the same thing, and both end. A live feed with nothing in
+             it is the other case: a quiet day, which ends differently. */
+          <FeedState offline={failed || freshness.state !== 'live'} />
         ) : (
           <Timeline entries={entries} />
         )}

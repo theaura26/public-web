@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { guardComingSoon } from '@/lib/coming-soon'
 
 /* Written, and not released. The menu carries it as coming-soon and the
    field-note index lists it under "soon", but it was the one page in that
@@ -21,5 +22,10 @@ export const metadata: Metadata = {
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  /* Unpublished. 404s in every deployed environment — production and
+     Vercel preview — while staying reachable under `next dev`, so the page
+     can keep being worked on. Delete this call to publish it. */
+  guardComingSoon()
+
   return children
 }

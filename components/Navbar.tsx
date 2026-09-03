@@ -126,6 +126,42 @@ export default function Navbar() {
      until the user actually opens the menu. Stays true thereafter so
      the feed isn’t torn down + reseeded on every reopen. */
   const [hasOpenedMenu, setHasOpenedMenu] = useState(false)
+
+  /* The mark beside Now, and what it is allowed to say.
+   *
+   * It pulsed in the brand accent on every page, which reads as the site
+   * telling you something is happening right now. It said that whatever
+   * the feed was doing — including through a day of the upstream ingest
+   * failing with the page below it empty.
+   *
+   * Two states now, and the glow belongs to the first of them:
+   *
+   *   loading  the request is in flight and the pulse is the wait
+   *   live     fresh, and carrying entries — a steady dot, no glow
+   *
+   * Anything else shows nothing. A stale feed, an empty one and a failed
+   * request all leave it off, which is the safe way round for a claim
+   * about the present tense.
+   *
+   * Fetched when the menu is first opened rather than on mount: the
+   * corner it lives in is not on screen until then, and a reader who
+   * never opens the menu never pays for the request. */
+  const [feedState, setFeedState] = useState<'idle' | 'loading' | 'live' | 'off'>('idle')
+  useEffect(() => {
+    if (!hasOpenedMenu) return
+    let alive = true
+    setFeedState('loading')
+    fetch('/api/aura-live/feed')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!alive) return
+        const live = d?.freshness?.state === 'live' && (d?.entries?.length ?? 0) > 0
+        setFeedState(live ? 'live' : 'off')
+      })
+      .catch(() => { if (alive) setFeedState('off') })
+    return () => { alive = false }
+  }, [hasOpenedMenu])
+
   const { theme, setTheme, viewMode, setViewMode } = useMode()
   const pathname = usePathname()
 
@@ -814,7 +850,10 @@ export default function Navbar() {
             data-attr="menu-link:/now"
           >
             Now
-            <span className="mg-dot" aria-hidden />
+            <span
+              className={`mg-dot ${feedState === 'loading' ? 'is-loading' : ''}`}
+              aria-hidden
+            />
           </Link>
           {/* Contact is not a subject the site is about; it is how you
               reach a person. It sits with the standing marks rather than
@@ -1316,9 +1355,21 @@ export default function Navbar() {
             border: 1px solid color-mix(in srgb, var(--contrast-text) 28%, transparent);
             color: color-mix(in srgb, var(--contrast-text) 62%, transparent);
           }
+          /* Unlit at rest: a hollow ring, the same move the hero makes
+             when its source goes quiet — background out, a hairline in
+             its place, nothing glowing. The mark stays on the word either
+             way, because its absence and its presence should not be the
+             thing a reader has to notice. */
           .mg-dot {
             width: 9px; height: 9px; border-radius: 50%; flex: none;
+            background: transparent;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+          }
+          /* Lit only while the request is in flight. The glow is the
+             wait, and it stops when the wait does. */
+          .mg-dot.is-loading {
             background: var(--brand-accent);
+            box-shadow: none;
             animation: mg-pulse 2.6s var(--ease) infinite;
           }
           @keyframes mg-pulse {
@@ -1326,7 +1377,7 @@ export default function Navbar() {
             50%      { box-shadow: 0 0 16px 3px var(--brand-accent); opacity: 1; }
           }
           @media (prefers-reduced-motion: reduce) {
-            .mg-dot { animation: none; }
+            .mg-dot.is-loading { animation: none; }
             .mg-panel { transition: none; }
           }
 

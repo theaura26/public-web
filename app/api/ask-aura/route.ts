@@ -331,154 +331,130 @@ export async function POST(req: Request) {
     { role: 'user' as const, content: `${reference}\n\nMy question: ${message}` },
   ]
 
-  const enc = new TextEncoder()
+  /* The answer is assembled before the Response is returned, and the
+     Response carries a finished body.
+   
+     It used to be a ReadableStream whose start() called the model. On
+     production that produced 200, the right streaming headers and an
+     empty body, every time: the invocation is torn down the moment the
+     handler returns, so nothing awaited inside the stream ever ran. Not
+     an abort and not an error — the catch never reached either, which is
+     why the panel had nothing to show and nothing to say. Preview kept
+     the invocation alive and served the same code correctly, which is
+     what hid it.
+   
+     Everything the platform is known to run is work done before the
+     return: the retrieval above, the feed route, the refusals. So the
+     model call joins them, and the same SSE frames the client already
+     reads are written into a string instead of a stream. req.signal is
+     the right signal again here, because all of this happens while the
+     request is genuinely open.
+   
+     The cost is the typing effect: the answer arrives in one frame
+     rather than word by word. An answer that arrives at once beats one
+     that never arrives. */
+  const frames: string[] = []
+  let answer = ''
 
-  /* The upstream call gets its own controller rather than the request's
-     own signal.
-     
-     Tying it straight to req.signal cost us the whole answer in
-     production: the platform can consider the request finished the
-     moment the streaming Response is handed back, and the abort that
-     follows killed the OpenAI call before a single token — 200, the
-     right headers, and an empty body. The catch below treated it as the
-     visitor pressing stop, which it never was, so nothing was said
-     either.
-     
-     Forwarding it keeps the behaviour that was wanted — a reader who
-     closes the tab stops the meter — without letting the request
-     lifecycle end the answer on its own. */
-  const upstreamAbort = new AbortController()
-  const forwardAbort = () => upstreamAbort.abort()
-  req.signal.addEventListener('abort', forwardAbort)
+  try {
+    const upstream = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
+      signal: req.signal,
+      body: JSON.stringify({
+        model: CHAT_MODEL,
+        /* Low, and deliberately so. Warmth here comes from the prompt and
+           from the source material, not from sampling: every degree of
+           temperature is another chance the model reaches past the
+           passages it was given for a fact it half-recalls. */
+        temperature: 0.2,
+        max_tokens: 700,
+        messages,
+      }),
+    })
 
-  const stream = new ReadableStream({
-    async start(controller) {
-      let answer = ''
-      try {
-        const upstream = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
-          signal: upstreamAbort.signal,
-          body: JSON.stringify({
-            model: CHAT_MODEL,
-            /* Low, and deliberately so. Warmth here comes from the prompt
-               and from the source material, not from sampling: every
-               degree of temperature is another chance the model reaches
-               past the passages it was given for a fact it half-recalls.
-               The evaluation suite catches those, and at 0.4 it caught
-               different ones on every run. */
-            temperature: 0.2,
-            max_tokens: 700,
-            stream: true,
-            messages,
-          }),
-        })
+    if (!upstream.ok) {
+      frames.push(sse('token', {
+        t: 'I could not reach my sources just then. Try again in a moment — or the estate pages themselves are the better read anyway.',
+      }))
+      frames.push(sse('meta', { suggestions: [], citations: [], confidence: 'low', error: 'upstream' }))
+      frames.push(sse('done', {}))
+      return new Response(frames.join(''), { headers: { ...SSE_HEADERS, 'x-request-id': requestId } })
+    }
 
-        if (!upstream.ok || !upstream.body) {
-          controller.enqueue(enc.encode(sse('token', {
-            t: 'I could not reach my sources just then. Try again in a moment — or the estate pages themselves are the better read anyway.',
-          })))
-          controller.enqueue(enc.encode(sse('meta', {
-            suggestions: [], citations: [], confidence: 'low', error: 'upstream',
-          })))
-          controller.enqueue(enc.encode(sse('done', {})))
-          controller.close()
-          return
-        }
+    const json = await upstream.json()
+    answer = json?.choices?.[0]?.message?.content ?? ''
 
-        const reader = upstream.body.getReader()
-        const dec = new TextDecoder()
-        let buf = ''
-        for (;;) {
-          const { done, value } = await reader.read()
-          if (done) break
-          buf += dec.decode(value, { stream: true })
-          const lines = buf.split('\n')
-          buf = lines.pop() ?? ''
-          for (const line of lines) {
-            if (!line.startsWith('data: ')) continue
-            const payload = line.slice(6).trim()
-            if (payload === '[DONE]') continue
-            try {
-              const delta = JSON.parse(payload).choices?.[0]?.delta?.content
-              if (delta) {
-                answer += delta
-                controller.enqueue(enc.encode(sse('token', { t: delta })))
-              }
-            } catch { /* keep-alive or partial frame */ }
-          }
-        }
+    if (!answer) {
+      frames.push(sse('token', {
+        t: 'I could not reach my sources just then. Try again in a moment — or the estate pages themselves are the better read anyway.',
+      }))
+      frames.push(sse('meta', { suggestions: [], citations: [], confidence: 'low', error: 'empty' }))
+      frames.push(sse('done', {}))
+      return new Response(frames.join(''), { headers: { ...SSE_HEADERS, 'x-request-id': requestId } })
+    }
 
-        /* Citations are the sources actually put in front of the model,
-           filtered to links the site is willing to point at. */
-        /* One citation per page, best-ranked chunk wins. Four rows all
-           reading the same page title is noise, not provenance — the
-           chunk-level detail stays in the trace. */
-        const seenPages = new Set<string>()
-        const citations = hits
-          .filter((h) => isCitableSource(h.chunk.url))
-          .filter((h) => !seenPages.has(h.chunk.url) && seenPages.add(h.chunk.url))
-          .slice(0, 3)
-          .map((h) => ({
-            sourceId: h.chunk.id,
-            title: h.chunk.sectionPath,
-            url: h.chunk.url,
-            sourceType: h.chunk.sourceType,
-            image: h.chunk.image ?? '',
-            /* The page's own name, without the section and without the
-               "— Aura" suffix: a card wants a title, not a breadcrumb. */
-            page: h.chunk.title.split(' — ')[0].split(' › ')[0],
-          }))
+    frames.push(sse('token', { t: answer }))
 
-        const suggestions = await followUps(message, answer, hits, key, req.signal)
-        const best = hits[0]?.confidence ?? 'low'
+    /* Citations are the sources actually put in front of the model,
+       filtered to links the site is willing to point at. One per page,
+       best-ranked chunk wins: four rows reading the same page title is
+       noise rather than provenance, and the chunk detail stays in the
+       trace. */
+    const seenPages = new Set<string>()
+    const citations = hits
+      .filter((h) => isCitableSource(h.chunk.url))
+      .filter((h) => !seenPages.has(h.chunk.url) && seenPages.add(h.chunk.url))
+      .slice(0, 3)
+      .map((h) => ({
+        sourceId: h.chunk.id,
+        title: h.chunk.sectionPath,
+        url: h.chunk.url,
+        sourceType: h.chunk.sourceType,
+        image: h.chunk.image ?? '',
+        /* The page's own name, without the section and without the
+           "— Aura" suffix: a card wants a title, not a breadcrumb. */
+        page: h.chunk.title.split(' — ')[0].split(' › ')[0],
+      }))
 
-        /* The evidence actually put in front of the model, echoed back
-           for the evaluation harness so a judge can check the answer
-           against its sources rather than guessing from tone. Off unless
-           explicitly switched on: visitors have no use for it, and it
-           would double the size of every response. */
-        const trace = process.env.ASK_AURA_EVAL_TRACE === '1'
-          ? hits.map((h) => ({ sectionPath: h.chunk.sectionPath, url: h.chunk.url, text: h.chunk.text }))
-          : undefined
+    const suggestions = await followUps(message, answer, hits, key, req.signal)
+    const best = hits[0]?.confidence ?? 'low'
 
-        /* Classified here, not in the browser: this is the only place
-           that knows which passages actually answered the question, and
-           the topic labels are worth more when they come from what was
-           retrieved than from what was typed. */
-        controller.enqueue(enc.encode(sse('meta', {
-            suggestions,
-          citations,
-          confidence: hits.length ? best : 'low',
-          requestId,
-          insight: insight(message, hits, { answer }),
-          ...(trace ? { trace } : {}),
-        })))
-        controller.enqueue(enc.encode(sse('done', {})))
-      } catch (err) {
-        /* An abort partway through an answer is the visitor pressing
-           stop, and there is nothing to report. An abort before a single
-           token is something else — whatever the cause, the reader is
-           left with an empty panel and no idea why. Anything that ends
-           the stream with nothing in it says so. */
-        const aborted = (err as Error)?.name === 'AbortError'
-        if (!aborted || !answer) {
-          controller.enqueue(enc.encode(sse('token', {
-            t: 'I could not reach my sources just then. Try again in a moment — or the estate pages themselves are the better read anyway.',
-          })))
-          controller.enqueue(enc.encode(sse('meta', {
-            suggestions: [], citations: [], confidence: 'low', error: aborted ? 'aborted_early' : 'stream',
-          })))
-          controller.enqueue(enc.encode(sse('done', {})))
-        }
-      } finally {
-        req.signal.removeEventListener('abort', forwardAbort)
-        controller.close()
-      }
-    },
-  })
+    /* The evidence actually put in front of the model, echoed back for
+       the evaluation harness so a judge can check the answer against its
+       sources rather than guessing from tone. Off unless switched on. */
+    const trace = process.env.ASK_AURA_EVAL_TRACE === '1'
+      ? hits.map((h) => ({ sectionPath: h.chunk.sectionPath, url: h.chunk.url, text: h.chunk.text }))
+      : undefined
 
-  return new Response(stream, { headers: { ...SSE_HEADERS, 'x-request-id': requestId } })
+    /* Classified here, not in the browser: this is the only place that
+       knows which passages actually answered the question, and the topic
+       labels are worth more when they come from what was retrieved than
+       from what was typed. */
+    frames.push(sse('meta', {
+      suggestions,
+      citations,
+      confidence: hits.length ? best : 'low',
+      requestId,
+      insight: insight(message, hits, { answer }),
+      ...(trace ? { trace } : {}),
+    }))
+    frames.push(sse('done', {}))
+  } catch (err) {
+    /* A reader who closed the tab is gone and there is nobody to tell.
+       Anything else ends with an answer that says so. */
+    if ((err as Error)?.name === 'AbortError') {
+      return new Response('', { headers: { ...SSE_HEADERS, 'x-request-id': requestId } })
+    }
+    frames.length = 0
+    frames.push(sse('token', {
+      t: 'I could not reach my sources just then. Try again in a moment — or the estate pages themselves are the better read anyway.',
+    }))
+    frames.push(sse('meta', { suggestions: [], citations: [], confidence: 'low', error: 'stream' }))
+    frames.push(sse('done', {}))
+  }
+
+  return new Response(frames.join(''), { headers: { ...SSE_HEADERS, 'x-request-id': requestId } })
 }
 
 export async function GET() {

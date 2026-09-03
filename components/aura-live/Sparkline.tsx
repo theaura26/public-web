@@ -145,6 +145,13 @@ export default function Sparkline({
         .wrap { display: flex; flex-direction: column; gap: var(--space-3); }
 
         .spark { display: block; width: 100%; height: auto; overflow: visible; cursor: crosshair; }
+        /* A click focuses the chart, and the browser drew its own ring
+           for it — a blue box around the whole series, which is the one
+           thing on the card that is meant to be read as a shape. The
+           pointer already says where it is with the crosshair and the
+           readout underneath, so it needs no ring; the keyboard, which
+           has neither, keeps ours. */
+        .spark:focus { outline: none; }
         .spark:focus-visible { outline: 1px solid rgba(255, 255, 255, 0.5); outline-offset: 4px; }
         .line { fill: none; stroke: rgba(255, 255, 255, 0.72); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
         .fill { fill: rgba(255, 255, 255, 0.09); stroke: none; }

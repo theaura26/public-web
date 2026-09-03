@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import ArrowCta from '@/components/ArrowCta'
 import { stubSlugs, labelFor, SECTIONS } from '@/lib/site-nav'
 import { FROM_AURA } from '@/lib/from-aura'
 import { RelatedLane } from '@/components/Swimlanes'
@@ -194,9 +195,14 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                   the route to a person. */}
               <p className="p1 pd-p">
                 Allocation is arranged with the estate directly. Tell us what you are after
-                and who it is for.{' '}
-                <Link className="pd-ask" href="/contact">Contact Us</Link>
+                and who it is for.
               </p>
+              {/* The ask used to be the last two words of the paragraph, set
+                  as an inline underline — the weight a citation gets. It is
+                  the only thing on the page a reader can act on, so it stands
+                  on its own as the ring-and-arrow control the sanctuary
+                  panels already use. */}
+              <ArrowCta className="pd-ask" href="/contact">Contact Us</ArrowCta>
             </>
           )}
 

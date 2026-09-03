@@ -55,6 +55,12 @@ export type Chapter = Omit<Discipline, 'glyph'> & {
    *  The six without it are composed from the audited disciplines in
    *  lib/disciplines.ts and exist nowhere else on the site. */
   href?: string
+  /** Written, and held back. The chapter keeps its place in the sequence
+   *  and the menu still names it, greyed and unclickable under a Coming
+   *  Soon marker. Everything that follows a chapter through to a page —
+   *  the sitemap, the sibling row at the foot of the other chapters —
+   *  reads this and stops. */
+  soon?: boolean
 }
 
 /** The chapters that own a page under /regenerative-life. */

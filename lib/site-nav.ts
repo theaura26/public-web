@@ -71,6 +71,11 @@ export const SECTIONS: NavSection[] = [
       label: c.label,
       href: chapterHref(c),
       note: c.subtitle,
+      /* Both, and they do different jobs: `soon` is what the sitemap
+         filters on, `disabled` is what the two leaf renderers branch on
+         to draw plain grey text in place of a link. */
+      soon: c.soon,
+      disabled: c.soon,
     })),
   },
 

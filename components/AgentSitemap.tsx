@@ -196,6 +196,17 @@ export const SITEMAP: SitemapEntry[] = [
     related: ['/coffee', '/circular', '/biodynamic'],
   },
   {
+    href: '/sanctuaries',
+    label: 'Sanctuaries',
+    topic: 'Four valleys, and what a sanctuary is for',
+    summary: 'Aura keeps four valleys in two hemispheres as places safe enough to think in generations. Mudigere in the Western Ghats and Ohara north of Kyoto are open and working; Munduk in Bali and Punakha in Bhutan are named and closed while the land is still being read.',
+    facts: [
+      { label: 'Open', value: 'Mudigere (India) · Ohara (Japan)' },
+      { label: 'Listening', value: 'Munduk (Indonesia) · Punakha (Bhutan)' },
+    ],
+    related: ['/mudigere', '/ohara', '/land'],
+  },
+  {
     href: '/land',
     label: 'The Land',
     topic: 'Land as ancestry — Mudigere and Ohara in dialogue',
@@ -222,50 +233,6 @@ export const SITEMAP: SitemapEntry[] = [
       { label: 'Previously', value: '/studios — redirected permanently to /atelier' },
     ],
     related: ['/artistry', '/brand', '/residency'],
-  },
-  {
-    href: '/regenerative-life/sanctuary-and-stay',
-    label: 'Sanctuary',
-    topic: 'The land in rhythm — two sanctuaries as one ecosystem',
-    summary: 'Aura Sanctuary — the land in rhythm. A 1000-year regenerative ecosystem across Mudigere, Ohara, and coming valleys in Munduk and Punakha.',
-    facts: [
-      { label: 'Active', value: 'Mudigere (India) · Ohara (Japan)' },
-      { label: 'Coming', value: 'Munduk (Indonesia) · Punakha (Bhutan)' },
-    ],
-    related: ['/mudigere', '/ohara', '/land'],
-  },
-  {
-    href: '/provenance',
-    label: 'Provenance',
-    topic: 'Cherry to cup, written down — a signed record in place of legacy certification',
-    summary: 'Aura replaces legacy certification with a live, sensor-fed, signed record. Blockchain-verified provenance from the Mudigere estate — cherry to cup, on chain.',
-    facts: [
-      { label: 'Method', value: 'Live sensor data, signed at source, kept in plain formats' },
-      { label: 'Replaces', value: 'Legacy third-party certification' },
-    ],
-    related: ['/coffee', '/mudigere', '/ecology'],
-  },
-  {
-    href: '/areca',
-    label: 'Areca — The Sentinel Palm',
-    topic: 'Areca as the mid-canopy and the cultural spine of coastal Karnataka',
-    summary: 'Areca catechu as the mid-canopy of the Aura estate. Vertical architecture, five-layer shade system, and the cultural spine of coastal Karnataka.',
-    facts: [
-      { label: 'Role', value: 'Mid-canopy in the five-layer shade system' },
-      { label: 'Carries', value: 'The pepper vine' },
-    ],
-    related: ['/pepper', '/shade', '/living-systems'],
-  },
-  {
-    href: '/pepper',
-    label: 'Pepper — Malabar Black Gold',
-    topic: 'Single-estate Malabar pepper, climbing the areca',
-    summary: 'Single-estate Malabar black pepper climbing the areca. Black, white, and green — water-retted and experimentally anaerobic. Grown in the Western Ghats biosphere.',
-    facts: [
-      { label: 'Types', value: 'Black · White · Green' },
-      { label: 'Processing', value: 'Water-retted; experimentally anaerobic' },
-    ],
-    related: ['/areca', '/fermentation', '/mudigere'],
   },
   {
     href: '/residency',

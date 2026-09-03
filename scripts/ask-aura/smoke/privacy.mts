@@ -1,4 +1,7 @@
 import { redact, classifyIntent, admittedGap, insight } from '../../../lib/ask-aura/privacy'
+import { loadEnvLocal } from './env.mjs'
+
+loadEnvLocal()
 
 /* Redaction has to hold in both directions. Letting a phone number
    through is the obvious failure; eating "3,600 ft" or "fifty-two

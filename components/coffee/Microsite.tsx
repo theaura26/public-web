@@ -1515,7 +1515,6 @@ export function NextUp({
           width: 100%; height: 100%; object-fit: cover; display: block;
           transition: transform var(--dur-slow) var(--ease);
         }
-        :global(.m-next-c):hover .m-next-m img { transform: scale(1.04); }
         .m-next-t { display: block; }
         .m-next-e {
           display: block;

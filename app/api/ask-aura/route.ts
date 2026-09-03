@@ -332,6 +332,25 @@ export async function POST(req: Request) {
   ]
 
   const enc = new TextEncoder()
+
+  /* The upstream call gets its own controller rather than the request's
+     own signal.
+     
+     Tying it straight to req.signal cost us the whole answer in
+     production: the platform can consider the request finished the
+     moment the streaming Response is handed back, and the abort that
+     follows killed the OpenAI call before a single token — 200, the
+     right headers, and an empty body. The catch below treated it as the
+     visitor pressing stop, which it never was, so nothing was said
+     either.
+     
+     Forwarding it keeps the behaviour that was wanted — a reader who
+     closes the tab stops the meter — without letting the request
+     lifecycle end the answer on its own. */
+  const upstreamAbort = new AbortController()
+  const forwardAbort = () => upstreamAbort.abort()
+  req.signal.addEventListener('abort', forwardAbort)
+
   const stream = new ReadableStream({
     async start(controller) {
       let answer = ''
@@ -339,7 +358,7 @@ export async function POST(req: Request) {
         const upstream = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
-          signal: req.signal,
+          signal: upstreamAbort.signal,
           body: JSON.stringify({
             model: CHAT_MODEL,
             /* Low, and deliberately so. Warmth here comes from the prompt
@@ -437,11 +456,23 @@ export async function POST(req: Request) {
         })))
         controller.enqueue(enc.encode(sse('done', {})))
       } catch (err) {
-        /* An aborted request is the visitor pressing stop, not a fault. */
-        if ((err as Error)?.name !== 'AbortError') {
-          controller.enqueue(enc.encode(sse('error', { message: 'Something went wrong.' })))
+        /* An abort partway through an answer is the visitor pressing
+           stop, and there is nothing to report. An abort before a single
+           token is something else — whatever the cause, the reader is
+           left with an empty panel and no idea why. Anything that ends
+           the stream with nothing in it says so. */
+        const aborted = (err as Error)?.name === 'AbortError'
+        if (!aborted || !answer) {
+          controller.enqueue(enc.encode(sse('token', {
+            t: 'I could not reach my sources just then. Try again in a moment — or the estate pages themselves are the better read anyway.',
+          })))
+          controller.enqueue(enc.encode(sse('meta', {
+            suggestions: [], citations: [], confidence: 'low', error: aborted ? 'aborted_early' : 'stream',
+          })))
+          controller.enqueue(enc.encode(sse('done', {})))
         }
       } finally {
+        req.signal.removeEventListener('abort', forwardAbort)
         controller.close()
       }
     },

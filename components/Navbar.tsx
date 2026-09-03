@@ -126,6 +126,34 @@ export default function Navbar() {
      until the user actually opens the menu. Stays true thereafter so
      the feed isn’t torn down + reseeded on every reopen. */
   const [hasOpenedMenu, setHasOpenedMenu] = useState(false)
+
+  /* Is the feed actually live?
+   *
+   * The dot beside Now pulses in the brand accent, which is the site
+   * saying something is happening right now. It said that whatever the
+   * feed was doing — including while the upstream ingest had been failing
+   * for a day and the page below had nothing on it.
+   *
+   * False until proven otherwise, and only true for a feed that is both
+   * fresh and carrying entries. Fetched when the menu is first opened
+   * rather than on mount, so a reader who never opens it never pays for
+   * the request; the corner it lives in is not on screen until then
+   * either. A failed request leaves it false, which is the safe way for
+   * this particular claim to fail. */
+  const [feedLive, setFeedLive] = useState(false)
+  useEffect(() => {
+    if (!hasOpenedMenu) return
+    let alive = true
+    fetch('/api/aura-live/feed')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!alive || !d) return
+        setFeedLive(d.freshness?.state === 'live' && (d.entries?.length ?? 0) > 0)
+      })
+      .catch(() => {})
+    return () => { alive = false }
+  }, [hasOpenedMenu])
+
   const { theme, setTheme, viewMode, setViewMode } = useMode()
   const pathname = usePathname()
 
@@ -814,7 +842,7 @@ export default function Navbar() {
             data-attr="menu-link:/now"
           >
             Now
-            <span className="mg-dot" aria-hidden />
+            {feedLive && <span className="mg-dot" aria-hidden />}
           </Link>
           {/* Contact is not a subject the site is about; it is how you
               reach a person. It sits with the standing marks rather than

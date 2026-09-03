@@ -549,7 +549,7 @@ export default function MudigerePage() {
           alt="Two young Malnad Gidda calves in the pen — indigenous Karnataka breed adapted to the Western Ghats"
           value="The herd."
         >
-          52 indigenous Malnad Gidda. The closed loop runs through them
+          About fifty indigenous Malnad Gidda. The closed loop runs through them
           — soil, plant, animal, cosmos as one system.
         </DataCard>
         <DataCard

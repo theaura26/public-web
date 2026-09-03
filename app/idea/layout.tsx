@@ -1,6 +1,12 @@
 import type { Metadata } from 'next'
 
+/* Written, and not released. The menu carries it as coming-soon and the
+   field-note index lists it under "soon", but it was the one page in that
+   state still saying index, follow — while every page on the site links
+   it from the menu markup. Its crawl status matches its stated status now.
+   Drop this block when it goes out. */
 export const metadata: Metadata = {
+  robots: { index: false, follow: true, googleBot: { index: false, follow: true } },
   title: 'The 1000 Year Idea',
   description:
     'A thousand years is the standard every choice at Aura is measured against. Seven decision filters and a commitment frame.',

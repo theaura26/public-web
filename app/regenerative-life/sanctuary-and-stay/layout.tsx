@@ -1,6 +1,11 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
+  /* Held back. The page is written and renders, and the menu names it
+     under a Coming Soon marker; it stays out of search until it is
+     published. Drop this line and the `soon` flag in lib/chapters.ts
+     together. */
+  robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
   /* Title is a bare string — the root layout's title.template
      ('%s — Aura') appends the brand suffix. Including '— Aura' here
      produced 'Sanctuary — Aura — Aura' in the rendered <title>. */

@@ -224,17 +224,6 @@ export const SITEMAP: SitemapEntry[] = [
     related: ['/artistry', '/brand', '/residency'],
   },
   {
-    href: '/regenerative-life/sanctuary-and-stay',
-    label: 'Sanctuary',
-    topic: 'The land in rhythm — two sanctuaries as one ecosystem',
-    summary: 'Aura Sanctuary — the land in rhythm. A 1000-year regenerative ecosystem across Mudigere, Ohara, and coming valleys in Munduk and Punakha.',
-    facts: [
-      { label: 'Active', value: 'Mudigere (India) · Ohara (Japan)' },
-      { label: 'Coming', value: 'Munduk (Indonesia) · Punakha (Bhutan)' },
-    ],
-    related: ['/mudigere', '/ohara', '/land'],
-  },
-  {
     href: '/residency',
     label: 'Monastic Polymaths',
     topic: 'An artist residency for natural intelligence',

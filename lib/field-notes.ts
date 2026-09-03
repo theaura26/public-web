@@ -158,13 +158,6 @@ const CROSS_LISTED: CrossListed[] = [
     from: 'Sanctuary',
   },
   {
-    href: '/regenerative-life/sanctuary-and-stay',
-    title: 'Sanctuary & Stay',
-    description: 'Four valleys in two hemispheres, and what it is like to stay in one.',
-    categories: ['land-ecology'],
-    from: 'Regenerative Life',
-  },
-  {
     href: '/regenerative-coffee/experience',
     title: 'Aura Festival',
     description: 'Three days on the estate, and a coffee that exists nowhere else.',

@@ -55,7 +55,7 @@ function HeroBanner() {
             {/* The designed lockup, not type. Two artworks — the mark is
                 near-black for day and near-white for night — swapped by
                 `[data-theme]` in globals.css. Painted as a background rather
-                than two <img> tags so only the active theme's file is ever
+                than two <img> tags so only the active theme’s file is ever
                 fetched. The sr-only text carries the heading for screen
                 readers. */}
             <h1 className="ni-lockup">
@@ -283,7 +283,7 @@ function AgentBrandView() {
       <h2>Three Pillars</h2>
       <ul>
         <li>Sanctuary — Silence, stillness, Japanese garden, forest walks</li>
-        <li>Agroculture — 100 acres coffee, 52 indigenous cattle, native canopy</li>
+        <li>Agroculture — 100 acres coffee, ~50 indigenous cattle, native canopy</li>
         <li>Artistry — Studios, workshops, gallery, festivals</li>
       </ul>
 
@@ -368,7 +368,7 @@ The Aura Life is guided by Natural Intelligence.`}</ScrollHighlight>
                    extra gutter of padding on top of the outer page
                    section-w; this padding mirrors that nesting).
                  - maxWidth 880 + gutter so the RIGHT edge also lands
-                   at the ScrollHighlight's right edge (since
+                   at the ScrollHighlight’s right edge (since
                    box-sizing: border-box includes the padding inside
                    max-width, we add it back so the CONTENT area is
                    880 px wide — same as the ScrollHighlight). */
@@ -442,9 +442,9 @@ The brand should endure.`}
       {/* ═══ CROSS-LINKS ═══ */}
       <div className="human-only">
         <Continue
-          heading="Explore"
+          heading="More about Aura"
           items={[
-            { href: '/reason', label: 'The Reason', description: 'The belief beneath the brand — the founder’s letter, grown over generations.', img: '/the-reason/aura-flowers-1.png' },
+            { href: '/regenerative-life/the-reason', label: 'The Reason', description: 'The belief beneath the brand — the founder’s letter, grown over generations.', img: '/the-reason/aura-flowers-1.png' },
             { href: '/atelier', label: 'Atelier', description: 'Where the brand is made real — three studios turning Natural Intelligence into story, systems and place.', img: '/aura-studios/aura-studios.jpg' },
             { href: '/mudigere', label: 'Mudigere', description: 'The estate the brand answers to — the living system behind every mark.', img: '/aura-mudigere.jpg' },
           ]}

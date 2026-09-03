@@ -22,7 +22,7 @@ import { StorytellingScroller } from '@/components/StorytellingScroller'
    Its own register: darker, closer, biological. Where the herd page
    stays on the animal, this one goes into the shed, the pit, and the
    lab — the pour of dung, the daily stir, the CPP ball dug in at a
-   plant's root, and the batch numbers that make it all provable.
+   plant’s root, and the batch numbers that make it all provable.
    Editorial and exact: the making, the testing, and the proof.
 ═══════════════════════════════════════════════════════════════════ */
 
@@ -32,7 +32,7 @@ const CIRC_PASSAGES = [
     { image: '/circular/images/aura-saltrock.jpg', alt: 'Finely ground basalt dust — the mineral component of CPP' },
   ] },
   { caption: 'The life that builds the soil back', media: [
-    { video: '/circular/videos/aura-microbe.mp4', poster: '/circular/images/aura-microbe.jpg', alt: "Microbial colonies from the estate's soil, under the lens" },
+    { video: '/circular/videos/aura-microbe.mp4', poster: '/circular/images/aura-microbe.jpg', alt: "Microbial colonies from the estate’s soil, under the lens" },
     { image: '/circular/images/aura-mushroom.jpg', alt: 'Fungi on the estate floor — the organisms that build soil' },
   ] },
 ]
@@ -47,22 +47,22 @@ export default function CircularPage() {
         src="/circular/videos/aura-shed.mp4"
         mediaType="video"
         poster="/circular/images/aura-shed.jpg"
-        caption="At Mudigere, Aura turns the herd's dung and urine into measured fertility — hand-turned compost pits, a living microbial brew, and an internal lab where every batch is tested before it reaches the soil."
-        alt="The preparation shed at Mudigere, where the estate's fertility is made"
+        caption="At Mudigere, Aura turns the herd’s dung and urine into measured fertility — hand-turned compost pits, a living microbial brew, and an internal lab where every batch is tested before it reaches the soil."
+        alt="The preparation shed at Mudigere, where the estate’s fertility is made"
       />
 
       <TwoCol id="reframe" heading="Nothing imported. Nothing wasted.">
         <p className="p1">
           It begins before the heat, at first light. The dung is gathered fresh — weighed and split three
           ways: some to the compost pits, some to the microbial brews, some packed into horns — and the
-          urine, most concentrated at dawn, is measured into the same system. This is the estate&apos;s
+          urine, most concentrated at dawn, is measured into the same system. This is the estate&rsquo;s
           most valuable raw material, and not a gram of it is left to waste.
         </p>
         <p className="p1">
           From that single input Aura runs a closed loop. The grasses feed the herd; the herd feeds the
           preparations; the preparations feed the soil; the soil grows the grasses and the coffee. Nothing
-          is bought in and nothing leaks out — the work is turning the animal&apos;s output back into
-          living ground, measured at every step, on the same fifty-two{' '}
+          is bought in and nothing leaks out — the work is turning the animal&rsquo;s output back into
+          living ground, measured at every step, on the same about fifty{' '}
           <Term tip="A small indigenous cattle breed of the Malnad region of Karnataka, adapted to this altitude, soil, and monsoon over centuries. Their gut microbiome is shaped by this land, so their dung carries a microbial signature native to it.">Malnad Gidda</Term>{' '}
           that graze the land they feed.
         </p>
@@ -70,7 +70,7 @@ export default function CircularPage() {
 
       {/* The closed loop — a system diagram of the core idea. Four nodes on
           a ring, clockwise arrows; currentColor so it inverts cleanly on any
-          surface. This is the page's central concept, shown before it's
+          surface. This is the page’s central concept, shown before it’s
           explained in detail. */}
       <section style={{ padding: 'var(--section-gap) 0' }}>
         <div className="section-w">
@@ -108,7 +108,7 @@ export default function CircularPage() {
           </figure>
           <p className="p1 loop-diagram__cap">
             Grass feeds the herd. The herd feeds the preparations. The preparations feed the soil. The
-            soil grows the grass. Nothing enters the loop, and nothing leaves it — the estate&apos;s
+            soil grows the grass. Nothing enters the loop, and nothing leaves it — the estate&rsquo;s
             fertility is made entirely from what it already produces.
           </p>
           <style jsx>{`
@@ -148,7 +148,7 @@ export default function CircularPage() {
       <ExpandingBanner
         src="/circular/images/aura-dung.jpg"
         mediaType="image"
-        alt="Fresh dung collected at dawn — the estate's raw material"
+        alt="Fresh dung collected at dawn — the estate’s raw material"
         caption="Dung and urine, at dawn"
       />
 
@@ -166,14 +166,14 @@ export default function CircularPage() {
           for minerals, then the biodynamic{' '}
           <Term tip="Yarrow, chamomile, stinging nettle, oak bark, dandelion, and valerian (BD 502–507), together with horn manure (BD 500) and horsetail (BD 508). Herbal and mineral ferments that steer decomposition and enrich the compost.">preparations — BD 500 through 508 —</Term>{' '}
           are worked in and the mix is layered into a shallow earthen pit, dug into the ground and left
-          unlined at the bottom so the estate&apos;s own soil organisms migrate up and inoculate it.
+          unlined at the bottom so the estate&rsquo;s own soil organisms migrate up and inoculate it.
         </p>
         <p className="p1">
           Every pit carries a number, and every pit is worked by hand: the dung is mixed and stirred
           roughly forty-five minutes a day, breaking up the pulps so it matures evenly. Fourteen pits run
-          across the estate in overlapping cycles — around 2,420 kilograms of CPP a year — turned by
-          reading, not by timer. The team checks temperature, texture, smell, and colour and turns a pit
-          when the compost signals it is ready. After three months — ninety days — the raw mix has become something
+          across the estate in overlapping cycles — around 2,420 kilograms of CPP a year — and every turn
+          is a judgement. The team reads temperature, texture, smell and colour, and turns a pit when
+          the compost says it is ready. After three months — ninety days — the raw mix has become something
           new: dark, crumbly, earth-smelling.
         </p>
       </TwoCol>
@@ -182,9 +182,9 @@ export default function CircularPage() {
       <Fragment key="c1">
       <DataGrid cols={3} standalone>
         <DataCard value="Cow Dung">
-          <em>The living culture.</em> Fresh dung from the estate&apos;s Malnad Gidda herd. The breed
-          matters — their gut microbiome is adapted to this altitude, these grasses, this soil, so the
-          microbial signature it carries is native to the ground it feeds.
+          <em>The living culture.</em>{' '}Fresh dung from the estate&rsquo;s Malnad Gidda herd. The breed
+          matters, on a belief the estate has yet to test: that a gut adapted to this altitude and
+          these grasses carries biology suited to the ground the dung returns to.
         </DataCard>
         <DataCard value="Eggshell">
           <em>The calcium source.</em> Crushed eggshell — calcium carbonate, a slow-release calcium that
@@ -211,9 +211,9 @@ export default function CircularPage() {
 
       <TwoCol id="ball" heading="The ball, placed at the root.">
         <p className="p1">
-          Matured CPP does not just go out as a spray. Much of it is rolled by hand into balls of measured
+          Matured CPP leaves the pit two ways. Much of it is rolled by hand into balls of measured
           sizes, because the dose has to fit the plant. Each ball is dug in a little way from a
-          coffee plant&apos;s roots and covered with mulch, so it holds its moisture and seeps its biology
+          coffee plant&rsquo;s roots and covered with mulch, so it holds its moisture and seeps its biology
           slowly down into the root zone — a slow compost feeding one plant at a time.
         </p>
         <p className="p1">
@@ -236,13 +236,13 @@ export default function CircularPage() {
           The second product is{' '}
           <Term tip="A living microbial culture from Vedic farming — fermented from cow dung, cow urine, jaggery, gram flour, and a handful of native soil, applied as a soil drench to inoculate the root zone with locally-adapted microbes.">Jeevamrit</Term>:
           dung and urine from the herd, jaggery to feed the microbes, gram flour for protein, and a
-          handful of native soil to seed it with the estate&apos;s own organisms. The name carries its
-          purpose — <em>jeeva</em>, life; <em>amrit</em>, nectar. It feeds the soil, not the plant — a
+          handful of native soil to seed it with the estate&rsquo;s own organisms. The name carries its
+          purpose — <em>jeeva</em>, life; <em>amrit</em>, nectar. It feeds the soil and lets the soil feed the plant — a
           culture poured into the ground as a drench that floods the root zone with living microbes.
         </p>
         <p className="p1">
           It is the highest-volume preparation on the estate — around 154,000 litres a year — and its
-          daily stir is the rhythm of the estate itself, not a task on a schedule. Each barrel is
+          daily stir sets the rhythm of the estate. Each barrel is
           stirred about forty-five minutes a day, one direction then the other, building a vortex and
           breaking it so oxygen works deep into the liquid and the beneficial organisms outcompete the
           pathogens. How much to brew is planned backwards from the land: a{' '}
@@ -288,7 +288,7 @@ export default function CircularPage() {
           This is where the loop earns the word <em>measured</em>. Every collection and every batch is
           numbered — pit numbers for the dung, batch numbers for the brews — and every preparation runs a
           fixed cycle, sixty to ninety days depending on what it is. Each batch is tested{' '}
-          <strong>before and after</strong> preparation in the estate&apos;s own lab: pH, electrical
+          <strong>before and after</strong>{' '}preparation in the estate&rsquo;s own lab: pH, electrical
           conductivity, microbial colony counts, the beneficial organisms that matter most in this climate
           —{' '}
           <Term tip="A soil fungus that suppresses plant pathogens and promotes root growth. Counted in every batch.">Trichoderma</Term>{' '}
@@ -298,7 +298,7 @@ export default function CircularPage() {
         </p>
         <p className="p1">
           If a batch comes back wrong, it does not go on the soil. It is corrected or held. When a
-          reading drifts — a pH too low, a count too thin — Dr. Arun, the estate&apos;s scientist, sets
+          reading drifts — a pH too low, a count too thin — Dr. Arun, the estate&rsquo;s scientist, sets
           the fix: hold it longer, add this much water, feed in this much Jeevamrit. The failed batch
           becomes a lesson that sharpens the next one. Ancestral practice, run like a laboratory: the hand
           reads it first, the lab confirms it, and nothing substandard ever reaches a root.
@@ -346,16 +346,16 @@ export default function CircularPage() {
 
       <TwoCol id="scale" heading="The loop at the scale of an estate.">
         <p className="p1">
-          This is the estate&apos;s fertility programme at full scale, run on what the herd produces:
+          This is the estate&rsquo;s fertility programme at full scale, run on what the herd produces:
           around 154,000 litres of Jeevamrit and 2,420
           kilograms of CPP a year, alongside biodynamic compost, buttermilk sprays, and the horn
-          preparations — all of it sourced from fifty-two cattle grazing the same 150 acres as the coffee.
+          preparations — all of it sourced from about fifty cattle grazing the same 150 acres as the coffee.
         </p>
         <p className="p1">
           The work is narrow and constant: collect at dawn, brew and compost by hand, number and test
           every batch, place it to a known root, and read the soil it leaves behind. Ancestral practice —
           the pit, the brew, the daily stir — run with modern measurement. That pairing is what Aura calls
-          Natural Intelligence, and here it is aimed at one thing: turning an animal&apos;s output into
+          Natural Intelligence, and here it is aimed at one thing: turning an animal&rsquo;s output into
           ground that gets richer every year.
         </p>
       </TwoCol>
@@ -369,14 +369,14 @@ export default function CircularPage() {
 
       <DataGrid cols={3} standalone>
         <DataCard value="154,000 L">
-          Jeevamrit brewed a year from the herd&apos;s dung and urine — stirred daily, planned backwards
+          Jeevamrit brewed a year from the herd&rsquo;s dung and urine — stirred daily, planned backwards
           from a BD calendar for 150 acres.
         </DataCard>
         <DataCard value="2,420 kg">
           CPP a year across fourteen numbered pits, turned by hand and dug in ball by ball at the root.
         </DataCard>
         <DataCard value="Pre &amp; post">
-          Every batch tested in the estate&apos;s own lab before and after preparation — a failing batch
+          Every batch tested in the estate&rsquo;s own lab before and after preparation — a failing batch
           is corrected or held, never sprayed.
         </DataCard>
       </DataGrid>
@@ -385,7 +385,7 @@ export default function CircularPage() {
         <p className="p1">
           A bag of fertiliser feeds one season. What Aura builds by closing this loop feeds the next
           generation of the estate: living soil, deepening year on year, on a horizon measured in decades.
-          We treat the herd&apos;s output with the respect owed the estate&apos;s most valuable material,
+          We treat the herd&rsquo;s output with the respect owed the estate&rsquo;s most valuable material,
           rebuild it into fertility by hand, test it before and after, and measure whether the ground is
           gaining. The oldest knowledge we have, run with the newest tools we trust — Natural Intelligence,
           returned to the soil. That is what generational impact looks like: one pit, one batch, at a time.
@@ -394,8 +394,8 @@ export default function CircularPage() {
 
       <Continue
         items={[
-          { href: '/herd', label: 'Ecosystem Engineers', description: 'Where the raw material comes from — fifty-two Malnad Gidda, the estate’s biological engine, each passported.', img: '/herd/images/aura-relationship2.jpg' },
-          { href: '/ecology', label: 'The Living System', description: 'What the fertility feeds — the whole farm measured, and rolled into one Ecological Health Index per block.', img: '/aura-mudigere-landscape.jpg' },
+          { href: '/herd', label: 'Ecosystem Engineers', description: 'Where the raw material comes from — about fifty Malnad Gidda, the estate’s biological engine, each passported.', img: '/herd/images/aura-relationship2.jpg' },
+          { href: '/ecology', label: 'The Health Index', description: 'What the fertility feeds — the whole farm measured, and rolled into one Ecological Health Index per block.', img: '/aura-mudigere-landscape.jpg' },
           { href: '/shade', label: 'The Light Instrument', description: 'The canopy above the loop — shade whiskering, measured in lux and cut to prescription.', img: '/aura-land.jpg' },
         ]}
       />

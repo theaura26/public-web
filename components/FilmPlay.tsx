@@ -107,7 +107,7 @@ export function FilmPlay({
         .film-play__cta .label { color: #fff; }
         @media (max-width: 768px) {
           .film-play__cta { bottom: var(--gutter); max-width: 46%; }
-          .film-play__cta .label { font-size: 10px; letter-spacing: 1.5px; line-height: 1.35; text-align: left; }
+          .film-play__cta .label { line-height: 1.35; text-align: left; }
         }
         .film-play__cta-icon {
           flex: 0 0 auto;
@@ -133,7 +133,7 @@ export function FilmPlay({
           pointer-events: none;
         }
         @media (max-width: 768px) {
-          .film-play__note { bottom: var(--gutter); max-width: 40%; font-size: 10px; letter-spacing: 1.5px; line-height: 1.35; }
+          .film-play__note { bottom: var(--gutter); max-width: 40%; line-height: 1.35; }
         }
         /* Fullscreen film overlay. */
         .film-play__fs {

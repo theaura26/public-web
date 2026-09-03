@@ -130,7 +130,7 @@ Three families, four roles. Headings **and body** use Bricolage Grotesque — `-
 
 | Role | Font | Size | Tracking | Line-height | Use |
 |---|---|---|---|---|---|
-| `h1` | grotesque | `clamp(44,9vw,88)` | `-0.06em` | 1.02 | page display, **weight 600, uppercase** |
+| `h1` | grotesque | `clamp(48,7.2vw,106)` | `-0.03em` | 1 | page display, **weight 600, uppercase** |
 | `h2` | grotesque | `clamp(36,5.5vw,60)` | `-0.04em` | 1.06 | section heading |
 | `h3` | grotesque | `clamp(24,3vw,32)` | `-0.03em` | 1.15 | sub-heading / card title |
 | `.p1` | sans | 16px | normal | 1.55 | primary body |
@@ -176,3 +176,228 @@ Inline styles, styled-jsx, or Tailwind arbitrary values can all read tokens:
 ```
 
 When in doubt: pick a token, not a magic number.
+
+---
+
+## 11b. The hover rule
+
+**One affordance for everything clickable: a brand-accent underline.** It is declared once, on `a:hover, button:hover, [role="button"]:hover` in `globals.css`, and inherited everywhere. Two tokens control it:
+
+| Token | Value | Why |
+|---|---|---|
+| `--rule-offset` | `0.22em` | **Proportional, not fixed.** A 4 px gap that sits right under an 11 px label looks pinched under a 32 px heading. The same number cannot be correct at both sizes. |
+| `--rule-weight` | `1.5px` | Absolute. A hairline is a hairline at any size. |
+
+This drifted once and is worth knowing how: the offset had been written as a literal in three files at three values — `4px` in `globals.css`, `6px` in the navbar, `7px` in the coffee microsite — because each was tuned by eye at its own type size. An em value is consistent by construction; a pixel value has to be re-tuned every time it meets new type, and nobody remembers to.
+
+**Selection is the same underline held on.** Where something is both hoverable and current — a nav tab, an active sub-nav link — it carries `text-decoration: underline` permanently rather than a `border-bottom`. Two mechanisms means two lines under one word the moment a reader hovers the thing they are already on.
+
+**To opt out**, set `text-decoration: none` on both the element and its `:hover`. Do this only where the underline is wrong for the object, not merely unfamiliar: the Ask Aura dock does it for chips, its close cross and its send icon, because an underline under an icon is meaningless.
+
+---
+
+## 12. Links and calls to action
+
+**There is one link UI on this site.** A 22 px circled chevron, then `.label` text. It is the "Explore Mudigere" control on the homepage, and it is what every "go deeper" action must look like — hub panels, pillar sections, cards, invitations.
+
+```tsx
+<a className="label" style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+  <span aria-hidden style={{
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+    width: 22, height: 22, borderRadius: '50%',
+    border: '1px solid rgba(255,255,255,0.7)',
+  }}>
+    <svg viewBox="0 0 24 24" width="11" height="11" fill="none">
+      <path d="M5 12h13M12.5 6l6.5 6-6.5 6" stroke="currentColor"
+        strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  </span>
+  Explore Mudigere
+</a>
+```
+
+The coffee microsite exposes it as `<ArrowLink>` / `<ArrowLinkStyles>` in [`components/coffee/Microsite.tsx`](components/coffee/Microsite.tsx).
+
+**Do not invent** bordered pill buttons, underlined mono links, or bare text-plus-arrow. If an action needs a different weight, change its placement or its surrounding space — not its form.
+
+---
+
+## 12b. Known drift
+
+Recorded rather than silently fixed, because changing them alters how the site feels and that is a decision, not a cleanup.
+
+**Durations off the scale.** The scale is four values — 150 / 250 / 400 / 450 ms. Roughly forty declarations sit outside it, most often `0.3s`, `0.4s`, `0.6s` and `0.9s`. Some are deliberate and correct: the marquees run at 72 s and 90 s, the Ask Aura ring orbits at 7 s, and long ambient motion has no business on a UI scale. The rest is drift. Retiming them is a design pass, not a find-and-replace.
+
+**Brand accent as a literal.** `#E37128` appears three times outside its token, in `VideoReactiveArt` and `RemarkableCircle`. Both are palettes passed to canvas and WebGL rather than CSS, so they cannot read a custom property — this is a real constraint, not laziness, but it does mean the accent has three copies that will not follow if the token changes.
+
+The Field Notes and From Aura index headings follow the banner, because they open a section the way a banner opens an article and were explicitly matched to it. The category pages, section indexes and coming-soon stubs follow section 8.
+
+Pick one. Until then, the rule is: a page that opens with a full-width display line follows the banner; a page that opens with a heading in the reading column follows section 8.
+
+**Two non-system curves.** `cubic-bezier(.6,0,.2,1)` and `cubic-bezier(0.34,1.56,0.64,1)` are in use and are not among the three in section 7. The second is an overshoot spring, which the system has no equivalent of. Either adopt it as a fourth curve or retire it.
+
+---
+
+## 13. styled-jsx and `next/link` — a standing trap
+
+**styled-jsx scopes every element in a selector, including the first one.** A `next/link` renders its own `<a>`, which never receives the scope class. So this silently does nothing:
+
+```tsx
+<Link className="cta" href="/x">Go</Link>
+<style jsx>{`
+  .cta { color: white; }   /* ✗ compiles to .cta.jsx-abc — never matches */
+`}</style>
+```
+
+The rule does not error, does not warn, and the element renders with inherited styles — which on a dark ground usually means invisible dark text. It has bitten this codebase more than once.
+
+**Two fixes, in order of preference:**
+
+```tsx
+/* 1 — put shared link styles in a global block (best for anything reused) */
+<style jsx global>{`
+  .cta { color: white; }
+`}</style>
+
+/* 2 — wrap the scoped selector's root in :global() */
+<style jsx>{`
+  :global(.cta) { color: white; }
+  :global(.cta):hover { color: var(--brand-accent); }
+`}</style>
+```
+
+**The same applies to any component that renders its own root element** — not just `Link`. If you write a styled-jsx rule and the style does not appear, check whether the target is a component before checking anything else.
+
+**How to catch it:** the styles are missing, not wrong. Read the computed style rather than trusting the screenshot — `getComputedStyle(el).filter === 'none'` on an element you gave a filter is the tell.
+
+**Seen in the wild, all of them silent:**
+
+| Where | Symptom |
+|---|---|
+| `.ln-end > *` on the coffee sub-nav | `pointer-events: auto` never applied, so the Aura Festival button was unclickable from the day it was written |
+| `.mn-leaf` in the menu | every item rendered at the inherited 16 px through two separate rounds of being asked to make it bigger |
+| `.ln-cta`, `.lane-card`, `.fn-item`, `.mg-btn-link` | styled correctly only after being made global |
+
+### Two more things this file will do to you
+
+**Backticks inside a CSS comment end the template literal.** The block is a template string, so `` /* like `this` */ `` terminates it and the build fails with a parse error pointing at a line that looks fine. Write the property name plainly.
+
+**`backdrop-filter` is dropped from emitted rules on this build.** It does not warn; the property simply is not in the stylesheet. Set it inline instead:
+
+```tsx
+<div style={{ backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)' }} />
+```
+
+`InfiniteArticleSlider`, the menu vignette, the Ask Aura panel and its bar all do this. If something that should be frosted looks flat, this is why — and note the bar carried a flat scrim for days before anyone noticed, because a missing blur reads as a design choice rather than a bug.
+
+---
+
+## 14. Tokens: `globals.css` is the source of truth
+
+Sections 1–11 above have drifted ahead of the stylesheet. Before using a token, confirm it exists:
+
+```bash
+grep -- '--token-name:' app/globals.css
+```
+
+**Documented here but NOT in `globals.css` as of this audit** — using any of these resolves to nothing, silently:
+
+`--space-1` · `--space-10` · `--space-11` · `--space-12` · `--col2-gap` · `--max-w-narrow` · `--bg-elevated` · `--nav-bg` · `--radius-pill` · `--z-content` · `--z-overlay` · `--z-nav` · `--z-cursor` · `--ease-in` · `--ease-bounce` · `--dur-slower` · every `--brand-*` swatch except `--brand-accent`
+
+A missing token is not a build error. `padding: var(--space-12) 0` becomes `padding: 0` and the section collapses. Either add the token to `globals.css` or use one that exists.
+
+---
+
+### No eyebrows
+
+A page title stands on its own. Do not put a small mono label above an
+`<h1>` to announce the section a page belongs to — not "FIELD NOTES"
+above a category name, not "THE REGENERATIVE LIFE" above a discipline.
+The reader arrived from somewhere; the menu, the URL and the title
+already say where they are, and the label just adds a line of noise
+above the one line that matters.
+
+This is a standing rule, not a preference on one page. If a page needs
+to say which section it belongs to, it says it in the prose or in the
+navigation at the foot.
+
+The mono `.label` role is still correct for what it was made for:
+naming a part of a page (SOURCES, ASK NEXT), captioning a figure, or
+labelling a row in a spec table. The rule is about the position — above
+the title — not about the type style.
+
+### h2 renders at three sizes, on purpose
+
+An audit across ten pages found `h2` computing to 60px, 32px and 28px.
+All three are correct, and the reason is worth writing down so the next
+audit does not try to "fix" it:
+
+- **60px** — `clamp(36,5.5vw,60)`, the section heading in page content.
+  This is the h2 of section 8 and the default everywhere.
+- **32px** — a lane heading (`.lane-h`) on the Field Notes and From Aura
+  indexes. It is an `<h2>` because it heads a section of the document
+  outline, and it is set at the h3 size because it labels a row of cards
+  sitting under a 92px page title. A 60px lane heading would out-shout
+  the page.
+- **28px** — the footer manifesto title, a fixed footer treatment that
+  appears identically on every page.
+
+The rule: the element is chosen for the document outline, the size is
+chosen for the visual hierarchy, and where they disagree the disagreement
+is deliberate and recorded here.
+
+The reverse is always wrong. `SanctuaryContent` on the homepage chose its
+element from its size — `const Heading = large ? 'h1' : 'h2'` — which gave
+the homepage three `h1`s, because two of the sanctuary banners happened to
+be big. It is an `h2` now, at the same size it always was.
+
+### Measured state
+
+Every public route (63 including the 404 and one product page) measured at
+1280 / 768 / 375 against a **production build**, not the dev server. The
+dev server served stale `globals.css` for the whole of this project, and an
+audit against it reports sizes the site does not ship. Serve the build:
+
+```
+npm run build && npx next start -p 3100
+```
+
+| Role | 1280 | 768 | 375 | Routes |
+|---|---|---|---|---|
+| `h1` | 92.16 | 55.3 | 48 | 56 |
+| `h2` content | 60 | 42.24 | 32 | 43 |
+| `h2` lane | 32 | 24 | 24 | 11 |
+| `h2` footer | 28 | 20 | 20 | 58 |
+| `.label` | 11 | 11 | 11 | **58 — one value, every route, every width** |
+| `.p1` | 16 | 15 | 15 | 58 |
+| `.p2` | 14 | 14 | 14 | 10 |
+
+Horizontal overflow: zero on every route at every width. Text clipped by an
+ancestor: none. Routes without an `h1`: none.
+
+### Intentional exceptions
+
+Three, and only three. Anything else that measures off this table is drift.
+
+1. **`/atelier` and `/mudigere-estate`** carry a larger display `h1` —
+   166.4 / 99.84 / 56px. Both are hero-led pages whose title is the
+   composition.
+2. **`/`** runs its own display scale: a 94.72px hero `h1` and 204.8px
+   manifesto rows. The homepage is a poster, and the rest of the site is
+   not.
+3. **`/regenerative-coffee` and its four sub-routes** are a self-contained
+   microsite with its own type scale — `h2` at 58.88 / 51.2 / 46.08 /
+   30.72px where the main site has one value. It was built as a separate
+   narrative object and restored deliberately. Leave it alone; it is
+   excluded from the site-wide type measurement for that reason.
+
+### The drift signature
+
+Every type inconsistency found in this pass had the same shape: a component
+restating a role's values locally instead of wearing the class. Three of
+them sat under comments claiming they matched the global spec, and had
+since drifted a pixel from it.
+
+If a component needs a role, give the element the class and override only
+what is genuinely particular to that context — the colour on a dark
+overlay, the leading in a tight box, the gap above. Never the size.

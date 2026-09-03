@@ -8,7 +8,7 @@ import type { ReactNode } from 'react'
 export const metadata: Metadata = {
   title: 'Ohara',
   description:
-    'A sanctuary for the senses, where nature teaches us how to live. A seventy-year-old home and a thirty-year garden, restored — not rebuilt — in the valley north of Kyoto.',
+    'A sanctuary for the senses, where nature teaches us how to live. A seventy-year-old home and a thirty-year garden, restored rather than rebuilt.',
   alternates: { canonical: 'https://theaura.life/ohara' },
   openGraph: {
     type: 'article',

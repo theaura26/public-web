@@ -10,7 +10,7 @@ import { useEffect, useRef, type ReactNode, type CSSProperties } from 'react'
    transitions its background to (near-)black and remaps the theme colour
    variables to their contrast values, so every child — headline, meta
    labels, body copy — inverts to light in one move. Scroll past and it
-   eases back. Works in both day and night because it uses the theme's
+   eases back. Works in both day and night because it uses the theme’s
    own --contrast-* palette rather than hard-coded colours.
 ═══════════════════════════════════════════════════════════════════ */
 
@@ -57,7 +57,7 @@ export function InvertOnScroll({
           transition: background-color 0.6s var(--ease, ease);
         }
         /* Ease the colour flip on the copy the section owns. (The reveal
-           headline's word spans carry their own inline opacity transition
+           headline’s word spans carry their own inline opacity transition
            and simply inherit the new colour.) */
         .invert-on-scroll :is(h2, h3, p, .label) {
           transition: color 0.6s var(--ease, ease);

@@ -87,8 +87,8 @@ export default function FermentationPage() {
         </DataGrid>
         <p className="p1">
           Six methods, one cherry. The full lot-by-lot file — yields, immature
-          counts, drying timelines, cupping notes — lives on the{' '}
-          <a href="/coffee">Our Coffee Story</a> page.
+          counts, drying timelines, cupping notes — lives in{' '}
+          <a href="/coffee">Our Bean Story</a>.
         </p>
       </TwoCol>
 
@@ -122,7 +122,7 @@ export default function FermentationPage() {
         </p>
         <p className="p1">
           <Term tip="Horn manure. Cow dung packed in a cow horn, buried over the cool months, then stirred into water and applied to soil.">BD 500</Term> begins as fresh dung from the estate&rsquo;s
-          52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term>, packed into a horn and buried. What we
+          About fifty <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term>, packed into a horn and buried. What we
           claim for it is the microbiology: a decomposition shaped by the breed, the
           season, and the soil it lies in. The cosmology around it — the lunar
           timing, the talk of the earth breathing — is poetry a century old, and
@@ -138,15 +138,15 @@ export default function FermentationPage() {
           value="Sealed. Logged."
         >
           Experimental anaerobic coffee tanks. pH every fifteen minutes,
-          temperature three times daily, Brix start to end. Every lot is a
-          tracked individual, not an average.
+          temperature three times daily, Brix start to end. Every lot is tracked
+          as an individual and carries its own record.
         </DataCard>
         <DataCard
           img="/journals/fermentation/aura-water-pepper.jpg"
           alt="Black peppercorns retting in water — the first stage of pepper fermentation"
           value="Retted. Released."
         >
-          Pepper&apos;s first stage. Water softens the pericarp, microbial
+          Pepper&rsquo;s first stage. Water softens the pericarp, microbial
           activity loosens the skin, and the discipline that scheduled it
           waits on the BD calendar to clear.
         </DataCard>

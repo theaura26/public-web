@@ -488,7 +488,7 @@ s_act("Biodynamic", "Grown in a closed loop.", GREEN)
 # 07 — Scale
 s_white_hero("THE ESTATE",
              "One estate.\nOne harvest\na year.",
-             "Sampigekhan Estate — Mudigere, Chikmagalur, Karnataka. "
+             "Aura Estate — Mudigere, Chikmagalur, Karnataka. "
              "150 acres, 100 of them in coffee. Small is the strategy.")
 
 # 08 — The facts

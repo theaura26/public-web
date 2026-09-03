@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 export const metadata: Metadata = {
   title: 'Living Systems',
   description:
-    'A forest that produces crops. 150 acres of four-story polyculture in the Western Ghats — canopy, mid-canopy, primary crop, understorey — read as a single living dataset with 52 Malnad Gidda cattle, beehives, and nine streams of continuous data.',
+    'A forest that produces crops. 150 acres of four-storey polyculture in the Western Ghats — canopy, mid-canopy, crop, understorey — read as one organism.',
   alternates: { canonical: '/living-systems' },
   openGraph: {
     type: 'article',

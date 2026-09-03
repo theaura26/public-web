@@ -26,18 +26,18 @@ export default function ShadePage() {
         alt="Looking up through the shade canopy at Mudigere"
       />
 
-      <TwoCol id="reframe" heading="Shade is the estate's oldest tool.">
+      <TwoCol id="reframe" heading="Shade is the estate’s oldest tool.">
         <p className="p1">
           The coffee of the Western Ghats has grown under trees for more than three centuries. Here shade
           is structural: native forest trees and planted{' '}
           <Term tip="Grevillea robusta — Silver Oak. A fast-growing timber tree planted through Western Ghats coffee as an upper-canopy shade, valued for its light, filtering crown.">Silver Oak</Term>{' '}
           form a multi-layered canopy that holds moisture, moderates temperature, cycles nutrients, and
-          carries the biodiversity that makes this one of the world&apos;s recognised hotspots. Aura works
+          carries the biodiversity that makes this one of the world&rsquo;s recognised hotspots. Aura works
           that canopy as an instrument — the layer that decides how much sun reaches the coffee below.
         </p>
         <p className="p1">
           The tuning is a practice called{' '}
-          <Term tip="The selective removal of branches from shade trees to regulate light reaching the coffee, while preserving each tree's natural architecture. Lighter and more precise than lopping or pollarding.">shade whiskering</Term>:
+          <Term tip="The selective removal of branches from shade trees to regulate light reaching the coffee, while preserving each tree’s natural architecture. Lighter and more precise than lopping or pollarding.">shade whiskering</Term>:
           the selective removal of branches to regulate the light without felling the tree or breaking
           its form. Too much shade suppresses flowering; too little exposes the coffee to heat and
           moisture stress. The work is to find the balance a block of coffee actually wants, and hold it —
@@ -67,7 +67,7 @@ export default function ShadePage() {
 
       <TwoCol id="stories" heading="Four stories, one canopy.">
         <p className="p1">
-          The canopy is not a uniform blanket — it is a four-story architecture, and every tree in it has
+          The canopy is a four-story architecture, and every tree in it has
           been counted, tagged, and mapped. An emergent layer of silver oak, fig, and jackfruit regulates
           temperature and holds carbon. Beneath it, areca palm and native hardwoods carry the mid-level
           shade and trellis the pepper. The coffee — Arabica Sln.9 and 795 — sits in the understory,
@@ -119,16 +119,15 @@ export default function ShadePage() {
           Forestry interns Nayana and Jagadeshwari walked the blocks with two digital lux meters, taking
           the sunlight reaching the coffee as a measurement rather than an impression. The targets came
           from the{' '}
-          <Term tip="Central Coffee Research Institute — India's national coffee research body, in Karnataka. Sets agronomic standards for the region's estates.">CCRI</Term>:
+          <Term tip="Central Coffee Research Institute — India’s national coffee research body, in Karnataka. Sets agronomic standards for the region’s estates.">CCRI</Term>:
           fifty to seventy thousand lux for Arabica, seventy to ninety thousand for the hardier Robusta.
         </p>
         <p className="p1">
           To catch how much the canopy varies within a single acre, Aura built a five-cluster method. Each
           acre was divided into five clusters, and ten readings taken at random inside each — fifty
           observations an acre, resolved into five cluster averages. The readings map each block into
-          zones — dense shade, medium, open — so it reads not as one number but as a gradient. The cut
-          answers the zone, not the block: fine enough to find a shaded pocket a few trees wide and leave
-          the rest standing.
+          zones — dense shade, medium, open — so a block reads as a gradient. The cut answers the zone:
+          fine enough to find a shaded pocket a few trees wide and leave the rest standing.
         </p>
       </TwoCol>
 
@@ -171,14 +170,14 @@ export default function ShadePage() {
         <p className="p1">
           What separates whiskering from lopping is where the judgement sits. Every significant cut was
           directed by a supervisor against the prescription, weighed for branch orientation, crown
-          symmetry, the tree&apos;s centre of gravity, and its stability through the storms ahead. The
+          symmetry, the tree&rsquo;s centre of gravity, and its stability through the storms ahead. The
           tree keeps its architecture and its life; the coffee below gets the light the numbers asked for.
         </p>
       </TwoCol>
 
       <PullQuote>
         Cut too much and you flood the coffee with light. Cut too little and the cherry never ripens.
-        The right cut is in the reading, not the manual.
+        The reading tells you where the right cut is.
       </PullQuote>
 
       <ExpandingBanner
@@ -200,8 +199,8 @@ export default function ShadePage() {
         <p className="p1">
           The trees are tended too. A fresh cut is an open wound and a way in for wood-decaying fungi, so
           every major cut is sealed with a paste of{' '}
-          <Term tip="Cow Pat Preparation — a fermented, microbially rich compost made from the herd's dung, used across the estate's biodynamic work. Here, mixed with turmeric into a wound dressing.">cow pat preparation</Term>{' '}
-          and turmeric — the herd&apos;s dung and a native antiseptic, closing the wound the same way the
+          <Term tip="Cow Pat Preparation — a fermented, microbially rich compost made from the herd’s dung, used across the estate’s biodynamic work. Here, mixed with turmeric into a wound dressing.">cow pat preparation</Term>{' '}
+          and turmeric — the herd&rsquo;s dung and a native antiseptic, closing the wound the same way the
           rest of the estate is fed.
         </p>
       </TwoCol>
@@ -218,8 +217,8 @@ export default function ShadePage() {
         <p className="p1">
           The estate already knows the light is worth this much attention: blocks held at sixty-five to
           seventy-five per cent canopy cup measurably better, and canopy vitality is tracked by satellite
-          every quarter. Whiskering is where that knowledge meets the tree — the annual decision that sets
-          the light for the whole season beneath it.
+          every quarter. Whiskering is that knowledge carried up a ladder and applied to one tree — the annual
+          decision that sets the light for the whole season beneath it.
         </p>
         <p className="p1">
           What Aura added is the loop that makes it repeatable: baseline reading, block-wise prescription,
@@ -264,9 +263,9 @@ export default function ShadePage() {
 
       <Continue
         items={[
-          { href: '/ecology', label: 'The Living System', description: 'The canopy is one reading among many — the whole farm measured, above ground and below.', img: '/aura-mudigere-landscape.jpg' },
+          { href: '/ecology', label: 'The Health Index', description: 'The canopy is one reading among many — the whole farm measured, above ground and below.', img: '/aura-mudigere-landscape.jpg' },
           { href: '/circular', label: 'Circular Intelligence', description: 'What the pruned wood and the herd feed back — measured fertility, tested before the soil.', img: '/circular/images/aura-shed.jpg' },
-          { href: '/herd', label: 'Ecosystem Engineers', description: 'The biological engine under the canopy — fifty-two Malnad Gidda, each passported.', img: '/herd/images/aura-relationship2.jpg' },
+          { href: '/herd', label: 'Ecosystem Engineers', description: 'The biological engine under the canopy — about fifty Malnad Gidda, each passported.', img: '/herd/images/aura-relationship2.jpg' },
         ]}
       />
     </>

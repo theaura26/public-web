@@ -6,11 +6,24 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lint:editorial": "node scripts/editorial/lint.mjs",
+    "lint:jsx": "node scripts/editorial/guard-styled-jsx.mjs",
+    "figma:spec": "node scripts/editorial/figma-spec.mjs",
+    "ask-aura:crawl": "node scripts/ask-aura/crawl.mjs",
+    "ask-aura:ingest": "node scripts/ask-aura/ingest.mjs",
+    "ask-aura:build": "npm run ask-aura:crawl && npm run ask-aura:ingest",
+    "ask-aura:eval": "tsx evals/ask-aura/run.mts",
+    "ask-aura:smoke": "tsx scripts/ask-aura/smoke/safety.mts && tsx scripts/ask-aura/smoke/privacy.mts && tsx scripts/ask-aura/smoke/affinity.mts && tsx scripts/ask-aura/smoke/retrieval.mts && tsx scripts/ask-aura/smoke/mcp.mts",
+    "ask-aura:mcp": "tsx mcp/aura-knowledge/server.mts",
+    "aura-live:run": "tsx scripts/aura-live/run.mts",
+    "aura-live:test": "tsx --test tests/aura-live/*.test.mts"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "@phosphor-icons/react": "^2.1.10",
     "@types/three": "^0.184.1",
+    "@vercel/blob": "^2.8.0",
     "framer-motion": "^12.38.0",
     "gsap": "^3.15.0",
     "lenis": "^1.3.23",
@@ -19,7 +32,8 @@
     "posthog-js": "^1.409.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "resend": "^6.12.0"
+    "resend": "^6.12.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -29,6 +43,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.3",
     "tailwindcss": "^4",
+    "tsx": "^4.23.12",
     "typescript": "^5"
   }
 }

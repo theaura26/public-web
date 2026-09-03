@@ -16,7 +16,7 @@ export default function CoffeePage() {
     <>
       <JournalHero
         currentHref="/coffee"
-        title="Our Coffee Story"
+        title="Our Bean Story"
         caption="Coffee flowers — the beginning of every lot"
       />
 
@@ -36,7 +36,7 @@ export default function CoffeePage() {
           Six lots. One harvest. No two cups the same.
         </p>
         <p className="p1">
-          Arabica grown at 3,600 feet in the <Term tip="Mountain range along India's west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>, beneath a four-story
+          Arabica grown at 3,600 feet in the <Term tip="Mountain range along India’s west coast. UNESCO biodiversity hotspot; over 7,000 plant species.">Western Ghats</Term>, beneath a four-story
           canopy. Two cultivars — <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>. Every lot is a document
           of place and method.
         </p>
@@ -85,8 +85,8 @@ export default function CoffeePage() {
           <DataCard value="6.0–6.5">Soil pH, laterite.</DataCard>
           <DataCard value="Sln.9 + Sln.795">Arabica cultivars.</DataCard>
           <DataCard value="80+ SCA">Cupping target.</DataCard>
-          <DataCard value="3–5×">Carbon vs monoculture.</DataCard>
-          <DataCard value="UNESCO">Biodiversity zone.</DataCard>
+          <DataCard value="4–5×">Estimated carbon vs monoculture.</DataCard>
+          <DataCard value="Western Ghats">A UNESCO World Heritage region.</DataCard>
         </DataGrid>
       </TwoCol>
 
@@ -183,7 +183,7 @@ export default function CoffeePage() {
           lactic-acid bacteria colonise the sweet mucilage on the bean, secreting
           enzymes that dissolve it while the pH drops. The alcohols and acids they
           leave behind are the raw material of the esters a taster later calls
-          &ldquo;fruity.&rdquo; We have watched every step of it happen.
+          &ldquo;fruity.&rdquo; We track it hour by hour.
         </p>
         <p className="p1">
           It is also double-edged. The same microbes that build fruit build faults
@@ -213,11 +213,12 @@ export default function CoffeePage() {
           into freshly harvested cherries, hoping to seed the same continuity.
         </p>
         <p className="p1">
-          Can a coffee ferment actually hold a &ldquo;house culture&rdquo; across
-          seasons, the way a sherry cask does? We do not know yet, and we will not
-          pretend otherwise — coffee ferments are short, and no one has shown a
-          strain that lasts from one season into the next. We are testing it, year
-          by year. We would rather tell you that than sell you the metaphor.
+          Can a coffee ferment hold a &ldquo;house culture&rdquo; across seasons,
+          the way a sherry cask does? It is the most interesting question on the
+          estate, and we are the ones running the experiment: every carry logged,
+          every tank assayed, year against year. Coffee ferments are short and
+          this is new ground, which is exactly why it is worth measuring rather
+          than asserting.
         </p>
       </TwoCol>
 
@@ -225,7 +226,9 @@ export default function CoffeePage() {
         <p className="p1">
           The on-estate lab tests every lot. Brix per zone on harvest day,
           moisture tracking through drying, screen grading and defect analysis
-          per SCA protocol. Every lot is cupped — target 80+ specialty.
+          per SCA protocol. Every lot is cupped at the estate against a target of
+          80+ specialty, and the scores we publish are our own cupping table,
+          read lot by lot and printed as we read them.
         </p>
         <p className="p1">
           The next build adds caffeine and polyphenol profiling, on-site <Term tip="SCA-certified coffee grader.">Q-grader</Term>{' '}
@@ -250,8 +253,8 @@ export default function CoffeePage() {
           sanctuaries, and cellars that care about provenance.
         </p>
         <p className="p1">
-          Promise less, deliver more. We do not roadshow. If the cup
-          interests you, the estate is open.
+          Promise less, deliver more. The cup makes the case, and the estate
+          is open to anyone it interests.
         </p>
       </TwoCol>
 

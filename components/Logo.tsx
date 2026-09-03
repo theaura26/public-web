@@ -1,5 +1,5 @@
 /* ── aura wordmark ──
-   Inlined SVG paths so `fill="currentColor"` follows the parent's CSS
+   Inlined SVG paths so `fill="currentColor"` follows the parent’s CSS
    colour. Renders identically anywhere the `color` token cascades —
    the navbar (theme text), the home hero (watermark / muted), the
    footer (giant watermark behind the mark), and the menu overlay

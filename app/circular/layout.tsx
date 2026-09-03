@@ -7,12 +7,12 @@ import type { ReactNode } from 'react'
 export const metadata: Metadata = {
   title: 'Circular Intelligence',
   description:
-    'Circular intelligence, told through compost. Nature produces no waste — only relationships. How manure becomes a biological network that rebuilds soil, water, carbon and resilience, and why Aura composts to restore relationships rather than add nutrients. Evidence-first; honest about what the science is still settling.',
+    'Nature produces no waste, only relationships. How the herd’s dung and urine become 154,000 litres of Jeevamrit a year, tested before it touches soil.',
   alternates: { canonical: '/circular' },
   openGraph: {
     title: 'Circular Intelligence',
     description:
-      'Compost is not fertiliser. It is a biological communication network — how a landscape keeps the loop closed.',
+      'Compost is a biological communication network — how a landscape keeps its loop closed.',
     type: 'article',
     images: [{ url: '/aura-mudigere-landscape.jpg', width: 1600, height: 900, alt: 'Aura — compost as circular intelligence' }],
   },

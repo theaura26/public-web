@@ -13,7 +13,7 @@ import Reveal from '@/components/RevealOnScroll'
    page feels alive if a human toggles into it.
 
    Because both routes return THIS component in agent mode, their agent views
-   can never drift. Copy here is kept identical to /reason's human chapters.
+   can never drift. Copy here is kept identical to /reason’s human chapters.
    ════════════════════════════════════════════════════════════════════════ */
 
 /* Emphasis span — mirrors the /reason `W` helper: holds key phrases at the
@@ -78,7 +78,7 @@ export default function AgentReason() {
         <p>And everything about asking questions.</p>
         <p><W>That turned out to be the advantage.</W></p>
         <p>When you know less, you challenge more.</p>
-        <p>I didn&apos;t carry the burden of orthodoxy. So I asked the land instead.</p>
+        <p>I didn&rsquo;t carry the burden of orthodoxy. So I asked the land instead.</p>
         <p>The land had better answers.</p>
         <p>Then I found <W>Ohara</W>. A quiet valley north of Kyoto. Cedar forests, rivers, temples.</p>
         <p>India gave me the ground.<br />Japan gave me the stillness.<br />Together they became something neither could alone.</p>
@@ -93,7 +93,7 @@ export default function AgentReason() {
       </Chapter>
 
       <Chapter title="What We Forgot">
-        <p>A hundred years ago, you didn&apos;t need a certification to prove food was organic. All food was organic.</p>
+        <p>A hundred years ago, you didn&rsquo;t need a certification to prove food was organic. All food was organic.</p>
         <p>We planted by the moon. Composted by instinct. Understood soil was alive.</p>
         <p>Not because we had data. Because we had <W>attention</W>.</p>
         <p>Then we forgot.</p>
@@ -150,11 +150,11 @@ export default function AgentReason() {
 
       <Chapter title="The Geography">
         <p><W>Mudigere, Western Ghats, India.</W></p>
-        <p>150 acres. 3,600 feet. UNESCO biodiversity zone. Coffee, tea, pepper, areca.</p>
+        <p>150 acres. 3,600 feet. Western Ghats, a UNESCO World Heritage region. Coffee, tea, pepper, areca.</p>
         <p><W>Ohara, Kyoto, Japan.</W></p>
         <p>Two properties. Japanese garden. Teahouse. Caf&eacute; on the river. Studios.</p>
         <p><W>Munduk, Bali. Punakha, Bhutan.</W></p>
-        <p>The ecosystem grows when the land says it&apos;s ready.</p>
+        <p>The ecosystem grows when the land says it&rsquo;s ready.</p>
       </Chapter>
 
       <Chapter title="The Monastic Polymath">

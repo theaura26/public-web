@@ -22,7 +22,7 @@ export default function LandPage() {
 
       <TwoCol heading="Land is ancestry.">
         <p className="p1">
-          Aura Estate sits in the <Term tip="A mountain range down India's west coast — older than the Himalaya, and one of the world's eight 'hottest' biodiversity hotspots, with over 7,000 plant species.">Western Ghats</Term> of Karnataka, on red{' '}
+          Aura Estate sits in the <Term tip="A mountain range down India’s west coast — older than the Himalaya, and one of the world’s eight 'hottest' biodiversity hotspots, with over 7,000 plant species.">Western Ghats</Term> of Karnataka, on red{' '}
           <Term tip="Iron- and aluminium-rich soil formed by deep tropical weathering — not a volcanic rock itself, but the long residue of one, the Deccan basalt, broken down over ages of monsoon.">laterite</Term>:
           soil that is itself the record of a very long weathering, under a monsoon
           older than agriculture and a four-story canopy older than any of us.
@@ -45,7 +45,7 @@ export default function LandPage() {
 
       <TwoCol id="facts" heading="Aura Estate.">
         <DataGrid cols={3}>
-          <DataCard value="13.1365°N, 75.6403°E">Coordinates.</DataCard>
+          <DataCard value="13.1686°N, 75.4340°E">Coordinates.</DataCard>
           <DataCard value="3,600 ft">Altitude.</DataCard>
           <DataCard value="Laterite">Soil — red, volcanic, pH 6.0–6.5.</DataCard>
           <DataCard value="40–100 in / yr">
@@ -53,7 +53,7 @@ export default function LandPage() {
           </DataCard>
           <DataCard value="14 – 30 °C">Temperature range.</DataCard>
           <DataCard value="58%">Humidity.</DataCard>
-          <DataCard value="UNESCO">Biodiversity zone.</DataCard>
+          <DataCard value="Western Ghats">A UNESCO World Heritage region.</DataCard>
           <DataCard value="150">Acres.</DataCard>
           <DataCard value="35,000">Trees.</DataCard>
         </DataGrid>
@@ -71,8 +71,8 @@ export default function LandPage() {
         <p className="p1">
           One hundred acres of shade-grown coffee — Arabica <Term tip="Selection 9. Ethiopian-hybrid Arabica bred at the Central Coffee Research Institute, Karnataka. Floral, citric.">Sln.9</Term> and <Term tip="Selection 795. Kents × S.288 Arabica cross, released 1946. Vigorous; cocoa-malt body under shade.">Sln.795</Term>,
           planted beneath a four-story canopy of silver oak, Albizzia,
-          jackfruit, and native fig. Thirty-two acres of tea, in organic
-          transition targeting 2027.
+          jackfruit, and native fig. Beside them, thirty-two acres of tea,
+          working towards organic certification in 2027.
         </p>
         <p className="p1">
           Black pepper climbing areca palms. Cardamom in the lower shade. Cacao,
@@ -80,7 +80,7 @@ export default function LandPage() {
           flowering seasons. 35,000 individual trees across the estate.
         </p>
         <p className="p1">
-          And 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle — an indigenous breed native to this
+          And about fifty <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle — an indigenous breed native to this
           altitude, rotating through blocks timed to cherry development stages.
           Their dung drives the biodynamic programme. Their presence shapes the
           soil biology season by season.
@@ -119,8 +119,10 @@ export default function LandPage() {
 
       <TwoCol id="east-east" heading="Mudigere and Ohara.">
         <p className="p1">
-          Aura works two estates. The first is here at Mudigere; the second
-          sits in Ohara, Kyoto — two properties totalling roughly 1,200 <Term tip="Japanese land measure. About 3.3 m² per tsubo.">tsubo</Term>,
+          Aura runs two sanctuaries. Aura Estate at Mudigere is one — the 150 acres
+          described above, and the only one of the two that farms. Ohara is the other,
+          north of Kyoto: two properties totalling
+          roughly 1,200 <Term tip="Japanese land measure. About 3.3 m² per tsubo.">tsubo</Term>,
           with seven existing buildings, a teahouse with a hearth, a
           thirty-year-old Japanese garden, and a cafe overlooking a river.
         </p>
@@ -138,8 +140,8 @@ export default function LandPage() {
           alt="Mudigere mountains rising over the Western Ghats — the valley that holds Aura Estate"
           value="Mudigere · Karnataka."
         >
-          150 acres, 3,600 ft, laterite soil, UNESCO biodiversity zone. Four-
-          story polyculture. 52 Malnad Gidda cattle. The agricultural engine.
+          150 acres, 3,600 ft, laterite soil, in the Western Ghats — a UNESCO World Heritage region. Four-
+          story polyculture. About fifty Malnad Gidda cattle. The agricultural engine.
         </DataCard>
         <DataCard
           img="/journals/land/aura-ohara.jpg"
@@ -161,11 +163,11 @@ export default function LandPage() {
           baseline.
         </p>
         <DataGrid cols={3}>
-          <DataCard value="4–5×">Carbon vs monoculture coffee.</DataCard>
-          <DataCard value="500–1,000 t">CO₂ credit potential per year.</DataCard>
+          <DataCard value="4–5×">Estimated carbon vs monoculture coffee.</DataCard>
+          <DataCard value="Quarterly">Canopy vitality read by satellite.</DataCard>
           <DataCard value="100 acres">Shade-grown coffee.</DataCard>
           <DataCard value="32 acres">Tea, organic transition 2027.</DataCard>
-          <DataCard value="35,000">Trees on chain over time.</DataCard>
+          <DataCard value="~35,000">Trees, estimated pending a completed count.</DataCard>
         </DataGrid>
         <p className="p1">
           The land is a carbon asset, a biodiversity corridor, a water

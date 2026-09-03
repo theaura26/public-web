@@ -44,19 +44,19 @@ export default function VedicPage() {
 
       <TwoCol id="read" heading="Read the plant before you treat it.">
         <p className="p1">
-          The Vrikshayurveda is a way of looking, not a book of recipes. It reads a plant the way its
+          The Vrikshayurveda is a way of looking. It reads a plant the way its
           sibling text reads a body — as a being with digestion, seasons, and specific weaknesses —
           and its first instruction never changes: read the plant before you treat it. A leaf that
-          yellows from the tip is one diagnosis; from the edge, another. Treat the diagnosis, not the
-          symptom.
+          yellows from the tip is one diagnosis; from the edge, another. Treat the diagnosis the
+          symptom points to.
         </p>
         <p className="p1">
           Industrial agriculture inherited the{' '}
           <Term tip="Nitrogen, phosphorus, potassium — the three macronutrients isolated by nineteenth-century agricultural chemistry. Not wrong. Narrow.">NPK</Term>{' '}
-          rulebook from nineteenth-century chemistry. It is not wrong; it is narrow — three letters
+          rulebook from nineteenth-century chemistry. It is a narrow rulebook — three letters
           cannot describe a forest floor. To be a tree servant is the older posture: observe the
-          tree, let it show what it wants, and act on the land&apos;s permission rather than the
-          calendar&apos;s. Observation comes first, sometimes by a whole season.
+          tree, let it show what it wants, and act on the land&rsquo;s permission rather than the
+          calendar&rsquo;s. Observation comes first, sometimes by a whole season.
         </p>
       </TwoCol>
 
@@ -69,12 +69,12 @@ export default function VedicPage() {
       <TwoCol id="herd" heading="It begins with the herd.">
         <p className="p1">
           Every preparation on the estate begins in the same place — the cattle. Aura keeps
-          fifty-two{' '}
+          about fifty{' '}
           <Term tip="A small indigenous cattle breed of the Malnad region of Karnataka, adapted to this altitude, soil, and monsoon over centuries. Low-yield, hardy, low-input.">Malnad Gidda</Term>,
           the small indigenous cattle of these hills. The five products of the cow — dung, urine,
           milk, curd, ghee — are the base of every ferment, and their dung and urine are the raw
-          material of the soil work. The herd is not livestock kept beside the farm; it is the engine
-          inside it.
+          material of the soil work. The herd is the engine inside the farm rather than livestock kept
+          beside it.
         </p>
         <p className="p1">
           You cannot make these preparations with an imported breed, and you cannot buy them. The
@@ -121,7 +121,7 @@ export default function VedicPage() {
         </p>
         <p className="p1">
           This is what Aura means by Natural Intelligence: the oldest knowledge we have, held to the
-          newest measurement we trust. What the Vrikshayurveda called the land&apos;s breath, and what
+          newest measurement we trust. What the Vrikshayurveda called the land&rsquo;s breath, and what
           the moon-timed preparations called the right hour, the estate now also writes down as a
           signed event — the lunar day and the stir time logged beside the humidity and the hand that
           did the work. The oldest instrument and the newest, agreeing.
@@ -133,7 +133,7 @@ export default function VedicPage() {
           pH, electrical conductivity, and a live colony count before a drop is sprayed.
         </DataCard>
         <DataCard value="90 days">
-          The soil re-read after application — proof that the thing worked in the ground, not the pot.
+          The soil re-read after application — proof that the thing worked in the ground.
         </DataCard>
         <DataCard value="Signed">
           Each spray logged: the block, the lunar day, the humidity, the dung batch, the hand that
@@ -144,13 +144,13 @@ export default function VedicPage() {
       <OneCol heading="Older than the study of it.">
         <p className="p1">
           The estate keeps every observation, every block it was applied to, and every microbial read
-          that followed. Over seasons that becomes something rare — a record of one valley&apos;s own
+          that followed. Over seasons that becomes something rare — a record of one valley&rsquo;s own
           soil, grown from the ground rather than borrowed from a textbook written for another. A
-          different valley would need a different record. That is not a flaw; it is the point.
+          different valley would need a different record, and that is the point.
         </p>
         <p className="p1">
           This is a generational instrument. The knowledge is old and the measurement is ours, and
-          together they build the estate&apos;s most durable asset: living soil, on a horizon measured
+          together they build the estate&rsquo;s most durable asset: living soil, on a horizon measured
           in decades. Where the practice becomes a ledger, this journal hands off to{' '}
           <em>Provenance</em>.
         </p>

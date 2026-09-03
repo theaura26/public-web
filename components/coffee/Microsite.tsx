@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import VisitModal, { openVisitModal } from './VisitModal'
 import { ScrollHighlight } from '@/components/article/Article'
+import { GlyphMark } from './RemarkableCircle'
 
 /* ═══════════════════════════════════════════════════════════════════
    MICROSITE BLOCKS — Regenerative Coffee
@@ -51,10 +51,10 @@ function Media({
 /* ── microsite header ───────────────────────────────────────────── */
 
 const NAV = [
-  { href: '/regenerative-coffee', label: 'Regenerative Coffee' },
-  { href: '/regenerative-coffee/biodynamic', label: 'Biodynamic' },
-  { href: '/regenerative-coffee/transparency', label: 'Transparent' },
-  { href: '/regenerative-coffee/flavour', label: 'Flavourful' },
+  { href: '/regenerative-coffee', label: 'Remarkable Circle' },
+  { href: '/regenerative-coffee/biodynamic', label: 'Better Ground' },
+  { href: '/regenerative-coffee/transparency', label: 'Transparency' },
+  { href: '/regenerative-coffee/flavour', label: 'Flavours' },
 ]
 
 /**
@@ -118,7 +118,7 @@ export function MicroNav() {
         aria-label="Regenerative Coffee"
         aria-hidden={!below}
       >
-        <div className="section-w ln-in">
+        <div className="ln-w ln-in">
           <div className="ln-scroll">
             {NAV.map((l) => (
               <Link
@@ -136,20 +136,18 @@ export function MicroNav() {
 
           {/* The CTA sits above the scroller: links pass under it. */}
           <div className="ln-end">
-            <button type="button" className="p2 ln-cta" onClick={openVisitModal}>
-              <span className="ln-cta-long">The Experience</span>
-              <span className="ln-cta-short">Experience</span>
-            </button>
+            <Link href={PAGE_HREF.experience} className="p2 ln-cta">
+              <span className="ln-cta-long">Attend the Festival</span>
+              <span className="ln-cta-short">Attend</span>
+            </Link>
           </div>
         </div>
       </nav>
 
-      <VisitModal />
-
       <style jsx global>{`
         /* Above the fold the header rides transparent on the hero, its
            marks forced light so they read against the black ground.
-           Below the fold it becomes the site's own themed bar — day or
+           Below the fold it becomes the site’s own themed bar — day or
            night — and peekaboos: away on the way down, back on the way up. */
         .aura-nav {
           transition: transform var(--dur-base) var(--ease),
@@ -181,39 +179,30 @@ export function MicroNav() {
           box-shadow: none !important;
         }
 
-        /* Liquid glass on the sub-nav — enhancement only. The bar's own
-           rule paints a solid fallback first, so browsers without
-           backdrop-filter (older Firefox, any engine with it disabled)
-           keep a legible bar instead of a transparent one. */
-        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-          /* doubled class + tag so this outranks the scoped fallback rule */
-          nav.ln.ln {
-            background:
-              linear-gradient(
-                to bottom,
-                rgba(255, 255, 255, 0.10) 0%,
-                rgba(255, 255, 255, 0.03) 42%,
-                rgba(255, 255, 255, 0.00) 100%
-              ),
-              rgba(12, 12, 12, 0.55);
-            -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.06);
-            backdrop-filter: blur(22px) saturate(180%) brightness(1.06);
-            box-shadow:
-              inset 0 1px 0 0 rgba(255, 255, 255, 0.16),
-              inset 0 -1px 0 0 rgba(255, 255, 255, 0.04);
-          }
-        }
+        /* The bar is a flat white. It used to be liquid glass — a blur
+           with a light gradient over a translucent ground — which meant
+           its colour was whatever photograph happened to be scrolling
+           under it, and on the bright frames the labels sat on cream. A
+           flat ground is the same bar on every scene. */
       `}</style>
 
       <style jsx>{`
         /* Persistent: always on screen. It sits under the main bar, and
            rides up to the viewport top while that bar is hidden. */
         .ln {
-          position: fixed; left: 0; right: 0; z-index: 40;
+          /* Above the chapter backdrop, which is fixed at z-index 0. */
+          position: relative; z-index: 1;
+          /* 39, deliberately: the hamburger's backdrop is z-40 and the
+             site bar and menu panel are z-50. At 40 this bar tied with
+             the backdrop, won on DOM order, and showed through the strip
+             of backdrop beside the open menu. */
+          position: fixed; left: 0; right: 0; z-index: 39;
           height: 56px;
-          /* Fallback first: a solid bar every browser can draw. */
-          background: rgba(10, 10, 10, 0.94);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+          /* White, matching the site bar directly above it, so the two
+             read as one header rather than a light bar with a dark strip
+             hung under it. */
+          background: #fff;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
           top: var(--nav-h);
           opacity: 0; pointer-events: none;
           transform: translateY(calc(-1 * var(--nav-h)));
@@ -224,6 +213,24 @@ export function MicroNav() {
         .ln.is-below { opacity: 1; pointer-events: auto; transform: translateY(0); }
         /* header away — the bar takes the top edge itself */
         .ln.is-below.is-up { transform: translateY(calc(-1 * var(--nav-h))); }
+
+        /* This bar lines up with the navbar above it rather than with
+           the article column. The navbar is a 10vw / 1fr / 10vw grid
+           with the mark centred in the left rail and the menu button
+           centred in the right, so the marks sit 5vw from each edge less
+           half their own width. Those two widths are the dependency —
+           if either mark is resized, these follow. */
+        .ln-w {
+          --nav-mark: 32px;
+          --nav-burger: 44px;
+          width: 100%;
+          padding-left: calc(5vw - var(--nav-mark) / 2);
+          padding-right: calc(5vw - var(--nav-burger) / 2);
+        }
+        @media (max-width: 620px) {
+          /* The navbar drops its rails on small screens; so does this. */
+          .ln-w { padding-left: var(--gutter, 20px); padding-right: var(--gutter, 20px); }
+        }
 
         .ln-in {
           position: relative;
@@ -273,26 +280,37 @@ export function MicroNav() {
           position: relative; flex-shrink: 0;
           font-size: 13px;
           display: inline-flex; align-items: center; height: 100%;
-          color: rgba(255, 255, 255, 0.72);
+          color: rgba(0, 0, 0, 0.66);
           text-decoration: none; white-space: nowrap;
           transition: color var(--dur-base) var(--ease);
         }
-        :global(.ln-l):hover { color: #fff; }
-        :global(.ln-l.is-on) { color: #fff; }
-        :global(.ln-l.is-on)::after {
-          content: ''; position: absolute; left: 0; right: 0; bottom: 0;
-          height: 1px; background: #fff;
-        }
+        /* No rule under the active tab — it reads as clay, which is enough
+           to mark where you are. Hover picks up the same clay. */
+        :global(.ln-l):hover { color: var(--brand-accent); }
+        :global(.ln-l.is-on) { color: var(--brand-accent); }
 
-        .ln-cta {
+        /* :global, because styled-jsx cannot put its scope class on a
+           <Link> — the same reason .ln-l is global above. */
+        :global(.ln-cta) {
+          /* The parent turns pointer events off so the bar's gradient
+             mask does not swallow clicks meant for the links beneath it,
+             and the child rule was meant to turn them back on. It never
+             did: styled-jsx cannot put its scope class on a Link, so the
+             rule compiled to a descendant selector carrying the jsx hash
+             and matched nothing — this button has been unclickable. Set
+             on the class itself, which is already global for exactly
+             that reason. */
+          pointer-events: auto;
           flex-shrink: 0; cursor: pointer;
+          display: inline-flex; align-items: center;
+          text-decoration: none; white-space: nowrap;
           font-size: 12px; line-height: 1.3;
           color: #fff; background: var(--brand-accent);
           border: none; border-radius: 999px;
           padding: 7px 16px;
           transition: filter var(--dur-base) var(--ease);
         }
-        .ln-cta:hover { filter: brightness(1.1); }
+        :global(.ln-cta):hover { filter: brightness(1.1); }
         .ln-cta-short { display: none; }
 
         @media (max-width: 640px) {
@@ -415,15 +433,13 @@ export function Panel({
 
       <style jsx>{`
         .p {
-          position: relative;
+          position: relative; z-index: 1;
           min-height: 100svh;
           display: flex; align-items: center;
           padding: calc(var(--nav-h) + var(--space-9)) 0 var(--space-9);
-          background: #000; color: #fff;
-          border-top: 1px solid rgba(255, 255, 255, 0.08);
+          background: var(--brand-green); color: #fff;
           overflow: hidden;
         }
-        .p:first-child { border-top: 0; }
         .p-bg { position: absolute; inset: 0; }
         .p-bg :global(.m-media) {
           width: 100%; height: 100%; object-fit: cover; display: block;
@@ -433,23 +449,24 @@ export function Panel({
         .is-c .p-in { text-align: center; }
 
 
-        /* Interior panels sit a clear step below the page opener —
-           the hero is the only thing at display scale. */
+        /* Both headings wear their element's role from globals — h1 for
+           the opener, h2 for an interior panel — and set only what is
+           local to a dark ground: the colour and the measure.
+
+           :not(.is-hero) is doing real work. A class beats an element
+           selector, so an unscoped font-weight of 400 on .p-h sat on top
+           of the h1 rule and the opener rendered at book weight and two
+           thirds of display size — while the comment above it claimed it
+           inherited. Scope anything that is only true of the interior
+           heading, or it silently overrides the opener too. */
         .p-h {
-          font-family: var(--font-grotesque), sans-serif;
-          font-weight: 400;
-          font-size: clamp(28px, 3.6vw, 54px);
-          line-height: 1.08; letter-spacing: -0.035em;
           color: #fff; margin: 0; max-width: 22ch;
         }
-        /* The page opener wears the site's uppercase H1 display role —
-           inherited from globals; only the ground colour is local. */
+        .p-h:not(.is-hero) {
+          line-height: 1.08;
+          max-width: 22ch;
+        }
         .p-h.is-hero {
-          font-weight: 600;
-          text-transform: uppercase;
-          font-size: clamp(44px, 9vw, 88px);
-          line-height: 1.02;
-          letter-spacing: -0.06em;
           color: #fff; max-width: 16ch;
           text-wrap: balance;
         }
@@ -587,7 +604,7 @@ export function Intro({
           display: flex; flex-direction: column; gap: var(--space-4);
         }
         .m-intro-b :global(p) {
-          font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: var(--text-body); margin: 0;
         }
         .m-intro-b :global(p:first-child) { color: var(--text); }
@@ -660,7 +677,7 @@ export function Pillar({
         .m-pillar-h { margin: 0; }
         .m-pillar-act { margin: var(--space-7) 0 0; }
         .m-pillar-lede {
-          font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: var(--text-body); margin: var(--space-5) 0 0; max-width: 46ch;
         }
         .m-pillar-list {
@@ -726,7 +743,7 @@ export function Cards({
           letter-spacing: -0.02em; margin: 0 0 var(--space-3);
         }
         .m-card-b {
-          font-size: 15px; line-height: 1.6; color: var(--text-body); margin: 0;
+          font-size: var(--p1-size); line-height: var(--p1-lh); color: var(--text-body); margin: 0;
         }
       `}</style>
     </section>
@@ -774,7 +791,7 @@ export function Index({
         .ix {
           min-height: 100svh; display: flex; align-items: center;
           padding: calc(var(--nav-h) + var(--space-9)) 0 var(--space-9);
-          background: #000; color: #fff;
+          background: var(--brand-green); color: #fff;
         }
         .ix-in { width: 100%; }
         .ix-top { margin-bottom: var(--space-9); }
@@ -858,7 +875,8 @@ export function Numbered({
           font-size: clamp(19px, 1.8vw, 24px); line-height: 1.2;
           letter-spacing: -0.02em; margin: 0 0 var(--space-3);
         }
-        .nb-cb { font-size: 15px; line-height: 1.6; color: var(--text-body); margin: 0; }
+        .nb-cb {
+          font-size: var(--p1-size); line-height: var(--p1-lh); color: var(--text-body); margin: 0; }
       `}</style>
     </section>
   )
@@ -927,7 +945,7 @@ export function Goals({
           letter-spacing: -0.02em; margin: 0;
         }
         .gl-b {
-          font-size: 15px; line-height: 1.65; color: var(--text-body);
+          font-size: var(--p1-size); line-height: var(--p1-lh); color: var(--text-body);
           margin: 0; max-width: 60ch;
         }
         @media (max-width: 760px) {
@@ -1011,7 +1029,7 @@ export function Statement({
         }
         .has-img .m-say-h, .has-img .m-say-s { color: #fff; }
         .m-say-s {
-          font-size: clamp(15px, 1.5vw, 18px); line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: var(--text-body); margin: var(--space-6) auto 0; max-width: 52ch;
         }
       `}</style>
@@ -1035,9 +1053,11 @@ export function Closing({ children }: { children: string }) {
       </div>
       <style jsx>{`
         .cl {
-          min-height: 72svh; display: flex; align-items: center;
-          background: #000;
-          padding: clamp(64px, 10vh, 120px) 0;
+          /* Above the chapter backdrop, which is fixed at z-index 0. */
+          position: relative; z-index: 1;
+          display: flex; align-items: center;
+          background: var(--brand-green);
+          padding: clamp(112px, 18vh, 216px) 0;
         }
         /* ScrollHighlight renders a plain h2, which the global rule
            paints var(--text) — invisible on black in day mode. */
@@ -1057,12 +1077,10 @@ export function Closing({ children }: { children: string }) {
  * image so the type stays crisp and the labels stay selectable.
  */
 export function LoopDiagram({
-  label = 'Natural intelligence',
   centre,
   stations = ['Observe', 'Remember', 'Learn', 'Act'],
   caption,
 }: {
-  label?: string
   centre: string[]
   stations?: string[]
   caption?: string
@@ -1070,8 +1088,6 @@ export function LoopDiagram({
   return (
     <section className="ld">
       <div className="section-w">
-        <p className="ld-l">{label}</p>
-
         <div className="ld-ring" role="img"
           aria-label={`${centre.join(' ')} — a closed loop: ${stations.join(', then ')}, and back to the start.`}>
           <span className="ld-circle" aria-hidden />
@@ -1090,19 +1106,14 @@ export function LoopDiagram({
 
       <style jsx>{`
         .ld {
-          background: #000; color: #fff;
-          padding: clamp(72px, 12vh, 140px) 0;
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
+          /* Above the chapter backdrop, which is fixed at z-index 0. */
+          position: relative; z-index: 1;
+          background: var(--brand-green); color: #fff;
+          padding: clamp(104px, 16vh, 196px) 0;
         }
-        .ld-l {
-          font-family: var(--font-mono), monospace;
-          font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.55); margin: 0 0 clamp(28px, 5vw, 56px);
-        }
-
         .ld-ring {
           position: relative;
-          width: min(100%, 620px);
+          width: min(100%, 820px);
           aspect-ratio: 1;
           margin: 0 auto;
           display: grid; place-items: center;
@@ -1131,17 +1142,21 @@ export function LoopDiagram({
         .ld-c {
           display: flex; flex-direction: column; text-align: center;
           font-family: var(--font-grotesque), sans-serif;
-          font-weight: 600;
-          font-size: clamp(17px, 3vw, 36px);
-          line-height: 1.14; letter-spacing: -0.035em;
+          /* The same setting as an H2, uppercase, and bold — it is the
+             heading of this section, and it was two thirds the size of
+             every other heading on the page, reading as a caption that
+             happened to be sitting inside a ring. */
+          font-weight: 700;
+          font-size: clamp(24px, 4vw, 58px);
+          line-height: 1.04; letter-spacing: -0.04em;
           text-transform: uppercase;
-          max-width: 62%;
+          max-width: 84%;
         }
 
         .ld-cap {
           font-size: clamp(15px, 1.5vw, 18px); line-height: 1.6;
-          color: rgba(255, 255, 255, 0.66);
-          margin: clamp(32px, 5vw, 56px) 0 0; max-width: 46ch;
+          color: rgba(255, 255, 255, 0.66); text-align: center;
+          margin: clamp(32px, 5vw, 56px) auto 0; max-width: 46ch;
         }
       `}</style>
     </section>
@@ -1183,10 +1198,12 @@ export function Banner({
 
       <style jsx>{`
         .bn {
-          min-height: 82svh;
+          /* Above the chapter backdrop, which is fixed at z-index 0. */
+          position: relative; z-index: 1;
+          min-height: 88svh;
           display: flex; align-items: center;
-          background: #000; color: #fff;
-          padding: clamp(80px, 14vh, 160px) 0;
+          background: var(--brand-green); color: #fff;
+          padding: clamp(112px, 18vh, 216px) 0;
           border-top: 1px solid rgba(255, 255, 255, 0.12);
         }
         .bn-in {
@@ -1215,9 +1232,12 @@ export function Banner({
         .bn-h {
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 500;
-          font-size: clamp(28px, 3.4vw, 54px);
-          line-height: 1.14; letter-spacing: -0.03em;
-          color: #fff; margin: 0; max-width: 24ch;
+          /* The banner carries a title and a subtitle in one heading, so
+             it runs long — at 54px it filled the panel and read as the
+             page rather than as a way out of it. */
+          font-size: clamp(24px, 2.4vw, 38px);
+          line-height: 1.2; letter-spacing: -0.025em;
+          color: #fff; margin: 0; max-width: 30ch;
           text-wrap: pretty;
         }
         .bn-act { margin: var(--space-7) 0 0; }
@@ -1229,14 +1249,14 @@ export function Banner({
           letter-spacing: -0.01em;
           color: #fff;
           text-decoration: underline;
-          text-decoration-thickness: 1.5px;
-          text-underline-offset: 7px;
+          text-decoration-thickness: var(--rule-weight);
+          text-underline-offset: var(--rule-offset);
         }
         :global(.bn-btn):hover {
           text-decoration: underline;
           text-decoration-color: var(--brand-accent);
-          text-decoration-thickness: 1.5px;
-          text-underline-offset: 7px;
+          text-decoration-thickness: var(--rule-weight);
+          text-underline-offset: var(--rule-offset);
         }
 
         @media (max-width: 860px) {
@@ -1250,13 +1270,14 @@ export function Banner({
 
 /* ── page hand-off — always the other three ─────────────────────── */
 
-type PageKey = 'hub' | 'biodynamic' | 'transparency' | 'flavour'
+type PageKey = 'hub' | 'biodynamic' | 'transparency' | 'flavour' | 'experience'
 
 const PAGE_HREF: Record<PageKey, string> = {
   hub: '/regenerative-coffee',
   biodynamic: '/regenerative-coffee/biodynamic',
   transparency: '/regenerative-coffee/transparency',
   flavour: '/regenerative-coffee/flavour',
+  experience: '/regenerative-coffee/experience',
 }
 
 const ORDER: PageKey[] = ['biodynamic', 'transparency', 'flavour', 'hub']
@@ -1269,7 +1290,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     biodynamic: {
       title: 'Grown in a closed loop.',
       sub: 'The herd feeds the soil. The soil feeds the trees. Nothing is bought in.',
-      cta: 'Explore biodynamic',
+      cta: 'Better Ground',
     },
     transparency: {
       title: 'Written down as it happens.',
@@ -1279,7 +1300,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     flavour: {
       title: 'Nine lots. One harvest.',
       sub: 'Three Robusta, six Arabica, and the full file behind every one.',
-      cta: 'Explore the coffee',
+      cta: 'Explore the flavours',
     },
   },
   biodynamic: {
@@ -1290,37 +1311,59 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     },
     flavour: {
       title: 'Then taste what it did.',
-      sub: 'Nine lots off this ground, two national wins, and the file behind each one.',
-      cta: 'Explore the coffee',
+      sub: 'Nine lots off this ground, first and second in Robusta at the 2026 Flavour of India Fine Cup Awards, and the file behind each one.',
+      cta: 'Explore the flavours',
     },
     hub: {
       title: 'Nine ways of paying attention.',
       sub: 'The whole loop, discipline by discipline — the practice this page is one part of.',
-      cta: 'Back to the loop',
+      cta: 'The Remarkable Circle',
     },
   },
   transparency: {
     flavour: {
       title: 'The record ends in a cup.',
       sub: 'Nine lots, scored by people with no stake in the result.',
-      cta: 'Explore the coffee',
+      cta: 'Explore the flavours',
     },
     biodynamic: {
       title: 'What the record is recording.',
-      sub: 'Fifty-two cattle, fourteen numbered pits, and a canopy cut to a light reading instead of a feeling.',
-      cta: 'Explore biodynamic',
+      sub: 'About fifty cattle, fourteen numbered pits, and a canopy cut to a light reading instead of a feeling.',
+      cta: 'Better Ground',
     },
     hub: {
       title: 'Nine ways of paying attention.',
       sub: 'The whole loop, discipline by discipline.',
-      cta: 'Back to the loop',
+      cta: 'The Remarkable Circle',
+    },
+  },
+  experience: {
+    biodynamic: {
+      title: 'What you would be standing in.',
+      sub: 'About fifty cattle, a closed loop, and a canopy cut to a light reading instead of a feeling.',
+      cta: 'Better Ground',
+    },
+    transparency: {
+      title: 'And what gets written down.',
+      sub: 'Nine streams of data, signed from the field, and re-read ninety days later.',
+      cta: 'Explore transparency',
+    },
+    flavour: {
+      title: 'What it ends up tasting like.',
+      sub: 'Nine lots off this ground, first and second in Robusta at the 2026 Flavour of India Fine Cup Awards, and the file behind every one.',
+      cta: 'Explore the flavours',
+    },
+    hub: {
+      title: 'Nine ways of paying attention.',
+      sub: 'The whole loop, discipline by discipline — three days is one pass through it.',
+      cta: 'The Remarkable Circle',
     },
   },
   flavour: {
     biodynamic: {
       title: 'It started in the ground.',
-      sub: 'Fifty-two cattle, a closed loop, and a canopy cut to a number.',
-      cta: 'Explore biodynamic',
+      sub: 'About fifty cattle, a closed loop, and a canopy cut to a number.',
+      cta: 'Better Ground',
     },
     transparency: {
       title: 'And all of it was written down.',
@@ -1330,12 +1373,22 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     hub: {
       title: 'One remarkable circle.',
       sub: 'Grass feeds the herd. The herd feeds the preparations. The preparations feed the soil. The soil grows the grass.',
-      cta: 'Back to the beginning',
+      cta: 'The Remarkable Circle',
     },
   },
 }
 
 /** The three hand-offs that close every page, in reading order. */
+/* The first photograph of each chapter, so a crosslink shows the place
+   it leads to rather than an empty plate. */
+const BANNER_THUMB: Record<PageKey, string | undefined> = {
+  hub: '/regenerative-coffee/overview/aura-regenerative-coffee.webp',
+  biodynamic: '/regenerative-coffee/better-ground/aura-closed-loop-01.webp',
+  flavour: '/regenerative-coffee/flavours/aura-cherry-morning.webp',
+  transparency: '/regenerative-coffee/transparency/aura-signing-field.webp',
+  experience: undefined,
+}
+
 export function NextBanners({ from }: { from: PageKey }) {
   return (
     <>
@@ -1349,6 +1402,8 @@ export function NextBanners({ from }: { from: PageKey }) {
             sub={copy.sub}
             cta={copy.cta}
             href={PAGE_HREF[k]}
+            src={BANNER_THUMB[k]}
+            alt=""
           />
         )
       })}
@@ -1360,32 +1415,27 @@ export function NextBanners({ from }: { from: PageKey }) {
 
 /**
  * The bottom of every microsite page. Clay ground (the brand accent),
- * one line, one button that opens the Experience form.
+ * one line, one link to the Festival page.
  */
 export function ReserveBanner() {
   return (
     <section className="rb">
       <div className="section-w rb-in">
-        <h2 className="rb-h">The Experience.</h2>
+        <h2 className="rb-h">The Aura Festival.</h2>
         <p className="rb-p">
-          Come and stand inside it — September, November or December.
-          Small groups, by arrangement, not by booking form.
+          Twenty places, three times a year. You set the protocol for a lot
+          of your own, and we build it and ship it under your name.
         </p>
-        <p className="rb-act">
-          <button type="button" className="label al is-ink rb-al" onClick={openVisitModal}>
-            <span className="al-i" aria-hidden>
-              <svg viewBox="0 0 24 24" width="11" height="11" fill="none">
-                <path d="M5 12h13M12.5 6l6.5 6-6.5 6" stroke="currentColor"
-                  strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-            Request the Experience
-          </button>
+        <p className="rb-act rb-al">
+          <ArrowLink href={PAGE_HREF.experience} tone="ink">Attend the Festival</ArrowLink>
         </p>
       </div>
       <style jsx>{`
         .rb {
-          min-height: 58svh; display: flex; align-items: center;
+          /* Above the chapter backdrop, which is fixed at z-index 0. */
+          position: relative; z-index: 1;
+          display: flex; align-items: center;
+          padding: clamp(128px, 20vh, 240px) 0;
           background: var(--brand-accent); color: #1d0f05;
           text-align: center;
         }
@@ -1398,15 +1448,15 @@ export function ReserveBanner() {
           color: #1d0f05; margin: 0 auto; max-width: 18ch;
         }
         .rb-p {
-          font-size: clamp(15px, 1.4vw, 18px); line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: rgba(29, 15, 5, 0.78);
           margin: var(--space-5) auto 0; max-width: 48ch;
         }
         .rb-act { margin: var(--space-7) auto 0; display: flex; justify-content: center; }
         /* ArrowLink, inked to the clay ground */
-        :global(.rb-al) { cursor: pointer; color: #1d0f05; }
-        :global(.rb-al) :global(.al-i) { border-color: rgba(29, 15, 5, 0.5); }
-        :global(.rb-al):hover :global(.al-i) {
+        .rb-al :global(.al) { color: #1d0f05; }
+        .rb-al :global(.al-i) { border-color: rgba(29, 15, 5, 0.5); }
+        .rb-al :global(.al):hover :global(.al-i) {
           background: #1d0f05; border-color: #1d0f05; color: var(--brand-accent);
         }
       `}</style>
@@ -1479,13 +1529,16 @@ export function NextUp({
           letter-spacing: -0.035em; margin-bottom: var(--space-4);
         }
         .m-next-b {
-          display: block; font-size: 16px; line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
+          display: block;
           color: var(--text-body); max-width: 46ch;
         }
         .m-next-a {
           display: inline-block; margin-top: var(--space-6);
           font-family: var(--font-mono), monospace; font-size: 13px;
-          color: var(--brand-accent);
+          /* Lifted: this banner's ground is the brand green, where the
+             base accent reads 3.10:1 — under AA. */
+          color: var(--brand-accent-lift);
           transition: transform var(--dur-base) var(--ease);
         }
         :global(.m-next-c):hover .m-next-a { transform: translateX(5px); }
@@ -1510,9 +1563,10 @@ export function NextUp({
  * sentence the last one left off.
  */
 export function Scene({
-  src, poster, alt = '', mediaType = 'image', title, children, align = 'left', dim = 'mid',
-  href, cta,
+  id, src, poster, alt = '', mediaType = 'image', title, children, align = 'left', dim = 'mid',
+  href, cta, glyph,
 }: {
+  id?: string
   src?: string
   poster?: string
   alt?: string
@@ -1523,9 +1577,12 @@ export function Scene({
   dim?: 'low' | 'mid' | 'high'
   href?: string
   cta?: string
+  /** filename in /public/glyphs/coffee — marks the scene as one of the
+      eight disciplines on the Remarkable Circle. */
+  glyph?: string
 }) {
   return (
-    <section className={`sc is-${align} dim-${dim} ${src ? '' : 'is-blank'}`}>
+    <section id={id} className={`sc is-${align} dim-${dim} ${src ? '' : 'is-blank'}`}>
       {src && (
         <div className="sc-bg">
           <Media src={src} poster={poster} alt={alt} mediaType={mediaType} />
@@ -1534,8 +1591,17 @@ export function Scene({
       )}
       <div className="section-w sc-in">
         <div className="sc-t">
+          {glyph && (
+            <span className="sc-g" aria-hidden>
+              <GlyphMark name={glyph} size={58} />
+            </span>
+          )}
           {title && <h2 className="sc-h">{title}</h2>}
-          <p className="sc-p">{children}</p>
+          {/* A container rather than the paragraph itself, so a scene can
+              break its copy into more than one block. Bare text still
+              renders here with the same typography; a scene that passes
+              <p> elements gets the spacing between them. */}
+          <div className="sc-p">{children}</div>
           {href && cta && (
             <p className="sc-act"><ArrowLink href={href}>{cta}</ArrowLink></p>
           )}
@@ -1543,14 +1609,26 @@ export function Scene({
       </div>
 
       <style jsx>{`
+        /* Transparent, not black. A chapter carries one fixed backdrop
+           that dissolves between photographs as the scenes scroll over
+           it (components/coffee/ChapterBackdrop.tsx); a black ground here
+           would sit on top of it and hide the whole thing. */
         .sc {
-          position: relative; min-height: 100svh;
+          position: relative; z-index: 1; min-height: 100svh;
           display: flex; align-items: flex-end;
-          padding: 0 0 clamp(48px, 9vh, 104px);
-          background: #000; color: #fff; overflow: hidden;
+          padding: 0 0 clamp(72px, 12vh, 144px);
+          background: var(--brand-green); color: #fff; overflow: hidden;
         }
-        /* a scene with no picture yet is simply black — the words carry it */
-        .is-blank { border-top: 1px solid rgba(255, 255, 255, 0.07); }
+        /* A scene never carries its own picture now — the chapter's
+           backdrop is behind all of them. This only governs the balance:
+           Bottom-weighting exists to keep text off a photograph; with no
+           photograph it only throws the page out of balance, so a blank
+           scene centres instead and takes equal space above and below.
+           That is what makes the chapter cards sit evenly between them. */
+        .is-blank {
+          align-items: center;
+          padding: clamp(72px, 12vh, 144px) 0;
+        }
         .sc-bg { position: absolute; inset: 0; }
         .sc-bg :global(.m-media) {
           width: 100%; height: 100%; object-fit: cover; display: block;
@@ -1578,6 +1656,12 @@ export function Scene({
         .sc-t { max-width: 40rem; }
         .is-centre .sc-t { margin-inline: auto; text-align: center; }
 
+        /* the discipline's mark, sitting above its own heading — the same
+           glyph the reader just clicked in the circle up top */
+        .sc-g { display: block; margin: 0 0 var(--space-5); color: #fff; }
+        .is-centre .sc-g { display: flex; justify-content: center; }
+        .sc-g :global(.glyph) { opacity: 0.9; }
+
         .sc-h {
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 400;
@@ -1588,11 +1672,17 @@ export function Scene({
         .is-centre .sc-h { margin-inline: auto; }
 
         .sc-p {
-          font-size: clamp(18px, 1.55vw, 22px);
-          line-height: 1.62;
+          /* The microsite is a deliberate exception to the P1 body size.
+             Everywhere else a paragraph shares the page with other things;
+             here it is the only text on screen, set over a photograph at
+             arm's length, and 16px is too quiet to carry a whole beat. */
+          font-size: 18px; line-height: 1.6;
           color: rgba(255, 255, 255, 0.92);
           margin: 0; text-wrap: pretty;
         }
+        .sc-p :global(p) { margin: 0 0 1.1em; }
+        .sc-p :global(p:last-child) { margin-bottom: 0; }
+        @media (max-width: 768px) { .sc-p { font-size: 16px; } }
 
         .sc-act { margin: var(--space-6) 0 0; }
         .is-centre .sc-act { display: flex; justify-content: center; }
@@ -1605,18 +1695,30 @@ export function Scene({
  * A chapter card — black, one line, nothing else. Used sparingly to
  * break a run of scenes, the way a title card breaks a reel.
  */
-export function Chapter({ children }: { children: ReactNode }) {
+export function Chapter({
+  children, tight = false,
+}: {
+  children: ReactNode
+  /** Closes the gap below, for a line that reads straight into the
+      block under it rather than standing on its own. */
+  tight?: boolean
+}) {
   return (
-    <section className="ch">
+    <section className={`ch ${tight ? 'is-tight' : ''}`}>
       <div className="section-w">
         <h2 className="ch-h">{children}</h2>
       </div>
       <style jsx>{`
+        /* Symmetric padding rather than a min-height, so the space above
+           and below is identical however many lines the card runs to. */
         .ch {
-          min-height: 44svh; display: flex; align-items: center;
-          background: #000; color: #fff; text-align: center;
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
+          /* Above the chapter backdrop, which is fixed at z-index 0. */
+          position: relative; z-index: 1;
+          display: flex; align-items: center; justify-content: center;
+          padding: clamp(128px, 21vh, 248px) 0;
+          background: var(--brand-green); color: #fff; text-align: center;
         }
+        .ch.is-tight { padding-bottom: clamp(40px, 6vh, 72px); }
         .ch-h {
           font-family: var(--font-hand), cursive;
           font-weight: 400;
@@ -1650,7 +1752,7 @@ export function Invite({
         .m-inv-a { display: inline-flex; }
         .m-inv-h { margin: 0 auto; max-width: 18ch; }
         .m-inv-b {
-          font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: var(--text-body); margin: var(--space-6) auto var(--space-7);
           max-width: 50ch;
         }

@@ -22,16 +22,16 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { Children, isValidElement, ReactNode, useEffect, useRef, useState } from 'react'
 import Reveal from '@/components/RevealOnScroll'
-import { ExpandingBanner } from '@/components/ExpandingBanner'
-import { ACTIVE_JOURNALS, nextActiveJournals, type Journal } from '@/lib/journals'
+import { ExpandingBanner, type BannerFrame } from '@/components/ExpandingBanner'
+import { ACTIVE_JOURNALS, journalImage, nextActiveJournals, type Journal } from '@/lib/journals'
 
 /* ── Shared "← Back" handler used by all three hero variants.
    The visible <Link> still carries a real `href` (so right-click
    "open in new tab", screen readers, no-JS fallback all behave),
    but the onClick swaps in router.back() so the affordance reads
-   as a true browser-back instead of always routing to the kit's
+   as a true browser-back instead of always routing to the kit’s
    default destination. The `href` becomes the fallback for the
    case where the user direct-loaded the page (history length 1)
    and pressing Back would otherwise leave them stranded. */
@@ -55,10 +55,10 @@ function useBackOrFallback(fallbackHref: string) {
       caption` hint; once `src` is set, the card holds the photo or video
       with a 10% black tint overlay (legibility floor) and the caption
       pinned bottom-left. Title style is chosen *per image*: a hidden
-      canvas samples the loaded image; if it's uniformly dark we use plain
+      canvas samples the loaded image; if it’s uniformly dark we use plain
       white text (reads cleanly against a low-key photo), otherwise we use
       `mix-blend-mode: difference` (inverts cleanly against varied or
-      light scenes). Same logic drives the back link while it's over the
+      light scenes). Same logic drives the back link while it’s over the
       banner; once past the banner the back switches to var(--text). */
 export function HeroBanner({
   title,
@@ -88,12 +88,8 @@ export function HeroBanner({
 }) {
   // If src wasn't passed but currentHref was, derive it from the journal
   // index — the same thumbnail the navbar and Continue cards use.
-  if (!src && currentHref) {
-    const journal = ACTIVE_JOURNALS.find(j => j.href === currentHref)
-    if (journal) src = journal.img
-  }
+  if (!src && currentHref) src = journalImage(currentHref)
   const words = title.split(/\s+/).filter(Boolean)
-  const draftingHint = [type, caption].filter(Boolean).join(' · ')
 
   // Pinned banner with scroll-driven blur clear — same gesture as the
   // homepage HeroVideo. The outer wrapper is 200vh; the inner stage is
@@ -220,8 +216,9 @@ export function HeroBanner({
         marginLeft: 'calc(50% - 50vw)',
         // 200vh wrapper holds the sticky stage in view for ~100vh of
         // scroll past first paint, giving the blur clear room to play
-        // before the banner releases and the next section enters.
-        height: '200vh',
+        // before the banner releases and the next section enters. A
+        // title card has no blur to clear, so it holds for one screen.
+        height: src ? '200vh' : '100vh',
       }}
     >
       {/* Back link removed site-wide — header logo/menu is the only nav. */}
@@ -232,7 +229,10 @@ export function HeroBanner({
           top: 0,
           width: '100%',
           height: '100vh',
-          background: src ? 'var(--bg)' : '#d6d6d6',
+          /* No photograph means a title card on the page's own ground,
+             not a grey field. A banner with nothing behind it is still
+             the opening of the chapter; it just opens in type. */
+          background: 'var(--bg)',
           overflow: 'hidden',
         }}
       >
@@ -318,22 +318,6 @@ export function HeroBanner({
         />
       )}
 
-      {/* Drafting hint — small mono label under the title while `src` is empty. */}
-      {!src && draftingHint && (
-        <div
-          className="hero-banner-drafting"
-          style={{
-            position: 'absolute',
-            left: 'clamp(20px, 4vw, 48px)',
-            bottom: 'clamp(20px, 4vh, 48px)',
-            color: '#5a5a5a',
-            pointerEvents: 'none',
-            zIndex: 2,
-          }}
-        >
-          <div className="label" style={{ opacity: 0.9 }}>{draftingHint}</div>
-        </div>
-      )}
 
       {/* Caption pinned bottom-left, on top of the photo. Always white —
           the bottom-left corner vignette (hero-banner-vignette) plus the
@@ -442,10 +426,7 @@ export function JournalHero({
   /** Where the back link goes. Defaults to /. */
   backHref?: string
 }) {
-  if (!src && currentHref) {
-    const journal = ACTIVE_JOURNALS.find(j => j.href === currentHref)
-    if (journal) src = journal.img
-  }
+  if (!src && currentHref) src = journalImage(currentHref)
   const words = title.split(/\s+/).filter(Boolean)
   const onBack = useBackOrFallback(backHref)
 
@@ -552,7 +533,7 @@ export function JournalHero({
           padding-right: var(--gutter);
         }
         /* One consistent size, matching the HeroBanner journals — left
-           aligned (JournalHero's own identity), wrapping to about two
+           aligned (JournalHero’s own identity), wrapping to about two
            lines rather than spreading edge-to-edge across the rail. */
         .journal-hero__title {
           margin: 0;
@@ -591,9 +572,9 @@ export function JournalHero({
           margin-left: calc(50% - 50vw);
           /* Clip the scroll-driven blur so its 20px halo doesn't bleed
              onto the surrounding white plate. overflow:hidden alone
-             isn't enough in Chrome (filter creates its own stacking
+             isn’t enough in Chrome (filter creates its own stacking
              context that can paint past the box); contain:paint locks
-             the paint region to the element's box. */
+             the paint region to the element’s box. */
           overflow: hidden;
           contain: paint;
         }
@@ -752,13 +733,17 @@ export function OneCol({
       <div className="section-w">
         <Reveal>
           {/* Flush-left within section-w (margin: 0, not 0 auto) so a
-              OneCol's heading + body line up with adjacent
-              ScrollHighlight stanzas (which also sit at section-w's
+              OneCol’s heading + body line up with adjacent
+              ScrollHighlight stanzas (which also sit at section-w’s
               left edge). Previously the OneCol block was centered
               within section-w, producing a visible indent mismatch
               between consecutive sections on /rta and elsewhere. */}
           <div style={{ maxWidth: 760, margin: 0, textAlign: 'left' }}>
-            <h2 style={{ marginTop: 0, marginBottom: 'var(--space-4)' }}>{heading}</h2>
+            {/* space-6, not space-4. Sixteen pixels under a 44px heading
+                read as the heading being crushed onto its own paragraph;
+                the one-column block has no second column to give the
+                heading air, so it has to come from below it. */}
+            <h2 style={{ marginTop: 0, marginBottom: 'var(--space-6)' }}>{heading}</h2>
             <div className="article-body">{children}</div>
           </div>
         </Reveal>
@@ -882,6 +867,14 @@ export function Term({ tip, children }: { tip: string; children: ReactNode }) {
       video moments. Renders an image (default), a video, or — when
       `src` is empty — a grey drafting card with a centred type +
       caption label, all sharing the same expanding gesture. */
+/* ── CrossfadeBanner — two or more frames, one banner stage ─────────
+      Stacked <Placeholder>s each own a 160vh scroll stage, so a pair
+      cost 320vh to deliver one beat. As frames they share a stage and
+      crossfade in place, with a dot per frame. */
+export function CrossfadeBanner({ frames }: { frames: BannerFrame[] }) {
+  return <ExpandingBanner frames={frames} />
+}
+
 export function Placeholder({
   src,
   alt,
@@ -940,20 +933,49 @@ export function DataGrid({
   rule?: boolean
   children: ReactNode
 }) {
+  /* Text cards read as a list; picture cards stay a grid.
+   *
+   * Three columns of prose forces every card to a ~20-character measure,
+   * which broke words mid-line and made three short paragraphs harder to
+   * read than three rows would be. A tile has an image doing the work of
+   * the column, so those keep the grid. The distinction is read off the
+   * children rather than passed in, so every existing call site gets the
+   * right one without being touched. */
+  const isList = !Children.toArray(children).some(
+    (c) => isValidElement<{ img?: string; video?: string }>(c)
+      && (c.props.img || c.props.video),
+  )
+
   const grid = (
     <div
-      className="data-grid"
+      className={`data-grid${isList ? ' is-list' : ''}`}
       style={{
         display: 'grid',
-        gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-        gap: 'clamp(24px, 3vw, 48px)',
+        gridTemplateColumns: isList ? '1fr' : `repeat(${cols}, minmax(0, 1fr))`,
+        gap: isList ? '0' : 'clamp(24px, 3vw, 48px)',
         marginTop: standalone ? 0 : 'clamp(24px, 4vh, 40px)',
       }}
     >
       {children}
       <style jsx>{`
+        /* Label left, body right, on one rule. Below 700 the two stack
+           and the rule still separates the rows. */
+        .data-grid.is-list :global(.data-row) {
+          display: grid;
+          grid-template-columns: minmax(0, 5fr) minmax(0, 11fr);
+          gap: clamp(16px, 3vw, 48px);
+          align-items: baseline;
+          padding: 18px 0;
+        }
+        .data-grid.is-list :global(.data-row:last-child) { border-bottom: 1px solid var(--border); }
+        @media (max-width: 700px) {
+          .data-grid.is-list :global(.data-row) {
+            grid-template-columns: 1fr;
+            gap: 8px;
+          }
+        }
         @media (max-width: 768px) {
-          .data-grid {
+          .data-grid:not(.is-list) {
             grid-template-columns: 1fr !important;
             /* Stacked tiles on mobile need real breathing room — match
                the homepage .pillar-grid rhythm. */
@@ -980,13 +1002,12 @@ export function DataCard({
   video,
   poster,
   alt,
-  type,
 }: {
   label?: string
   value?: ReactNode
   children?: ReactNode
-  /** When set (or when `type` is provided), the card renders as a
-   *  homepage-hero-style tile: 4:5 thumbnail above the heading and body. */
+  /** When set, the card renders as a homepage-hero-style tile: 4:5
+   *  thumbnail above the heading and body. */
   img?: string
   /** Optional 4:5 video. Renders as an autoplaying muted loop in the
    *  thumbnail slot, with `poster` as the still fallback. Promotes the
@@ -996,12 +1017,15 @@ export function DataCard({
    *  on reduced-motion. */
   poster?: string
   alt?: string
-  /** Image-type suggestion shown in the grey placeholder when `img` is
-   *  empty — e.g. "Portrait", "Detail", "Landscape". Setting `type`
-   *  alone (without `img`) also promotes the card to tile mode. */
+  /** Shot brief for a picture nobody has taken yet — "Portrait",
+   *  "Detail", "Landscape". Kept so a call site can carry the note, but
+   *  it no longer renders: a card with no photograph is a row of text. */
   type?: string
 }) {
-  const isTile = !!img || !!video || !!type
+  /* A note about a photograph is not a photograph: `type` alone used to
+     promote the card to a 4:5 tile and fill it with grey. Only real media
+     makes a tile now; everything else is a row. */
+  const isTile = !!img || !!video
   /* Lazy-play DataCard videos via IntersectionObserver. autoPlay +
      preload="metadata" was enough to make every off-screen tile
      buffer ~1-2 MB on page load (a 3-card wisdom grid sitting ~9000
@@ -1022,7 +1046,6 @@ export function DataCard({
     return () => observer.disconnect()
   }, [video])
   if (isTile) {
-    const placeholderLabel = [type, typeof value === 'string' ? value : undefined].filter(Boolean).join(' · ')
     return (
       <div className="data-card">
         <div
@@ -1033,7 +1056,7 @@ export function DataCard({
             /* Portrait 4:5 — matches the homepage pillar grid so journal
                tiles share the same proportions as the home hero. */
             aspectRatio: '4 / 5',
-            background: '#d6d6d6',
+            background: 'var(--bg-card)',
             borderRadius: 'var(--radius-1)',
             overflow: 'hidden',
             marginBottom: 20,
@@ -1060,21 +1083,6 @@ export function DataCard({
               decoding="async"
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
-          ) : placeholderLabel ? (
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 16,
-                textAlign: 'center',
-                color: '#5a5a5a',
-              }}
-            >
-              <div className="label" style={{ opacity: 0.9 }}>{placeholderLabel}</div>
-            </div>
           ) : null}
         </div>
         {value && <h3 style={{ margin: 0, marginBottom: 12 }}>{value}</h3>}
@@ -1082,9 +1090,12 @@ export function DataCard({
       </div>
     )
   }
+  /* A row of the list. The hairline sits above each row and the grid
+     closes the last one, so the set reads as a table of rows rather than
+     as three cards that happen to be adjacent. */
   return (
-    <div style={{ borderTop: '1.5px solid var(--border-strong)', paddingTop: 16 }}>
-      {value && <p className="p1" style={{ margin: 0, marginBottom: 12 }}>{value}</p>}
+    <div className="data-row" style={{ borderTop: '1px solid var(--border)' }}>
+      {value && <p className="p1" style={{ margin: 0 }}>{value}</p>}
       {children && <div className="p1" style={{ color: 'var(--text-body)' }}>{children}</div>}
     </div>
   )
@@ -1208,7 +1219,7 @@ export function SpecTable({
 /* ── Portrait — a CONTAINED tall image (or video), for visuals that are
       intentionally portrait and should stay that way rather than being
       cropped into a full-bleed landscape strip. Sits inside the content
-      column at a comfortable width, holds the image's own tall ratio, and
+      column at a comfortable width, holds the image’s own tall ratio, and
       carries a bottom-left mono caption. Default ratio 5 / 7. */
 export function Portrait({
   src,
@@ -1224,7 +1235,9 @@ export function Portrait({
   poster?: string
   alt?: string
   caption?: string
-  /** CSS aspect-ratio string matching the image so nothing is cropped. */
+  /** The picture's own aspect ratio, as a CSS string. The box is set to
+   *  it, so nothing is cropped and the space is reserved before the file
+   *  loads. Declare the real one. */
   ratio?: string
   align?: 'left' | 'center' | 'right'
 }) {
@@ -1239,10 +1252,15 @@ export function Portrait({
     io.observe(v)
     return () => io.disconnect()
   }, [video])
-  const justify = align === 'left' ? 'flex-start' : align === 'right' ? 'flex-end' : 'center'
   return (
     <section style={{ padding: 'var(--section-gap) 0' }}>
-      <div className="section-w" style={{ display: 'flex', justifyContent: justify }}>
+      {/* A block, not a flex row. The Reveal wrapper sits between this
+          and the figure, and as a flex item with no width of its own it
+          shrank to its content — the picture came out 365px wide inside a
+          1200px rail, varying with the length of its own caption. As a
+          plain block child, width:100% on the figure resolves against the
+          rail. `align` is moot while the figure fills it. */}
+      <div className="section-w">
         <Reveal>
           <figure className="portrait" style={{ ['--pt-ratio' as string]: ratio }}>
             <div className="portrait__media">
@@ -1255,11 +1273,29 @@ export function Portrait({
             </div>
             {caption && <figcaption className="label portrait__caption">{caption}</figcaption>}
             <style jsx>{`
+              /* Full rail. It used to be clamp(300px, 46vw, 560px), which
+                 put the picture at half the width of the text and the
+                 spec table beside it — it read as undersized rather than
+                 as a deliberate inset. */
               .portrait {
                 margin: 0;
-                width: clamp(300px, 46vw, 560px);
+                width: 100%;
                 max-width: 100%;
               }
+              /* The box holds the ratio of the picture that goes in it,
+                 which the caller declares. Getting that right is the
+                 whole job: matched, object-fit cover crops nothing and
+                 the space is reserved before the file loads. A fixed ratio applied
+                 to every image regardless of its shape is what made this
+                 letterbox a 16:9 plate into a 4:5 hole.
+
+                 Two things were tried and failed. A :has() rule scoping
+                 :global(img) to release the ratio once an image exists is
+                 dropped silently by styled-jsx and never reaches the
+                 stylesheet — backticks in this comment would break the
+                 template literal too, which is why there are none.
+                 Dropping the ratio entirely collapses the box to zero
+                 height until a lazy image loads. */
               .portrait__media {
                 position: relative;
                 width: 100%;
@@ -1411,10 +1447,19 @@ export function ScrollHighlight({
           {lines.map((line, lineIdx) => {
             const words = line.split(/\s+/).filter(Boolean)
             const isLast = lineIdx === lines.length - 1
+            /* The gap between lines is a paragraph gap, which is right when
+               each line is its own statement — "Picked by hand. / Dried in
+               the sun. / Released by the season." It is wrong when one
+               sentence is broken across two lines for the shape of it:
+               "The land has been computing / longer than any machine" came
+               out as two separate lines a paragraph apart. A line that does
+               not finish its sentence is continued by the next, so those two
+               sit on the leading instead. */
+            const continues = !isLast && !/[.!?:]["'’”]?$/.test(line.trim())
             return (
               <span
                 key={lineIdx}
-                style={{ display: 'block', marginBottom: isLast ? 0 : 'var(--space-6)' }}
+                style={{ display: 'block', marginBottom: isLast ? 0 : continues ? 0 : 'var(--space-6)' }}
               >
                 {words.map((w, i) => {
                   wordIndex++
@@ -1455,6 +1500,15 @@ export function ScrollHighlight({
                     </span>
                   )
                 })}
+                {/* A line break carries no whitespace of its own. Each
+                    line is a display:block span, so the last word of one
+                    ran straight into the first of the next everywhere the
+                    text is read rather than looked at — "the small
+                    livesthat keep the large system alive". Screen
+                    readers, the Ask Aura corpus and every crawler saw it
+                    that way. A trailing space collapses to nothing on
+                    screen and separates the two everywhere else. */}
+                {!isLast ? ' ' : ''}
               </span>
             )
           })}
@@ -1476,12 +1530,12 @@ export function Continue({
 }: {
   currentHref?: string
   count?: number
-  items?: { href: string; label: string; description: string; img?: string }[]
+  items?: { href: string; label: string; description?: string; img?: string }[]
   /** Eyebrow above the cards. Defaults to "Continue reading" (journals);
    *  company pages pass their own, e.g. "Explore". */
   heading?: string
 }) {
-  const resolved: { href: string; label: string; description: string; img?: string }[] =
+  const resolved: { href: string; label: string; description?: string; img?: string }[] =
     items ?? nextActiveJournals(currentHref, count).map(j => ({
       href: j.href,
       label: j.title,
@@ -1508,6 +1562,7 @@ export function Continue({
               <Link
                 key={item.href}
                 href={item.href}
+                aria-label={item.description ? `${item.label} — ${item.description}` : undefined}
                 className="continue-card"
                 style={{
                   display: 'block',
@@ -1539,8 +1594,13 @@ export function Continue({
                     decoding="async"
                   />
                 </div>
-                <h3 style={{ margin: 0, marginBottom: 12 }}>{item.label}</h3>
-                <div className="p1" style={{ color: 'var(--text-body)' }}>{item.description}</div>
+                {/* Picture and name. The lede under each card put a
+                    paragraph beneath every one of them, and three or four
+                    of those at the foot of a page read as a contents list
+                    rather than as a row of doors. The description is still
+                    accepted so a call site can carry it, and still used as
+                    the card's accessible name; it is not printed. */}
+                <h3 style={{ margin: 0 }}>{item.label}</h3>
               </Link>
             ))}
           </div>
@@ -1553,7 +1613,7 @@ export function Continue({
               position: relative;
               width: 100%;
               aspect-ratio: 16 / 9;
-              background: #d6d6d6;
+              background: var(--bg-card);
               border-radius: var(--radius-1);
               overflow: hidden;
               margin-bottom: 24px;

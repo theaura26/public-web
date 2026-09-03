@@ -118,8 +118,8 @@ export default function ContactPage() {
           </Reveal>
           <Reveal delay={100}>
             <p className="p1" style={{ maxWidth: 520, marginTop: 32 }}>
-              Whether it&rsquo;s coffee, collaboration, or just a conversation —
-              we&rsquo;d love to hear from you.
+              Coffee, collaboration, or a conversation &mdash; write, and
+              somebody here reads it.
             </p>
           </Reveal>
         </div>
@@ -231,7 +231,7 @@ export default function ContactPage() {
                     id="message"
                     className={`ph-no-capture field-input${touched.message && errors.message ? ' has-error' : ''}`}
                     rows={4}
-                    placeholder="Tell us what you're thinking..."
+                    placeholder="Tell us what you’re thinking..."
                     value={fields.message}
                     onChange={e => set('message', e.target.value)}
                     onBlur={() => blur('message')}
@@ -270,9 +270,9 @@ export default function ContactPage() {
       </section>
 
       <Continue
-        heading="Explore"
+        heading="More about Aura"
         items={[
-          { href: '/reason', label: 'The Reason', description: 'Why Aura exists — the founder’s letter, grown over generations.', img: '/the-reason/aura-flowers-1.png' },
+          { href: '/regenerative-life/the-reason', label: 'The Reason', description: 'Why Aura exists — the founder’s letter, grown over generations.', img: '/the-reason/aura-flowers-1.png' },
           { href: '/atelier', label: 'Atelier', description: 'The labs and workshops — clay, fibre, wood, sound, type, software.', img: '/aura-studios/aura-studios.jpg' },
           { href: '/brand', label: 'Our Brand', description: 'The identity and voice — how Aura carries itself.', img: '/aura-hero.jpg' },
         ]}

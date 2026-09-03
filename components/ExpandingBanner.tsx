@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /* ═══════════════════════════════════════════════════════════════════
    EXPANDING BANNER — scroll-driven blur → clarity reveal.
@@ -19,11 +19,11 @@ import { useEffect, useRef } from 'react'
    finished card still while the reader kept scrolling, which is what
    reads as stuck.
 
-   Accepts either a video (`type="video"`, `src` is .mp4) or an image
-   (`type="image"`, `src` is a still). With no `src` the card renders as
-   a neutral grey drafting surface — same expanding gesture, with the
-   `caption` (and optional image-type hint) centred as a placeholder
-   label.
+   Accepts either a video (`mediaType="video"`, `src` is .mp4) or an
+   image (`mediaType="image"`, `src` is a still). With no `src` there is
+   nothing to expand and the banner renders nothing at all — a picture
+   slot with no picture used to be a grey card, which reads as an image
+   that failed rather than one nobody has taken.
 ═══════════════════════════════════════════════════════════════════ */
 
 export type ExpandingBannerProps = {
@@ -45,9 +45,64 @@ export type ExpandingBannerProps = {
    *  with `mix-blend-mode: difference` so it inverts against whatever
    *  is behind it (grey drafting card or a real photo). */
   titleOverlay?: React.ReactNode
+  /** Two or more frames sharing one banner stage, crossfading in place.
+   *
+   *  Stacking two banners meant 320vh of scroll through two grey cards
+   *  to deliver what is really one beat — the four valleys, the four
+   *  soils. As frames they occupy one stage and one scroll reveal, and
+   *  the reader gets both without paying twice for them. */
+  frames?: BannerFrame[]
 }
 
-export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption, type, titleOverlay }: ExpandingBannerProps) {
+export type BannerFrame = {
+  src?: string
+  mediaType?: 'image' | 'video'
+  poster?: string
+  alt?: string
+  caption?: string
+  type?: string
+}
+
+/** How long each frame holds, and how long the fade between them takes. */
+const FRAME_MS = 4600
+const FADE_MS = 900
+
+export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption, titleOverlay, frames }: ExpandingBannerProps) {
+  /* A frame with no photograph is a shot that has not been taken. It used
+     to render as a grey drafting card, which reads as a picture that
+     failed to load rather than as a picture nobody has made yet, so an
+     unshot frame is dropped and the ones that exist rotate without it. */
+  const usable = (frames ?? []).filter((fr) => fr.src)
+  const multi = usable.length > 1
+  const [active, setActive] = useState(0)
+  /* Reduced motion used to stop the rotation dead, because the dots were
+     there to step through it by hand. Without them that would strand the
+     reader on the first frame and hide the rest, so the rotation runs
+     either way and reduced motion cuts between frames instead of fading:
+     every frame is seen, nothing animates. */
+  const [reduced, setReduced] = useState(false)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  }, [])
+  useEffect(() => {
+    if (!multi) return
+    const id = window.setInterval(
+      () => setActive((i) => (i + 1) % usable.length),
+      FRAME_MS,
+    )
+    return () => window.clearInterval(id)
+  }, [multi, usable.length])
+
+  /* With frames, the active one supplies what the single-media props
+     would have. The scroll machinery below is untouched: it drives one
+     wrapper, and the frames crossfade inside it. */
+  const f = usable.length ? usable[active % usable.length] : undefined
+  if (f) {
+    src = f.src; mediaType = f.mediaType ?? 'image'; poster = f.poster
+    alt = f.alt; caption = f.caption
+  }
+
   const wrapRef = useRef<HTMLDivElement>(null)
   const innerRef = useRef<HTMLDivElement>(null)
   const cardRef = useRef<HTMLDivElement>(null)
@@ -192,7 +247,10 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
     return () => observer.disconnect()
   }, [mediaType])
 
-  const draftingLabel = [type, caption].filter(Boolean).join(' · ')
+
+  /* Nothing to show. Every hook above has already run, so the early
+     return is safe here and nowhere earlier. */
+  if (!src) return null
 
   return (
     <div ref={wrapRef} className="expanding-banner-wrap" style={{ position: 'relative', zIndex: 0 }}>
@@ -219,10 +277,10 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
             position: 'relative',
             overflow: 'hidden',
             borderRadius: 3,
-            background: src ? 'var(--bg)' : '#d6d6d6',
+            background: 'var(--bg)',
           }}
         >
-          {src && mediaType === 'video' && (
+          {!multi && src && mediaType === 'video' && (
             <video
               ref={mediaRef as React.RefObject<HTMLVideoElement>}
               muted
@@ -245,7 +303,7 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
               <source src={src} type="video/mp4" />
             </video>
           )}
-          {src && mediaType === 'image' && (
+          {!multi && src && mediaType === 'image' && (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               ref={mediaRef as React.RefObject<HTMLImageElement>}
@@ -268,21 +326,73 @@ export function ExpandingBanner({ src, mediaType = 'image', poster, alt, caption
               }}
             />
           )}
-          {!src && draftingLabel && (
+          {/* Every frame stacked in one wrapper, crossfading on opacity.
+              The wrapper takes mediaRef, so the scroll reveal blurs and
+              scales the stack as a single object exactly as it does a
+              single image. */}
+          {multi && (
             <div
               ref={mediaRef as React.RefObject<HTMLDivElement>}
               style={{
                 position: 'absolute',
                 inset: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 24,
-                textAlign: 'center',
-                color: '#5a5a5a',
+                transform: 'scale(1.04)',
+                willChange: 'filter, transform',
               }}
             >
-              <div className="label" style={{ opacity: 0.9, maxWidth: 'min(80%, 720px)' }}>{draftingLabel}</div>
+              {usable.map((fr, i) => (
+                <div
+                  key={i}
+                  aria-hidden={i !== active}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    opacity: i === active ? 1 : 0,
+                    transition: reduced ? 'none' : `opacity ${FADE_MS}ms ease`,
+                  }}
+                >
+                  {fr.src && (fr.mediaType ?? 'image') === 'video' ? (
+                    <video
+                      muted
+                      loop
+                      playsInline
+                      autoPlay
+                      preload="none"
+                      poster={fr.poster}
+                      aria-label={fr.alt}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    >
+                      <source src={fr.src} type="video/mp4" />
+                    </video>
+                  ) : fr.src ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={fr.src}
+                      alt={fr.alt ?? fr.caption ?? ''}
+                      loading="lazy"
+                      decoding="async"
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 24,
+                        textAlign: 'center',
+                        color: '#5a5a5a',
+                      }}
+                    >
+                      <div className="label" style={{ opacity: 0.9, maxWidth: 'min(80%, 720px)' }}>
+                        {[fr.type, fr.caption].filter(Boolean).join(' · ')}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           )}
           {/* Corner vignette — soft radial shadow anchored at bottom-left

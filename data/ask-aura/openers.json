@@ -1,0 +1,407 @@
+{
+  "/artistry": {
+    "hash": "1b5570e2270cb070",
+    "line": "This is where we shape ideas into lasting craft — ask me anything.",
+    "prompts": [
+      "How does subtraction guide your making?",
+      "What crafts are combined here?",
+      "How do you use AI in artistry?"
+    ]
+  },
+  "/regenerative-life/artistry": {
+    "hash": "72e094189d685a46",
+    "line": "This is where craft and nature come together — ask me anything.",
+    "prompts": [
+      "What does natural intelligence mean here?",
+      "How does Aura build for 1,000 years?",
+      "What makes Aura’s hospitality unique?"
+    ]
+  },
+  "/biodynamic": {
+    "hash": "65edad3602879b18",
+    "line": "This estate lives and breathes as one — what would you like to know?",
+    "prompts": [
+      "What makes biodynamic a worldview?",
+      "How does the herd power the estate?",
+      "What are biodynamic preparations?"
+    ]
+  },
+  "/brand": {
+    "hash": "b7554c28feb12af5",
+    "line": "This is the heart of Aura’s identity — what do you want to know?",
+    "prompts": [
+      "What are Aura’s three intelligences?",
+      "How does Aura define Natural Intelligence?",
+      "What are Aura’s brand principles?"
+    ]
+  },
+  "/circular": {
+    "hash": "be1c19d44fd539fc",
+    "line": "This is how we turn waste into rich soil — ask me anything.",
+    "prompts": [
+      "How does CPP slow compost work?",
+      "What is Jeevamrit made of?",
+      "How do you test soil quality?"
+    ]
+  },
+  "/coffee": {
+    "hash": "b3b925c81fa7c595",
+    "line": "This is the story behind every bean we grow — ask me anything.",
+    "prompts": [
+      "What makes Lot 001 special?",
+      "How does dry osmosis work?",
+      "What’s unique about Solera Maceration?"
+    ]
+  },
+  "/contact": {
+    "hash": "1543ba2904e7aadd",
+    "line": "Got questions or want to work with us? Ask away.",
+    "prompts": [
+      "How can I contact Aura?",
+      "Where is the estate located?",
+      "Can I visit the atelier?"
+    ]
+  },
+  "/ecology": {
+    "hash": "5d63117946a80078",
+    "line": "This is how we measure the estate’s health — ask me anything.",
+    "prompts": [
+      "How is the Health Index calculated?",
+      "What role do fungi play here?",
+      "How does soil breathing get measured?"
+    ]
+  },
+  "/fermentation": {
+    "hash": "927cd0f5c08b4bb1",
+    "line": "This is where fermentation shapes our coffee and soil—ask me anything.",
+    "prompts": [
+      "How does coffee fermentation work?",
+      "Why use cow dung in fermentation?",
+      "What does 'sealed and logged' mean?"
+    ]
+  },
+  "/herd": {
+    "hash": "ba4b1dd3d746e859",
+    "line": "This is the herd that powers our estate — ask me anything.",
+    "prompts": [
+      "Why choose Malnad Gidda cattle?",
+      "How is every animal cared for?",
+      "What does 'every animal, a passport' mean?"
+    ]
+  },
+  "/": {
+    "hash": "adf0453ec2462dec",
+    "line": "Welcome to Aura — ask me anything about our work and values.",
+    "prompts": [
+      "What does Ṛta mean here?",
+      "How do the three intelligences work?",
+      "What makes Mudigere regenerative?"
+    ]
+  },
+  "/land": {
+    "hash": "8b51a915a6a4c0a0",
+    "line": "This land tells our story — what do you want to know?",
+    "prompts": [
+      "What makes Aura Estate unique?",
+      "How do you work this land?",
+      "What crops grow here besides coffee?"
+    ]
+  },
+  "/living-systems": {
+    "hash": "4ca4ce4305317a5c",
+    "line": "This is how our forest farm really works — ask me anything.",
+    "prompts": [
+      "How does the canopy support crops?",
+      "What role does the herd play?",
+      "How do the nine data streams help?"
+    ]
+  },
+  "/mudigere": {
+    "hash": "62b00d08343259cc",
+    "line": "This is Mudigere, where our coffee story begins — ask me anything.",
+    "prompts": [
+      "Why is Mudigere special for coffee?",
+      "How do the four farm layers work?",
+      "What role do the bees play?"
+    ]
+  },
+  "/ohara": {
+    "hash": "72494cb451232af0",
+    "line": "This is Ohara valley, where nature and design live together — ask me anything.",
+    "prompts": [
+      "How does Ohara keep its own time?",
+      "What makes the home seventy years old?",
+      "How do Shu, Ha, Ri shape Ohara?"
+    ]
+  },
+  "/regenerative-life/the-reason": {
+    "hash": "8b3c855987490542",
+    "line": "This is why we do what we do — ask me anything.",
+    "prompts": [
+      "Why did Aura start farming here?",
+      "How do generations shape Aura’s work?",
+      "What inspired Aura’s brand and atelier?"
+    ]
+  },
+  "/residency": {
+    "hash": "34c75b922c1c64df",
+    "line": "This residency is where deep focus meets creative craft — ask me anything.",
+    "prompts": [
+      "Who are monastic polymaths?",
+      "What makes the residency unique?",
+      "How do forest islands help here?"
+    ]
+  },
+  "/rta": {
+    "hash": "eced999165f63594",
+    "line": "This land guides every choice we make here — what do you want to ask?",
+    "prompts": [
+      "What is the Vedic order here?",
+      "How does the land decide timing?",
+      "What happens in RTA Labs?"
+    ]
+  },
+  "/shade": {
+    "hash": "8114b44ac305f118",
+    "line": "This is how we manage light for perfect coffee — ask me anything.",
+    "prompts": [
+      "How do you measure light precisely?",
+      "What is the Health Index here?",
+      "Why cut only prescribed shade?"
+    ]
+  },
+  "/wisdom": {
+    "hash": "57a847ab561eb72d",
+    "line": "This is the moral spine that guides everything we do here.",
+    "prompts": [
+      "What are the seven decision filters?",
+      "How do the three intelligences work?",
+      "What is the fourfold self-check?"
+    ]
+  },
+  "/bug-hotels": {
+    "hash": "a4f2551ea7d26932",
+    "line": "This is the bug hotel that keeps our estate thriving — ask me anything.",
+    "prompts": [
+      "What is a bug hotel?",
+      "How do bug hotels help pollinators?",
+      "Why are drilled logs used here?"
+    ]
+  },
+  "/field-notes/animals": {
+    "hash": "2b87ea2b6e423137",
+    "line": "Let me tell you about the animals living here with us.",
+    "prompts": [
+      "How do Malnad Gidda cows help the estate?",
+      "What insects live on the plantation?",
+      "Which pollinators are most important here?"
+    ]
+  },
+  "/field-notes/art-culture": {
+    "hash": "95c85331011ec1d4",
+    "line": "This is where our art and culture come alive — what would you like to ask?",
+    "prompts": [
+      "What is the Gau Angan lamp ritual?",
+      "Who are the monastic polymaths?",
+      "What happens at the Aura Festival?"
+    ]
+  },
+  "/field-notes/biodiversity": {
+    "hash": "166879f1f03fdd0c",
+    "line": "This is where we track life thriving across our estate — ask me anything.",
+    "prompts": [
+      "How do bug hotels support biodiversity?",
+      "What is the Health Index measuring?",
+      "How does the Sentinel Palm fit in?"
+    ]
+  },
+  "/field-notes/biodynamic": {
+    "hash": "e0f2c4b20ccefceb",
+    "line": "This is how we work with nature’s rhythms — ask me anything.",
+    "prompts": [
+      "What are the fourteen numbered pits?",
+      "How do cows contribute to fertility?",
+      "What is circular intelligence here?"
+    ]
+  },
+  "/field-notes/coffee-fermentation": {
+    "hash": "485f7f45cc0e9c53",
+    "line": "This is where coffee’s flavour journey really begins — ask me anything.",
+    "prompts": [
+      "How does controlled decay affect flavour?",
+      "Why stop fermentation at pH 4.2?",
+      "What role does Malabar Pepper play?"
+    ]
+  },
+  "/field-notes/labs": {
+    "hash": "dbcff03badc65a60",
+    "line": "This is where we test and track every step — ask me anything.",
+    "prompts": [
+      "How do ferment logs work here?",
+      "What decides when a tank comes off?",
+      "How do colony counts affect coffee?"
+    ]
+  },
+  "/field-notes/land-ecology": {
+    "hash": "23a0570884c34a19",
+    "line": "This is the land and life we nurture here — what do you want to know?",
+    "prompts": [
+      "What is red laterite soil?",
+      "How do forest islands help ecology?",
+      "Which plants are removed from understorey?"
+    ]
+  },
+  "/field-notes": {
+    "hash": "36f849a8f943906e",
+    "line": "Here’s what we’ve learned about our land and coffee—ask me anything.",
+    "prompts": [
+      "What is biodynamic farming here?",
+      "How do labs improve coffee quality?",
+      "Which animals live on the estate?"
+    ]
+  },
+  "/forest-islands": {
+    "hash": "ec7923c241348f3f",
+    "line": "This is how we bring life back to the land — ask me anything.",
+    "prompts": [
+      "What are forest islands here?",
+      "How do bug hotels help restoration?",
+      "Why include cows in the process?"
+    ]
+  },
+  "/from-aura": {
+    "hash": "4983fd93960df071",
+    "line": "Here's what we grow, craft, and share with visitors like you.",
+    "prompts": [
+      "What coffee varieties does Aura grow?",
+      "What objects and editions are made here?",
+      "When can visitors experience the estate?"
+    ]
+  },
+  "/land-spirit-soul": {
+    "hash": "41aca2ef82a69337",
+    "line": "This is the heart of our estate’s spirit — ask me anything.",
+    "prompts": [
+      "What is the diya’s significance?",
+      "How does Vedic farming work here?",
+      "Why is the Sentinel Palm special?"
+    ]
+  },
+  "/now": {
+    "hash": "995e37a85c5cd102",
+    "line": "Here's the latest from the estate — what would you like to know?",
+    "prompts": [
+      "How much rain fell this monsoon?",
+      "What’s the current soil temperature?",
+      "How is the moon phase relevant here?"
+    ]
+  },
+  "/pollinators": {
+    "hash": "1fd2165158397624",
+    "line": "Pollinators are vital here — what would you like to know?",
+    "prompts": [
+      "Which plants support Aura’s pollinators?",
+      "How do pollinators affect coffee flowering?",
+      "What steps is Aura taking for pollinators?"
+    ]
+  },
+  "/regenerative-coffee/biodynamic": {
+    "hash": "e10ec765a311c8d8",
+    "line": "This is how we grow coffee in a closed, living system — ask me anything.",
+    "prompts": [
+      "What does 'closed loop' mean here?",
+      "How do animals help the farm?",
+      "What data do you track on each batch?"
+    ]
+  },
+  "/regenerative-coffee/experience": {
+    "hash": "5625b575fc83b38d",
+    "line": "Join me here and ask anything about the Aura Festival experience.",
+    "prompts": [
+      "What happens on the third day?",
+      "How does the cattle system work?",
+      "What data is collected during the festival?"
+    ]
+  },
+  "/regenerative-coffee/flavour": {
+    "hash": "8791a26debc55d5b",
+    "line": "This is where our coffee’s unique flavours come alive — ask me anything.",
+    "prompts": [
+      "How do you decide flavour lots?",
+      "What happens during fermentation?",
+      "Why are some lots award-winning?"
+    ]
+  },
+  "/regenerative-coffee/transparency": {
+    "hash": "fa8452270b8d8402",
+    "line": "Here’s how we keep everything honest — ask me anything.",
+    "prompts": [
+      "What data do sensors record?",
+      "How is soil health verified?",
+      "Who scores the coffee quality?"
+    ]
+  },
+  "/regenerative-coffee": {
+    "hash": "0c02d6350f501837",
+    "line": "This is the heart of our regenerative coffee — ask me anything.",
+    "prompts": [
+      "What makes Aura’s coffee regenerative?",
+      "How does biodynamic farming help soil?",
+      "What role does microbiome play here?"
+    ]
+  },
+  "/regenerative-life/aura-intelligence": {
+    "hash": "7baf6ba7216a8bc2",
+    "line": "This is how we read the land to work with it — ask me anything.",
+    "prompts": [
+      "What is Aura Intelligence?",
+      "How does Aura read the land?",
+      "Why is this possible now?"
+    ]
+  },
+  "/privacy": {
+    "hash": "60a1668fb7216f46",
+    "line": "I'm here to explain how we protect your privacy on this site.",
+    "prompts": [
+      "What data does Aura collect?",
+      "How does Aura use analytics?",
+      "What are my privacy rights?"
+    ]
+  },
+  "/regenerative-life/the-plantation": {
+    "hash": "58026baf58d6bbfb",
+    "line": "This is the plantation where our regenerative journey begins — ask me anything.",
+    "prompts": [
+      "How do you measure soil fertility?",
+      "What animals help create fertility?",
+      "What lives in the four storeys?"
+    ]
+  },
+  "/regenerative-life/vedic-and-biodynamic": {
+    "hash": "fea5f28e0873b6cc",
+    "line": "This is how we live and work with nature here — ask me anything.",
+    "prompts": [
+      "What is biodynamic farming here?",
+      "How does the calendar guide work?",
+      "What are BD 500 through 508?"
+    ]
+  },
+  "/regenerative-life/food-and-fermentation": {
+    "hash": "f71033103aacba12",
+    "line": "This is where coffee meets fermentation — ask me anything.",
+    "prompts": [
+      "What are Aura’s six fermentation methods?",
+      "How does Aura track every coffee lot?",
+      "What role does microbial activity play?"
+    ]
+  },
+  "/regenerative-life/rta": {
+    "hash": "6c07d768c19f5908",
+    "line": "This is how we let the land set the work's pace — ask me anything.",
+    "prompts": [
+      "What does RTA stand for here?",
+      "How does soil timing affect planting?",
+      "What is the role of a timestamp?"
+    ]
+  }
+}

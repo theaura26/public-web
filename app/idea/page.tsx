@@ -61,15 +61,15 @@ export default function IdeaPage() {
       <TwoCol id="rta" heading="Right time, right action.">
         <p className="p1">
           The oldest instrument on the estate is timing.{' '}
-          <Term tip="Right time, right action — the principle that an action is right when it sits in alignment with everything around it, not only with the clock."><Rta /></Term>{' '}
-          holds that an action is right when it aligns with everything around it, not only with the
-          clock. Move the herd at the right hour and the soil builds; move it at the wrong one and
+          <Term tip="Right time, right action — the principle that an action is right when it sits in alignment with everything around it: the soil, the weather, the moon, the plant."><Rta /></Term>{' '}
+          holds that an action is right when it aligns with everything around it. The soil, the weather,
+          the moon and the plant all have a say in the hour. Move the herd at the right one and the soil builds; move it at the wrong one and
           the same animals bare the ground.
         </p>
         <p className="p1">
           This is working knowledge, and the instruments now confirm it season after season. Aura
           keeps the ancestral sense of time and puts numbers to it — reading the soil, the canopy,
-          and the water, and acting when the land, not the calendar, says to.
+          and the water, and acting when the land says to.
         </p>
       </TwoCol>
 
@@ -79,7 +79,7 @@ export default function IdeaPage() {
         <p className="p1">
           Nothing here is framed and forgotten. The claim gets checked — soil carbon and root depth
           at Mudigere, the canopy closing along the reserve boundary, the water table, the
-          herd&apos;s effect on the ground it works. Aura measures so a thousand-year promise stays
+          herd&rsquo;s effect on the ground it works. Aura measures so a thousand-year promise stays
           honest.
         </p>
         <p className="p1">
@@ -103,7 +103,7 @@ export default function IdeaPage() {
 
       <DataGrid cols={3} standalone>
         <DataCard value="1,000 yr">
-          The horizon Aura measures against — the frame that makes today&apos;s decision clear.
+          The horizon Aura measures against — the frame that makes today&rsquo;s decision clear.
         </DataCard>
         <DataCard value="150 acres">
           Under care at Mudigere — coffee, pepper, areca, forest, and pasture, held as one organism.
@@ -118,7 +118,7 @@ export default function IdeaPage() {
           Aura works the long horizon because that is where the deepest impact is made — soil that
           compounds, a forest that closes, a practice others can keep. We pair the oldest knowledge
           we have with the newest science we trust, and we hold both to one plan. That is what
-          generational impact looks like: the reason today&apos;s work is worth doing at all. Plant
+          generational impact looks like: the reason today&rsquo;s work is worth doing at all. Plant
           the tree whose shade you will not sit in. The rest is practice.
         </p>
       </OneCol>

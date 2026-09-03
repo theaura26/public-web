@@ -27,7 +27,7 @@ import { StorytellingScroller } from '@/components/StorytellingScroller'
 const HERD_PASSAGES = [
   { caption: 'The hands that tend the herd', media: [
     { image: '/herd/images/aura-relationship1.jpg', alt: 'The estate team with the herd at Mudigere' },
-    { image: '/herd/images/aura-dung.jpg', alt: "Fresh dung collected at dawn — the estate's raw material" },
+    { image: '/herd/images/aura-dung.jpg', alt: "Fresh dung collected at dawn — the estate’s raw material" },
   ] },
   { caption: 'The next generation, kept pure', media: [
     { video: '/herd/videos/aura-calf1.mp4', poster: '/herd/images/aura-calf1.jpg', alt: 'A Malnad Gidda calf on the estate — the next generation' },
@@ -45,13 +45,13 @@ export default function HerdPage() {
         src="/herd/videos/aura-relationship2.mp4"
         mediaType="video"
         poster="/herd/images/aura-relationship2.jpg"
-        caption="A hand, a mouthful of green, a calf leaning in. Fifty-two Malnad Gidda — the estate's engine — grazed on pesticide-free ground, tended by name, and read animal by animal."
+        caption="A hand, a mouthful of green, a calf leaning in. About fifty Malnad Gidda — the estate’s engine — grazed on pesticide-free ground, tended by name, and read animal by animal."
         alt="A caretaker hand-feeding a Malnad Gidda calf at Mudigere, the herd behind"
       />
 
-      <TwoCol id="reframe" heading="The herd is the estate's engine.">
+      <TwoCol id="reframe" heading="The herd is the estate’s engine.">
         <p className="p1">
-          Fifty-two{' '}
+          About fifty{' '}
           <Term tip="A small indigenous cattle breed of the Malnad region of Karnataka, adapted to this altitude, soil, and monsoon over centuries. Low-yield, hardy, low-input.">Malnad Gidda</Term>{' '}
           live and graze at Mudigere, and almost everything the soil is fed begins in their bodies. The
           compost, the pit, the microbial brew, the sprays that go out over the coffee — trace any of them
@@ -71,7 +71,7 @@ export default function HerdPage() {
         src="/herd/images/aura-grassland2.jpg"
         mediaType="image"
         alt="The Malnad Gidda herd grazing under the coffee canopy at Mudigere"
-        caption="Fifty-two, on their own ground"
+        caption="The herd, on their own ground"
       />
 
       <TwoCol id="loop" heading="Same land, same system.">
@@ -92,8 +92,8 @@ export default function HerdPage() {
       <ExpandingBanner
         src="/herd/images/aura-gift1.jpg"
         mediaType="image"
-        alt="Grass and grazer at Mudigere — each other's gift"
-        caption="Grass and grazer — each other's gift"
+        alt="Grass and grazer at Mudigere — each other’s gift"
+        caption="Grass and grazer — each other’s gift"
       />
 
       <StorytellingScroller
@@ -107,8 +107,8 @@ export default function HerdPage() {
           it needs it, treated with{' '}
           <Term tip="Plant-based sprays — neem, herbal decoctions, and biodynamic preparations — used in place of synthetic veterinary chemicals wherever possible.">organic sprays</Term>{' '}
           before reaching for a chemical. What touches an animal that grazes a pesticide-free block has to
-          answer to the same rule as the block. And it is a whole household, not a headcount: cows,
-          chickens, and the estate dogs now, goats to come, each known by the people who keep them.
+          answer to the same rule as the block. And it is a whole household: cows,
+          chickens, and the estate dogs now, goats to come, each known by name to the people who keep them.
         </p>
         <p className="p1">
           The closeness earns its keep. A caretaker washing a cow at dawn reads a limp, an off feed, a
@@ -126,17 +126,17 @@ export default function HerdPage() {
 
       <TwoCol id="passport" heading="Every animal, a passport.">
         <p className="p1">
-          The yellow tag in a cow&apos;s ear is the visible end of a living passport. Behind it, Aura
+          The yellow tag in a cow&rsquo;s ear is the visible end of a living passport. Behind it, Aura
           keeps her health day by day, the milk she gives, the urine collected from her, and, across the
           herd, the dung produced each morning. It is dense enough to run ahead of trouble — a{' '}
-          <Term tip="Reading the trend in an animal's daily measures — feed, yield, output, behaviour — to flag a health issue before it shows, and to plan the herd's rotation and rest.">predictive read</Term>{' '}
-          on each animal and on the whole herd&apos;s management. GPS tags, ordered and on their way, will
+          <Term tip="Reading the trend in an animal’s daily measures — feed, yield, output, behaviour — to flag a health issue before it shows, and to plan the herd’s rotation and rest.">predictive read</Term>{' '}
+          on each animal and on the whole herd&rsquo;s management. GPS tags, ordered and on their way, will
           add where and how each cow grazes to the same file.
         </p>
         <p className="p1">
           That record is what makes the estate traceable end to end. A batch of{' '}
           <Term tip="A living microbial culture fermented from cow dung, urine, jaggery, gram flour, and native soil, applied as a soil drench. Aura brews around 154,000 litres a year.">Jeevamrit</Term>{' '}
-          is tagged to the animals that fed it; the application is tagged to the block; the block&apos;s
+          is tagged to the animals that fed it; the application is tagged to the block; the block&rsquo;s
           soil is retested ninety days on. When a lot of coffee is sold, it traces back through soil and
           preparation to the animals that grazed that ground — animal to preparation to soil to cherry to
           cup, every link documented.
@@ -173,7 +173,7 @@ export default function HerdPage() {
         </p>
         <p className="p1">
           And measured is the operative word. Every one of those preparations is tested in the
-          estate&apos;s own lab — microbial counts and a full set of parameters — before a drop of it
+          estate&rsquo;s own lab — microbial counts and a full set of parameters — before a drop of it
           reaches the soil. What the animal produces, the lab reads; what the lab clears, the ground
           receives. The full making, testing, and correcting of those preparations is its own story —{' '}
           <a href="/circular">Circular Intelligence</a>.
@@ -184,21 +184,22 @@ export default function HerdPage() {
         <p className="p1">
           The Malnad Gidda is an indigenous Karnataka breed that has grazed these hills for centuries —
           small-framed, hardy, heat-tolerant, and adapted to the altitude, the monsoon, and the specific
-          grasses of the Western Ghats. Its gut microbiome is shaped by this landscape, not a generic one.
+          grasses of the Western Ghats. Aura keeps it because a gut shaped by this ground is the likeliest source of dung suited to it.
         </p>
         <p className="p1">
-          That is why the breed matters: the dung carries the microbiome. Malnad Gidda dung has a
-          microbial composition suited to this soil, co-evolved with it over generations, and a commercial
-          dairy breed cannot replicate it. Aura keeps the line pure and estate-bred, documented in each
-          passport — the herd is a genetic resource as much as an engine, an indigenous breed grown rare
-          in modern Karnataka, kept alive here because the soil asks for it.
+          That is the reasoning, and it is worth naming as reasoning. Dung carries the gut that made
+          it; a gut adapted to these grasses over generations is the likeliest source of biology suited
+          to this soil. No metagenomic comparison against another breed has been run here, so the estate
+          holds it as a belief it acts on rather than a result it can show you. It acts on it thoroughly:
+          the line is kept pure and estate-bred, documented in each passport, an indigenous breed grown
+          rare in modern Karnataka and kept alive here because the soil is thought to ask for it.
         </p>
       </TwoCol>
 
       <SpecTable
         title="The herd"
         rows={[
-          { label: 'Head', value: '52 Malnad Gidda' },
+          { label: 'Head', value: '~50 Malnad Gidda' },
           { label: 'Breed', value: 'Indigenous Karnataka, altitude-adapted' },
           { label: 'Frame', value: 'Small, hardy, heat-tolerant' },
           { label: 'Microbiome', value: 'Co-evolved with this soil' },
@@ -218,21 +219,21 @@ export default function HerdPage() {
       </ScrollHighlight>
 
       <DataGrid cols={3} standalone>
-        <DataCard img="/herd/images/aura-gift2.jpg" value="52">
-          Malnad Gidda at Mudigere — an indigenous breed, and the estate&apos;s biological engine.
+        <DataCard img="/herd/images/aura-gift2.jpg" value="~50">
+          Malnad Gidda at Mudigere — an indigenous breed, and the estate&rsquo;s biological engine.
         </DataCard>
         <DataCard img="/herd/images/aura-gift3.jpg" value="Daily">
           Health, milk, and urine logged per cow; dung logged per herd — a living record for every animal.
         </DataCard>
         <DataCard img="/herd/images/aura-grassland1.jpg" value="Lab-tested">
-          Every preparation the herd feeds — Jeevamrit, CPP, BD 500, compost — read in the estate&apos;s
+          Every preparation the herd feeds — Jeevamrit, CPP, BD 500, compost — read in the estate&rsquo;s
           own lab before the soil.
         </DataCard>
       </DataGrid>
 
       <OneCol id="close" heading="The engine is a generational asset.">
         <p className="p1">
-          The herd is the instrument that powers the estate&apos;s most durable asset — living soil, built
+          The herd is the instrument that powers the estate&rsquo;s most durable asset — living soil, built
           on what the animals return. And it is held together by hands: the person who bathes a cow at dawn
           is the one who reads her record, collects her dung, and stirs it into the brew that evening. When
           the herd is well the preparations are strong, and when the preparations are strong the soil is
@@ -245,7 +246,7 @@ export default function HerdPage() {
       <Continue
         items={[
           { href: '/circular', label: 'Circular Intelligence', description: 'Where the herd’s dung and urine go next — remade by hand into measured fertility, tested before the soil.', img: '/circular/images/aura-shed.jpg' },
-          { href: '/ecology', label: 'The Living System', description: 'The whole farm the herd feeds — fungi, worms, roots, and one Ecological Health Index per block.', img: '/aura-mudigere-landscape.jpg' },
+          { href: '/ecology', label: 'The Health Index', description: 'The whole farm the herd feeds — fungi, worms, roots, and one Ecological Health Index per block.', img: '/aura-mudigere-landscape.jpg' },
           { href: '/mudigere', label: 'Mudigere', description: 'Aura Estate — 150 acres in the Western Ghats, the ground the herd grazes and feeds.', img: '/aura-mudigere.jpg' },
         ]}
       />

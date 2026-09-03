@@ -20,7 +20,7 @@
 
 | Claim | Evidence | Source | Status | Publish? |
 |---|---|---|---|---|
-| 150 acres at Sampigekhan Estate, Mudigere, Chikmagalur district, Karnataka | Estate record | `app/land`, `app/mudigere-estate` | FACT | ✅ Yes |
+| 150 acres at Aura Estate, Mudigere, Chikmagalur district, Karnataka | Estate record | `app/land`, `app/mudigere-estate` | FACT | ✅ Yes |
 | 3,600 ft altitude | Estate record | `app/land` | FACT | ✅ Yes |
 | Red laterite soil, pH 6.0–6.5 | Estate soil tests `[NEEDS PROOF]` — attach a lab report | `app/land`, `app/coffee` | FACT | ✅ Yes |
 | 40–100 in annual rainfall; 14–30 °C; 58% humidity | Estate weather station at 3,600 ft | `app/land`, `app/provenance` | FACT | ✅ Yes |

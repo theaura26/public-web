@@ -31,8 +31,8 @@ export default function ArecaPage() {
         <p className="p1">
           At Mudigere the{' '}
           <Term tip="Areca catechu — the slender upright palm of coastal South Asia, grown for its nut and, on regenerative estates, as the structural mid-canopy.">areca palm</Term>{' '}
-          is the tree the whole plantation stands on. It grows straight — <strong>15 – 20 m</strong> on a
-          single vertical axis for its entire life — and Aura works it as the estate&apos;s mid-canopy,
+          is the tree the whole plantation stands on. It grows straight — <strong>15 – 20 m</strong>{' '}on a
+          single vertical axis for its entire life — and Aura works it as the estate&rsquo;s mid-canopy,
           the layer every other crop hangs off. It never wins a cupping score and never shows up on a
           menu. It holds up the ones that do.
         </p>
@@ -63,19 +63,19 @@ export default function ArecaPage() {
          can afford to bend.`}
       </ScrollHighlight>
 
-      <TwoCol id="lineage" heading="Karnataka's answer for a thousand years.">
+      <TwoCol id="lineage" heading="Karnataka’s answer for a thousand years.">
         <p className="p1">
           Areca is not a neutral tree here. Its nut (<Term tip="Kannada for the areca nut.">adike</Term>{' '}
           in Kannada), wrapped in a betel leaf, is offered at weddings, at temples, at the start of a
           conversation with an elder — a small formal gesture older than anyone can date. In the coastal
           and{' '}
           <Term tip="The Western Ghats districts of Karnataka, defined by heavy monsoon, evergreen forest, and a long lineage of coffee and areca growing.">Malnad</Term>{' '}
-          districts, a household&apos;s areca grove is at once a bank account and a family record.
+          districts, a household&rsquo;s areca grove is at once a bank account and a family record.
         </p>
         <p className="p1">
-          Aura grows it aware of that lineage. For a thousand years areca has been this landscape&apos;s
+          Aura grows it aware of that lineage. For a thousand years areca has been this landscape&rsquo;s
           answer to &ldquo;what shall we plant?&rdquo; — we are not introducing it, we are continuing it.
-          That is the estate&apos;s method in one tree: the oldest answer in the district, kept and
+          That is the estate&rsquo;s method in one tree: the oldest answer in the district, kept and
           measured rather than replaced.
         </p>
       </TwoCol>
@@ -109,12 +109,12 @@ export default function ArecaPage() {
         </DataGrid>
       </TwoCol>
 
-      <TwoCol id="patience" heading="A tree you plant for someone else's coffee.">
+      <TwoCol id="patience" heading="A tree you plant for someone else’s coffee.">
         <p className="p1">
           An areca takes five to seven years to bear its first useful nut, and longer before its trunk
           roughens enough for a pepper vine to trust. Plant one today and you are planting shade for a
-          block that will not exist for a decade. That is not a complaint. It is the estate&apos;s whole
-          logic written as a planting schedule.
+          block that will not exist for a decade. That is the estate&rsquo;s whole logic written as a
+          planting schedule.
         </p>
         <p className="p1">
           A palm Aura plants this year will still be the mid-canopy in the 2050s, holding up coffee that

@@ -8,8 +8,8 @@ import { CaretDown } from '@phosphor-icons/react'
 
    Ported from aura_roaster_v1.html: the "tap for lot data" flip cards
    and the eight-block estate map. Same black ground and hairline
-   grammar as the Scene pages; the interaction is the roaster draft's,
-   the clothes are the microsite's.
+   grammar as the Scene pages; the interaction is the roaster draft’s,
+   the clothes are the microsite’s.
 ═══════════════════════════════════════════════════════════════════ */
 
 /* ── data ───────────────────────────────────────────────────────── */
@@ -28,7 +28,7 @@ export type Lot = {
 export const ARABICA_LOTS: Lot[] = [
   {
     id: 'DO01',
-    eyebrow: 'SCA 85.25 · Excellent grade',
+    eyebrow: 'Our table: 85.25 · excellent range',
     name: 'Liquid Gold',
     method: 'Dry Osmosis',
     headline: ['Brix 19.55% · zero quakers', 'Agtron 63.2 · 48 hr anaerobic'],
@@ -49,7 +49,7 @@ export const ARABICA_LOTS: Lot[] = [
   },
   {
     id: 'AM01-A',
-    eyebrow: 'SCA 84.25 · Specialty grade',
+    eyebrow: 'Our table: 84.25 · specialty range',
     name: 'Silver Lining',
     method: 'Appassimento Maceration',
     headline: ['48 hr cold soak below 10 °C', '8-day anaerobic · Agtron 67.5'],
@@ -70,7 +70,7 @@ export const ARABICA_LOTS: Lot[] = [
   },
   {
     id: 'BW01',
-    eyebrow: 'SCA 83.00 · Specialty grade',
+    eyebrow: 'Our table: 83.00 · specialty range',
     name: 'Coal Black',
     method: 'Banana Wash',
     headline: ['24 hr anaerobic + 48 hr banana leaf', 'Brix 19.25% · Agtron 53.1'],
@@ -91,7 +91,7 @@ export const ARABICA_LOTS: Lot[] = [
   },
   {
     id: 'RH01',
-    eyebrow: 'SCA 82.25 · Specialty grade',
+    eyebrow: 'Our table: 82.25 · specialty range',
     name: 'Red Affair',
     method: 'Red Honey Anaerobic',
     headline: ['Mucilage on · anaerobic', 'Zero quakers · Agtron 64.5'],
@@ -232,20 +232,19 @@ type Block = {
   /* Map geometry, lifted from the roaster draft's own SVG so the
      estate reads as a shape rather than a list. viewBox 0 0 600 450. */
   d: string
-  fill: string
   lx: number
   ly: number
 }
 
 const BLOCKS: Block[] = [
-  { id: 'nagarakatte', d: 'M50,50 L200,30 L220,120 L180,180 L60,160 Z', fill: '#5B7F5B', lx: 130, ly: 100, name: 'Nagarakatte', varietal: 'Arabica Selection 9', lots: 'AM01 — Appassimento Maceration', brix: '20%', shade: 'Silver Oak, Rosewood, Fig', trees: '~4,500', desc: 'The Appassimento block. Cold-fermented below 10 °C, dried in a dark room for 25 days — the block that produced the SCA 84.25 lot. High canopy density, cool microclimate.' },
-  { id: 'byton', d: 'M210,30 L380,20 L400,100 L370,160 L230,120 Z', fill: '#6B8F4B', lx: 300, ly: 80, name: 'Byton Patte', varietal: 'Arabica Selection 9', lots: 'DO01 — Dry Osmosis · SMN01 — Solera Maceration', brix: '20–20.5%', shade: 'Silver Oak, Jackfruit, Wild Fig', trees: '~5,200', desc: 'Two flagship lots from a single block. The 85.25 Dry Osmosis and the Solera Maceration both draw from Byton’s dense shade canopy and well-drained laterite soil. The estate’s highest-scoring Arabica zone.' },
-  { id: 'tenginamara', d: 'M400,20 L550,50 L560,150 L410,110 Z', fill: '#4B7F6B', lx: 480, ly: 85, name: 'Tenginamara Patte', varietal: 'Arabica Selection 9', lots: 'SMW01 — Solera Wash', brix: '20%', shade: 'Silver Oak, Teak, native canopy', trees: '~3,800', desc: 'The Solera Wash block. 48-hour anaerobic, Solera carry-forward, 3-day soak, hand-washed. Minimal intervention — the cleanest expression of the cherry, and the rarest lot on the estate.' },
-  { id: 'charandi', d: 'M60,170 L180,190 L200,280 L80,300 Z', fill: '#7B8F5B', lx: 130, ly: 240, name: 'Charandi Patte', varietal: 'Arabica Selection 9', lots: 'RH01 — Red Honey Anaerobic', brix: '20%', shade: 'Mixed native, Silver Oak', trees: '~4,100', desc: 'The Red Honey block. Mucilage-on drying after an anaerobic ferment. The Q grader notes a citrus core with room to climb as the roast develops. Zero defects, perfect clean cup.' },
-  { id: 'onegida', d: 'M190,190 L370,170 L380,260 L210,290 Z', fill: '#5B8F7B', lx: 280, ly: 230, name: 'One Gida Patte', varietal: 'Arabica Selection 9', lots: 'BW01 — Banana Wash', brix: '21%', shade: 'Banana, Silver Oak, mixed native', trees: '~4,800', desc: 'The Banana Wash block. Estate-grown banana leaves layered with pulped cherries for 48 hours. The highest Brix among the Arabica lots, and the most distinctly Indian process on the estate.' },
-  { id: 'tline', d: 'M380,170 L560,160 L570,270 L390,270 Z', fill: '#8B6F4B', lx: 470, ly: 220, name: 'T Line Robusta Patte', varietal: 'Robusta Old Peridenia', lots: 'AM01 — Appassimento Maceration (Robusta)', brix: '28%', shade: 'Dense four-storey canopy', trees: '~3,600', desc: 'National winner — Robusta Experimental. Brix 28%, the highest of any lot on the estate. Heritage Old Peridenia under dense shade, transformed by the same cold-ferment Appassimento technique.' },
-  { id: 'shed', d: 'M80,310 L210,300 L230,390 L100,410 Z', fill: '#7B6F5B', lx: 155, ly: 355, name: 'Shed Patte', varietal: 'Robusta Old Peridenia', lots: 'G01 — Grappa', brix: '26%', shade: 'Mixed canopy, estate infrastructure', trees: '~3,200', desc: 'The Grappa block. Home of the proprietary G1 bacterial strain cultured from wet coffee cascara, applied layer-by-layer through a six-day fermentation. Available for allocation.' },
-  { id: 'gida', d: 'M220,300 L390,280 L420,380 L240,400 Z', fill: '#6B7F4B', lx: 310, ly: 340, name: 'Gida Patte', varietal: 'Robusta Old Peridenia', lots: 'VW01 — Volcanic Wash', brix: '27%', shade: 'Dense mixed canopy', trees: '~3,400', desc: 'National winner — Robusta Washed. Pulped after a 48-hour anaerobic ferment, soaked three days with daily water changes. Clean, structured, deeply sweet.' },
+  { id: 'nagarakatte', d: 'M204,132 C196,147 170,160 149,166 C129,171 96,175 80,167 C63,158 52,132 50,114 C49,96 55,71 69,60 C83,49 113,47 135,49 C157,51 188,57 199,71 C211,85 212,116 204,132 Z', lx: 126, ly: 108, name: 'Nagarakatte', varietal: 'Arabica Selection 9', lots: 'AM01 — Appassimento Maceration', brix: '20%', shade: 'Silver Oak, Rosewood, Fig', trees: '~4,500', desc: 'The Appassimento block. Cold-fermented below 10 °C, dried in a dark room for 25 days — the block that produced the SCA 84.25 lot. High canopy density, cool microclimate.' },
+  { id: 'byton', d: 'M383,86 C388,102 387,130 373,142 C359,154 324,158 300,158 C276,157 242,151 230,139 C218,126 220,101 226,84 C232,67 245,43 264,36 C284,29 321,34 340,42 C360,50 377,69 383,86 Z', lx: 302, ly: 98, name: 'Byton Patte', varietal: 'Arabica Selection 9', lots: 'DO01 — Dry Osmosis · SMN01 — Solera Maceration', brix: '20–20.5%', shade: 'Silver Oak, Jackfruit, Wild Fig', trees: '~5,200', desc: 'Two flagship lots from a single block. The 85.25 Dry Osmosis and the Solera Maceration both draw from Byton’s dense shade canopy and well-drained laterite soil. The estate’s highest-scoring Arabica zone.' },
+  { id: 'tenginamara', d: 'M541,146 C529,160 499,167 478,168 C457,169 426,163 414,151 C402,138 402,112 405,94 C408,75 417,48 433,40 C450,31 483,36 503,44 C522,51 543,68 550,85 C556,102 553,132 541,146 Z', lx: 474, ly: 104, name: 'Tenginamara Patte', varietal: 'Arabica Selection 9', lots: 'SMW01 — Solera Wash', brix: '20%', shade: 'Silver Oak, Teak, native canopy', trees: '~3,800', desc: 'The Solera Wash block. 48-hour anaerobic, Solera carry-forward, 3-day soak, hand-washed. Minimal intervention — the cleanest expression of the cherry, and the rarest lot on the estate.' },
+  { id: 'charandi', d: 'M183,223 C192,239 199,266 191,281 C184,295 156,309 136,312 C116,316 86,314 72,304 C58,293 52,268 52,250 C52,232 57,207 71,196 C86,185 118,180 137,184 C155,189 174,207 183,223 Z', lx: 120, ly: 250, name: 'Charandi Patte', varietal: 'Arabica Selection 9', lots: 'RH01 — Red Honey Anaerobic', brix: '20%', shade: 'Mixed native, Silver Oak', trees: '~4,100', desc: 'The Red Honey block. Mucilage-on drying after an anaerobic ferment. The Q grader notes a citrus core with room to climb as the roast develops. Zero defects, perfect clean cup.' },
+  { id: 'onegida', d: 'M385,254 C381,270 357,286 337,295 C317,304 284,312 265,307 C246,301 227,278 221,262 C215,245 216,221 228,208 C240,196 270,188 292,187 C315,185 347,188 362,199 C378,211 389,238 385,254 Z', lx: 298, ly: 244, name: 'One Gida Patte', varietal: 'Arabica Selection 9', lots: 'BW01 — Banana Wash', brix: '21%', shade: 'Banana, Silver Oak, mixed native', trees: '~4,800', desc: 'The Banana Wash block. Estate-grown banana leaves layered with pulped cherries for 48 hours. The highest Brix among the Arabica lots, and the most distinctly Indian process on the estate.' },
+  { id: 'tline', d: 'M533,204 C547,218 560,244 556,260 C552,276 527,293 507,301 C488,309 458,315 441,309 C423,302 407,280 401,262 C396,244 394,216 406,202 C418,189 451,179 472,180 C493,180 519,191 533,204 Z', lx: 474, ly: 246, name: 'T Line Robusta Patte', varietal: 'Robusta Old Peridenia', lots: 'AM01 — Appassimento Maceration (Robusta)', brix: '28%', shade: 'Dense four-storey canopy', trees: '~3,600', desc: 'National winner — Robusta Experimental. Brix 28%, the highest of any lot on the estate. Heritage Old Peridenia under dense shade, transformed by the same cold-ferment Appassimento technique.' },
+  { id: 'shed', d: 'M242,404 C232,417 205,427 185,430 C164,433 132,431 118,422 C104,412 100,388 101,371 C102,355 110,332 125,323 C140,314 173,313 192,318 C212,323 235,336 243,351 C251,365 251,390 242,404 Z', lx: 172, ly: 374, name: 'Shed Patte', varietal: 'Robusta Old Peridenia', lots: 'G01 — Grappa', brix: '26%', shade: 'Mixed canopy, estate infrastructure', trees: '~3,200', desc: 'The Grappa block. Home of the proprietary G1 bacterial strain cultured from wet coffee cascara, applied layer-by-layer through a six-day fermentation. Available for allocation.' },
+  { id: 'gida', d: 'M430,355 C437,371 439,396 426,409 C414,422 381,431 357,433 C332,434 296,429 281,417 C266,406 265,380 269,363 C273,347 286,326 305,317 C324,308 363,305 384,311 C405,317 423,338 430,355 Z', lx: 350, ly: 372, name: 'Gida Patte', varietal: 'Robusta Old Peridenia', lots: 'VW01 — Volcanic Wash', brix: '27%', shade: 'Dense mixed canopy', trees: '~3,400', desc: 'National winner — Robusta Washed. Pulped after a 48-hour anaerobic ferment, soaked three days with daily water changes. Clean, structured, deeply sweet.' },
 ]
 
 /* ── lot cards — tap for lot data ───────────────────────────────── */
@@ -253,12 +252,12 @@ const BLOCKS: Block[] = [
 function LotCard({ lot }: { lot: Lot }) {
   const [open, setOpen] = useState(false)
   return (
-    <article className={`lc ${open ? 'is-open' : ''}`}>
+    /* backdrop-filter inline: styled-jsx drops it from emitted rules on
+       this build, the same way it does for the menu vignette. */
+    <article className={`lc ${open ? 'is-open' : ''}`} style={{ backdropFilter: 'blur(18px) saturate(120%)', WebkitBackdropFilter: 'blur(18px) saturate(120%)' }}>
       <span className="lc-head">
-        <span className="lc-top">
-          <h3 className="lc-n">{lot.name}</h3>
-          <span className="lc-badge">{lot.eyebrow}</span>
-        </span>
+        <span className="lc-badge">{lot.eyebrow}</span>
+        <h3 className="lc-n">{lot.name}</h3>
         <p className="lc-m">{lot.method}</p>
       </span>
 
@@ -273,6 +272,25 @@ function LotCard({ lot }: { lot: Lot }) {
         {open ? 'Hide lot data' : 'Show lot data'}
         <CaretDown size={12} weight="bold" className="lc-caret" aria-hidden />
       </button>
+
+      {/* The same file, as text. `open` gates the panel below on state, so
+          the specification is not in the document at all until somebody
+          clicks — which means an agent reading this page saw nine lot
+          names and not one number behind them. Read off the same
+          lot.data, so the two cannot drift. */}
+      <div className="agent-only">
+        {/* "Label: value" on one line rather than a <dl>. Agent view sets
+            every element to display:block, which puts a dt and its dd on
+            separate lines with nothing to tell them apart — a column of
+            alternating words where "Brix at harvest" and "28%" look like
+            two facts. This is the same shape the estate blocks use. */}
+        <ul>
+          {lot.data.map((r) => (
+            <li key={r.k}>{r.k}: {r.v}</li>
+          ))}
+        </ul>
+        <p>{lot.process}</p>
+      </div>
 
       {open && (
         <div className="lc-panel">
@@ -289,9 +307,14 @@ function LotCard({ lot }: { lot: Lot }) {
       )}
 
       <style jsx>{`
+        /* A ground of their own. These sit over the chapter's
+           photograph, and a transparent card left the type fighting
+           whatever was behind it. The blur separates the card from the
+           picture without hiding it — you can still see the frame move
+           underneath. */
         .lc {
           display: flex; flex-direction: column; gap: var(--space-5);
-          background: transparent; color: #fff;
+          background: rgba(12, 14, 15, 0.74); color: #fff;
           border: 1px solid rgba(255, 255, 255, 0.14);
           border-radius: var(--radius-1);
           padding: clamp(22px, 2.4vw, 32px);
@@ -300,15 +323,11 @@ function LotCard({ lot }: { lot: Lot }) {
         }
         .lc:hover {
           border-color: rgba(255, 255, 255, 0.3);
-          background: rgba(255, 255, 255, 0.03);
+          background: rgba(12, 14, 15, 0.82);
         }
 
         /* name, grade and method read as one lock-up */
         .lc-head { display: flex; flex-direction: column; gap: 6px; }
-        .lc-top {
-          display: flex; align-items: flex-start;
-          justify-content: space-between; gap: var(--space-4);
-        }
         .lc-n {
           flex: 1 1 auto; min-width: 0;
           font-family: var(--font-grotesque), sans-serif;
@@ -317,15 +336,13 @@ function LotCard({ lot }: { lot: Lot }) {
           letter-spacing: -0.03em; margin: 0;
         }
         .lc-badge {
-          font-family: var(--font-mono), monospace;
-          font-size: 9px; line-height: 1.4;
-          letter-spacing: 0.8px; text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.72);
-          border: 1px solid rgba(255, 255, 255, 0.24);
-          border-radius: 999px;
-          padding: 4px 10px;
-          text-align: right; flex: 0 1 auto; max-width: 52%;
-          margin-top: 4px;
+            /* Matches .bx-de: an eyebrow above the name, in the accent,
+               rather than a pill beside it. */
+            font-family: var(--font-mono), monospace;
+            font-size: 11px; font-weight: 500;
+            letter-spacing: 1px; text-transform: uppercase;
+            color: var(--brand-accent);
+            display: block; margin: 0 0 var(--space-3);
         }
         .lc-m {
           font-family: var(--font-mono), monospace;
@@ -333,7 +350,7 @@ function LotCard({ lot }: { lot: Lot }) {
           color: rgba(255, 255, 255, 0.6); margin: 0;
         }
         .lc-b {
-          font-size: 15px; line-height: 1.55;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: rgba(255, 255, 255, 0.8); margin: 0;
         }
 
@@ -409,9 +426,11 @@ export function LotCards({ title, intro, lots }: {
 
       <style jsx>{`
         .lots {
-          background: #000; color: #fff;
-          padding: clamp(72px, 12vh, 140px) 0;
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
+          /* Transparent, above the chapter backdrop. A black ground here
+             sat on top of the photographs and broke the run. */
+          position: relative; z-index: 1;
+          background: var(--brand-green); color: #fff;
+          padding: clamp(104px, 16vh, 196px) 0;
         }
         .lots-h {
           font-family: var(--font-grotesque), sans-serif; font-weight: 400;
@@ -419,7 +438,7 @@ export function LotCards({ title, intro, lots }: {
           letter-spacing: -0.04em; color: #fff; margin: 0; max-width: 18ch;
         }
         .lots-i {
-          font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: rgba(255, 255, 255, 0.72);
           margin: var(--space-5) 0 0; max-width: 52ch;
         }
@@ -437,7 +456,11 @@ export function LotCards({ title, intro, lots }: {
 /* ── block explorer — the estate, block by block ────────────────── */
 
 export function BlockExplorer() {
-  const [sel, setSel] = useState<Block | null>(null)
+  /* Opens on the first block. An empty panel beside a map is a prompt
+     to do work before the page shows anything, and the reader has not
+     been told yet that the blocks are clickable — showing one answers
+     that by demonstration. */
+  const [sel, setSel] = useState<Block | null>(BLOCKS[0])
   return (
     <section className="bx">
       <div className="section-w">
@@ -458,7 +481,6 @@ export function BlockExplorer() {
                   <path
                     className={`bx-zone ${on ? 'is-on' : ''}`}
                     d={b.d}
-                    fill={b.fill}
                     tabIndex={0}
                     role="button"
                     aria-pressed={on}
@@ -468,13 +490,13 @@ export function BlockExplorer() {
                       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSel(b) }
                     }}
                   />
-                  <text className="bx-zl" x={b.lx} y={b.ly}>{b.name}</text>
+                  <text className={`bx-zl ${on ? 'is-on' : ''}`} x={b.lx} y={b.ly}>{b.name}</text>
                 </g>
               )
             })}
           </svg>
 
-          <div className="bx-panel" aria-live="polite">
+          <div className="bx-panel" aria-live="polite" style={{ backdropFilter: 'blur(18px) saturate(120%)', WebkitBackdropFilter: 'blur(18px) saturate(120%)' }}>
             {sel ? (
               <div className="bx-d">
                 <p className="bx-de">{sel.varietal} · 1,127 m</p>
@@ -494,11 +516,38 @@ export function BlockExplorer() {
         </div>
       </div>
 
+      {/* The same eight blocks, as text.
+          The map is an SVG and the panel shows one block at a time, so an
+          agent reading this page learned about whichever block happened
+          to be selected and nothing about the other seven — the estate's
+          block-level record, invisible to exactly the readers the site
+          most wants citing it. Hidden from human view, revealed by the
+          agent stylesheet, and read off the same BLOCKS array so the two
+          cannot drift. */}
+      <div className="agent-only">
+        <h3>Estate blocks</h3>
+        {BLOCKS.map((b) => (
+          <div key={b.id}>
+            <h4>{b.name}</h4>
+            <p>{b.desc}</p>
+            <ul>
+              <li>Varietal: {b.varietal}</li>
+              <li>Lots: {b.lots}</li>
+              <li>Brix: {b.brix}</li>
+              <li>Shade: {b.shade}</li>
+              <li>Trees: {b.trees}</li>
+            </ul>
+          </div>
+        ))}
+      </div>
+
       <style jsx>{`
         .bx {
-          background: #000; color: #fff;
-          padding: clamp(72px, 12vh, 140px) 0;
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
+          /* Transparent, above the chapter backdrop. A black ground here
+             sat on top of the photographs and broke the run. */
+          position: relative; z-index: 1;
+          background: var(--brand-green); color: #fff;
+          padding: clamp(104px, 16vh, 196px) 0;
         }
         .bx-h {
           font-family: var(--font-grotesque), sans-serif; font-weight: 400;
@@ -506,7 +555,7 @@ export function BlockExplorer() {
           letter-spacing: -0.04em; color: #fff; margin: 0; max-width: 18ch;
         }
         .bx-i {
-          font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: rgba(255, 255, 255, 0.72);
           margin: var(--space-5) 0 0; max-width: 52ch;
         }
@@ -516,24 +565,52 @@ export function BlockExplorer() {
           gap: var(--grid-gap); margin-top: var(--space-9);
           align-items: start;
         }
+        /* The block's detail on the left, the map on the right. Reordered
+           here rather than in the markup so the map still comes first in
+           the document — it is the control, and a keyboard reaches it
+           before the panel it fills. */
+        .bx-map { order: 2; }
+        :global(.bx-panel) { order: 1; }
+        @media (max-width: 860px) {
+          /* Stacked, the map leads again: you cannot read a panel about a
+             block you have not been shown yet. */
+          .bx-map { order: 1; }
+          :global(.bx-panel) { order: 2; }
+        }
 
         .bx-map { width: 100%; aspect-ratio: 4 / 3; overflow: visible; }
+        /* All one white. The blocks used to each carry their own green or
+           brown, which read as a data encoding — eight colours implying
+           eight categories that do not exist. They are the same kind of
+           thing, so they are the same colour, and selection is the only
+           state the map has to show. */
         :global(.bx-zone) {
           cursor: pointer;
-          stroke: #000; stroke-width: 2;
-          opacity: 0.62;
-          transition: opacity var(--dur-base) var(--ease),
+          fill: #fff;
+          fill-opacity: 0.14;
+          stroke: rgba(255, 255, 255, 0.55);
+          stroke-width: 1.5;
+          transition: fill-opacity var(--dur-base) var(--ease),
                       stroke var(--dur-base) var(--ease);
         }
-        :global(.bx-zone):hover { opacity: 0.85; stroke: rgba(255,255,255,0.5); }
+        :global(.bx-zone):hover { fill-opacity: 0.3; stroke: #fff; }
+        /* The UA focus ring draws a rectangle, which on an organic shape
+           reads as a selection box somebody left behind. Suppressed on
+           :focus so a click leaves nothing; :focus-visible still marks
+           the block for anyone arriving by keyboard, with the same white
+           stroke selection uses. */
+        :global(.bx-zone):focus { outline: none; }
         :global(.bx-zone):focus-visible { outline: none; stroke: #fff; stroke-width: 2.5; }
-        :global(.bx-zone.is-on) { opacity: 1; stroke: #fff; stroke-width: 2.5; }
+        /* Selected reads as solid, so the label inverts to sit on it. */
+        :global(.bx-zone.is-on) { fill-opacity: 1; stroke: #fff; stroke-width: 2; }
         :global(.bx-zl) {
           font-family: var(--font-mono), monospace;
           font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase;
           fill: rgba(255, 255, 255, 0.92);
           pointer-events: none; text-anchor: middle; dominant-baseline: central;
+          transition: fill var(--dur-base) var(--ease);
         }
+        :global(.bx-zl.is-on) { fill: #0B0B0B; }
 
         .bx-panel {
           border: 1px solid rgba(255, 255, 255, 0.16);
@@ -576,7 +653,7 @@ export function BlockExplorer() {
           color: rgba(255, 255, 255, 0.92);
         }
         .bx-db {
-          font-size: 15px; line-height: 1.6;
+          font-size: var(--p1-size); line-height: var(--p1-lh);
           color: rgba(255, 255, 255, 0.78); margin: 0;
         }
 

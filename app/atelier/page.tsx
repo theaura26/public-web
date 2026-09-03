@@ -3,7 +3,7 @@ import { Placeholder, ScrollHighlight, Continue } from '@/components/article/Art
 import { StudioPillarMedia } from '@/components/StudioPillarMedia'
 
 /* ═══════════════════════════════════════════
-   STUDIOS — Aura's working capabilities.
+   STUDIOS — Aura’s working capabilities.
    Three studios. One ethos: Natural Intelligence.
 
    Structure:
@@ -37,7 +37,7 @@ export const metadata = {
      repeating 'Aura' here would produce 'Atelier — Aura — Aura'. */
   title: 'Atelier',
   description:
-    'Origin, Engine, Hospitality. Three studios applying Natural Intelligence to story, systems, and place — built on regenerative land in Mudigere, Karnataka and Ohara, Kyoto. For monastic polymaths and crazy misfits.',
+    'Origin, Engine, Hospitality. Three studios applying Natural Intelligence to story, systems and place, built on regenerative land at Mudigere, Karnataka.',
   keywords: [
     'Aura studios',
     'Natural Intelligence',
@@ -141,7 +141,7 @@ export default function StudiosPage() {
       </section>
 
       {/* ── Hero banner ──────────────────────────────────────
-          Editorial banner matching /coffee's JournalHero media —
+          Editorial banner matching /coffee’s JournalHero media —
           full-bleed video below the title plate, caption pinned
           bottom-left. Uses the existing global `.journal-hero__media`
           + `.journal-hero__media-el` + `.journal-hero__caption`
@@ -183,8 +183,8 @@ Build for the next 1,000 years.
 Monastic polymaths. Crazy misfits.`}</ScrollHighlight>
 
       {/* ── Three studios ────────────────────────────────────
-          Pillar grid in the homepage's wider 16/9-derived rail
-          so the three cards stretch beyond section-w's content
+          Pillar grid in the homepage’s wider 16/9-derived rail
+          so the three cards stretch beyond section-w’s content
           width. Each card carries its own 3:4 media tile —
           Engine and Hospitality autoplay short loops; Origin is
           a still. */}
@@ -247,10 +247,10 @@ Impact measured in centuries.`}</ScrollHighlight>
       </section>
 
       <Continue
-        heading="Explore"
+        heading="More about Aura"
         items={[
           { href: '/artistry', label: 'Artistry', description: 'The studio and labs at work — making by subtraction, shu-ha-ri at the bench.', img: '/aura-artistry.jpg' },
-          { href: '/reason', label: 'The Reason', description: 'Why any of it exists — the belief that ties land, craft and technology together.', img: '/the-reason/aura-flowers-1.png' },
+          { href: '/regenerative-life/the-reason', label: 'The Reason', description: 'Why any of it exists — the belief that ties land, craft and technology together.', img: '/the-reason/aura-flowers-1.png' },
           { href: '/brand', label: 'Our Brand', description: 'How the work is carried into the world — the identity and voice of Aura.', img: '/aura-hero.jpg' },
         ]}
       />

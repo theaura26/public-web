@@ -26,7 +26,7 @@ export default function ResidencyPage() {
         <p className="p1">
           At Mudigere and Ohara, Aura runs a residency for polymaths — people
           who think, craft, and work across science and art, and will not
-          choose one over the other. We gather them onto the estates, hold the
+          choose one over the other. We gather them onto the land, hold the
           noise of the world off, and give them an environment built for focus.
           What comes out is the truest work they can make.
         </p>
@@ -47,8 +47,8 @@ export default function ResidencyPage() {
 
       <TwoCol heading="The environment of focus.">
         <p className="p1">
-          Focus is the estate&apos;s first gift to a resident. Days run on the
-          land&apos;s clock, not a calendar — you eat from the garden you walked
+          Focus is the estate&rsquo;s first gift to a resident. Days run on the
+          land&rsquo;s clock — you eat from the garden you walked
           past at dawn, and the work answers to the season and the people who
           have read this place longer than any of us have been alive.
         </p>
@@ -57,7 +57,7 @@ export default function ResidencyPage() {
           others read datasets: canopy density predicts cherry{' '}
           <Term tip="Refractometer reading of dissolved sugars in a cherry or wort, given as a percentage.">Brix</Term>,
           bee activity forecasts flowering, cattle rotation shapes next
-          season&apos;s microbiome. Residents learn to read it too. The land is
+          season&rsquo;s microbiome. Residents learn to read it too. The land is
           the oldest general-purpose intelligence we have — observed,
           transmitted, lived — and a mind that listens to it long enough begins
           to think differently. That pairing, old knowledge with modern
@@ -67,12 +67,12 @@ export default function ResidencyPage() {
 
       <TwoCol heading="The environment of craft.">
         <p className="p1">
-          At Ohara, north of Kyoto, the residency keeps the valley&apos;s
+          At Ohara, north of Kyoto, the residency keeps the valley&rsquo;s
           rhythm.{' '}
-          <Term tip="朝 — morning. In Ohara's rhythm, the hours of light and renewal: café, tea, and workshops made by hand.">Asa</Term>{' '}
+          <Term tip="朝 — morning. In Ohara’s rhythm, the hours of light and renewal: café, tea, and workshops made by hand.">Asa</Term>{' '}
           is light and renewal — matcha and light meals, and workshops in
           fermentation, pottery, indigo, and kintsugi.{' '}
-          <Term tip="庭 — garden, and by extension the evening. In Ohara's rhythm, the hours of calm and reflection.">Niwa</Term>{' '}
+          <Term tip="庭 — garden, and by extension the evening. In Ohara’s rhythm, the hours of calm and reflection.">Niwa</Term>{' '}
           is calm and reflection, the slow close of the day. Craft practised at
           that pace is craft done well, and the sanctuary is built to hold it.
         </p>
@@ -114,15 +114,15 @@ export default function ResidencyPage() {
 
       <Placeholder
         src="/journals/residency/aura-monastic-polymath-3.jpg"
-        alt="A practitioner at work in a quiet studio — the residency's posture of attention"
+        alt="A practitioner at work in a quiet studio — the residency’s posture of attention"
         caption="Sit close to someone who has been listening to one craft for thirty years."
       />
 
-      <TwoCol heading="Two estates, one residency.">
+      <TwoCol heading="Two sanctuaries, one residency.">
         <p className="p1">
-          The residency runs across both estates because the two hold different
+          The residency runs across both sanctuaries because the two hold different
           intelligences. Mudigere is Vedic — raw, monsoon, soil, a four-story
-          canopy and fifty-two indigenous cattle, work that is loud, hot, and
+          canopy and about fifty indigenous cattle, work that is loud, hot, and
           generous. Ohara is Zen — tea, washi, a seventy-year-old home and a
           thirty-year-old garden, days that are quieter and more deliberate.
           Both operate from{' '}
@@ -141,7 +141,7 @@ export default function ResidencyPage() {
 
       <DataGrid cols={3} standalone>
         <DataCard value="Focus">
-          The estate holds the noise off. Days run on the land&apos;s clock,
+          The estate holds the noise off. Days run on the land&rsquo;s clock,
           attention stays on one problem, and the horizon is measured in years,
           not weeks.
         </DataCard>
@@ -151,7 +151,7 @@ export default function ResidencyPage() {
           and by hand.
         </DataCard>
         <DataCard value="Creation">
-          Two working estates as the studio — forest, kiln, wet mill, garden —
+          Two sanctuaries as the studio — forest, kiln, wet mill, garden —
           where residents make with material grown, fermented, or fired on the
           ground they stand on.
         </DataCard>
@@ -169,7 +169,7 @@ export default function ResidencyPage() {
         <p className="p1">
           A century from now, very little of what we call artificial
           intelligence today will still be running. The intelligence that will
-          still be running lives in soil, in craft, in a shepherd&apos;s
+          still be running lives in soil, in craft, in a shepherd&rsquo;s
           vocabulary, in fermentation lineages generations deep, in the
           notebooks of people who spent two months on an estate watching the
           canopy breathe. Aura runs the residency to put more of that into the

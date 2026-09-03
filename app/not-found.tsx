@@ -5,7 +5,6 @@ import Reveal from '@/components/RevealOnScroll'
 
 const ROUTES: { href: string; label: string; description: string }[] = [
   { href: '/', label: 'Return home', description: 'The orchard, the workshop, the kitchen — all still here.' },
-  { href: '/idea', label: 'The 1000 Year Idea', description: 'The frame by which every choice is measured.' },
   { href: '/contact', label: 'Get in touch', description: 'A page can be missing. A conversation cannot.' },
 ]
 

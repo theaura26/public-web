@@ -3,9 +3,9 @@ import type { NextRequest } from 'next/server'
 
 /* Exact-match redirect for the private signature page: /signature -> /signature/.
 
-   The signature page's logo (referenced relatively in the approved <table>) and
+   The signature page’s logo (referenced relatively in the approved <table>) and
    its COPY button both resolve against the page URL, so the page must be served
-   WITH the trailing slash. A next.config `redirects` rule can't express this
+   WITH the trailing slash. A next.config `redirects` rule can’t express this
    cleanly — its path matching also matches `/signature/` and loops. Proxy
    with an exact pathname check redirects only the slash-less form; `/signature/`
    falls straight through to the static file. Matcher is scoped to the single

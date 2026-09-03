@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
 /* Page-specific metadata layout — /artistry/page.tsx is a client
-   component ('use client'), so it can't export `metadata` itself.
-   Without this layout the page inherited the root layout's default
+   component ('use client'), so it can’t export `metadata` itself.
+   Without this layout the page inherited the root layout’s default
    title ('Aura — The 1000-Year Idea'), making it invisible in
    search results and indistinguishable from the home page. */
 export const metadata: Metadata = {

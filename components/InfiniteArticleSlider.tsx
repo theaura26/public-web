@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 /* ═══════════════════════════════════════════════════════════════════
    ARTICLE SLIDER — a left-anchored, horizontally-scrollable row of the
-   estate's editorials, under a small section label.
+   estate’s editorials, under a small section label.
 
    The first card is the anchor (larger); the rest follow in a row that
    runs off the right edge and scrolls. Vertical mouse-wheel is mapped to
@@ -23,15 +23,15 @@ const ARTICLES: Article[] = [
   { href: '/herd',           title: 'Ecosystem Engineers',   img: '/herd/images/aura-relationship2.jpg' },
   { href: '/circular',       title: 'Circular Intelligence', img: '/circular/images/aura-shed.jpg', size: 'md' },
   { href: '/shade',          title: 'The Light Instrument',  img: '/shade/images/aura-tree-canopy-lookup.jpg', size: 'lg' },
-  { href: '/ecology',        title: 'The Living System',     img: '/ecology/images/aura-forest-floor-seedling.jpg', size: 'sm' },
+  { href: '/ecology',        title: 'The Health Index',     img: '/ecology/images/aura-forest-floor-seedling.jpg', size: 'sm' },
   { href: '/artistry',       title: 'Artistry',              img: '/aura-artistry.jpg', size: 'md' },
   { href: '/wisdom',         title: 'Moral Spine',           img: '/journals/wisdom/aura-moral-spine.jpg', size: 'lg' },
   { href: '/living-systems', title: 'Living Systems',        img: '/journals/living-systems/aura-living-systems.jpg', size: 'sm' },
-  { href: '/coffee',         title: 'Our Coffee Story',      img: '/journals/coffee/aura-our-coffee-story.jpg', size: 'md' },
+  { href: '/coffee',         title: 'Our Bean Story',       img: '/journals/coffee/aura-our-coffee-story.jpg', size: 'md' },
   { href: '/rta',            title: 'Rta',                   img: '/journals/rta/aura-rta.jpg', size: 'lg' },
   { href: '/fermentation',   title: 'Fermentation',          img: '/journals/fermentation/aura-fermentation.jpg', size: 'sm' },
   { href: '/land',           title: 'The Land',              img: '/journals/land/aura-the-land.jpg', size: 'md' },
-  { href: '/biodynamic',     title: 'Biodynamic',            img: '/journals/biodynamic/aura-biodynamic.jpg', size: 'lg' },
+  { href: '/biodynamic',     title: 'A Living Organism',    img: '/journals/biodynamic/aura-biodynamic.jpg', size: 'lg' },
   { href: '/residency',      title: 'Monastic Polymaths',    img: '/journals/residency/aura-monastic-polymath.jpg', size: 'sm' },
 ]
 
@@ -132,6 +132,7 @@ export function InfiniteArticleSlider() {
           position: relative;
           width: 100vw;
           margin-left: calc(50% - 50vw);
+          overflow: hidden;
           padding: clamp(18px, 3vh, 40px) 0 clamp(24px, 5vh, 64px);
         }
         /* Right-edge blur + fade, like the slide-out menu's vignette, so
@@ -139,12 +140,13 @@ export function InfiniteArticleSlider() {
         .ias__fade {
           position: absolute;
           top: 0;
-          right: 0;
+          /* Same overhang as the Field Notes lanes — a backdrop-filter
+             flush to the viewport edge leaves a seam. */
+          right: -32px;
           bottom: 0;
-          width: clamp(64px, 12vw, 200px);
+          width: calc(clamp(64px, 12vw, 200px) + 32px);
           pointer-events: none;
           z-index: 2;
-          background: linear-gradient(to right, transparent, var(--bg) 82%);
           -webkit-mask-image: linear-gradient(to right, transparent, #000 55%);
           mask-image: linear-gradient(to right, transparent, #000 55%);
         }

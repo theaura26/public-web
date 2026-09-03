@@ -89,7 +89,7 @@ Everything in **bold** is on the slide. Everything else is for the speaker and t
 
 **Visual:** Aerial ridgeline, mist in the valleys. ✅ `/journals/land/aura-mudigere-panorama.jpg`
 **Purpose:** Establish scale before anything else. Small is a strategy, not a limitation.
-**Proof:** Sampigekhan Estate, Mudigere, Chikmagalur district, Karnataka. 150 acres, 100 in coffee. Estate record.
+**Proof:** Aura Estate, Mudigere, Chikmagalur district, Karnataka. 150 acres, 100 in coffee. Estate record.
 
 ---
 
@@ -117,7 +117,7 @@ Everything in **bold** is on the slide. Everything else is for the speaker and t
 
 ## 10
 
-**Fifty-two Malnad Gidda.**
+**About fifty Malnad Gidda.**
 
 *Indigenous to these hills. Grazing them for centuries before anyone thought to write it down.*
 

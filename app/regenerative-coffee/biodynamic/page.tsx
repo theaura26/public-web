@@ -1,12 +1,14 @@
+import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
+import { BETTER_GROUND, STEPS } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
   MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner, ArrowLinkStyles,
 } from '@/components/coffee/Microsite'
 
 export const metadata: Metadata = {
-  title: 'Biodynamic — Regenerative Coffee',
+  title: 'Better Ground — Regenerative Coffee',
   description:
-    'Fifty-two cattle, 154,000 litres of Jeevamrit a year, and a canopy cut to a light reading instead of a feeling. Sampigekhan Estate, Mudigere.',
+    'About fifty cattle, 154,000 litres of Jeevamrit a year, and a canopy cut to a light reading instead of a feeling. Aura Estate, Mudigere.',
   alternates: { canonical: '/regenerative-coffee/biodynamic' },
 }
 
@@ -22,42 +24,44 @@ export default function BiodynamicPage() {
       <MicroNav />
       <ArrowLinkStyles />
 
+      {/* One ground for the whole chapter, dissolving between the
+
+          photographs as the scenes scroll over it. */}
+
+      <ChapterBackdrop frames={BETTER_GROUND} steps={STEPS.biodynamic} />
+
+
       <Panel
         hero
         align="centre"
         title="Grown in a closed loop."
-        lede="Nothing comes in. Nothing leaves."
+        lede="No fertiliser is bought in, and no waste is trucked out. The herd, the soil and the trees feed each other, and the estate’s job is to keep the loop turning."
       />
 
       <Scene>
         Coffee does not begin with coffee. It begins with an animal, a metre
-        of soil, and somebody awake before the light.
-      </Scene>
-
-      <Scene>
-        A hundred and fifty acres at 3,600 feet, in the
-        Western Ghats above Mudigere. Four storeys of shade — pepper and
-        silver oak, then jackfruit, then coffee, then the ground. From the air
-        it reads as forest. It happens to make coffee.
+        of soil, and somebody awake before the light. A hundred and fifty
+        acres at 3,600 feet, in the Western Ghats above Mudigere, under four
+        storeys of shade — pepper and silver oak, then jackfruit, then coffee,
+        then the ground. From the air it reads as forest. It happens to make
+        coffee.
       </Scene>
 
       <Scene title="Our best farmers have four legs.">
-        Fifty-two Malnad Gidda. Small, hardy, native to these hills, and
+        About fifty Malnad Gidda. Small, hardy, native to these hills, and
         grazing them for centuries before anybody thought to write it down.
+        The herd is also the whole fertiliser supply — everything this soil is
+        ever given comes out of them, which is why nothing has been sprayed on
+        the grass they eat. What goes into the animal comes back out into the
+        ground the coffee is standing in.
       </Scene>
 
-      <Scene>
-        They are not scenery. Everything this soil is ever given comes out of
-        them — which is why nothing has been sprayed on the grass they eat.
-        What goes into the animal comes back out into the ground the coffee is
-        standing in.
-      </Scene>
-
-      <Scene>
-        So the day starts at twenty to six, in the dark, with a bucket. What
-        they left overnight is gathered while it is still warm, weighed,
-        written down, and split three ways — into the pits, into the brews,
-        into the horns.
+      <Scene title="The day starts at twenty to six, with a bucket.">
+        What the herd left overnight is gathered while it is still warm,
+        weighed, written down, and split three ways — into the compost pits,
+        into the Jeevamrit brews, and into the horns for BD 500. It is the
+        most valuable raw material on the estate, and it is collected by hand,
+        every morning, before anything else happens.
       </Scene>
 
       <Scene title="We do not buy fertility. We make it.">
@@ -67,43 +71,37 @@ export default function BiodynamicPage() {
         rather the point.
       </Scene>
 
-      <Scene>
-        Fourteen numbered pits, ninety days apiece. Horn manure buried through
-        the cool months and put out at dusk. Quartz buried through the summer,
-        misted over the canopy at first light. Yarrow, chamomile, nettle, oak
-        bark, dandelion, valerian — in doses small enough to look like
-        superstition, into a heap the size of a room.
-      </Scene>
-
-      <Scene>
-        None of it arrives on a lorry.
+      <Scene title="Fourteen compost pits, ninety days apiece.">
+        Horn manure is buried through the cool months and sprayed at dusk;
+        ground quartz is buried through the summer and misted over the canopy
+        at first light. Yarrow, chamomile, nettle, oak bark, dandelion and
+        valerian go into a heap the size of a room, in doses measured in
+        grams rather than sacks. All of it is made here. None of it arrives
+        on a lorry.
       </Scene>
 
       <Chapter>Then we stopped guessing.</Chapter>
 
-      <Scene>
-        Shade on estates like this one has been read by eye for three hundred
-        years. A contractor stands under a tree, decides it is too dark, and
-        directs the cut. It works until it doesn’t, and a cut made on a
-        feeling is still the wrong shape fifty years later.
+      <Scene title="Shade has been judged by eye here for three hundred years.">
+        <p>
+          A contractor stands under a tree, decides it is too dark, and
+          directs the cut. That works until it doesn’t, and a tree cut on
+          a hunch is still the wrong shape fifty years later. So in 2026
+          we walked Block 3 with a lux meter, fifty readings to the acre.
+        </p>
+        <p>
+          The block turned out to be three blocks: one at 33,000 lux with
+          two-thirds of the light gone, one at 62,000, one at 82,000 and
+          wide open. Arabica wants 50,000 to 70,000. One zone in three was
+          where we had assumed the whole block was.
+        </p>
       </Scene>
 
-      <Scene>
-        So in 2026 we took a lux meter into Block 3 and took fifty readings an
-        acre. The block turned out to be three blocks. One read 33,000 lux
-        with two-thirds of the light gone. One read 62,000. One read 82,000,
-        wide open and far too bright.
-      </Scene>
-
-      <Scene>
-        Arabica wants 50,000 to 70,000. One zone in three was where we had
-        assumed all of it was.
-      </Scene>
-
-      <Scene>
-        So we cut to the number instead of the feeling. Every wound dressed
-        with dung and turmeric, every cut logged, and the whole block read
-        again ninety days later to find out whether we had been right.
+      <Scene title="So we cut to the number instead.">
+        Every wound was dressed with cow dung and turmeric, every cut was
+        logged against the tree it came off, and the whole block was read
+        again with the meter ninety days later to find out whether we had been
+        right. Recording what you did is the easy half.
       </Scene>
 
       <Scene title="Nothing comes in. Nothing leaves.">

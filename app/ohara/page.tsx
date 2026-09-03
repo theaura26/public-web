@@ -17,7 +17,7 @@ import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, Cloud
 /* ═══════════════════════════════════════════════════════════════════
    OHARA — a single scrolling story, structured as the deliberate
    flip of /mudigere. Mudigere opens on land and fact (geology,
-   acreage, the world's oldest Arabica region) and only arrives at
+   acreage, the region where Indian coffee began) and only arrives at
    people and philosophy in its final third. Ohara opens on essence —
    the valley, Asa (朝) and Niwa (庭), 豊かな暮らし — and closes on the
    practical shape of the next three years (Shu-Ha-Ri) and the
@@ -30,7 +30,7 @@ import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, Cloud
 ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Live land data — same widget as /mudigere's LiveLandData,
-   re-pointed at Ohara's coordinates. ── */
+   re-pointed at Ohara’s coordinates. ── */
 type WeatherData = { temp: number; humidity: number; wind: number; code: number; isDay: boolean }
 
 const WEATHER_LABELS: Record<number, string> = {
@@ -110,12 +110,47 @@ function OharaLandData() {
         </div>
       </div>
 
+          {/* Queried by coordinates; t=h satellite, no-API-key ?output=embed form. */}
+      <div className="land-data__map">
+        <iframe
+          title="Ohara — Kyoto Prefecture, Japan"
+          src="https://maps.google.com/maps?q=35.1200,135.8300&t=h&z=13&output=embed"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
+      </div>
 
       <style jsx>{`
-        /* Compact orientation panel — location + live weather. (Map embed
-           removed: it leaked into the agent/reader view.) */
+        /* Orientation panel — facts on the left, satellite map on the right.
+           The map was pulled in July 2026 because it escaped into the
+           agent/reader view; the same commit added a global agent-mode rule
+           that hides every iframe in main, so the leak it was removed for is
+           handled centrally now and the map can sit here safely. */
         .land-data {
-          max-width: 640px;
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: clamp(28px, 5vw, 72px);
+          align-items: start;
+        }
+        @media (max-width: 768px) {
+          .land-data { grid-template-columns: 1fr; gap: 32px; }
+        }
+        .land-data__map {
+          position: relative;
+          aspect-ratio: 4 / 3;
+          border: 1px solid var(--border);
+          border-radius: var(--radius-1);
+          overflow: hidden;
+          background: var(--bg-card);
+        }
+        .land-data__map :global(iframe) {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+          display: block;
         }
       `}</style>
     </div>
@@ -160,7 +195,7 @@ const OHARA_PASSAGES = [
   // B · RESTORATION — the roofline, the teahouse, the kept mark
   { caption: 'Inside the restored teahouse', media: [
     { image: '/ohara/images/aura-moss.jpg', alt: 'Moss and fallen maple leaves on the restored roofline', caption: 'The restored roofline, kept aging' },
-    { image: '/ohara/images/aura-interior.jpg', alt: "Inside the restored teahouse — the craftsman's repair", caption: 'Inside the teahouse' },
+    { image: '/ohara/images/aura-interior.jpg', alt: "Inside the restored teahouse — the craftsman’s repair", caption: 'Inside the teahouse' },
     { image: '/ohara/images/aura-emblem.jpg', alt: 'A carved emblem kept from the original home', caption: 'A mark kept from the original' },
   ] },
   // C · ASA — the morning counter
@@ -171,7 +206,7 @@ const OHARA_PASSAGES = [
   // D · NIWA — the table the valley sets
   { caption: 'The fields that feed the table', media: [
     { image: '/ohara/images/aura-organic.jpg', alt: 'Organic produce gathered from the valley and greenhouse', caption: 'Foraged and grown' },
-    { image: '/ohara/images/aura-bento.jpg', alt: "An obanzai plate built from the valley's produce", caption: 'Written around what arrived' },
+    { image: '/ohara/images/aura-bento.jpg', alt: "An obanzai plate built from the valley’s produce", caption: 'Written around what arrived' },
     { image: '/ohara/images/aura-farm.jpg', alt: 'The kitchen garden and terraced fields that feed the table', caption: 'The fields that feed the table' },
   ] },
   // E · KI NO IE — the pavilion by the river
@@ -185,7 +220,7 @@ const OHARA_PASSAGES = [
     { video: '/ohara/videos/aura-autumn.mp4', poster: '/ohara/images/aura-autumn.jpg', alt: 'Autumn maple over the moss-grown eaves at Ohara', caption: 'The garden, in autumn' },
     { image: '/ohara/images/aura-autumnleaves.jpg', alt: 'Fallen autumn leaves across the moss at Ohara', caption: 'Autumn, come to the ground' },
     { video: '/ohara/videos/aura-winter1.mp4', poster: '/ohara/images/aura-winter1.jpg', alt: 'The same corner of the garden under snow', caption: 'The same corner, in winter' },
-    { image: '/ohara/images/aura-winter2.jpg', alt: "Snow settled on the garden's stone and moss", caption: 'Snow on stone and moss' },
+    { image: '/ohara/images/aura-winter2.jpg', alt: "Snow settled on the garden’s stone and moss", caption: 'Snow on stone and moss' },
     { video: '/ohara/videos/aura-winter3.mp4', poster: '/ohara/images/aura-winter3.jpg', alt: 'Snow falling through the bare maple at Ohara', caption: 'Snow through the bare maple' },
   ] },
 ]
@@ -193,6 +228,9 @@ const OHARA_PASSAGES = [
 export default function OharaPage() {
   return (
     <>
+      {/* The story opens on the wordmark intro rather than a set title,
+          so the outline has no top level of its own. This supplies one. */}
+      <h1 className="sr-only">Ohara</h1>
       <style jsx global>{`
         .layer-row {
           border-top: 1px solid var(--border);
@@ -373,7 +411,7 @@ export default function OharaPage() {
         </DataCard>
         <DataCard value={<>Niwa · 庭 <span className="label" style={{ display: 'block', marginTop: 4 }}>Evening – night</span></>}>
           Calm and reflection. Farm-to-table dinner from the greenhouse and
-          the valley's organic growers; wellbeing held at the day's slow
+          the valley’s organic growers; wellbeing held at the day’s slow
           close.
         </DataCard>
         <DataCard value={<>Terrace · 風の間 <span className="label" style={{ display: 'block', marginTop: 4 }}>Anytime</span></>}>
@@ -444,7 +482,7 @@ export default function OharaPage() {
           season through.
         </p>
         <p className="p1">
-          The retail counter carries living objects from Ohara's artisans —
+          The retail counter carries living objects from Ohara’s artisans —
           ceramics, linen, wood, incense, tea — each piece carrying the
           maker&rsquo;s name and the season it was made. Its terrace is the same{' '}
           <Term tip="風の間 — 'room of the wind.' The open terrace introduced earlier in the Rhythm of Life grid; this is where it physically sits, off Ki no Ie.">風の間</Term> from
@@ -477,7 +515,7 @@ export default function OharaPage() {
       </DataGrid>
 
       {/* ═══ 9 · ABOUT AURA ═══ — the brand promise, as a stanza,
-          mirroring Mudigere's forest-mark artwork moment. */}
+          mirroring Mudigere’s forest-mark artwork moment. */}
       <ScrollHighlight>{`Mind. Design that stays out of the way.
 Body. A place built to coexist with nature.
 Soul. A rhythm felt before it is seen.
@@ -526,7 +564,7 @@ a place to return to, and to hand on.`}</ScrollHighlight>
       <Continue
         items={[
           { href: '/artistry', label: 'Artistry', description: 'The studio and labs — making by subtraction, shu-ha-ri at the bench.', img: '/aura-artistry.jpg' },
-          { href: '/reason', label: 'The Reason', description: 'Why Aura exists — not built but grown, the belief that ties every estate and studio into one system.', img: '/the-reason/aura-flowers-1.png' },
+          { href: '/regenerative-life/the-reason', label: 'The Reason', description: 'Why Aura exists — not built but grown, the belief that ties every estate and studio into one system.', img: '/the-reason/aura-flowers-1.png' },
           { href: '/residency', label: 'Monastic Polymaths', description: 'The residency — makers who live the seasons and work across disciplines, the way a monastery once did.', img: '/journals/residency/aura-monastic-polymath.jpg' },
         ]}
       />

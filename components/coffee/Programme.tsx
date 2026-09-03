@@ -1,0 +1,141 @@
+'use client'
+
+/* ── The three days ───────────────────────────────────────────────
+   What to expect, day by day.
+
+   This used to be a three-column table with each day running morning /
+   afternoon / evening down its own column. It read well across, and
+   badly down: three columns of prose forced every entry to be the same
+   length whether it had that much to say or not, and a day is not
+   actually three equal thirds. The morning of day two is most of day
+   two.
+
+   So it is a list now. Each day carries a pair — the mode a guest is in,
+   and the thing that mode is for — and then the specific moments
+   underneath it, at whatever length each one honestly needs. Nothing is
+   padded to fill a cell.
+
+   The times of day are gone as icons; where a time matters it is in the
+   sentence, which is where a reader looks for it anyway.
+*/
+
+type Day = {
+  n: string
+  /** The mode, and what the mode is for. */
+  title: string
+  items: string[]
+}
+
+const DAYS: Day[] = [
+  {
+    n: 'Day one',
+    title: 'Arrival / Wonder',
+    items: [
+      'Four hours up from Bengaluru, and somewhere in the last one the canopy shuts over the road and the temperature drops six degrees.',
+      'You walk the estate before a single person explains it — a hundred and fifty acres, four storeys of canopy, and more going on overhead than you will manage to name.',
+      'Nobody owns a mountain. You arrive as its guest, which is the only way anyone arrives here.',
+      'You come around a corner and the first long table is already there, cooked from the estate and laid outside. Almost everything on it grew within sight of where you sit.',
+    ],
+  },
+  {
+    n: 'Day two',
+    title: 'Hands / Discovery',
+    items: [
+      'A hike before the light, up through all four layers to where the shade thins out.',
+      'Down to the wet mill at five, before the pickers come in, to watch a fermentation being read — and to take the Brix yourself.',
+      'Biodynamics from the people whose hands make it: the horn buried through winter, the fourteen compost pits, the quartz that goes in at midsummer. You bury one yourself.',
+      'About fifty Malnad Gidda, indigenous and waist-high, and the looking goes both ways.',
+      'The long table again, later and louder than the first one.',
+    ],
+  },
+  {
+    n: 'Day three',
+    title: 'Judgement / Authorship',
+    items: [
+      'Back to the mill for whatever came off the tanks overnight, and the fermentation numbers that made the call while you were asleep.',
+      'Cup the lots blind against last season. Nobody says which is which until everyone has committed out loud, and everyone is wrong at least once. It is the best hour of the three days.',
+      'Pick a lot and set its protocol — varietal, ferment, drying, all of it.',
+      'Then down through the Ghats. We build that exact coffee and send it to you under your own name, about four months later.',
+    ],
+  },
+]
+
+export function Programme() {
+  return (
+    <section className="pg">
+      <div className="section-w">
+        <ol className="pg-days">
+          {DAYS.map((d) => (
+            <li className="pg-day" key={d.n}>
+              <div className="pg-head">
+                <span className="pg-n">{d.n}</span>
+                <h3 className="pg-dt">{d.title}</h3>
+              </div>
+              <ul className="pg-items">
+                {d.items.map((line) => (
+                  <li className="pg-b" key={line}>{line}</li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <style jsx>{`
+        .pg {
+          background: var(--brand-green); color: #fff;
+          /* Air above as well as below. With no top padding the first day
+             sat flush against the rule that closes the section before it,
+             which read as the two being one block. */
+          padding: clamp(96px, 15vh, 176px) 0;
+        }
+
+        .pg-days {
+          list-style: none; margin: 0; padding: 0;
+          display: flex; flex-direction: column;
+          gap: clamp(56px, 8vh, 96px);
+        }
+
+        /* Day label and theme on the left, the day itself on the right —
+           the same two-column reading the journal kit uses, so the
+           festival page does not invent a layout of its own. */
+        .pg-day {
+          display: grid;
+          grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+          gap: clamp(24px, 4vw, 64px);
+        }
+        @media (max-width: 768px) {
+          .pg-day { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+        }
+
+        .pg-n {
+          display: block;
+          font-family: var(--font-mono), monospace;
+          font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.45); margin-bottom: 10px;
+        }
+        .pg-dt {
+          font-family: var(--font-grotesque), sans-serif; font-weight: 400;
+          font-size: clamp(24px, 3vw, 32px); line-height: 1.15;
+          letter-spacing: -0.03em; color: #fff; margin: 0;
+          text-wrap: balance;
+        }
+
+        .pg-items {
+          list-style: none; margin: 0; padding: 0;
+          display: flex; flex-direction: column;
+          gap: clamp(14px, 1.8vh, 20px);
+        }
+        /* No marker. The gap between items is the separation, and the
+           site has no bullet convention to borrow — inventing one here
+           would have made this the only page with it. */
+        .pg-b {
+          font-size: var(--p1-size); line-height: var(--p1-lh);
+          font-family: var(--font-sans);
+          color: rgba(255, 255, 255, 0.78);
+          margin: 0; text-wrap: pretty;
+        }
+      `}</style>
+    </section>
+  )
+}

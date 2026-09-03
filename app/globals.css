@@ -17,7 +17,14 @@
    spacing/radius/z step, add it here first.
 
    Section order:
-     1.  Brand palette                 --brand-accent, --error
+     1.  Brand palette                 --brand-accent, --brand-green, --error
+
+         The accent is an ink for dark grounds and it was chosen against
+         black, where it reads at 6.66:1. On --brand-green it falls to
+         3.10:1, which is under AA. --brand-accent-lift is the same hue
+         carried up to 4.88:1 on that ground; use it for accent-coloured
+         TEXT sitting on the green. Accent as a FILL (the festival pill,
+         with white type on it) is unaffected and stays --brand-accent.
      2.  Theme — Night (default)       --bg / --text / --border
      3.  Theme — Day
      4.  Spacing scale                 --space-2 → --space-9
@@ -32,6 +39,8 @@
 :root {
   /* ── 1. Brand palette (immutable across themes) ── */
   --brand-accent: #E37128;          /* primary action / hover */
+  --brand-green: #36483A;           /* the dark ground the estate pages sit on */
+  --brand-accent-lift: #F5A56B;     /* the accent, lifted for use ON --brand-green */
   --error: #E8421A;                 /* form validation, destructive UI */
   --success: #1F6B4B;               /* confirmed state — form sent, validation passed */
 
@@ -50,6 +59,12 @@
   --max-w: 1200px;                            /* primary content width */
   --nav-h: 56px;                              /* fixed navbar height */
   --section-gap: clamp(80px, 12vh, 140px);    /* between major sections */
+
+  /* Air around a page's title block — the h1 and its lede. One pair of
+     values so every index, section page and stub breathes the same, and
+     so changing it is one edit rather than five. */
+  --head-top: calc(var(--space-9) * 1.2);       /* 96px */
+  --head-bottom: clamp(67px, 9.6vh, 115px);
   --grid-gap: clamp(32px, 5vw, 80px);         /* between grid items */
 
   /* ── 6. Radius ── */
@@ -64,6 +79,16 @@
   --ease: cubic-bezier(0.4, 0, 0.2, 1);            /* Material standard — micro transitions (color, opacity, border) */
   --ease-out: cubic-bezier(0.19, 1, 0.22, 1);      /* easeOutExpo — hero reveals, panel slides, hover swaps */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);    /* Spring micro-snap — used by navbar tile + Continue card symbol hover */
+
+  /* ── The hover rule ──────────────────────────────────────────────
+     One affordance for every clickable thing on the site: a brand-accent
+     underline. Its offset is proportional rather than fixed, because a
+     4px gap that looks right under an 11px label looks pinched under a
+     32px heading — the same number cannot be correct at both sizes, and
+     three different numbers in three files is how it drifted before.
+     Thickness stays absolute: a hairline is a hairline at any size. */
+  --rule-offset: 0.22em;
+  --rule-weight: 1.5px;
 
   --dur-fast: 150ms;
   --dur-base: 250ms;
@@ -481,10 +506,16 @@ p.journal-hero__caption {
 [data-view="agent"] main .expanding-banner-wrap,
 [data-view="agent"] main .expanding-banner-inner,
 [data-view="agent"] main .expanding-banner-card,
+/* Regenerative Coffee's chapter backdrop — a fixed stack of photographs
+   behind the scenes. Its frames are already covered by `main img` and
+   `main video` above; this takes the wrapper and its scrim, which would
+   otherwise flatten into a black block in the text view. */
+[data-view="agent"] main .cb,
 /* Crossfade scroller — the runs of decorative full-bleed banners and the
    wordmark / film-play overlay held over the length of a run. */
 [data-view="agent"] main .story2__run,
 [data-view="agent"] main .story2__overlay,
+[data-view="agent"] main .land-data__map,
 [data-view="agent"] main .journal-hero__media,
 [data-view="agent"] main .hero-tile__media,
 [data-view="agent"] main .pillar-media,
@@ -515,6 +546,12 @@ p.journal-hero__caption {
 /* StudioPillarMedia — 3:4 reserved box on each /atelier pillar
    card (Origin / Engine / Hospitality). */
 [data-view="agent"] main .studio-pillar-media,
+/* From Aura product plate — the picture runs off the left edge on a
+   negative rail margin and is given the width back. Agent mode's reset
+   zeroes the margin and keeps the width, so the box overhung the page by
+   the width of the rail: 328px of horizontal scroll on a plain-text
+   view. */
+[data-view="agent"] main .pd-plate,
 /* PullQuote full-bleed border rules — `width: 100vw` + a centering
    negative margin gets the margin wiped by the agent-mode
    `* { margin-left/right: 0 }` reset, leaving a 100vw bar pinned to
@@ -876,6 +913,17 @@ p.journal-hero__caption {
 [data-view="agent"] .aura-nav > a:first-child img { display: none !important; }
 [data-view="agent"] .nav-wordmark { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
 
+/* The bar stops floating. It is fixed with a fully transparent
+   background, which works over photography and fails completely over a
+   wall of monospace text: the wordmark and the word Menu sat on top of
+   whatever line happened to be scrolling past them, both legible and
+   neither readable. Static puts it at the top of the document where a
+   header belongs, and the overlap cannot happen. */
+[data-view="agent"] .aura-nav {
+  position: static !important;
+  background: var(--bg) !important;
+}
+
 /* Footer: simplified, no watermark. */
 [data-view="agent"] footer { background: var(--bg) !important; padding-bottom: var(--space-7) !important; }
 [data-view="agent"] footer > div:last-child { display: none !important; }
@@ -956,6 +1004,126 @@ p.journal-hero__caption {
   width: auto !important;
 }
 
+/* ── Field Notes, agent view ───────────────────────────────────────
+   The View All page is a set of sideways-scrolling lanes and the
+   category pages are image-led rows. Neither survives being flattened
+   to plain text, so the rails become lists and the plates — which are
+   decoration once the photograph is gone — are dropped entirely. */
+[data-view="agent"] main :is(.sw, .fn, .lane, .lane-bar, .lane-scroll, .lane-track,
+  .lane-card, .fn-list, .fn-row, .fn-item, .fn-text, .fn-head, .sw-head, .fn-filters) {
+  display: block !important;
+  width: auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  max-width: none !important;
+}
+[data-view="agent"] main :is(.lane-plate, .fn-plate) { display: none !important; }
+[data-view="agent"] main :is(.lane, .fn-row) { padding: 8px 0 !important; }
+/* The filter row stays a row — it is a list of links, and reads fine. */
+[data-view="agent"] main .fn-filter { display: inline !important; margin-right: 12px !important; }
+
+/* ── Coffee microsite, agent view ──────────────────────────────────
+   The microsite is built out of viewport-tall panels: every Scene,
+   Panel, Chapter, Banner and the Remarkable Circle header each claim
+   100svh so the reader arrives at one idea at a time. Stripped of
+   their photography that becomes screen after screen of white space
+   with a sentence in it, so collapse the lot to their content height
+   and let the document read straight through.
+
+   Same treatment as .hero-section, .sanctuary-panel and .story2 above
+   — the microsite simply had none. */
+[data-view="agent"] main :is(
+  .rc, .rc-inner, .p, .sc, .ch, .bn, .rb, .ld, .cl, .pg, .xb,
+  .gl, .ix, .pr, .nb, .lots, .bx,
+  .m-hero, .m-next, .m-pillar, .m-say, .m-cards, .m-intro, .m-stats
+) {
+  display: block !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 12px 0 !important;
+  overflow: visible !important;
+}
+
+/* Every measure in here is set for a display face — 16ch on a Scene
+   heading, 22ch on a Panel. At one mono size those turn headings into
+   four-word ladders, so the whole microsite reads at full width. */
+[data-view="agent"] main :is(
+  .rc, .p, .sc, .ch, .bn, .rb, .ld, .cl, .pg, .xb,
+  .gl, .ix, .pr, .nb, .lots, .bx,
+  .m-hero, .m-next, .m-pillar, .m-say, .m-cards, .m-intro, .m-stats
+) * {
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* The decorative furniture: the turning ring and its strings, the loop
+   diagram's circle, the scrims that darken photography, and every empty
+   plate waiting on a picture. None of it carries meaning as plain text. */
+[data-view="agent"] main :is(
+  .rc-ring, .rc-orbit, .sc-bg, .sc-scrim, .p-bg, .p-scrim,
+  .ld-circle, .bn-m, .m-pillar-media, .m-next-m,
+  .cb, .bx-map, .lc-toggle, .lc-panel
+),
+[data-view="agent"] nav.ln {
+  display: none !important;
+}
+
+/* Controls, not content. The chapter sub-nav repeats on every microsite
+   page and duplicates the navigation AgentSitemap already provides; the
+   estate map is an SVG whose eight labels read as loose words once
+   flattened, so the block record is written out as text beside it; and
+   the lot-data toggle opens a panel that is likewise written out in
+   full for this view. A button reading "Show lot data" is an
+   instruction to click, and there is nothing here to click. */
+
+/* The circle's own layout: eight glyphs pinned around an orbit, each
+   counter-rotating. Flattened to static they would still be sized off
+   an aspect-ratio square, so the header would keep a viewport of dead
+   air above its first line. Collapse the stage and let the eight
+   labels read as the list of disciplines they are. */
+[data-view="agent"] main :is(
+  .rc-stage, .rc-spin, .rc-slot, .rc-counter, .rc-centre, .rc-item
+) {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  aspect-ratio: auto !important;
+}
+[data-view="agent"] main .rc-label { display: inline !important; }
+/* The season chip's two lines are flex children; as plain text they
+   need their own lines or they run together ("SeptemberFully booked"). */
+[data-view="agent"] main :is(.vm-w-n, .vm-w-f) { display: block !important; }
+/* The heading's hard break is a display decision — one line in the
+   markdown document. */
+[data-view="agent"] main .rc-br { display: none !important; }
+/* Decorative — the glyphs carry no meaning in the plain-text document. */
+[data-view="agent"] main .glyph { display: none !important; }
+/* The programme's time of day is an icon; the word beside it is hidden
+   for sighted readers. Swap them back for the plain-text document. */
+[data-view="agent"] main .pg-time svg { display: none !important; }
+[data-view="agent"] main .pg-time-t {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  clip-path: none !important;
+  overflow: visible !important;
+}
+
+/* Multi-column blocks read top-to-bottom instead of across: the
+   three-day programme, the season chips, the lot cards, the banners. */
+[data-view="agent"] main :is(
+  .pg-t, .pg-day, .vm-seg, .vm-w, .vm-step, .vm-step-c, .lots-g, .bn-in
+) {
+  display: block !important;
+  grid-template-columns: 1fr !important;
+  grid-template-rows: none !important;
+}
+
 /* Agent mode: hide every <img> entirely — the previous dashed alt-text
    placeholder was visual noise. The wordmark, hero film, brand slide
    stills, journal thumbnails, etc. all disappear; the alt text is
@@ -1025,14 +1193,18 @@ body::-webkit-scrollbar { width: 0; }
    states (pointer on anchors/buttons) handle everything now. */
 
 
-/* ═══ Reveal-on-scroll ═══ */
-.reveal {
+/* ═══ Reveal-on-scroll ═══
+   Gated on .js, which an inline script in <head> sets before first
+   paint. Ungated, opacity:0 hides every page until React hydrates, and
+   hides it forever if scripts are blocked or hydration throws — the
+   content is in the HTML, so that failure is entirely self-inflicted. */
+.js .reveal {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
 }
 
-.reveal.visible {
+.js .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -1082,9 +1254,137 @@ button:disabled,
 a:hover, button:hover, [role="button"]:hover {
   text-decoration: underline;
   text-decoration-color: var(--brand-accent);
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1.5px;
+  text-underline-offset: var(--rule-offset);
+  text-decoration-thickness: var(--rule-weight);
 }
+
+/* Full-bleed rails in the plain-text view.
+ *
+ * A lane track, the From Aura plate and the Ohara wordmark all run off
+ * the page edge the same way: a negative margin the width of the rail,
+ * given back as `width: calc(100% + rail)`. Agent mode's reset zeroes
+ * every margin and leaves the width, so each of them overhung the page
+ * by exactly one rail — 328px of horizontal scroll on a view whose whole
+ * point is that it reads as plain text. The width goes with the margin.
+ * The lane keeps its links; it just stops being a rail. */
+[data-view="agent"] main :is(.lane-bleed, .lane-scroll, .lane-track, .wordmark-intro) {
+  width: auto !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+[data-view="agent"] main .lane-track {
+  display: block !important;
+}
+
+/* Pillar cards: the whole card is the link, so the rule above drew one
+   underline across the title, the label and the body paragraph at once.
+   The title is the thing being followed, so the underline lands on it and
+   nowhere else in the card. */
+.pillar-card:hover,
+.pillar-card:focus-visible {
+  text-decoration: none;
+}
+/* One hover for every picture card on the site.
+ *
+ * There were three. Field Notes and the swimlanes scaled the picture and
+ * turned the title orange; the pillars underlined the title and left the
+ * video alone; the Continue cards blurred the photograph and faded a
+ * symbol through it. Three conventions on four surfaces reads as three
+ * different sites.
+ *
+ * The title is what a reader is following, so the title is what answers.
+ * The picture holds still. The Continue card keeps its blur-and-symbol
+ * reveal — that one is a designed moment rather than a card state, and
+ * it is the exception on purpose.
+ *
+ * These classes are all global: each sits on a next/link Link, which
+ * styled-jsx cannot reach with a scoped rule, so they are declared here
+ * together rather than copied into four component stylesheets. */
+.pillar-card:hover h3,
+.pillar-card:focus-visible h3,
+.fn-item:hover .fn-t,
+.fn-item:focus-visible .fn-t,
+.lane-card:hover .lane-t,
+.lane-card:focus-visible .lane-t,
+.m-next-c:hover .m-next-t,
+.m-next-c:focus-visible .m-next-t,
+.sc-card:hover .sc-name,
+.sc-card:focus-visible .sc-name {
+  text-decoration: underline;
+  text-decoration-color: var(--brand-accent);
+  text-underline-offset: var(--rule-offset);
+  text-decoration-thickness: var(--rule-weight);
+}
+/* The card itself never underlines — only its title. */
+.fn-item:hover,
+.fn-item:focus-visible,
+.lane-card:hover,
+.lane-card:focus-visible,
+.m-next-c:hover,
+.m-next-c:focus-visible,
+.sc-card:hover,
+.sc-card:focus-visible {
+  text-decoration: none;
+}
+
+
+/* The ring-and-arrow call to action — components/ArrowCta.tsx.
+   Renders as a Link or a button depending on what it does, so both are
+   styled here rather than on the element. Every colour is currentColor:
+   the caller sets the colour once and the ring follows at 70%, which is
+   what lets the same control sit on the contrast band and on a
+   photograph without either one naming a colour of its own. */
+.arrow-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: auto;
+}
+/* The underline belongs to running prose. Here the ring is the
+   affordance, so the hover state moves it instead. */
+.arrow-cta:hover,
+.arrow-cta:focus-visible {
+  text-decoration: none;
+}
+.arrow-cta__ring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* flex: none — the ring is a fixed 22px and a long label was
+     squashing it into an oval. */
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, currentColor 70%, transparent);
+  transition: transform 240ms ease, border-color 240ms ease;
+}
+.arrow-cta:hover .arrow-cta__ring,
+.arrow-cta:focus-visible .arrow-cta__ring {
+  transform: translateX(3px);
+  border-color: currentColor;
+}
+@media (prefers-reduced-motion: reduce) {
+  .arrow-cta__ring { transition: none; }
+  .arrow-cta:hover .arrow-cta__ring,
+  .arrow-cta:focus-visible .arrow-cta__ring { transform: none; }
+}
+
+/* The sanctuary panels sit on a photograph, so this one names its
+   colour. The ring reads it off currentColor and follows. */
+.sanctuary-explore { color: #fff; }
+
+/* On the From Aura band the CTA follows the band's own text colour, and
+   it needs room: it used to be the tail of a sentence and is now the
+   only thing on the page to act on. */
+.pd-ask { margin-top: var(--space-5); }
 
 /* Sanctuary banner: hover affordance is the cursor pill (Explore X) — no
    text underline anywhere inside the clickable region. The parent rule above
@@ -1104,13 +1404,20 @@ a:hover, button:hover, [role="button"]:hover {
 ═══════════════════════════════════════════ */
 
 /* H1 — page display */
+/* The display heading, one spec. This used to be clamp(44,9vw,88) at
+   -0.06em while HeroBanner and JournalHero — the opener on every journal
+   and field note — used clamp(48,7.2vw,106) at -0.03em. Both were live
+   on pages sitting next to each other in the same menu, and on a phone
+   both clamp to their minimum, so the split showed as 48 against 44.
+   The banner's is the one the site actually looks like, so the banner's
+   is the one that survives. Recorded in DESIGN-SYSTEM.md section 12b. */
 h1 {
   font-family: var(--font-grotesque);
   font-weight: 600;
   text-transform: uppercase;
-  font-size: clamp(44px, 9vw, 88px);
-  line-height: 1.02;
-  letter-spacing: -0.06em;
+  font-size: clamp(48px, 7.2vw, 106px);
+  line-height: 1;
+  letter-spacing: -0.03em;
   color: var(--text);
   text-wrap: balance;
   font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
@@ -1141,10 +1448,20 @@ h3 {
 }
 
 /* P1 — primary body, full-strength text */
+/* P1's measurements, as values rather than only as a class. The coffee
+   microsite sets its body copy on a dark photograph and has to own its own
+   colour, so it cannot simply wear .p1 — but it can be the same size, and
+   these are the only two numbers that decide that. Change them here and the
+   class and every rule borrowing them move together. */
+:root { --p1-size: 16px; --p1-lh: 1.55; }
+@media (max-width: 768px) {
+  :root { --p1-size: 15px; --p1-lh: 1.5; }
+}
+
 .p1 {
   font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: var(--p1-size);
+  line-height: var(--p1-lh);
   color: var(--text);
   font-weight: 400;
 }
@@ -1162,7 +1479,6 @@ h3 {
 
 /* Mobile body sizing */
 @media (max-width: 768px) {
-  .p1 { font-size: 15px; line-height: 1.5; }
   .p2 { font-size: 14px; line-height: 1.5; }
 }
 
@@ -1325,6 +1641,52 @@ html [data-theme="night"] .hero-section-w:has(.hero-display:hover) .hero-mid__co
   border: 0;
 }
 
+/* Footer privacy link.
+   Unscoped on purpose: it is a next/link, and a styled-jsx rule in
+   Footer.tsx would compile to .footer-privacy.jsx-hash against an
+   element that never gets the hash. It matched nothing and the link
+   rendered as a bare .label — no position, no measure, no hover. */
+.footer-privacy {
+  display: inline-block;
+  justify-self: start;
+  color: var(--text-body);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+.footer-privacy:hover { color: var(--text); }
+
+/* It is last in the DOM so that a single column stacks it below the
+   clocks, which is where it belongs when the footer is a list. On four
+   columns it is placed back into column one at the foot of the row —
+   the manifesto's left edge, level with the clocks. */
+@media (min-width: 768px) {
+  .footer-privacy {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+  }
+}
+
+/* Visually hidden, still read aloud.
+   For a page whose title is set as artwork — an SVG wordmark, a letter
+   row, a Figma-faithful board — the visual title is not a heading to a
+   screen reader or to a search engine, and the document outline starts
+   at h2 with no top level. This carries the real title in the markup
+   without touching the design. The 1px box plus `clip` is deliberate:
+   an off-screen `left: -9999px` version of this would widen
+   documentElement.scrollWidth and show up as horizontal overflow. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ── Atelier hero — editorial display title ─────────────────────────
    "ATELIER" stretches edge-to-edge across the section-w rail, in
    the same uppercase grotesque the journal heroes use. Letters are
@@ -1409,11 +1771,16 @@ section.one-col + section.one-col {
    p1 lead and the p2 body lines breathe. Without this, consecutive
    <p> blocks inside <TwoCol>/<OneCol> stack with zero space because
    `.p1` / `.p2` carry their type spec but no margin. */
+/* Paragraph rhythm inside a body block. It was clamp(12px, 1.4vh, 20px),
+   which is tighter than the leading it sits between — at 17px over 158%
+   a line is ~27px, so a 20px gap read as one dense slab rather than
+   separate paragraphs. Set above the line height so the break is
+   legible. */
 .article-body > p + p,
 .article-body > p + div,
 .article-body > div + p,
 .article-body p + p {
-  margin-top: clamp(12px, 1.4vh, 20px) !important;
+  margin-top: clamp(20px, 2.2vh, 30px) !important;
 }
 
 /* Mobile: trim the section rhythm by ~30% so the journals don't feel
@@ -1458,12 +1825,20 @@ section.one-col + section.one-col {
   border-radius: 2px;
   opacity: 0;
   transition: opacity var(--dur-fast) var(--ease);
+  /* Out of flow until it is wanted. An absolutely positioned box still
+     contributes to the document's scroll width at opacity 0, and a term
+     near the right edge was pushing the page 5-16px wide on every route
+     that uses <Term> — /land, /circular, /ecology, /biodynamic,
+     /mudigere, /ohara and /mudigere-estate. The fade is worth less than
+     a page that does not scroll sideways. */
+  display: none;
 }
 /* term tooltip — open on hover (pointer), on focus (keyboard), or
    when [data-open] is set by the JSX tap handler (touch). */
 .aura-term:hover .aura-term__tip,
 .aura-term:focus .aura-term__tip,
 .aura-term[data-open] .aura-term__tip {
+  display: block;
   opacity: 1;
 }
 .aura-term:focus { outline: none; }
@@ -1670,7 +2045,7 @@ section.one-col + section.one-col {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .reveal { opacity: 1; transform: none; }
+  .js .reveal { opacity: 1; transform: none; }
   .hero-anim { opacity: 1 !important; transform: none !important; }
 }
 
@@ -1809,7 +2184,7 @@ body:has(.reason) .page-vignette { display: none !important; }
   display: block;
   transform: translateY(115%);
   opacity: 0;
-  transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: transform 0.9s var(--ease-out), opacity 0.9s var(--ease-out);
   will-change: transform;
 }
 .rl.is-in .rl-inner { transform: none; opacity: 1; }
@@ -2032,7 +2407,7 @@ html.lenis, html.lenis body { height: auto; }
 /* …and a GRADUAL opacity fade to go with the burst — override the shared
    .rm-fadein ease (easeOutExpo front-loads opacity into a pop) with an even
    ease-in-out over a longer beat, so the constellation truly fades in. */
-.rm-disc.rm-fadein { transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+.rm-disc.rm-fadein { transition: opacity 1.5s var(--ease); }
 .rm-whereland { position: absolute; width: 84%; filter: drop-shadow(0 2px 14px rgba(240,237,232,0.95)); }
 /* hover the overlay text → constellation behind it eases to 70% so the text reads cleaner */
 .rm-disc:has(.rm-whereland:hover) .rm-art { opacity: 0.7; }
@@ -2058,3 +2433,98 @@ html.lenis, html.lenis body { height: auto; }
 
 /* closing */
 .rm-portrait { max-width: 68%; margin: 0 auto; aspect-ratio: 430 / 506; } /* match desktop closing crop */
+
+
+/* ── Regenerative Coffee: the chapter backdrop ───────────────────────
+   A chapter carries one fixed layer of photographs behind its scenes
+   (components/coffee/ChapterBackdrop.tsx). The microsite's sections
+   paint their own black, which is right on every page that has no
+   backdrop — the Festival page among them — and wrong on the four that
+   do, where it sits on top of the pictures and hides them.
+
+   So the component marks the document and only then do the grounds step
+   aside. Scoping this was not optional: transparent everywhere left the
+   Festival page as white text on a white body. */
+/* .cl, .bn and .rb are deliberately absent: they sit after the last
+   scene, where the backdrop has already faded, and a transparent ground
+   there is white text on the white body. */
+[data-rc-backdrop] :is(.sc, .p, .ch, .ld, .lots, .bx) {
+  background: transparent !important;
+}
+
+
+/* ── /sanctuaries ────────────────────────────────────────────────────
+   Two place cards to a row, picture over name. The row is a list because
+   it is one: four valleys, two of which open and two of which do not.
+   The quiet pair get the same card and lose the link — see the note in
+   app/sanctuaries/page.tsx. */
+.sc-row {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  max-width: var(--max-w);
+  display: grid;
+  gap: clamp(28px, 4vw, 56px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 768px) {
+  .sc-row { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
+}
+/* The rows carry no padding of their own — the sections above and below
+   them already bring a --section-gap each, so a row sits in 108px of
+   air at both ends without asking for any.
+   
+   The last row is the exception. What follows it is the Read on block,
+   which draws its rule at the very top of its own padding, so the rule
+   landed hard against the bottom line of the cards while every other
+   gap on the page was 108px. The margin puts it back in rhythm. */
+.sc-row:last-of-type { margin-bottom: var(--section-gap); }
+.sc-card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.6vw, 20px);
+  color: inherit;
+  text-decoration: none;
+}
+/* Nothing to click, so nothing that suggests it. */
+.sc-card.is-quiet { cursor: default; }
+.sc-plate {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-1);
+  background: var(--bg-card);
+}
+.sc-plate img,
+.sc-plate video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.sc-text { display: flex; flex-direction: column; gap: 6px; }
+/* Same face and rhythm as a Field Notes card title, one step up in
+   size because a valley is the subject of this page rather than one
+   entry in a list. */
+.sc-name {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: var(--text);
+  transition: color var(--dur-base) var(--ease);
+}
+.sc-tag {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-body);
+  max-width: 48ch;
+}
+.sc-meta { color: var(--text-muted); }
+/* The quiet pair read one step back from the working pair. The picture
+   keeps its full strength — dimming the card multiplied against the
+   photograph and hid the valley, which is the one thing worth showing. */
+.sc-card.is-quiet .sc-name,
+.sc-card.is-quiet .sc-tag { color: var(--text-muted); }

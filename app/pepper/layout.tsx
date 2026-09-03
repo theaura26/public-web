@@ -1,7 +1,16 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
+/* Parked. The page is written and renders in full; it is out of
+   circulation — no menu card, no field-note category, no sitemap entry —
+   so robots are told to skip it while it waits. See PARKED_JOURNALS in
+   lib/journals.ts for how to put it back. */
 export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: { index: false, follow: false },
+  },
   /* Root layout's title.template appends '— Aura'; the suffix here
      produced double-up titles in the rendered head. Bare string only. */
   title: 'Pepper — Malabar Black Gold',

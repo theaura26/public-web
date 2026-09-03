@@ -19,7 +19,7 @@ export default function BiodynamicPage() {
         src="/journals/biodynamic/aura-biodynamic.mp4"
         mediaType="video"
         poster="/journals/biodynamic/aura-biodynamic.jpg"
-        title="Biodynamic"
+        title="A Living Organism"
         type="Detail · cattle in pen"
         caption="The estate as one living organism"
         alt="The estate working as one organism — biodynamic practice across canopy, herd, and soil"
@@ -140,12 +140,12 @@ export default function BiodynamicPage() {
 
       <TwoCol id="herd" heading="The herd as engine.">
         <p className="p1">
-          Everything begins with the cattle. The 52 <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> are the
+          Everything begins with the cattle. The <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> are the
           small indigenous cattle of these hills, grazing at this altitude for
-          centuries. Their gut microbiome is
-          adapted to the estate&rsquo;s grasses and soil. Their dung carries
-          microbial characteristics specific to this breed, this land, this
-          climate.
+          centuries. Their gut has adapted to the estate&rsquo;s grasses and
+          soil over generations, and the reasoning here is that the dung
+          carries that adaptation with it. The comparison against another
+          breed has not been run.
         </p>
         <p className="p1">
           The dung drives BD 500, CPP, Jeevamrit, Panchgavya, and compost
@@ -193,19 +193,23 @@ export default function BiodynamicPage() {
         </DataGrid>
       </TwoCol>
 
-      <TwoCol id="onchain" heading="On chain.">
+      <TwoCol id="onchain" heading="The record, and where it is going.">
         <p className="p1">
-          The BD seasonal cycle — a full year of preparations applied, tested,
-          and recorded — is sealed on the blockchain as a permanent, verifiable
-          event.
+          A full biodynamic year — every preparation applied, every batch
+          tested, every block retested at ninety days — is written down as it
+          happens and signed by the person who did it. The record is kept in
+          plain JSON and CSV, readable without any of Aura&rsquo;s own software.
         </p>
         <p className="p1">
-          Organic and biodynamic certification evidence becomes tamper-evident,
-          cross-referenced against weather data, lunar records, and soil outcomes
-          that cannot be retroactively altered.
+          Each entry sits alongside the weather at the hour, the point in the
+          lunar calendar, and the soil result that followed it, so a claim about
+          a block can be traced back to the batch that made it.
         </p>
         <p className="p1">
-          This is the practice, recorded with integrity, made permanent.
+          Every one of those milestones is signed and timestamped in the
+          estate&rsquo;s own record, which is what this page stands on. Writing
+          them to a public chain is the next step, and when a lot page is open
+          for anyone to check, it will be linked from here.
         </p>
       </TwoCol>
 

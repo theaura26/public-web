@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Regenerative Coffee',
   description:
-    'Coffee that leaves the land better than it found it. Biodynamic, transparent, flavourful — one estate, one harvest, six lots. Sampigekhan Estate, Mudigere.',
+    'Coffee that leaves the land better than it found it. Biodynamic, transparent, flavourful — one estate, one harvest, nine lots. Aura Estate, Mudigere.',
   alternates: { canonical: '/regenerative-coffee' },
   openGraph: {
     title: 'Aura — Regenerative Coffee',

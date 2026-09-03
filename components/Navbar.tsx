@@ -3,13 +3,14 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { TABS } from '@/lib/site-nav'
 import { useMode } from './ModeProvider'
 import { LogoEmblem } from './Logo'
 import ContactModal from './ContactModal'
 
 /* ── Article tiles for the journal slide-out ──
    Mirrors the sitemap of journal pages exactly. Top-level routes
-   (/, /reason, /brand, /contact) live in PRIMARY_LINKS and are
+   (/, /reason, /brand, /contact) live in NAV_GROUPS and are
    intentionally excluded.
 
    Titles match the actual <ArticleHero> on each page.
@@ -36,21 +37,28 @@ const ARTICLES: Article[] = [
   // "COMING SOON" placeholders. Mirror any change in lib/journals.ts.
   //
   // ── New editorials + places (reworked here) ──
-  { href: '/mudigere',       title: 'Guests of the mountain.',            size: 'lg', img: '/aura-mudigere.jpg', video: '/aura-mudigere.mp4' },
+  // The masthead of the coffee microsite, and the only tile that is
+  // drawn rather than photographed. Composed from the same nine glyphs
+  // and the same ring geometry the live circle is built from, so the
+  // card and the thing it opens are the same object — see
+  // components/coffee/RemarkableCircle.tsx. White among photographs on
+  // purpose: it is a diagram, and it should not pretend to be a place.
+  { href: '/regenerative-coffee', title: 'Regenerative Coffee',          size: 'lg', img: '/coffee/aura-remarkable-circle-card.svg' },
+  { href: '/mudigere',       title: 'Guests of the Mountain',             size: 'lg', img: '/aura-mudigere.jpg', video: '/aura-mudigere.mp4' },
   { href: '/herd',           title: 'Ecosystem Engineers',                size: 'sm', img: '/herd/images/aura-relationship2.jpg', video: '/herd/videos/aura-relationship2.mp4' },
   { href: '/circular',       title: 'Circular Intelligence',              size: 'sm', img: '/circular/images/aura-shed.jpg', video: '/circular/videos/aura-shed.mp4' },
   { href: '/shade',          title: 'The Light Instrument',               size: 'lg', img: '/shade/images/aura-tree-canopy-lookup.jpg', video: '/shade/videos/aura-tree-canopy-lookup.mp4' },
-  { href: '/ecology',        title: 'The Living System',                  size: 'sm', img: '/ecology/images/aura-forest-floor-seedling.jpg', video: '/ecology/videos/aura-forest-floor-seedling.mp4' },
+  { href: '/ecology',        title: 'The Health Index',                  size: 'sm', img: '/ecology/images/aura-forest-floor-seedling.jpg', video: '/ecology/videos/aura-forest-floor-seedling.mp4' },
   { href: '/ohara',          title: 'Asa. Niwa.',                         size: 'lg', img: '/ohara/images/aura-header.jpg', video: '/ohara/videos/aura-header.mp4' },
-  { href: '/artistry',       title: 'Code meets clay.',                   size: 'sm', img: '/aura-artistry.jpg', video: '/aura-artistry.mp4' },
+  { href: '/artistry',       title: 'Code Meets Clay.',                   size: 'sm', img: '/aura-artistry.jpg', video: '/aura-artistry.mp4' },
   // ── Live journals (published on theaura.life) ──
   { href: '/wisdom',         title: 'Moral Spine',                        size: 'lg', img: '/journals/wisdom/aura-moral-spine.jpg' },
   { href: '/living-systems', title: 'Living Systems',                     size: 'sm', img: '/journals/living-systems/aura-living-systems.jpg' },
-  { href: '/coffee',         title: 'Our Coffee Story',                   size: 'sm', img: '/journals/coffee/aura-our-coffee-story.jpg' },
+  { href: '/coffee',         title: 'Our Bean Story',                      size: 'sm', img: '/journals/coffee/aura-our-coffee-story.jpg' },
   { href: '/rta',            title: 'Rta',                                size: 'lg', img: '/journals/rta/aura-rta.jpg' },
   { href: '/fermentation',   title: 'Fermentation',                       size: 'sm', img: '/journals/fermentation/aura-fermentation.jpg' },
   { href: '/land',           title: 'The Land',                           size: 'lg', img: '/journals/land/aura-the-land.jpg' },
-  { href: '/biodynamic',     title: 'Biodynamic',                         size: 'sm', img: '/journals/biodynamic/aura-biodynamic.jpg', video: '/journals/biodynamic/aura-biodynamic.mp4' },
+  { href: '/biodynamic',     title: 'A Living Organism',                    size: 'sm', img: '/journals/biodynamic/aura-biodynamic.jpg', video: '/journals/biodynamic/aura-biodynamic.mp4' },
   { href: '/residency',      title: 'Monastic Polymaths',                 size: 'sm', img: '/journals/residency/aura-monastic-polymath.jpg' },
   // ── Coming soon — not yet published. The journal's own image runs
   //    dimmed + desaturated behind a "COMING SOON" label (mirrors the
@@ -60,21 +68,49 @@ const ARTICLES: Article[] = [
   { href: '/areca',          title: 'The Sentinel Palm',                  size: 'sm', comingSoon: true, img: '/aura-mudigere-landscape.jpg' },
   { href: '/pepper',         title: 'Malabar Pepper',                     size: 'lg', comingSoon: true, img: '/journals/fermentation/aura-pepper.jpg' },
   { href: '/provenance',     title: 'Provenance',                         size: 'sm', comingSoon: true, img: '/aura-provenance.jpg' },
-  { href: '/sanctuary',      title: 'Sanctuary',                          size: 'lg', comingSoon: true, img: '/aura-sanctuary.jpg' },
+  { href: '/sanctuaries',    title: 'Sanctuary',                          size: 'lg', img: '/aura-sanctuary.jpg' },
+  /* These four were commissioned and are now written and shot. Each
+     carries its own opening photograph rather than the flat grey plate
+     it sat on while it was still a brief. */
+  { href: '/bug-hotels', title: 'Bug Hotels', size: 'sm', img: '/bug-hotels/images/aura-bug-hotels-01.webp' },
+  { href: '/pollinators', title: 'The Flowering Understory', size: 'lg', img: '/pollinators/images/aura-the-flowering-understory-01.webp' },
+  { href: '/forest-islands', title: 'Forest Islands', size: 'lg', img: '/forest-islands/images/aura-forest-islands-01.webp' },
+  { href: '/land-spirit-soul', title: 'Land, Spirit, Soul',                size: 'sm', img: '/land-spirit-soul/images/aura-land-spirit-soul-01.webp' },
 ]
 
-const PRIMARY_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/reason', label: 'The Reason' },
-  { href: '/atelier', label: 'Atelier' },
-  { href: '/brand', label: 'Our Brand' },
-  { href: '/contact', label: 'Contact Us' },
-]
+/* ── The menu's information architecture ──────────────────────────
+   Five groups, one open at a time. `off` is deliberately switched off
+   (Shop, until there is something to sell); `soon` is a real
+   destination that has no page yet. Both render unclickable — the
+   difference is that one is a decision and the other is a backlog. */
+/** A group is either an accordion (has `items`) or a plain link (has
+ *  `href`). Home is the only link — it has nothing to expand into. */
+
+
 
 const INSTAGRAM_URL = 'https://www.instagram.com/theaura.life/'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  /* True only on a device that really hovers. Touch browsers
+     synthesise mouseenter on tap, which would open a group on the same
+     gesture that is trying to close one. */
+  const canHoverRef = useRef(false)
+  /* Hover intent: sweeping the cursor down the list must not flick
+     three panels open on the way past. */
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  /* Which accordion group is open — one at a time. `null` means the
+     reader has not chosen, so the menu follows the route and opens
+     where they already are; `''` means they closed them all. Derived
+     rather than written in an effect, which would cascade a render. */
+  const [openGroup, setOpenGroup] = useState<string | null>(null)
+
+  useEffect(() => {
+    canHoverRef.current = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    return () => { if (hoverTimer.current) clearTimeout(hoverTimer.current) }
+  }, [])
+
   /* Inline contact modal — opened by the /mudigere "Contact
      us" nav link instead of routing to /contact, so the architect
      stays on the briefing page while writing. */
@@ -82,17 +118,53 @@ export default function Navbar() {
   const [showLogo, setShowLogo] = useState(false)
   /* Lazy-mount gate for the tile-feed media. Browsers eagerly fetch
      images and sniff video metadata even inside a `position: fixed`
-     panel parked at `right: -100vw`, because they can't predict when
+     panel parked at `right: -100vw`, because they can’t predict when
      a CSS-positioned element will enter the viewport. Setting
      `loading="lazy"` + `preload="none"` on the elements is not
      enough — Chrome still spends ~25-30 MB on Navbar media on every
-     page load. Solution: don't put the heavy children in the DOM
+     page load. Solution: don’t put the heavy children in the DOM
      until the user actually opens the menu. Stays true thereafter so
-     the feed isn't torn down + reseeded on every reopen. */
+     the feed isn’t torn down + reseeded on every reopen. */
   const [hasOpenedMenu, setHasOpenedMenu] = useState(false)
   const { theme, setTheme, viewMode, setViewMode } = useMode()
   const pathname = usePathname()
+
+  /* The open menu is announced on <body> so anything else fixed to the
+     viewport can stand down while it is up. Same idiom the coffee
+     sub-nav already uses for its own bar. */
+  useEffect(() => {
+    document.body.classList.toggle('menu-open', menuOpen)
+    return () => document.body.classList.remove('menu-open')
+  }, [menuOpen])
+  /* The section on show: whatever the reader last pointed at, and
+     failing that whichever one covers the page they are on, and failing
+     that the first. Derived rather than stored, so it cannot fall out of
+     step with the route. */
+  /* Always opens on the first section. Opening on whichever section
+     covered the current route meant the menu looked different every
+     time it was opened, and a reader cannot learn a shape that keeps
+     moving. `openGroup` is what the reader has pointed at since. */
+  const activeSection = openGroup ?? TABS[0].id
   const scrollRef = useRef<HTMLDivElement>(null)
+
+  /* The list above the corner marks reserved space for them with a fixed
+     number — 210px, 190 and 170 at the three widths. The marks are set in
+     clamp(22px, 3vw, 32px), so their real height moves with the viewport
+     and the number was a guess at it. It guessed short: 4px of overlap at
+     1440, 10 on a phone, and exactly flush at 1024, which is no margin at
+     all. Measured instead, so the two can never meet. */
+  const cornerRef = useRef<HTMLDivElement>(null)
+  const overlayRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const corner = cornerRef.current
+    const overlay = overlayRef.current
+    if (!corner || !overlay) return
+    const apply = () => overlay.style.setProperty('--menu-corner-h', `${Math.ceil(corner.getBoundingClientRect().height)}px`)
+    apply()
+    const ro = new ResizeObserver(apply)
+    ro.observe(corner)
+    return () => ro.disconnect()
+  }, [menuOpen])
   const tileRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
   useEffect(() => {
@@ -368,7 +440,7 @@ export default function Navbar() {
         }}
       >
         {/* Left — rotating symbol (centred in the 10vw rail). On
-            /mudigere the architect's briefing is meant to be
+            /mudigere the architect’s briefing is meant to be
             a closed loop — no clickable home affordance, so the
             symbol renders as a plain span instead of a Link. */}
         {isMudigereBriefing ? (
@@ -562,10 +634,11 @@ export default function Navbar() {
           on purpose: the .tile-feed-vignette below uses `backdrop-filter`
           to blur the menu content, and a transformed parent forces this
           panel onto its own GPU compositor layer which the sibling
-          backdrop-filter can't see through. Animating `right` keeps the
+          backdrop-filter can’t see through. Animating `right` keeps the
           panel un-transformed at rest, so the backdrop-filter behind it
           works as expected. */}
       <div
+        ref={overlayRef}
         className="menu-overlay fixed z-50"
         style={{
           top: 0,
@@ -608,23 +681,160 @@ export default function Navbar() {
           <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor', transform: 'translateY(-3.75px) rotate(-45deg)' }} />
         </button>
 
-        {/* Left — primary nav, locked at top, never scrolls */}
+        <ul className="mn-tabs" role="tablist" aria-label="Sections">
+          {TABS.map((sec) => {
+            const on = activeSection === sec.id
+            return (
+              <li key={sec.id}>
+                <button
+                  type="button"
+                  role="tab"
+                  id={`mn-tab-${sec.id}`}
+                  aria-selected={on}
+                  aria-controls={`mn-panel-${sec.id}`}
+                  tabIndex={on ? 0 : -1}
+                  className={`mn-tab ${on ? 'is-on' : ''}`}
+                  onMouseEnter={() => {
+                    if (!canHoverRef.current) return
+                    if (hoverTimer.current) clearTimeout(hoverTimer.current)
+                    hoverTimer.current = setTimeout(() => setOpenGroup(sec.id), 90)
+                  }}
+                  onMouseLeave={() => { if (hoverTimer.current) clearTimeout(hoverTimer.current) }}
+                  onFocus={() => setOpenGroup(sec.id)}
+                  onClick={() => setOpenGroup(sec.id)}
+                  onKeyDown={(e) => {
+                    /* Arrows walk the row, which is what a tablist
+                       promises the moment it calls itself one. */
+                    const i = TABS.findIndex((x) => x.id === activeSection)
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                      e.preventDefault()
+                      const next = e.key === 'ArrowRight'
+                        ? (i + 1) % TABS.length
+                        : (i - 1 + TABS.length) % TABS.length
+                      setOpenGroup(TABS[next].id)
+                      document.getElementById(`mn-tab-${TABS[next].id}`)?.focus()
+                    }
+                  }}
+                >
+                  {sec.label}
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+
+        {/* Left — the five sections as a row, and the open one’s
+            contents beneath. Hovering a section swaps the panel; the
+            reader never has to click to look. */}
         <aside className="menu-left">
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {PRIMARY_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="menu-link"
-                data-attr={`menu-link:${link.href}`}
-                data-active={pathname === link.href}
-              >
-                {link.label}
-              </Link>
-            ))}
+          <nav className="mn" aria-label="Main">
+
+            {TABS.map((sec) => {
+              const on = activeSection === sec.id
+              return (
+                <div
+                  key={sec.id}
+                  id={`mn-panel-${sec.id}`}
+                  role="tabpanel"
+                  aria-labelledby={`mn-tab-${sec.id}`}
+                  hidden={!on}
+                  className="mn-panel"
+                >
+                  <ul className="mn-items">
+                    {sec.items.map((item) => (
+                      <li
+                        key={item.href + item.label}
+                        className={`mn-row ${item.children ? 'has-more' : ''}`}
+                      >
+                        {/* Something announced but not yet a place is
+                            plain text, not a dead link — the marker says
+                            so, and there is nothing to click through to. */}
+                        {item.disabled ? (
+                          <span className="mn-leaf is-soon" aria-disabled>
+                            {item.label}
+                          </span>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            className={`mn-leaf ${pathname === item.href ? 'is-on' : ''}`}
+                            aria-current={pathname === item.href ? 'page' : undefined}
+                            onClick={() => setMenuOpen(false)}
+                            data-attr={`menu-link:${item.href}`}
+                          >
+                            {item.label}
+                          </Link>
+                        )}
+
+                        {item.children && (
+                          /* The tier beneath. Open on hover, and on focus
+                             too — a layer a keyboard cannot reach is a
+                             layer that is not there. */
+                          <div className="mn-sub">
+                            <ul className="mn-sub-in">
+                            {item.children.map((child) => (
+                              <li key={child.href + child.label}>
+                                {child.disabled ? (
+                                  <span className="mn-sub-leaf is-soon" aria-disabled>
+                                    {child.label}
+                                  </span>
+                                ) : (
+                                  <Link
+                                    href={child.href}
+                                    className={`mn-sub-leaf ${pathname === child.href ? 'is-on' : ''}`}
+                                    aria-current={pathname === child.href ? 'page' : undefined}
+                                    onClick={() => setMenuOpen(false)}
+                                    data-attr={`menu-link:${child.href}`}
+                                  >
+                                    {child.label}
+                                  </Link>
+                                )}
+                              </li>
+                            ))}
+                            </ul>
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            })}
           </nav>
+
         </aside>
+
+        {/* Now, reached as it should be — the thing that is happening,
+            not an item in a list of subjects. Bottom-left, where the
+            panel’s other standing marks sit. */}
+        <div className="menu-corner" ref={cornerRef}>
+          <Link
+            href="/now"
+            className="mg-live"
+            onClick={() => setMenuOpen(false)}
+            data-attr="menu-link:/now"
+          >
+            Now
+            <span className="mg-dot" aria-hidden />
+          </Link>
+          {/* Contact is not a subject the site is about; it is how you
+              reach a person. It sits with the standing marks rather than
+              inside a list of things to read. */}
+          <Link
+            href="/contact"
+            className="mn-corner-link"
+            onClick={() => setMenuOpen(false)}
+            data-attr="menu-link:/contact"
+          >
+            Contact Us
+          </Link>
+          {/* Announced, not visitable — there is no page behind it yet.
+              A span rather than a Link, so it cannot be clicked or
+              focused, matching how the soon leaves behave. */}
+          <span className="mn-corner-link is-soon" aria-disabled>
+            Living Index
+            <span className="mn-soon-pill">Coming soon</span>
+          </span>
+        </div>
 
         {/* Bottom-left utilities: theme toggle + view-mode toggle + Instagram */}
         <div className="menu-utils">
@@ -715,6 +925,10 @@ export default function Navbar() {
                     className="tile"
                     data-size={a.size}
                     data-coming-soon={a.comingSoon ? 'true' : undefined}
+                    data-noimg={!a.img && !a.video ? 'true' : undefined}
+                    /* Some coming-soon entries have no page behind them yet —
+                       never prefetch a route that would 404. */
+                    prefetch={a.comingSoon ? false : undefined}
                     aria-disabled={a.comingSoon ? true : undefined}
                     tabIndex={a.comingSoon ? -1 : undefined}
                     style={{
@@ -765,7 +979,7 @@ export default function Navbar() {
                         <span className="tile-coming-soon">Coming Soon</span>
                       )}
                     </div>
-                    <p className="tile-title">{a.title}</p>
+                    <p className="label tile-title">{a.title}</p>
                   </Link>
                 )
               })
@@ -777,6 +991,345 @@ export default function Navbar() {
         <style jsx>{`
           :global(.menu-overlay) { width: 90vw; color: var(--contrast-text); }
           :global(.menu-backdrop) { display: flex; align-items: stretch; }
+          /* ── the accordion ──────────────────────────────────────
+             Five groups, one open. The open one is marked by a 2px rule
+             that slides out in front of it — no chevrons. Panels animate
+             on grid-template-rows so nothing has to be measured. */
+          .mg { display: flex; flex-direction: column; }
+          .mg-grp { display: flex; flex-direction: column; }
+
+          :global(.mg-btn-link) {
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
+            color: var(--contrast-text);
+            text-decoration: none; display: block;
+            padding: 12px 0;
+            transition: color var(--dur-base) var(--ease);
+          }
+          :global(.mg-btn-link:hover) { color: var(--brand-accent); }
+
+          .mg-btn {
+            appearance: none; background: none; border: 0;
+            padding: 12px 0; width: 100%;
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
+            color: var(--contrast-text);
+            text-align: left; cursor: pointer;
+            display: flex; align-items: center; flex-wrap: wrap;
+            transition: color var(--dur-base) var(--ease);
+          }
+          .mg-btn:hover { color: var(--brand-accent); }
+          .mg-btn:focus-visible {
+            outline: 2px solid var(--brand-accent); outline-offset: 3px;
+          }
+          @media (max-width: 900px) {
+            .mg-btn, :global(.mg-btn-link), :global(.mg-live) { font-size: 24px; }
+            :global(.mg-item) { font-size: 12px; }
+          }
+          @media (max-width: 600px) {
+            .mg-btn, :global(.mg-btn-link), :global(.mg-live) { font-size: 21px; }
+            :global(.mg-item) { font-size: 11px; }
+          }
+          .mg-note {
+            margin-left: 10px;
+            font-family: var(--font-mono), monospace;
+            font-size: 8.5px; letter-spacing: 0.8px; text-transform: uppercase;
+            color: var(--brand-accent); white-space: nowrap;
+            /* wraps to its own line rather than clipping the group name */
+            flex: 0 0 auto;
+          }
+
+          .mg-panel {
+            display: grid; grid-template-rows: 0fr;
+            transition: grid-template-rows var(--dur-slow) var(--ease-out);
+          }
+          .mg-grp[data-open='true'] .mg-panel { grid-template-rows: 1fr; }
+          .mg-panel-in { overflow: hidden; }
+
+          .mg-items,
+          /* ── sections ──────────────────────────────────────────
+             A row of five, and the open one’s contents underneath. The
+             row is set in mono because it labels the panel rather than
+             being read as prose; the contents are Bricolage because they
+             are the names of things. */
+          .mn { display: flex; flex-direction: column; gap: 34px; }
+          /* Across the top of the whole panel, not inside the left
+             column — five section names will not sit in a 345px rail,
+             and the row is a header for both columns rather than for
+             one of them. */
+          .mn-tabs {
+            position: absolute;
+            top: 22px;
+            left: var(--gutter);
+            right: 84px;
+            z-index: 3;
+            list-style: none; margin: 0; padding: 0;
+            display: flex; flex-wrap: wrap; gap: 30px;
+          }
+          .mn-tab {
+            background: none; border: 0; padding: 4px 0; cursor: pointer;
+            /* The site's one hover affordance: a brand-accent underline,
+               inherited from globals.css rather than reinvented here.
+               The selected tab uses the same underline held on, so hover
+               and selection never draw two lines under one word. */
+            /* Bricolage rather than mono: these are the names of parts of
+               the site, not technical labels, and set small they read as
+               a row of places rather than as machine text. */
+            /* .p2: grotesque, 14px, normal. The row labels the panel
+               rather than titling it, so it takes the secondary body
+               role rather than a heading one. */
+            font-family: var(--font-grotesque), sans-serif;
+            font-size: 14px; font-weight: 400;
+            line-height: 1.6; letter-spacing: normal; text-transform: none;
+            color: color-mix(in srgb, var(--contrast-text) 55%, transparent);
+            text-underline-offset: var(--rule-offset);
+            text-decoration-thickness: var(--rule-weight);
+            transition: color var(--dur-base) var(--ease),
+                        text-decoration-color var(--dur-base) var(--ease);
+          }
+          .mn-tab:hover { color: var(--contrast-text); }
+          .mn-tab.is-on {
+            color: var(--contrast-text);
+            text-decoration: underline;
+            text-decoration-color: var(--brand-accent);
+            text-underline-offset: var(--rule-offset);
+            text-decoration-thickness: var(--rule-weight);
+          }
+          .mn-tab:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
+
+          .mn-items { list-style: none; margin: 0; padding: 0; }
+          /* A row that has a tier beneath it opens on hover, and on
+             focus within, so the keyboard reaches it too. Grid rows
+             animate from 0fr to 1fr, which is what lets the list push
+             down smoothly without anyone measuring anything. */
+          /* One grid row, one wrapper inside it. Collapsing the track
+             itself only governs the first row, so a parent with three
+             children kept two of them open — the wrapper gives the grid
+             a single thing to close. */
+          .mn-sub {
+            display: grid; grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows var(--dur-base) var(--ease-out),
+                        opacity var(--dur-base) var(--ease);
+          }
+          .mn-sub-in {
+            list-style: none; margin: 0;
+            overflow: hidden;
+            min-height: 0;
+          }
+          .mn-row.has-more:hover .mn-sub,
+          .mn-row.has-more:focus-within .mn-sub {
+            grid-template-rows: 1fr;
+            opacity: 1;
+          }
+          /* Indented, so the tier reads as belonging to the line above
+             rather than as a continuation of the list. */
+          .mn-sub-in { padding-left: 18px; }
+          :global(.mn-sub-leaf) {
+            display: block;
+            padding: 3px 0;
+            font-family: var(--font-mono), monospace;
+            font-size: 11px; line-height: 1.5;
+            letter-spacing: 0.6px; text-transform: uppercase;
+            color: color-mix(in srgb, var(--contrast-text) 62%, transparent);
+            text-decoration: none;
+          }
+          :global(.mn-sub-leaf):hover,
+          :global(.mn-sub-leaf).is-on {
+            color: var(--contrast-text);
+            text-decoration: underline;
+            text-decoration-color: var(--brand-accent);
+            text-underline-offset: var(--rule-offset);
+            text-decoration-thickness: var(--rule-weight);
+          }
+          :global(.mn-sub-leaf):focus-visible {
+            outline: 2px solid var(--brand-accent); outline-offset: 2px;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .mn-sub { transition: none; }
+          }
+          .mn-items > li:first-child .mn-group { margin-top: 0; }
+          /* :global — .mn-leaf sits on a Link, and styled-jsx cannot put
+             its scope class on a component, so a scoped rule here matches
+             nothing at all. The symptom is not a wrong style but an
+             absent one: these have been rendering at the inherited 16px
+             the whole time. Same reason .mn-sub-leaf is global below. */
+
+          :global(.mn-leaf) {
+            display: block;
+            padding: 5px 0;
+            /* h3 from the design system: grotesque, 22–32px, -0.03em,
+               1.15. These are sub-headings within the panel, which is
+               exactly the role h3 describes. */
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
+            color: var(--contrast-text);
+            text-decoration: none;
+            transition: opacity var(--dur-base) var(--ease);
+          }
+          :global(.mn-leaf):hover,
+          :global(.mn-leaf).is-on {
+            text-decoration: underline;
+            text-decoration-color: var(--brand-accent);
+            text-underline-offset: var(--rule-offset);
+            text-decoration-thickness: var(--rule-weight);
+          }
+
+          :global(.mn-leaf):focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
+
+          /* The panel changes under the pointer, so it should arrive
+             rather than snap. */
+          .mn-panel[hidden] { display: none; }
+          .mn-panel { animation: mn-fade var(--dur-base) var(--ease-out); }
+          @keyframes mn-fade {
+            from { opacity: 0; transform: translateY(4px); }
+            to   { opacity: 1; transform: none; }
+          }
+          @media (prefers-reduced-motion: reduce) { .mn-panel { animation: none; } }
+
+          .mg-sub { list-style: none; margin: 0; padding: 0; }
+          /* Indented under the group heading, so the hierarchy reads
+             without a rule or a bullet. */
+          .mg-items {
+            padding: 2px 0 16px 18px;
+            display: flex; flex-direction: column; gap: 10px;
+          }
+          .mg-sub {
+            margin: 8px 0 2px; padding-left: 13px;
+            border-left: 1px solid var(--contrast-border);
+            display: flex; flex-direction: column; gap: 8px;
+          }
+
+          /* DM Mono, per the type spec: Bricolage carries the groups,
+             mono carries the labels under them. */
+          :global(.mg-item) {
+            font-family: var(--font-mono), monospace;
+            font-size: 12px; letter-spacing: 0.9px; text-transform: uppercase;
+            line-height: 1.4;
+            color: var(--contrast-text-body);
+            text-decoration: none; display: inline-flex;
+            align-items: baseline; gap: 8px;
+            transition: color var(--dur-base) var(--ease);
+          }
+          :global(.mg-item:hover) { color: var(--brand-accent); }
+          :global(.mg-item[data-active='true']) { color: var(--brand-accent); }
+          .mg-sub :global(.mg-item) { font-size: 11px; color: var(--contrast-text-muted); }
+          .mg-sub :global(.mg-item:hover) { color: var(--brand-accent); }
+
+          /* Switched off, but not dimmed — these read at full weight
+             like everything else. They simply do not go anywhere yet,
+             which aria-disabled carries for assistive tech. */
+          :global(.mg-item.is-off) { cursor: default; }
+
+          /* ── live ──────────────────────────────────────────────
+             Sits in the same stack as the groups and is set like them,
+             so it reads as another way in rather than a status badge
+             bolted to the bottom. The dot carries all the signal. */
+          .menu-corner {
+            position: absolute;
+            left: var(--gutter);
+            bottom: 44px;
+            z-index: 102;
+            display: flex; flex-direction: column;
+            align-items: flex-start; gap: 0;
+          }
+          /* Both columns sit at bottom: 44px, but every mark here carries
+             12px of padding for its touch target — which floated the last
+             line above the icons opposite. Dropping it on the last one
+             lands the two columns on the same bottom edge. */
+          .menu-corner > :last-child { padding-bottom: 0; }
+          /* h3, the same as Live above it — they are two marks of the
+             same standing, not a heading with a footnote. */
+          :global(.mn-corner-link) {
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
+            color: var(--contrast-text);
+            /* Same box as .mg-live above it, so the three marks step
+               evenly and each gets the same touch target. */
+            display: inline-flex; align-items: center;
+            padding: 12px 0;
+            text-decoration: none;
+            text-underline-offset: var(--rule-offset);
+            text-decoration-thickness: var(--rule-weight);
+          }
+          /* Underline only, like the leaves. The accent arrives as the
+             rule under the word and the word keeps its colour — turning
+             the text accent as well was two signals for one hover. */
+          :global(.mn-corner-link.is-soon) {
+            cursor: default;
+            color: color-mix(in srgb, var(--contrast-text) 55%, transparent);
+          }
+          :global(.mn-corner-link.is-soon):hover { text-decoration: none; }
+          :global(.mn-corner-link):not(.is-soon):hover {
+            text-decoration-line: underline;
+            text-decoration-color: var(--brand-accent);
+            /* Longhands, not the shorthand: 'text-decoration: underline'
+               resets thickness and offset to initial, so the rule came
+               back at the browser default instead of the house weight. */
+            text-underline-offset: var(--rule-offset);
+            text-decoration-thickness: var(--rule-weight);
+          }
+
+          /* Announced, not visitable. Dimmed and inert, with no label —
+             the menu says what exists by what it lets you open. */
+          :global(.mn-leaf.is-soon),
+          :global(.mn-sub-leaf.is-soon) {
+            cursor: default;
+            color: color-mix(in srgb, var(--contrast-text) 55%, transparent);
+          }
+          :global(.mn-leaf.is-soon):hover,
+          :global(.mn-sub-leaf.is-soon):hover { text-decoration: none; }
+          :global(.mg-live) {
+            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 12px;
+            font-family: var(--font-grotesque), sans-serif;
+            font-weight: 400;
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15; letter-spacing: -0.03em;
+            color: var(--contrast-text);
+            padding: 12px 0;
+          }
+          /* Small enough to read as an annotation on the label, not as a
+             second line of navigation. */
+          :global(.mn-soon-pill) {
+            margin-left: 10px;
+            display: inline-block;
+            /* On the label's baseline, not its middle — the pill reads as
+               part of the line it annotates rather than as a badge
+               floating beside it. */
+            vertical-align: baseline;
+            font-family: var(--font-mono), monospace;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            line-height: 1;
+            padding: 5px 8px 4px;
+            border-radius: 999px;
+            border: 1px solid color-mix(in srgb, var(--contrast-text) 28%, transparent);
+            color: color-mix(in srgb, var(--contrast-text) 62%, transparent);
+          }
+          .mg-dot {
+            width: 9px; height: 9px; border-radius: 50%; flex: none;
+            background: var(--brand-accent);
+            animation: mg-pulse 2.6s var(--ease) infinite;
+          }
+          @keyframes mg-pulse {
+            0%, 100% { box-shadow: 0 0 8px 0 var(--brand-accent); opacity: 0.8; }
+            50%      { box-shadow: 0 0 16px 3px var(--brand-accent); opacity: 1; }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .mg-dot { animation: none; }
+            .mg-panel { transition: none; }
+          }
+
           :global(.menu-link) {
             font-family: var(--font-mono) !important;
             font-size: 12px !important;
@@ -793,19 +1346,21 @@ export default function Navbar() {
           /* Utility stack: left-aligned with the primary nav links column
              (var(--gutter) inside the menu panel). Stacks vertically, each
              chip left-anchored so the column reads tidy. */
+          /* Bottom right, diagonally opposite Live. The panel's own
+             controls — theme, view mode, the one outward link — sit out
+             of the reading path, at the end of it. */
           :global(.menu-utils) {
             position: absolute;
-            bottom: 60px;
-            left: var(--gutter);
-            /* Sit ABOVE the .tile-feed-vignette (z: 101). On mobile
-               the vignette is full-bleed across the bottom of the
-               viewport; the utility icons need to remain crisp and
-               clickable on top of the blur. */
-            z-index: 102;
+            bottom: 44px;
+            right: var(--gutter);
+            /* Top of the panel's stack. Above the tile feed vignette
+               (101) and above the feed itself, so these stay crisp and
+               clickable whatever scrolls under them. */
+            z-index: 120;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            gap: 16px;
+            align-items: center;
+            gap: 14px;
           }
           /* Toggle chips (theme + view mode) — slightly bigger filled circle.
              Background tint is keyed off currentColor so it darkens in light
@@ -887,9 +1442,19 @@ export default function Navbar() {
           /* Hover symbol — vector glyph centred over the photo, hidden
              at rest and revealed on hover. Pure 35 % of the card width
              (no clamp) so the mark scales with the tile — small cards
-             get a small mark, large cards get a large one. Difference
-             blend so it reads on any underlying tone; z-index high so
-             the mark sits above the thumbnail unambiguously. */
+             get a small mark, large cards get a large one.
+
+             It used to difference-blend, on the theory that inverting
+             would make it read against any tone. Difference is precisely
+             what fails against a mid-tone: white differenced with a
+             mid-grey returns a mid-grey, so contrast collapses and this
+             mark’s particle edges turn to speckle. Over the estate
+             photography — green, brown, mid-everything — that is most of
+             the time.
+
+             So the mark is simply white, and the hover darkens the photo
+             beneath it to guarantee it a ground. Predictable on any
+             image rather than theoretically clever on some. */
           :global(.tile-img .tile-symbol) {
             position: absolute;
             top: 50%;
@@ -900,16 +1465,17 @@ export default function Navbar() {
             opacity: 0;
             pointer-events: none;
             z-index: 10;
-            mix-blend-mode: difference;
             transition: opacity 0.32s var(--ease-out), transform 0.4s var(--ease-spring);
           }
           /* On hover: blur the photo AND scale it just past the clip, so the
              blur has no faded edge (that soft light border read as a vignette).
              The centre glyph fades + scales in over the top. Link wrapper
-             doesn't get the styled-jsx scope class, so the chain is global. */
+             doesn’t get the styled-jsx scope class, so the chain is global. */
           :global(.tile:hover .tile-img img:not(.tile-symbol)),
           :global(.tile:hover .tile-img video) {
-            filter: blur(14px);
+            /* Darkened as well as blurred, so the white mark always has
+               something to sit against. */
+            filter: blur(14px) brightness(0.5);
             transform: scale(1.12);
           }
           :global(.tile:hover .tile-img .tile-symbol) {
@@ -918,7 +1484,7 @@ export default function Navbar() {
           }
           /* Coming-soon tiles: muted card, no hover effects, label overlay
              centred on the placeholder. Tile is non-interactive (preventDefault
-             on click + tabIndex -1) so all that's left is the visual treatment. */
+             on click + tabIndex -1) so all that’s left is the visual treatment. */
           :global(.tile[data-coming-soon="true"]) {
             cursor: default;
             pointer-events: auto;
@@ -929,6 +1495,14 @@ export default function Navbar() {
           :global(.tile[data-coming-soon="true"] .tile-img) {
             opacity: 0.55;
           }
+          /* An unwritten journal has no photograph to dim, so it gets a
+             flat grey plate instead of the card surface — visibly a
+             placeholder rather than an image that failed to load. */
+          :global(.tile[data-noimg="true"] .tile-img) {
+            background: var(--contrast-text-muted);
+            opacity: 0.22;
+          }
+          :global(.tile[data-noimg="true"]:hover .tile-img) { opacity: 0.28; }
           :global(.tile[data-coming-soon="true"] .tile-img img:not(.tile-symbol)),
           :global(.tile[data-coming-soon="true"] .tile-img video) {
             filter: grayscale(1) brightness(0.85);
@@ -953,26 +1527,31 @@ export default function Navbar() {
             transform: translate(-50%, -50%);
             z-index: 11;
             font-family: var(--font-mono);
-            font-size: 11px;
+            font-size: 9.5px;
             font-weight: 400;
-            letter-spacing: 1.5px;
+            letter-spacing: 0.9px;
             text-transform: uppercase;
             color: var(--contrast-text);
+            /* One line. Sized to fit the narrow tiles rather than
+               wrapping inside them. */
             white-space: nowrap;
+            text-align: center;
+            max-width: calc(100% - 12px);
             pointer-events: none;
-            padding: 6px 10px;
+            padding: 5px 9px;
             background: color-mix(in oklab, var(--contrast-bg) 70%, transparent);
-            border-radius: 2px;
+            /* A pill, like the one in the corner. A 2px radius on a
+               nine-pixel label reads as a clipped rectangle rather than
+               as a deliberate shape. */
+            border-radius: 999px;
+            border: 1px solid color-mix(in srgb, var(--contrast-text) 28%, transparent);
           }
-          /* Matches the global .label style exactly: DM Mono 11px, 1px
-             letter-spacing, uppercase. Title and meta labels site-wide now
-             share one type role. */
+          /* The label role, worn on the element itself. This rule sets
+             only what the menu changes about it: the contrast colour the
+             overlay needs, the leading, and the gap above. Restating the
+             role’s own values here is what let the phone breakpoint below
+             drift to 10px under a comment claiming it matched. */
           :global(.tile-title) {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            font-weight: 400;
-            letter-spacing: 1px;
-            text-transform: uppercase;
             line-height: 1.4;
             color: var(--contrast-text);
             margin-top: 16px;
@@ -1031,11 +1610,30 @@ export default function Navbar() {
             display: none;
           }
 
+          .menu-left::-webkit-scrollbar { display: none; width: 0; }
           .menu-left {
             position: absolute;
-            top: 116px;                   /* aligned with marquee top */
-            left: var(--gutter);          /* aligned with the panel's own gutter */
-            width: 240px;
+            /* The panel logo is hidden at this width, so nothing sits
+               above the nav but the close button — it can start higher
+               than the marquee line it used to align to. */
+            /* Aligned with the marquee strip beside it: both start at
+               116px, so the panel reads as one horizon rather than two. */
+            top: 116px;
+            /* Five pixels left of the gutter the row above uses. The two
+               start on the same pixel geometrically, but the items are
+               set nearly three times larger and larger type carries more
+               apparent side-bearing, so identical geometry reads as an
+               indent. Applied to the column rather than the list: this
+               column scrolls, and overflow-y auto computes overflow-x to
+               auto as well, so a negative margin on the list inside it
+               was simply clipped off. */
+            left: calc(var(--gutter) - 5px);
+            /* The marks below, their own 44px offset, and a gap. */
+            bottom: calc(var(--menu-corner-h, 170px) + 44px + var(--space-5));
+            width: 345px;
+            overflow-y: auto;
+            padding-bottom: var(--space-5);
+            scrollbar-width: none; -ms-overflow-style: none;
             display: flex;
             flex-direction: column;
             z-index: 2;
@@ -1044,11 +1642,19 @@ export default function Navbar() {
           .menu-right {
             position: absolute;
             top: 0;
-            left: calc(var(--gutter) + 240px + clamp(64px, 8vw, 160px));
+            /* Clear of the tab row, not just of the 345px rail. The row
+               is a header for both columns and floats over this lane;
+               its four names run about 422px from the gutter, so a gap
+               sized to the rail alone puts a tile behind the last one. */
+            left: calc(var(--gutter) + 345px + clamp(150px, 12vw, 210px));
             right: var(--gutter);
             bottom: 0;
             overflow-y: auto;
-            padding: 116px 0 60px;
+            /* 32px lines the first tile's top edge up with Home's text
+               in the nav — the column’s 20px offset plus the 12px
+               padding on a group. Tiles are left-aligned in this
+               column, so the close button at the far right is clear. */
+            padding: 32px 0 60px;
             box-sizing: border-box;
             /* Hide native scrollbar — the journal feed scrolls silently
                so the cards do all the visual work. */
@@ -1105,7 +1711,7 @@ export default function Navbar() {
             /* Uniform 100px gap between every tile, regardless of width. */
             gap: 100px;
             /* Column lane: 560px wide, positioned in the right portion of
-               the menu but with every tile snapping to the lane's LEFT
+               the menu but with every tile snapping to the lane’s LEFT
                edge for a clean uniform reading rhythm. */
             max-width: 560px;
             margin-left: auto;
@@ -1137,20 +1743,47 @@ export default function Navbar() {
 
             /* Left nav column — fixed, stacked vertically below the top bar */
             .menu-left {
-              top: 88px;
+              top: 148px;
               left: 24px;
-              width: 140px;
+              right: 24px;
+              /* Full width now that the tile lane is gone from this
+                 breakpoint — the 260px rail existed to leave room for it. */
+              width: auto;
+              overflow-y: auto;
               z-index: 3;
             }
 
-            /* Right tile feed — scrolls; pushed further right for breathing room */
-            .menu-right {
-              top: 0;
-              left: calc(140px + 24px + 200px);
-              right: 24px;
-              bottom: 0;
-              padding: 88px 0 80px;
+            /* ── the menu on a phone ──────────────────────────────
+               Two columns do not fit. The rail needs 260px and the tab
+               row needs about 420px, so on a 375px screen they were
+               drawing on top of each other and the tile lane had a
+               sliver left over.
+
+               So: one column. The tabs sit below the logo in a row that
+               scrolls sideways — the same gesture as the coffee
+               microsite’s nav — and the tile feed is gone entirely. A
+               phone menu is for getting somewhere, and eighteen
+               thumbnails in a 90px gutter helped nobody find anything. */
+            .mn-tabs {
+              top: 76px;
+              left: 0; right: 0;
+              padding: 0 24px 14px;
+              flex-wrap: nowrap;
+              gap: 22px;
+              overflow-x: auto;
+              -webkit-overflow-scrolling: touch;
+              scrollbar-width: none;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+              /* The row dissolves at the right edge rather than being
+                 chopped, so it reads as scrollable. */
+              -webkit-mask-image: linear-gradient(to right, #000 84%, transparent 100%);
+              mask-image: linear-gradient(to right, #000 84%, transparent 100%);
             }
+            .mn-tabs::-webkit-scrollbar { display: none; }
+            .mn-tab { white-space: nowrap; }
+
+            .menu-right { display: none; }
+            :global(.tile-feed-vignette) { display: none; }
             .tile-feed {
               gap: 48px;
             }
@@ -1165,9 +1798,9 @@ export default function Navbar() {
               line-height: 1.4;
             }
             :global(.menu-utils) {
-              bottom: 60px;
-              left: 24px;
-              gap: 14px;
+              bottom: 40px;
+              right: 24px;
+              gap: 12px;
             }
             :global(.menu-util-btn svg) {
               width: 20px;
@@ -1195,31 +1828,22 @@ export default function Navbar() {
             :global(.menu-logo) { top: 16px; left: var(--gutter); }
             :global(.menu-close) { top: 16px; right: var(--gutter); }
 
+            /* Below the tab row, and the full width of the panel — the
+               220px rail existed to leave room for a tile lane that no
+               longer renders at this breakpoint. */
             .menu-left {
-              top: 76px;
+              top: 148px;
               left: var(--gutter);
-              right: auto;
-              width: 96px;
+              right: var(--gutter);
+              width: auto;
+              overflow-y: auto;
             }
             .menu-left :global(nav) {
               flex-direction: column !important;
               gap: 14px !important;
             }
 
-            .menu-right {
-              top: 0;
-              /* Original phone offset (no shift). The previous +60 px
-                 nudge shrank the column too much, squashing the
-                 cards — left at the pre-shift position so tiles
-                 keep their previous pixel sizes. */
-              left: calc(var(--gutter) + 96px + 32px);
-              right: var(--gutter);
-              bottom: 0;
-              /* Match HOME's top edge in the left rail (menu-left top: 76px)
-                 so the first tile starts on the same baseline as the first
-                 nav link. */
-              padding: 76px 0 100px;
-            }
+            .menu-right { display: none; }
             /* Keep the inline width-% per tile so each journal renders at
                its own ARTICLES.w * 0.85% — varied widths give the feed its
                editorial rhythm. We just override the original aspect / radius. */
@@ -1227,16 +1851,10 @@ export default function Navbar() {
               aspect-ratio: 16 / 10;
               border-radius: 3px;
             }
-            /* Phone — pin the tile title to the global label spec
-               (mono 10 px, 1 px letter-spacing, uppercase, muted)
-               so it reads as a caption rather than a headline under
-               the smaller cards. !important to beat any inherited
-               styles from p / agent-mode rules. */
+            /* Phone — the label role already sets the type. Only the
+               gap above and the weight of the ink change under the
+               smaller cards. */
             :global(.tile-title) {
-              font-size: 10px !important;
-              line-height: 1.4 !important;
-              letter-spacing: 1px !important;
-              font-weight: 400 !important;
               margin-top: 10px;
               opacity: 0.7;
             }
@@ -1251,9 +1869,9 @@ export default function Navbar() {
             }
 
             :global(.menu-utils) {
-              left: var(--gutter);
               bottom: 32px;
-              gap: 12px;
+              right: var(--gutter);
+              gap: 10px;
             }
             :global(.menu-link) { font-size: 11px !important; }
             /* Phone: full-bleed bottom band — pull the vignette all
@@ -1305,7 +1923,7 @@ export default function Navbar() {
       {/* Bottom blur band — a thin strip at the very bottom of the
           viewport that softens the cards just before they scroll off-
           screen. Rendered as a SIBLING of .menu-overlay so position:
-          fixed isn't trapped by .menu-overlay's transform, and so it
+          fixed isn’t trapped by .menu-overlay’s transform, and so it
           spans the full viewport width (no hard left seam where the
           menu panel meets the page background). Visibility tracks
           menuOpen via inline opacity. */}
@@ -1325,7 +1943,7 @@ export default function Navbar() {
       />
 
       {/* Contact modal — opened by the /mudigere "Contact us"
-          button. Mounted here so it's a sibling of the nav and lives
+          button. Mounted here so it’s a sibling of the nav and lives
           above the page-vignette (z-index 100 vs 40). */}
       <ContactModal
         open={contactOpen}

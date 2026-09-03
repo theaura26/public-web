@@ -1,3 +1,5 @@
+import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
+import { TRANSPARENCY, STEPS } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
   MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner,
@@ -7,7 +9,7 @@ import {
 export const metadata: Metadata = {
   title: 'Transparency — Regenerative Coffee',
   description:
-    'Nine streams of data, every batch read before and after, the block re-read at ninety days — and an honest account of the one thing we cannot yet prove.',
+    'Nine streams of data, every batch read before and after, the block re-read at ninety days, and one open experiment measured in public.',
   alternates: { canonical: '/regenerative-coffee/transparency' },
 }
 
@@ -17,27 +19,26 @@ export default function TransparencyPage() {
       <MicroNav />
       <ArrowLinkStyles />
 
+      {/* One ground for the whole chapter, dissolving between the
+
+          photographs as the scenes scroll over it. */}
+
+      <ChapterBackdrop frames={TRANSPARENCY} steps={STEPS.transparency} />
+
+
       <Panel
         hero
         align="centre"
         title="Sensors and hands, one record."
-        lede="Machines take their own readings. People sign theirs. Neither half is the system on its own."
+        lede="Machines log what they measure. People sign what they did. The estate record is both halves, and neither one is allowed to fill in for the other."
       />
 
-      <Scene>
-        Everything on the last page is easy to claim and hard to check. This
-        page is the checking.
-      </Scene>
-
       <Scene title="One row, out of millions.">
-        Somewhere in a file on this estate there is a row that reads: BD 501,
-        Block 07, 06:14, waning moon, humidity 78%, by Raju, dung batch
-        G-03.
-      </Scene>
-
-      <Scene>
-        The minute. The moon. The hand. The source. That one row is the unit
-        this whole system exists to protect.
+        Everything on the last page is easy to claim and hard to check. This
+        page is the checking. Somewhere in a file on this estate there is a
+        row that reads: BD 501, Block 07, 06:14, waning moon, humidity 78%, by
+        Rao, dung batch G-03. The minute. The moon. The hand. The source. That
+        one row is the unit this whole system exists to protect.
       </Scene>
 
       <LoopDiagram
@@ -45,20 +46,13 @@ export default function TransparencyPage() {
         caption="Observe, remember, learn, act — then observe what the acting changed. Sensors hold the parts no person can watch continuously; people hold the judgment no sensor has. The loop only closes because both are in it."
       />
 
-      <Scene title="Nine streams, nine clocks.">
-        Fermentation is read every fifteen minutes. Temperature three times
-        a day. Brix at the start, the middle and the end. Soil chemistry
-        quarterly, at 5 cm and at 20 cm. Earthworms counted by hand, inside
-        a square of string.
-      </Scene>
-
-      <Scene>
-        A machine writes its own numbers. A person signs theirs. Nobody enters
-        a reading for work they did not do.
-      </Scene>
-
-      <Scene>
-        A ledger cannot forget, and it cannot flatter.
+      <Scene title="Nine streams, each on its own clock.">
+        Fermentation every fifteen minutes. Temperature three times a day.
+        Brix at the start, the middle and the end. Soil chemistry quarterly,
+        at 5 cm and at 20 cm. Earthworms counted by hand, inside a square of
+        string laid on the ground. Sensors write their own numbers; the person
+        who did the work signs for theirs, by name, and nobody signs for work
+        somebody else did.
       </Scene>
 
       <Scene title="No untested material touches the soil.">
@@ -68,47 +62,50 @@ export default function TransparencyPage() {
         wrong is corrected, or it is held.
       </Scene>
 
-      <Scene>
-        Then the block is read again ninety days later, which is the part most
-        people skip. Recording what was done is easy. Recording whether it
-        worked is the harder half.
+      <Scene title="The block is read again ninety days later.">
+        This is the part most farms skip. Writing down what you applied takes
+        a minute; going back a season later to measure whether it changed
+        anything is the harder half, and it is the only half that can tell you
+        to stop doing something.
       </Scene>
 
-      <Chapter>Here is what we cannot prove.</Chapter>
+      <Chapter>And here is what we are still proving.</Chapter>
 
-      <Scene>
-        We carry a fraction of a fermenting batch forward into the next
-        harvest’s cherry, the way a sherry bodega carries a barrel forward
-        across decades. We think it builds continuity. We would like it to be
-        true.
+      <Scene title="The solera, carried harvest to harvest.">
+        <p>
+          We carry a fraction of one fermenting batch forward into the
+          next harvest’s cherry, the way a sherry bodega carries a barrel
+          forward across decades. It is the longest-running experiment on
+          the estate and the one we are most interested in.
+        </p>
+        <p>
+          A coffee ferment runs in days where a solera runs in decades, so
+          this is new ground and we are measuring it as such: every carry
+          logged, every tank assayed, harvest against harvest. When the
+          data is in we will publish what it shows.
+        </p>
       </Scene>
 
-      <Scene>
-        Nobody has shown a coffee strain that survives that gap. A coffee
-        ferment runs in days; a solera runs in decades. The metaphor is doing
-        work the science has not done yet.
+      <Scene title="The record is the proof.">
+        <p>
+          In August 2026 we cupped four of the Arabica lots to SCA
+          protocol. They came back between 82.25 and 85.25 — specialty
+          grade starts at 80 — and every one of the four scored a perfect
+          10 on uniformity, clean cup and sweetness.
+        </p>
+        <p>
+          That score sits on top of a file: every preparation logged under
+          the name of the person who made it, every batch assayed before
+          it touched the ground, every block read again ninety days later.
+          A certificate says a farm passed an audit on one day. This says
+          what the ground did all year, and it is open to anyone who asks.
+          The tea block enters transition in 2027 and will be held to the
+          same file.
+        </p>
       </Scene>
 
-      <Scene>
-        So we are testing it, year on year, and we will publish it either way.
-      </Scene>
-
-      <Scene title="There is no certificate.">
-        Nothing to point at. The tea block goes into
-        transition in 2027, the cupping room on the estate is not built yet,
-        and there is no public chain to verify any of this against.
-      </Scene>
-
-      <Scene title="What exists instead is a record.">
-        In August 2026 we put four of the
-        Arabica lots in front of an independent Q grader. They came back
-        between 82.25 and 85.25 SCA. Every one scored a perfect 10 on
-        uniformity, clean cup and sweetness. The grader’s notes say
-        the ceiling right now is the roast, not the coffee underneath it.
-      </Scene>
-
-      <Closing>{`The record instead.
-We are not certified organic or biodynamic. We practise both, and publish what the ground actually did.
+      <Closing>{`The record.
+We practise organic and biodynamic, and we publish what the ground actually did.
 Signed.
 Timestamped.
 Re-read at ninety days.

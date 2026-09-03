@@ -3,7 +3,7 @@
 /* ── Global read-depth tracker ───────────────────────────────────────
    Mounted once in the root layout, it watches scroll on EVERY page and
    fires `read_depth` at 25 / 50 / 75 / 100% — once each, reset per route.
-   Pages too short to "read" (e.g. /contact) are skipped, so they don't
+   Pages too short to "read" (e.g. /contact) are skipped, so they don’t
    emit instant-100% noise.
 
    For a content brand this is the key behaviour signal: what actually gets

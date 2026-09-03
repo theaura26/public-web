@@ -182,7 +182,7 @@ export default function WisdomPage() {
           alt="The four-story canopy breathing — natural intelligence at work"
           value="Natural."
         >
-          The oldest. The land&apos;s own rhythm — canopy, microbe, herd,
+          The oldest. The land&rsquo;s own rhythm — canopy, microbe, herd,
           monsoon — read across decades, not quarters.
         </DataCard>
         <DataCard
@@ -196,11 +196,11 @@ export default function WisdomPage() {
         <DataCard
           video="/journals/wisdom/aura-machine-intelligence.mp4"
           poster="/journals/wisdom/aura-machine-intelligence.jpg"
-          alt="A field sensor catching the day's light — machine intelligence learning the land's signal"
+          alt="A field sensor catching the day’s light — machine intelligence learning the land’s signal"
           value="Machine."
         >
           The youngest. Sensors, logs, and a Mudigere-native model that
-          learns the land&apos;s signal because we keep the record.
+          learns the land&rsquo;s signal because we keep the record.
         </DataCard>
       </DataGrid>
 

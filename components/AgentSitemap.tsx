@@ -42,10 +42,10 @@ export const SITEMAP: SitemapEntry[] = [
       { label: 'Active sites', value: 'Mudigere (India), Ohara (Japan)' },
       { label: 'Planned sites', value: 'Munduk (Indonesia), Punakha (Bhutan)' },
     ],
-    related: ['/reason', '/herd', '/ohara'],
+    related: ['/regenerative-life/the-reason', '/herd', '/ohara'],
   },
   {
-    href: '/reason',
+    href: '/regenerative-life/the-reason',
     label: 'The Reason',
     topic: 'Why Aura exists — restoration over extraction',
     summary: 'Aura was built to restore what sustains us. The reason runs through every pillar: regenerative agriculture, slow-living hospitality, embedded creative practice, and operating systems that honour land before output.',
@@ -60,7 +60,7 @@ export const SITEMAP: SitemapEntry[] = [
       { label: 'Intelligences', value: 'Natural · Human · Machine' },
       { label: 'Type system', value: 'Bricolage Grotesque (display + body) · DM Mono (label) · Mynerve (pull quote)' },
     ],
-    related: ['/reason', '/artistry'],
+    related: ['/regenerative-life/the-reason', '/artistry'],
   },
   {
     href: '/contact',
@@ -79,12 +79,12 @@ export const SITEMAP: SitemapEntry[] = [
     href: '/mudigere',
     label: 'Mudigere',
     topic: 'Aura Estate — the Indian estate',
-    summary: 'Aura’s Indian estate: 150 acres at 3,600 ft in the Western Ghats of Karnataka. A four-story shade-grown polyculture of coffee, pepper, cardamom, and areca, worked with a 52-head Malnad Gidda herd and a combined biodynamic and Vedic preparation programme.',
+    summary: 'Aura’s Indian estate: 150 acres at 3,600 ft in the Western Ghats of Karnataka. A four-story shade-grown polyculture of coffee, pepper, cardamom, and areca, worked with a herd of about fifty Malnad Gidda and a combined biodynamic and Vedic preparation programme.',
     facts: [
       { label: 'Estate', value: 'Aura Estate, Mudigere, Karnataka' },
       { label: 'Area', value: '150 acres' },
       { label: 'Altitude', value: '3,600 ft (Western Ghats)' },
-      { label: 'Herd', value: '52 Malnad Gidda' },
+      { label: 'Herd', value: '~50 Malnad Gidda' },
     ],
     related: ['/herd', '/circular', '/shade'],
   },
@@ -103,9 +103,9 @@ export const SITEMAP: SitemapEntry[] = [
     href: '/herd',
     label: 'Ecosystem Engineers',
     topic: 'The herd as the estate’s biological engine',
-    summary: 'Aura runs a 52-head herd of indigenous Malnad Gidda at Mudigere as the estate’s biological engine — the living source of every soil preparation. Each animal is individually passported, grazes the same 150 acres it feeds, and its dung and urine are measured back into the fertility programme; traceability runs animal → preparation → soil → cherry → cup.',
+    summary: 'Aura runs a herd of about fifty indigenous Malnad Gidda at Mudigere as the estate’s biological engine — the living source of every soil preparation. Each animal is individually passported, grazes the same 150 acres it feeds, and its dung and urine are measured back into the fertility programme; traceability runs animal → preparation → soil → cherry → cup.',
     facts: [
-      { label: 'Herd', value: '52 Malnad Gidda (indigenous breed)' },
+      { label: 'Herd', value: '~50 Malnad Gidda (indigenous breed)' },
       { label: 'Role', value: 'Biological engine — dung/urine for all preparations' },
       { label: 'Record', value: 'Individual passport per animal' },
     ],
@@ -138,7 +138,7 @@ export const SITEMAP: SitemapEntry[] = [
   },
   {
     href: '/ecology',
-    label: 'The Living System',
+    label: 'The Health Index',
     topic: 'Whole-farm ecological monitoring — the Ecological Health Index',
     summary: 'Aura reads its estate as one living system, above ground and below — retained wood and the saprophytic fungi that eat it, forest islands, soil respiration, earthworms, roots — and folds fifteen monitoring programmes into one Ecological Health Index per block.',
     facts: [
@@ -165,7 +165,7 @@ export const SITEMAP: SitemapEntry[] = [
     label: 'Moral Spine',
     topic: 'The things we will not do — restraint as intelligence',
     summary: 'Aura’s moral spine: attention treated as a moral choice and restraint as a form of intelligence — a running account of the lines the estate holds even when it could cross them.',
-    related: ['/reason', '/brand'],
+    related: ['/regenerative-life/the-reason', '/brand'],
   },
   {
     href: '/living-systems',
@@ -176,7 +176,7 @@ export const SITEMAP: SitemapEntry[] = [
   },
   {
     href: '/coffee',
-    label: 'Our Coffee Story',
+    label: 'Our Bean Story',
     topic: 'Six lots, one harvest — one Arabica, six fermentations',
     summary: 'One harvest of a single Arabica taken through six distinct fermentation methods — six separate lots and six cups — the estate’s coffee read as an experiment in method.',
     related: ['/fermentation', '/circular', '/mudigere'],
@@ -196,15 +196,26 @@ export const SITEMAP: SitemapEntry[] = [
     related: ['/coffee', '/circular', '/biodynamic'],
   },
   {
+    href: '/sanctuaries',
+    label: 'Sanctuaries',
+    topic: 'Four valleys, and what a sanctuary is for',
+    summary: 'Aura keeps four valleys in two hemispheres as places safe enough to think in generations. Mudigere in the Western Ghats and Ohara north of Kyoto are open and working; Munduk in Bali and Punakha in Bhutan are named and closed while the land is still being read.',
+    facts: [
+      { label: 'Open', value: 'Mudigere (India) · Ohara (Japan)' },
+      { label: 'Listening', value: 'Munduk (Indonesia) · Punakha (Bhutan)' },
+    ],
+    related: ['/mudigere', '/ohara', '/land'],
+  },
+  {
     href: '/land',
     label: 'The Land',
     topic: 'Land as ancestry — Mudigere and Ohara in dialogue',
-    summary: 'The two estates in dialogue — Mudigere in the Western Ghats and Ohara north of Kyoto — held as ancestry and stewardship across generations rather than acreage.',
+    summary: 'Two sanctuaries in dialogue — Aura Estate at Mudigere in the Western Ghats and Ohara north of Kyoto — held as ancestry and stewardship across generations rather than acreage.',
     related: ['/mudigere', '/ohara', '/ecology'],
   },
   {
     href: '/biodynamic',
-    label: 'Biodynamic',
+    label: 'A Living Organism',
     topic: 'A worldview worked as method — BD 500–508, Jeevamrit, Panchgavya',
     summary: 'Biodynamics at Mudigere as a worldview worked as method: the BD 500–508 preparations, Jeevamrit microbial culture and Panchgavya, all driven by the herd as the estate’s biological engine.',
     facts: [
@@ -222,50 +233,6 @@ export const SITEMAP: SitemapEntry[] = [
       { label: 'Previously', value: '/studios — redirected permanently to /atelier' },
     ],
     related: ['/artistry', '/brand', '/residency'],
-  },
-  {
-    href: '/sanctuary',
-    label: 'Sanctuary',
-    topic: 'The land in rhythm — the estates as one ecosystem',
-    summary: 'Aura Sanctuary — the land in rhythm. A 1000-year regenerative ecosystem across Mudigere, Ohara, and coming valleys in Munduk and Punakha.',
-    facts: [
-      { label: 'Active', value: 'Mudigere (India) · Ohara (Japan)' },
-      { label: 'Coming', value: 'Munduk (Indonesia) · Punakha (Bhutan)' },
-    ],
-    related: ['/mudigere', '/ohara', '/land'],
-  },
-  {
-    href: '/provenance',
-    label: 'Provenance',
-    topic: 'Cherry to cup, on chain — verified origin without legacy certification',
-    summary: 'Aura replaces legacy certification with live, sensor-fed, blockchain-verified provenance from the Mudigere estate — cherry to cup, on chain.',
-    facts: [
-      { label: 'Method', value: 'Live sensor data, blockchain-verified' },
-      { label: 'Replaces', value: 'Legacy third-party certification' },
-    ],
-    related: ['/coffee', '/mudigere', '/ecology'],
-  },
-  {
-    href: '/areca',
-    label: 'Areca — The Sentinel Palm',
-    topic: 'Areca as the mid-canopy and the cultural spine of coastal Karnataka',
-    summary: 'Areca catechu as the mid-canopy of the Aura estate. Vertical architecture, five-layer shade system, and the cultural spine of coastal Karnataka.',
-    facts: [
-      { label: 'Role', value: 'Mid-canopy in the five-layer shade system' },
-      { label: 'Carries', value: 'The pepper vine' },
-    ],
-    related: ['/pepper', '/shade', '/living-systems'],
-  },
-  {
-    href: '/pepper',
-    label: 'Pepper — Malabar Black Gold',
-    topic: 'Single-estate Malabar pepper, climbing the areca',
-    summary: 'Single-estate Malabar black pepper climbing the areca. Black, white, and green — water-retted and experimentally anaerobic. Grown in the Western Ghats biosphere.',
-    facts: [
-      { label: 'Types', value: 'Black · White · Green' },
-      { label: 'Processing', value: 'Water-retted; experimentally anaerobic' },
-    ],
-    related: ['/areca', '/fermentation', '/mudigere'],
   },
   {
     href: '/residency',

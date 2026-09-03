@@ -66,7 +66,7 @@ export default function RtaPage() {
           A spray logged at 06:12 carries more integrity than a weekly report
           written on Friday. The data does not say &ldquo;we sprayed this
           week.&rdquo; It says &ldquo;<Term tip="Horn silica. Ground quartz buried over summer, sprayed as fine mist for light metabolism.">BD 501</Term> was applied to Block 07 at 06:14 on
-          a waning moon, humidity 78%, by Raju, using dung batch G-03.&rdquo;
+          a waning moon, humidity 78%, by Rao, using dung batch G-03.&rdquo;
         </p>
         <DataGrid cols={3}>
           <DataCard value="Timestamp.">To the minute.</DataCard>
@@ -100,7 +100,7 @@ export default function RtaPage() {
 
       <TwoCol id="herd" heading="In the herd.">
         <p className="p1">
-          Fifty-two <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle rotate through blocks timed to coffee
+          About fifty <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term> cattle rotate through blocks timed to coffee
           cherry development stages. The cattle enrich soil biology for the
           next season — but only if they are in the right block at the right
           time.
@@ -115,7 +115,7 @@ export default function RtaPage() {
         src="/journals/rta/aura-mudigere.mp4"
         mediaType="video"
         poster="/journals/rta/aura-mudigere.jpg"
-        alt="Mudigere valley rolling under monsoon light — the estate's rhythm read across a single day"
+        alt="Mudigere valley rolling under monsoon light — the estate’s rhythm read across a single day"
         caption="Mudigere — the valley keeps its own timing"
       />
 
@@ -198,7 +198,7 @@ export default function RtaPage() {
 
       <OneCol id="closing" heading="The land decides when it is ready.">
         <p className="p1">
-          BD application at dusk. Fermentation closed by pH, not by hour. Cattle
+          BD application at dusk. Fermentation closed by pH. Cattle
           rotated by cherry stage. Each is the same observation in a different
           register: the work waits on the land, and the land is right more
           often than we are.

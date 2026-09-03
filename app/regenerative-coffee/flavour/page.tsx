@@ -1,3 +1,5 @@
+import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
+import { FLAVOURS, STEPS } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
   MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner, ArrowLinkStyles,
@@ -7,7 +9,7 @@ import {
 } from '@/components/coffee/HarvestInteractive'
 
 export const metadata: Metadata = {
-  title: 'Coffee — Regenerative Coffee',
+  title: 'Flavours — Regenerative Coffee',
   description:
     'Nine lots from one harvest — three Robusta, six Arabica. The ferment, the lab that ends it, two national wins, and the full file behind every lot.',
   alternates: { canonical: '/regenerative-coffee/flavour' },
@@ -28,78 +30,80 @@ export default function FlavourPage() {
       <MicroNav />
       <ArrowLinkStyles />
 
+      {/* One ground for the whole chapter, dissolving between the
+
+          photographs as the scenes scroll over it. */}
+
+      <ChapterBackdrop frames={FLAVOURS} steps={STEPS.flavour} />
+
+
       <Panel
         hero
         align="centre"
         title="Nine lots. One harvest."
-        lede="They come off the same trees on the same morning. What happens after that is decided in a shed, over about a week."
+        lede="Nine lots come off the same trees on the same morning. What separates them happens afterwards, in the wet mill, over about a week."
       />
-
-      <Scene>
-        Two pages of system — the loop, the ledger. This page is what all
-        of it is for.
-      </Scene>
 
       {/* ── the ferment ─────────────────────────────────────────── */}
 
-      <Chapter>It is decided in the wet mill.</Chapter>
+      <Chapter>The wet mill decides it.</Chapter>
 
       <Scene title="Four decisions, over about a week.">
         Oxygen: sealed, or open. Time: twenty-four hours, or forty-eight.
-        Mucilage: left on, partial, or washed away. Culture: the cherry’s
-        own, or wild off a banana leaf, or carried forward from the last
-        tank. Everything a lot becomes is settled by those four.
+        Mucilage: left on, partial, or washed away. Culture: the cherry’s own,
+        or wild off a banana leaf, or carried forward from the last tank.
+        Everything a lot becomes is settled by those four — and before any of
+        them, by the picking, because only fully ripe cherries are taken and
+        every floater is pulled out.
       </Scene>
 
-      <Scene>
-        Only fully ripe cherries are taken, and every floater is pulled out.
-        Flavour is cultured after that — grown, in the dark, by things too
-        small to see. Wild yeasts and lactic acid bacteria eat the mucilage
-        while the pH falls, and the alcohols and acids they leave behind are
-        what a taster later calls fruit.
+      <Scene title="Wild yeasts do most of the work.">
+        Yeasts and lactic acid bacteria eat the mucilage off the bean while
+        the pH falls. The alcohols and acids they leave behind are what a
+        taster later calls fruit. Nobody adds flavour to coffee here — they
+        set the conditions and let the microbes get on with it.
       </Scene>
 
       {/* ── the lab ─────────────────────────────────────────────── */}
 
       <Chapter>The ferment ends on a number.</Chapter>
 
-      <Scene title="Someone is awake for it.">
-        The meter gets read every fifteen minutes, through the night.
-        Temperature is written down three times a day, Brix at the start,
-        the middle and the end. At pH 4.2 the tank comes off, whatever the
-        shed smells like. That same reading is what a roaster gets handed
-        months later.
-      </Scene>
-
-      <Scene>
-        The data does not average across the harvest. It follows each lot
-        as an individual, which is the only reason nine lots off one farm
-        can be told apart at all.
+      <Scene title="The tank is read every fifteen minutes, all night.">
+        <p>
+          A member of the mill team takes the pH by hand, on the quarter
+          hour, for as long as the ferment runs — which is where the
+          twenty-four and forty-eight hour lots stop being an abstraction
+          and start being somebody’s night. Temperature goes down three
+          times a day, Brix at the start, the middle and the end.
+        </p>
+        <p>
+          At pH 4.2 the tank comes off, whatever the shed smells like.
+          Those readings follow each lot as an individual rather than
+          averaging across the harvest, which is the only reason nine lots
+          off one farm can be told apart at all — and they are what a
+          roaster is handed, months later, with the coffee.
+        </p>
       </Scene>
 
       {/* ── what specialty means here ───────────────────────────── */}
 
-      <Chapter>Then somebody else scores it.</Chapter>
+      <Chapter>Then somebody tastes it.</Chapter>
 
-      <Scene title="August 2026, in front of a Q grader.">
-        Four of the Arabica lots went in front of an
-        independent Q grader under SCA protocol. They came back between
-        82.25 and 85.25. Every one scored a perfect ten on uniformity,
-        clean cup and sweetness. The grader's note said the ceiling was
-        the roast, and the coffee underneath it had further to go.
+      <Scene title="Four lots scored between 82.25 and 85.25.">
+        In August 2026 four of the Arabica lots were cupped to SCA protocol on
+        the estate’s own table. Anything at 80 or above is specialty grade;
+        every one of the four scored a perfect ten on uniformity, clean cup
+        and sweetness. The grader’s note put the ceiling at the roast — the
+        coffee is already ahead of what anyone has so far got out of it in a
+        roaster.
       </Scene>
 
-      <Scene>
-        Then the Robusta went to the Coffee Board of India’s Flavour of
-        India Fine Cup Award, judged nationally against estates from five
-        other states. Volcanic Wash and Appassimento Maceration both won
-        their categories, and a second washed entry placed in the top four.
-      </Scene>
-
-      <Scene>
-        Neither result is the point on its own. Both arrive at the same
-        finding independently: the ground is doing the work, and the ferment
-        only decides how much of it reaches the cup.
+      <Scene title="Then a national panel scored it, blind.">
+        The Robusta went to the Coffee Board of India’s Flavour of India Fine
+        Cup Awards, judged nationally by people with no stake in the result.
+        At the 2026 awards Aura Estate took first place in Robusta
+        Experimental and second in Robusta Washed. Two tables, one of them
+        ours and one of them not, agreeing about the same coffee.
       </Scene>
 
       {/* ── Robusta — three lots, open ──────────────────────────── */}
@@ -107,15 +111,11 @@ export default function FlavourPage() {
       <Chapter>Robusta.</Chapter>
 
       <Scene title="Three lots. Two national wins.">
-        Old Peridenia, a heritage varietal, grown at 1,127 metres
-        under the same four-storey canopy as everything else here, picked
-        at 97% ripeness. Brix comes in between 26% and 28%. No Arabica on
-        this estate has ever read that high.
-      </Scene>
-
-      <Scene>
-        Robusta does not usually get mornings like that. Grown on this
-        ground, with this biology underneath it, it did.
+        Old Peridenia, a heritage varietal, grown at 3,600 feet under the same
+        four-storey canopy as everything else here, picked at 97% ripeness.
+        Brix comes in between 26% and 28% — no Arabica on this estate has ever
+        read that high. Robusta does not usually get mornings like that. Grown
+        on this ground, with this biology underneath it, it did.
       </Scene>
 
       <LotCards
@@ -130,14 +130,10 @@ export default function FlavourPage() {
 
       <Scene title="Six lots from the same cherry.">
         Sln.9 and Sln.795 at 3,600 feet, under a canopy held between 65% and
-        75%. Picked
-        the same morning, from the same block, by the same hands — and
-        then sent six different ways in the mill.
-      </Scene>
-
-      <Scene>
-        The 2026 Arabica went, in full, to one specialty cafe in Mumbai.
-        The files sit below regardless. The range is the argument.
+        75%. Picked the same morning, from the same block, by the same hands —
+        and then sent six different ways in the mill. The 2026 Arabica went,
+        in full, to one specialty cafe in Mumbai. The complete file for every
+        lot sits below, and the next harvest is the one to talk about.
       </Scene>
 
       <LotCards
@@ -153,13 +149,18 @@ export default function FlavourPage() {
       <BlockExplorer />
 
       <Scene title="A block of their own.">
-        The estate is open to roasters who want more than a purchase order.
-        A roaster picks a block, sets the varietal focus, the processing
-        method and the drying protocol, and the estate builds a lot that
-        exists nowhere else. Every tree in it is tagged. Brix, pH, ripeness,
-        soil moisture and shade cover are tracked at zone level, and the
-        roaster reads the same numbers the estate does. Harvest decisions
-        get made together, in the week they matter.
+        <p>
+          The estate is open to roasters who want more than a purchase
+          order. A roaster picks a block, sets the varietal focus, the
+          processing method and the drying protocol, and the estate builds
+          a lot that exists nowhere else.
+        </p>
+        <p>
+          Every tree in it is tagged. Brix, pH, ripeness, soil moisture
+          and shade cover are tracked at zone level, and the roaster reads
+          the same numbers the estate does. Harvest decisions get made
+          together, in the week they matter.
+        </p>
       </Scene>
 
       <Closing>{`The harder half.

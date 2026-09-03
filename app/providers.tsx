@@ -23,17 +23,17 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { Suspense, useEffect, type ReactNode } from 'react'
 
 const KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY
-const HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog.com'
+const HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
 
 /* Enabled only on a production build with a key set. NODE_ENV is a build-time
-   constant, identical on server and client, so gating the render on it can't
+   constant, identical on server and client, so gating the render on it can’t
    cause a hydration mismatch — and local `next dev` (NODE_ENV=development) or
-   any test runner never initialises, so their traffic can't pollute the
+   any test runner never initialises, so their traffic can’t pollute the
    project. */
 const ENABLED = !!KEY && process.env.NODE_ENV === 'production'
 
 /* Initialise ONCE, at module load on the client — before React runs any effect.
-   (Child effects run before parent effects, so an init inside the provider's own
+   (Child effects run before parent effects, so an init inside the provider’s own
    effect would fire AFTER the first $pageview and drop it.) The `__loaded` guard
    keeps it idempotent across Fast Refresh / re-imports. */
 if (
@@ -46,11 +46,26 @@ if (
     ui_host: HOST,                              // so toolbar/links resolve
     capture_pageview: false,                    // App Router: captured manually below
     autocapture: true,                          // every click/input site-wide
-    persistence: 'localStorage+cookie',         // fullest: stable cross-session identity
+    /* localStorage only — no cookie is written. Worth being precise
+       about what that does and does not buy: the visitor is still
+       recognised across sessions, because localStorage persists exactly
+       like the cookie did. Under UK/EU rules storage on a reader’s
+       device is treated the same whichever bucket it lives in, so this
+       removes cookies without removing the consent question. Dropping
+       that too means persistence: 'memory' and person_profiles: 'never',
+       which costs returning-visitor analytics entirely. */
+    persistence: 'localStorage',
     person_profiles: 'always',                  // profile every visitor
     capture_exceptions: true,                   // error tracking: unhandled exceptions
-    session_recording: { maskAllInputs: true }, // replay with all form values masked
+    /* Recording stays off.
+       Autocapture and pageviews watch a page a visitor chose to load; a
+       session replay records them using it, which is a different thing to
+       collect. Nothing turns it on — there is no consent surface asking
+       for it, so the honest setting is off rather than on-by-default.
+       Turning it on later means adding that surface first. */
+    disable_session_recording: true,
   })
+
 }
 
 export function Analytics({ children }: { children: ReactNode }) {

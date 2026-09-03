@@ -72,7 +72,7 @@ function WeatherGlyph({ code, isDay, size = 20 }: { code: number; isDay: boolean
 }
 
 function LiveLandData() {
-  const weather = useWeather(13.1365, 75.6403)
+  const weather = useWeather(13.168594, 75.433983)
   const condition = weather ? (WEATHER_LABELS[weather.code] ?? 'Overcast') : null
   return (
     <div className="land-data">
@@ -93,7 +93,7 @@ function LiveLandData() {
         )}
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 32px' }}>
-          <div><p className="label">COORDINATES</p><p style={{ marginTop: 2, color: 'var(--text)' }}>13.1365&deg; N, 75.6403&deg; E</p></div>
+          <div><p className="label">COORDINATES</p><p style={{ marginTop: 2, color: 'var(--text)' }}>13.1686&deg; N, 75.4340&deg; E</p></div>
           <div><p className="label">ALTITUDE</p><p style={{ marginTop: 2, color: 'var(--text)' }}>3,600 ft.</p></div>
           <div><p className="label">TEMP.</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.temp}°C now · 14–30°C` : '14–30°C'}</p></div>
           <div><p className="label">HUMIDITY</p><p style={{ marginTop: 2, color: 'var(--text)' }}>{weather ? `${weather.humidity}%` : '58%'}</p></div>
@@ -102,13 +102,49 @@ function LiveLandData() {
         </div>
       </div>
 
+          {/* Queried by COORDINATES, not a place name — a name query matches
+              a nearby business listing and auto-opens its card; coordinates
+              drop a clean pin. t=h satellite, the no-API-key ?output=embed form. */}
+      <div className="land-data__map">
+        <iframe
+          title="Aura Estate — Mudigere, Karnataka"
+          src="https://maps.google.com/maps?q=13.168594,75.433983&t=h&z=14&output=embed"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
+      </div>
 
       <style jsx>{`
-        /* Compact orientation panel — location + live weather. (The map
-           embed was removed: it broke into the agent/reader view and added
-           little the coordinates don't already give.) */
+        /* Orientation panel — facts on the left, satellite map on the right.
+           The map was pulled in July 2026 because it escaped into the
+           agent/reader view; the same commit added a global agent-mode rule
+           that hides every iframe in main, so the leak it was removed for is
+           handled centrally now and the map can sit here safely. */
         .land-data {
-          max-width: 640px;
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: clamp(28px, 5vw, 72px);
+          align-items: start;
+        }
+        @media (max-width: 768px) {
+          .land-data { grid-template-columns: 1fr; gap: 32px; }
+        }
+        .land-data__map {
+          position: relative;
+          aspect-ratio: 4 / 3;
+          border: 1px solid var(--border);
+          border-radius: var(--radius-1);
+          overflow: hidden;
+          background: var(--bg-card);
+        }
+        .land-data__map :global(iframe) {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+          display: block;
         }
       `}</style>
     </div>
@@ -214,15 +250,12 @@ export default function MudigerePage() {
 
   return (
     <>
-      {/* Hide the kit's default back link — /mudigere is reached by
+      {/* Hide the kit’s default back link — /mudigere is reached by
           direct invitation, not from another journal. */}
       <style jsx global>{`
         .hero-banner__back,
         .journal-hero__back,
         .article-hero__back { display: none !important; }
-        @media (max-width: 600px) {
-          .mud-hero__caption { font-size: 10px !important; line-height: 1.45 !important; }
-        }
         /* Four-layer cross-section — flowed into the crops column: the
            label stacked above its description, one block per canopy layer
            so it reads cleanly in the narrower second column. */
@@ -269,7 +302,7 @@ export default function MudigerePage() {
 
         /* Forest pull-quote — doesn't just fade: the blur clears, it rises and
            scales up, then breathes gently so it feels alive. Triggered off the
-           parent Reveal's .visible class. */
+           parent Reveal’s .visible class. */
         .forest-mark {
           opacity: 0;
           transform: scale(0.93) translateY(14px);
@@ -300,7 +333,7 @@ export default function MudigerePage() {
         }
 
         /* Spec section transitions in card-by-card. The Reveal container
-           itself doesn't move (so there's no double-animation); each card
+           itself doesn’t move (so there’s no double-animation); each card
            fades + rises with a staggered delay once the section is in view. */
         .reveal.mud-cascade { opacity: 1; transform: none; }
         .mud-cascade .stat-card {
@@ -359,7 +392,7 @@ export default function MudigerePage() {
         <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 55% 45% at 0% 100%, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 35%, rgba(0, 0, 0, 0) 75%)', pointerEvents: 'none', zIndex: 4 }} />
         {/* Wordmark — replaces the type, parallaxes over the video.
             Rendered solid white (filter forces white regardless of the
-            SVG's own fill); no mix-blend. */}
+            SVG’s own fill); no mix-blend. */}
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', zIndex: 5 }}>
           <h1 aria-label="Mudigere" style={{ margin: 0 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -380,12 +413,12 @@ export default function MudigerePage() {
         </p>
       </section>
 
-      <Movement heading={<>The world&rsquo;s oldest Arabica region, rediscovered.</>}>
+      <Movement heading={<>Where Indian coffee began.</>}>
         <p className="p1">
           Four centuries ago, seven coffee seeds crossed from Yemen into
           the hills above Chikmagalur and took root — the cradle of Indian
           coffee, held in the{' '}
-          <Term tip="Mountain range along India's west coast. A UNESCO World Heritage site and one of the world's eight 'hottest hotspots' of biological diversity. Older than the Himalayas.">Western Ghats</Term>, a range older than the Himalayas
+          <Term tip="Mountain range along India’s west coast. A UNESCO World Heritage site and one of the world’s eight 'hottest hotspots' of biological diversity. Older than the Himalayas.">Western Ghats</Term>, a range older than the Himalayas
           and among the eight most biodiverse places on Earth.
         </p>
         <p className="p1">
@@ -452,7 +485,7 @@ export default function MudigerePage() {
                 ['32 acres', 'Tea, in organic transition.', 'tea'],
                 ['3,000 mm', 'Annual monsoon rainfall.', 'rain'],
                 ['35,000', 'Trees, across four canopy layers.', 'trees'],
-                ['52', 'Malnad Gidda cattle.', 'cows'],
+                ['~50', 'Malnad Gidda cattle.', 'cows'],
               ] as const).map(([value, label, thumb]) => (
                 <div key={value} className="stat-card">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -625,7 +658,7 @@ export default function MudigerePage() {
         <DataCard
           img="/journals/living-systems/aura-cow.jpg"
           alt="Malnad Gidda grazing through the coffee blocks"
-          value="52 cattle, in rotation."
+          value="~50 cattle, in rotation."
         >
           Their movement through the coffee IS the rotation. Their dung is
           the input.
@@ -690,8 +723,8 @@ export default function MudigerePage() {
           Together they are turning a colonial-era plantation, built for
           extraction, into a living system — one that grows its structures
           around the landscape rather than through it. An artist residency, a
-          research laboratory, sanctuary spaces: built to be lived in, not
-          only worked.
+          research laboratory, sanctuary spaces: built to be lived in as well as
+          worked.
         </p>
         <p className="p1">
           Phase one fixes the hydrology — reservoirs that catch three thousand
@@ -718,7 +751,7 @@ export default function MudigerePage() {
 
       <Continue
         items={[
-          { href: '/herd', label: 'Ecosystem Engineers', description: 'The estate’s biological engine — fifty-two Malnad Gidda, cared for by hand, each passported.', img: '/herd/images/aura-grassland1.jpg' },
+          { href: '/herd', label: 'Ecosystem Engineers', description: 'The estate’s biological engine — about fifty Malnad Gidda, cared for by hand, each passported.', img: '/herd/images/aura-grassland1.jpg' },
           { href: '/circular', label: 'Circular Intelligence', description: 'What the herd makes — CPP and Jeevamrit, by hand, tested before the soil.', img: '/circular/images/aura-shed.jpg' },
           { href: '/shade', label: 'The Light Instrument', description: 'The canopy above the estate — shade whiskering, measured in lux and cut to prescription.', img: '/aura-land.jpg' },
         ]}

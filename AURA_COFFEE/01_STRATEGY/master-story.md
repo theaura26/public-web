@@ -82,7 +82,7 @@ The forest is the farm.
 
 They are the engine. Not a detail, not a charming photograph — the source of almost everything the soil is fed.
 
-Fifty-two Malnad Gidda, an indigenous Karnataka breed that has grazed these hills for centuries. Small-framed, hardy, adapted to this altitude and this monsoon. The breed is the point: their gut microbiome is shaped by these grasses and this soil, so their dung carries a microbial signature native to the ground it feeds. A commercial dairy breed cannot replicate it.
+About fifty Malnad Gidda, an indigenous Karnataka breed that has grazed these hills for centuries. Small-framed, hardy, adapted to this altitude and this monsoon. The breed is the point: their gut microbiome is shaped by these grasses and this soil, so their dung carries a microbial signature native to the ground it feeds. A commercial dairy breed cannot replicate it.
 
 They graze the same 150 acres that grow the coffee, kept pesticide-free. What they take from a block returns to it as dung and urine. Nothing is bought in; nothing is trucked away.
 
@@ -132,7 +132,7 @@ The concrete version: **the same Sln.9, picked on the same morning from the same
 
 ### How is Aura different?
 
-**One.** The loop is real and it is closed. Not "we compost". The estate's entire fertility programme — around 154,000 litres of Jeevamrit and 2,420 kg of CPP a year — is made from fifty-two cattle grazing the same ground as the coffee.
+**One.** The loop is real and it is closed. Not "we compost". The estate's entire fertility programme — around 154,000 litres of Jeevamrit and 2,420 kg of CPP a year — is made from about fifty cattle grazing the same ground as the coffee.
 
 **Two.** Everything is measured, including the things most farms only feel. Light in lux before a branch comes down. pH every fifteen minutes through a ferment. Soil respiration monthly. Earthworms quarterly. Fourteen ecological programmes rolled into one Ecological Health Index per block.
 
@@ -262,7 +262,7 @@ Ten chapters. This sequence drives the film, the deck, and the scroll.
 **Hero line:**
 > Coffee doesn't begin with coffee. It begins about a metre underground.
 
-**Supporting story:** Sampigekhan Estate. 150 acres in the Western Ghats of Karnataka, at 3,600 feet, on red laterite that is itself the record of a very long weathering. Monsoon older than agriculture. A four-story canopy older than anyone working under it.
+**Supporting story:** Aura Estate. 150 acres in the Western Ghats of Karnataka, at 3,600 feet, on red laterite that is itself the record of a very long weathering. Monsoon older than agriculture. A four-story canopy older than anyone working under it.
 
 This is the chapter that earns the right to talk about soil at all — by framing it as the origin of flavour rather than a virtue.
 
@@ -285,7 +285,7 @@ This is the chapter that earns the right to talk about soil at all — by framin
 **Hero line:**
 > Our best farmers have four legs.
 
-**Supporting story:** Fifty-two Malnad Gidda — indigenous, small-framed, adapted to these hills over centuries. They graze the ground the coffee grows in, and what they take from a block returns to it. The breed matters because the microbiome does: their dung carries a signature native to this soil, which no dairy breed can replicate.
+**Supporting story:** About fifty Malnad Gidda — indigenous, small-framed, adapted to these hills over centuries. They graze the ground the coffee grows in, and what they take from a block returns to it. The breed matters because the microbiome does: their dung carries a signature native to this soil, which no dairy breed can replicate.
 
 Then the human beat, which is what makes this chapter warm rather than technical: they are washed at dawn, known by name, dosed with plant-based sprays before anything else. One of them fought off a leopard and walked back.
 

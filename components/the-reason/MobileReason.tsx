@@ -181,7 +181,7 @@ export default function MobileReason() {
       {/* ── Where land / disciplines map ── */}
       <section className="rm-sec rm-warm">
         <div ref={discRef} className="rm-disc rm-fadein">
-          <img className="rm-art" src={`${A}/aura-aboutus.png`} alt="A constellation of Aura's disciplines radiating from one centre." loading="lazy" decoding="async" />
+          <img className="rm-art" src={`${A}/aura-aboutus.png`} alt="A constellation of Aura’s disciplines radiating from one centre." loading="lazy" decoding="async" />
           <img className="rm-whereland" src={`${A}/aura-whereland.svg`} alt="Where land becomes a framework for how to live generationally." loading="lazy" decoding="async" />
         </div>
       </section>
@@ -219,7 +219,7 @@ export default function MobileReason() {
         <ScaleIn><img className="rm-symbol r-float" src={`${A}/aura-three.png`} alt="" aria-hidden loading="lazy" decoding="async" /></ScaleIn>
         <RT className="rm-hand">The Three Pillars</RT>
         {[
-          { video: '/aura-hospitality.mp4', poster: '/aura-hospitality.jpg', t: 'The Sanctuary', b: 'Where silence is not the absence of sound — it is the presence of everything you stopped noticing.' },
+          { video: '/aura-hospitality.mp4', poster: '/aura-hospitality.jpg', t: 'The Sanctuary', b: 'Where silence is the presence of everything you had stopped noticing.' },
           { video: '/aura-agroculture.mp4', poster: '/aura-agroculture.jpg', t: 'The Agroculture', b: '150 acres that get better every season, tended by people who think in decades not quarters.' },
           { video: '/aura-labs.mp4', poster: '/aura-labs.jpg', t: 'The Artistry', b: 'The connective tissue — studios, workshops, festivals. Where what the land grows becomes what the hands make.' },
         ].map((p, i) => (

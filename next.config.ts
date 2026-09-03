@@ -3,9 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* Note: previous versions pinned `turbopack: { root: path.resolve(__dirname) }`
      to silence a workspace-root warning during local `next dev`. But
-     `__dirname` is a CommonJS global — undefined in Vercel's ESM
+     `__dirname` is a CommonJS global — undefined in Vercel’s ESM
      module loader — and `path.resolve(undefined)` throws, which is
-     exactly what's been failing every prod deploy since PR #16. The
+     exactly what’s been failing every prod deploy since PR #16. The
      fix lives in PR #13 (and is being re-applied here). If the
      workspace-root warning returns and starts mattering, swap to
      ESM-safe `path.dirname(fileURLToPath(import.meta.url))`. */
@@ -15,20 +15,22 @@ const nextConfig: NextConfig = {
      designing. Production builds never render it. */
   devIndicators: false,
   /* Next 16 only honours qualities declared here — anything else is
-     ignored with a warning at request time. /brand's slide deck asks for
+     ignored with a warning at request time. /brand’s slide deck asks for
      78, so declare it alongside the 75 default rather than let ~90 images
      silently fall back. */
   images: { qualities: [75, 78] },
   /* PostHog reverse proxy — events + assets are served from our own
      origin under /ingest, so first-party requests dodge ad-blockers
-     (which drop ~a third of third-party analytics traffic). EU endpoints
-     for data residency. The catch-all must sit after the /static rule.
+     (which drop ~a third of third-party analytics traffic). US endpoints,
+     matching the region the project key belongs to — the key is checked
+     against the region it is sent to, so an EU proxy with a US key drops
+     every event silently. The catch-all must sit after the /static rule.
      `skipTrailingSlashRedirect` stops Next 308-redirecting /ingest paths. */
   skipTrailingSlashRedirect: true,
   async rewrites() {
     return [
-      { source: '/ingest/static/:path*', destination: 'https://eu-assets.i.posthog.com/static/:path*' },
-      { source: '/ingest/:path*', destination: 'https://eu.i.posthog.com/:path*' },
+      { source: '/ingest/static/:path*', destination: 'https://us-assets.i.posthog.com/static/:path*' },
+      { source: '/ingest/:path*', destination: 'https://us.i.posthog.com/:path*' },
     ]
   },
   /* /studios was renamed to /atelier. A permanent redirect keeps the old
@@ -41,12 +43,12 @@ const nextConfig: NextConfig = {
   },
   /* No redirect from /mudigere-estate → /mudigere: they are intentionally
      separate pages for different audiences. /mudigere is the public flagship
-     (indexed, in the sitemap); /mudigere-estate is the architect's briefing,
+     (indexed, in the sitemap); /mudigere-estate is the architect’s briefing,
      reached by direct URL only (noindex, not in the sitemap). */
   /* Belt-and-braces on the noindex meta the signature page already carries:
      an X-Robots-Tag header, so crawlers are told noindex at the HTTP level
      too. The path is deliberately NOT disallowed in robots.txt — a blocked
-     crawler can't read the noindex, which is what actually keeps it out. */
+     crawler can’t read the noindex, which is what actually keeps it out. */
   async headers() {
     const isPreview = process.env.VERCEL_ENV === 'preview';
     return [

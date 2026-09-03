@@ -4,9 +4,15 @@
     {
       "name": "aura-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 3000,
-      "autoPort": true
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "-p",
+        "3200"
+      ],
+      "port": 3200,
+      "autoPort": false
     }
   ]
 }

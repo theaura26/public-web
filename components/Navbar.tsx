@@ -127,30 +127,38 @@ export default function Navbar() {
      the feed isn’t torn down + reseeded on every reopen. */
   const [hasOpenedMenu, setHasOpenedMenu] = useState(false)
 
-  /* Is the feed actually live?
+  /* The mark beside Now, and what it is allowed to say.
    *
-   * The dot beside Now pulses in the brand accent, which is the site
-   * saying something is happening right now. It said that whatever the
-   * feed was doing — including while the upstream ingest had been failing
-   * for a day and the page below had nothing on it.
+   * It pulsed in the brand accent on every page, which reads as the site
+   * telling you something is happening right now. It said that whatever
+   * the feed was doing — including through a day of the upstream ingest
+   * failing with the page below it empty.
    *
-   * False until proven otherwise, and only true for a feed that is both
-   * fresh and carrying entries. Fetched when the menu is first opened
-   * rather than on mount, so a reader who never opens it never pays for
-   * the request; the corner it lives in is not on screen until then
-   * either. A failed request leaves it false, which is the safe way for
-   * this particular claim to fail. */
-  const [feedLive, setFeedLive] = useState(false)
+   * Two states now, and the glow belongs to the first of them:
+   *
+   *   loading  the request is in flight and the pulse is the wait
+   *   live     fresh, and carrying entries — a steady dot, no glow
+   *
+   * Anything else shows nothing. A stale feed, an empty one and a failed
+   * request all leave it off, which is the safe way round for a claim
+   * about the present tense.
+   *
+   * Fetched when the menu is first opened rather than on mount: the
+   * corner it lives in is not on screen until then, and a reader who
+   * never opens the menu never pays for the request. */
+  const [feedState, setFeedState] = useState<'idle' | 'loading' | 'live' | 'off'>('idle')
   useEffect(() => {
     if (!hasOpenedMenu) return
     let alive = true
+    setFeedState('loading')
     fetch('/api/aura-live/feed')
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
-        if (!alive || !d) return
-        setFeedLive(d.freshness?.state === 'live' && (d.entries?.length ?? 0) > 0)
+        if (!alive) return
+        const live = d?.freshness?.state === 'live' && (d?.entries?.length ?? 0) > 0
+        setFeedState(live ? 'live' : 'off')
       })
-      .catch(() => {})
+      .catch(() => { if (alive) setFeedState('off') })
     return () => { alive = false }
   }, [hasOpenedMenu])
 
@@ -842,7 +850,12 @@ export default function Navbar() {
             data-attr="menu-link:/now"
           >
             Now
-            {feedLive && <span className="mg-dot" aria-hidden />}
+            {(feedState === 'loading' || feedState === 'live') && (
+              <span
+                className={`mg-dot ${feedState === 'loading' ? 'is-loading' : ''}`}
+                aria-hidden
+              />
+            )}
           </Link>
           {/* Contact is not a subject the site is about; it is how you
               reach a person. It sits with the standing marks rather than
@@ -1347,6 +1360,9 @@ export default function Navbar() {
           .mg-dot {
             width: 9px; height: 9px; border-radius: 50%; flex: none;
             background: var(--brand-accent);
+          }
+          /* The glow is the wait, and it stops when the wait does. */
+          .mg-dot.is-loading {
             animation: mg-pulse 2.6s var(--ease) infinite;
           }
           @keyframes mg-pulse {
@@ -1354,7 +1370,7 @@ export default function Navbar() {
             50%      { box-shadow: 0 0 16px 3px var(--brand-accent); opacity: 1; }
           }
           @media (prefers-reduced-motion: reduce) {
-            .mg-dot { animation: none; }
+            .mg-dot.is-loading { animation: none; }
             .mg-panel { transition: none; }
           }
 

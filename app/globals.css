@@ -1327,17 +1327,6 @@ a:hover, button:hover, [role="button"]:hover {
   text-decoration: none;
 }
 
-/* A pillar that is written but held back. It is a div rather than a
-   Link, so it inherits none of the anchor styling and needs the cursor
-   said explicitly — the card looks identical to its two neighbours and
-   the marker beside the title is the only thing that differs. Colours
-   come from the local text tokens because this grid sits inside
-   InvertOnScroll and reads on either ground. */
-.pillar-card.is-soon {
-  cursor: default;
-  text-decoration: none;
-  color: inherit;
-}
 
 /* The ring-and-arrow call to action — components/ArrowCta.tsx.
    Renders as a Link or a button depending on what it does, so both are

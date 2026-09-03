@@ -850,12 +850,10 @@ export default function Navbar() {
             data-attr="menu-link:/now"
           >
             Now
-            {(feedState === 'loading' || feedState === 'live') && (
-              <span
-                className={`mg-dot ${feedState === 'loading' ? 'is-loading' : ''}`}
-                aria-hidden
-              />
-            )}
+            <span
+              className={`mg-dot ${feedState === 'loading' ? 'is-loading' : ''}`}
+              aria-hidden
+            />
           </Link>
           {/* Contact is not a subject the site is about; it is how you
               reach a person. It sits with the standing marks rather than
@@ -1357,12 +1355,21 @@ export default function Navbar() {
             border: 1px solid color-mix(in srgb, var(--contrast-text) 28%, transparent);
             color: color-mix(in srgb, var(--contrast-text) 62%, transparent);
           }
+          /* Unlit at rest: a hollow ring, the same move the hero makes
+             when its source goes quiet — background out, a hairline in
+             its place, nothing glowing. The mark stays on the word either
+             way, because its absence and its presence should not be the
+             thing a reader has to notice. */
           .mg-dot {
             width: 9px; height: 9px; border-radius: 50%; flex: none;
-            background: var(--brand-accent);
+            background: transparent;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
           }
-          /* The glow is the wait, and it stops when the wait does. */
+          /* Lit only while the request is in flight. The glow is the
+             wait, and it stops when the wait does. */
           .mg-dot.is-loading {
+            background: var(--brand-accent);
+            box-shadow: none;
             animation: mg-pulse 2.6s var(--ease) infinite;
           }
           @keyframes mg-pulse {

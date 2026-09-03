@@ -25,10 +25,18 @@ export default function ExperiencePage() {
       <MicroNav />
       <ArrowLinkStyles />
 
+      {/* Standing in until the festival has its own photograph. The
+          sorting floor is the closest thing in the library to what the
+          three days actually are — cherry on a table and hands over it,
+          which is what the chapter under this banner says. Panel draws
+          a 55% scrim over whatever it is given, so the white display
+          type holds. */}
       <Panel
         hero
         align="centre"
         title="Aura Festival."
+        src="/regenerative-coffee/flavours/aura-grader-table.webp"
+        alt="Two baskets of freshly picked coffee cherry on the sorting floor at Mudigere"
         lede="Three days inside a living system. You set one lot's protocol yourself, and it reaches you under your own name about four months later. Twenty places, three times a year."
       />
 

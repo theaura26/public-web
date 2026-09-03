@@ -414,12 +414,12 @@
     ]
   },
   "/regenerative-life/sanctuary-and-stay": {
-    "hash": "70caccd63ede2ac7",
-    "line": "This sanctuary holds our land and life — what do you want to know?",
+    "hash": "24388ead96ace431",
+    "line": "This is where our sanctuary and stay come alive — what do you want to know?",
     "prompts": [
       "What are the four climates here?",
       "How do the two valleys differ?",
-      "Why maintain a network of valleys?"
+      "What happens during the working day?"
     ]
   },
   "/sanctuaries": {

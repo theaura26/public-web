@@ -1284,12 +1284,43 @@ a:hover, button:hover, [role="button"]:hover {
 .pillar-card:focus-visible {
   text-decoration: none;
 }
+/* One hover for every picture card on the site.
+ *
+ * There were three. Field Notes and the swimlanes scaled the picture and
+ * turned the title orange; the pillars underlined the title and left the
+ * video alone; the Continue cards blurred the photograph and faded a
+ * symbol through it. Three conventions on four surfaces reads as three
+ * different sites.
+ *
+ * The title is what a reader is following, so the title is what answers.
+ * The picture holds still. The Continue card keeps its blur-and-symbol
+ * reveal — that one is a designed moment rather than a card state, and
+ * it is the exception on purpose.
+ *
+ * These classes are all global: each sits on a next/link Link, which
+ * styled-jsx cannot reach with a scoped rule, so they are declared here
+ * together rather than copied into four component stylesheets. */
 .pillar-card:hover h3,
-.pillar-card:focus-visible h3 {
+.pillar-card:focus-visible h3,
+.fn-item:hover .fn-t,
+.fn-item:focus-visible .fn-t,
+.lane-card:hover .lane-t,
+.lane-card:focus-visible .lane-t,
+.m-next-c:hover .m-next-t,
+.m-next-c:focus-visible .m-next-t {
   text-decoration: underline;
   text-decoration-color: var(--brand-accent);
   text-underline-offset: var(--rule-offset);
   text-decoration-thickness: var(--rule-weight);
+}
+/* The card itself never underlines — only its title. */
+.fn-item:hover,
+.fn-item:focus-visible,
+.lane-card:hover,
+.lane-card:focus-visible,
+.m-next-c:hover,
+.m-next-c:focus-visible {
+  text-decoration: none;
 }
 
 /* A pillar that is written but held back. It is a div rather than a
@@ -1303,21 +1334,64 @@ a:hover, button:hover, [role="button"]:hover {
   text-decoration: none;
   color: inherit;
 }
-.pillar-soon {
-  display: inline-block;
-  margin-left: var(--space-3);
-  vertical-align: middle;
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  font-weight: 400;
-  letter-spacing: 0.9px;
-  text-transform: uppercase;
-  white-space: nowrap;
-  padding: 4px 8px;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  color: var(--text-muted);
+
+/* The ring-and-arrow call to action — components/ArrowCta.tsx.
+   Renders as a Link or a button depending on what it does, so both are
+   styled here rather than on the element. Every colour is currentColor:
+   the caller sets the colour once and the ring follows at 70%, which is
+   what lets the same control sit on the contrast band and on a
+   photograph without either one naming a colour of its own. */
+.arrow-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: auto;
 }
+/* The underline belongs to running prose. Here the ring is the
+   affordance, so the hover state moves it instead. */
+.arrow-cta:hover,
+.arrow-cta:focus-visible {
+  text-decoration: none;
+}
+.arrow-cta__ring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* flex: none — the ring is a fixed 22px and a long label was
+     squashing it into an oval. */
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, currentColor 70%, transparent);
+  transition: transform 240ms ease, border-color 240ms ease;
+}
+.arrow-cta:hover .arrow-cta__ring,
+.arrow-cta:focus-visible .arrow-cta__ring {
+  transform: translateX(3px);
+  border-color: currentColor;
+}
+@media (prefers-reduced-motion: reduce) {
+  .arrow-cta__ring { transition: none; }
+  .arrow-cta:hover .arrow-cta__ring,
+  .arrow-cta:focus-visible .arrow-cta__ring { transform: none; }
+}
+
+/* The sanctuary panels sit on a photograph, so this one names its
+   colour. The ring reads it off currentColor and follows. */
+.sanctuary-explore { color: #fff; }
+
+/* On the From Aura band the CTA follows the band's own text colour, and
+   it needs room: it used to be the tail of a sentence and is now the
+   only thing on the page to act on. */
+.pd-ask { margin-top: var(--space-5); }
 
 /* Sanctuary banner: hover affordance is the cursor pill (Explore X) — no
    text underline anywhere inside the clickable region. The parent rule above

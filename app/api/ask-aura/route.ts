@@ -374,10 +374,31 @@ export async function POST(req: Request) {
     })
 
     if (!upstream.ok) {
+      /* The status, and the model's own short reason for refusing.
+      
+         "upstream" on its own cost real time: production returned it
+         while staging answered the same question from the same code, and
+         nothing in the response said whether the key was rejected, the
+         quota was spent or the model name was wrong. Those are three
+         different jobs for three different people.
+      
+         The code and the reason field only. The body can carry the
+         request back to you, and a key does not belong in a response a
+         browser can read. */
+      let reason = ''
+      try {
+        const err = await upstream.json()
+        const raw = err?.error?.code ?? err?.error?.type ?? ''
+        reason = String(raw).slice(0, 40)
+      } catch { /* a non-JSON error page says nothing worth keeping */ }
+
       frames.push(sse('token', {
         t: 'I could not reach my sources just then. Try again in a moment — or the estate pages themselves are the better read anyway.',
       }))
-      frames.push(sse('meta', { suggestions: [], citations: [], confidence: 'low', error: 'upstream' }))
+      frames.push(sse('meta', {
+        suggestions: [], citations: [], confidence: 'low',
+        error: 'upstream', status: upstream.status, ...(reason ? { reason } : {}),
+      }))
       frames.push(sse('done', {}))
       return new Response(frames.join(''), { headers: { ...SSE_HEADERS, 'x-request-id': requestId } })
     }

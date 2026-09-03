@@ -1258,6 +1258,11 @@ a:hover, button:hover, [role="button"]:hover {
   text-decoration-thickness: var(--rule-weight);
 }
 
+/* The consent banner is a control, not content: agent mode flattens
+   everything in <main>, and this sits outside it deliberately so the
+   question still reads as a question. */
+[data-view="agent"] .cb { display: none !important; }
+
 /* Full-bleed rails in the plain-text view.
  *
  * A lane track, the From Aura plate and the Ohara wordmark all run off

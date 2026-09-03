@@ -78,7 +78,7 @@ export default function PrivacyPage() {
 
       <TwoCol id="analytics" heading="Analytics">
         <p className="p1">
-          We use PostHog, hosted in the European Union. It runs only on the live site. Analytics
+          We use PostHog, hosted in the United States. It runs only on the live site. Analytics
           requests are routed through a path on this domain rather than directly to PostHog,
           which means an ad blocker will usually not block them.
         </p>
@@ -86,6 +86,11 @@ export default function PrivacyPage() {
           PostHog assigns you an identifier so that repeat visits are recognised as the same
           visitor. This site sets no cookies; the identifier is stored in your browser&rsquo;s
           local storage. Clearing site data for this domain removes it.
+        </p>
+        <p className="p1">
+          Session recording is off until you allow it. We ask once, and anything you type is
+          masked before it leaves your browser. Declining keeps it off, and clearing site data
+          asks again.
         </p>
       </TwoCol>
 
@@ -111,7 +116,7 @@ export default function PrivacyPage() {
       <SpecTable
         title="Who receives your data"
         rows={[
-          { label: 'PostHog', value: 'Usage data, session recordings, device data. Hosted in the EU' },
+          { label: 'PostHog', value: 'Usage data, device data, and session recordings where allowed. Hosted in the United States' },
           { label: 'OpenAI', value: 'The text of questions asked through Ask Aura' },
           { label: 'Vercel', value: 'Hosting. Serves the site and processes requests to it' },
           { label: 'Advertisers, brokers', value: 'None. We do not sell or share data for advertising' },

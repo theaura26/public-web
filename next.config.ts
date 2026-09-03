@@ -21,14 +21,16 @@ const nextConfig: NextConfig = {
   images: { qualities: [75, 78] },
   /* PostHog reverse proxy — events + assets are served from our own
      origin under /ingest, so first-party requests dodge ad-blockers
-     (which drop ~a third of third-party analytics traffic). EU endpoints
-     for data residency. The catch-all must sit after the /static rule.
+     (which drop ~a third of third-party analytics traffic). US endpoints,
+     matching the region the project key belongs to — the key is checked
+     against the region it is sent to, so an EU proxy with a US key drops
+     every event silently. The catch-all must sit after the /static rule.
      `skipTrailingSlashRedirect` stops Next 308-redirecting /ingest paths. */
   skipTrailingSlashRedirect: true,
   async rewrites() {
     return [
-      { source: '/ingest/static/:path*', destination: 'https://eu-assets.i.posthog.com/static/:path*' },
-      { source: '/ingest/:path*', destination: 'https://eu.i.posthog.com/:path*' },
+      { source: '/ingest/static/:path*', destination: 'https://us-assets.i.posthog.com/static/:path*' },
+      { source: '/ingest/:path*', destination: 'https://us.i.posthog.com/:path*' },
     ]
   },
   /* /studios was renamed to /atelier. A permanent redirect keeps the old

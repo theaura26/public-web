@@ -16,7 +16,7 @@ export default function SanctuaryPage() {
     <>
       <HeroBanner
         currentHref="/regenerative-life/sanctuary-and-stay"
-        title="Sanctuary"
+        title="Sanctuary &amp; Stay"
         src="/regenerative-life/sanctuary-and-stay/images/santuary-hero-banner.webp"
         caption="A network of valleys — two in practice, two more in listening"
         alt="Someone sitting at the rail of a deck above a valley filling with cloud"

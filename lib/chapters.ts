@@ -366,7 +366,6 @@ export const CHAPTERS: Chapter[] = [
     id: 'sanctuary',
     label: 'Sanctuary & Stay',
     slug: 'sanctuary-and-stay',
-    soon: true,
     href: '/regenerative-life/sanctuary-and-stay',
     card: '/regenerative-life/sanctuary-and-stay/images/santuary-hero-banner.webp',
     lede: 'What happens when a piece of land is tended long enough that it begins to tend the people standing on it.',

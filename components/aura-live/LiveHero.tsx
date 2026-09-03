@@ -115,7 +115,16 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           display: flex;
           flex-direction: column;
           align-items: center;
+          /* Safe centring, not plain center. This column is taller than
+             a short window — title, stamp, the stamp's floor and the card
+             band come to about 665px — and a centred flex container that
+             overflows spills equally at both ends, which puts the top of
+             NOW above the viewport where it cannot be scrolled back to.
+             The safe keyword aligns to the start once the content stops
+             fitting, so the wordmark is never the part that is lost.
+             Identical to center at any height where it all fits. */
           justify-content: center;
+          justify-content: safe center;
           /* No shared gap: the stamp belongs to the title and the card
              band does not, so the two distances are set separately below
              rather than by one number that governs both. */
@@ -201,7 +210,12 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 600;
           text-transform: uppercase;
-          font-size: clamp(44px, 8.6vw, 128px);
+          /* Height as well as width. 8.6vw alone gave a 1600×500 window a
+             128px NOW with nowhere to put it — the size was reading the
+             one axis that had room. The min() takes whichever axis is
+             tighter; above roughly 640px tall the width still decides and
+             nothing about the desktop hero changes. */
+          font-size: clamp(44px, min(8.6vw, 20vh), 128px);
           line-height: 0.92;
           letter-spacing: -0.035em;
           text-wrap: balance;
@@ -218,7 +232,11 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
              title and its stamp below the middle of the clear space,
              which is where they sit better — the band is closer under
              them than it is far from the top. */
-          margin: var(--space-6) 0 clamp(96px, 14vh, 150px);
+          /* The floor was 96px, which on a 500px window is a fifth of the
+             screen spent holding the band away from the stamp. 14vh still
+             governs everywhere there is room; it now yields when there is
+             not. */
+          margin: var(--space-6) 0 clamp(40px, 14vh, 150px);
           /* Solid, not 72%. At 11px over this film it was reading 3.34:1
              even under the heavier veil it used to have — under AA, and
              the reason the veil had to be as dark as it was. */
@@ -260,6 +278,16 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
         }
         @media (prefers-reduced-motion: reduce) {
           .dot { animation: none; }
+        }
+
+        /* Short screens only. The note higher up is right that the auto
+           space clears the 56px bar at every height where the column
+           fits — it stops being true once it does not, and the title then
+           starts at the very top with the nav sitting over the word.
+           Reserving the bar back costs nothing above 760px, where this
+           query does not apply. */
+        @media (max-height: 760px) {
+          .hero { padding-top: var(--nav-h); }
         }
 
         @media (max-width: 640px) {

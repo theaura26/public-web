@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { guardComingSoon } from '@/lib/coming-soon'
 
 /* Parked. The page is written and renders in full; it is simply out of
    circulation — no menu card, no field-note category, no sitemap entry —
@@ -23,5 +24,10 @@ export const metadata: Metadata = {
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  /* Unpublished. 404s in every deployed environment — production and
+     Vercel preview — while staying reachable under `next dev`, so the page
+     can keep being worked on. Delete this call to publish it. */
+  guardComingSoon()
+
   return children
 }

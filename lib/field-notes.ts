@@ -16,7 +16,7 @@
  * dropped a note out of the menu before.
  */
 
-import { ACTIVE_JOURNALS, type Journal } from './journals'
+import { ACTIVE_JOURNALS, linkImage, type Journal } from './journals'
 
 export type CategoryId =
   | 'biodynamic'
@@ -212,9 +212,13 @@ export function notesIn(id: CategoryId): NoteEntry[] {
     .filter((j): j is Journal => Boolean(j))
     .map((j) => ({ href: j.href, title: j.title, description: j.description, img: j.img, status: 'live' as const }))
 
+  /* Cross-listed pages carry no picture of their own — they are entries
+     pointing at a page that lives elsewhere, and the picture belongs to
+     that page. linkImage is the same lookup the onward links use, so the
+     index shows a note the way the rest of the site shows it. */
   const borrowed: NoteEntry[] = CROSS_LISTED
     .filter((c) => c.categories.includes(id))
-    .map((c) => ({ href: c.href, title: c.title, description: c.description, status: 'live' as const, from: c.from }))
+    .map((c) => ({ href: c.href, title: c.title, description: c.description, img: linkImage(c.href), status: 'live' as const, from: c.from }))
 
   const soon: NoteEntry[] = PENDING_NOTES
     .filter((n) => n.categories.includes(id))

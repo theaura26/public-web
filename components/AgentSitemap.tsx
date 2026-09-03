@@ -196,6 +196,17 @@ export const SITEMAP: SitemapEntry[] = [
     related: ['/coffee', '/circular', '/biodynamic'],
   },
   {
+    href: '/sanctuaries',
+    label: 'Sanctuaries',
+    topic: 'Four valleys, and what a sanctuary is for',
+    summary: 'Aura keeps four valleys in two hemispheres as places safe enough to think in generations. Mudigere in the Western Ghats and Ohara north of Kyoto are open and working; Munduk in Bali and Punakha in Bhutan are named and closed while the land is still being read.',
+    facts: [
+      { label: 'Open', value: 'Mudigere (India) · Ohara (Japan)' },
+      { label: 'Listening', value: 'Munduk (Indonesia) · Punakha (Bhutan)' },
+    ],
+    related: ['/mudigere', '/ohara', '/land'],
+  },
+  {
     href: '/land',
     label: 'The Land',
     topic: 'Land as ancestry — Mudigere and Ohara in dialogue',

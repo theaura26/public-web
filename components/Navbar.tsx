@@ -68,7 +68,7 @@ const ARTICLES: Article[] = [
   { href: '/areca',          title: 'The Sentinel Palm',                  size: 'sm', comingSoon: true, img: '/aura-mudigere-landscape.jpg' },
   { href: '/pepper',         title: 'Malabar Pepper',                     size: 'lg', comingSoon: true, img: '/journals/fermentation/aura-pepper.jpg' },
   { href: '/provenance',     title: 'Provenance',                         size: 'sm', comingSoon: true, img: '/aura-provenance.jpg' },
-  { href: '/regenerative-life/sanctuary-and-stay',      title: 'Sanctuary',                          size: 'lg', comingSoon: true, img: '/aura-sanctuary.jpg' },
+  { href: '/sanctuaries',    title: 'Sanctuary',                          size: 'lg', img: '/aura-sanctuary.jpg' },
   /* These four were commissioned and are now written and shot. Each
      carries its own opening photograph rather than the flat grey plate
      it sat on while it was still a brief. */

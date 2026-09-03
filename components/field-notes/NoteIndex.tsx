@@ -217,7 +217,16 @@ export function NoteIndex({
         /* The blob paints the ground; the pill only changes its ink and
            drops its hairline so the two do not double up. */
         .fn .fn-filter.is-on { color: var(--contrast-text); border-color: transparent; }
-        .fn .fn-filters:hover .fn-filter.is-on { color: var(--text-body); }
+        /* While the pointer is in the row the blob has slid off the
+           current category, so that pill has to look like the others
+           again — it was getting its ink back and not its hairline, and
+           read as a gap in the row. :not(:hover) so the pill keeps the
+           on state when the pointer comes back to it and the blob
+           returns underneath. */
+        .fn .fn-filters:hover .fn-filter.is-on:not(:hover) {
+          color: var(--text-body);
+          border-color: var(--border-strong);
+        }
         .fn .fn-filter:hover { color: var(--contrast-text); border-color: transparent; }
 
         /* ── the cards ──
@@ -254,7 +263,6 @@ export function NoteIndex({
           width: 100%; height: 100%; object-fit: cover; display: block;
           transition: transform var(--dur-slow) var(--ease-out);
         }
-        .fn .fn-item:hover .fn-plate img { transform: scale(1.04); }
         .fn .fn-plate[data-noimg='true'] { background: var(--text-muted); opacity: 0.16; }
         .fn .fn-item.is-soon .fn-plate[data-noimg='true'] { background: var(--text-muted); opacity: 0.18; }
 
@@ -279,7 +287,6 @@ export function NoteIndex({
           color: var(--text-body);
           max-width: 62ch;
         }
-        .fn .fn-item:hover .fn-t { color: var(--brand-accent); }
         .fn .fn-item.is-soon .fn-t { color: var(--text-muted); }
         .fn .fn-item.is-soon .fn-d { color: var(--text-muted); }
         .fn .fn-from {

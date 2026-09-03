@@ -9,6 +9,7 @@ import { InfiniteArticleSlider } from '@/components/InfiniteArticleSlider'
 import { InvertOnScroll } from '@/components/InvertOnScroll'
 import { LogoEmblem } from '@/components/Logo'
 import { Sun, Moon, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun, CloudMoon } from '@phosphor-icons/react'
+import ArrowCta from '@/components/ArrowCta'
 
 /* ═══════════════════════════════════════════
    LIVE WEATHER — Open-Meteo (free, no key)
@@ -1149,49 +1150,20 @@ function SanctuaryContent({ s, large = false, onExplore }: { s: Sanctuary; large
             <p className="label" style={{ color: '#ffffff', margin: 0 }}>{s.coords}</p>
           </div>
           {/* Explore CTA — the whole panel is now clickable, but the
-              CTA stays as a visible affordance. stopPropagation so we
-              don’t double-fire when the user clicks the button. */}
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); onExplore?.() }}
-            aria-label={`Open ${s.name} details`}
-            className="label"
-            style={{
-              background: 'transparent',
-              border: 'none',
-              padding: 0,
-              color: '#ffffff',
-              margin: 0,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 10,
-              pointerEvents: 'auto',
-            }}
+              CTA stays as a visible affordance. ArrowCta stops the click
+              propagating so we don’t double-fire the panel's handler.
+
+              The ring and arrow were written out by hand here, and again
+              on the From Aura pages. They are one control now, in
+              components/ArrowCta.tsx. Only the colour is set locally:
+              this one sits on a photograph and has to be white. */}
+          <ArrowCta
+            onClick={() => onExplore?.()}
+            ariaLabel={`Open ${s.name} details`}
+            className="sanctuary-explore"
           >
-            <span
-              aria-hidden
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 22,
-                height: 22,
-                borderRadius: '50%',
-                border: '1px solid rgba(255,255,255,0.7)',
-                fontFamily: 'var(--font-mono)',
-                fontSize: 13,
-                lineHeight: 1,
-                letterSpacing: 0,
-                fontWeight: 400,
-                color: '#fff',
-              }}
-            >
-              <svg viewBox="0 0 24 24" width={11} height={11} fill="none" aria-hidden>
-                <path d="M5 12h13M12.5 6l6.5 6-6.5 6" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
             Explore {s.name}
-          </button>
+          </ArrowCta>
         </div>
       ) : (
         /* Bottom labels — same rhythm as the large-banner Ohara/Mudigere
@@ -1975,10 +1947,11 @@ Awake.`}</ScrollHighlight>
               },
               {
                 title: 'Sanctuary',
-                href: '/regenerative-life/sanctuary-and-stay',
-                /* Written and held back — see the `soon` flag in
-                   lib/chapters.ts. The card stays; the link goes. */
-                soon: true,
+                /* /sanctuaries, which is the public page about the four
+                   valleys. It used to point at the Sanctuary & Stay
+                   chapter and then lost its link when that chapter was
+                   held back; there is somewhere to send a reader now. */
+                href: '/sanctuaries',
                 lead: 'Places that hold the right kind of attention',
                 desc: 'Two sanctuaries open and two more named — architecture, kitchen and residency, built to run for decades on a farm that would be working anyway.',
                 video: '/aura-hospitality.mp4',
@@ -1999,31 +1972,21 @@ Awake.`}</ScrollHighlight>
                 {/* Each pillar opens the page that explains it. These three
                     cards are where most readers first meet the three, so
                     they set the tone for Agroculture, Hospitality and the
-                    Atelier and then take you to them. */}
-                {(() => {
-                  const body = (
-                    <>
-                      <PillarVideo src={card.video} poster={card.poster} alt={card.alt} />
-                      <h3 style={{ marginTop: 'var(--space-5)', marginBottom: 'var(--space-3)' }}>
-                        {card.title}
-                        {'soon' in card && card.soon ? <span className="pillar-soon">Coming Soon</span> : null}
-                      </h3>
-                      {/* Lead reads as a meta caption underneath the title —
-                          mono uppercase via the global .label spec, matching
-                          every other meta caption on the page. */}
-                      <p className="label" style={{ marginBottom: 'var(--space-4)' }}>{card.lead}</p>
-                      <p className="p1">{card.desc}</p>
-                    </>
-                  )
-                  /* A pillar that is written but held back keeps its card
-                     and loses its link. The reader still meets all three;
-                     the marker says why the third does not open yet. */
-                  return 'soon' in card && card.soon ? (
-                    <div className="pillar-card is-soon">{body}</div>
-                  ) : (
-                    <Link href={card.href} className="pillar-card no-underline">{body}</Link>
-                  )
-                })()}
+                    Atelier and then take you to them.
+
+                    All three are links again. Sanctuary spent a while as a
+                    plain div, because the chapter behind it was held back
+                    and a card that opens nothing is worse than one that
+                    says so; /sanctuaries answers that now. */}
+                <Link href={card.href} className="pillar-card no-underline">
+                  <PillarVideo src={card.video} poster={card.poster} alt={card.alt} />
+                  <h3 style={{ marginTop: 'var(--space-5)', marginBottom: 'var(--space-3)' }}>{card.title}</h3>
+                  {/* Lead reads as a meta caption underneath the title —
+                      mono uppercase via the global .label spec, matching
+                      every other meta caption on the page. */}
+                  <p className="label" style={{ marginBottom: 'var(--space-4)' }}>{card.lead}</p>
+                  <p className="p1">{card.desc}</p>
+                </Link>
               </Reveal>
             ))}
           </div>

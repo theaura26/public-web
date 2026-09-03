@@ -229,7 +229,6 @@ function LaneStyles() {
           width: 100%; height: 100%; object-fit: cover; display: block;
           transition: transform var(--dur-slow) var(--ease-out);
         }
-        .sw .lane-card:hover .lane-plate img { transform: scale(1.04); }
 
 
         /* An unwritten note has no photograph — a flat plate, not an
@@ -250,7 +249,6 @@ function LaneStyles() {
           transition: color var(--dur-base) var(--ease);
           color: var(--text);
         }
-        .sw .lane-card:hover .lane-t { color: var(--brand-accent); }
         .sw .lane-card.is-soon .lane-t { color: var(--text-muted); }
         .sw .lane-from {
           font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; line-height: normal;

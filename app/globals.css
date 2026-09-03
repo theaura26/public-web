@@ -1284,40 +1284,107 @@ a:hover, button:hover, [role="button"]:hover {
 .pillar-card:focus-visible {
   text-decoration: none;
 }
+/* One hover for every picture card on the site.
+ *
+ * There were three. Field Notes and the swimlanes scaled the picture and
+ * turned the title orange; the pillars underlined the title and left the
+ * video alone; the Continue cards blurred the photograph and faded a
+ * symbol through it. Three conventions on four surfaces reads as three
+ * different sites.
+ *
+ * The title is what a reader is following, so the title is what answers.
+ * The picture holds still. The Continue card keeps its blur-and-symbol
+ * reveal — that one is a designed moment rather than a card state, and
+ * it is the exception on purpose.
+ *
+ * These classes are all global: each sits on a next/link Link, which
+ * styled-jsx cannot reach with a scoped rule, so they are declared here
+ * together rather than copied into four component stylesheets. */
 .pillar-card:hover h3,
-.pillar-card:focus-visible h3 {
+.pillar-card:focus-visible h3,
+.fn-item:hover .fn-t,
+.fn-item:focus-visible .fn-t,
+.lane-card:hover .lane-t,
+.lane-card:focus-visible .lane-t,
+.m-next-c:hover .m-next-t,
+.m-next-c:focus-visible .m-next-t,
+.sc-card:hover .sc-name,
+.sc-card:focus-visible .sc-name {
   text-decoration: underline;
   text-decoration-color: var(--brand-accent);
   text-underline-offset: var(--rule-offset);
   text-decoration-thickness: var(--rule-weight);
 }
-
-/* A pillar that is written but held back. It is a div rather than a
-   Link, so it inherits none of the anchor styling and needs the cursor
-   said explicitly — the card looks identical to its two neighbours and
-   the marker beside the title is the only thing that differs. Colours
-   come from the local text tokens because this grid sits inside
-   InvertOnScroll and reads on either ground. */
-.pillar-card.is-soon {
-  cursor: default;
+/* The card itself never underlines — only its title. */
+.fn-item:hover,
+.fn-item:focus-visible,
+.lane-card:hover,
+.lane-card:focus-visible,
+.m-next-c:hover,
+.m-next-c:focus-visible,
+.sc-card:hover,
+.sc-card:focus-visible {
   text-decoration: none;
+}
+
+
+/* The ring-and-arrow call to action — components/ArrowCta.tsx.
+   Renders as a Link or a button depending on what it does, so both are
+   styled here rather than on the element. Every colour is currentColor:
+   the caller sets the colour once and the ring follows at 70%, which is
+   what lets the same control sit on the contrast band and on a
+   photograph without either one naming a colour of its own. */
+.arrow-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
   color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: auto;
 }
-.pillar-soon {
-  display: inline-block;
-  margin-left: var(--space-3);
-  vertical-align: middle;
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  font-weight: 400;
-  letter-spacing: 0.9px;
-  text-transform: uppercase;
-  white-space: nowrap;
-  padding: 4px 8px;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  color: var(--text-muted);
+/* The underline belongs to running prose. Here the ring is the
+   affordance, so the hover state moves it instead. */
+.arrow-cta:hover,
+.arrow-cta:focus-visible {
+  text-decoration: none;
 }
+.arrow-cta__ring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* flex: none — the ring is a fixed 22px and a long label was
+     squashing it into an oval. */
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, currentColor 70%, transparent);
+  transition: transform 240ms ease, border-color 240ms ease;
+}
+.arrow-cta:hover .arrow-cta__ring,
+.arrow-cta:focus-visible .arrow-cta__ring {
+  transform: translateX(3px);
+  border-color: currentColor;
+}
+@media (prefers-reduced-motion: reduce) {
+  .arrow-cta__ring { transition: none; }
+  .arrow-cta:hover .arrow-cta__ring,
+  .arrow-cta:focus-visible .arrow-cta__ring { transform: none; }
+}
+
+/* The sanctuary panels sit on a photograph, so this one names its
+   colour. The ring reads it off currentColor and follows. */
+.sanctuary-explore { color: #fff; }
+
+/* On the From Aura band the CTA follows the band's own text colour, and
+   it needs room: it used to be the tail of a sentence and is now the
+   only thing on the page to act on. */
+.pd-ask { margin-top: var(--space-5); }
 
 /* Sanctuary banner: hover affordance is the cursor pill (Explore X) — no
    text underline anywhere inside the clickable region. The parent rule above
@@ -2384,3 +2451,80 @@ html.lenis, html.lenis body { height: auto; }
 [data-rc-backdrop] :is(.sc, .p, .ch, .ld, .lots, .bx) {
   background: transparent !important;
 }
+
+
+/* ── /sanctuaries ────────────────────────────────────────────────────
+   Two place cards to a row, picture over name. The row is a list because
+   it is one: four valleys, two of which open and two of which do not.
+   The quiet pair get the same card and lose the link — see the note in
+   app/sanctuaries/page.tsx. */
+.sc-row {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  max-width: var(--max-w);
+  display: grid;
+  gap: clamp(28px, 4vw, 56px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 768px) {
+  .sc-row { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
+}
+/* The rows carry no padding of their own — the sections above and below
+   them already bring a --section-gap each, so a row sits in 108px of
+   air at both ends without asking for any.
+   
+   The last row is the exception. What follows it is the Read on block,
+   which draws its rule at the very top of its own padding, so the rule
+   landed hard against the bottom line of the cards while every other
+   gap on the page was 108px. The margin puts it back in rhythm. */
+.sc-row:last-of-type { margin-bottom: var(--section-gap); }
+.sc-card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.6vw, 20px);
+  color: inherit;
+  text-decoration: none;
+}
+/* Nothing to click, so nothing that suggests it. */
+.sc-card.is-quiet { cursor: default; }
+.sc-plate {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-1);
+  background: var(--bg-card);
+}
+.sc-plate img,
+.sc-plate video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.sc-text { display: flex; flex-direction: column; gap: 6px; }
+/* Same face and rhythm as a Field Notes card title, one step up in
+   size because a valley is the subject of this page rather than one
+   entry in a list. */
+.sc-name {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: var(--text);
+  transition: color var(--dur-base) var(--ease);
+}
+.sc-tag {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-body);
+  max-width: 48ch;
+}
+.sc-meta { color: var(--text-muted); }
+/* The quiet pair read one step back from the working pair. The picture
+   keeps its full strength — dimming the card multiplied against the
+   photograph and hid the valley, which is the one thing worth showing. */
+.sc-card.is-quiet .sc-name,
+.sc-card.is-quiet .sc-tag { color: var(--text-muted); }

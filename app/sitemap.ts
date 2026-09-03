@@ -12,6 +12,9 @@ import { CATEGORIES } from '@/lib/field-notes'
    /mudigere-estate is deliberately absent: it is noindex. */
 const OFF_MENU = [
   '/contact',
+  /* The four valleys on one page. Public and index:true; the Regenerative
+     Life menu carries the Sanctuary & Stay chapter rather than this. */
+  '/sanctuaries',
   /* Privacy is reached from the footer rather than the menu. It is
      index:true, so it belongs here. */
   '/privacy',

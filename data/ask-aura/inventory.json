@@ -1,19 +1,19 @@
 {
-  "origin": "https://staging.theaura.life",
-  "started": "2026-09-03T07:15:06.503Z",
+  "origin": "http://localhost:3200",
+  "started": "2026-09-03T10:22:59.410Z",
   "records": [
     {
-      "url": "https://staging.theaura.life",
+      "url": "http://localhost:3200",
       "id": "home",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.592Z",
-      "hash": "cb47aaf37f838c74",
+      "seenAt": "2026-09-03T10:22:59.442Z",
+      "hash": "29ed03e826be4804",
       "title": "Aura — Natural Intelligence Company.",
       "canonical": "https://theaura.life",
       "description": "We are a team of Monastic Polymaths who combine ancestral wisdom with creative capital to make what the future cannot automate.",
       "image": "https://theaura.life/og-hello.jpg",
-      "words": 1304,
+      "words": 1302,
       "sections": 30,
       "headings": [
         "Aura — Natural Intelligence Company.",
@@ -28,11 +28,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/artistry",
+      "url": "http://localhost:3200/artistry",
       "id": "artistry",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.593Z",
+      "seenAt": "2026-09-03T10:22:59.442Z",
       "hash": "a76ae63ecf111e88",
       "title": "Artistry — A space to make — Aura",
       "canonical": "https://theaura.life/artistry",
@@ -53,11 +53,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/atelier",
+      "url": "http://localhost:3200/atelier",
       "id": "atelier",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.594Z",
+      "seenAt": "2026-09-03T10:22:59.442Z",
       "hash": "2b29a04c3cb8b33c",
       "title": "Atelier — Aura",
       "canonical": "https://theaura.life/atelier",
@@ -78,11 +78,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/biodynamic",
+      "url": "http://localhost:3200/biodynamic",
       "id": "biodynamic",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.628Z",
+      "seenAt": "2026-09-03T10:22:59.568Z",
       "hash": "a12b816807164af9",
       "title": "A Living Organism — Aura",
       "canonical": "https://theaura.life/biodynamic",
@@ -103,11 +103,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/brand",
+      "url": "http://localhost:3200/brand",
       "id": "brand",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.651Z",
+      "seenAt": "2026-09-03T10:22:59.568Z",
       "hash": "4863e7ef9cfa1394",
       "title": "Our Brand — Aura",
       "canonical": "https://theaura.life/brand",
@@ -128,11 +128,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/bug-hotels",
+      "url": "http://localhost:3200/bug-hotels",
       "id": "bug-hotels",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.651Z",
+      "seenAt": "2026-09-03T10:22:59.568Z",
       "hash": "b7f460b6a3b0fe3b",
       "title": "Bug Hotels — Aura",
       "canonical": "https://theaura.life/bug-hotels",
@@ -153,11 +153,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/circular",
+      "url": "http://localhost:3200/circular",
       "id": "circular",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.662Z",
+      "seenAt": "2026-09-03T10:22:59.703Z",
       "hash": "394e843c80b60284",
       "title": "Circular Intelligence — Aura",
       "canonical": "https://theaura.life/circular",
@@ -178,11 +178,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/coffee",
+      "url": "http://localhost:3200/coffee",
       "id": "coffee",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.670Z",
+      "seenAt": "2026-09-03T10:22:59.703Z",
       "hash": "e6c2232beaf321f9",
       "title": "Our Bean Story — Aura",
       "canonical": "https://theaura.life/coffee",
@@ -203,11 +203,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/contact",
+      "url": "http://localhost:3200/contact",
       "id": "contact",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.672Z",
+      "seenAt": "2026-09-03T10:22:59.704Z",
       "hash": "07f104bb6a96ff7d",
       "title": "Contact — Aura",
       "canonical": "https://theaura.life/contact",
@@ -228,11 +228,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/ecology",
+      "url": "http://localhost:3200/ecology",
       "id": "ecology",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.685Z",
+      "seenAt": "2026-09-03T10:22:59.824Z",
       "hash": "845bddc4ebc249a2",
       "title": "The Health Index — Aura",
       "canonical": "https://theaura.life/ecology",
@@ -253,11 +253,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/fermentation",
+      "url": "http://localhost:3200/fermentation",
       "id": "fermentation",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.693Z",
+      "seenAt": "2026-09-03T10:22:59.826Z",
       "hash": "46fb44a1e11be714",
       "title": "Controlled Decay — Aura",
       "canonical": "https://theaura.life/fermentation",
@@ -278,11 +278,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/field-notes",
+      "url": "http://localhost:3200/field-notes",
       "id": "field-notes",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.693Z",
+      "seenAt": "2026-09-03T10:22:59.826Z",
       "hash": "0017ac613d04eba6",
       "title": "Field Notes — Aura",
       "canonical": "https://theaura.life/field-notes",
@@ -303,11 +303,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/field-notes/animals",
+      "url": "http://localhost:3200/field-notes/animals",
       "id": "field-notes-animals",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.706Z",
+      "seenAt": "2026-09-03T10:22:59.874Z",
       "hash": "3909d4fea9138532",
       "title": "Animals — Field Notes — Aura",
       "canonical": "https://theaura.life/field-notes/animals",
@@ -321,11 +321,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/field-notes/art-culture",
+      "url": "http://localhost:3200/field-notes/art-culture",
       "id": "field-notes-art-culture",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.714Z",
+      "seenAt": "2026-09-03T10:22:59.997Z",
       "hash": "c65cf0b5cc08ddfb",
       "title": "Art & Culture — Field Notes — Aura",
       "canonical": "https://theaura.life/field-notes/art-culture",
@@ -339,11 +339,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/field-notes/biodiversity",
+      "url": "http://localhost:3200/field-notes/biodiversity",
       "id": "field-notes-biodiversity",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.714Z",
+      "seenAt": "2026-09-03T10:22:59.998Z",
       "hash": "756f2aed27b5ab90",
       "title": "Biodiversity — Field Notes — Aura",
       "canonical": "https://theaura.life/field-notes/biodiversity",
@@ -357,11 +357,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/field-notes/biodynamic",
+      "url": "http://localhost:3200/field-notes/biodynamic",
       "id": "field-notes-biodynamic",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.730Z",
+      "seenAt": "2026-09-03T10:23:00.001Z",
       "hash": "653a4876fdda3771",
       "title": "Biodynamic — Field Notes — Aura",
       "canonical": "https://theaura.life/field-notes/biodynamic",
@@ -375,11 +375,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/field-notes/coffee-fermentation",
+      "url": "http://localhost:3200/field-notes/coffee-fermentation",
       "id": "field-notes-coffee-fermentation",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.738Z",
+      "seenAt": "2026-09-03T10:23:00.052Z",
       "hash": "2b4d2a12b7d371c6",
       "title": "Coffee & Fermentation — Field Notes — Aura",
       "canonical": "https://theaura.life/field-notes/coffee-fermentation",
@@ -393,11 +393,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/field-notes/labs",
+      "url": "http://localhost:3200/field-notes/labs",
       "id": "field-notes-labs",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.755Z",
+      "seenAt": "2026-09-03T10:23:00.195Z",
       "hash": "34eac63304f65514",
       "title": "Labs — Field Notes — Aura",
       "canonical": "https://theaura.life/field-notes/labs",
@@ -411,11 +411,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/field-notes/land-ecology",
+      "url": "http://localhost:3200/field-notes/land-ecology",
       "id": "field-notes-land-ecology",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.764Z",
+      "seenAt": "2026-09-03T10:23:00.195Z",
       "hash": "00cc37adcd10801d",
       "title": "Land & Ecology — Field Notes — Aura",
       "canonical": "https://theaura.life/field-notes/land-ecology",
@@ -429,11 +429,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/forest-islands",
+      "url": "http://localhost:3200/forest-islands",
       "id": "forest-islands",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.771Z",
+      "seenAt": "2026-09-03T10:23:00.195Z",
       "hash": "437b02715794e30a",
       "title": "Forest Islands — Aura",
       "canonical": "https://theaura.life/forest-islands",
@@ -454,11 +454,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/from-aura",
+      "url": "http://localhost:3200/from-aura",
       "id": "from-aura",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.782Z",
+      "seenAt": "2026-09-03T10:23:00.223Z",
       "hash": "7ae1974faf8e70cc",
       "title": "From Aura — Aura",
       "canonical": "https://theaura.life/from-aura",
@@ -476,11 +476,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/herd",
+      "url": "http://localhost:3200/herd",
       "id": "herd",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.782Z",
+      "seenAt": "2026-09-03T10:23:00.322Z",
       "hash": "b5be571e0221dc40",
       "title": "Ecosystem Engineers — Aura",
       "canonical": "https://theaura.life/herd",
@@ -501,11 +501,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/land",
+      "url": "http://localhost:3200/land",
       "id": "land",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.785Z",
+      "seenAt": "2026-09-03T10:23:00.323Z",
       "hash": "6bcc0f227a22f280",
       "title": "The Land — Aura",
       "canonical": "https://theaura.life/land",
@@ -526,11 +526,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/land-spirit-soul",
+      "url": "http://localhost:3200/land-spirit-soul",
       "id": "land-spirit-soul",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.801Z",
+      "seenAt": "2026-09-03T10:23:00.323Z",
       "hash": "55924e4d1cd3c203",
       "title": "Land, Spirit, Soul — Aura",
       "canonical": "https://theaura.life/land-spirit-soul",
@@ -551,11 +551,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/living-systems",
+      "url": "http://localhost:3200/living-systems",
       "id": "living-systems",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.802Z",
+      "seenAt": "2026-09-03T10:23:00.435Z",
       "hash": "aa66a7e18a697b27",
       "title": "Living Systems — Aura",
       "canonical": "https://theaura.life/living-systems",
@@ -576,11 +576,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/mudigere",
+      "url": "http://localhost:3200/mudigere",
       "id": "mudigere",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.804Z",
+      "seenAt": "2026-09-03T10:23:00.436Z",
       "hash": "faedef3b44c74bba",
       "title": "Mudigere — Aura",
       "canonical": "https://theaura.life/mudigere",
@@ -601,32 +601,36 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/now",
+      "url": "http://localhost:3200/now",
       "id": "now",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.816Z",
-      "hash": "b05c2fbf2a93eb01",
+      "seenAt": "2026-09-03T10:23:00.436Z",
+      "hash": "61db9280e1f831f1",
       "title": "Aura Live — Aura",
       "canonical": "https://theaura.life/now",
       "description": "What is happening on the land at Mudigere, taken from the estate record. Every entry carries its date, its place and its evidence.",
       "image": "https://theaura.life/aura-land.jpg",
-      "words": 200,
-      "sections": 4,
+      "words": 778,
+      "sections": 30,
       "headings": [
         "Now",
-        "The Plantation",
-        "Vedic & Biodynamic",
-        "Field Notes"
+        "August",
+        "Buttermilk applied in Blocks 2 and 3",
+        "CPP Spray applied in Tea area",
+        "Neen Oil applied in Block 12",
+        "CPP Spray applied in Tea area",
+        "Neen Oil applied in Block 12",
+        "CPP Spray applied in Blocks 8, 9, 14, 15 and 16"
       ],
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/ohara",
+      "url": "http://localhost:3200/ohara",
       "id": "ohara",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.822Z",
+      "seenAt": "2026-09-03T10:23:00.592Z",
       "hash": "46e566e8fc398adc",
       "title": "Ohara — Aura",
       "canonical": "https://theaura.life/ohara",
@@ -647,11 +651,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/pollinators",
+      "url": "http://localhost:3200/pollinators",
       "id": "pollinators",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.824Z",
+      "seenAt": "2026-09-03T10:23:00.594Z",
       "hash": "40aa59d7e53cf3ca",
       "title": "The Flowering Understory — Aura",
       "canonical": "https://theaura.life/pollinators",
@@ -672,11 +676,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/privacy",
+      "url": "http://localhost:3200/privacy",
       "id": "privacy",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.840Z",
+      "seenAt": "2026-09-03T10:23:00.594Z",
       "hash": "e569ae8718b59b64",
       "title": "Privacy — Aura",
       "canonical": "https://theaura.life/privacy",
@@ -697,11 +701,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/regenerative-coffee",
+      "url": "http://localhost:3200/regenerative-coffee",
       "id": "regenerative-coffee",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.855Z",
+      "seenAt": "2026-09-03T10:23:00.704Z",
       "hash": "fb4b50c4781c85f7",
       "title": "Regenerative Coffee — Aura",
       "canonical": "https://theaura.life/regenerative-coffee",
@@ -722,11 +726,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/regenerative-coffee/biodynamic",
+      "url": "http://localhost:3200/regenerative-coffee/biodynamic",
       "id": "regenerative-coffee-biodynamic",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.859Z",
+      "seenAt": "2026-09-03T10:23:00.705Z",
       "hash": "e14d27db3701a544",
       "title": "Better Ground — Regenerative Coffee",
       "canonical": "https://theaura.life/regenerative-coffee/biodynamic",
@@ -747,11 +751,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/regenerative-coffee/experience",
+      "url": "http://localhost:3200/regenerative-coffee/experience",
       "id": "regenerative-coffee-experience",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.867Z",
+      "seenAt": "2026-09-03T10:23:00.706Z",
       "hash": "cd3e2667b6968256",
       "title": "Aura Festival — Regenerative Coffee",
       "canonical": "https://theaura.life/regenerative-coffee/experience",
@@ -772,11 +776,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/regenerative-coffee/flavour",
+      "url": "http://localhost:3200/regenerative-coffee/flavour",
       "id": "regenerative-coffee-flavour",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.899Z",
+      "seenAt": "2026-09-03T10:23:00.811Z",
       "hash": "7edebe6c9a9ba5dd",
       "title": "Flavours — Regenerative Coffee",
       "canonical": "https://theaura.life/regenerative-coffee/flavour",
@@ -797,11 +801,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/regenerative-coffee/transparency",
+      "url": "http://localhost:3200/regenerative-coffee/transparency",
       "id": "regenerative-coffee-transparency",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:06.904Z",
+      "seenAt": "2026-09-03T10:23:00.811Z",
       "hash": "aa15bd6b8e3421a9",
       "title": "Transparency — Regenerative Coffee",
       "canonical": "https://theaura.life/regenerative-coffee/transparency",
@@ -822,11 +826,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/regenerative-life/artistry",
+      "url": "http://localhost:3200/regenerative-life/artistry",
       "id": "regenerative-life-artistry",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:07.019Z",
+      "seenAt": "2026-09-03T10:23:00.812Z",
       "hash": "02d60a1674eb7a90",
       "title": "Artistry — The Regenerative Life — Aura",
       "canonical": "https://theaura.life/regenerative-life/artistry",
@@ -846,11 +850,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/regenerative-life/aura-intelligence",
+      "url": "http://localhost:3200/regenerative-life/aura-intelligence",
       "id": "regenerative-life-aura-intelligence",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:07.019Z",
+      "seenAt": "2026-09-03T10:23:00.900Z",
       "hash": "5a651de0e6e48452",
       "title": "Aura Intelligence — The Regenerative Life — Aura",
       "canonical": "https://theaura.life/regenerative-life/aura-intelligence",
@@ -871,11 +875,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/regenerative-life/food-and-fermentation",
+      "url": "http://localhost:3200/regenerative-life/food-and-fermentation",
       "id": "regenerative-life-food-and-fermentation",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:07.021Z",
+      "seenAt": "2026-09-03T10:23:00.900Z",
       "hash": "b6ac80f4dc86c30b",
       "title": "Food & Fermentation — The Regenerative Life — Aura",
       "canonical": "https://theaura.life/regenerative-life/food-and-fermentation",
@@ -895,17 +899,17 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/regenerative-life/rta",
+      "url": "http://localhost:3200/regenerative-life/rta",
       "id": "regenerative-life-rta",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:07.039Z",
-      "hash": "3921348ede88554b",
+      "seenAt": "2026-09-03T10:23:00.900Z",
+      "hash": "11b97e458241c390",
       "title": "RTA — The Regenerative Life — Aura",
       "canonical": "https://theaura.life/regenerative-life/rta",
       "description": "The old word for the order that keeps time. On this estate it is a working rule: do the thing when the land is ready for it, not when the calendar is free.",
       "image": "https://theaura.life/regenerative-life/rta/images/rta-1.webp",
-      "words": 385,
+      "words": 387,
       "sections": 9,
       "headings": [
         "RTA",
@@ -915,16 +919,41 @@
         "Timestamped, so the timing can be argued with.",
         "Rta, in full",
         "Fermentation",
-        "Artistry"
+        "Sanctuary & Stay"
       ],
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/regenerative-life/the-plantation",
+      "url": "http://localhost:3200/regenerative-life/sanctuary-and-stay",
+      "id": "regenerative-life-sanctuary-and-stay",
+      "status": 200,
+      "state": "ok",
+      "seenAt": "2026-09-03T10:23:00.951Z",
+      "hash": "70caccd63ede2ac7",
+      "title": "Sanctuary — Aura",
+      "canonical": "https://theaura.life/regenerative-life/sanctuary-and-stay",
+      "description": "Aura Sanctuary — the land in rhythm. A 1000-year regenerative ecosystem across Mudigere, Ohara, and coming valleys in Munduk and Punakha.",
+      "image": "https://theaura.life/regenerative-life/sanctuary-and-stay/images/santuary-hero-banner.webp",
+      "words": 1202,
+      "sections": 17,
+      "headings": [
+        "Sanctuary",
+        "A sanctuary is a posture a place takes.",
+        "One rhythm, four climates.",
+        "Four valleys. One rhythm. The land tends the people who tend the land.",
+        "The two in practice.",
+        "What actually travels between them.",
+        "The two in listening.",
+        "Why a network at all."
+      ],
+      "issue": ""
+    },
+    {
+      "url": "http://localhost:3200/regenerative-life/the-plantation",
       "id": "regenerative-life-the-plantation",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:07.039Z",
+      "seenAt": "2026-09-03T10:23:00.952Z",
       "hash": "565717bbc216ed51",
       "title": "The Plantation — The Regenerative Life — Aura",
       "canonical": "https://theaura.life/regenerative-life/the-plantation",
@@ -945,11 +974,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/regenerative-life/the-reason",
+      "url": "http://localhost:3200/regenerative-life/the-reason",
       "id": "regenerative-life-the-reason",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:07.040Z",
+      "seenAt": "2026-09-03T10:23:00.976Z",
       "hash": "58f3aac31287fbdc",
       "title": "The Reason — Aura",
       "canonical": "https://theaura.life/regenerative-life/the-reason",
@@ -966,11 +995,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/regenerative-life/vedic-and-biodynamic",
+      "url": "http://localhost:3200/regenerative-life/vedic-and-biodynamic",
       "id": "regenerative-life-vedic-and-biodynamic",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:07.059Z",
+      "seenAt": "2026-09-03T10:23:01.087Z",
       "hash": "7153c568ef263c81",
       "title": "Vedic & Biodynamic — The Regenerative Life — Aura",
       "canonical": "https://theaura.life/regenerative-life/vedic-and-biodynamic",
@@ -991,11 +1020,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/residency",
+      "url": "http://localhost:3200/residency",
       "id": "residency",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:07.062Z",
+      "seenAt": "2026-09-03T10:23:01.090Z",
       "hash": "a8f31982d6d8319b",
       "title": "Monastic Polymaths — Aura",
       "canonical": "https://theaura.life/residency",
@@ -1016,11 +1045,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/rta",
+      "url": "http://localhost:3200/rta",
       "id": "rta",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:07.076Z",
+      "seenAt": "2026-09-03T10:23:01.090Z",
       "hash": "bd9a417c2b6e9c60",
       "title": "The Land Decides the Hour — Aura",
       "canonical": "https://theaura.life/rta",
@@ -1041,11 +1070,34 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/shade",
+      "url": "http://localhost:3200/sanctuaries",
+      "id": "sanctuaries",
+      "status": 200,
+      "state": "ok",
+      "seenAt": "2026-09-03T10:23:01.113Z",
+      "hash": "5827f3ecb7fac918",
+      "title": "Sanctuaries — Aura",
+      "canonical": "https://theaura.life/sanctuaries",
+      "description": "Places safe enough to think in generations. Four valleys in two hemispheres where mind, body and soul stay in one piece — Mudigere and Ohara open and working, Munduk and Punakha still being listened to.",
+      "image": "https://theaura.life/aura-mudigere.jpg",
+      "words": 208,
+      "sections": 6,
+      "headings": [
+        "Sanctuaries",
+        "A sanctuary is a place safe enough to think in generations. Mind, body and soul kept in one piece, on land that will outlast everyone standing on it. Four valleys, two hemispheres, and the room to make something nobody has made yet.",
+        "The other two are still listening.",
+        "The Land",
+        "Monastic Polymaths",
+        "Rta"
+      ],
+      "issue": ""
+    },
+    {
+      "url": "http://localhost:3200/shade",
       "id": "shade",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:07.092Z",
+      "seenAt": "2026-09-03T10:23:01.219Z",
       "hash": "3892af62977381bb",
       "title": "The Light Instrument — Aura",
       "canonical": "https://theaura.life/shade",
@@ -1066,11 +1118,11 @@
       "issue": ""
     },
     {
-      "url": "https://staging.theaura.life/wisdom",
+      "url": "http://localhost:3200/wisdom",
       "id": "wisdom",
       "status": 200,
       "state": "ok",
-      "seenAt": "2026-09-03T07:15:07.103Z",
+      "seenAt": "2026-09-03T10:23:01.220Z",
       "hash": "3212005550a744ec",
       "title": "Moral Spine — Aura",
       "canonical": "https://theaura.life/wisdom",

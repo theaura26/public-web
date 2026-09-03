@@ -364,16 +364,10 @@ export const CHAPTERS: Chapter[] = [
   /* 02 ─────────────────────────────────────────────────────────────── */
   {
     id: 'sanctuary',
-    label: 'Sanctuaries',
+    label: 'Sanctuary & Stay',
     slug: 'sanctuary-and-stay',
-    /* Points at /sanctuaries, which is the public page about the four
-       valleys. The chapter under /regenerative-life is written and held
-       back, and this entry pointed at it — which greyed the leaf out in
-       the menu and left the section a chapter short. The subject has a
-       public home now, so the menu opens that instead and the held-back
-       chapter keeps to itself. */
-    href: '/sanctuaries',
-    card: '/aura-sanctuary.jpg',
+    href: '/regenerative-life/sanctuary-and-stay',
+    card: '/regenerative-life/sanctuary-and-stay/images/santuary-hero-banner.webp',
     lede: 'What happens when a piece of land is tended long enough that it begins to tend the people standing on it.',
     hero: {
       type: 'Landscape · two hemispheres',

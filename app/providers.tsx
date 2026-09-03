@@ -22,8 +22,22 @@ import { PostHogProvider } from 'posthog-js/react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { Suspense, useEffect, type ReactNode } from 'react'
 
+/** Where the answer to the recording question is kept. */
+export const CONSENT_KEY = 'aura:session-recording'
+
+/** Called by the consent banner. Idempotent. */
+export function startRecording() {
+  try { window.localStorage.setItem(CONSENT_KEY, 'granted') } catch {}
+  if (ENABLED) posthog.startSessionRecording()
+}
+
+/** Called when the banner is declined. Recording never begins. */
+export function declineRecording() {
+  try { window.localStorage.setItem(CONSENT_KEY, 'declined') } catch {}
+}
+
 const KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY
-const HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog.com'
+const HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
 
 /* Enabled only on a production build with a key set. NODE_ENV is a build-time
    constant, identical on server and client, so gating the render on it can’t
@@ -57,8 +71,20 @@ if (
     persistence: 'localStorage',
     person_profiles: 'always',                  // profile every visitor
     capture_exceptions: true,                   // error tracking: unhandled exceptions
-    session_recording: { maskAllInputs: true }, // replay with all form values masked
+    /* Recording is off until somebody says yes.
+       Autocapture and pageviews are analytics on a page a visitor chose to
+       load; a session replay is a recording of them using it, and that is
+       a different question to ask. It starts only from the consent banner
+       calling startRecording() below, and the answer is remembered so the
+       question is asked once. */
+    disable_session_recording: true,
+    session_recording: { maskAllInputs: true }, // masked, for when it does run
   })
+
+  /* Somebody who already said yes should not be asked again. */
+  try {
+    if (window.localStorage.getItem(CONSENT_KEY) === 'granted') posthog.startSessionRecording()
+  } catch { /* storage blocked — stay off */ }
 }
 
 export function Analytics({ children }: { children: ReactNode }) {

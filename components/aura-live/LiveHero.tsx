@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import { estateParts, clockLabel } from '@/lib/aura-live/time'
 import type { FeedFreshness } from '@/lib/aura-live/feed'
 
@@ -21,6 +22,40 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 export default function LiveHero({ freshness, children }: { freshness: FeedFreshness; children?: React.ReactNode }) {
   const { state, lastCheckedAt } = freshness
 
+  /* The same departure the other banners make: as the reader scrolls into
+     the hero the film blurs and pulls back, so the opener recedes rather
+     than sliding away sharp. Keyed to the hero's own height, because this
+     one is a block in the flow rather than a sticky stage — the gesture is
+     finished by the time the hero has left. */
+  const heroRef = useRef<HTMLElement>(null)
+  const filmRef = useRef<HTMLVideoElement>(null)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let raf = 0
+    const tick = () => {
+      raf = 0
+      const hero = heroRef.current
+      const film = filmRef.current
+      if (!hero || !film) return
+      const rect = hero.getBoundingClientRect()
+      const travelled = Math.max(0, -rect.top)
+      const raw = Math.min(1, travelled / Math.max(1, rect.height * 0.8))
+      const p = reduced ? (raw > 0.05 ? 1 : 0) : raw * raw * raw * (raw * (raw * 6 - 15) + 10)
+      film.style.filter = `blur(${p * 20}px)`
+      film.style.transform = `scale(${1 + 0.1 * p})`
+    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    tick()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [])
+
   let stamp = 'estate record unavailable'
   if (lastCheckedAt) {
     const p = estateParts(lastCheckedAt)
@@ -28,11 +63,12 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
   }
 
   return (
-    <header className="hero">
+    <header className="hero" ref={heroRef}>
       {/* The estate, moving, behind the readings. Muted, looped and
           inline so it behaves as a ground rather than as media; the
           poster carries it on reduced motion and before it buffers. */}
       <video
+        ref={filmRef}
         className="film"
         src="/aura-mudigere.mp4"
         poster="/aura-mudigere.jpg"
@@ -110,6 +146,7 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           height: 100%;
           object-fit: cover;
           z-index: 0;
+          will-change: filter, transform;
         }
         .veil {
           position: absolute;

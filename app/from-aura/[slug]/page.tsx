@@ -110,39 +110,43 @@ export async function generateMetadata(
  * coffee — it promised a residency "the ferment, the drying, and the lab
  * record that closed it", which is not what a residency has. Each lane
  * gets the sentence that is true for it. */
+/* What each of these is, and how a reader gets it.
+ *
+ * This described the page rather than the thing — "when it is, this page
+ * carries what the estate already keeps on it" — and framed everything as
+ * a wait. Nothing on the estate is sold from a shelf; it is arranged with
+ * the estate directly. So each of these says what the thing is, and the
+ * line beneath tells the reader how to ask for it. */
 const UNRELEASED: Record<string, React.ReactElement> = {
   coffee: (
     <p className="p1 pd-p">
-      Nothing from this harvest is released yet. When it is, this page carries what the
-      estate already keeps on it — the block it came from, the ferment, the drying, and
-      the lab record that closed the tank.
+      One harvest, split by the block and the ferment it came off. Each lot carries the
+      file that made it — the block, the ferment, the drying, and the lab record that
+      closed the tank.
     </p>
   ),
   'from-the-farm': (
     <p className="p1 pd-p">
-      Not released yet. What the estate can spare of this depends on the season, and the
-      page will say how much there is and where on the land it came from before it says
-      a price.
+      Tea, pepper, areca and what else the canopy gives, grown beside the coffee and
+      picked when the season gives it. What the estate can spare of any of it moves with
+      the year.
     </p>
   ),
   objects: (
     <p className="p1 pd-p">
-      Not released yet. These are made in the studios on the estate, in small numbers,
-      from material the land already grows — so the run is as long as the material allows
-      and no longer.
+      Made in the studios on the estate, from material the land already grows. A run lasts
+      as long as the material allows and stops there.
     </p>
   ),
   experiences: (
     <p className="p1 pd-p">
-      Not open for booking yet. When it is, this page carries the dates, how many places
-      there are, and what the days actually consist of — the estate&rsquo;s working day is
-      the thing on offer, so it is described rather than dressed.
+      The estate&rsquo;s working day is the thing on offer — three days at Mudigere, twenty
+      places, three times a year.
     </p>
   ),
   default: (
     <p className="p1 pd-p">
-      Not released yet. When it is, this page carries the record the estate already keeps
-      on it.
+      Grown, made or kept on the estate at Mudigere.
     </p>
   ),
 }
@@ -182,9 +186,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           ) : (
             <>
               {UNRELEASED[p.laneId] ?? UNRELEASED.default}
+              {/* The line here used to be "Aura publishes the record before
+                  it publishes a price, and that holds at the point of sale
+                  as much as anywhere else" — which restates its own premise
+                  and leaves the reader nothing to do. Every one of these is
+                  arranged with the estate directly, so the useful thing is
+                  the route to a person. */}
               <p className="p1 pd-p">
-                Aura publishes the record before it publishes a price, and that holds at the
-                point of sale as much as anywhere else.
+                Allocation is arranged with the estate directly. Tell us what you are after
+                and who it is for.{' '}
+                <Link className="pd-ask" href="/contact">Contact Us</Link>
               </p>
             </>
           )}
@@ -235,7 +246,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           align-items: stretch;
         }
         @media (max-width: 768px) {
-          .pd-in { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
+          /* Stacked, the grid gap lands on top of the text column's own
+             padding and only on that side — 129px above the title against
+             81 below the last line. The column's padding is already
+             symmetrical, so it supplies the whole gap and the two edges
+             match. */
+          .pd-in { grid-template-columns: minmax(0, 1fr); gap: 0; }
         }
 
         /* The product runs off the left edge of the page. The rail is

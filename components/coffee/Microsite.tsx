@@ -1311,7 +1311,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     },
     flavour: {
       title: 'Then taste what it did.',
-      sub: 'Nine lots off this ground, two national wins, and the file behind each one.',
+      sub: 'Nine lots off this ground, first and second in Robusta at the 2026 Flavour of India Fine Cup Awards, and the file behind each one.',
       cta: 'Explore the flavours',
     },
     hub: {
@@ -1350,7 +1350,7 @@ const HANDOFF: Record<PageKey, Partial<Record<PageKey, { title: string; sub: str
     },
     flavour: {
       title: 'What it ends up tasting like.',
-      sub: 'Nine lots off this ground, two national wins, and the file behind every one.',
+      sub: 'Nine lots off this ground, first and second in Robusta at the 2026 Flavour of India Fine Cup Awards, and the file behind every one.',
       cta: 'Explore the flavours',
     },
     hub: {

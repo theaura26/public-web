@@ -546,6 +546,12 @@ p.journal-hero__caption {
 /* StudioPillarMedia — 3:4 reserved box on each /atelier pillar
    card (Origin / Engine / Hospitality). */
 [data-view="agent"] main .studio-pillar-media,
+/* From Aura product plate — the picture runs off the left edge on a
+   negative rail margin and is given the width back. Agent mode's reset
+   zeroes the margin and keeps the width, so the box overhung the page by
+   the width of the rail: 328px of horizontal scroll on a plain-text
+   view. */
+[data-view="agent"] main .pd-plate,
 /* PullQuote full-bleed border rules — `width: 100vw` + a centering
    negative margin gets the margin wiped by the agent-mode
    `* { margin-left/right: 0 }` reset, leaving a 100vw bar pinned to
@@ -1246,6 +1252,45 @@ button:disabled,
 
 /* Brand-accent underline on hover for clickable elements */
 a:hover, button:hover, [role="button"]:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--brand-accent);
+  text-underline-offset: var(--rule-offset);
+  text-decoration-thickness: var(--rule-weight);
+}
+
+/* The consent banner is a control, not content: agent mode flattens
+   everything in <main>, and this sits outside it deliberately so the
+   question still reads as a question. */
+[data-view="agent"] .cb { display: none !important; }
+
+/* Full-bleed rails in the plain-text view.
+ *
+ * A lane track, the From Aura plate and the Ohara wordmark all run off
+ * the page edge the same way: a negative margin the width of the rail,
+ * given back as `width: calc(100% + rail)`. Agent mode's reset zeroes
+ * every margin and leaves the width, so each of them overhung the page
+ * by exactly one rail — 328px of horizontal scroll on a view whose whole
+ * point is that it reads as plain text. The width goes with the margin.
+ * The lane keeps its links; it just stops being a rail. */
+[data-view="agent"] main :is(.lane-bleed, .lane-scroll, .lane-track, .wordmark-intro) {
+  width: auto !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+[data-view="agent"] main .lane-track {
+  display: block !important;
+}
+
+/* Pillar cards: the whole card is the link, so the rule above drew one
+   underline across the title, the label and the body paragraph at once.
+   The title is the thing being followed, so the underline lands on it and
+   nowhere else in the card. */
+.pillar-card:hover,
+.pillar-card:focus-visible {
+  text-decoration: none;
+}
+.pillar-card:hover h3,
+.pillar-card:focus-visible h3 {
   text-decoration: underline;
   text-decoration-color: var(--brand-accent);
   text-underline-offset: var(--rule-offset);

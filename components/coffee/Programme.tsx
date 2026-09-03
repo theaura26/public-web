@@ -29,22 +29,22 @@ type Day = {
 const DAYS: Day[] = [
   {
     n: 'Day one',
-    title: 'Arrival / Altitude',
+    title: 'Arrival / Wonder',
     items: [
       'Four hours up from Bengaluru, and somewhere in the last one the canopy shuts over the road and the temperature drops six degrees.',
       'You walk the estate before a single person explains it — a hundred and fifty acres, four storeys of canopy, and more going on overhead than you will manage to name.',
       'Nobody owns a mountain. You arrive as its guest, which is the only way anyone arrives here.',
-      'The first long-table dinner, cooked from the estate and eaten outside. Almost everything on the table grew within sight of where you are sitting.',
+      'You come around a corner and the first long table is already there, cooked from the estate and laid outside. Almost everything on it grew within sight of where you sit.',
     ],
   },
   {
     n: 'Day two',
-    title: 'Practice / Ground',
+    title: 'Hands / Discovery',
     items: [
       'A hike before the light, up through all four layers to where the shade thins out.',
       'Down to the wet mill at five, before the pickers come in, to watch a fermentation being read — and to take the Brix yourself.',
-      'Biodynamic agriculture from the people who actually practise it: the horn buried through winter, the fourteen compost pits, the quartz that goes in at midsummer. You bury one with your own hands.',
-      'The herd, all about fifty Malnad Gidda, and they will meet you back.',
+      'Biodynamics from the people whose hands make it: the horn buried through winter, the fourteen compost pits, the quartz that goes in at midsummer. You bury one yourself.',
+      'About fifty Malnad Gidda, indigenous and waist-high, and the looking goes both ways.',
       'The long table again, later and louder than the first one.',
     ],
   },

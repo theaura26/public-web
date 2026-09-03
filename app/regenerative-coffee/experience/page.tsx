@@ -8,7 +8,7 @@ import { Programme } from '@/components/coffee/Programme'
 export const metadata: Metadata = {
   title: 'Aura Festival — Regenerative Coffee',
   description:
-    'Three days at Mudigere — the wet mill at five, the lab bench, the blocks and the cupping table. November or December, small groups, and a lot of your own.',
+    'Three days at Mudigere — the wet mill at five, the lab bench, the blocks and the cupping table. November or December, small groups, and one lot set by you.',
   alternates: { canonical: '/regenerative-coffee/experience' },
 }
 
@@ -29,10 +29,10 @@ export default function ExperiencePage() {
         hero
         align="centre"
         title="Aura Festival."
-        lede="Three days on the estate, and you go home having designed a lot of your own. Twenty places a window, three times a year."
+        lede="Three days inside a living system. You set one lot's protocol yourself, and it reaches you under your own name about four months later. Twenty places, three times a year."
       />
 
-      <Chapter tight>Come and get your hands dirty.</Chapter>
+      <Chapter tight>The knowledge enters through the hands before it reaches the head.</Chapter>
 
       <ExperienceBlock />
 

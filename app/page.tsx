@@ -1502,13 +1502,13 @@ export default function Home() {
           {/* 6 / 7 / 8. Three CTA tiles — staggered after the mid-row text settles.
               Media slots map to dedicated /public assets:
                 · aura-grown.jpg   — Reason  (left)
-                · aura-depth.jpg   — Brand   (middle)
+                · aura-depth.jpg   — Aura Now (middle)
                 · aura-contact.jpg — Contact (right) */}
           <div className="hero-tiles">
             {[
-              { href: '/regenerative-life/the-reason',  l1: 'Aura is not built,',     l2: 'it is grown',     pill: 'The Reason', img: '/aura-grown.jpg',   video: '/aura-grown.mp4', symbol: '/aura-symbol-1.png', alt: 'Aura — patient, grown systems'              },
-              { href: '/brand',   l1: 'Rhythm over speed,',     l2: 'depth and width', pill: 'Our Brand',  img: '/aura-depth.jpg',   video: '/aura-depth.mp4', symbol: '/aura-symbol-2.png', alt: 'Aura — rhythm, depth and breadth of practice' },
-              { href: '/atelier',  l1: 'Regenerative innovation',l2: 'and craft',       pill: 'Atelier',    img: '/aura-contact.jpg', video: undefined, symbol: '/aura-symbol-3.png', alt: 'Aura Atelier — natural intelligence applied to story, systems, and place' },
+              { href: '/regenerative-coffee', l1: 'Regenerative Coffee', l2: 'and our remarkable circle', pill: 'Remarkable Circle', img: '/regenerative-coffee/flavours/aura-cherry-morning.webp', video: undefined, symbol: '/aura-symbol-1.png', alt: 'Aura — ripe coffee cherries on the branch at Mudigere' },
+              { href: '/now', l1: 'Now at the Aura Estate,', l2: 'Mudigere', pill: 'Aura Now', img: '/aura-grown.jpg', video: '/aura-grown.mp4', symbol: '/aura-symbol-2.png', alt: 'Aura — the night sky through the canopy at Mudigere' },
+              { href: '/regenerative-life/aura-intelligence', l1: 'Observe, remember,', l2: 'learn, act', pill: 'Aura Intelligence', img: '/aura-depth.jpg', video: '/aura-depth.mp4', symbol: '/aura-symbol-3.png', alt: 'Aura Intelligence — the estate read, remembered and acted on' },
             ].map((tile, i) => (
               <Link
                 key={tile.href}

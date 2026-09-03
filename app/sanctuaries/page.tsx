@@ -13,6 +13,12 @@ import Reveal from '@/components/RevealOnScroll'
  * question a sanctuary raises — why four places rather than one bigger
  * one — needs more than a caption to answer, so it is answered here.
  *
+ * What a sanctuary is for: somewhere safe enough that mind, body and
+ * soul stay in one piece, which is the condition for thinking in
+ * generations and for making anything new. A place under threat plans
+ * for the season it is in. That argument is the page's opening line and
+ * everything else on it follows from that.
+ *
  * Two are working and two are being listened to. The page keeps that
  * distinction in its structure rather than in a badge: the working pair
  * open their pages, the coming pair do not open anything, and the one
@@ -141,12 +147,11 @@ export default function SanctuariesPage() {
         mediaType="video"
         poster="/aura-mudigere.jpg"
         alt="Mudigere at first light — the working sanctuary in the Western Ghats"
-        caption="Mudigere, Karnataka — the first of four valleys"
       />
 
-      <ScrollHighlight align="left">{`A sanctuary begins the day someone decides to stay.
-Four valleys, two hemispheres, and the same question asked in each: what does this place want to become.
-Two of them are answering. Two are still being asked.`}</ScrollHighlight>
+      <ScrollHighlight align="left">{`A sanctuary is a place safe enough to think in generations.
+Mind, body and soul kept in one piece, on land that will outlast everyone standing on it.
+Four valleys, two hemispheres, and the room to make something nobody has made yet.`}</ScrollHighlight>
 
       <ul className="sc-row">
         {WORKING.map((p) => (
@@ -156,15 +161,16 @@ Two of them are answering. Two are still being asked.`}</ScrollHighlight>
 
       <TwoCol id="listening" heading="The other two are still listening.">
         <p className="p1">
-          Munduk and Punakha are named and closed. A sanctuary starts with a season of
-          listening, and in both valleys that season is still running: a year of weather, a
-          soil record, the names of the people already farming the ridge, and an honest
-          account of what the water does in the dry months.
+          Munduk and Punakha are named and closed. A place becomes safe to think in once it
+          is understood, and in both valleys that understanding is still being gathered: a
+          year of weather, a soil record, the names of the people already farming the ridge,
+          and an honest account of what the water does in the dry months.
         </p>
         <p className="p1">
           Arriving before that work is finished means bringing an answer to a question the
-          valley was never asked. So these two wait. They will be written up here when there
-          is something true to write.
+          valley was never asked. A century of decisions rests on getting the first one
+          right, so these two wait. They will be written up here when there is something
+          true to write.
         </p>
       </TwoCol>
 

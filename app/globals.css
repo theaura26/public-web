@@ -2481,6 +2481,15 @@ html.lenis, html.lenis body { height: auto; }
 @media (max-width: 768px) {
   .sc-row { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
 }
+/* The rows carry no padding of their own — the sections above and below
+   them already bring a --section-gap each, so a row sits in 108px of
+   air at both ends without asking for any.
+   
+   The last row is the exception. What follows it is the Read on block,
+   which draws its rule at the very top of its own padding, so the rule
+   landed hard against the bottom line of the cards while every other
+   gap on the page was 108px. The margin puts it back in rhythm. */
+.sc-row:last-of-type { margin-bottom: var(--section-gap); }
 .sc-card {
   display: flex;
   flex-direction: column;

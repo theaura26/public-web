@@ -54,9 +54,23 @@ const BRAND_RELEVANCE: Record<string, number> = {
   'prayers': 2,
 }
 
+/* Why a score would be taken without its repetition penalties.
+ *
+ * Those penalties exist to stop a highlight reel filling with the eighth
+ * card about the same spray. They are about competing for a scarce slot,
+ * and a record from the last few days is not competing for one — it has
+ * its own reserved lane. Charging it for repetition there would price it
+ * out of a lane built for it, which is how the estate's routine daily
+ * work came to be seven days behind the day it happened.
+ *
+ * The same-work-same-place-same-day penalty is not in this: that one is
+ * a duplicate guard, not a competition rule, and it applies everywhere. */
+export type ScoreOptions = { ignoreRepetition?: boolean }
+
 export function scoreCandidate(
   c: MergedCandidate,
   published: AuraFeedEntry[],
+  options: ScoreOptions = {},
 ): Score {
   const reasons: string[] = []
   let total = 0
@@ -118,28 +132,38 @@ export function scoreCandidate(
   /* ── Repetition, −0–5 ──
      The estate sprays the same preparation every week. The first card is
      the story; the eighth is wallpaper. */
-  const sameCategoryRecent = published
-    .slice(0, 12)
-    .filter((e) => e.category === c.category).length
-  if (sameCategoryRecent >= 6) add(-5, 'category dominates the recent feed')
-  else if (sameCategoryRecent >= 4) add(-3, 'category over-represented recently')
-  else if (sameCategoryRecent >= 2) add(-1, 'category seen recently')
+  if (!options.ignoreRepetition) {
+    const sameCategoryRecent = published
+      .slice(0, 12)
+      .filter((e) => e.category === c.category).length
+    if (sameCategoryRecent >= 6) add(-5, 'category dominates the recent feed')
+    else if (sameCategoryRecent >= 4) add(-3, 'category over-represented recently')
+    else if (sameCategoryRecent >= 2) add(-1, 'category seen recently')
 
-  const sameSubjectRecent = published
-    .slice(0, 8)
-    .filter((e) => e.headline.toLowerCase().includes(subject)).length
-  if (sameSubjectRecent >= 2) add(-2, 'same subject twice in the recent feed')
+    const sameSubjectRecent = published
+      .slice(0, 8)
+      .filter((e) => e.headline.toLowerCase().includes(subject)).length
+    if (sameSubjectRecent >= 2) add(-2, 'same subject twice in the recent feed')
+  }
 
   /* The same work, in the same place, on the same day. The estate logs
      that as two rows because two people wrote two updates; a reader sees
      one card apparently published twice. Merging cannot join them — the
      descriptions genuinely differ — so the second one is scored down
-     instead of being pretended into the first. */
+     instead of being pretended into the first.
+
+     The same *work*, which means the subject has to match too. Without
+     that clause this read category, date and place, and a place is blank
+     on most application rows — so three different preparations applied
+     on one working day counted as three copies of one event and the
+     third was scored eight points down for being itself. Buttermilk is
+     not CPP Balls. */
   const sameDaySamePlace = published.filter(
     (e) =>
       e.category === c.category &&
       e.occurredOn === c.time.occurredOn &&
-      (e.location?.label ?? '') === (c.location?.label ?? ''),
+      (e.location?.label ?? '') === (c.location?.label ?? '') &&
+      e.headline.toLowerCase().includes(subject),
   ).length
   if (sameDaySamePlace) add(-4 * sameDaySamePlace, 'same work, same place, same day as a card already in the feed')
 

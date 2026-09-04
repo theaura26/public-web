@@ -18,12 +18,13 @@ import type { PublicEntry } from '@/lib/aura-live/feed'
  * photograph of the event. It is decorative and hidden from screen
  * readers; the subject is written out beside it either way.
  *
- * The empty days between two entries are drawn as ticks at the same scale
- * as the entries themselves. That is the argument for building it this
- * way: a feed that only draws the days it published makes a quiet
- * fortnight look exactly like a busy one, and this page's whole claim is
- * that it shows what actually happened. A three-week stretch where
- * nothing met the bar is visibly three weeks long.
+ * The empty days between two entries are held open at the same scale as
+ * the entries themselves. That is the argument for building it this way:
+ * a feed that only draws the days it published makes a quiet fortnight
+ * look exactly like a busy one, and this page's whole claim is that it
+ * shows what actually happened. A three-week stretch where nothing met
+ * the bar is visibly three weeks long — shown by the length of the line,
+ * never written out as a number.
  */
 
 const MS_DAY = 86_400_000
@@ -31,9 +32,14 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December']
 
 /* Long enough to read as a real interval, short enough that a gap does
-   not become the page. Beyond it the true count is written out, so a
-   capped run of ticks never quietly shortens a season. */
-const MAX_TICKS = 16
+   not become the page. A season quieter than this is drawn at the cap;
+   the line is a measure of the page, not a report card. */
+const MAX_GAP_DAYS = 16
+
+/* What one empty day is worth in height. It was a 10px mark on a 6px gap
+   when the days were drawn as ticks; the marks are gone and the measure
+   they set is the part worth keeping. */
+const DAY_HEIGHT = 16
 
 type Row =
   | { kind: 'month'; key: string; label: string }
@@ -83,19 +89,22 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
         if (row.kind === 'month') return null
 
         if (row.kind === 'gap') {
-          const shown = Math.min(row.days, MAX_TICKS)
+          const shown = Math.min(row.days, MAX_GAP_DAYS)
           return (
-            <li key={row.key} className="row r-gap" aria-hidden="true" title={`${row.days} days with nothing published`}>
-              <span className="ticks">
-                {Array.from({ length: shown }, (_, i) => <span key={i} className="tick" />)}
-              </span>
-              {/* "23 days" on its own read as a measurement of something,
-                  not as an absence. The gap is the argument — a quiet
-                  fortnight should look like one — so it says what it is. */}
-              {row.days > MAX_TICKS && (
-                <span className="elapsed label">{row.days} days, nothing to report</span>
-              )}
-            </li>
+            /* Empty on purpose. The gap used to draw its own run of tick
+               marks and, past sixteen days, write the count out — which
+               put a second texture on a line that already had one, and
+               announced the estate's quietest stretches in words. Neither
+               is the page's job. It holds the space open at the same
+               scale as before and lets the one line run through it, so a
+               quiet fortnight still looks like a fortnight without being
+               labelled as one. */
+            <li
+              key={row.key}
+              className="row r-gap"
+              aria-hidden="true"
+              style={{ height: `${shown * DAY_HEIGHT}px` }}
+            />
           )
         }
 
@@ -147,21 +156,27 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
           align-items: center;
         }
 
-        /* One dashed line down the centre of the page, drawn once behind
+        /* One dotted line down the centre of the page, drawn once behind
            everything rather than per row, so it never restarts.
 
            It starts where the first row starts, not at the top of the
            list. The list carries top padding to clear the banner, and a
-           rail drawn from 0 spent that padding on a stub of dashes
-           hanging off the first month pill with nothing above it to join
-           to. A line between two things needs the first thing. */
+           rail drawn from 0 spent that padding on a stub hanging off the
+           first month pill with nothing above it to join to. A line
+           between two things needs the first thing.
+
+           It stops at the last one too. Every row carries space-8 of
+           padding beneath it for the next card, and the last row has no
+           next card — so the rail spent that 64px running out of the
+           bottom of the list into nothing. Ending it there costs the same
+           64px back. */
         .tl::before {
           content: '';
           position: absolute;
           left: 50%;
           top: var(--space-9);
-          bottom: 0;
-          border-left: 1px dashed var(--border-strong);
+          bottom: var(--space-8);
+          border-left: 1px dotted var(--border-strong);
           transform: translateX(-0.5px);
         }
 
@@ -239,21 +254,14 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
            a quiet fortnight looks like a fortnight. Centred on the line
            like everything else. */
         .r-gap {
-          gap: var(--space-4);
+          /* content-box, so the inline height is the run of empty days
+             and the padding for the next card adds beneath it. Under
+             border-box the padding eats the height, and every gap of four
+             days or fewer comes out the same 64px tall — which is the one
+             thing the run is here to avoid. */
+          box-sizing: content-box;
           padding-bottom: var(--space-8);
         }
-        .ticks {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 6px;
-        }
-        .tick {
-          width: 1px;
-          height: 10px;
-          background: var(--border-strong);
-        }
-        .elapsed { color: var(--text-muted); }
 
         @media (max-width: 760px) {
           .tl { --tl-node: 48px; }

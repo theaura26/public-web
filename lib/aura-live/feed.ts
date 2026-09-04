@@ -38,6 +38,8 @@ export type FeedView = {
   freshness: FeedFreshness
   /** True when the ledger could not be read at all. */
   failed: boolean
+  /** Why the ledger could not be read. Null when it could. */
+  failure: string | null
   lastRunAt: string | null
 }
 
@@ -83,13 +85,19 @@ export async function readFeed(): Promise<FeedView> {
   let entries: AuraFeedEntry[] = []
   let lastRunAt: string | null = null
   let failed = false
+  let failure: string | null = null
   try {
     const doc = await getStore(cfg).read()
     entries = doc.entries
     lastRunAt = doc.lastRunAt
   } catch (err) {
     failed = true
-    console.error(JSON.stringify({ evt: 'aura-live.ledger-unreadable', message: err instanceof Error ? err.message : String(err) }))
+    /* Carried, not only logged. `failed` alone told us the ledger could
+       not be read and nothing about why, and the logs for this site sit
+       in an account not everyone working on it can open — so a fault
+       that was already understood took a deploy to see. */
+    failure = err instanceof Error ? err.message : String(err)
+    console.error(JSON.stringify({ evt: 'aura-live.ledger-unreadable', message: failure }))
   }
 
   let freshness: FeedFreshness = { state: 'unknown', lastCheckedAt: null, minutesSinceSync: null }
@@ -114,6 +122,7 @@ export async function readFeed(): Promise<FeedView> {
     entries: entries.slice(0, cfg.maxFeedEntries).map(toPublic),
     freshness,
     failed,
+    failure,
     lastRunAt,
   }
 }

@@ -1,26 +1,41 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { BlobNotFoundError, BlobStoreNotFoundError, BlobServiceNotAvailable } from '@vercel/blob'
+import { readFileSync } from 'node:fs'
 
-/* The blob store used to decide "this ledger has never been written" by
-   matching the error's message against /not found|404|BlobNotFound/.
-   @vercel/blob words it "The requested blob does not exist", which that
-   pattern does not match — so the first read on any environment with a
-   token but no ledger raised, and /now told readers the record could not
-   be reached.
-   These pin the two halves of the rule: the empty case is recognised by
-   class, and the genuine faults are not swallowed with it. */
+/* Two reads of the private ledger went wrong in a row, and both were
+   invisible from the outside because an unreadable ledger and a quiet
+   estate render the same empty page.
 
-test('a never-written blob is recognised by class, not by its wording', () => {
-  const err = new BlobNotFoundError()
-  assert.ok(err instanceof BlobNotFoundError)
+   The first asked whether a blob had ever been written by matching the
+   thrown error's message against /not found|404|BlobNotFound/, and
+   @vercel/blob words it "The requested blob does not exist".
+
+   The second fetched meta.downloadUrl, on the belief that it was a
+   signed url that a private store would honour. It is not. These pin the
+   fact that replaced that belief, and the shape of the read that follows
+   from it. */
+
+const SDK = readFileSync('node_modules/@vercel/blob/dist/index.js', 'utf8')
+const STORE = readFileSync('lib/aura-live/store.ts', 'utf8')
+
+test('downloadUrl is the public url with ?download=1, and carries no credentials', () => {
+  /* Straight from the SDK: the only difference between url and
+     downloadUrl is a query parameter that sets Content-Disposition.
+     Nothing about it authenticates, so a bare fetch of it against a
+     private store is refused exactly as meta.url would be. */
+  assert.match(SDK, /downloadUrl\w*\.searchParams\.set\("download", "1"\)/)
+})
+
+test('the ledger is read through the SDK, which authenticates', () => {
+  assert.match(STORE, /await get\(this\.key, \{ access: 'private', useCache: false \}\)/)
   assert.ok(
-    !/not found|404|BlobNotFound/i.test(err.message),
-    'the old message pattern still misses this error — it is why the guard is on the class',
+    !/fetch\(meta\.downloadUrl/.test(STORE),
+    'reading a private blob over a bare fetch is the bug this replaced',
   )
 })
 
-test('a missing or unavailable store is a fault, not an empty ledger', () => {
-  assert.ok(!(new BlobStoreNotFoundError() instanceof BlobNotFoundError))
-  assert.ok(!(new BlobServiceNotAvailable() instanceof BlobNotFoundError))
+test('a blob that was never written is an empty ledger, not a fault', () => {
+  /* get() returns null rather than throwing, so the empty case no longer
+     rests on recognising an error class. */
+  assert.match(STORE, /if \(!result \|\| !result\.stream\) return \{ \.\.\.EMPTY_DOCUMENT \}/)
 })

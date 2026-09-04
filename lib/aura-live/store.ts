@@ -79,35 +79,28 @@ class BlobStore implements FeedStore {
   constructor(private readonly key: string) {}
 
   async read(): Promise<FeedDocument> {
-    const { head, BlobNotFoundError } = await import('@vercel/blob')
-    try {
-      const meta = await head(this.key)
-      /* downloadUrl, not url. The store is private, and a private blob's
-         public url is not readable — the signed download url is the one
-         that resolves. Skip the edge cache either way: the job needs the
-         ledger it just wrote, not a copy of it. */
-      const res = await fetch(meta.downloadUrl ?? meta.url, { cache: 'no-store' })
-      if (!res.ok) {
-        if (res.status === 404) return { ...EMPTY_DOCUMENT }
-        throw new Error(`Blob read failed: ${res.status}`)
-      }
-      return validate(await res.json())
-    } catch (err) {
-      /* An empty store is the normal first state of a new environment,
-         and it is not a failure.
-         `head()` signals it with BlobNotFoundError, whose message reads
-         "Vercel Blob: The requested blob does not exist". This used to be
-         matched on the message against /not found|404|BlobNotFound/ — the
-         phrase is "does not exist", so it never matched, the error was
-         rethrown, and every environment that had a blob token but had not
-         yet had a ledger written reported the feed as unreadable. /now
-         then told readers the record could not be reached when the truth
-         was that nothing had been written to it yet.
-         Matched on the class now. Deliberately narrow: BlobStoreNotFound
-         and BlobServiceNotAvailable are real faults and still raise. */
-      if (err instanceof BlobNotFoundError) return { ...EMPTY_DOCUMENT }
-      throw err
-    }
+    /* get(), not head()-then-fetch().
+
+       The store is private, and the previous read asked head() for the
+       blob's metadata and then fetched meta.downloadUrl with a bare
+       fetch. downloadUrl is not a signed url — the SDK builds it by
+       taking the blob's public CDN url and setting ?download=1, which
+       changes the Content-Disposition and nothing else. It carries no
+       credentials, so against a private store it is refused exactly as
+       meta.url would be, and the ledger came back unreadable every time.
+
+       get() is the SDK's own read and authenticates with the read-write
+       token. useCache: false because the job needs the ledger it just
+       wrote, not a CDN copy of it. */
+    const { get } = await import('@vercel/blob')
+    const result = await get(this.key, { access: 'private', useCache: false })
+
+    /* Null when the blob does not exist, which is the normal first state
+       of a new environment and not a failure. The old code had to read
+       that out of a thrown BlobNotFoundError; get() simply says so. */
+    if (!result || !result.stream) return { ...EMPTY_DOCUMENT }
+
+    return validate(await new Response(result.stream).json())
   }
 
   async write(doc: FeedDocument): Promise<void> {

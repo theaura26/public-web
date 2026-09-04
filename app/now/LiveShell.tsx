@@ -48,7 +48,11 @@ export default function LiveShell({
           /* The feed's own ground. White made the cards read as paper on
              a screen; this is the estate's paper colour, and it carries
              below the last entry so the page ends on it. */
-          background: #F5F3ED;
+          /* Named, because the feed rows paint the same colour to mask
+             the rail behind their text, and a second literal of it
+             somewhere else is a drift waiting to happen. */
+          --feed-ground: #F5F3ED;
+          background: var(--feed-ground);
           min-height: 100vh;
         }
 

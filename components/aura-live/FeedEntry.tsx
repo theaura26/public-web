@@ -148,20 +148,30 @@ export default function FeedEntry({ entry, index }: { entry: PublicEntry; index:
         }
         .sep { padding: 0 8px; opacity: 0.55; }
 
+        /* Four sizes on this page and no more, after Substack's feed:
+           12 for the eyebrow, 17 for what happened, 15 for the detail,
+           13 for the month. An entry here is one fact — "Buttermilk
+           applied in Blocks 1, 2 and 3" — and 26px was setting a log
+           line like a headline. Weight carries it now instead of size,
+           which is the trick that makes a long feed readable rather than
+           loud.
+           One rhythm underneath: 22px for both, so a row with a body and
+           a row without still sit on the same grid. */
         .headline {
           margin: 0;
-          font-size: clamp(20px, 1.8vw, 26px);
-          line-height: 1.22;
-          letter-spacing: -0.02em;
+          font-size: 17px;
+          line-height: 22px;
+          font-weight: 600;
+          letter-spacing: -0.01em;
           text-wrap: balance;
         }
 
         .prose {
           margin: 0;
-          font-size: clamp(16px, 1.3vw, 19px);
-          line-height: 1.5;
-          color: var(--text-body);
-          max-width: 54ch;
+          font-size: 15px;
+          line-height: 22px;
+          color: var(--text-muted);
+          max-width: 62ch;
         }
 
         .media {

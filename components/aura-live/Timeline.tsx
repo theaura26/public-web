@@ -36,11 +36,6 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
    the line is a measure of the page, not a report card. */
 const MAX_GAP_DAYS = 16
 
-/* What one empty day is worth in height. It was a 10px mark on a 6px gap
-   when the days were drawn as ticks; the marks are gone and the measure
-   they set is the part worth keeping. */
-const DAY_HEIGHT = 16
-
 type Row =
   | { kind: 'month'; key: string; label: string }
   | { kind: 'gap'; key: string; days: number }
@@ -91,20 +86,16 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
         if (row.kind === 'gap') {
           const shown = Math.min(row.days, MAX_GAP_DAYS)
           return (
-            /* Empty on purpose. The gap used to draw its own run of tick
-               marks and, past sixteen days, write the count out — which
-               put a second texture on a line that already had one, and
-               announced the estate's quietest stretches in words. Neither
-               is the page's job. It holds the space open at the same
-               scale as before and lets the one line run through it, so a
-               quiet fortnight still looks like a fortnight without being
-               labelled as one. */
-            <li
-              key={row.key}
-              className="row r-gap"
-              aria-hidden="true"
-              style={{ height: `${shown * DAY_HEIGHT}px` }}
-            />
+            /* One tick a day. The run is the argument — a quiet fortnight
+               should look like a fortnight — and a tick counts where a
+               blank stretch of line only measures. What stays gone is the
+               sentence underneath it: the length says how long the estate
+               was quiet without announcing it in words. */
+            <li key={row.key} className="row r-gap" aria-hidden="true">
+              <span className="ticks">
+                {Array.from({ length: shown }, (_, i) => <span key={i} className="tick" />)}
+              </span>
+            </li>
           )
         }
 
@@ -144,8 +135,11 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
 
       <style jsx>{`
         .tl {
-          --tl-card: 660px;
-          --tl-node: 64px;
+          /* Narrower and lighter, after Substack's explore column.
+             A feed row is a fact, and 660px of card around a fact is a
+             frame around a sentence. */
+          --tl-card: 600px;
+          --tl-node: 40px;
 
           position: relative;
           list-style: none;
@@ -173,9 +167,22 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
         .tl::before {
           content: '';
           position: absolute;
-          left: 50%;
+          /* On the marks, not down the middle of the page.
+             It ran at 50% because the entries were cards wide enough to
+             hide it, and it only ever showed in the gaps between them.
+             Without the card there is nothing to hide behind, and a
+             dotted line through the middle of a paragraph is just a line
+             through a paragraph. It runs through the centre of the
+             subject marks now — which is what a reader reads it as
+             anyway, one thread with the estate's work strung along it.
+             max() keeps it on the marks once the column stops being
+             600px and starts being the screen. */
+          left: max(
+            calc(var(--tl-node) / 2),
+            calc(50% - var(--tl-card) / 2 + var(--tl-node) / 2)
+          );
           top: var(--space-9);
-          bottom: var(--space-8);
+          bottom: var(--space-6);
           border-left: 1px dotted var(--border-strong);
           transform: translateX(-0.5px);
         }
@@ -188,7 +195,12 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
           flex-direction: column;
           align-items: center;
         }
-        .r-entry { padding-bottom: var(--space-8); }
+        /* The gap is its own grid and must not be stretched by the row. */
+        .row.r-gap {
+          align-items: stretch;
+          margin: 0 auto;
+        }
+        .r-entry { padding-bottom: var(--space-6); }
 
         /* The month rides on the line and breaks it. The page background
            is what does the breaking — the pill is opaque, so the dash
@@ -211,7 +223,6 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
           line-height: 1;
         }
 
-        /* The card sits on the line and hides it. */
         /* The reveal wrapper is a pass-through: the row centres its
            children and the card sizes itself, so the wrapper has to do
            neither and get out of the way of both. */
@@ -220,19 +231,33 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
           display: flex;
           justify-content: center;
         }
+
+        /* Not a card any more.
+           An entry used to sit in a bordered, padded box with its own
+           ground, floating on the rail. Every one of them announced
+           itself as an object before a reader got to what it said, and a
+           column of objects reads slower than a column of facts.
+           A hairline underneath is all the separation a row needs — the
+           thing Substack's feed gets right, and it is the absence of the
+           box rather than the size of the type.
+           It still masks the rail, which is why the ground is painted
+           rather than left transparent: the dotted line runs the height
+           of the list and a row has to stand in front of it. */
         .card {
+          position: relative;
           width: min(100%, var(--tl-card));
           display: grid;
           grid-template-columns: var(--tl-node) minmax(0, 1fr);
-          gap: var(--space-5);
+          gap: var(--space-4);
           align-items: start;
-          /* More room under the content than over it: the last thing in
-             the card is a "Show more" summary set at label size, and an
-             even inset left it sitting on the edge. */
-          padding: var(--space-6) var(--space-6) var(--space-7);
-          background: var(--bg-card);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-1);
+          padding: 0 0 var(--space-6);
+          /* The page's own ground, not --bg. --bg is white inside this
+             page's scope and the ground is the estate's paper colour, so
+             painting --bg gave every row a white block to sit in — a card
+             again, just without the border. The row has to disappear into
+             the page and leave only the hairline. */
+          background: var(--feed-ground, transparent);
+          border-bottom: 1px solid var(--border);
         }
 
         .node {
@@ -253,22 +278,36 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
         /* A run of empty days, drawn at the same scale as the entries so
            a quiet fortnight looks like a fortnight. Centred on the line
            like everything else. */
+        /* The gap takes the entries' own grid, so its run of days lands
+           in the subject column and reads as marks on the same thread
+           rather than as a second column of dashes beside it. */
         .r-gap {
-          /* content-box, so the inline height is the run of empty days
-             and the padding for the next card adds beneath it. Under
-             border-box the padding eats the height, and every gap of four
-             days or fewer comes out the same 64px tall — which is the one
-             thing the run is here to avoid. */
-          box-sizing: content-box;
-          padding-bottom: var(--space-8);
+          width: min(100%, var(--tl-card));
+          display: grid;
+          grid-template-columns: var(--tl-node) minmax(0, 1fr);
+          gap: var(--space-4);
+          padding-bottom: var(--space-6);
+        }
+        .ticks {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 6px;
+          padding: var(--space-2) 0;
+          /* The ground behind the run, so the ticks are marks on the rail
+             rather than dashes sitting on top of a dotted line that
+             carries straight through them. */
+          background: var(--feed-ground, transparent);
+        }
+        .tick {
+          width: 1px;
+          height: 10px;
+          background: var(--border-strong);
         }
 
         @media (max-width: 760px) {
-          .tl { --tl-node: 48px; }
-          .card {
-            padding: var(--space-5) var(--space-5) var(--space-6);
-            gap: var(--space-4);
-          }
+          .tl { --tl-node: 32px; }
+          .card { gap: var(--space-3); }
         }
       `}</style>
     </ol>

@@ -83,10 +83,16 @@ class BlobStore implements FeedStore {
     try {
       const meta = await head(this.key)
       /* downloadUrl, not url. The store is private, and a private blob's
-         public url is not readable — the signed download url is the one
-         that resolves. Skip the edge cache either way: the job needs the
-         ledger it just wrote, not a copy of it. */
-      const res = await fetch(meta.downloadUrl ?? meta.url, { cache: 'no-store' })
+         CDN url requires authentication. The downloadUrl is the CDN url with
+         ?download=1 appended — not a pre-signed URL — so it still needs the
+         BLOB_READ_WRITE_TOKEN as a Bearer header to pass the access check.
+         Skip the edge cache either way: the job needs the ledger it just
+         wrote, not a stale copy of it. */
+      const token = process.env.BLOB_READ_WRITE_TOKEN
+      const res = await fetch(meta.downloadUrl ?? meta.url, {
+        cache: 'no-store',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
       if (!res.ok) {
         if (res.status === 404) return { ...EMPTY_DOCUMENT }
         throw new Error(`Blob read failed: ${res.status}`)

@@ -4,6 +4,7 @@ import Sparkline from './Sparkline'
 import MoonDisc from './MoonDisc'
 import SourceNote from './SourceNote'
 import type { Today } from '@/lib/aura-live/today'
+import { rainCaption } from '@/lib/aura-live/conditions'
 
 /* The land, today.
  *
@@ -90,7 +91,7 @@ export default function TodayCard({ today }: { today: Today }) {
               <Sparkline
                 series={conditions.rain.series}
                 shape="bars"
-                caption={`since June — rain on all but ${conditions.rain.seasonDays - conditions.rain.seasonWetDays} days`}
+                  caption={rainCaption(conditions.rain)}
                 formatPoint={(p) => {
                   const [, m, d] = p.day.split('-')
                   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']

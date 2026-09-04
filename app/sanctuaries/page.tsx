@@ -38,7 +38,6 @@ type Place = {
   region: string
   coords: string
   img: string
-  video?: string
   alt: string
   /** Where the place opens. Absent while a valley is still being read. */
   href?: string
@@ -51,7 +50,6 @@ const WORKING: Place[] = [
     region: 'Karnataka, India',
     coords: '13.17°N · 75.43°E',
     img: '/aura-mudigere.jpg',
-    video: '/aura-mudigere.mp4',
     alt: 'The Aura estate at Mudigere — coffee under four storeys of canopy in the Western Ghats',
     href: '/mudigere',
   },
@@ -61,7 +59,6 @@ const WORKING: Place[] = [
     region: 'Kyoto Prefecture, Japan',
     coords: '35.13°N · 135.83°E',
     img: '/aura-ohara.jpg',
-    video: '/aura-ohara.mp4',
     alt: 'Ohara — a valley north of Kyoto, gardens and gate in autumn',
     href: '/ohara',
   },
@@ -74,7 +71,6 @@ const LISTENING: Place[] = [
     region: 'Bali, Indonesia',
     coords: '8.27°S · 115.06°E',
     img: '/aura-munduk.jpg',
-    video: '/aura-munduk.mp4',
     alt: 'Munduk — mountain forest and terraces in northern Bali',
   },
   {
@@ -88,21 +84,21 @@ const LISTENING: Place[] = [
 ]
 
 function PlaceCard({ p }: { p: Place }) {
+  /* A still, on every card.
+   *
+   * Three of the four had film behind them, and the page came to 13.9 MB
+   * of video for four cards a third of the rail wide — with
+   * aura-mudigere.mp4 pulled twice, once for the banner and once for the
+   * card underneath it, because two video elements on one src do not
+   * share a range request the way two images share a cache entry.
+   *
+   * The stills are 0.96 MB for all four. The film is worth its weight in
+   * the banner, where it is the size of the screen and the first thing a
+   * reader meets; at card size it is a texture, and a card elsewhere on
+   * this site — a field note, a swimlane — is a photograph. */
   const media = (
     <span className="sc-plate" aria-hidden>
-      {p.video ? (
-        <video
-          src={p.video}
-          poster={p.img}
-          muted
-          loop
-          playsInline
-          autoPlay
-          preload="none"
-        />
-      ) : (
-        <img src={p.img} alt="" loading="lazy" decoding="async" />
-      )}
+      <img src={p.img} alt="" loading="lazy" decoding="async" />
     </span>
   )
 

@@ -13,7 +13,11 @@ import { readFeed } from '@/lib/aura-live/feed'
  */
 
 export const runtime = 'nodejs'
-export const revalidate = 900
+/* TEMPORARY — 60s for a recording, put back to 900 afterwards.
+   The gateway syncs hourly and the publish job runs on the half hour, so
+   900 is the honest interval: re-reading faster than the source can
+   change is polling for nothing. */
+export const revalidate = 60
 
 export async function GET() {
   const view = await readFeed()
@@ -21,13 +25,19 @@ export async function GET() {
     {
       estate: 'mudigere',
       freshness: view.freshness,
+      /* Whether the ledger could be read at all. Without it an empty
+         feed has two meanings that look identical from here — a store
+         that could not be opened, and a store with nothing published in
+         it — and the caller has no way to tell a fault from a quiet day.
+         The page distinguishes them; a machine reading this could not. */
+      readable: !view.failed,
       entries: view.entries,
     },
     {
       headers: {
         /* Matched to the gateway's hourly sync: a client that re-reads
            more often than the source changes is polling for nothing. */
-        'cache-control': 'public, s-maxage=900, stale-while-revalidate=3600',
+        'cache-control': 'public, s-maxage=60, stale-while-revalidate=300',
       },
     },
   )

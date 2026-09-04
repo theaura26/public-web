@@ -80,32 +80,54 @@ export default function SourceNote({ children }: { children: React.ReactNode }) 
         }
         .dot:focus-visible { outline: 1px solid rgba(255, 255, 255, 0.6); outline-offset: 3px; }
 
+        /* The site's tooltip, which is .aura-term__tip in globals.css:
+           the inverted pair off the text and background tokens, a 2px
+           corner, 8/12 padding, and a fade with nothing moving. This one
+           had grown its own — a hardcoded #23282b, a 4px radius, space-4
+           padding and a slide — so two tooltips on one site looked like
+           two decisions.
+
+           Two things stay different, and both are the content rather than
+           the style. It is set as prose because it is sixty words: the
+           label treatment is 10px uppercase mono, which is right for the
+           three or four a Term carries and unreadable at this length. And
+           it opens downward because the mark sits on the top edge of a
+           card, where upward puts the box off the hero. */
         .tip {
           position: absolute;
-          top: calc(100% + 10px);
+          top: calc(100% + 8px);
           left: -12px;
-          z-index: 3;
-          width: max(260px, 34ch);
-          padding: var(--space-4) var(--space-5);
-          border-radius: var(--radius-1);
-          background: #23282b;
-          color: rgba(255, 255, 255, 0.82);
-          /* Set as prose, not as a label — it is a sentence, and the
-             header’s mono tracking makes a paragraph unreadable. */
+          z-index: 30;
+          pointer-events: none;
+          max-width: min(320px, 60vw);
+          width: max-content;
+          padding: 8px 12px;
+          border-radius: 2px;
+          background: var(--text);
+          color: var(--bg);
+          /* A hairline, which the article tooltip does without.
+             There it is a near-black box on a page the colour of paper
+             and the edge draws itself. Here it opens over a card already
+             at rgb(22,25,27): the ink reads at 18:1 but the box against
+             the card measured 1.02:1, so the tooltip had no edge and the
+             sentence looked like it had been printed on the card. Taken
+             off the background token, so it follows the theme with
+             everything else. */
+          border: 1px solid color-mix(in srgb, var(--bg) 18%, transparent);
           font-family: var(--font-grotesque), sans-serif;
-          font-size: 14px;
-          line-height: 1.5;
+          font-size: 13px;
+          line-height: 1.45;
           letter-spacing: 0;
           text-transform: none;
+          text-align: left;
+          white-space: normal;
           opacity: 0;
           visibility: hidden;
-          transform: translateY(-4px);
           transition:
-            opacity var(--dur-base) var(--ease),
-            transform var(--dur-base) var(--ease),
-            visibility var(--dur-base) var(--ease);
+            opacity var(--dur-fast) var(--ease),
+            visibility var(--dur-fast) var(--ease);
         }
-        .tip.on { opacity: 1; visibility: visible; transform: none; }
+        .tip.on { opacity: 1; visibility: visible; }
 
         @media (prefers-reduced-motion: reduce) {
           .dot, .tip { transition: none; }

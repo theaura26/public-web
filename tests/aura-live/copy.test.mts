@@ -274,6 +274,57 @@ test('a repeated category is penalised as the run fills up', () => {
   assert.ok(crowded.reasons.some((r) => /dominates|over-represented/.test(r)))
 })
 
+/* Three preparations went onto the estate on 4 September. Two were
+   published and the third was scored eight points down for being the
+   same work in the same place on the same day as the other two — which
+   it was not. The guard read category, date and place and never the
+   subject, so a working day's whole output collapsed into one event.
+
+   Both of these hold category, date and place equal so that the subject
+   is the only thing that differs. */
+function twin(c: ReturnType<typeof merged>, headline: string) {
+  return [
+    {
+      id: 'x1',
+      category: c.category,
+      headline,
+      occurredOn: c.time.occurredOn,
+      location: c.location,
+    },
+  ] as never
+}
+
+test('different preparations on one day are not each other', () => {
+  const c = merged('applicationDone')            // subject: Buttermilk
+  const s = scoreCandidate(c, twin(c, 'CPP Balls applied in Block 3'))
+  assert.ok(
+    !s.reasons.some((r) => /same work, same place, same day/.test(r)),
+    'a different subject on the same day and ground must not read as a duplicate',
+  )
+})
+
+test('the same work twice on one day still reads as a duplicate', () => {
+  const c = merged('applicationDone')
+  const s = scoreCandidate(c, twin(c, `${c.subject} applied in Block 3`))
+  assert.ok(
+    s.reasons.some((r) => /same work, same place, same day/.test(r)),
+    'the duplicate guard must still catch the case it was written for',
+  )
+})
+
+/* The recent lane is not a highlight reel and does not charge for
+   repetition — routine daily work is the point of it. */
+test('the recent lane waives the repetition penalties', () => {
+  const c = merged('applicationDone')
+  const crowded = Array.from({ length: 6 }, (_, i) => ({
+    id: `x${i}`, category: 'sprays', headline: 'Something else', occurredOn: '2026-08-01',
+  })) as never
+  const ranked = scoreCandidate(c, crowded)
+  const lane = scoreCandidate(c, crowded, { ignoreRepetition: true })
+  assert.ok(lane.total > ranked.total, 'the lane must not price out the work it exists to carry')
+  assert.ok(!lane.reasons.some((r) => /dominates|over-represented|seen recently/.test(r)))
+})
+
 test('every score carries its reasons', () => {
   const s = scoreCandidate(merged('applicationDone'), [])
   assert.ok(s.reasons.length >= 4)

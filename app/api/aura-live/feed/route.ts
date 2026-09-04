@@ -13,11 +13,12 @@ import { readFeed } from '@/lib/aura-live/feed'
  */
 
 export const runtime = 'nodejs'
-/* TEMPORARY — 60s for a recording, put back to 900 afterwards.
-   The gateway syncs hourly and the publish job runs on the half hour, so
-   900 is the honest interval: re-reading faster than the source can
-   change is polling for nothing. */
-export const revalidate = 60
+/* An hour, matched to the gateway. It syncs on the hour — pg_cron,
+   `0 * * * *` — so an hour is the shortest interval at which a re-read
+   can find anything new. Faster than the source can change is polling
+   for nothing, and this replaces both the 900 that predated it and the
+   60 that was left in for a recording. */
+export const revalidate = 3600
 
 export async function GET() {
   const view = await readFeed()
@@ -43,7 +44,7 @@ export async function GET() {
       headers: {
         /* Matched to the gateway's hourly sync: a client that re-reads
            more often than the source changes is polling for nothing. */
-        'cache-control': 'public, s-maxage=60, stale-while-revalidate=300',
+        'cache-control': 'public, s-maxage=3600, stale-while-revalidate=300',
       },
     },
   )

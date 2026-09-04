@@ -1373,10 +1373,17 @@ export default function Navbar() {
             box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
           }
           /* Lit means the source is flowing, the same thing the mark
-             beside NOW on the page means, and it holds still. */
+             beside NOW on the page means — and it blinks, on the same
+             2.6s, so the two marks keep one rhythm instead of two that
+             drift apart while a reader is looking at both. */
           .mg-dot.is-live {
             background: var(--brand-accent);
             box-shadow: inset 0 0 0 1px var(--brand-accent);
+            animation: live-blink 2.6s var(--ease) infinite;
+          }
+          @keyframes live-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.55; }
           }
           /* The glow is the wait, and it stops when the wait does — the
              one state the banner has no use for, because it is rendered
@@ -1391,7 +1398,7 @@ export default function Navbar() {
             50%      { box-shadow: 0 0 16px 3px var(--brand-accent); opacity: 1; }
           }
           @media (prefers-reduced-motion: reduce) {
-            .mg-dot.is-loading { animation: none; }
+            .mg-dot.is-live, .mg-dot.is-loading { animation: none; }
             .mg-panel { transition: none; }
           }
 

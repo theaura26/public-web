@@ -263,11 +263,6 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
             0 0 0.06em var(--brand-accent),
             0 0 0.3em rgba(227, 113, 40, 0.85),
             0 0 0.7em rgba(227, 113, 40, 0.45);
-          animation: live-pulse 2.6s var(--ease, ease-in-out) infinite;
-        }
-        @keyframes live-pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.55; }
         }
         /* Behind, or unknown: the mark hollows out and stops glowing.
            Nothing about a lit dot should survive the source going quiet. */
@@ -276,9 +271,7 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           box-shadow: inset 0 0 0 0.02em rgba(255, 255, 255, 0.5);
           animation: none;
         }
-        @media (prefers-reduced-motion: reduce) {
-          .dot { animation: none; }
-        }
+
 
         /* Short screens only. The note higher up is right that the auto
            space clears the 56px bar at every height where the column

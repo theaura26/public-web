@@ -155,8 +155,15 @@ export default function Navbar() {
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
         if (!alive) return
-        const live = d?.freshness?.state === 'live' && (d?.entries?.length ?? 0) > 0
-        setFeedState(live ? 'live' : 'off')
+        /* Freshness alone, which is what the banner on /now reads and
+           what the page's own wording is based on.
+        
+           It used to require entries as well, and the two marks then
+           disagreed on the same data: with the source syncing and nothing
+           yet published, the banner was lit and this one was hollow. The
+           dot is about the flow, and the flow is the source. What has
+           been published out of it is what the page below is for. */
+        setFeedState(d?.freshness?.state === 'live' ? 'live' : 'off')
       })
       .catch(() => { if (alive) setFeedState('off') })
     return () => { alive = false }
@@ -851,7 +858,7 @@ export default function Navbar() {
           >
             Now
             <span
-              className={`mg-dot ${feedState === 'loading' ? 'is-loading' : ''}`}
+              className={['mg-dot', feedState === 'loading' && 'is-loading', feedState === 'live' && 'is-live'].filter(Boolean).join(' ')}
               aria-hidden
             />
           </Link>
@@ -1365,8 +1372,15 @@ export default function Navbar() {
             background: transparent;
             box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
           }
-          /* Lit only while the request is in flight. The glow is the
-             wait, and it stops when the wait does. */
+          /* Lit means the source is flowing, the same thing the mark
+             beside NOW on the page means, and it holds still. */
+          .mg-dot.is-live {
+            background: var(--brand-accent);
+            box-shadow: inset 0 0 0 1px var(--brand-accent);
+          }
+          /* The glow is the wait, and it stops when the wait does — the
+             one state the banner has no use for, because it is rendered
+             on the server and knows the answer already. */
           .mg-dot.is-loading {
             background: var(--brand-accent);
             box-shadow: none;

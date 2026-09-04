@@ -24,6 +24,26 @@ import { estateParts } from './time'
 
 const ENDPOINT = 'https://api.open-meteo.com/v1/forecast'
 
+/* The season total comes from a different endpoint to the sparkline.
+ *
+ * The forecast endpoint reaches back 92 days and returns null for the
+ * older end of that — for this estate on 4 September, 33 of the 96 days
+ * since 1 June came back empty. Nulls are dropped from the series,
+ * because a gap cannot be plotted, and the same array was then counted
+ * for "days in the season". So the page said 598 mm and "rain on all but
+ * 3 days since June" when the truth was 1253 mm and five dry days, and
+ * the window it described was 7 July to 4 September with June absent
+ * from it entirely.
+ *
+ * This endpoint is the same models, addressed by date rather than by an
+ * offset, and it answers for the whole season without gaps. */
+const SEASON_ENDPOINT = 'https://historical-forecast-api.open-meteo.com/v1/forecast'
+
+/** Above this, a day counts as a rain day. The meteorological
+    convention, and stated on the page rather than left inside the word
+    "rain" — a 0.9 mm day is not dry to anyone standing in it. */
+const RAIN_DAY_MM = 1
+
 /** Aura Estate, Mudigere. The coordinate the site publishes. */
 const LAT = 13.1686
 const LON = 75.434
@@ -65,6 +85,13 @@ export type Conditions = {
     seasonMm: number
     seasonDays: number
     seasonWetDays: number
+    /** Calendar days from the onset to today. Equal to seasonDays when
+        the record is whole, and reported separately so a gap in the
+        data can never quietly shrink the denominator again. */
+    seasonSpanDays: number
+    /** First and last day the total actually covers. */
+    seasonFrom: string
+    seasonTo: string
     series: Series
   }
   soilMoisture: { latest: number; weekAgo: number | null; series: Series }
@@ -279,8 +306,36 @@ export async function readConditions(): Promise<Conditions | null> {
 
   if (!rainSeries.length || !moistureSeries.length || !tempSeries.length) return null
 
-  const seasonStart = `${estateParts(new Date()).year}-${MONSOON_ONSET}`
-  const seasonSeries = rainSeries.filter((d) => d.day >= seasonStart)
+  const p0s = estateParts(new Date())
+  const seasonStart = `${p0s.year}-${MONSOON_ONSET}`
+
+  /* Asked for by date, so June is in it. Falls back to the forecast
+     window if the request fails — a short season is better than no card,
+     and seasonSpanDays says how short it is. */
+  let seasonSeries = rainSeries.filter((d) => d.day >= seasonStart)
+  try {
+    const su = new URL(SEASON_ENDPOINT)
+    su.searchParams.set('latitude', String(LAT))
+    su.searchParams.set('longitude', String(LON))
+    su.searchParams.set('daily', 'precipitation_sum')
+    su.searchParams.set('start_date', seasonStart)
+    su.searchParams.set('end_date', p0s.dateKey)
+    su.searchParams.set('timezone', TZ)
+    const sres = await fetch(su, { next: { revalidate: 3600 }, signal: AbortSignal.timeout(8000) })
+    if (sres.ok) {
+      const sp = (await sres.json()) as Payload
+      const full: Series = (sp.daily?.time ?? [])
+        .map((day, i) => ({ day, value: sp.daily?.precipitation_sum?.[i] }))
+        .filter((d): d is { day: string; value: number } => d.value != null)
+      if (full.length > seasonSeries.length) seasonSeries = full
+    }
+  } catch {
+    /* Keep the forecast-window season. */
+  }
+
+  const seasonSpanDays = Math.floor(
+    (Date.parse(`${p0s.dateKey}T00:00:00Z`) - Date.parse(`${seasonStart}T00:00:00Z`)) / 86_400_000,
+  ) + 1
 
   const latestIndex = daily.time.length - 1
   /* The API returns estate-local ISO strings without a zone, so the
@@ -302,7 +357,10 @@ export async function readConditions(): Promise<Conditions | null> {
       prev7mm: sum(rainSeries.slice(-14, -7)),
       seasonMm: sum(seasonSeries),
       seasonDays: seasonSeries.length,
-      seasonWetDays: seasonSeries.filter((d) => d.value > 1).length,
+      seasonWetDays: seasonSeries.filter((d) => d.value > RAIN_DAY_MM).length,
+      seasonSpanDays,
+      seasonFrom: seasonSeries[0]?.day ?? seasonStart,
+      seasonTo: seasonSeries[seasonSeries.length - 1]?.day ?? p0s.dateKey,
       /* The chart stays three weeks long; the total is the season. */
       series: rainSeries.slice(-WINDOW_DAYS),
     },
@@ -332,3 +390,40 @@ export function seriesEndLabel(series: Series): string {
   const last = series.at(-1)?.day
   return last ? estateParts(`${last}T06:00:00Z`).dateKey : ''
 }
+
+/* What the rain line is allowed to claim.
+ *
+ * It used to read "since June — rain on all but 3 days" off a series
+ * that started on 7 July. The forecast endpoint returns null for the far
+ * end of its 92-day window, nulls are dropped because a gap cannot be
+ * plotted, and the shortened array was then counted as the season. June
+ * was not in it, and neither were 33 days of July that had no reading —
+ * so five dry days out of 96 was reported as three out of 60, and 1253
+ * mm of monsoon as 598.
+ *
+ * Two things it now says out loud. "Rain" here means over a millimetre,
+ * the meteorological convention, because a 0.9 mm day is not dry to
+ * anyone standing in it. And when the record has a hole in it, the line
+ * names the window it actually covers rather than the one it would like
+ * to.
+ */
+export function rainCaption(rain: {
+  seasonDays: number
+  seasonWetDays: number
+  seasonSpanDays: number
+  seasonFrom: string
+  seasonTo: string
+}) {
+  const dry = rain.seasonDays - rain.seasonWetDays
+  const whole = rain.seasonDays >= rain.seasonSpanDays
+  const day = (iso: string) => {
+    const [, m, d] = iso.split('-')
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    return `${Number(d)} ${months[Number(m) - 1]}`
+  }
+  const when = whole ? 'since June' : `${day(rain.seasonFrom)}–${day(rain.seasonTo)}`
+  return dry === 0
+    ? `${when} — over 1 mm every day`
+    : `${when} — over 1 mm on all but ${dry} ${dry === 1 ? 'day' : 'days'}`
+}
+

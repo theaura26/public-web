@@ -82,9 +82,11 @@ class BlobStore implements FeedStore {
     const { head, BlobNotFoundError } = await import('@vercel/blob')
     try {
       const meta = await head(this.key)
-      /* Read through the CDN url rather than the API, and skip the edge
-         cache: the job needs the ledger it just wrote, not a copy of it. */
-      const res = await fetch(meta.url, { cache: 'no-store' })
+      /* downloadUrl, not url. The store is private, and a private blob's
+         public url is not readable — the signed download url is the one
+         that resolves. Skip the edge cache either way: the job needs the
+         ledger it just wrote, not a copy of it. */
+      const res = await fetch(meta.downloadUrl ?? meta.url, { cache: 'no-store' })
       if (!res.ok) {
         if (res.status === 404) return { ...EMPTY_DOCUMENT }
         throw new Error(`Blob read failed: ${res.status}`)
@@ -111,7 +113,14 @@ class BlobStore implements FeedStore {
   async write(doc: FeedDocument): Promise<void> {
     const { put } = await import('@vercel/blob')
     await put(this.key, JSON.stringify(validate(doc)), {
-      access: 'public',
+      /* Private, because the store is.
+      
+         public-web-blob was created with private access and this asked
+         for public on every write, so every write failed with "Cannot use
+         public access on a private store" — and the ledger stayed empty
+         from the day the store was made. Nothing downstream noticed,
+         because an empty ledger is also what a quiet estate looks like. */
+      access: 'private',
       contentType: 'application/json',
       /* The key is the identity of the ledger. A random suffix would
          create a new blob on every run and orphan the last one. */

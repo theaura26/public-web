@@ -26,7 +26,11 @@ import LiveShell from './LiveShell'
    surfaces within the quarter hour, rarely enough that the page is not
    rebuilding for data that cannot have changed. See
    docs/aura-live/architecture.md for the arithmetic behind the number. */
-export const revalidate = 900
+/* TEMPORARY — 60s for a recording, put back to 900 afterwards.
+   The gateway syncs hourly and the publish job runs on the half hour, so
+   900 is the honest interval: re-reading faster than the source can
+   change is polling for nothing. */
+export const revalidate = 60
 
 export default async function LivePage() {
   const [{ entries, freshness, failed }, today] = await Promise.all([readFeed(), readToday()])

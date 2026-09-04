@@ -41,7 +41,7 @@ names ......... no uncleared worker in published prose      ← may reject
    ▼
 store ......... one JSON ledger, upserted atomically
    ▼
-render ........ /live, server-rendered, revalidated every 15 minutes
+render ........ /now, server-rendered, revalidated hourly
 ```
 
 Each arrow that can reject writes a reason into the audit trail. Nothing

@@ -31,6 +31,12 @@ export async function GET() {
          it — and the caller has no way to tell a fault from a quiet day.
          The page distinguishes them; a machine reading this could not. */
       readable: !view.failed,
+      /* The reason, when there is one. `readable: false` on its own is
+         the same shape of silence the flag was added to remove: it says
+         the ledger is unreachable and not what stopped it. Truncated,
+         because this is a public endpoint and the message is a
+         diagnostic, not a stack trace. */
+      ...(view.failure ? { unreadableBecause: view.failure.slice(0, 200) } : {}),
       entries: view.entries,
     },
     {

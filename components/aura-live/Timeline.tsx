@@ -148,12 +148,18 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
         }
 
         /* One dashed line down the centre of the page, drawn once behind
-           everything rather than per row, so it never restarts. */
+           everything rather than per row, so it never restarts.
+
+           It starts where the first row starts, not at the top of the
+           list. The list carries top padding to clear the banner, and a
+           rail drawn from 0 spent that padding on a stub of dashes
+           hanging off the first month pill with nothing above it to join
+           to. A line between two things needs the first thing. */
         .tl::before {
           content: '';
           position: absolute;
           left: 50%;
-          top: 0;
+          top: var(--space-9);
           bottom: 0;
           border-left: 1px dashed var(--border-strong);
           transform: translateX(-0.5px);

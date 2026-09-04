@@ -152,9 +152,20 @@ async function discover(cfg: AuraLiveConfig, errors: string[]): Promise<GatewayR
 /* ── The run ─────────────────────────────────────────────────────────── */
 
 export async function runFeedGeneration(
-  opts: { force?: boolean; now?: Date } = {},
+  /* `drain` lifts the per-run caps for one run.
+     Those caps exist to keep a first run from dumping the archive onto
+     the page, which is the right instinct on day one and the wrong one
+     afterwards: 280 records that had already cleared every quality gate
+     sat behind a six-per-run limit, drip-feeding at a rate slower than
+     the estate files new work. Everything else still applies — the
+     windows, the score bar, the policy gates, the recent lane first.
+     This lifts a rate limit, not a standard. */
+  opts: { force?: boolean; drain?: boolean; now?: Date } = {},
 ): Promise<RunOutcome> {
-  const cfg = loadConfig()
+  const loaded = loadConfig()
+  const cfg = opts.drain
+    ? { ...loaded, maxPublishPerRun: Number.MAX_SAFE_INTEGER, maxPerCategoryPerRun: Number.MAX_SAFE_INTEGER }
+    : loaded
   const now = opts.now ?? new Date()
   const errors: string[] = []
   const base: RunOutcome = {
@@ -217,8 +228,17 @@ export async function runFeedGeneration(
 
   const published = new Map(doc.entries.map((e) => [e.canonicalKey, e]))
   /* A row that contributed to a merged card must not resurface as its
-     own card on the next run. */
-  const claimed = new Set(doc.entries.flatMap((e) => e.contributingKeys.length ? e.contributingKeys : [e.canonicalKey]))
+     own card on the next run.
+     Asked of the ledger's memory as well as its entries. `entries` is
+     trimmed to the page length on every commit, so this used to forget
+     every card that scrolled off the end — which came back round as a
+     new card, with a fresh publication date, for ever. A drain run made
+     it plain: 172 records republished on a second pass with nothing new
+     upstream. */
+  const claimed = new Set([
+    ...doc.publishedKeys,
+    ...doc.entries.flatMap((e) => e.contributingKeys.length ? e.contributingKeys : [e.canonicalKey]),
+  ])
 
   /* 3. Discover. */
   const records = await discover(cfg, errors)
@@ -281,20 +301,81 @@ export async function runFeedGeneration(
   /* 8. Score, and take the best of what clears the bar. */
   const feed = [...doc.entries]
 
-  /* Ordered by a first-pass score, then re-scored one at a time against
-     the feed as it grows. Scoring the whole set up front and taking the
-     top six is the bug that produced four near-identical spraying cards
-     in a row: the repetition penalty could only see the feed as it was
-     before the run, never the cards the run was itself adding. */
-  const queue = merged
-    .map((c) => ({ candidate: c, provisional: scoreCandidate(c, feed).total }))
-    .sort((a, b) => b.provisional - a.provisional)
-
   const accepted: AuraFeedEntry[] = []
   const perCategory = new Map<string, number>()
   /* The gallery matches on subject, which is evidence rather than copy,
      so it has to survive the walk from candidate to stored entry. */
   const subjects = new Map<string, string>()
+
+  /* Two lanes, in this order.
+     The last few days go first and are judged on whether they qualify.
+     Everything else competes on score for what is left. Ranking the two
+     together is what put this morning's work at rank 255 of 263: nothing
+     in the score knows what day it is, so a routine spray was measured
+     against the best of five months and lost every run. */
+  const recentFrom = new Date(Date.parse(`${at.slice(0, 10)}T00:00:00Z`) - cfg.recentDays * 86_400_000)
+    .toISOString()
+    .slice(0, 10)
+  const isRecent = (c: MergedCandidate) => (c.time.occurredOn ?? '') >= recentFrom
+
+  const publish = async (
+    candidate: MergedCandidate,
+    score: ReturnType<typeof scoreCandidate>,
+    category: string,
+  ) => {
+    const entry = await buildEntry(candidate, score.total, score.reasons, at, cfg, roster)
+    if (!entry) {
+      audit(candidate.canonicalKey, 'rejected', ['copy-failed-verification-or-name-policy'], candidate.contributingKeys, score.total)
+      return false
+    }
+    accepted.push(entry)
+    subjects.set(entry.id, candidate.subject)
+    feed.unshift(entry)
+    perCategory.set(category, (perCategory.get(category) ?? 0) + 1)
+    audit(candidate.canonicalKey, 'accepted', score.reasons, candidate.contributingKeys, score.total)
+    return true
+  }
+
+  /* Lane one. Newest first, and scored without the repetition penalties:
+     those exist to stop a highlight reel filling with the eighth card
+     about the same spray, and this lane is not a highlight reel. It is
+     also exempt from the per-category cap, because a working day's
+     applications are all one category by nature — capping them at two
+     would silently drop the third thing that happened that day.
+     The score still has to clear the bar. A thin record is thin whenever
+     it happened. */
+  const recent = merged
+    .filter(isRecent)
+    .map((c) => ({ candidate: c, score: scoreCandidate(c, feed, { ignoreRepetition: true }) }))
+    .sort((a, b) =>
+      (b.candidate.time.occurredOn ?? '').localeCompare(a.candidate.time.occurredOn ?? '') ||
+      b.score.total - a.score.total,
+    )
+
+  let recentPublished = 0
+  for (const { candidate } of recent) {
+    const score = scoreCandidate(candidate, feed, { ignoreRepetition: true })
+    if (recentPublished >= cfg.maxRecentPerRun || accepted.length >= cfg.maxPublishPerRun) {
+      audit(candidate.canonicalKey, 'deferred', ['recent-lane limit reached'], candidate.contributingKeys, score.total)
+      continue
+    }
+    if (score.total < cfg.minScore) {
+      audit(candidate.canonicalKey, 'rejected', [...score.reasons, `below-threshold-${cfg.minScore}`], candidate.contributingKeys, score.total)
+      continue
+    }
+    if (await publish(candidate, score, candidate.category ?? 'field-activities')) recentPublished++
+  }
+
+  /* Lane two, the archive, as before.
+     Ordered by a first-pass score, then re-scored one at a time against
+     the feed as it grows. Scoring the whole set up front and taking the
+     top six is the bug that produced four near-identical spraying cards
+     in a row: the repetition penalty could only see the feed as it was
+     before the run, never the cards the run was itself adding. */
+  const queue = merged
+    .filter((c) => !isRecent(c))
+    .map((c) => ({ candidate: c, provisional: scoreCandidate(c, feed).total }))
+    .sort((a, b) => b.provisional - a.provisional)
 
   for (const { candidate } of queue) {
     const score = scoreCandidate(candidate, feed)
@@ -313,16 +394,7 @@ export async function runFeedGeneration(
       continue
     }
 
-    const entry = await buildEntry(candidate, score.total, score.reasons, at, cfg, roster)
-    if (!entry) {
-      audit(candidate.canonicalKey, 'rejected', ['copy-failed-verification-or-name-policy'], candidate.contributingKeys, score.total)
-      continue
-    }
-    accepted.push(entry)
-    subjects.set(entry.id, candidate.subject)
-    feed.unshift(entry)
-    perCategory.set(category, (perCategory.get(category) ?? 0) + 1)
-    audit(candidate.canonicalKey, 'accepted', score.reasons, candidate.contributingKeys, score.total)
+    await publish(candidate, score, category)
   }
 
   /* 9. Corrections. The copy is rewritten; the identity, the event time
@@ -368,6 +440,14 @@ export async function runFeedGeneration(
       return byEvent !== 0 ? byEvent : b.publishedAt.localeCompare(a.publishedAt)
     })
     .slice(0, cfg.maxFeedEntries)
+
+  /* What the ledger remembers, which outlives what it shows. Capped well
+     past the lookback window, so a key can never be forgotten while the
+     source row behind it is still discoverable. */
+  const publishedKeys = [...new Set([
+    ...doc.publishedKeys,
+    ...accepted.flatMap((e) => e.contributingKeys.length ? e.contributingKeys : [e.canonicalKey]),
+  ])].slice(-cfg.maxRememberedKeys)
 
   /* 10b. Archive imagery, when it is switched on.
      Assigned last and in reading order, because "what the reader just
@@ -416,6 +496,7 @@ export async function runFeedGeneration(
     sourceRevision: errors.length ? doc.sourceRevision : sourceRevision,
     lastRunAt: at,
     entries,
+    publishedKeys,
     audit: appendAudit(doc.audit, audits),
   })
 

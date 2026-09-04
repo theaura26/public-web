@@ -22,15 +22,12 @@ import LiveShell from './LiveShell'
  * check on video, which refetches nothing.
  */
 
-/* Four times the gateway's own hourly sync — often enough that a new card
-   surfaces within the quarter hour, rarely enough that the page is not
-   rebuilding for data that cannot have changed. See
-   docs/aura-live/architecture.md for the arithmetic behind the number. */
-/* TEMPORARY — 60s for a recording, put back to 900 afterwards.
-   The gateway syncs hourly and the publish job runs on the half hour, so
-   900 is the honest interval: re-reading faster than the source can
-   change is polling for nothing. */
-export const revalidate = 60
+/* An hour, matched to the gateway. It syncs on the hour — pg_cron,
+   `0 * * * *` — so an hour is the shortest interval at which a re-read
+   can find anything new. Faster than the source can change is polling
+   for nothing, and this replaces both the 900 that predated it and the
+   60 that was left in for a recording. */
+export const revalidate = 3600
 
 export default async function LivePage() {
   const [{ entries, freshness, failed }, today] = await Promise.all([readFeed(), readToday()])

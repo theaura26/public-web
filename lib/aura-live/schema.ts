@@ -252,6 +252,18 @@ export const FeedDocumentSchema = z.object({
   sourceRevision: z.string().nullable().default(null),
   lastRunAt: z.string().nullable().default(null),
   entries: z.array(AuraFeedEntrySchema).default([]),
+  /* Every canonical key this feed has ever published, including the ones
+     whose cards have since fallen off the end of `entries`.
+
+     Without it, "have we published this?" was asked of `entries` alone —
+     and `entries` is trimmed to the page length on every commit. Anything
+     trimmed was forgotten, rediscovered on the next run and published
+     again with a fresh timestamp, for ever. A drain run made it plain:
+     172 records republished on a second pass with nothing new upstream.
+
+     Keys, not entries, because that is all the question needs. Sixty
+     entries weigh 369 KB; sixty keys weigh four. */
+  publishedKeys: z.array(z.string()).default([]),
   audit: z.array(AuditRecordSchema).default([]),
 })
 export type FeedDocument = z.infer<typeof FeedDocumentSchema>
@@ -262,5 +274,6 @@ export const EMPTY_DOCUMENT: FeedDocument = {
   sourceRevision: null,
   lastRunAt: null,
   entries: [],
+  publishedKeys: [],
   audit: [],
 }

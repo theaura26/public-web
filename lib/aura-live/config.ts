@@ -89,8 +89,30 @@ export function loadConfig() {
     /** And no more than this many from any one category in a single run,
         so a busy spraying week cannot take the whole page. */
     maxPerCategoryPerRun: num('AURA_LIVE_MAX_PER_CATEGORY_PER_RUN', 2),
+    /* ── The recent lane ──
+       A page called NOW ranked the last few days against the best of the
+       last five months and lost, every run. Nothing in the score knows
+       what day it is, so the estate's routine daily work — a spray
+       applied, a preparation made — sat at rank 255 of 263 behind a
+       backlog it could never out-argue, and the page's newest card was
+       days old while the source had that morning's.
+
+       So the last few days get their own slots, taken before the ranked
+       queue is opened, judged on whether they qualify rather than on
+       whether they beat an archive. */
+    /** How recent is recent. Two days covers yesterday's work written up
+        this morning, which is how the estate actually files. */
+    recentDays: num('AURA_LIVE_RECENT_DAYS', 2),
+    /** Slots held for those days, taken from the run's total. The estate
+        files three or four applications on a working day. */
+    maxRecentPerRun: num('AURA_LIVE_MAX_RECENT_PER_RUN', 4),
     /** Feed length on the page. */
     maxFeedEntries: num('AURA_LIVE_MAX_FEED_ENTRIES', 60),
+    /** How many canonical keys the ledger remembers publishing, past the
+        cards it still shows. Comfortably more than the lookback window
+        can surface, so nothing is forgotten while it is still
+        discoverable — and cheap, because a key is not an entry. */
+    maxRememberedKeys: num('AURA_LIVE_MAX_REMEMBERED_KEYS', 5000),
 
     /* ── Pictures ──
        Off. An entry carries a photograph when the estate took one of the

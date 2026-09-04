@@ -108,6 +108,11 @@ export function loadConfig() {
     maxRecentPerRun: num('AURA_LIVE_MAX_RECENT_PER_RUN', 4),
     /** Feed length on the page. */
     maxFeedEntries: num('AURA_LIVE_MAX_FEED_ENTRIES', 60),
+    /** How many canonical keys the ledger remembers publishing, past the
+        cards it still shows. Comfortably more than the lookback window
+        can surface, so nothing is forgotten while it is still
+        discoverable — and cheap, because a key is not an entry. */
+    maxRememberedKeys: num('AURA_LIVE_MAX_REMEMBERED_KEYS', 5000),
 
     /* ── Pictures ──
        Off. An entry carries a photograph when the estate took one of the

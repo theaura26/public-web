@@ -152,9 +152,20 @@ async function discover(cfg: AuraLiveConfig, errors: string[]): Promise<GatewayR
 /* ── The run ─────────────────────────────────────────────────────────── */
 
 export async function runFeedGeneration(
-  opts: { force?: boolean; now?: Date } = {},
+  /* `drain` lifts the per-run caps for one run.
+     Those caps exist to keep a first run from dumping the archive onto
+     the page, which is the right instinct on day one and the wrong one
+     afterwards: 280 records that had already cleared every quality gate
+     sat behind a six-per-run limit, drip-feeding at a rate slower than
+     the estate files new work. Everything else still applies — the
+     windows, the score bar, the policy gates, the recent lane first.
+     This lifts a rate limit, not a standard. */
+  opts: { force?: boolean; drain?: boolean; now?: Date } = {},
 ): Promise<RunOutcome> {
-  const cfg = loadConfig()
+  const loaded = loadConfig()
+  const cfg = opts.drain
+    ? { ...loaded, maxPublishPerRun: Number.MAX_SAFE_INTEGER, maxPerCategoryPerRun: Number.MAX_SAFE_INTEGER }
+    : loaded
   const now = opts.now ?? new Date()
   const errors: string[] = []
   const base: RunOutcome = {
@@ -217,8 +228,17 @@ export async function runFeedGeneration(
 
   const published = new Map(doc.entries.map((e) => [e.canonicalKey, e]))
   /* A row that contributed to a merged card must not resurface as its
-     own card on the next run. */
-  const claimed = new Set(doc.entries.flatMap((e) => e.contributingKeys.length ? e.contributingKeys : [e.canonicalKey]))
+     own card on the next run.
+     Asked of the ledger's memory as well as its entries. `entries` is
+     trimmed to the page length on every commit, so this used to forget
+     every card that scrolled off the end — which came back round as a
+     new card, with a fresh publication date, for ever. A drain run made
+     it plain: 172 records republished on a second pass with nothing new
+     upstream. */
+  const claimed = new Set([
+    ...doc.publishedKeys,
+    ...doc.entries.flatMap((e) => e.contributingKeys.length ? e.contributingKeys : [e.canonicalKey]),
+  ])
 
   /* 3. Discover. */
   const records = await discover(cfg, errors)
@@ -421,6 +441,14 @@ export async function runFeedGeneration(
     })
     .slice(0, cfg.maxFeedEntries)
 
+  /* What the ledger remembers, which outlives what it shows. Capped well
+     past the lookback window, so a key can never be forgotten while the
+     source row behind it is still discoverable. */
+  const publishedKeys = [...new Set([
+    ...doc.publishedKeys,
+    ...accepted.flatMap((e) => e.contributingKeys.length ? e.contributingKeys : [e.canonicalKey]),
+  ])].slice(-cfg.maxRememberedKeys)
+
   /* 10b. Archive imagery, when it is switched on.
      Assigned last and in reading order, because "what the reader just
      saw" is a fact about the feed’s final order and the order is not
@@ -468,6 +496,7 @@ export async function runFeedGeneration(
     sourceRevision: errors.length ? doc.sourceRevision : sourceRevision,
     lastRunAt: at,
     entries,
+    publishedKeys,
     audit: appendAudit(doc.audit, audits),
   })
 

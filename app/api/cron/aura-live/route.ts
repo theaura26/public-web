@@ -38,10 +38,15 @@ export async function GET(request: Request) {
   /* `?force=1` runs outside a publishing window. For backfills and for
      seeing what a run would do, never on the schedule. */
   const force = url.searchParams.get('force') === '1'
+  /* `?drain=1` lifts the per-run publication caps for this run, to clear
+     a backlog of records that already qualified and were only ever held
+     back by a rate limit. Hand-run, never on the schedule — the cron
+     sends no query string. */
+  const drain = url.searchParams.get('drain') === '1'
 
   const started = Date.now()
   try {
-    const outcome = await runFeedGeneration({ force })
+    const outcome = await runFeedGeneration({ force, drain })
 
     /* Only bust the page cache when the page actually changed.
        The feed page is /now — it moved, and this line kept revalidating

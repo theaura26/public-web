@@ -413,3 +413,52 @@ test('a failed run does not record the revision, so the next one retries', async
   await runFeedGeneration()
   assert.equal((await ledger()).sourceRevision, null, 'a run that found nothing must not claim the revision')
 })
+
+/* The ledger shows a page and remembers a history, and those are not the
+   same length. `entries` is trimmed to the page on every commit, so
+   asking it alone whether something was published forgets every card
+   that has scrolled off the end — which then comes back round as a new
+   card with a fresh date, for ever. A drain run made it plain: 172
+   records republished on a second pass with nothing new upstream. */
+
+test('a card that has scrolled off the page is not published again', async () => {
+  serve(makeWorld())
+  await runFeedGeneration()
+
+  const first = await ledger()
+  assert.ok(first.entries.length, 'the first run must publish something to trim')
+  assert.ok(first.publishedKeys.length >= first.entries.length,
+    'the ledger must remember at least what it is showing')
+
+  /* Empty the page but keep the memory — exactly what the trim does when
+     the feed is longer than maxFeedEntries. */
+  await getStore().write({ ...first, entries: [] })
+
+  const before = (await ledger()).publishedKeys.length
+  const again = await runFeedGeneration()
+
+  assert.equal(again.published, 0,
+    'nothing may be republished on the strength of an empty page')
+  assert.equal((await ledger()).publishedKeys.length, before,
+    'and nothing new may be remembered either')
+})
+
+test('drain lifts the per-run caps and nothing else', async () => {
+  /* The world here holds three activities, one of them a missed
+     application and one an internal action plan. Draining must publish
+     more freely and refuse those two exactly as a capped run does:
+     drain is a rate limit, not a standard. */
+  serve(makeWorld())
+  const drained = await runFeedGeneration({ drain: true })
+  const doc = await ledger()
+
+  assert.equal(drained.rejected > 0, true, 'the quality gates must still refuse')
+  assert.ok(
+    !doc.entries.some((e) => e.canonicalKey === fixtures.applicationMissed.canonical_key),
+    'a missed application is not an event, however fast the run is allowed to go',
+  )
+  assert.ok(
+    !doc.entries.some((e) => e.canonicalKey === fixtures.actionPlan.canonical_key),
+    'an internal action plan is not an event either',
+  )
+})

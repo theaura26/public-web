@@ -128,7 +128,7 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
                 {thumb ? (
                   <Image className="thumb" src={thumb} alt="" fill sizes="64px" aria-hidden="true" />
                 ) : (
-                  <CategoryGlyph category={entry.category} size={20} />
+                  <CategoryGlyph category={entry.category} size={16} />
                 )}
                 <span className="sr-only">{CATEGORY_LABEL[entry.category]}</span>
               </span>
@@ -144,8 +144,12 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
 
       <style jsx>{`
         .tl {
-          --tl-card: 660px;
-          --tl-node: 64px;
+          /* Narrower, with the type. Substack's explore column is 512
+             and a 660px measure around a 17px line is mostly margin. */
+          --tl-card: 600px;
+          /* The subject mark at Substack's scale: an avatar beside a
+             line of text, not a plate the text sits next to. */
+          --tl-node: 40px;
 
           position: relative;
           list-style: none;
@@ -224,12 +228,14 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
           width: min(100%, var(--tl-card));
           display: grid;
           grid-template-columns: var(--tl-node) minmax(0, 1fr);
-          gap: var(--space-5);
+          gap: var(--space-4);
           align-items: start;
-          /* More room under the content than over it: the last thing in
-             the card is a "Show more" summary set at label size, and an
-             even inset left it sitting on the edge. */
-          padding: var(--space-6) var(--space-6) var(--space-7);
+          /* The inset follows the type. 32/48 was cut for a 26px headline
+             and a 19px body; against 17 and 15 it left the words adrift
+             in a wide white field. Still more room under than over —
+             the last thing in the card is a "Show more" at label size,
+             and an even inset leaves it sitting on the edge. */
+          padding: var(--space-5) var(--space-5) var(--space-6);
           background: var(--bg-card);
           border: 1px solid var(--border);
           border-radius: var(--radius-1);
@@ -264,7 +270,7 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
         }
 
         @media (max-width: 760px) {
-          .tl { --tl-node: 48px; }
+          .tl { --tl-node: 32px; }
           .card {
             padding: var(--space-5) var(--space-5) var(--space-6);
             gap: var(--space-4);

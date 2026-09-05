@@ -132,7 +132,10 @@ export default function FeedEntry({ entry, index }: { entry: PublicEntry; index:
       )}
 
       <style jsx>{`
-        .entry { display: flex; flex-direction: column; gap: var(--space-4); }
+        /* 16px between the parts of an entry was set against a 26px
+           headline; at 17px it reads as three separate things rather
+           than one row. */
+        .entry { display: flex; flex-direction: column; gap: var(--space-3); }
 
         /* The stamp labels the headline — they are one thing, and the
            entry’s own gap held them apart as if they were two. Nesting
@@ -148,20 +151,29 @@ export default function FeedEntry({ entry, index }: { entry: PublicEntry; index:
         }
         .sep { padding: 0 8px; opacity: 0.55; }
 
+        /* Substack's sizing: a feed row is read, not announced.
+           Four sizes on the page — 12 for the eyebrow, 17 for what
+           happened, 15 for the detail, 13 for the month — and weight
+           carries the hierarchy that size was carrying. An entry here is
+           one fact, "Buttermilk applied in Blocks 1, 2 and 3", and 26px
+           set a log line like a headline.
+           Both on a 22px rhythm, so a row with a body and a row without
+           sit on the same grid. */
         .headline {
           margin: 0;
-          font-size: clamp(20px, 1.8vw, 26px);
-          line-height: 1.22;
-          letter-spacing: -0.02em;
+          font-size: 17px;
+          line-height: 22px;
+          font-weight: 600;
+          letter-spacing: -0.01em;
           text-wrap: balance;
         }
 
         .prose {
           margin: 0;
-          font-size: clamp(16px, 1.3vw, 19px);
-          line-height: 1.5;
+          font-size: 15px;
+          line-height: 22px;
           color: var(--text-body);
-          max-width: 54ch;
+          max-width: 62ch;
         }
 
         .media {

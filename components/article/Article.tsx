@@ -1447,9 +1447,15 @@ export function ScrollHighlight({
         const vh = window.innerHeight
         const startY = vh * 0.78
         const endY = vh * 0.38
-        wordRefs.current.forEach(span => {
-          if (!span) return
-          const y = span.getBoundingClientRect().top
+        /* Read every position, then write every opacity. Interleaved,
+           each write invalidates layout and the next read forces the
+           browser to compute it again — twenty-five forced layouts a
+           frame on a page like Regenerative Coffee, which is most of
+           what made the scroll feel rough. Two passes cost one. */
+        const tops = wordRefs.current.map((s) => (s ? s.getBoundingClientRect().top : null))
+        wordRefs.current.forEach((span, i) => {
+          const y = tops[i]
+          if (!span || y === null) return
           const p = Math.max(0, Math.min(1, (startY - y) / (startY - endY)))
           span.style.opacity = String(0.18 + p * 0.82)
         })
@@ -1516,11 +1522,15 @@ export function ScrollHighlight({
                     <span key={i}>
                       <span
                         ref={el => { wordRefs.current[idx] = el }}
-                        style={{
-                          opacity: 0.18,
-                          transition: 'opacity var(--dur-fast) var(--ease)',
-                          willChange: 'opacity',
-                        }}
+                        /* No transition on a scroll-driven value.
+                           Opacity here is written on every scroll frame, and a
+                           transition on the same property is asked to animate to a new
+                           target before it has reached the last one. It restarts
+                           mid-flight, frame after frame, so the word lags the scroll and
+                           shimmers against it — twenty-five words doing that at once is
+                           the flicker. A transition is for a value that changes at
+                           moments; this one changes continuously and is set directly. */
+                        style={{ opacity: 0.18 }}
                       >
                         {marked ? (
                           <>

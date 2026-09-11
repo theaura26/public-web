@@ -1,5 +1,6 @@
 'use client'
 
+import { revealWhenReady } from '@/lib/film-reveal'
 import { useEffect, useRef, useState } from 'react'
 import type { Frame } from '@/lib/regenerative-coffee-gallery'
 
@@ -149,7 +150,7 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
               <video
                 className="cb-media cb-film"
                 muted loop playsInline autoPlay preload="metadata"
-                onLoadedData={(e) => { e.currentTarget.dataset.ready = 'true' }}
+                ref={revealWhenReady}
               >
                 <source src={f.video} type="video/mp4" />
               </video>

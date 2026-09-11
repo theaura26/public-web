@@ -29,6 +29,26 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
      finished by the time the hero has left. */
   const heroRef = useRef<HTMLElement>(null)
   const filmRef = useRef<HTMLVideoElement>(null)
+
+  /* Hold the film back until it has a frame to show, then fade it up.
+     Set from an effect rather than in the markup so the class only ever
+     exists where the effect that clears it can run — server-rendered
+     HTML ships the film visible, and a reader without JavaScript sees
+     the estate rather than a blank frame. */
+  useEffect(() => {
+    const film = filmRef.current
+    if (!film) return
+    if (film.readyState >= 2) return
+    film.classList.add('is-waiting')
+    const show = () => film.classList.remove('is-waiting')
+    film.addEventListener('loadeddata', show, { once: true })
+    /* A video that never loads must not leave the frame empty. */
+    const bail = window.setTimeout(show, 3000)
+    return () => {
+      film.removeEventListener('loadeddata', show)
+      window.clearTimeout(bail)
+    }
+  }, [])
   useEffect(() => {
     if (typeof window === 'undefined') return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -71,12 +91,20 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
         ref={filmRef}
         className="film"
         src="/aura-mudigere.mp4"
-        poster="/aura-mudigere.jpg"
+        /* The film's own first frame, not a scenic still of the same
+           place. They were two different pictures — 35 levels apart out
+           of 255 — so every load painted the poster, then cut to an
+           unrelated frame the moment the video had enough data. That cut
+           is the flicker. Matched, the swap is invisible. */
+        poster="/aura-mudigere-poster.jpg"
         autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        /* auto, not metadata. This video autoplays, so the browser needs
+           frames either way; asking for metadata only delays the first
+           of them and holds the poster on screen longer. */
+        preload="auto"
         aria-hidden="true"
       />
       {/* The film is a ground, not a picture: it is dimmed hard so the
@@ -165,7 +193,19 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           object-fit: cover;
           z-index: 0;
           will-change: filter, transform;
+          /* Faded in over its own poster rather than cut to.
+             A poster is a bridge to the first frame, and the swap happens
+             the instant the decoder has enough data — one paint, no
+             warning. Matching the poster to frame 0 removes the jump
+             where the two images disagree; this removes the seam
+             everywhere else, including the moment the video is replaced
+             by a slightly different decode of the same frame.
+             It starts opaque and is only dimmed by the class below, so a
+             reader with JavaScript off still gets the film rather than a
+             permanently invisible one. */
+          transition: opacity 420ms var(--ease, ease-out);
         }
+        .film.is-waiting { opacity: 0; }
         .veil {
           position: absolute;
           inset: 0;
@@ -189,7 +229,7 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
         }
         @media (prefers-reduced-motion: reduce) {
           .film { display: none; }
-          .hero { background: #000 url('/aura-mudigere.jpg') center / cover; }
+          .hero { background: #000 url('/aura-mudigere-poster.jpg') center / cover; }
         }
 
         /* Title and stamp keep the page gutter, and sit above the film. */

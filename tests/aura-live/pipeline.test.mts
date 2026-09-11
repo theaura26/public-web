@@ -462,3 +462,41 @@ test('drain lifts the per-run caps and nothing else', async () => {
     'an internal action plan is not an event either',
   )
 })
+
+/* A copy fix that only reaches cards published after it is not a fix.
+   The card reading "Buttermilk applied / Buttermilk." and the one that
+   put a vine count in acres were written before their templates were
+   corrected, and their source rows are never going to change — so the
+   correction path would never have fired and the bad copy would have
+   stood until it aged off the end of the feed. */
+
+test('a card written by an older generator is rewritten', async () => {
+  serve(makeWorld())
+  await runFeedGeneration()
+
+  const before = await ledger()
+  const target = before.entries[0]
+  assert.ok(target, 'the first run must publish something to rewrite')
+
+  /* Put it back the way the old templates left it: stale version, and a
+     body the current templates would never write. */
+  await getStore().write({
+    ...before,
+    entries: before.entries.map((e, i) =>
+      i === 0
+        ? { ...e, body: 'Across 1045 vines acres.', editorial: { ...e.editorial, generatorVersion: 'aura-live/0.9.0' } }
+        : e,
+    ),
+  })
+
+  const run = await runFeedGeneration()
+  const after = await ledger()
+  const rewritten = after.entries.find((e) => e.canonicalKey === target.canonicalKey)
+
+  assert.ok(run.updated >= 1, 'the run must report the rewrite')
+  assert.ok(rewritten, 'the card stays on the page')
+  assert.notEqual(rewritten!.body, 'Across 1045 vines acres.', 'the stale copy must not survive')
+  assert.equal(rewritten!.editorial?.generatorVersion, loadConfig().generatorVersion)
+  assert.equal(rewritten!.publishedAt, target.publishedAt,
+    'a card does not become new because its copy was corrected')
+})

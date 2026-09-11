@@ -211,10 +211,20 @@ export async function runFeedGeneration(
      overwhelming majority of scheduled runs have nothing to find. Two
      requests instead of a hundred is what makes a half-hourly schedule
      reasonable against a source that changes every few weeks. */
+  /* One exception to the shortcut: the templates having moved.
+     Entries carry the generator that wrote them, and when a copy fix
+     lands there is nothing new at the source to notice — the rows are
+     the same rows. Skipping on the revision alone would leave every
+     standing card written by the old templates until it aged off the
+     feed. A run that has stale cards to rewrite is not a wasted run. */
+  const hasStaleCopy = doc.entries.some(
+    (e) => e.editorial?.generatorVersion !== cfg.generatorVersion,
+  )
   if (
     sourceRevision &&
     doc.sourceRevision === sourceRevision &&
     doc.entries.length > 0 &&
+    !hasStaleCopy &&
     !opts.force
   ) {
     return {
@@ -267,12 +277,27 @@ export async function runFeedGeneration(
     const existing = published.get(record.canonical_key)
     const isNew = !claimed.has(record.canonical_key)
     if (!isNew && existing) {
-      /* Already on the page. Only a genuine source correction matters. */
+      /* Already on the page. A source correction rewrites it — and so
+         does a change in the templates that wrote it.
+      
+         Without the second clause a fix to the copy only ever reached
+         cards published after the fix. The card reading "Buttermilk
+         applied / Buttermilk." and the one putting a vine count in acres
+         were both written before their templates were corrected, and
+         nothing would have rewritten them: those source rows are not
+         going to change, so the correction path never fired and the bad
+         copy would have stood until it aged off the end of the feed.
+         The stored version is what the entry was written by, so a
+         difference means the templates have moved underneath it. */
       const seen = existing.evidence.syncedAt
       const nowSynced = record.provenance?.syncedAt
-      if (record.updated_at && seen && nowSynced && record.updated_at > (existing.updatedAt ?? existing.publishedAt)) {
-        corrections.push(record)
-      }
+      const sourceMoved = Boolean(
+        record.updated_at && seen && nowSynced &&
+        record.updated_at > (existing.updatedAt ?? existing.publishedAt),
+      )
+      const writtenByAnOlderGenerator =
+        existing.editorial?.generatorVersion !== cfg.generatorVersion
+      if (sourceMoved || writtenByAnOlderGenerator) corrections.push(record)
       continue
     }
     if (!isNew) continue

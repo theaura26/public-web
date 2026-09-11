@@ -343,3 +343,29 @@ test('an exhausted pool repeats rather than leaving a card blank', () => {
   const forced = pickGalleryImage('al_w', 'cows', 'Herd', all)
   assert.ok(forced, 'a picture is still returned when everything has been used')
 })
+
+/* The column is headed "Area (acres)" and the estate does not always fill
+   it with acres. Two rows carry a count of vines. The unit was stripped
+   and re-appended regardless, which published "across 1045 vines acres" —
+   a plant count stated as a measurement. */
+
+test('a cell that states its own unit keeps it', () => {
+  const c = merged('applicationDone')
+  const withVines = { ...c, area: '1045 vines' } as typeof c
+  const body = writeCopy(withVines).body ?? ''
+  assert.ok(!/vines acres/.test(body), 'a vine count must not be dressed as an acreage')
+  assert.match(body, /1045 vines/)
+})
+
+test('a bare number still gets the unit the column implies', () => {
+  const c = merged('applicationDone')
+  assert.match(writeCopy({ ...c, area: '4.5' } as typeof c).body ?? '', /4\.5 acres/)
+  assert.match(writeCopy({ ...c, area: '1' } as typeof c).body ?? '', /\b1 acre\b/)
+})
+
+test('a cell that already says acres is not given a second one', () => {
+  const c = merged('applicationDone')
+  const body = writeCopy({ ...c, area: '32.24 acres' } as typeof c).body ?? ''
+  assert.ok(!/acres acres|acre acres/.test(body))
+  assert.match(body, /32\.24 acres/)
+})

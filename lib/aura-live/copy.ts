@@ -85,9 +85,19 @@ function placeClause(c: MergedCandidate): string {
 
 /* "1 acres" is the kind of small wrongness that makes a reader stop
    trusting the numbers around it — and some cells already carry the unit,
-   which is how "32.24 acre acres" happens. */
+   which is how "32.24 acre acres" happens.
+
+   The column is headed "Area (acres)" and is not always an area in acres.
+   Some rows carry a count of vines. Stripping a trailing "acres" and
+   appending one regardless turned "1045 vines" into "1045 vines acres" —
+   a plant count published as a measurement, on a page whose argument is
+   that it does not overstate.
+   So the unit is only supplied when the cell is a bare number and the
+   column heading is therefore the only thing saying what it is. A cell
+   that states its own unit keeps it. */
 function acres(value: string): string {
   const bare = value.replace(/\s*acres?\.?$/i, '').trim()
+  if (!/^\d+(?:\.\d+)?$/.test(bare)) return bare
   return `${bare} ${Number(bare) === 1 ? 'acre' : 'acres'}`
 }
 

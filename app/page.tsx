@@ -1020,15 +1020,38 @@ function SanctuaryBg({ s }: { s: Sanctuary }) {
   if (s.bgVideo) {
     return (
       <>
+        {/* The still, behind the film rather than inside it.
+            bgSrc was the video's poster, and a poster and the first frame
+            of these films are different photographs — 35 levels apart out
+            of 255 on Mudigere — so the panel cut from one picture to
+            another the moment the film had data. Held behind it, the still
+            is what the panel rests on and the film arrives over the top. */}
+        {s.bgSrc && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={s.bgSrc}
+            alt=""
+            aria-hidden="true"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        )}
         <video
           ref={videoRef}
           muted
           loop
           playsInline
           preload="none"
-          poster={s.bgSrc}
+          /* No poster: the still behind is doing that job. */
           aria-label={`${s.name} sanctuary — ambient backdrop`}
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          /* Set on the element, because the opacity below is inline and a
+                 CSS rule keyed to a data attribute could never outrank it. */
+              onLoadedData={(e) => { e.currentTarget.style.opacity = '1' }}
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+            /* Faded up once it has a frame; hidden until then, which shows
+               the still rather than nothing. */
+            opacity: 0, transition: 'opacity 420ms ease',
+          }}
         >
           <source src={s.bgVideo} type="video/mp4" />
         </video>

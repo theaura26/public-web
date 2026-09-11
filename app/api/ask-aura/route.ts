@@ -181,7 +181,14 @@ function sourcesBlock(hits: Hit[]): string {
     .map((h, i) =>
       [
         `[${i + 1}] ${h.chunk.sectionPath}`,
-        `    url: ${h.chunk.url}`,
+        /* An outside source's address is withheld from the model.
+           The research is here to inform what gets said — an answer about
+           whether biodynamics is established should rest on more than the
+           estate's account of itself — but the reader is never sent out,
+           and the surest way for a URL not to appear in an answer is for
+           the model never to have been given it. The text still does its
+           work; only the address is kept back. */
+        h.chunk.namespace === 'aura' ? `    url: ${h.chunk.url}` : '    url: (not for quoting)',
         `    type: ${h.chunk.sourceType}`,
         `    ${h.chunk.text}`,
       ].join('\n'),
@@ -312,10 +319,9 @@ export async function POST(req: Request) {
 
   const { message, history, page } = verdict
 
-  /* Retrieve before any Aura-specific claim. Aura's own pages only —
-     the retriever returns nothing else now, so an answer is grounded
-     in this estate's own account and every card under it leads back
-     into the site. */
+  /* Retrieve before any Aura-specific claim. Both namespaces: the
+     research may inform what is said, and the citation step below
+     makes sure it is never what is offered. */
   let hits: Hit[] = []
   try {
     hits = await search(message, { limit: 6, pageUrl: page.url, signal: req.signal })
@@ -444,6 +450,15 @@ export async function POST(req: Request) {
        trace. */
     const seenPages = new Set<string>()
     const citations = hits
+      /* Aura's own pages only. The research the model reads is real and
+         it shapes the answer — one about whether biodynamics is
+         established should rest on more than the estate's account of
+         itself — but a card is an invitation to leave, and these look
+         exactly like the ones leading to a page here. Read the
+         knowledge, keep the reader. Named on the namespace rather than
+         left to the host allowlist alone, because that is the rule as
+         it is meant: nothing outside is offered, whatever its address. */
+      .filter((h) => h.chunk.namespace === 'aura')
       .filter((h) => isCitableSource(h.chunk.url))
       .filter((h) => !seenPages.has(h.chunk.url) && seenPages.add(h.chunk.url))
       .slice(0, 3)

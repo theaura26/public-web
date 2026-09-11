@@ -117,6 +117,28 @@ function wildlife(c: MergedCandidate): Copy {
   }
 }
 
+/* A body that only repeats the headline.
+ *
+ * The Copy type has always said body is "absent when the headline
+ * already carries everything recorded", and the application template
+ * never honoured it: with no quantity and no area the body fell back to
+ * the subject alone, so "Buttermilk applied" was followed by
+ * "Buttermilk." — the same sentence twice, the second one set smaller.
+ *
+ * Compared on words rather than characters, because the two are written
+ * differently on purpose: the headline conjugates ("applied in Block 5")
+ * and the body lists. If every word the body has is already in the
+ * headline, the body is not a second sentence and the card is better
+ * without it.
+ */
+function repeatsHeadline(headline: string, body: string): boolean {
+  const words = (s: string) =>
+    s.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean)
+  const inHeadline = new Set(words(headline))
+  const bodyWords = words(body)
+  return bodyWords.length > 0 && bodyWords.every((w) => inHeadline.has(w))
+}
+
 function application(c: MergedCandidate): Copy {
   const facts = (c.raw.facts ?? {}) as Record<string, unknown>
   const input = c.subject
@@ -141,9 +163,15 @@ function application(c: MergedCandidate): Copy {
     ? `${input} has now been applied across ${acres(todate)} this round.`
     : undefined
 
+  const bodyText = sentence(parts.filter(Boolean).join(' '))
+
   return {
     headline,
-    body: sentence(parts.filter(Boolean).join(' ')),
+    /* Dropped rather than printed when it says nothing the headline has
+       not. A row with no quantity and no area leaves the subject on its
+       own, and "Buttermilk applied / Buttermilk." is one sentence set
+       twice, the second time smaller. */
+    body: repeatsHeadline(headline, bodyText) ? undefined : bodyText,
     significance,
     templateId: 'practice.application.v2',
   }

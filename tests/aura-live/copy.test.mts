@@ -369,3 +369,23 @@ test('a cell that already says acres is not given a second one', () => {
   assert.ok(!/acres acres|acre acres/.test(body))
   assert.match(body, /32\.24 acres/)
 })
+
+/* "Buttermilk applied" followed by "Buttermilk." is one sentence set
+   twice, the second time smaller. The Copy type has always said body is
+   "absent when the headline already carries everything recorded"; the
+   application template never honoured it, and a row with no quantity and
+   no area fell back to the subject alone. */
+
+test('a body that only repeats the headline is not published', () => {
+  const c = merged('applicationDone')
+  const bare = { ...c, quantities: [], area: undefined, location: undefined } as typeof c
+  const copy = writeCopy(bare)
+  assert.match(copy.headline, /Buttermilk applied/)
+  assert.equal(copy.body, undefined, 'the card is better with no second line than with an echo')
+})
+
+test('a body that adds a number or a place is kept', () => {
+  const copy = writeCopy(merged('applicationDone'))
+  assert.ok(copy.body, 'a row carrying a quantity and an area still gets its detail')
+  assert.match(copy.body!, /acres/)
+})

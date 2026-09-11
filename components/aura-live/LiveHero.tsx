@@ -141,7 +141,13 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
              pair is centred in. Without it the pair centres on the whole
              hero, including the strip the nav sits over, which puts NOW
              high by half the bar. */
-          padding: var(--nav-h, 56px) 0 var(--space-9);
+          /* The bar, plus a floor under it. The floor is the half of the
+             minimum gap that belongs to the top; the other half is the
+             band's own margin below. Because both are fixed and equal,
+             the two auto margins still split what is left evenly — so the
+             pair stays centred and can never be squeezed against either
+             edge, however short the window gets. */
+          padding: calc(var(--nav-h, 56px) + var(--space-6)) 0 var(--space-9);
           /* The site's hero measure — the field notes index, the
              articles and the Remarkable Circle are all 100svh. The
              microsite's min(92svh, 900px) is the outlier and this used to
@@ -259,6 +265,17 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           width: 0.16em;
           height: 0.16em;
           margin-left: 0.1em;
+          /* Hung, not set.
+             The line is centred, so anything after the word counts toward
+             the width being centred — and the dot's 0.16em plus its
+             0.1em of lead pushed NOW half of that to the left of the
+             page's middle. Sixteen pixels at 128px type: not enough to
+             name, enough to see, and it drifted with the type size
+             because it is all in em.
+             Taking the advance back off the right lets the mark hang
+             beyond the line while the word itself measures alone, which
+             is the thing that should be centred. */
+          margin-right: -0.26em;
           /* Centred on the word, not perched above it: the dot's bottom
              sits 0.28em over the baseline, which puts its middle on the
              middle of the cap height. */
@@ -297,16 +314,18 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
            starts at the very top with the nav sitting over the word.
            Reserving the bar back costs nothing above 760px, where this
            query does not apply. */
-        /* Short screens. Two auto margins split whatever is left, and
-           once there is nothing left they both collapse to zero and the
-           stamp lands on the card band. A floor under the stamp costs the
-           centring a little — the pair rides that much high — which is
-           the right trade at a height where the alternative is the two
-           touching. The nav is reserved unconditionally now, so this rule
-           no longer needs to do it. */
-        @media (max-height: 760px) {
-          .fresh { margin-bottom: var(--space-6); }
-        }
+        /* The other half of the floor.
+           A fixed margin here and an auto one above used to be the short
+           screen rule, and it had the failure backwards: the fixed side
+           took its 32px first and the auto side absorbed the remainder,
+           so as the window shrank the space above NOW collapsed to
+           nothing and the word jammed under the bar — 108px of headroom
+           at 760, 48 at 700, zero by 620.
+           Matching fixed floors on both sides instead. The autos divide
+           only what is left over, which is symmetrical by definition, and
+           at the height where there is nothing left over the pair still
+           has 32px of air each side. */
+        .band-slot { margin-top: var(--space-6); }
 
         /* No gap here either. The base rule sets gap: 0 deliberately —
            the stamp belongs to the title and the band does not — and this

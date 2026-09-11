@@ -188,6 +188,14 @@ export type SearchOptions = {
 }
 
 export async function search(query: string, opts: SearchOptions = {}): Promise<Hit[]> {
+  /* Both namespaces. The peer-reviewed material is here so an answer
+     about, say, whether biodynamics is scientifically established can
+     rest on something other than this estate's own account of itself —
+     and an answer that can only quote the estate on the estate is the
+     weaker thing to have.
+     What changed is what a reader is handed, not what the model is
+     given: nothing outside is cited or linked. Read the knowledge, keep
+     the reader here. The citation step is where that is enforced. */
   const { limit: askedFor = 6, namespaces = ['aura', 'external'], pageUrl, signal } = opts
   /* Clamped here rather than only at the callers: a limit is a promise
      about how much this function will ever return, and a promise every

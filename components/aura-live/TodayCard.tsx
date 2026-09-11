@@ -238,7 +238,13 @@ export default function TodayCard({ today }: { today: Today }) {
         .lead { width: 552px; }
         .cap {
           margin: 0;
-          color: rgba(255, 255, 255, 0.45);
+          /* The reading's name, and the one label left at a flat 11px
+             while the number under it ran from 24px to 32 and the note
+             beside it from 13 to 15. It moves with them. */
+          font-size: clamp(11px, 0.16vw + 10.4px, 13px);
+          /* 0.45 measured 4.49:1 on this ground — a hundredth under AA,
+             which is the kind of miss only measuring finds. */
+          color: rgba(255, 255, 255, 0.52);
           display: flex;
           align-items: center;
         }
@@ -288,9 +294,14 @@ export default function TodayCard({ today }: { today: Today }) {
 
         .note {
           margin: 0;
-          font-size: 13px;
+          /* Moves with the card it sits in, which runs from a phone's
+             full width to 552px. A fixed 13px was the same line at both
+             ends. */
+          font-size: clamp(13px, 0.2vw + 12.2px, 15px);
           line-height: 1.5;
-          color: rgba(255, 255, 255, 0.42);
+          /* 0.42 measured about 4.4:1 on this ground — just under, and
+             this line carries the reading's meaning, not its label. */
+          color: rgba(255, 255, 255, 0.52);
           max-width: 42ch;
         }
 

@@ -1,5 +1,6 @@
 'use client'
 
+import { revealWhenReady } from '@/lib/film-reveal'
 import { useEffect, useRef, useState } from 'react'
 import type { Frame } from '@/lib/regenerative-coffee-gallery'
 
@@ -135,25 +136,26 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           /* Order of arrival is the z-order, and the frame the reader has
              just reached is always last in it — so it is on top in the
              same render that starts its fade. */
-          style={{ zIndex: shown.indexOf(i) + 1, ['--dim' as string]: String(f.dim ?? 0.45) }}
+          /* The still rides on the frame when a film sits over it.
+             It was a sibling <img> for one deploy, and .cb-media is a plain
+             block rather than a positioned one — so the two did not layer,
+             they stacked: the picture took the frame and the film sat below
+             it, out of sight. A background is behind by definition and costs
+             no element. */
+          style={{
+            zIndex: shown.indexOf(i) + 1,
+            ['--dim' as string]: String(f.dim ?? 0.45),
+            ...(f.video ? { backgroundImage: `url(${f.src})` } : null),
+          }}
         >
           {f.video ? (
-            <>
-              {/* The still behind the film, not inside it. As the video's poster
-                  it lived in the same box as the thing replacing it — and the two
-                  are different pictures, 20 levels apart out of 255 on Hydrology —
-                  so the backdrop cut from one to the other the moment the film had
-                  data. Behind, it is what the chapter rests on. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="cb-media" src={f.src} alt="" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
-              <video
-                className="cb-media cb-film"
-                muted loop playsInline autoPlay preload="metadata"
-                onLoadedData={(e) => { e.currentTarget.dataset.ready = 'true' }}
-              >
-                <source src={f.video} type="video/mp4" />
-              </video>
-            </>
+            <video
+              className="cb-media cb-film"
+              muted loop playsInline autoPlay preload="metadata"
+              ref={revealWhenReady}
+            >
+              <source src={f.video} type="video/mp4" />
+            </video>
           ) : (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img className="cb-media" src={f.src} alt="" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
@@ -179,6 +181,10 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
         .cb-frame {
           position: absolute;
           inset: 0;
+          /* The still, where a frame carries a film. */
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
           opacity: 0;
           /* A transition, not an animation. An animation cannot be
              interrupted gracefully: when the reader scrolls on before a

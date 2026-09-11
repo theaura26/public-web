@@ -1,5 +1,6 @@
 'use client'
 
+import { revealWhenReady } from '@/lib/film-reveal'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
 import Reveal from '@/components/RevealOnScroll'
@@ -509,6 +510,14 @@ function LocationModal({ open, onClose, label, bleed, children }: { open: boolea
         )}
       </div>
       <style jsx global>{`
+        /* The sanctuary film, faded up over the still behind it once it
+           holds a frame. Driven by the attribute the reveal helper sets,
+           not an inline opacity — a film already loaded when React
+           arrived never fires the event an inline value was waiting on,
+           and stayed hidden while it played. */
+        .panel-film { opacity: 0; transition: opacity 420ms ease; }
+        .panel-film[data-ready='true'] { opacity: 1; }
+
         /* Modal palette is always INVERTED from the page. Day page → dark
            modal + light text. Night page → light modal + dark text. The map
            asset is authored dark-on-light, so it needs an invert whenever
@@ -1036,22 +1045,17 @@ function SanctuaryBg({ s }: { s: Sanctuary }) {
           />
         )}
         <video
-          ref={videoRef}
+          /* Both jobs on one ref: the observer needs the element, and the
+             film needs revealing once it holds a frame. */
+          ref={(el) => { videoRef.current = el; revealWhenReady(el) }}
+          className="panel-film"
           muted
           loop
           playsInline
           preload="none"
           /* No poster: the still behind is doing that job. */
           aria-label={`${s.name} sanctuary — ambient backdrop`}
-          /* Set on the element, because the opacity below is inline and a
-                 CSS rule keyed to a data attribute could never outrank it. */
-              onLoadedData={(e) => { e.currentTarget.style.opacity = '1' }}
-          style={{
-            position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
-            /* Faded up once it has a frame; hidden until then, which shows
-               the still rather than nothing. */
-            opacity: 0, transition: 'opacity 420ms ease',
-          }}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         >
           <source src={s.bgVideo} type="video/mp4" />
         </video>

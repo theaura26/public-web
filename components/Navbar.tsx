@@ -1,5 +1,6 @@
 'use client'
 
+import { revealWhenReady } from '@/lib/film-reveal'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -1011,7 +1012,7 @@ export default function Navbar() {
                           /* No poster. The wrapper behind carries the still,
                              so there is nothing here to cut away from. */
                           aria-label={a.title}
-                          onLoadedData={(e) => { e.currentTarget.dataset.ready = 'true' }}
+                          ref={revealWhenReady}
                         >
                           <source src={a.video} type="video/mp4" />
                         </video>

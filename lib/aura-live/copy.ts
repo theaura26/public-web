@@ -85,9 +85,19 @@ function placeClause(c: MergedCandidate): string {
 
 /* "1 acres" is the kind of small wrongness that makes a reader stop
    trusting the numbers around it — and some cells already carry the unit,
-   which is how "32.24 acre acres" happens. */
+   which is how "32.24 acre acres" happens.
+
+   The column is headed "Area (acres)" and is not always an area in acres.
+   Some rows carry a count of vines. Stripping a trailing "acres" and
+   appending one regardless turned "1045 vines" into "1045 vines acres" —
+   a plant count published as a measurement, on a page whose argument is
+   that it does not overstate.
+   So the unit is only supplied when the cell is a bare number and the
+   column heading is therefore the only thing saying what it is. A cell
+   that states its own unit keeps it. */
 function acres(value: string): string {
   const bare = value.replace(/\s*acres?\.?$/i, '').trim()
+  if (!/^\d+(?:\.\d+)?$/.test(bare)) return bare
   return `${bare} ${Number(bare) === 1 ? 'acre' : 'acres'}`
 }
 
@@ -105,6 +115,28 @@ function wildlife(c: MergedCandidate): Copy {
     body: sentence(c.location ? `${verb} ${placePhrase(c.location.label)}` : `${verb} on the estate`),
     templateId: 'wildlife.observed.v2',
   }
+}
+
+/* A body that only repeats the headline.
+ *
+ * The Copy type has always said body is "absent when the headline
+ * already carries everything recorded", and the application template
+ * never honoured it: with no quantity and no area the body fell back to
+ * the subject alone, so "Buttermilk applied" was followed by
+ * "Buttermilk." — the same sentence twice, the second one set smaller.
+ *
+ * Compared on words rather than characters, because the two are written
+ * differently on purpose: the headline conjugates ("applied in Block 5")
+ * and the body lists. If every word the body has is already in the
+ * headline, the body is not a second sentence and the card is better
+ * without it.
+ */
+function repeatsHeadline(headline: string, body: string): boolean {
+  const words = (s: string) =>
+    s.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean)
+  const inHeadline = new Set(words(headline))
+  const bodyWords = words(body)
+  return bodyWords.length > 0 && bodyWords.every((w) => inHeadline.has(w))
 }
 
 function application(c: MergedCandidate): Copy {
@@ -131,9 +163,15 @@ function application(c: MergedCandidate): Copy {
     ? `${input} has now been applied across ${acres(todate)} this round.`
     : undefined
 
+  const bodyText = sentence(parts.filter(Boolean).join(' '))
+
   return {
     headline,
-    body: sentence(parts.filter(Boolean).join(' ')),
+    /* Dropped rather than printed when it says nothing the headline has
+       not. A row with no quantity and no area leaves the subject on its
+       own, and "Buttermilk applied / Buttermilk." is one sentence set
+       twice, the second time smaller. */
+    body: repeatsHeadline(headline, bodyText) ? undefined : bodyText,
     significance,
     templateId: 'practice.application.v2',
   }

@@ -1,5 +1,6 @@
 'use client'
 
+import { revealWhenReady } from '@/lib/film-reveal'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -986,7 +987,17 @@ export default function Navbar() {
                       alignSelf: 'flex-start',
                     }}
                   >
-                    <div className="tile-img" aria-hidden>
+                    {/* The still sits on the wrapper, not inside the video. It used to
+                        be the video's poster, and a poster and the first frame of these
+                        films are different photographs — 65 levels apart out of 255 on
+                        the artistry tile — so a tile cut from one picture to another the
+                        moment its film had data. Behind the film instead: it is what the
+                        tile rests on and what the film arrives over. */}
+                    <div
+                      className="tile-img"
+                      aria-hidden
+                      style={a.img ? { backgroundImage: `url(${a.img})` } : undefined}
+                    >
                       {a.video ? (
                         <video
                           autoPlay
@@ -998,8 +1009,10 @@ export default function Navbar() {
                              scrolls into view. Was: "auto" (full preload on every
                              page load, ~10MB of menu video transfer). */
                           preload="none"
-                          poster={a.img}
+                          /* No poster. The wrapper behind carries the still,
+                             so there is nothing here to cut away from. */
                           aria-label={a.title}
+                          ref={revealWhenReady}
                         >
                           <source src={a.video} type="video/mp4" />
                         </video>
@@ -1489,6 +1502,20 @@ export default function Navbar() {
             will-change: transform;
             transition: opacity var(--dur-fast) var(--ease);
           }
+          /* The still the film arrives over. */
+          :global(.tile-img) {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+          }
+          /* Held back until it has a frame, then faded up over that still.
+             Starting hidden costs nothing where JavaScript does not run: the
+             wrapper behind is the picture, and the film is decorative. */
+          :global(.tile-img video) {
+            opacity: 0;
+            transition: opacity 420ms ease;
+          }
+          :global(.tile-img video[data-ready="true"]) { opacity: 1; }
           :global(.tile-img) {
             position: relative;
             width: 100%;

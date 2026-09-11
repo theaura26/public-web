@@ -1,5 +1,6 @@
 'use client'
 
+import { revealWhenReady } from '@/lib/film-reveal'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
 import Reveal from '@/components/RevealOnScroll'
@@ -509,6 +510,14 @@ function LocationModal({ open, onClose, label, bleed, children }: { open: boolea
         )}
       </div>
       <style jsx global>{`
+        /* The sanctuary film, faded up over the still behind it once it
+           holds a frame. Driven by the attribute the reveal helper sets,
+           not an inline opacity — a film already loaded when React
+           arrived never fires the event an inline value was waiting on,
+           and stayed hidden while it played. */
+        .panel-film { opacity: 0; transition: opacity 420ms ease; }
+        .panel-film[data-ready='true'] { opacity: 1; }
+
         /* Modal palette is always INVERTED from the page. Day page → dark
            modal + light text. Night page → light modal + dark text. The map
            asset is authored dark-on-light, so it needs an invert whenever
@@ -1020,13 +1029,31 @@ function SanctuaryBg({ s }: { s: Sanctuary }) {
   if (s.bgVideo) {
     return (
       <>
+        {/* The still, behind the film rather than inside it.
+            bgSrc was the video's poster, and a poster and the first frame
+            of these films are different photographs — 35 levels apart out
+            of 255 on Mudigere — so the panel cut from one picture to
+            another the moment the film had data. Held behind it, the still
+            is what the panel rests on and the film arrives over the top. */}
+        {s.bgSrc && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={s.bgSrc}
+            alt=""
+            aria-hidden="true"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        )}
         <video
-          ref={videoRef}
+          /* Both jobs on one ref: the observer needs the element, and the
+             film needs revealing once it holds a frame. */
+          ref={(el) => { videoRef.current = el; revealWhenReady(el) }}
+          className="panel-film"
           muted
           loop
           playsInline
           preload="none"
-          poster={s.bgSrc}
+          /* No poster: the still behind is doing that job. */
           aria-label={`${s.name} sanctuary — ambient backdrop`}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         >
@@ -1773,6 +1800,16 @@ export default function Home() {
               text-align: center;
               max-width: 240px;
               margin: 0 auto;
+            }
+
+            /* Phones only. 240px broke the second paragraph across four lines
+               and left "us." alone on the last of them — a word on its own is
+               read as emphasis it was never given. 256px is where it joins the
+               line above; 260 keeps it there when a font renders a hair wide.
+               Tablets keep 240: the measure is generous enough there already
+               and this is a phone-width wrap. */
+            @media (max-width: 640px) {
+              .hero-mid { max-width: 260px; }
             }
             .hero-mid__logo {
               justify-self: center;

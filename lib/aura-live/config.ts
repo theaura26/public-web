@@ -141,6 +141,12 @@ export function loadConfig() {
 
     /** Bumped whenever copy generation changes, so the audit trail can
         explain why the same evidence produced different words. */
-    generatorVersion: 'aura-live/1.0.0',
+    /* Bumped when the templates change what they would write for the
+       same record. Entries carry the version they were written by, and a
+       run rewrites any that no longer match — so a copy fix reaches the
+       cards already on the page instead of only the next ones.
+       1.1.0: the area unit is no longer assumed to be acres, and a body
+       that only repeats its headline is not published. */
+    generatorVersion: 'aura-live/1.1.0',
   }
 }

@@ -1,5 +1,6 @@
 'use client'
 
+import { revealWhenReady } from '@/lib/film-reveal'
 import { useEffect, useRef, useState } from 'react'
 import type { Frame } from '@/lib/regenerative-coffee-gallery'
 
@@ -135,10 +136,24 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           /* Order of arrival is the z-order, and the frame the reader has
              just reached is always last in it — so it is on top in the
              same render that starts its fade. */
-          style={{ zIndex: shown.indexOf(i) + 1, ['--dim' as string]: String(f.dim ?? 0.45) }}
+          /* The still rides on the frame when a film sits over it.
+             It was a sibling <img> for one deploy, and .cb-media is a plain
+             block rather than a positioned one — so the two did not layer,
+             they stacked: the picture took the frame and the film sat below
+             it, out of sight. A background is behind by definition and costs
+             no element. */
+          style={{
+            zIndex: shown.indexOf(i) + 1,
+            ['--dim' as string]: String(f.dim ?? 0.45),
+            ...(f.video ? { backgroundImage: `url(${f.src})` } : null),
+          }}
         >
           {f.video ? (
-            <video className="cb-media" poster={f.src} muted loop playsInline autoPlay preload="metadata">
+            <video
+              className="cb-media cb-film"
+              muted loop playsInline autoPlay preload="metadata"
+              ref={revealWhenReady}
+            >
               <source src={f.video} type="video/mp4" />
             </video>
           ) : (
@@ -149,6 +164,14 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
       ))}
 
       <style jsx>{`
+        /* Held back until it has a frame, then faded up over the still
+           behind it. Hidden where JavaScript does not run, and there the
+           still is the picture — the film was only ever over the top. */
+        .cb-film {
+          opacity: 0;
+          transition: opacity 420ms ease;
+        }
+        .cb-film[data-ready='true'] { opacity: 1; }
         .cb {
           position: fixed;
           inset: 0;
@@ -158,6 +181,10 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
         .cb-frame {
           position: absolute;
           inset: 0;
+          /* The still, where a frame carries a film. */
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
           opacity: 0;
           /* A transition, not an animation. An animation cannot be
              interrupted gracefully: when the reader scrolls on before a

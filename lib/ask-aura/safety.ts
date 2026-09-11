@@ -357,19 +357,19 @@ export function isAllowedLink(url: string): boolean {
   }
 }
 
-/* The research the corpus actually holds, named one host at a time.
-   Crediting a source is not the same act as linking out in prose: an
-   answer that rests on the UNESCO listing should show the reader where
-   that came from, and a citation the reader cannot follow is not really
-   provenance. This list changes only when the external corpus does, so
-   it stays short enough to read. */
-const CITABLE_HOSTS = new Set([
-  ...ALLOWED_HOSTS,
-  'whc.unesco.org',
-  'www.indiacoffee.org',
-  'doi.org',
-  'nbagr.icar.gov.in',
-])
+/* Where a citation may point: this site, and nowhere else.
+   It used to hold the research hosts too, on the reasoning that crediting
+   a source is a different act from linking out in prose and that a
+   citation a reader cannot follow is not really provenance. That reading
+   was fair and the result was not: the cards render identically to the
+   ones that lead to a page here, so "Biodynamic agriculture — evidence
+   review" arrived as a card reading "Biodynamic agriculture" and took the
+   reader to a journal without ever saying it would.
+   Retrieval no longer returns anything outside the estate, so nothing
+   should reach this check from outside either. It is kept as the second
+   of two doors rather than the only one — a policy this plain is worth
+   enforcing where the links are made as well as where they are found. */
+const CITABLE_HOSTS = new Set([...ALLOWED_HOSTS])
 
 /** May this source be shown beneath an answer as where it came from? */
 export function isCitableSource(url: string): boolean {

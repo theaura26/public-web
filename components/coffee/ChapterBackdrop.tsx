@@ -138,9 +138,22 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
           style={{ zIndex: shown.indexOf(i) + 1, ['--dim' as string]: String(f.dim ?? 0.45) }}
         >
           {f.video ? (
-            <video className="cb-media" poster={f.src} muted loop playsInline autoPlay preload="metadata">
-              <source src={f.video} type="video/mp4" />
-            </video>
+            <>
+              {/* The still behind the film, not inside it. As the video's poster
+                  it lived in the same box as the thing replacing it — and the two
+                  are different pictures, 20 levels apart out of 255 on Hydrology —
+                  so the backdrop cut from one to the other the moment the film had
+                  data. Behind, it is what the chapter rests on. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="cb-media" src={f.src} alt="" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+              <video
+                className="cb-media cb-film"
+                muted loop playsInline autoPlay preload="metadata"
+                onLoadedData={(e) => { e.currentTarget.dataset.ready = 'true' }}
+              >
+                <source src={f.video} type="video/mp4" />
+              </video>
+            </>
           ) : (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img className="cb-media" src={f.src} alt="" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
@@ -149,6 +162,14 @@ export function ChapterBackdrop({ frames, steps: map }: { frames: Frame[]; steps
       ))}
 
       <style jsx>{`
+        /* Held back until it has a frame, then faded up over the still
+           behind it. Hidden where JavaScript does not run, and there the
+           still is the picture — the film was only ever over the top. */
+        .cb-film {
+          opacity: 0;
+          transition: opacity 420ms ease;
+        }
+        .cb-film[data-ready='true'] { opacity: 1; }
         .cb {
           position: fixed;
           inset: 0;

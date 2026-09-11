@@ -132,13 +132,22 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           /* No horizontal padding: the band inside sets its own rail so
              the cards can run off the right edge. The title and stamp
              carry the gutter themselves. */
-          /* No top padding. The title and stamp centre themselves in the
-             space above the card band with a pair of auto margins, and
-             any padding here lands on one side of that pair only — it was
-             pushing them 152px below the middle. The auto space is far
-             larger than the nav at every height this hero can be, so the
-             bar is cleared without reserving for it. */
-          padding: 0 0 var(--space-9);
+          /* The bar is reserved, so the free space starts under it.
+             There was no top padding here, on the reasoning that padding
+             lands on one side of a single auto margin and pushes the pair
+             down. True while only the top margin was auto — and both are
+             auto now, so the padding stops being a shove and becomes what
+             it should have been all along: the top edge of the space the
+             pair is centred in. Without it the pair centres on the whole
+             hero, including the strip the nav sits over, which puts NOW
+             high by half the bar. */
+          /* The bar, plus a floor under it. The floor is the half of the
+             minimum gap that belongs to the top; the other half is the
+             band's own margin below. Because both are fixed and equal,
+             the two auto margins still split what is left evenly — so the
+             pair stays centred and can never be squeezed against either
+             edge, however short the window gets. */
+          padding: calc(var(--nav-h, 56px) + var(--space-6)) 0 var(--space-9);
           /* The site's hero measure — the field notes index, the
              articles and the Remarkable Circle are all 100svh. The
              microsite's min(92svh, 900px) is the outlier and this used to
@@ -227,20 +236,23 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           gap: var(--space-2);
           /* Close under the title — it is the title's timestamp, and it
              used to sit 88px away, reading as its own thing. */
-          /* Only the space above the pair is auto. Setting this one to a
-             measure and letting the other take the remainder drops the
-             title and its stamp below the middle of the clear space,
-             which is where they sit better — the band is closer under
-             them than it is far from the top. */
-          /* The floor was 96px, which on a 500px window is a fifth of the
-             screen spent holding the band away from the stamp. 14vh still
-             governs everywhere there is room; it now yields when there is
-             not. */
-          margin: var(--space-6) 0 clamp(40px, 14vh, 150px);
+          /* Auto both sides, so the pair sits in the middle of the clear
+             frame rather than near the bottom of it. A measure here and
+             auto above gave the remainder to the top: 150px over, 126
+             under, at 1440x900. Two autos split it evenly, and the
+             measure that used to live here is now the floor in the short
+             screen rule at the end of this block. */
+          margin: var(--space-6) 0 auto;
           /* Solid, not 72%. At 11px over this film it was reading 3.34:1
              even under the heavier veil it used to have — under AA, and
              the reason the veil had to be as dark as it was. */
           color: #fff;
+          /* The stamp is the only line of prose on a full-bleed frame and
+             it was a fixed 11px at every width — cramped under a 44px
+             title on a phone, and a hairline under a 128px one on a large
+             display. It moves with the title now, between the two. */
+          font-size: clamp(12px, 0.42vw + 10.4px, 15px);
+          letter-spacing: 0.07em;
         }
         /* On the title rather than beside the timestamp. Six pixels next
            to a line of 11px mono was a detail nobody found; at the top of
@@ -253,6 +265,17 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
           width: 0.16em;
           height: 0.16em;
           margin-left: 0.1em;
+          /* Hung, not set.
+             The line is centred, so anything after the word counts toward
+             the width being centred — and the dot's 0.16em plus its
+             0.1em of lead pushed NOW half of that to the left of the
+             page's middle. Sixteen pixels at 128px type: not enough to
+             name, enough to see, and it drifted with the type size
+             because it is all in em.
+             Taking the advance back off the right lets the mark hang
+             beyond the line while the word itself measures alone, which
+             is the thing that should be centred. */
+          margin-right: -0.26em;
           /* Centred on the word, not perched above it: the dot's bottom
              sits 0.28em over the baseline, which puts its middle on the
              middle of the cap height. */
@@ -291,12 +314,28 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
            starts at the very top with the nav sitting over the word.
            Reserving the bar back costs nothing above 760px, where this
            query does not apply. */
-        @media (max-height: 760px) {
-          .hero { padding-top: var(--nav-h); }
-        }
+        /* The other half of the floor.
+           A fixed margin here and an auto one above used to be the short
+           screen rule, and it had the failure backwards: the fixed side
+           took its 32px first and the auto side absorbed the remainder,
+           so as the window shrank the space above NOW collapsed to
+           nothing and the word jammed under the bar — 108px of headroom
+           at 760, 48 at 700, zero by 620.
+           Matching fixed floors on both sides instead. The autos divide
+           only what is left over, which is symmetrical by definition, and
+           at the height where there is nothing left over the pair still
+           has 32px of air each side. */
+        .band-slot { margin-top: var(--space-6); }
 
+        /* No gap here either. The base rule sets gap: 0 deliberately —
+           the stamp belongs to the title and the band does not — and this
+           put 48px back between every pair of items, which lands between
+           the stamp and the band and nowhere else that matters. The auto
+           margins then split what was left around it, and the pair came
+           out 48px high on a phone: 117 over, 165 under. The stamp's own
+           top margin is what holds it off the title. */
         @media (max-width: 640px) {
-          .hero { min-height: 100svh; gap: var(--space-7); }
+          .hero { min-height: 100svh; }
         }
       `}</style>
     </header>

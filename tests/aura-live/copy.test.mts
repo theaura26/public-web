@@ -343,3 +343,49 @@ test('an exhausted pool repeats rather than leaving a card blank', () => {
   const forced = pickGalleryImage('al_w', 'cows', 'Herd', all)
   assert.ok(forced, 'a picture is still returned when everything has been used')
 })
+
+/* The column is headed "Area (acres)" and the estate does not always fill
+   it with acres. Two rows carry a count of vines. The unit was stripped
+   and re-appended regardless, which published "across 1045 vines acres" —
+   a plant count stated as a measurement. */
+
+test('a cell that states its own unit keeps it', () => {
+  const c = merged('applicationDone')
+  const withVines = { ...c, area: '1045 vines' } as typeof c
+  const body = writeCopy(withVines).body ?? ''
+  assert.ok(!/vines acres/.test(body), 'a vine count must not be dressed as an acreage')
+  assert.match(body, /1045 vines/)
+})
+
+test('a bare number still gets the unit the column implies', () => {
+  const c = merged('applicationDone')
+  assert.match(writeCopy({ ...c, area: '4.5' } as typeof c).body ?? '', /4\.5 acres/)
+  assert.match(writeCopy({ ...c, area: '1' } as typeof c).body ?? '', /\b1 acre\b/)
+})
+
+test('a cell that already says acres is not given a second one', () => {
+  const c = merged('applicationDone')
+  const body = writeCopy({ ...c, area: '32.24 acres' } as typeof c).body ?? ''
+  assert.ok(!/acres acres|acre acres/.test(body))
+  assert.match(body, /32\.24 acres/)
+})
+
+/* "Buttermilk applied" followed by "Buttermilk." is one sentence set
+   twice, the second time smaller. The Copy type has always said body is
+   "absent when the headline already carries everything recorded"; the
+   application template never honoured it, and a row with no quantity and
+   no area fell back to the subject alone. */
+
+test('a body that only repeats the headline is not published', () => {
+  const c = merged('applicationDone')
+  const bare = { ...c, quantities: [], area: undefined, location: undefined } as typeof c
+  const copy = writeCopy(bare)
+  assert.match(copy.headline, /Buttermilk applied/)
+  assert.equal(copy.body, undefined, 'the card is better with no second line than with an echo')
+})
+
+test('a body that adds a number or a place is kept', () => {
+  const copy = writeCopy(merged('applicationDone'))
+  assert.ok(copy.body, 'a row carrying a quantity and an area still gets its detail')
+  assert.match(copy.body!, /acres/)
+})

@@ -1774,6 +1774,16 @@ export default function Home() {
               max-width: 240px;
               margin: 0 auto;
             }
+
+            /* Phones only. 240px broke the second paragraph across four lines
+               and left "us." alone on the last of them — a word on its own is
+               read as emphasis it was never given. 256px is where it joins the
+               line above; 260 keeps it there when a font renders a hair wide.
+               Tablets keep 240: the measure is generous enough there already
+               and this is a phone-width wrap. */
+            @media (max-width: 640px) {
+              .hero-mid { max-width: 260px; }
+            }
             .hero-mid__logo {
               justify-self: center;
               padding-left: 0;

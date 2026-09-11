@@ -143,11 +143,27 @@ export default function FeedEntry({ entry, index }: { entry: PublicEntry; index:
            margin to drift later. */
         .top { display: flex; flex-direction: column; gap: 6px; }
 
+        /* The filing line: when, and what kind.
+           It inherits .label, which is a fixed 11px of uppercase mono on
+           1px of tracking — four things all working against legibility at
+           once, and then set in --text-muted, which measures 2.56:1 on
+           the card. Under AA, and the reason this line reads as grey
+           noise rather than as information.
+           Mono and uppercase stay, because that is the house voice for a
+           record. The size comes up a step, the tracking goes relative so
+           it tracks the size, and the ink goes to --text-body: 5.6:1. */
         .eyebrow {
           display: flex;
           align-items: baseline;
           margin: 0;
-          color: var(--text-muted);
+          font-size: 12px;
+          letter-spacing: 0.07em;
+          color: var(--text-body);
+        }
+        /* Past about 1600px the whole page is being read further away,
+           and 12px of mono stops carrying. One step, once. */
+        @media (min-width: 1600px) {
+          .eyebrow { font-size: 13px; }
         }
         .sep { padding: 0 8px; opacity: 0.55; }
 

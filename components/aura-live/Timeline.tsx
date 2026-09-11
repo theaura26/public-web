@@ -269,12 +269,25 @@ export default function Timeline({ entries }: { entries: PublicEntry[] }) {
           padding-bottom: var(--space-8);
         }
 
+        /* Phones. 24px of inset each side of a 350px card spends 14% of
+           the screen on margin the page already has — the gutter is
+           outside it. 16px gives the words back about 16 characters a
+           line, which is the difference between two lines and three. */
         @media (max-width: 760px) {
           .tl { --tl-node: 32px; }
           .card {
-            padding: var(--space-5) var(--space-5) var(--space-6);
-            gap: var(--space-4);
+            padding: var(--space-4) var(--space-4) var(--space-5);
+            gap: var(--space-3);
           }
+        }
+
+        /* Large screens. The column is a reading measure and does not
+           grow with the window — 600px of 17px type is right at any width
+           — but the run of them can breathe further apart once there is
+           room, and the month has further to carry. */
+        @media (min-width: 1600px) {
+          .r-entry { padding-bottom: var(--space-7); }
+          .month { font-size: 14px; }
         }
       `}</style>
     </ol>

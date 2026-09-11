@@ -312,8 +312,10 @@ export async function POST(req: Request) {
 
   const { message, history, page } = verdict
 
-  /* Retrieve before any Aura-specific claim. Both namespaces: external
-     research may only explain, and the prompt enforces that. */
+  /* Retrieve before any Aura-specific claim. Aura's own pages only —
+     the retriever returns nothing else now, so an answer is grounded
+     in this estate's own account and every card under it leads back
+     into the site. */
   let hits: Hit[] = []
   try {
     hits = await search(message, { limit: 6, pageUrl: page.url, signal: req.signal })

@@ -188,7 +188,18 @@ export type SearchOptions = {
 }
 
 export async function search(query: string, opts: SearchOptions = {}): Promise<Hit[]> {
-  const { limit: askedFor = 6, namespaces = ['aura', 'external'], pageUrl, signal } = opts
+  /* Aura's own pages, and nothing else.
+     The corpus also carries peer-reviewed references — they were there so
+     an answer about, say, whether biodynamics is scientifically
+     established could stand on something outside this estate's own
+     account of itself. They were reaching the reader as citation cards
+     that looked exactly like a page of this site and opened a journal,
+     and a card that leaves the site without saying so is worse than no
+     card. So nothing outside is retrieved, quoted or linked.
+     The external material stays in the corpus rather than being deleted:
+     turning it back on is one word here, and that is a decision about
+     editorial policy rather than about code. */
+  const { limit: askedFor = 6, namespaces = ['aura'], pageUrl, signal } = opts
   /* Clamped here rather than only at the callers: a limit is a promise
      about how much this function will ever return, and a promise every
      caller has to remember to keep is not one. */

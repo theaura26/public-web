@@ -1,0 +1,4117 @@
+{
+ "source": {
+  "file": "AURA // Coffee Festival",
+  "fileKey": "EuPeJbNrgT7WaaAiwhl0gV",
+  "page": "Web",
+  "node": "857:42",
+  "name": "RIPE",
+  "url": "https://www.figma.com/design/EuPeJbNrgT7WaaAiwhl0gV/AURA----Coffee-Festival?node-id=857-42",
+  "extracted": "2026-09-12",
+  "state": "after prep (styles applied, layers named, cards split)"
+ },
+ "frame": {
+  "w": 1920,
+  "h": 18753,
+  "fill": [
+   {
+    "t": "solid",
+    "hex": "#000000",
+    "a": 1
+   }
+  ]
+ },
+ "nodeCount": 190,
+ "nodes": [
+  {
+   "id": "857:134",
+   "name": "aura-laterite-wet.jpg",
+   "type": "RECTANGLE",
+   "d": 2,
+   "x": -70,
+   "y": -35,
+   "w": 2057,
+   "h": 1150
+  },
+  {
+   "id": "857:133",
+   "name": "01 Hero / photo \u2014 Screenshot 2026-09-11 at 3.56.46 PM",
+   "type": "RECTANGLE",
+   "d": 2,
+   "x": -1,
+   "y": -30,
+   "w": 2056,
+   "h": 1148,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "a76d2036f4ef83d5d32e95a02e8d85fb0b1a3ed2",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "857:132",
+   "name": "01 Hero / group \u2014 aura-award-cup.jpg",
+   "type": "FRAME",
+   "d": 1,
+   "x": -1,
+   "y": 0,
+   "w": 1920,
+   "h": 1089,
+   "opacity": 0.89,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "857:135",
+   "name": "RIPE",
+   "type": "TEXT",
+   "d": 2,
+   "x": 60,
+   "y": 659,
+   "w": 533,
+   "h": 242,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#1FE379",
+     "a": 1
+    }
+   ],
+   "text": "RIPE",
+   "style": "Display/XL 200",
+   "font": "Archie Brackett/Bold",
+   "size": 200,
+   "align": "CENTER",
+   "autoresize": "NONE",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:136",
+   "name": "Right Time \u2028made visible.",
+   "type": "TEXT",
+   "d": 2,
+   "x": 1309,
+   "y": 744,
+   "w": 455,
+   "h": 158,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#23FF88",
+     "a": 1
+    }
+   ],
+   "text": "Right Time \u2028made visible.",
+   "style": "Hero/Tagline 75",
+   "font": "Bricolage Grotesque/SemiBold",
+   "size": 75,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:137",
+   "name": "Mudigere \u00b7 Harvest 2026 IN GOOD COMPANY",
+   "type": "TEXT",
+   "d": 2,
+   "x": 1309,
+   "y": 919,
+   "w": 434,
+   "h": 22,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Mudigere \u00b7 Harvest 2026 IN GOOD COMPANY",
+   "style": "Hero/Meta 20",
+   "font": "Bricolage Grotesque/Bold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:212",
+   "name": "02 Intro / text \u2014 This September, we come together at Aura jus",
+   "type": "TEXT",
+   "d": 1,
+   "x": 179,
+   "y": 1718,
+   "w": 635,
+   "h": 311,
+   "text": "This September, we come together at Aura just as the estate moves towards harvest.\nFriends begin arriving from the 20th.\nBoojee and BESST join us on the 23rd.\nAnd for a few days, we walk, taste, make, ask questions, get our hands dirty, eat together and spend time in good company.\nThen harvest begins.",
+   "style": "Nav + Intro/22",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 22,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:140",
+   "name": "03 Section bar / rule \u2014 horizontal",
+   "type": "VECTOR",
+   "d": 1,
+   "x": 180,
+   "y": 2310,
+   "w": 1577,
+   "h": 0,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:142",
+   "name": "03 Section bar / text \u2014 THE RHYTHM",
+   "type": "TEXT",
+   "d": 1,
+   "x": 179,
+   "y": 2321,
+   "w": 137,
+   "h": 33,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "THE RHYTHM",
+   "style": "Nav + Intro/22",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 22,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:143",
+   "name": "03 Section bar / text \u2014 COME PREPARED",
+   "type": "TEXT",
+   "d": 1,
+   "x": 536,
+   "y": 2321,
+   "w": 179,
+   "h": 33,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "COME PREPARED",
+   "style": "Nav + Intro/22",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 22,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:144",
+   "name": "03 Section bar / text \u2014 GRATITUDE",
+   "type": "TEXT",
+   "d": 1,
+   "x": 936,
+   "y": 2321,
+   "w": 115,
+   "h": 33,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "GRATITUDE",
+   "style": "Nav + Intro/22",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 22,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:145",
+   "name": "03 Section bar / text \u2014 REMEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1272,
+   "y": 2321,
+   "w": 122,
+   "h": 33,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "REMEMBER",
+   "style": "Nav + Intro/22",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 22,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:146",
+   "name": "03 Section bar / text \u2014 THE HARVEST",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1615,
+   "y": 2321,
+   "w": 142,
+   "h": 33,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "THE HARVEST",
+   "style": "Nav + Intro/22",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 22,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:141",
+   "name": "03 Section bar / rule \u2014 horizontal",
+   "type": "VECTOR",
+   "d": 1,
+   "x": 180,
+   "y": 2362,
+   "w": 1577,
+   "h": 0,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:58",
+   "name": "04 The Rhythm / text \u2014 THE RHYTHM",
+   "type": "TEXT",
+   "d": 1,
+   "x": 288,
+   "y": 2743,
+   "w": 1344,
+   "h": 242,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#23FF88",
+     "a": 1
+    }
+   ],
+   "text": "THE RHYTHM",
+   "style": "Display/XL 200",
+   "font": "Archie Brackett/Bold",
+   "size": 200,
+   "align": "CENTER",
+   "autoresize": "NONE",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:49",
+   "name": "05 The days / spine \u2014 vertical rule (timeline)",
+   "type": "VECTOR",
+   "d": 1,
+   "x": 960,
+   "y": 3062,
+   "w": 0,
+   "h": 5505,
+   "opacity": 0.33,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:53",
+   "name": "05 The days / photo \u2014 Friends of Aura (20 Sep)",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 508,
+   "y": 3151,
+   "w": 904,
+   "h": 475,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "62a0a19e7fc64ea4d059d40abc78062236037050",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "857:94",
+   "name": "05 The days / text \u2014 Friends of Aura",
+   "type": "TEXT",
+   "d": 1,
+   "x": 433,
+   "y": 3254,
+   "w": 254,
+   "h": 120,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#23FF88",
+     "a": 1
+    }
+   ],
+   "text": "Friends of Aura",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:105",
+   "name": "05 The days / text \u2014 Before everyone comes together, Aura begins ",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 3262,
+   "w": 361,
+   "h": 200,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Before everyone comes together, Aura begins to fill slowly. \nFriends arrive from Singapore and different parts of India. There is no need to rush into a programme. These days are for finding the place.",
+   "style": "Body/20 (odd line-height)",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:111",
+   "name": "05 The days / vector \u2014 Vector",
+   "type": "VECTOR",
+   "d": 1,
+   "x": 947,
+   "y": 3374,
+   "w": 25,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#23FF88",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "860:298",
+   "name": "05 The days / heading \u2014 20 SEPTEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 3724,
+   "w": 361,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "20 SEPTEMBER",
+   "style": "Card/Date 20",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:299",
+   "name": "05 The days / list \u2014 Arrive.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 3768,
+   "w": 361,
+   "h": 332,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Arrive.\nCoffee.\nFind your room.\nWalk.\nMeet whoever is around.\nEat together.\nSit by the fire.\nLet Aura introduce itself.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:95",
+   "name": "05 The days / text \u2014 Come in",
+   "type": "TEXT",
+   "d": 1,
+   "x": 433,
+   "y": 3853,
+   "w": 312,
+   "h": 60,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Come in",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:100",
+   "name": "05 The days / text \u2014 Good to be here.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 869,
+   "y": 3875,
+   "w": 312,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Good to be here.",
+   "style": "Quote/30",
+   "font": "Arvind/Regular",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:54",
+   "name": "05 The days / photo \u2014 Find your rhythm (21 Sep)",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 508,
+   "y": 4195,
+   "w": 904,
+   "h": 475,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "2295d5335ac76ac152256f987ba74f9a1fc81378",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "860:300",
+   "name": "05 The days / heading \u2014 21 SEPTEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 4215,
+   "w": 361,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "21 SEPTEMBER",
+   "style": "Card/Date 20",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:301",
+   "name": "05 The days / list \u2014 Wake early if you want to.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 4259,
+   "w": 361,
+   "h": 376,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Wake early if you want to.\nFollow the cows.\nWalk with someone from the estate.\nFind coffee somewhere.\nSpend time in the field.\nEat.\nTalk.\nDo nothing for a while.\nThere is no need to see everything.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:97",
+   "name": "05 The days / text \u2014 Find your rhythm",
+   "type": "TEXT",
+   "d": 1,
+   "x": 433,
+   "y": 4297,
+   "w": 312,
+   "h": 120,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Find your rhythm",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:101",
+   "name": "05 The days / text \u2014 I\u2019m beginning to understand this place.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 919,
+   "y": 4526,
+   "w": 312,
+   "h": 72,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "I\u2019m beginning to understand this place.",
+   "style": "Quote/30",
+   "font": "Arvind/Regular",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:302",
+   "name": "05 The days / heading \u2014 22 SEPTEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 4846,
+   "w": 361,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "22 SEPTEMBER",
+   "style": "Card/Date 20",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:303",
+   "name": "05 The days / list \u2014 Spend more time with the people ",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 4890,
+   "w": 361,
+   "h": 248,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Spend more time with the people of Aura.\nHelp make something.\nWalk deeper into the estate.\nJoin what is already happening.\nBy the time everyone else arrives, Aura should feel a little less like somewhere you are visiting.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:98",
+   "name": "05 The days / text \u2014 Get closer",
+   "type": "TEXT",
+   "d": 1,
+   "x": 433,
+   "y": 4912,
+   "w": 312,
+   "h": 60,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Get closer",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:102",
+   "name": "05 The days / text \u2014 I\u2019m starting to become part of the place.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 933,
+   "y": 4912,
+   "w": 298,
+   "h": 72,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "I\u2019m starting to become part of the place.",
+   "style": "Quote/30",
+   "font": "Arvind/Regular",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:57",
+   "name": "05 The days / photo \u2014 Company comes together (22 Sep)",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 505,
+   "y": 5376,
+   "w": 910,
+   "h": 478,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "3bebccfd6255540fbfb128d98d1036f0f4db49f2",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "857:110",
+   "name": "05 The days / text \u2014 Boojee and BESST arrive.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 5417,
+   "w": 361,
+   "h": 376,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Boojee and BESST arrive. \nThe full company comes together. \nNo big programme.\nArrive.\nSettle.\nCoffee.\nWalk.\nMeet.\nThen dinner.",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:96",
+   "name": "05 The days / text \u2014 The company comes together",
+   "type": "TEXT",
+   "d": 1,
+   "x": 433,
+   "y": 5473,
+   "w": 312,
+   "h": 240,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#23FF88",
+     "a": 1
+    }
+   ],
+   "text": "The company comes together",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:48",
+   "name": "05 The days / photo \u2014 full bleed (23 Sep)",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 4,
+   "y": 5558,
+   "w": 1916,
+   "h": 1079,
+   "opacity": 0.6,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "26f847b9fd57b529824af48a6970575236c32bc5",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "857:104",
+   "name": "05 The days / text \u2014 23 September 2026",
+   "type": "TEXT",
+   "d": 1,
+   "x": 992,
+   "y": 5594,
+   "w": 298,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "23 September 2026",
+   "style": "Quote/30",
+   "font": "Arvind/Regular",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:282",
+   "name": "05 The days / heading \u2014 23 SEPTEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 6035,
+   "w": 402,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "23 SEPTEMBER",
+   "style": "Card/Date 20",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:59",
+   "name": "05 The days / text \u2014 White. Indigo. Or both.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 433,
+   "y": 6056,
+   "w": 312,
+   "h": 180,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "White. Indigo.\u2028Or both.",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:283",
+   "name": "05 The days / list \u2014 Nothing more complicated than th",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 6079,
+   "w": 402,
+   "h": 184,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Nothing more complicated than that. A simple visual thread for the first evening when everyone is together.\nGood food. A long table. Conversation. Maybe music. Maybe fire. No speeches required.\nTonight, just good company.",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:55",
+   "name": "05 The days / photo \u2014 Arrive & Exhale (24 Sep)",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 508,
+   "y": 6421,
+   "w": 904,
+   "h": 475,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "6abb0daa2cc0620ad0877c646be4eaec7def5421",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "860:304",
+   "name": "05 The days / heading \u2014 24 SEPTEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 6496,
+   "w": 348,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "24 SEPTEMBER",
+   "style": "Card/Date 20",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:305",
+   "name": "05 The days / list \u2014 Now we slow the pace. Not to do ",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 6540,
+   "w": 348,
+   "h": 268,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Now we slow the pace. Not to do less. To notice more.\nWelcome into Aura.\nKnow each other differently.\nThe Aura Pause.\nShavasana.\nStars.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:99",
+   "name": "05 The days / text \u2014 Arrive & Exhale",
+   "type": "TEXT",
+   "d": 1,
+   "x": 433,
+   "y": 6554,
+   "w": 312,
+   "h": 120,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Arrive & Exhale",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:103",
+   "name": "05 The days / text \u2014 I am somewhere special.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 812,
+   "y": 6741,
+   "w": 298,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "I am somewhere special.",
+   "style": "Quote/30",
+   "font": "Arvind/Regular",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:51",
+   "name": "05 The days / photo \u2014 See & Feel (25 Sep)",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 508,
+   "y": 6955,
+   "w": 904,
+   "h": 475,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "f33434c4da47143be06ab3cd955eff4c4d060d73",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "860:284",
+   "name": "05 The days / heading \u2014 25 SEPTEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 6969,
+   "w": 383,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "25 SEPTEMBER",
+   "style": "Card/Date 20",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:64",
+   "name": "05 The days / text \u2014 There is so much happening here.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1150,
+   "y": 7008,
+   "w": 298,
+   "h": 72,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "There is so much happening here.",
+   "style": "Quote/30",
+   "font": "Arvind/Regular",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:285",
+   "name": "05 The days / list \u2014 The first day belongs to noticin",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 7013,
+   "w": 383,
+   "h": 404,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "The first day belongs to noticing. Not only coffee. What grows above it. What lives beneath it. What moves through it. And the people who care for it.\nSensory estate walk.\nBiodiversity discoveries.\nFungi.\nShade.\nSoil.\nPeople of Aura.\nCoffee cupping.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:61",
+   "name": "05 The days / text \u2014 See & Feel",
+   "type": "TEXT",
+   "d": 1,
+   "x": 433,
+   "y": 7123,
+   "w": 312,
+   "h": 60,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "See & Feel",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:56",
+   "name": "05 The days / photo \u2014 Understand (26 Sep)",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 508,
+   "y": 7491,
+   "w": 904,
+   "h": 475,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "e8240ad3995278a68b6f9b77dabfa012cd6781b1",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "860:286",
+   "name": "05 The days / heading \u2014 26 SEPTEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 7495,
+   "w": 366,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "26 SEPTEMBER",
+   "style": "Card/Date 20",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:287",
+   "name": "05 The days / list \u2014 Cow to soil. Soil to tree. Tree ",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 7539,
+   "w": 366,
+   "h": 424,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Cow to soil. Soil to tree. Tree to harvest. Observation to memory. Memory to better decisions.\nBD500.\nCPP.\nSoil biology.\nHungry Soil experiment.\nPlant health.\nFood and fermentation.\nAura Intelligence.\nField memories.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:62",
+   "name": "05 The days / text \u2014 Understand",
+   "type": "TEXT",
+   "d": 1,
+   "x": 433,
+   "y": 7659,
+   "w": 335,
+   "h": 60,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Understand",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:65",
+   "name": "05 The days / text \u2014 Now I understand how it connects.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1084,
+   "y": 7854,
+   "w": 253,
+   "h": 72,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Now I understand how it connects.",
+   "style": "Quote/30",
+   "font": "Arvind/Regular",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:52",
+   "name": "05 The days / photo \u2014 Make It Yours (27 Sep)",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 508,
+   "y": 8031,
+   "w": 904,
+   "h": 475,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "ea93dbc95ecadb79ad02d58b269e16c29ac1a63d",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "860:288",
+   "name": "05 The days / heading \u2014 27 SEPTEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 8115,
+   "w": 383,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "27 SEPTEMBER",
+   "style": "Card/Date 20",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:289",
+   "name": "05 The days / list \u2014 Plant something. Make something.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1458,
+   "y": 8159,
+   "w": 383,
+   "h": 292,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Plant something. Make something. \u2028Leave something behind. \u2028Take something with you.\nPlant Your Tree.\nNatural Dye.\nFinal walk.\nFood together.\nYour Aura Memory.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:63",
+   "name": "05 The days / text \u2014 Make It Yours",
+   "type": "TEXT",
+   "d": 1,
+   "x": 433,
+   "y": 8214,
+   "w": 366,
+   "h": 60,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Make It Yours",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:66",
+   "name": "05 The days / text \u2014 I was part of Aura.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1084,
+   "y": 8234,
+   "w": 283,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "I was part of Aura.",
+   "style": "Quote/30",
+   "font": "Arvind/Regular",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:47",
+   "name": "00 Backdrop / bg \u2014 dawn gradient (spans 06-07)",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": -213,
+   "y": 8659,
+   "w": 2432,
+   "h": 2286,
+   "opacity": 0.5,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "8417b3a1e948cc6658c7c46d88ee4e69dec43ce2",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "857:85",
+   "name": "06 Two arcs / text \u2014 The experience moves through two different a",
+   "type": "TEXT",
+   "d": 1,
+   "x": 590,
+   "y": 8890,
+   "w": 741,
+   "h": 120,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "The experience moves through two different arcs.",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "CENTER",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:70",
+   "name": "06 Two arcs / text \u2014 The days have structure. They also have room",
+   "type": "TEXT",
+   "d": 1,
+   "x": 641,
+   "y": 9066,
+   "w": 639,
+   "h": 92,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "The days have structure. They also have room.\nWeather may move things. The estate may move things. Something unexpected may become more interesting than something we planned.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "CENTER",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:290",
+   "name": "06 Two arcs / heading \u2014 FRIENDS OF AURA",
+   "type": "TEXT",
+   "d": 1,
+   "x": 641,
+   "y": 9445,
+   "w": 266,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "FRIENDS OF AURA",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:293",
+   "name": "06 Two arcs / heading \u2014 In Good Company",
+   "type": "TEXT",
+   "d": 1,
+   "x": 949,
+   "y": 9445,
+   "w": 383,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "In Good Company",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:291",
+   "name": "06 Two arcs / list \u2014 20-22 SEPTEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 641,
+   "y": 9501,
+   "w": 266,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#23FF88",
+     "a": 1
+    }
+   ],
+   "text": "20-22 SEPTEMBER",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:294",
+   "name": "06 Two arcs / list \u2014 23-27 SEPTEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 949,
+   "y": 9501,
+   "w": 383,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#23FF88",
+     "a": 1
+    }
+   ],
+   "text": "23-27 SEPTEMBER",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:292",
+   "name": "06 Two arcs / list \u2014 Come In",
+   "type": "TEXT",
+   "d": 1,
+   "x": 641,
+   "y": 9545,
+   "w": 266,
+   "h": 112,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Come In\nFind Your Rhythm\nGet Closer",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:295",
+   "name": "06 Two arcs / list \u2014 Feel",
+   "type": "TEXT",
+   "d": 1,
+   "x": 949,
+   "y": 9545,
+   "w": 383,
+   "h": 112,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Feel\nUnderstand\nBelong",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:112",
+   "name": "07 Come prepared / text \u2014 COME PREPARED",
+   "type": "TEXT",
+   "d": 1,
+   "x": 164,
+   "y": 9939,
+   "w": 1593,
+   "h": 242,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "COME PREPARED",
+   "style": "Display/L 180",
+   "font": "Archie Brackett/Bold",
+   "size": 180,
+   "align": "CENTER",
+   "autoresize": "NONE",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:138",
+   "name": "07 Come prepared / text \u2014 This is a working estate. Walk. Explore. Get",
+   "type": "TEXT",
+   "d": 1,
+   "x": 256,
+   "y": 10290,
+   "w": 1409,
+   "h": 175,
+   "text": "This is a working estate. Walk. Explore. \u2028Get your hands dirty. Taste. Create. Pause. \u2028Ask. Notice. Discover. ",
+   "style": "Heading/60 (odd line-height)",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "CENTER",
+   "autoresize": "NONE",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:123",
+   "name": "07 Come prepared / text \u2014 How to show up",
+   "type": "TEXT",
+   "d": 1,
+   "x": 222,
+   "y": 10814,
+   "w": 741,
+   "h": 60,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "How to show up",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:306",
+   "name": "07 Come prepared / heading \u2014 Come curious",
+   "type": "TEXT",
+   "d": 1,
+   "x": 230,
+   "y": 10947,
+   "w": 266,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Come curious",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:312",
+   "name": "07 Come prepared / heading \u2014 Participate",
+   "type": "TEXT",
+   "d": 1,
+   "x": 765,
+   "y": 10947,
+   "w": 235,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Participate",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:321",
+   "name": "07 Come prepared / heading \u2014 Notice first",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1322,
+   "y": 10947,
+   "w": 344,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Notice first",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:307",
+   "name": "07 Come prepared / body \u2014 Ask the obvious question. \u2028It is",
+   "type": "TEXT",
+   "d": 1,
+   "x": 230,
+   "y": 11003,
+   "w": 266,
+   "h": 48,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Ask the obvious question. \u2028It is often the useful one.",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:313",
+   "name": "07 Come prepared / body \u2014 Touch. Taste. Make. Try.\u2028Discuss",
+   "type": "TEXT",
+   "d": 1,
+   "x": 765,
+   "y": 11003,
+   "w": 235,
+   "h": 48,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Touch. Taste. Make. Try.\u2028Discuss. Share. ",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:322",
+   "name": "07 Come prepared / body \u2014 Look before photographing. \u2028Obse",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1322,
+   "y": 11003,
+   "w": 344,
+   "h": 48,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Look before photographing. \u2028Observe before asking for the answer.",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:310",
+   "name": "07 Come prepared / heading \u2014 Let the day move",
+   "type": "TEXT",
+   "d": 1,
+   "x": 230,
+   "y": 11133,
+   "w": 266,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Let the day move",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:319",
+   "name": "07 Come prepared / heading \u2014 Respect the working farm",
+   "type": "TEXT",
+   "d": 1,
+   "x": 765,
+   "y": 11133,
+   "w": 437,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Respect the working farm",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:325",
+   "name": "07 Come prepared / heading \u2014 Bring what you know",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1322,
+   "y": 11133,
+   "w": 388,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Bring what you know",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:311",
+   "name": "07 Come prepared / body \u2014 Weather and the estate may chang",
+   "type": "TEXT",
+   "d": 1,
+   "x": 230,
+   "y": 11189,
+   "w": 266,
+   "h": 72,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Weather and the estate may change the rhythm, and we let the day move. ",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:320",
+   "name": "07 Come prepared / body \u2014 The people, animals and land are",
+   "type": "TEXT",
+   "d": 1,
+   "x": 765,
+   "y": 11189,
+   "w": 437,
+   "h": 72,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "The people, animals and land are not\u2028here for our visit. We are entering\u2028something already alive.",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:326",
+   "name": "07 Come prepared / body \u2014 Coffee. Food. Technology. Plants",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1322,
+   "y": 11189,
+   "w": 388,
+   "h": 72,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Coffee. Food. Technology. Plants. Design. Storytelling. People. Everyone coming knows something somebody else does not.",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:124",
+   "name": "07 Come prepared / text \u2014 What to bring",
+   "type": "TEXT",
+   "d": 1,
+   "x": 222,
+   "y": 11481,
+   "w": 741,
+   "h": 60,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "What to bring",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:308",
+   "name": "07 Come prepared / heading \u2014 Field",
+   "type": "TEXT",
+   "d": 1,
+   "x": 230,
+   "y": 11620,
+   "w": 266,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Field",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:314",
+   "name": "07 Come prepared / heading \u2014 Evening",
+   "type": "TEXT",
+   "d": 1,
+   "x": 768,
+   "y": 11620,
+   "w": 235,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Evening",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:317",
+   "name": "07 Come prepared / heading \u2014 useful",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1322,
+   "y": 11620,
+   "w": 235,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "useful",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:309",
+   "name": "07 Come prepared / list \u2014 Comfortable outdoor clothes",
+   "type": "TEXT",
+   "d": 1,
+   "x": 230,
+   "y": 11676,
+   "w": 266,
+   "h": 376,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Comfortable outdoor clothes\nFull-length trousers\nClosed walking shoes\nCap or hat\nSunscreen\nInsect repellent\nWater bottle\nSmall towel\nRain protection",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:315",
+   "name": "07 Come prepared / list \u2014 Comfortable smart-casual clothes",
+   "type": "TEXT",
+   "d": 1,
+   "x": 768,
+   "y": 11676,
+   "w": 235,
+   "h": 92,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Comfortable smart-casual clothes\nLight jacket or shawl",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:318",
+   "name": "07 Come prepared / list \u2014 Phone",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1322,
+   "y": 11676,
+   "w": 235,
+   "h": 112,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Phone\nCharger\nPowerbank",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:139",
+   "name": "07 Come prepared / illustration \u2014 cap",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 1336,
+   "y": 11786,
+   "w": 474,
+   "h": 378,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "74af6a2388f75906464f6440046830d21f429fa4",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "860:316",
+   "name": "07 Come prepared / body \u2014 For 23 September: white, indigo,",
+   "type": "TEXT",
+   "d": 1,
+   "x": 768,
+   "y": 11788,
+   "w": 235,
+   "h": 48,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#8CA7FE",
+     "a": 1
+    }
+   ],
+   "text": "For 23 September: white, indigo, or both.",
+   "style": "Table/20 Key",
+   "font": "Bricolage Grotesque/Bold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:323",
+   "name": "07 Come prepared / heading \u2014 Making",
+   "type": "TEXT",
+   "d": 1,
+   "x": 765,
+   "y": 11884,
+   "w": 263,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Making",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "860:324",
+   "name": "07 Come prepared / body \u2014 One old outfit that can get dirt",
+   "type": "TEXT",
+   "d": 1,
+   "x": 765,
+   "y": 11940,
+   "w": 263,
+   "h": 48,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "One old outfit that can get dirty or stained",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:193",
+   "name": "08 Scatter close / group \u2014 Group 1437258068",
+   "type": "GROUP",
+   "d": 1,
+   "x": 123,
+   "y": 12461,
+   "w": 1619,
+   "h": 1013
+  },
+  {
+   "id": "857:195",
+   "name": "08 Scatter close / photo \u2014 IMG_6217",
+   "type": "RECTANGLE",
+   "d": 3,
+   "x": 1286,
+   "y": 12461,
+   "w": 160,
+   "h": 214,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "deaeafa327e9a2b76dbcff6a7ed6a6f8532cdc92",
+     "scale": "CROP"
+    }
+   ]
+  },
+  {
+   "id": "857:194",
+   "name": "08 Scatter close / photo \u2014 Frame",
+   "type": "FRAME",
+   "d": 2,
+   "x": 1302,
+   "y": 12461,
+   "w": 113,
+   "h": 145,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    },
+    {
+     "t": "image",
+     "hash": "39a94f5de3f58224c605dfc0afe2a9d36e9e6744",
+     "scale": "CROP"
+    }
+   ]
+  },
+  {
+   "id": "857:203",
+   "name": "08 Scatter close / photo \u2014 Frame",
+   "type": "FRAME",
+   "d": 2,
+   "x": 538,
+   "y": 12494,
+   "w": 72,
+   "h": 112,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    },
+    {
+     "t": "image",
+     "hash": "a0e647aa0fc03b6637e2face51359787ee52cb16",
+     "scale": "CROP"
+    }
+   ]
+  },
+  {
+   "id": "857:206",
+   "name": "08 Scatter close / Union",
+   "type": "BOOLEAN_OPERATION",
+   "d": 1,
+   "x": 836,
+   "y": 12600,
+   "w": 250,
+   "h": 79,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "857:207",
+   "name": "08 Scatter close / mark \u2014 Vector",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 920,
+   "y": 12600,
+   "w": 37,
+   "h": 7,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "857:208",
+   "name": "08 Scatter close / mark \u2014 Vector",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 836,
+   "y": 12613,
+   "w": 55,
+   "h": 66,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "857:209",
+   "name": "08 Scatter close / mark \u2014 Vector",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 1031,
+   "y": 12613,
+   "w": 55,
+   "h": 66,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "857:211",
+   "name": "08 Scatter close / mark \u2014 Vector",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 908,
+   "y": 12614,
+   "w": 60,
+   "h": 65,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "857:210",
+   "name": "08 Scatter close / mark \u2014 Vector",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 984,
+   "y": 12614,
+   "w": 39,
+   "h": 64,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "857:197",
+   "name": "aura-cherry-morning.jpg",
+   "type": "RECTANGLE",
+   "d": 3,
+   "x": 1415,
+   "y": 12664,
+   "w": 379,
+   "h": 214,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "7e65aeef318e4cb0ffc873ab15b0d1a5bd9bd161",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "857:200",
+   "name": "08 Scatter close / photo \u2014 Frame",
+   "type": "FRAME",
+   "d": 2,
+   "x": 123,
+   "y": 12713,
+   "w": 105,
+   "h": 151,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    },
+    {
+     "t": "image",
+     "hash": "4c466b657be0910fd0f95b02e4d65eaf9c189647",
+     "scale": "CROP"
+    }
+   ]
+  },
+  {
+   "id": "857:196",
+   "name": "08 Scatter close / Frame 55",
+   "type": "FRAME",
+   "d": 2,
+   "x": 1556,
+   "y": 12713,
+   "w": 129,
+   "h": 154,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "860:296",
+   "name": "08 Scatter close / heading \u2014 with Boojee and BESST.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 717,
+   "y": 12780,
+   "w": 487,
+   "h": 36,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "with Boojee and BESST.",
+   "style": "Card/Heading 30",
+   "font": "Bricolage Grotesque/ExtraBold",
+   "size": 30,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:202",
+   "name": "08 Scatter close / photo \u2014 RAJ07525",
+   "type": "RECTANGLE",
+   "d": 3,
+   "x": 412,
+   "y": 12814,
+   "w": 177,
+   "h": 233,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "5076a8321e1ff7c3955456275643defc7dfc9d3e",
+     "scale": "CROP"
+    }
+   ]
+  },
+  {
+   "id": "860:297",
+   "name": "08 Scatter close / list \u2014 Friends with friends.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 717,
+   "y": 12836,
+   "w": 487,
+   "h": 288,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Friends with friends.\nCoffee with shade.\nRoots with fungi.\nCows with soil.\nFood with season.\nKnowledge with memory.\nAnd all of us with the land.",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:201",
+   "name": "08 Scatter close / Frame 60",
+   "type": "FRAME",
+   "d": 2,
+   "x": 428,
+   "y": 12839,
+   "w": 146,
+   "h": 182,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "857:198",
+   "name": "08 Scatter close / photo \u2014 Frame",
+   "type": "FRAME",
+   "d": 2,
+   "x": 1313,
+   "y": 12930,
+   "w": 115,
+   "h": 150,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    },
+    {
+     "t": "image",
+     "hash": "8c9179e91838d8a12edf897f91de154dce056336",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "857:204",
+   "name": "08 Scatter close / group \u2014 141x188",
+   "type": "GROUP",
+   "d": 2,
+   "x": 1601,
+   "y": 13265,
+   "w": 141,
+   "h": 188
+  },
+  {
+   "id": "857:205",
+   "name": "08 Scatter close / photo \u2014 IMG_6102",
+   "type": "RECTANGLE",
+   "d": 3,
+   "x": 1601,
+   "y": 13265,
+   "w": 141,
+   "h": 188,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "8220dafdcde548935dc767226cffd05eccdef2bb",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "857:91",
+   "name": "08 Scatter close / text \u2014 Nothing here grows alone.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 538,
+   "y": 13277,
+   "w": 845,
+   "h": 96,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Nothing here grows alone.",
+   "style": "Quote/80 Closing",
+   "font": "Arvind/Regular",
+   "size": 80,
+   "align": "CENTER",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:199",
+   "name": "08 Scatter close / photo \u2014 Frame",
+   "type": "FRAME",
+   "d": 2,
+   "x": 228,
+   "y": 13303,
+   "w": 137,
+   "h": 171,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    },
+    {
+     "t": "image",
+     "hash": "ab370095bbb44b8e7f00e4891ec5695df423ff5c",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "857:93",
+   "name": "09 Gratitude / photo \u2014 bell",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 469,
+   "y": 13817,
+   "w": 540,
+   "h": 797,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "7293103c9bcfb6892b3e2b598f6092221743df40",
+     "scale": "CROP"
+    }
+   ]
+  },
+  {
+   "id": "857:86",
+   "name": "09 Gratitude / text \u2014 Harvest begins with gratitude.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1086,
+   "y": 14006,
+   "w": 515,
+   "h": 120,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Harvest begins with gratitude.",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:71",
+   "name": "09 Gratitude / text \u2014 Prayer belongs to the beginning of harvest.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1092,
+   "y": 14167,
+   "w": 475,
+   "h": 248,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Prayer belongs to the beginning of harvest.\nIt is not a performance. It is not an activity.\nIt is a moment to acknowledge what the land has given before we begin taking from it.\nGuests may be invited to participate where appropriate. \nMostly, we listen.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:50",
+   "name": "00 Backdrop / plate \u2014 lower page (y14485-18753)",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": -1,
+   "y": 14485,
+   "w": 1921,
+   "h": 4268,
+   "fill": [
+    {
+     "t": "gradient_linear",
+     "stops": [
+      {
+       "hex": "#000000",
+       "a": 1,
+       "pos": 0
+      },
+      {
+       "hex": "#005F2C",
+       "a": 1,
+       "pos": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "857:92",
+   "name": "10 Remember / backdrop \u2014 plate",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 3,
+   "y": 14675,
+   "w": 1920,
+   "h": 1080
+  },
+  {
+   "id": "857:87",
+   "name": "10 Remember / text \u2014 What should Aura remember from today?",
+   "type": "TEXT",
+   "d": 1,
+   "x": 219,
+   "y": 15120,
+   "w": 434,
+   "h": 180,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "What should Aura remember from today?",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:151",
+   "name": "10 Remember / photo \u2014 image",
+   "type": "RECTANGLE",
+   "d": 3,
+   "x": 1042,
+   "y": 15132,
+   "w": 570,
+   "h": 570,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "b418f852d2e78aa7e04ee57e0ee3d9295c249c42",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "857:148",
+   "name": "10 Remember / group \u2014 Group 1437258069",
+   "type": "GROUP",
+   "d": 1,
+   "x": 1066,
+   "y": 15145,
+   "w": 512,
+   "h": 544
+  },
+  {
+   "id": "857:149",
+   "name": "10 Remember / group \u2014 494x544",
+   "type": "GROUP",
+   "d": 2,
+   "x": 1084,
+   "y": 15145,
+   "w": 494,
+   "h": 544
+  },
+  {
+   "id": "857:150",
+   "name": "10 Remember / mark \u2014 Vector 93",
+   "type": "VECTOR",
+   "d": 3,
+   "x": 1084,
+   "y": 15145,
+   "w": 494,
+   "h": 544,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#D9D9D9",
+     "a": 1
+    }
+   ],
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#000000",
+      "a": 1
+     }
+    ],
+    "w": 0.679998517036438
+   }
+  },
+  {
+   "id": "857:154",
+   "name": "10 Remember / photo \u2014 IMG_2022",
+   "type": "RECTANGLE",
+   "d": 2,
+   "x": 1117,
+   "y": 15177,
+   "w": 433,
+   "h": 406,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "bce35ea4287d1a975bf8f3cc6d9acd75abbaabf7",
+     "scale": "CROP"
+    }
+   ]
+  },
+  {
+   "id": "857:72",
+   "name": "10 Remember / text \u2014 Every evening, one question.",
+   "type": "TEXT",
+   "d": 1,
+   "x": 225,
+   "y": 15341,
+   "w": 475,
+   "h": 208,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Every evening, one question. \nIt may be answered with a sentence, a photograph, something learned, something funny, something small, something we should change, something we should never change. \nThe gathering should leave more than photographs behind. It should leave memory.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:153",
+   "name": "Where the magic happens.",
+   "type": "TEXT",
+   "d": 2,
+   "x": 1066,
+   "y": 15566,
+   "w": 477,
+   "h": 111,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#3C3C3C",
+     "a": 1
+    }
+   ],
+   "text": "Where the magic happens.",
+   "style": "Quote/27 Caption",
+   "font": "Arvind/Regular",
+   "size": 27.199939727783203,
+   "align": "CENTER",
+   "autoresize": "NONE",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:152",
+   "name": "10 Remember / plate \u2014 372x74",
+   "type": "RECTANGLE",
+   "d": 3,
+   "x": 1135,
+   "y": 15569,
+   "w": 372,
+   "h": 74,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#E3DCCE",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "857:158",
+   "name": "10 Remember / photo \u2014 image",
+   "type": "RECTANGLE",
+   "d": 3,
+   "x": 1270,
+   "y": 15597,
+   "w": 553,
+   "h": 553,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "b418f852d2e78aa7e04ee57e0ee3d9295c249c42",
+     "scale": "FILL"
+    }
+   ]
+  },
+  {
+   "id": "857:155",
+   "name": "10 Remember / group \u2014 Group 1437258070",
+   "type": "GROUP",
+   "d": 1,
+   "x": 1312,
+   "y": 15608,
+   "w": 497,
+   "h": 530
+  },
+  {
+   "id": "857:156",
+   "name": "10 Remember / group \u2014 477x530",
+   "type": "GROUP",
+   "d": 2,
+   "x": 1312,
+   "y": 15608,
+   "w": 477,
+   "h": 530
+  },
+  {
+   "id": "857:157",
+   "name": "10 Remember / mark \u2014 Vector 93",
+   "type": "VECTOR",
+   "d": 3,
+   "x": 1312,
+   "y": 15608,
+   "w": 477,
+   "h": 530,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#D9D9D9",
+     "a": 1
+    }
+   ],
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#000000",
+      "a": 1
+     }
+    ],
+    "w": 0.679998517036438
+   }
+  },
+  {
+   "id": "857:77",
+   "name": "10 Remember / text \u2014 Your memory",
+   "type": "TEXT",
+   "d": 1,
+   "x": 225,
+   "y": 15624,
+   "w": 115,
+   "h": 20,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Your memory",
+   "style": "Form/17 Label",
+   "font": "Bricolage Grotesque/Light",
+   "size": 17,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 0
+  },
+  {
+   "id": "857:161",
+   "name": "10 Remember / photo \u2014 IMAGE 18",
+   "type": "RECTANGLE",
+   "d": 2,
+   "x": 1331,
+   "y": 15633,
+   "w": 430,
+   "h": 415,
+   "fill": [
+    {
+     "t": "image",
+     "hash": "94c559a9df5912a3e1a0a910832234659b0e92e2",
+     "scale": "CROP"
+    }
+   ]
+  },
+  {
+   "id": "857:125",
+   "name": "10 Remember / field \u2014 memory textarea",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 224,
+   "y": 15657,
+   "w": 336,
+   "h": 157,
+   "r": 7,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:81",
+   "name": "10 Remember / group \u2014 Frame 358",
+   "type": "FRAME",
+   "d": 1,
+   "x": 225,
+   "y": 15664,
+   "w": 326,
+   "h": 60
+  },
+  {
+   "id": "857:82",
+   "name": "A sentence, observation,\u2028or something that happened today...",
+   "type": "TEXT",
+   "d": 2,
+   "x": 235,
+   "y": 15674,
+   "w": 306,
+   "h": 40,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "A sentence, observation,\u2028or something that happened today...",
+   "style": "Form/17 Label",
+   "font": "Bricolage Grotesque/Light",
+   "size": 17,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 0
+  },
+  {
+   "id": "857:79",
+   "name": "10 Remember / text \u2014 Your Name (optional)",
+   "type": "TEXT",
+   "d": 1,
+   "x": 225,
+   "y": 15849,
+   "w": 179,
+   "h": 20,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Your Name (optional)",
+   "style": "Form/17 Label",
+   "font": "Bricolage Grotesque/Light",
+   "size": 17,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 0
+  },
+  {
+   "id": "857:80",
+   "name": "10 Remember / text \u2014 Tree connection (optional)",
+   "type": "TEXT",
+   "d": 1,
+   "x": 595,
+   "y": 15849,
+   "w": 230,
+   "h": 20,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Tree connection (optional)",
+   "style": "Form/17 Label",
+   "font": "Bricolage Grotesque/Light",
+   "size": 17,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 0
+  },
+  {
+   "id": "857:126",
+   "name": "10 Remember / field \u2014 your name",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 224,
+   "y": 15878,
+   "w": 336,
+   "h": 40,
+   "r": 7,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:127",
+   "name": "10 Remember / field \u2014 tree connection",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 594,
+   "y": 15878,
+   "w": 336,
+   "h": 40,
+   "r": 7,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:128",
+   "name": "10 Remember / field \u2014 add a photograph",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 224,
+   "y": 15942,
+   "w": 269,
+   "h": 40,
+   "r": 7,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#4F6B41",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "857:130",
+   "name": "10 Remember / text \u2014 Add a photograph (optional)",
+   "type": "TEXT",
+   "d": 1,
+   "x": 234,
+   "y": 15952,
+   "w": 243,
+   "h": 20,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Add a photograph (optional)",
+   "style": "Form/17 Label",
+   "font": "Bricolage Grotesque/Light",
+   "size": 17,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:129",
+   "name": "10 Remember / button \u2014 add memory",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 224,
+   "y": 16002,
+   "w": 126,
+   "h": 40,
+   "r": 7,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#23FF88",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "857:159",
+   "name": "10 Remember / plate \u2014 374x116",
+   "type": "RECTANGLE",
+   "d": 3,
+   "x": 1393,
+   "y": 16002,
+   "w": 374,
+   "h": 116,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#E3DCCE",
+     "a": 1
+    }
+   ]
+  },
+  {
+   "id": "857:160",
+   "name": "Mornings with nothing\u2028on the calendar.",
+   "type": "TEXT",
+   "d": 2,
+   "x": 1331,
+   "y": 16006,
+   "w": 478,
+   "h": 126,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#3C3C3C",
+     "a": 1
+    }
+   ],
+   "text": "Mornings with nothing\u2028on the calendar.",
+   "style": "Quote/27 Caption",
+   "font": "Arvind/Regular",
+   "size": 27.199939727783203,
+   "align": "CENTER",
+   "autoresize": "NONE",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:131",
+   "name": "10 Remember / text \u2014 add memory",
+   "type": "TEXT",
+   "d": 1,
+   "x": 234,
+   "y": 16012,
+   "w": 106,
+   "h": 20,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#003306",
+     "a": 1
+    }
+   ],
+   "text": "add memory",
+   "style": "Form/17 Label",
+   "font": "Bricolage Grotesque/Light",
+   "size": 17,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:78",
+   "name": "10 Remember / text \u2014 Memories added here stay with this page for ",
+   "type": "TEXT",
+   "d": 1,
+   "x": 225,
+   "y": 16088,
+   "w": 602,
+   "h": 20,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Memories added here stay with this page for now \u2014 nothing is sent anywhere yet.",
+   "style": "Form/17 Note",
+   "font": "Bricolage Grotesque/Light",
+   "size": 17,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 0
+  },
+  {
+   "id": "857:147",
+   "name": "10 Remember / plate \u2014 605x534",
+   "type": "RECTANGLE",
+   "d": 1,
+   "x": 1315,
+   "y": 16244,
+   "w": 605,
+   "h": 534
+  },
+  {
+   "id": "857:88",
+   "name": "11 Tree registry / text \u2014 Some guests will leave another kind of memor",
+   "type": "TEXT",
+   "d": 1,
+   "x": 219,
+   "y": 16437,
+   "w": 515,
+   "h": 180,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Some guests will leave another kind of memory.",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:73",
+   "name": "11 Tree registry / text \u2014 A tree. Coffee, cacao, shade or another plan",
+   "type": "TEXT",
+   "d": 1,
+   "x": 225,
+   "y": 16652,
+   "w": 475,
+   "h": 92,
+   "text": "A tree. Coffee, cacao, shade or another plant chosen according to what belongs in the land. \nThe relationship continues after the visit ends.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:162",
+   "name": "11 Tree registry / group \u2014 Group 1437258067",
+   "type": "GROUP",
+   "d": 1,
+   "x": 225,
+   "y": 16802,
+   "w": 693,
+   "h": 260
+  },
+  {
+   "id": "857:177",
+   "name": "11 Tree registry / rule \u2014 horizontal",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 225,
+   "y": 16802,
+   "w": 693,
+   "h": 0,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:163",
+   "name": "GUEST",
+   "type": "TEXT",
+   "d": 2,
+   "x": 229,
+   "y": 16808,
+   "w": 63,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "GUEST",
+   "style": "Table/20 Key",
+   "font": "Bricolage Grotesque/Bold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:164",
+   "name": "-",
+   "type": "TEXT",
+   "d": 2,
+   "x": 910,
+   "y": 16808,
+   "w": 7,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "-",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:178",
+   "name": "11 Tree registry / rule \u2014 horizontal",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 225,
+   "y": 16839,
+   "w": 693,
+   "h": 0,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:171",
+   "name": "TREE ID",
+   "type": "TEXT",
+   "d": 2,
+   "x": 229,
+   "y": 16846,
+   "w": 71,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "TREE ID",
+   "style": "Table/20 Key",
+   "font": "Bricolage Grotesque/Bold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:167",
+   "name": "Assigned after planting",
+   "type": "TEXT",
+   "d": 2,
+   "x": 714,
+   "y": 16846,
+   "w": 204,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Assigned after planting",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "RIGHT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:179",
+   "name": "11 Tree registry / rule \u2014 horizontal",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 225,
+   "y": 16877,
+   "w": 693,
+   "h": 0,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:172",
+   "name": "SPECIES",
+   "type": "TEXT",
+   "d": 2,
+   "x": 229,
+   "y": 16883,
+   "w": 79,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "SPECIES",
+   "style": "Table/20 Key",
+   "font": "Bricolage Grotesque/Bold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:168",
+   "name": "Chosen with the estate",
+   "type": "TEXT",
+   "d": 2,
+   "x": 715,
+   "y": 16883,
+   "w": 203,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Chosen with the estate",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "RIGHT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:180",
+   "name": "11 Tree registry / rule \u2014 horizontal",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 225,
+   "y": 16914,
+   "w": 693,
+   "h": 0,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:173",
+   "name": "BLOCK",
+   "type": "TEXT",
+   "d": 2,
+   "x": 229,
+   "y": 16920,
+   "w": 63,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "BLOCK",
+   "style": "Table/20 Key",
+   "font": "Bricolage Grotesque/Bold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:165",
+   "name": "-",
+   "type": "TEXT",
+   "d": 2,
+   "x": 910,
+   "y": 16921,
+   "w": 7,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "-",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:181",
+   "name": "11 Tree registry / rule \u2014 horizontal",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 225,
+   "y": 16951,
+   "w": 693,
+   "h": 0,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:174",
+   "name": "PLANTING DATE",
+   "type": "TEXT",
+   "d": 2,
+   "x": 229,
+   "y": 16957,
+   "w": 147,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "PLANTING DATE",
+   "style": "Table/20 Key",
+   "font": "Bricolage Grotesque/Bold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:169",
+   "name": "27 September 2026",
+   "type": "TEXT",
+   "d": 2,
+   "x": 745,
+   "y": 16958,
+   "w": 173,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "27 September 2026",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "RIGHT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:182",
+   "name": "11 Tree registry / rule \u2014 horizontal",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 225,
+   "y": 16988,
+   "w": 693,
+   "h": 0,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:175",
+   "name": "FIRST PHOTOGRAPH",
+   "type": "TEXT",
+   "d": 2,
+   "x": 229,
+   "y": 16994,
+   "w": 186,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "FIRST PHOTOGRAPH",
+   "style": "Table/20 Key",
+   "font": "Bricolage Grotesque/Bold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:170",
+   "name": "Added at planting",
+   "type": "TEXT",
+   "d": 2,
+   "x": 763,
+   "y": 16994,
+   "w": 155,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "Added at planting",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "RIGHT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:183",
+   "name": "11 Tree registry / rule \u2014 horizontal",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 225,
+   "y": 17025,
+   "w": 693,
+   "h": 0,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:176",
+   "name": "LATEST OBSERVATION",
+   "type": "TEXT",
+   "d": 2,
+   "x": 229,
+   "y": 17031,
+   "w": 203,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "LATEST OBSERVATION",
+   "style": "Table/20 Key",
+   "font": "Bricolage Grotesque/Bold",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:166",
+   "name": "-",
+   "type": "TEXT",
+   "d": 2,
+   "x": 910,
+   "y": 17032,
+   "w": 7,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "-",
+   "style": "Body/20",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:184",
+   "name": "11 Tree registry / rule \u2014 horizontal",
+   "type": "VECTOR",
+   "d": 2,
+   "x": 225,
+   "y": 17062,
+   "w": 693,
+   "h": 0,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:89",
+   "name": "12 The harvest / text \u2014 The gathering finishes on 27 September. Harv",
+   "type": "TEXT",
+   "d": 1,
+   "x": 219,
+   "y": 17371,
+   "w": 627,
+   "h": 180,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "The gathering finishes on 27 September. Harvest does not.",
+   "style": "Heading/60",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 60,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:74",
+   "name": "12 The harvest / text \u2014 From here Aura moves through:",
+   "type": "TEXT",
+   "d": 1,
+   "x": 219,
+   "y": 17586,
+   "w": 475,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "From here Aura moves through:",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:75",
+   "name": "12 The harvest / text \u2014 The page should continue with the harvest un",
+   "type": "TEXT",
+   "d": 1,
+   "x": 219,
+   "y": 17733,
+   "w": 500,
+   "h": 96,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "The page should continue with the harvest until February. What happened to the coffee. What became a lot. What tasted extraordinary. What failed. What changed. What we learned. What still needs another season.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:185",
+   "name": "12 The harvest / rule \u2014 horizontal",
+   "type": "VECTOR",
+   "d": 1,
+   "x": 220,
+   "y": 18105,
+   "w": 1513,
+   "h": 0,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:187",
+   "name": "12 The harvest / text \u2014 SEPTEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 219,
+   "y": 18116,
+   "w": 121,
+   "h": 33,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "SEPTEMBER",
+   "style": "Nav + Intro/22",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 22,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:188",
+   "name": "12 The harvest / text \u2014 OCTOBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 518,
+   "y": 18116,
+   "w": 95,
+   "h": 33,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "OCTOBER",
+   "style": "Nav + Intro/22",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 22,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:189",
+   "name": "12 The harvest / text \u2014 NOVEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 791,
+   "y": 18116,
+   "w": 114,
+   "h": 33,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "NOVEMBER",
+   "style": "Nav + Intro/22",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 22,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:190",
+   "name": "12 The harvest / text \u2014 DECEMBER",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1084,
+   "y": 18116,
+   "w": 111,
+   "h": 33,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "DECEMBER",
+   "style": "Nav + Intro/22",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 22,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:191",
+   "name": "12 The harvest / text \u2014 JANUARY",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1373,
+   "y": 18116,
+   "w": 90,
+   "h": 33,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "JANUARY",
+   "style": "Nav + Intro/22",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 22,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:192",
+   "name": "12 The harvest / text \u2014 FEBUARY",
+   "type": "TEXT",
+   "d": 1,
+   "x": 1641,
+   "y": 18116,
+   "w": 92,
+   "h": 33,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "FEBUARY",
+   "style": "Nav + Intro/22",
+   "font": "Bricolage Grotesque/Regular",
+   "size": 22,
+   "align": "LEFT",
+   "autoresize": "WIDTH_AND_HEIGHT",
+   "paragraphSpacing": 20
+  },
+  {
+   "id": "857:186",
+   "name": "12 The harvest / rule \u2014 horizontal",
+   "type": "VECTOR",
+   "d": 1,
+   "x": 220,
+   "y": 18159,
+   "w": 1513,
+   "h": 0,
+   "stroke": {
+    "p": [
+     {
+      "t": "solid",
+      "hex": "#FFFFFF",
+      "a": 1
+     }
+    ],
+    "w": 1
+   }
+  },
+  {
+   "id": "857:76",
+   "name": "12 The harvest / text \u2014 The harvest timeline opens once the gatherin",
+   "type": "TEXT",
+   "d": 1,
+   "x": 219,
+   "y": 18209,
+   "w": 615,
+   "h": 24,
+   "fill": [
+    {
+     "t": "solid",
+     "hex": "#FFFFFF",
+     "a": 1
+    }
+   ],
+   "text": "The harvest timeline opens once the gathering ends on 27 September.",
+   "style": "Body/20 Light",
+   "font": "Bricolage Grotesque/Light",
+   "size": 20,
+   "align": "LEFT",
+   "autoresize": "HEIGHT",
+   "paragraphSpacing": 20
+  }
+ ]
+}

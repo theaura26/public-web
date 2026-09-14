@@ -34,7 +34,7 @@ const TARGETS = [
   '.grat__fig', '.grat__h', '.grat__b',
   '.rem__h', '.rem__b',
   '.reg__h', '.reg__b', '.reg__row',
-  '.harv__h', '.harv__from', '.harv__b', '.harv__months li', '.harv__note',
+  '.harv__h', '.harv__from', '.harv__b', '.harv__months li', '.harv__act',
 ].join(', ')
 
 /* Starts as the block's top crosses 95% of the screen height and is done

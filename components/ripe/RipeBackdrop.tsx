@@ -33,7 +33,10 @@ const GROUNDS: { id: Ground; image?: string; colour?: string; video?: string; di
   { id: 'dawn', image: '/RIPE/aura-dawn-1920.jpg', dim: 0.42 },
   { id: 'indigo', image: '/RIPE/aura-indigo-1920.jpg', dim: 0.56 },
   { id: 'forest', colour: '#052B14' },
-  { id: 'film', video: '/RIPE/aura-ripe-banner.mp4', image: '/RIPE/aura-ripe-banner-image.jpg', dim: 0.45 },
+  /* The harvest's own footage behind the page's last section, dimmed
+     further than the other grounds: it is busier and brighter than the
+     cherry film, and the heading, list and CTA sit straight on it. */
+  { id: 'film', video: '/RIPE/aura-ripe-harvest.mp4', image: '/RIPE/aura-ripe-harvest.jpg', dim: 0.62 },
 ]
 
 /* A tiny store rather than context: the claims come from several

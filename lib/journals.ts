@@ -198,7 +198,7 @@ const LINK_IMAGES: Record<string, string> = {
   /* The four pages Field Notes cross-lists that are not journals. Without
      an entry here the index drew them as a title and a paragraph with a
      blank where every neighbour has a photograph. */
-  '/regenerative-coffee/experience': '/from-aura/experiences/experiences.webp',
+  '/ripe': '/RIPE/aura-ripe-banner-image.jpg',
   '/regenerative-coffee/transparency': '/regenerative-coffee/transparency/aura-hands-sensor.webp',
   '/regenerative-life/food-and-fermentation': '/regenerative-life/food-and-fermentation/images/aura-farm-fermentation-01.webp',
   '/now': '/aura-grown.jpg',

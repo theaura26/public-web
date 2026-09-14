@@ -1,7 +1,7 @@
 import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
 import { OVERVIEW, STEPS } from '@/lib/regenerative-coffee-gallery'
 import {
-  MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner, ArrowLinkStyles,
+  MicroNav, RipeBanner, Panel, Scene, Chapter, Closing, NextBanners, ArrowLinkStyles,
 } from '@/components/coffee/Microsite'
 import { RemarkableCircle } from '@/components/coffee/RemarkableCircle'
 
@@ -227,7 +227,7 @@ Canopy.`}</Closing>
       <NextBanners from="hub" />
 
       {/* Persistent close — every page ends on the clay ask. */}
-      <ReserveBanner />
+      <RipeBanner />
     </>
   )
 }

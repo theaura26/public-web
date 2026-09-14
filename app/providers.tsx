@@ -23,7 +23,8 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { Suspense, useEffect, type ReactNode } from 'react'
 
 const KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY
-const HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
+/* The app host for links and the toolbar. The project is on PostHog EU. */
+const HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://eu.posthog.com'
 
 /* Enabled only on a production build with a key set. NODE_ENV is a build-time
    constant, identical on server and client, so gating the render on it can’t

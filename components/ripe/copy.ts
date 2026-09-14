@@ -1,0 +1,353 @@
+/* ═══════════════════════════════════════════════════════════════════
+   RIPE — the page's words.
+
+   Every string here is taken verbatim from the design file:
+   AURA // Coffee Festival, page Web, node 857:42.
+   See design/coffee-festival/SPEC.md and nodes.json.
+
+   Nothing in this file is drafted or invented. Where the design is
+   wrong it is reproduced and flagged rather than silently corrected —
+   there is one of those, marked below.
+═══════════════════════════════════════════════════════════════════ */
+
+export const BRAND = {
+  /* Two lines, because the design breaks it explicitly: the text node
+     carries a U+2028 line separator after "Right Time" rather than
+     letting the measure decide. */
+  tagline: ['Right Time', 'made visible.'],
+  meta: 'Mudigere · Harvest 2026 IN GOOD COMPANY',
+} as const
+
+/* A run of copy. A bare string is white; { g } is the brand green.
+   Both sequences below are transcribed from the styled text segments of
+   their nodes, so the accented words are the design's own choice of
+   which words to lift rather than mine. */
+export type Run = string | { g: string }
+
+/* Node 861:331 — 60px, x179 y1239, 1453 wide. */
+export const OPENING: Run[] = [
+  'Some things cannot be ', { g: 'hurried' },
+  '. A cherry. A ferment.  A field. An idea. A relationship. You create the conditions. You pay ',
+  { g: 'attention' },
+  '. And eventually there is a moment when something becomes ',
+  { g: 'ready' }, '.',
+]
+
+/* Node 857:212 — 22px, x179 y1718, 635 wide. */
+export const INTRO: Run[] = [
+  { g: 'This September, ' },
+  'we come together at Aura just as the estate moves towards harvest.\n'
+  + 'Friends begin arriving from the 20th.\n'
+  + 'Boojee and BESST join us on the 24th.\n'
+  + 'And for a few days, we walk, taste, make, ask questions, get our hands dirty, eat ',
+  { g: 'together ' },
+  'and spend time in good ',
+  { g: 'company.\n' },
+  'Then ',
+  { g: 'harvest' },
+  ' begins.',
+]
+
+/* Node 861:332 — 550x378 at x1228 y1651, beside the intro. */
+export const OPENING_MARK = {
+  src: '/RIPE/aura-cow.png', w: 550, h: 378,
+  alt: 'A line drawing of a calf',
+}
+
+export const NAV = [
+  { id: 'rhythm',   label: 'THE RHYTHM' },
+  { id: 'prepared', label: 'COME PREPARED' },
+  { id: 'gratitude',label: 'GRATITUDE' },
+  { id: 'remember', label: 'REMEMBER' },
+  { id: 'harvest',  label: 'THE HARVEST' },
+] as const
+
+/* ── The days ────────────────────────────────────────────────────
+   Ten beats down one spine. A beat carries any of: a photograph, the
+   60px title that overlaps it, a handwritten line laid over the
+   picture, and the day's programme in the right-hand column.
+
+   The pairing of photograph to beat is taken from the layer names in
+   the prepared Figma file, which record which picture sits with which
+   day. */
+export type Beat = {
+  title: string
+  /** Photograph for this beat, if it carries one. */
+  image?: string
+  alt?: string
+  /** Full-bleed rather than held in the centre column. */
+  bleed?: boolean
+  /** Title in the brand green. Two of the ten are, per the node fills:
+      Friends of Aura, and The company comes together. */
+  green?: boolean
+  /** The handwritten line laid over the picture. */
+  quote?: string
+  /** Where that line sits, taken from the frame: qx is a percentage of
+      the viewport, qy a percentage down the picture. They are scattered
+      in the design rather than set on a grid, so each is its own pair. */
+  qx?: number
+  qy?: number
+  /** Right column: the date, then the day's programme as a list. */
+  date?: string
+  lead?: string
+  list?: string[]
+  /** Right column prose with no date above it. */
+  prose?: string[]
+}
+
+export const BEATS: Beat[] = [
+  {
+    title: 'Friends of Aura',
+    green: true,
+    image: '/RIPE/aura-friends-of-aura.jpg',
+    alt: 'The estate seen from above, buildings held inside the canopy',
+    prose: [
+      'Before everyone comes together, Aura begins to fill slowly.',
+      'Friends arrive from Singapore and different parts of India. There is no need to rush into a programme. These days are for finding the place.',
+    ],
+  },
+  {
+    title: 'Come in',
+    quote: 'Good to be here.', qx: 45.26,
+    date: '20 SEPTEMBER',
+    list: [
+      'Arrive.', 'Coffee.', 'Find your room.', 'Walk.',
+      'Meet whoever is around.', 'Eat together.', 'Sit by the fire.',
+      'Let Aura introduce itself.',
+    ],
+  },
+  {
+    title: 'Find your rhythm',
+    image: '/RIPE/aura-find-your-rhythm.jpg',
+    alt: 'Indigenous cattle feeding together at the estate',
+    quote: 'I’m beginning to understand this place.', qx: 47.86, qy: 69.7,
+    date: '21 SEPTEMBER',
+    list: [
+      'Wake early if you want to.', 'Follow the cows.',
+      'Walk with someone from the estate.', 'Find coffee somewhere.',
+      'Spend time in the field.', 'Eat.', 'Talk.',
+      'Do nothing for a while.', 'There is no need to see everything.',
+    ],
+  },
+  {
+    title: 'Get closer',
+    quote: 'I’m starting to become part of the place.', qx: 48.59,
+    date: '22 SEPTEMBER',
+    list: [
+      'Spend more time with the people of Aura.', 'Help make something.',
+      'Walk deeper into the estate.', 'Join what is already happening.',
+      'By the time everyone else arrives, Aura should feel a little less like somewhere you are visiting.',
+    ],
+  },
+  {
+    title: 'The company comes together',
+    green: true,
+    image: '/RIPE/aura-company-comes-closer.jpg',
+    alt: 'A group sitting together on a ridge under a tree at dusk',
+    quote: '24 September 2026', qx: 51.67, qy: 45.6,
+    prose: [
+      'Boojee and BESST arrive.',
+      'The full company comes together.',
+      'No big programme.',
+      'Arrive. Check in. High tea and a welcome to Aura. Then dinner by the fire.',
+    ],
+  },
+  {
+    title: 'Arrive & Exhale',
+    image: '/RIPE/aura-arrive-exhale.jpg',
+    alt: 'Coffee cherries holding a bead of water against an open sky',
+    quote: 'I am somewhere special.', qx: 42.29, qy: 67.4,
+    date: '24 SEPTEMBER',
+    lead: 'Now we slow the pace. Not to do less. To notice more.',
+    list: ['Check in and settle.', 'High tea. Welcome into Aura.', 'Bonfire and dinner.', 'Season RIPE: the route for the three days ahead.', 'An icebreaker.'],
+  },
+  {
+    title: 'See & Feel',
+    image: '/RIPE/aura-see-and-feel.jpg',
+    alt: 'Pale lichen and a young seedling in red laterite soil',
+    quote: 'There is so much happening here.', qx: 59.9, qy: 11.2,
+    date: '25 SEPTEMBER',
+    lead: 'The first day belongs to noticing. Not only coffee. What grows above it. What lives beneath it. What moves through it. And the people who care for it.',
+    list: [
+      'A walk through the tea, if you like.', 'Breakfast on the estate.',
+      'Frame walk and cherry picking.', 'Lunch outdoors.',
+      'Biodiversity discovery walk.', 'Honey bees and pollination.',
+      'Coffee cupping.', 'Free time.',
+    ],
+  },
+  {
+    title: 'White. Indigo. Or both.',
+    /* The indigo botanical print, which is what the line is about. The
+       node's source image is 2.5MB at 1672x941 — aura-indigo.jpg, not
+       the cherry banner it was first built with. */
+    image: '/RIPE/aura-indigo-1920.jpg',
+    alt: 'An indigo botanical print on cream paper',
+    bleed: true,
+    date: '25 SEPTEMBER · EVENING',
+    list: [
+      'Nothing more complicated than that. A simple visual thread for an evening when everyone is together.',
+      'Bonfire and dinner in front of the bungalow.',
+      'Tonight, just good company.',
+    ],
+  },
+  {
+    title: 'Understand',
+    image: '/RIPE/aura-understand.jpg',
+    alt: 'Hands deep in wet compost at the estate heap',
+    quote: 'Now I understand how it connects.', qx: 56.46, qy: 76.4,
+    date: '26 SEPTEMBER',
+    lead: 'Cow to soil. Soil to tree. Tree to harvest. Observation to memory. Memory to better decisions.',
+    list: [
+      'Breakfast by the chef.', 'BD 500, CPP and soil biology.',
+      'Stir it. Smell it. Hold it.', 'Lunch together.', 'Free time.',
+      'The Hungry Soil experiment.', 'Live kitchen by the fire.',
+    ],
+  },
+  {
+    title: 'Make It Yours',
+    image: '/RIPE/aura-make-it-yours.jpg',
+    alt: 'Hands working together at the estate window',
+    quote: 'I was part of Aura.', qx: 56.46, qy: 42.7,
+    date: '27 SEPTEMBER',
+    lead: 'Plant something. Make something.  Leave something behind.  Take something with you.',
+    list: ['Plant Your Tree.', 'Coffee and breakfast.', 'Temple time.', 'Lunch and goodbyes.'],
+  },
+]
+
+/* ── Two arcs ────────────────────────────────────────────────────── */
+export const ARCS = {
+  title: 'The experience moves through two different arcs.',
+  note: [
+    'The days have structure. They also have room.',
+    'Weather may move things. The estate may move things. Something unexpected may become more interesting than something we planned.',
+  ],
+  columns: [
+    { title: 'FRIENDS OF AURA', dates: '20-22 SEPTEMBER', steps: ['Come In', 'Find Your Rhythm', 'Get Closer'] },
+    { title: 'In Good Company', dates: '24-27 SEPTEMBER', steps: ['Feel', 'Understand', 'Belong'] },
+  ],
+}
+
+/* ── Come prepared ───────────────────────────────────────────────── */
+export const PREPARED = {
+  /* Five of its phrases are lifted into the green — the verbs. */
+  lead: [
+    'This is a working estate. ', { g: 'Walk' }, '. Explore.  ',
+    { g: 'Get your hands dirty. ' }, 'Taste. ', { g: 'Create.' }, ' Pause.  ',
+    { g: 'Ask.' }, ' Notice. ', { g: 'Discover.' },
+  ] as Run[],
+  showUp: {
+    title: 'How to show up',
+    cards: [
+      { title: 'Come curious', body: 'Ask the obvious question.  It is often the useful one.' },
+      { title: 'Participate', body: 'Touch. Taste. Make. Try. Discuss. Share.' },
+      { title: 'Notice first', body: 'Look before photographing.  Observe before asking for the answer.' },
+      { title: 'Let the day move', body: 'Weather and the estate may change the rhythm, and we let the day move.' },
+      { title: 'Respect the working farm', body: 'The people, animals and land are not here for our visit. We are entering something already alive.' },
+      { title: 'Bring what you know', body: 'Coffee. Food. Technology. Plants. Design. Storytelling. People. Everyone coming knows something somebody else does not.' },
+    ],
+  },
+  bring: {
+    title: 'What to bring',
+    mark: { src: '/RIPE/aura-cap.png', w: 475, h: 379, alt: 'A line drawing of a field cap' },
+    cards: [
+      {
+        title: 'Field',
+        list: ['Comfortable outdoor clothes', 'Full-length trousers', 'Closed walking shoes',
+               'Cap or hat', 'Sunscreen', 'Insect repellent', 'Water bottle', 'Small towel', 'Rain protection'],
+      },
+      {
+        /* The later artwork puts the dress note first and folds the two
+           clothing lines into one. Its colour stays the periwinkle the
+           Figma node sets, #8CA7FE — the JPEG renders it white, and that
+           is the one place the two disagree. */
+        title: 'Evening',
+        note: 'For 25 September: white, indigo, or both.',
+        list: ['Comfortable smart-casual clothes with light jacket or shawl'],
+      },
+      { title: 'useful', list: ['Phone', 'Charger', 'Powerbank'] },
+      /* Sits under Evening in the second column, not under Field. */
+      { title: 'Making', body: 'One old outfit that can get dirty or stained', column: 2 },
+    ],
+  },
+}
+
+/* ── Closing ─────────────────────────────────────────────────────── */
+export const CLOSING = {
+  title: 'with Boojee and BESST.',
+  pairs: [
+    'Friends with friends.', 'Coffee with shade.', 'Roots with fungi.',
+    'Cows with soil.', 'Food with season.', 'Knowledge with memory.',
+    'And all of us with the land.',
+  ],
+  /* Was an SVG of the same words. Set as type it takes the hand role the
+     rest of the page uses, at the same size as every other line in it,
+     and it can be written on the way the beat quotes are. */
+  hand: 'Nothing here grows alone.',
+}
+
+/* ── Gratitude ───────────────────────────────────────────────────── */
+export const GRATITUDE = {
+  title: 'Harvest begins with gratitude.',
+  body: [
+    'Prayer belongs to the beginning of harvest.',
+    'It is not a performance. It is not an activity.',
+    'It is a moment to acknowledge what the land has given before we begin taking from it.',
+    'Guests may be invited to participate where appropriate.',
+    'Mostly, we listen.',
+  ],
+}
+
+/* ── Remember ────────────────────────────────────────────────────── */
+export const REMEMBER = {
+  title: 'What should Aura remember from today?',
+  body: [
+    'Every evening, one question.',
+    'It may be answered with a sentence, a photograph, something learned, something funny, something small, something we should change, something we should never change.',
+    'The gathering should leave more than photographs behind. It should leave memory.',
+  ],
+  form: {
+    legend: 'Your memory',
+    placeholder: 'A sentence, observation, or something that happened today...',
+    name: 'Your Name (optional)',
+    tree: 'Tree connection (optional)',
+    photo: 'Add a photograph (optional)',
+    submit: 'add memory',
+    note: 'Memories added here stay with this page for now — nothing is sent anywhere yet.',
+  },
+  shots: [
+    { src: '/RIPE/aura-remember-01.png', w: 512, h: 546,
+      caption: 'Where the magic happens.',
+      alt: 'A polaroid of the estate crew' },
+    { src: '/RIPE/aura-remember-02.png', w: 500, h: 543,
+      caption: 'Mornings with nothing on the calendar.',
+      alt: 'A polaroid of two people walking a forest path' },
+  ],
+}
+
+/* ── Tree registry ───────────────────────────────────────────────── */
+export const REGISTRY = {
+  title: 'Some guests will leave another kind of memory.',
+  /* "A tree." is lifted into the green in the artwork. */
+  lead: ['A tree. ', 'Coffee, cacao, shade or another plant chosen according to what belongs in the land.'],
+  body: ['The relationship continues after the visit ends.'],
+  mark: { src: '/RIPE/aura-tree.png', w: 900, h: 1100, alt: 'An illustration of a flowering coffee plant' },
+  rows: [
+    ['GUEST', '-'],
+    ['TREE ID', 'Assigned after planting'],
+    ['SPECIES', 'Chosen with the estate'],
+    ['BLOCK', '-'],
+    ['PLANTING DATE', '27 September 2026'],
+    ['FIRST PHOTOGRAPH', 'Added at planting'],
+    ['LATEST OBSERVATION', '-'],
+  ],
+}
+
+/* ── The harvest ─────────────────────────────────────────────────── */
+export const HARVEST = {
+  title: 'The gathering finishes on 27 September. Harvest does not.',
+  from: 'From here Aura moves through:',
+  body: 'The page should continue with the harvest until February. What happened to the coffee. What became a lot. What tasted extraordinary. What failed. What changed. What we learned. What still needs another season.',
+  /* The design spells it FEBUARY; corrected here (SPEC.md section 1). */
+  months: ['SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER', 'JANUARY', 'FEBRUARY'],
+  note: 'The harvest timeline opens once the gathering ends on 27 September.',
+}

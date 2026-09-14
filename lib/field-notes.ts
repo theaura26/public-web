@@ -158,11 +158,11 @@ const CROSS_LISTED: CrossListed[] = [
     from: 'Sanctuary',
   },
   {
-    href: '/regenerative-coffee/experience',
-    title: 'Aura Festival',
-    description: 'Three days on the estate, and a coffee that exists nowhere else.',
+    href: '/ripe',
+    title: 'RIPE Festival',
+    description: 'A week at Mudigere as the estate turns towards harvest, in good company.',
     categories: ['art-culture'],
-    from: 'Regenerative Coffee',
+    from: 'Experiences',
   },
   {
     /* The site's fullest account of fermentation, and it was missing from

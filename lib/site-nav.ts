@@ -161,6 +161,7 @@ export const SECTIONS: NavSection[] = [
         href: '/from-aura/experiences',
         soon: true,
         children: [
+          { label: 'RIPE Festival', href: '/ripe' },
           { label: 'Artist residencies', href: '/from-aura/residencies', soon: true },
           { label: 'Farm tours', href: '/from-aura/farm-tours', soon: true },
           { label: 'Harvest tours', href: '/from-aura/harvest-tours', soon: true },

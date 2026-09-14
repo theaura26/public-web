@@ -29,7 +29,6 @@ const OFF_MENU = [
   '/regenerative-coffee/biodynamic',
   '/regenerative-coffee/transparency',
   '/regenerative-coffee/flavour',
-  '/regenerative-coffee/experience',
 ]
 
 /* The sitemap is derived, not maintained.

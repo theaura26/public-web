@@ -136,7 +136,7 @@ export function MicroNav() {
 
           {/* The CTA sits above the scroller: links pass under it. */}
           <div className="ln-end">
-            <Link href={PAGE_HREF.experience} className="p2 ln-cta">
+            <Link href="/ripe" className="p2 ln-cta">
               <span className="ln-cta-long">Attend the Festival</span>
               <span className="ln-cta-short">Attend</span>
             </Link>
@@ -1459,6 +1459,64 @@ export function ReserveBanner() {
         .rb-al :global(.al):hover :global(.al-i) {
           background: #1d0f05; border-color: #1d0f05; color: var(--brand-accent);
         }
+      `}</style>
+    </section>
+  )
+}
+
+/* ── RIPE banner — the festival page, on the RIPE ground ──────────── */
+
+/**
+ * The same slot as ReserveBanner, pointing at /ripe. It borrows the RIPE
+ * page's own world rather than the clay: the cherry film's still under a
+ * deep black, the green logotype and line, and the house arrow link in
+ * its standard white. ReserveBanner above stays with the retired Aura
+ * Festival page.
+ */
+export function RipeBanner() {
+  return (
+    <section className="rpb">
+      <div className="section-w rpb-in">
+        <h2 className="rpb-h">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="rpb-mark" src="/RIPE/aura-ripe.svg" alt="" aria-hidden width={466} height={256} />
+          <span className="rpb-name">RIPE</span>
+        </h2>
+        <p className="rpb-t">Right time made visible.</p>
+        <p className="rpb-act">
+          <ArrowLink href="/ripe">Discover RIPE</ArrowLink>
+        </p>
+      </div>
+      <style jsx>{`
+        .rpb {
+          position: relative; z-index: 1; overflow: hidden;
+          display: flex; align-items: center;
+          padding: clamp(128px, 20vh, 240px) 0;
+          background: #000 url('/RIPE/aura-ripe-banner-image.jpg') center / cover no-repeat;
+          color: #fff; text-align: center;
+        }
+        /* The still stays a mood, not a picture: black over it, heaviest at
+           the edges so the words sit on near-black in the middle column. */
+        .rpb::before {
+          content: ''; position: absolute; inset: 0;
+          background:
+            radial-gradient(ellipse 70% 80% at 50% 50%, rgba(0,0,0,0.62), rgba(0,0,0,0.88)),
+            rgba(0,0,0,0.2);
+        }
+        .rpb-in { position: relative; width: 100%; }
+        .rpb-h { margin: 0; line-height: 0; }
+        .rpb-mark { display: block; width: clamp(221px, 26vw, 390px); height: auto; margin: 0 auto; }
+        .rpb-name {
+          position: absolute; width: 1px; height: 1px; overflow: hidden;
+          clip: rect(0 0 0 0); white-space: nowrap;
+        }
+        .rpb-t {
+          font-family: var(--font-grotesque), sans-serif; font-weight: 700;
+          text-transform: uppercase; letter-spacing: -0.02em;
+          font-size: clamp(16px, 1.6vw, 22px); line-height: 1.1;
+          color: #23FF88; margin: var(--space-5) auto 0;
+        }
+        .rpb-act { margin: var(--space-7) auto 0; display: flex; justify-content: center; }
       `}</style>
     </section>
   )

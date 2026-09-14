@@ -2,7 +2,7 @@ import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
 import { BETTER_GROUND, STEPS } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
-  MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner, ArrowLinkStyles,
+  MicroNav, RipeBanner, Panel, Scene, Chapter, Closing, NextBanners, ArrowLinkStyles,
 } from '@/components/coffee/Microsite'
 
 export const metadata: Metadata = {
@@ -118,7 +118,7 @@ Alive.`}</Closing>
 
       <NextBanners from="biodynamic" />
 
-      <ReserveBanner />
+      <RipeBanner />
     </>
   )
 }

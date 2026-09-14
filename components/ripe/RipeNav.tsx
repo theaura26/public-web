@@ -281,8 +281,11 @@ export function RipeNav() {
         }
         /* No rule under the active tab — the green is enough to mark
            where you are, which is how the coffee bar reads too. */
-        :global(.rn-l):hover { color: var(--ripe-green); }
-        :global(.rn-l.is-on) { color: var(--ripe-green); }
+        /* The site's own nav colour, as on the coffee microsite's bar: the
+           active section and hover read in the brand accent rather than
+           the festival green, so the bar stays part of the site's UI. */
+        :global(.rn-l):hover { color: var(--brand-accent); }
+        :global(.rn-l.is-on) { color: var(--brand-accent); }
       `}</style>
     </>
   )

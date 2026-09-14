@@ -2,7 +2,7 @@ import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
 import { FLAVOURS, STEPS } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
-  MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner, ArrowLinkStyles,
+  MicroNav, RipeBanner, Panel, Scene, Chapter, Closing, NextBanners, ArrowLinkStyles,
 } from '@/components/coffee/Microsite'
 import {
   LotCards, BlockExplorer, ARABICA_LOTS, ROBUSTA_LOTS,
@@ -172,7 +172,7 @@ Cup.`}</Closing>
 
       <NextBanners from="flavour" />
 
-      <ReserveBanner />
+      <RipeBanner />
     </>
   )
 }

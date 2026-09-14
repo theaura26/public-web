@@ -2,8 +2,7 @@ import { ChapterBackdrop } from '@/components/coffee/ChapterBackdrop'
 import { TRANSPARENCY, STEPS } from '@/lib/regenerative-coffee-gallery'
 import type { Metadata } from 'next'
 import {
-  MicroNav, Panel, Scene, Chapter, Closing, NextBanners, ReserveBanner,
-  LoopDiagram, ArrowLinkStyles,
+  MicroNav, RipeBanner, Panel, Scene, Chapter, Closing, NextBanners, LoopDiagram, ArrowLinkStyles,
 } from '@/components/coffee/Microsite'
 
 export const metadata: Metadata = {
@@ -113,7 +112,7 @@ Ours to prove.`}</Closing>
 
       <NextBanners from="transparency" />
 
-      <ReserveBanner />
+      <RipeBanner />
     </>
   )
 }

@@ -1,6 +1,8 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useReveal } from './useReveal'
+import { useGround } from './RipeBackdrop'
 import { REMEMBER } from './copy'
 
 /* ── Remember ────────────────────────────────────────────────────────
@@ -83,8 +85,54 @@ export function addMemory(fields: { text: string; name?: string; tree?: string; 
   return true
 }
 
+/* The prints are laid down by the scroll, one at a time. Each slides in
+   from its own side, tilted further than it rests, and settles as it rises
+   through the lower part of the screen. The first sits higher, so it has
+   landed before the second starts — the reader takes in one photograph and
+   its caption, then the next. Read on the scroll event, not an animation
+   frame, for the same reason as the spine in RipeDays. */
+const SHOT_START = 0.95
+const SHOT_SPAN = 0.4
+/* Each later print waits this much more of the screen before it starts,
+   so side by side on a desktop they still arrive in turn. */
+const SHOT_STAGGER = 0.2
+
 export function RipeRemember() {
   const ref = useReveal<HTMLElement>()
+  /* Forest green from here, running on into the tree registry, so the two
+     sections about what the gathering leaves behind share one ground. */
+  useGround('forest', ref, 'remember')
+
+  useEffect(() => {
+    const shots = Array.from(document.querySelectorAll<HTMLElement>('.rem .shot'))
+    if (!shots.length) return
+    const rest = [-4, 5]
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      shots.forEach((el, i) => { el.style.opacity = '1'; el.style.transform = `rotate(${rest[i] ?? 0}deg)` })
+      return
+    }
+    shots.forEach((el) => { el.style.transition = 'none' })
+    const update = () => {
+      const vh = window.innerHeight
+      const tops = shots.map((el) => el.getBoundingClientRect().top)
+      shots.forEach((el, i) => {
+        const p = Math.min(Math.max((vh * (SHOT_START - i * SHOT_STAGGER) - tops[i]) / (vh * SHOT_SPAN), 0), 1)
+        const e = 1 - Math.pow(1 - p, 3)
+        const dir = i % 2 === 0 ? -1 : 1
+        el.style.opacity = e.toFixed(3)
+        el.style.transform =
+          `translate3d(${((1 - e) * dir * 70).toFixed(1)}px, ${((1 - e) * 40).toFixed(1)}px, 0) ` +
+          `rotate(${((rest[i] ?? 0) + (1 - e) * dir * 12).toFixed(2)}deg)`
+      })
+    }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
 
   return (
     <section ref={ref} id="remember" className="rem">
@@ -229,13 +277,13 @@ export function RipeRemember() {
         @media (max-width: 1199px) {
           .rem__shots { flex-direction: column; align-items: center; }
           .shot { width: min(270px, 47%); }
-          /* A small pile in the middle: the second print lies over most
-             of the first, nudged the other way, so both captions and the
-             edge of the first photograph still show. A margin percentage
-             is measured against the container's width, the same base as
-             the print's own width, so the overlap holds at every size. */
+          /* A loose pile in the middle: the second print only catches the
+             bottom corner of the first, so the first photograph and its
+             caption stay readable. A margin percentage is measured against
+             the container's width, the same base as the print's own width,
+             so the overlap holds at every size. */
           .shot--1 { align-self: center; margin-right: 14%; }
-          .shot--2 { align-self: center; margin-left: 14%; margin-top: calc(min(270px, 47%) * -0.72); }
+          .shot--2 { align-self: center; margin-left: 14%; margin-top: calc(min(270px, 47%) * -0.3); }
         }
         @media (prefers-reduced-motion: reduce) {
           .shot { transition: none; }

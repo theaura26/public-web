@@ -281,9 +281,12 @@ export function RipePrepared() {
 
         {/* Generated with Higgsfield from the cap and the calf as
             references, so the kit is drawn in the same green engraving. */}
+        {/* Not lazy, like the cap below: a lazy image only started loading
+            as it reached the screen, so the scroll fade had already run by
+            the time it arrived and it appeared all at once. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="prep__kit" src="/RIPE/aura-bring.png" alt=""
-             aria-hidden loading="lazy" decoding="async" />
+             aria-hidden decoding="async" />
         <h2 className="prep__h">{PREPARED.bring.title}</h2>
         <div className="prep__grid prep__grid--bring">
           {PREPARED.bring.cards.map((c) => (
@@ -314,7 +317,7 @@ export function RipePrepared() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="prep__mark" src={PREPARED.bring.mark.src} alt=""
                aria-hidden width={PREPARED.bring.mark.w} height={PREPARED.bring.mark.h}
-               loading="lazy" decoding="async" />
+               decoding="async" />
         </div>
       </div>
       <style jsx>{`
@@ -347,7 +350,7 @@ export function RipePrepared() {
         /* The cap closes the list on the right, on its own row. */
         .prep__mark {
           grid-column: 1 / -1; justify-self: end;
-          display: block; width: min(475px, 70%); height: auto;
+          display: block; width: min(380px, 56%); height: auto;
         }
         /* start, not stretch: a card in a short column was being pulled
            to the height of the tallest one in its row, which put a hole
@@ -573,6 +576,37 @@ export function RipeGratitude() {
 export function RipeRegistry() {
   const ref = useReveal<HTMLElement>()
   useGround('forest', ref, 'registry')
+  const tree = useRef<HTMLImageElement>(null)
+
+  /* The coffee plant grows in with the scroll: it is uncovered from the
+     base of the stem upward while it rises a little from where it stands,
+     so the leaves and flowers at the crown arrive last. Scroll position,
+     not a clock, so it grows back down when the reader scrolls up. */
+  useEffect(() => {
+    const el = tree.current
+    if (!el) return
+    el.style.transition = 'none'
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.style.opacity = '1'; el.style.transform = 'none'; el.style.clipPath = 'none'
+      return
+    }
+    const update = () => {
+      const vh = window.innerHeight
+      const r = el.getBoundingClientRect()
+      const p = Math.min(Math.max((vh * 0.95 - r.top) / (vh * 0.55), 0), 1)
+      const e = 1 - Math.pow(1 - p, 2)
+      el.style.opacity = Math.min(1, p * 3).toFixed(3)
+      el.style.clipPath = `inset(${((1 - e) * 100).toFixed(2)}% -10% 0 -10%)`
+      el.style.transform = `translateY(${((1 - e) * 24).toFixed(1)}px) scale(${(0.94 + e * 0.06).toFixed(4)})`
+    }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
   return (
     <section ref={ref} className="reg">
       <div className="section-w reg__in">
@@ -591,8 +625,8 @@ export function RipeRegistry() {
         </dl>
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="reg__mark" src={REGISTRY.mark.src} alt="" aria-hidden
-             loading="lazy" decoding="async" />
+        <img ref={tree} className="reg__mark" src={REGISTRY.mark.src} alt="" aria-hidden
+             decoding="async" />
       </div>
       <style jsx>{`
         /* The deep green ground the artwork puts under this block, and
@@ -611,6 +645,7 @@ export function RipeRegistry() {
           justify-self: center;
           opacity: 0; transform: translateY(20px);
           transition: opacity 1s var(--ease-out) .15s, transform 1s var(--ease-out) .15s;
+          transform-origin: 50% 100%;
         }
         .reg.is-in .reg__mark { opacity: 1; transform: translateY(0); }
         .reg__h {

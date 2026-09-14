@@ -15,8 +15,10 @@ import { useEffect } from 'react'
    embedded preview — a frame-driven reveal stands still half-done, which
    is how content "went missing" before.
 
-   The hero and the days are not in the list: both already move with the
-   scroll on their own timelines, and two drivers on one element fight.
+   The hero, the days, the polaroids and the registry's tree are not in
+   the list: each already moves with the scroll on its own timeline
+   (RipeHero, RipeDays, RipeRemember, RipeRegistry), and two drivers on
+   one element fight.
 
    Where a section's own .is-in rule transitions opacity or transform on
    the same element, that transition is switched off inline, so the block
@@ -30,8 +32,8 @@ const TARGETS = [
   '.prep__lead', '.prep__h', '.prep__grid .card', '.prep__kit', '.prep__mark',
   '.close__scatter', '.close__mark', '.close__t', '.close__l li', '.close__art',
   '.grat__fig', '.grat__h', '.grat__b',
-  '.rem__h', '.rem__b', '.shot img',
-  '.reg__h', '.reg__b', '.reg__row', '.reg__mark',
+  '.rem__h', '.rem__b',
+  '.reg__h', '.reg__b', '.reg__row',
   '.harv__h', '.harv__from', '.harv__b', '.harv__months li', '.harv__note',
 ].join(', ')
 

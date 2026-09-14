@@ -38,7 +38,7 @@ export const INTRO: Run[] = [
   { g: 'This September, ' },
   'we come together at Aura just as the estate moves towards harvest.\n'
   + 'Friends begin arriving from the 20th.\n'
-  + 'Boojee and BESST join us on the 23rd.\n'
+  + 'Boojee and BESST join us on the 24th.\n'
   + 'And for a few days, we walk, taste, make, ask questions, get our hands dirty, eat ',
   { g: 'together ' },
   'and spend time in good ',
@@ -144,12 +144,35 @@ export const BEATS: Beat[] = [
     green: true,
     image: '/RIPE/aura-company-comes-closer.jpg',
     alt: 'A group sitting together on a ridge under a tree at dusk',
-    quote: '23 September 2026', qx: 51.67, qy: 45.6,
+    quote: '24 September 2026', qx: 51.67, qy: 45.6,
     prose: [
       'Boojee and BESST arrive.',
       'The full company comes together.',
       'No big programme.',
-      'Arrive. Settle. Coffee. Walk. Meet. Then dinner.',
+      'Arrive. Check in. High tea and a welcome to Aura. Then dinner by the fire.',
+    ],
+  },
+  {
+    title: 'Arrive & Exhale',
+    image: '/RIPE/aura-arrive-exhale.jpg',
+    alt: 'Coffee cherries holding a bead of water against an open sky',
+    quote: 'I am somewhere special.', qx: 42.29, qy: 67.4,
+    date: '24 SEPTEMBER',
+    lead: 'Now we slow the pace. Not to do less. To notice more.',
+    list: ['Check in and settle.', 'High tea. Welcome into Aura.', 'Bonfire and dinner.', 'Season RIPE: the route for the three days ahead.', 'An icebreaker.'],
+  },
+  {
+    title: 'See & Feel',
+    image: '/RIPE/aura-see-and-feel.jpg',
+    alt: 'Pale lichen and a young seedling in red laterite soil',
+    quote: 'There is so much happening here.', qx: 59.9, qy: 11.2,
+    date: '25 SEPTEMBER',
+    lead: 'The first day belongs to noticing. Not only coffee. What grows above it. What lives beneath it. What moves through it. And the people who care for it.',
+    list: [
+      'A walk through the tea, if you like.', 'Breakfast on the estate.',
+      'Frame walk and cherry picking.', 'Lunch outdoors.',
+      'Biodiversity discovery walk.', 'Honey bees and pollination.',
+      'Coffee cupping.', 'Free time.',
     ],
   },
   {
@@ -160,32 +183,11 @@ export const BEATS: Beat[] = [
     image: '/RIPE/aura-indigo-1920.jpg',
     alt: 'An indigo botanical print on cream paper',
     bleed: true,
-    date: '23 SEPTEMBER',
+    date: '25 SEPTEMBER · EVENING',
     list: [
-      'Nothing more complicated than that. A simple visual thread for the first evening when everyone is together.',
-      'Good food. A long table. Conversation. Maybe music. Maybe fire. No speeches required.',
+      'Nothing more complicated than that. A simple visual thread for an evening when everyone is together.',
+      'Bonfire and dinner in front of the bungalow.',
       'Tonight, just good company.',
-    ],
-  },
-  {
-    title: 'Arrive & Exhale',
-    image: '/RIPE/aura-arrive-exhale.jpg',
-    alt: 'Coffee cherries holding a bead of water against an open sky',
-    quote: 'I am somewhere special.', qx: 42.29, qy: 67.4,
-    date: '24 SEPTEMBER',
-    lead: 'Now we slow the pace. Not to do less. To notice more.',
-    list: ['Welcome into Aura.', 'Know each other differently.', 'The Aura Pause.', 'Shavasana.', 'Stars.'],
-  },
-  {
-    title: 'See & Feel',
-    image: '/RIPE/aura-see-and-feel.jpg',
-    alt: 'Pale lichen and a young seedling in red laterite soil',
-    quote: 'There is so much happening here.', qx: 59.9, qy: 11.2,
-    date: '25 SEPTEMBER',
-    lead: 'The first day belongs to noticing. Not only coffee. What grows above it. What lives beneath it. What moves through it. And the people who care for it.',
-    list: [
-      'Sensory estate walk.', 'Biodiversity discoveries.', 'Fungi.', 'Shade.',
-      'Soil.', 'People of Aura.', 'Coffee cupping.',
     ],
   },
   {
@@ -196,8 +198,9 @@ export const BEATS: Beat[] = [
     date: '26 SEPTEMBER',
     lead: 'Cow to soil. Soil to tree. Tree to harvest. Observation to memory. Memory to better decisions.',
     list: [
-      'BD500.', 'CPP.', 'Soil biology.', 'Hungry Soil experiment.',
-      'Plant health.', 'Food and fermentation.', 'Aura Intelligence.', 'Field memories.',
+      'Breakfast by the chef.', 'BD 500, CPP and soil biology.',
+      'Stir it. Smell it. Hold it.', 'Lunch together.', 'Free time.',
+      'The Hungry Soil experiment.', 'Live kitchen by the fire.',
     ],
   },
   {
@@ -207,7 +210,7 @@ export const BEATS: Beat[] = [
     quote: 'I was part of Aura.', qx: 56.46, qy: 42.7,
     date: '27 SEPTEMBER',
     lead: 'Plant something. Make something.  Leave something behind.  Take something with you.',
-    list: ['Plant Your Tree.', 'Natural Dye.', 'Final walk.', 'Food together.', 'Your Aura Memory.'],
+    list: ['Plant Your Tree.', 'Coffee and breakfast.', 'Temple time.', 'Lunch and goodbyes.'],
   },
 ]
 
@@ -220,7 +223,7 @@ export const ARCS = {
   ],
   columns: [
     { title: 'FRIENDS OF AURA', dates: '20-22 SEPTEMBER', steps: ['Come In', 'Find Your Rhythm', 'Get Closer'] },
-    { title: 'In Good Company', dates: '23-27 SEPTEMBER', steps: ['Feel', 'Understand', 'Belong'] },
+    { title: 'In Good Company', dates: '24-27 SEPTEMBER', steps: ['Feel', 'Understand', 'Belong'] },
   ],
 }
 
@@ -258,7 +261,7 @@ export const PREPARED = {
            Figma node sets, #8CA7FE — the JPEG renders it white, and that
            is the one place the two disagree. */
         title: 'Evening',
-        note: 'For 23 September: white, indigo, or both.',
+        note: 'For 25 September: white, indigo, or both.',
         list: ['Comfortable smart-casual clothes with light jacket or shawl'],
       },
       { title: 'useful', list: ['Phone', 'Charger', 'Powerbank'] },

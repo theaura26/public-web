@@ -113,10 +113,8 @@ export function RipeDays() {
             autoAlpha: 1, y: 0, ease: 'none', stagger: 0.2,
             scrollTrigger: { trigger: beat, start: 'top bottom-=40%', end: 'top top+=10%', scrub: true },
           })
-          gsap.to(words, {
-            autoAlpha: 0, ease: 'none',
-            scrollTrigger: { trigger: beat, start: 'bottom bottom-=10%', end: 'bottom top+=40%', scrub: true },
-          })
+          /* No fade on the way out: the words stay at full strength and
+             scroll away with the screen. */
           return
         }
 
@@ -445,14 +443,11 @@ export function RipeDays() {
             text-align: center;
           }
           .beat:not(:has(.beat__fig)) .beat__title { order: 1; max-width: 16ch; }
-          .beat:not(:has(.beat__fig)) .beat__prog { order: 2; max-width: 75%; }
+          /* Half the old 75% measure, so the centred list reads as a narrow
+             column; the 260px floor keeps a phone from breaking the longer
+             lines one word at a time. */
+          .beat:not(:has(.beat__fig)) .beat__prog { order: 2; max-width: max(37.5%, 260px); }
           .beat:not(:has(.beat__fig)) .beat__quote { order: 3; margin: 0; text-align: center; }
-          /* A single centred column, so its programme is P1; the photo
-             cards keep P2 because they run title and programme side by
-             side. */
-          .beat:not(:has(.beat__fig)) :is(.beat__lead, .beat__prose, .beat__list li) {
-            font-size: var(--t-p1-size); line-height: var(--t-p1-lh);
-          }
 
           .beat.is-bleed {
             min-height: 100dvh;

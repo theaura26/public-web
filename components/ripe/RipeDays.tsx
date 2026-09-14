@@ -39,8 +39,9 @@ import { useGround } from './RipeBackdrop'
    reader. Its tip is held at the middle of the screen from the moment the
    run arrives there until it leaves, so the line is always drawn exactly
    as far down as the reader has come, with the aura mark at the end
-   marking where they are. One custom property drives both, so the tip
-   and the line cannot drift apart. */
+   marking where they are. The line is revealed from the scroll position;
+   the mark is held mid-screen by the browser (position: sticky), so it
+   moves in step with the page. */
 
 export function RipeDays() {
   const root = useRef<HTMLDivElement>(null)
@@ -259,10 +260,17 @@ export function RipeDays() {
         }
         /* The clip is on the dots alone, so the tip is never cut off by
            the edge it marks. */
+        /* Held at the middle of the screen by position: sticky rather than
+           moved by the scroll handler. A top set from a scroll event lands
+           a frame behind the browser's own scrolling, and the mark shook
+           against the page; sticky is placed by the browser in the same
+           step as the scroll, so it stays still. Its natural place is the
+           top of the spine, and it cannot leave the spine's box, so it
+           starts where the line starts and stops where it ends. */
         .days__tip {
-          position: absolute; left: 50%; top: var(--grow);
-          width: 32px; height: auto; max-width: none;
-          transform: translate(-50%, -50%);
+          position: sticky; top: calc(50vh - 14px);
+          display: block; width: 32px; height: auto; max-width: none;
+          margin-left: -14.5px;
           filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35));
         }
 
@@ -532,7 +540,12 @@ export function RipeDays() {
             width: 20ch; text-align: center;
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.65);
           }
-          .beat:not(:has(.beat__fig)) .beat__quote { top: 0.1em; }
+          /* No picture to sit on, so the line joins the title and the date on
+             one row across the three bands. 92px, not the 50px the title box
+             is set at: the title's first line starts about 38px inside its
+             box, and the hand's line box is shorter, so this is what puts
+             the three first lines level — measured at 1440 and 1920. */
+          .beat:not(:has(.beat__fig)) .beat__quote { top: 92px; }
 
           .beat.is-bleed {
             grid-template-columns: 22% 54% 24%;

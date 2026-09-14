@@ -285,7 +285,7 @@ export function RipePrepared() {
             as it reached the screen, so the scroll fade had already run by
             the time it arrived and it appeared all at once. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="prep__kit" src="/RIPE/aura-bring.png" alt=""
+        <img className="prep__kit" src="/RIPE/aura-bring.jpg" alt=""
              aria-hidden decoding="async" />
         <h2 className="prep__h">{PREPARED.bring.title}</h2>
         <div className="prep__grid prep__grid--bring">
@@ -426,13 +426,87 @@ export function RipePrepared() {
 }
 
 /* ── Closing pairs + the last line ───────────────────────────────── */
+/* The scatter, as eight photographs in three sizes around the words.
+   Size is depth: L is near — sharp, full strength, drifting fastest; M sits
+   in the middle; S is far — soft, dimmer, drifting slowest. The parallax is
+   what makes the sizes read as distance rather than as three thumbnails. As
+   the section arrives they come up one at a time in `order`, and as it
+   leaves they go again in the same order. Positions follow the reference
+   scatter: a hollow middle for the words, photographs around it. */
+type Shot = { src: string; x: number; y: number; size: 'L' | 'M' | 'S'; order: number }
+const SCATTER: Shot[] = [
+  { src: '/RIPE/collage/aura-collage-01.jpg', x: 27, y: 12, size: 'S', order: 1 },
+  { src: '/RIPE/collage/aura-collage-02.jpg', x: 76, y: 11, size: 'M', order: 0 },
+  { src: '/RIPE/collage/aura-collage-03.jpg', x: 6,  y: 33, size: 'M', order: 2 },
+  { src: '/RIPE/collage/aura-collage-04.jpg', x: 93, y: 35, size: 'S', order: 3 },
+  { src: '/RIPE/collage/aura-collage-05.jpg', x: 20, y: 51, size: 'L', order: 4 },
+  { src: '/RIPE/collage/aura-collage-06.jpg', x: 79, y: 56, size: 'M', order: 5 },
+  { src: '/RIPE/collage/aura-collage-07.jpg', x: 9,  y: 84, size: 'L', order: 6 },
+  { src: '/RIPE/collage/aura-collage-08.jpg', x: 92, y: 82, size: 'L', order: 7 },
+]
+const DEPTH = {
+  S: { blur: 2.4, peak: 0.6,  drift: 0.12 },
+  M: { blur: 0.9, peak: 0.85, drift: 0.24 },
+  L: { blur: 0,   peak: 1,    drift: 0.42 },
+} as const
+
 export function RipeClosing() {
   const ref = useReveal<HTMLElement>()
+  const scatter = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const section = ref.current, box = scatter.current
+    if (!section || !box) return
+    const figs = Array.from(box.querySelectorAll<HTMLElement>('.close__shot'))
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const n = SCATTER.length
+    const update = () => {
+      const vh = window.innerHeight
+      const r = section.getBoundingClientRect()
+      /* 0 as the section's top reaches the bottom of the screen, 1 as its
+         bottom leaves the top. */
+      const t = Math.min(Math.max((vh - r.top) / (vh + r.height), 0), 1)
+      figs.forEach((el, i) => {
+        const s = SCATTER[i], d = DEPTH[s.size]
+        if (reduced) {
+          el.style.opacity = String(d.peak)
+          el.style.transform = 'translate(-50%, -50%)'
+          el.style.filter = d.blur ? `blur(${d.blur}px)` : 'none'
+          return
+        }
+        const k = s.order / (n - 1)
+        const inStart = 0.1 + k * 0.22, outStart = 0.58 + k * 0.22, span = 0.12
+        const up = Math.min(Math.max((t - inStart) / span, 0), 1)
+        const down = Math.min(Math.max((t - outStart) / span, 0), 1)
+        const ease = (x: number) => 1 - Math.pow(1 - x, 3)
+        const v = ease(up) * (1 - ease(down))
+        const lift = (0.5 - t) * vh * d.drift
+        const scale = 0.86 + 0.14 * ease(up) + 0.04 * ease(down)
+        el.style.opacity = (v * d.peak).toFixed(3)
+        el.style.transform = `translate(-50%, calc(-50% + ${lift.toFixed(1)}px)) scale(${scale.toFixed(4)})`
+        el.style.filter = `blur(${(d.blur + (1 - v) * 4).toFixed(2)}px)`
+      })
+    }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [ref])
+
   return (
     <section ref={ref} className="close">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="close__scatter" src="/RIPE/aura-collage.png" alt="" aria-hidden
-           width={1619} height={1014} loading="lazy" decoding="async" />
+      <div ref={scatter} className="close__scatter" aria-hidden>
+        {SCATTER.map((s) => (
+          <figure key={s.src} className={`close__shot is-${s.size}`}
+                  style={{ ['--x' as string]: `${s.x}%`, ['--xm' as string]: `${s.x < 50 ? 8 : 92}%`, ['--y' as string]: `${s.y}%` } as React.CSSProperties}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={s.src} alt="" width={340} height={426} decoding="async" />
+          </figure>
+        ))}
+      </div>
       <div className="section-w close__in">
         {/* The Union node at the centre of the scatter is the aura mark. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -453,13 +527,24 @@ export function RipeClosing() {
           display: flex; align-items: center;
           padding: var(--ripe-section-gap) 0;
         }
-        /* contain, not cover. The scatter is a composition — eight frames
-           placed around a hollow middle — and covering it crops the
-           outer ones away and pushes the rest off the words they are
-           meant to surround. */
-        .close__scatter {
-          position: absolute; inset: 0; width: 100%; height: 100%;
-          object-fit: contain; opacity: 0.65; pointer-events: none;
+        .close__scatter { position: absolute; inset: 0; pointer-events: none; }
+        .close__shot {
+          position: absolute; left: var(--x); top: var(--y); margin: 0;
+          opacity: 0; transform: translate(-50%, -50%);
+          will-change: opacity, transform, filter;
+        }
+        .close__shot img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+        .close__shot.is-L { width: clamp(84px, 11vw, 220px); }
+        .close__shot.is-M { width: clamp(66px, 8.2vw, 165px); }
+        .close__shot.is-S { width: clamp(50px, 5.6vw, 112px); }
+        /* Below 600px the words take the middle of the screen, so the
+           photographs keep to the two edges (--xm), in the same three
+           sizes, scaled down. */
+        @media (max-width: 599px) {
+          .close__shot { left: var(--xm); }
+          .close__shot.is-L { width: 64px; }
+          .close__shot.is-M { width: 52px; }
+          .close__shot.is-S { width: 42px; }
         }
         .close__in { position: relative; z-index: 1; }
         /* A full screen of height centres the block in black on a phone. */

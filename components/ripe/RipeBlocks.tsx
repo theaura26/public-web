@@ -4,7 +4,10 @@ import { useReveal } from './useReveal'
 import { useGround } from './RipeBackdrop'
 import { OPENING, OPENING_MARK, INTRO, ARCS, PREPARED, CLOSING, GRATITUDE, REGISTRY, HARVEST } from './copy'
 import { RipeReveal } from './RipeReveal'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { ExperienceForm } from '../coffee/ExperienceForm'
+import ArrowCta from '@/components/ArrowCta'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -321,7 +324,8 @@ export function RipePrepared() {
         </div>
       </div>
       <style jsx>{`
-        .prep { padding: 0 0 var(--ripe-section-gap); }
+        /* Air between the COME PREPARED display and the lead under it. */
+        .prep { padding: var(--sp-cluster) 0 var(--ripe-section-gap); }
         .prep :global(.prep__lead) {
           font-family: var(--font-grotesque), sans-serif; font-weight: 400;
           color: #fff;
@@ -781,10 +785,150 @@ export function RipeRegistry() {
 }
 
 /* ── The harvest ─────────────────────────────────────────────────── */
+/* The booking pop-up, in the Ask Aura panel's own UI: dark glass over a
+   dimmed page, the mark and a bare close cross in the header, the opening
+   line, a mono note, then the Aura Festival form offered for the two
+   harvest windows. Escape, the cross or the backdrop closes it, the page
+   behind does not scroll, and focus returns to the button that opened it. */
+function RipeBookModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const panel = useRef<HTMLDivElement>(null)
+  /* Closing plays the exit before the modal unmounts, the way Ask Aura
+     leaves: the panel sinks and fades, then onClose removes it. */
+  const [closing, setClosing] = useState(false)
+  const close = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { onClose(); return }
+    setClosing(true)
+  }
+  useEffect(() => {
+    if (!open) return
+    const prev = document.body.style.overflow
+    const opener = document.activeElement as HTMLElement | null
+    document.body.style.overflow = 'hidden'
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      if (reduced) onClose(); else setClosing(true)
+    }
+    window.addEventListener('keydown', onKey)
+    /* preventScroll: focusing without it could nudge the page behind. */
+    panel.current?.focus({ preventScroll: true })
+    return () => {
+      document.body.style.overflow = prev
+      window.removeEventListener('keydown', onKey)
+      opener?.focus()
+    }
+  }, [open, onClose])
+  if (!open) return null
+  /* Portalled to <body>. Rendered inside the harvest section it sat in
+     that section's stacking context, under the site's bars and Ask Aura's
+     launcher; at the top of the document it is above everything. The
+     backdrop blurs the page like Ask Aura's scrim, set inline because
+     styled-jsx drops backdrop-filter on this build. */
+  return createPortal(
+    <div className={`rbk ${closing ? 'is-closing' : ''}`} onClick={close}
+         style={{ backdropFilter: 'blur(14px) saturate(1.2)', WebkitBackdropFilter: 'blur(14px) saturate(1.2)' }}>
+      <div
+        ref={panel}
+        className={`rbk__panel ${closing ? 'is-closing' : ''}`}
+        onAnimationEnd={(e) => { if (closing && e.target === e.currentTarget) onClose() }}
+        role="dialog" aria-modal="true" aria-labelledby="rbk-title" tabIndex={-1}
+        onClick={(e) => e.stopPropagation()}
+        /* Inline for the same reason as Ask Aura: styled-jsx drops
+           backdrop-filter from the emitted rules on this build. */
+        style={{ backdropFilter: 'blur(52px) saturate(1.8)', WebkitBackdropFilter: 'blur(52px) saturate(1.8)' }}
+      >
+        <header className="rbk__head">
+          <button type="button" className="rbk__close" aria-label="Close" onClick={close}>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden focusable="false">
+              <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </button>
+        </header>
+        <div className="rbk__body">
+          <p id="rbk-title" className="rbk__line">Book your place at RIPE — November or January on the estate.</p>
+          <div className="rbk__form">
+            <ExperienceForm
+              windows={HARVEST.windows.map((w) => ({ label: w.month.charAt(0) + w.month.slice(1).toLowerCase(), seats: 20 }))}
+              topic="RIPE — Harvest booking"
+              source="ripe"
+            />
+          </div>
+        </div>
+      </div>
+      <style jsx>{`
+        .rbk {
+          position: fixed; inset: 0; z-index: 2147483000;
+          display: flex; align-items: center; justify-content: center;
+          padding: 20px;
+          background: rgba(16, 14, 13, 0.34);
+          animation: rbk-fade 360ms ease-out both;
+        }
+        @media (max-width: 768px) { .rbk { background: rgba(16, 14, 13, 0.55); } }
+        @keyframes rbk-fade { from { opacity: 0; } to { opacity: 1; } }
+        .rbk__panel {
+          --aa-ink: rgba(255, 255, 255, 0.96);
+          --aa-body: rgba(255, 255, 255, 0.72);
+          --aa-meta: rgba(255, 255, 255, 0.62);
+          position: relative;
+          width: min(620px, calc(100vw - 40px));
+          max-height: min(860px, calc(100dvh - 40px));
+          display: flex; flex-direction: column;
+          border-radius: 28px;
+          background: rgba(22, 20, 19, 0.74);
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.22),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+            0 24px 70px rgba(0, 0, 0, 0.42);
+          color: var(--aa-ink); overflow: hidden; outline: none;
+          animation: rbk-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+          will-change: transform, opacity;
+        }
+        @supports not (backdrop-filter: blur(1px)) { .rbk__panel { background: rgba(22, 20, 19, 0.95); } }
+        @media (max-width: 768px) { .rbk__panel { background: rgba(22, 20, 19, 0.93); } }
+        .rbk.is-closing { animation: rbk-fade-out 280ms ease forwards; }
+        .rbk__panel.is-closing { animation: rbk-out 280ms cubic-bezier(0.4, 0, 1, 1) forwards; pointer-events: none; }
+        @keyframes rbk-fade-out { from { opacity: 1; } to { opacity: 0; } }
+        @keyframes rbk-out {
+          from { opacity: 1; transform: none; }
+          to   { opacity: 0; transform: translateY(24px) scale(0.97); }
+        }
+        @keyframes rbk-in {
+          from { opacity: 0; transform: translateY(28px) scale(0.965); }
+          to   { opacity: 1; transform: none; }
+        }
+        @media (prefers-reduced-motion: reduce) { .rbk, .rbk__panel { animation: none; } }
+        .rbk__head {
+          display: flex; align-items: center; justify-content: flex-end;
+          padding: 4px 6px 0; flex: none;
+        }
+        .rbk__close {
+          display: grid; place-items: center; width: 44px; height: 44px;
+          border: 0; background: none; cursor: pointer; color: var(--aa-meta);
+          transition: color var(--dur-base) var(--ease);
+        }
+        .rbk__close:hover { color: var(--aa-ink); text-decoration: none; }
+        .rbk__close:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 2px; }
+        .rbk__body {
+          flex: 1 1 auto; overflow-y: auto; padding: 8px 22px 22px;
+          scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+          overscroll-behavior: contain;
+        }
+        .rbk__line {
+          margin: 0; font-family: var(--font-sans), system-ui, sans-serif;
+          font-size: 21px; line-height: 1.32; letter-spacing: -0.01em; font-weight: 500;
+          color: var(--aa-ink); text-wrap: balance;
+        }
+        .rbk__form { margin-top: 28px; }
+      `}</style>
+    </div>
+  , document.body)
+}
+
 export function RipeHarvest() {
   const ref = useReveal<HTMLElement>()
   /* The page closes on the film: the ground becomes it here. */
   useGround('film', ref, 'harvest')
+  const [booking, setBooking] = useState(false)
   return (
     <section ref={ref} id="harvest" className="harv">
       <div className="section-w harv__in">
@@ -793,10 +937,18 @@ export function RipeHarvest() {
         <p className="harv__b">{HARVEST.body}</p>
 
         <ol className="harv__months">
-          {HARVEST.months.map((m) => <li key={m}>{m}</li>)}
+          {HARVEST.windows.map((w) => (
+            <li key={w.month}>
+              <span className="harv__m">{w.month}</span>
+              <span className="harv__l">{w.line}</span>
+            </li>
+          ))}
         </ol>
-        <p className="harv__note">{HARVEST.note}</p>
+        <p className="harv__act">
+          <ArrowCta className="harv__book" icon="plus" onClick={() => setBooking(true)}>{HARVEST.cta}</ArrowCta>
+        </p>
       </div>
+      <RipeBookModal open={booking} onClose={() => setBooking(false)} />
       <style jsx>{`
         /* The page closes on the film: the harvest the whole gathering
            is timed to, running behind the last words. */
@@ -826,16 +978,23 @@ export function RipeHarvest() {
           opacity: 0; transition: opacity .9s var(--ease-out);
         }
         .harv.is-in .harv__months { opacity: 1; }
-        @media (min-width: 760px) { .harv__months { grid-template-columns: repeat(6, minmax(0,1fr)); } }
-        .harv__months li {
-          font-size: var(--t-body-size); line-height: var(--t-body-lh);
+        /* Two windows side by side, each a month and what happens in it.
+           Two columns, so P2. */
+        .harv__months { grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--space-6); padding: var(--space-6) 0; max-width: 820px; }
+        .harv__months li { display: flex; flex-direction: column; gap: 8px; }
+        .harv__m {
+          font-family: var(--font-grotesque), sans-serif; font-weight: 600;
+          font-size: var(--t-body-size); line-height: var(--t-label-lh);
           letter-spacing: var(--t-track); color: #fff;
         }
-        .harv__note {
-          font-size: var(--t-p1-size); line-height: var(--t-p1-lh);
-          letter-spacing: var(--t-track); color: rgba(255,255,255,0.6);
-          margin: var(--space-6) 0 0; max-width: 46ch;
+        .harv__l {
+          font-size: var(--t-p2-size); line-height: var(--t-p2-lh);
+          letter-spacing: var(--t-track); color: rgba(255,255,255,0.78); text-wrap: pretty;
         }
+        .harv__act { margin: var(--space-7) 0 0; }
+        /* The site's ring-and-arrow CTA (components/ArrowCta), in white:
+           it sits on the harvest film. Two classes to outrank .label. */
+        .harv__act :global(.arrow-cta.harv__book) { color: #fff; }
       `}</style>
     </section>
   )

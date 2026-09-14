@@ -51,6 +51,9 @@ const COPY: Record<string, { title: string; description: string; img?: string }>
   '/from-aura/pepper': { title: 'Pepper', description: 'Malabar, black and white, off the vines that climb the shade trees.', img: '/from-aura/pepper/pepper.webp' },
   '/from-aura/pepper-25-26': { title: 'Pepper 25/26', description: 'The season just cured — black and white, sorted and weighed off the same vines.', img: '/from-aura/pepper/black-and-white.webp' },
   '/from-aura/pepper-26-27': { title: 'Pepper 26/27', description: 'Reserved by the block, off the vines that climb the areca in it.', img: '/from-aura/pepper/blocks-and-zones.webp' },
+  /* RIPE is the one experience that is not a /from-aura page. It is keyed
+     by its own URL because the lane is built from the menu's hrefs. */
+  '/ripe': { title: 'RIPE Festival', description: 'A week at Mudigere as the estate turns towards harvest, in good company.', img: '/from-aura/experiences/ripe-festival.webp' },
   '/from-aura/residencies': { title: 'Artist residencies', description: 'Invited, embedded, and run on the estate’s clock.', img: '/from-aura/objects/craft.webp' },
   '/from-aura/soapnut': { title: 'Soapnut', description: 'The nut the estate washes with, gathered from its own trees.', img: '/from-aura/farm-goods/soapnut.webp' },
   '/from-aura/stationery': { title: 'Stationery', description: 'Paper, ink and the things a residency runs on.', img: '/from-aura/objects/stationery.webp' },

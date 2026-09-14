@@ -541,11 +541,11 @@ export function RipeDays() {
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.65);
           }
           /* No picture to sit on, so the line joins the title and the date on
-             one row across the three bands. 92px, not the 50px the title box
-             is set at: the title's first line starts about 38px inside its
-             box, and the hand's line box is shorter, so this is what puts
-             the three first lines level — measured at 1440 and 1920. */
-          .beat:not(:has(.beat__fig)) .beat__quote { top: 92px; }
+             one row across the three bands, their letters starting at the
+             same height. Set from the drawn letters, not the line boxes: at
+             92px the hand's first stroke landed 41px below the tops of the
+             title and date at both 1440 and 1920, so 51px lines all three. */
+          .beat:not(:has(.beat__fig)) .beat__quote { top: 51px; }
 
           .beat.is-bleed {
             grid-template-columns: 22% 54% 24%;

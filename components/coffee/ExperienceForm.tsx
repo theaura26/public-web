@@ -16,14 +16,13 @@ import { track, identify } from '@/lib/analytics'
 
 /* Availability is real state, not decoration. Set `seats` to what is
    actually left; set it to 0 and the chip closes itself. */
-const WINDOWS = [
+const WINDOWS: readonly { label: string; seats: number }[] = [
   { label: 'September', seats: 0 },
   { label: 'November', seats: 20 },
   { label: 'December', seats: 20 },
-] as const
-type Window = (typeof WINDOWS)[number]['label']
+]
 
-type Fields = { name: string; email: string; window: Window | ''; party: number; note: string }
+type Fields = { name: string; email: string; window: string; party: number; note: string }
 type Errors = Partial<Record<'name' | 'email' | 'window' | 'party' | 'note', string>>
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
@@ -37,7 +36,14 @@ function validate(f: Fields): Errors {
   return e
 }
 
-export function ExperienceForm() {
+/* The same form serves RIPE's booking pop-up: it passes its own windows,
+   the subject line the team receives, and the analytics source. Left
+   unset, it is the Aura Festival form exactly as before. */
+export function ExperienceForm({
+  windows = WINDOWS,
+  topic = 'Coffee — Aura Festival',
+  source = 'coffee-microsite',
+}: { windows?: readonly { label: string; seats: number }[]; topic?: string; source?: string } = {}) {
   const [fields, setFields] = useState<Fields>({ name: '', email: '', window: '', party: 2, note: '' })
   const [errors, setErrors] = useState<Errors>({})
   const [status, setStatus] = useState<Status>('idle')
@@ -65,7 +71,7 @@ export function ExperienceForm() {
         body: JSON.stringify({
           name: fields.name.trim(),
           email: fields.email.trim(),
-          topic: `Coffee — Aura Festival (${fields.window})`,
+          topic: `${topic} (${fields.window})`,
           message: [
             `Window: ${fields.window}`,
             `Party size: ${fields.party}`,
@@ -83,9 +89,9 @@ export function ExperienceForm() {
       identify(fields.email.trim(), {
         name: fields.name.trim(),
         email: fields.email.trim(),
-        latest_contact_topic: `Coffee — Aura Festival (${fields.window})`,
+        latest_contact_topic: `${topic} (${fields.window})`,
       })
-      track('experience_request_submit', { window: fields.window, source: 'coffee-microsite' })
+      track('experience_request_submit', { window: fields.window, source })
     } catch (err) {
       setStatus('error')
       setApiError(err instanceof Error ? err.message : 'Something went wrong.')
@@ -112,7 +118,7 @@ export function ExperienceForm() {
         <div className="vm-f">
           <span className="vm-l" id="vm-window-l">When</span>
           <div className="vm-seg" role="radiogroup" aria-labelledby="vm-window-l">
-            {WINDOWS.map(w => {
+            {windows.map(w => {
               const full = w.seats === 0
               const note = full ? 'Fully booked' : `${w.seats} seats available`
               return (
@@ -249,7 +255,7 @@ export function ExperienceForm() {
           color: rgba(255, 255, 255, 0.62);
         }
 
-        .vm-seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .vm-seg { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
         .vm-w {
           display: flex; flex-direction: column; align-items: center; gap: 3px;
           font-family: var(--font-mono), monospace;

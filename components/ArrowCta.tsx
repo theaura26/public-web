@@ -20,6 +20,9 @@ type Common = {
   /** Spoken label where the visible text is not the whole story. */
   ariaLabel?: string
   className?: string
+  /** The glyph in the ring. An arrow goes somewhere; a plus opens
+      something on the page, such as a booking form. */
+  icon?: 'arrow' | 'plus'
 }
 
 type Props = Common &
@@ -30,13 +33,13 @@ type Props = Common &
     | { href?: never; onClick: (e: React.MouseEvent) => void }
   )
 
-export default function ArrowCta({ children, ariaLabel, className, href, onClick }: Props) {
+export default function ArrowCta({ children, ariaLabel, className, href, onClick, icon = 'arrow' }: Props) {
   const inner = (
     <>
       <span className="arrow-cta__ring" aria-hidden>
         <svg viewBox="0 0 24 24" width={11} height={11} fill="none" aria-hidden>
           <path
-            d="M5 12h13M12.5 6l6.5 6-6.5 6"
+            d={icon === 'plus' ? 'M12 5v14M5 12h14' : 'M5 12h13M12.5 6l6.5 6-6.5 6'}
             stroke="currentColor"
             strokeWidth={1.6}
             strokeLinecap="round"

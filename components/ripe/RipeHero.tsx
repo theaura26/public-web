@@ -109,11 +109,15 @@ export function RipeHero() {
            edge the rest of the page uses. */
         .hero__in {
           position: relative; z-index: 1; width: 100%;
-          padding-inline: 3.1% 8.1%;
+          /* Physical sides, not padding-inline. The build rewrites a logical
+             two-value padding into left/right behind a :not(:lang(…))
+             selector, which outranks the plain phone overrides below — the
+             uneven desktop gutters then applied at every width. */
+          padding-left: 3.1%; padding-right: 8.1%;
           display: flex; flex-direction: column; gap: clamp(24px, 5vh, 56px);
         }
         @media (max-width: 720px) {
-          .hero__in { padding-inline: var(--gutter, 20px); }
+          .hero__in { padding-left: var(--gutter, 20px); padding-right: var(--gutter, 20px); }
         }
         .hero__mark { margin: 0; line-height: 0; }
         .hero__mark img {
@@ -148,7 +152,9 @@ export function RipeHero() {
            the film with the other side empty. Centred, the mark, the
            tagline and the meta line share one axis down the middle. */
         @media (max-width: 899px) {
-          .hero__in { align-items: center; text-align: center; }
+          /* Even gutters: the desktop's 3.1% / 8.1% split put the centred
+             stack visibly right of centre between 720 and 899px. */
+          .hero__in { align-items: center; text-align: center; padding-left: var(--gutter, 20px); padding-right: var(--gutter, 20px); }
           /* Half as large again. At the 180px floor the mark was smaller
              than the two lines of tagline under it on a phone, and it is
              the name of the thing. */
@@ -158,12 +164,18 @@ export function RipeHero() {
         /* The design puts the mark at the lower left and the words against
            the right edge. Below 900px they stack, mark first. */
         @media (min-width: 900px) {
-          .hero__in { flex-direction: row; align-items: flex-end; justify-content: space-between; gap: var(--space-7); }
+          /* Top-aligned: the logotype and the tagline start on one line,
+             optically — see .hero__tag's margin below. */
+          .hero__in { flex-direction: row; align-items: flex-start; justify-content: space-between; gap: var(--space-7); }
           /* Shrink to the widest line so the block's right edge lands on
              the page's right margin. With a fixed max-width it was placed
              at the end but its content still started at its own left, so
              the words stopped short of the edge. The lines stay
              left-aligned to each other, as the file sets them. */
+          /* Optical top: the first cap line of the tagline sits 0.18em inside
+             its line box (measured: 12px at 66px type, at 1440), so it is
+             drawn up by that much to meet the top of the logotype. */
+          .hero__tag { margin-top: -0.18em; }
           .hero__say {
             text-align: left;
             width: max-content; max-width: 44%;

@@ -164,7 +164,7 @@ export function RipeShell({ children }: { children: ReactNode }) {
             .open__intro, .arcs__note, .prep__lead,
             .prep__grid:not(.prep__grid--bring),
             .grat__col, .rem__left, .reg__b,
-            .harv__from, .harv__b, .harv__note
+            .harv__from, .harv__b
           ) { max-width: 90%; }
         }
 

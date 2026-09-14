@@ -344,10 +344,14 @@ export const REGISTRY = {
 
 /* ── The harvest ─────────────────────────────────────────────────── */
 export const HARVEST = {
-  title: 'The gathering finishes on 27 September. Harvest does not.',
-  from: 'From here Aura moves through:',
-  body: 'The page should continue with the harvest until February. What happened to the coffee. What became a lot. What tasted extraordinary. What failed. What changed. What we learned. What still needs another season.',
-  /* The design spells it FEBUARY; corrected here (SPEC.md section 1). */
-  months: ['SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER', 'JANUARY', 'FEBRUARY'],
-  note: 'The harvest timeline opens once the gathering ends on 27 September.',
+  title: 'The gathering finishes on 27 Sep 2026, but the harvest does not.',
+  from: 'From here Aura moves through the entire remarkable circle.',
+  body: 'The festival continues with the harvest until February. What happened to the coffee. What became a lot. What tasted extraordinary. What failed. What changed. What we learned. What still needs another season.',
+  /* The two months a visit can be booked for, each with what the estate
+     is doing then. The form offers the same two. */
+  windows: [
+    { month: 'NOVEMBER', line: 'The harvest in full. Cherries come in block by block, and every lot begins its own record.' },
+    { month: 'JANUARY', line: 'The lots are cupped and chosen. What tasted extraordinary, and what the season taught.' },
+  ],
+  cta: 'Book your experience',
 }

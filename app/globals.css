@@ -1378,8 +1378,10 @@ a:hover, button:hover, [role="button"]:hover {
 }
 
 /* The sanctuary panels sit on a photograph, so this one names its
-   colour. The ring reads it off currentColor and follows. */
-.sanctuary-explore { color: #fff; }
+   colour. The ring reads it off currentColor and follows. Two classes,
+   because .label further down this sheet sets color at the same weight
+   and, coming later, was turning the CTA dark grey over the photograph. */
+.arrow-cta.sanctuary-explore { color: #fff; }
 
 /* On the From Aura band the CTA follows the band's own text colour, and
    it needs room: it used to be the tail of a sentence and is now the

@@ -283,6 +283,10 @@ export function RipeArcs() {
 /* ── Come prepared ───────────────────────────────────────────────── */
 export function RipePrepared() {
   const ref = useReveal<HTMLElement>()
+  /* The estate film carries on behind the whole of Come Prepared, not
+     just its heading — the ground used to fall back to black as soon as
+     the cards arrived. */
+  useGround('dawn', ref, 'prepared')
   return (
     <section ref={ref} className="prep">
       <div className="section-w">

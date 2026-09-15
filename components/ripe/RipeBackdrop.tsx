@@ -85,8 +85,11 @@ export function useGround(id: Ground, ref: RefObject<HTMLElement | null>, key: s
         recompute()
       },
       /* The band is the middle of the screen, so a ground changes when
-         its section owns the view rather than when it first peeks in. */
-      { rootMargin: '-35% 0px -35% 0px', threshold: 0 },
+         its section owns the view rather than when it first peeks in.
+         Wide rather than narrow: at 35% a ground was handed back in the
+         gap between two claiming sections, and the page blinked to black
+         between them. */
+      { rootMargin: '-20% 0px -20% 0px', threshold: 0 },
     )
     io.observe(el)
     return () => { io.disconnect(); claims.delete(key); recompute() }

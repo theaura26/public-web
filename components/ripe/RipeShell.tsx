@@ -147,6 +147,19 @@ export function RipeShell({ children }: { children: ReactNode }) {
             max-width: none; margin: 0;
             padding-inline: calc(9% + 30px);
           }
+          /* The Discover Aura lane puts its first card on the site rail
+             (a 1200px column), not on this one, so the cards started right
+             of the heading: 8px at 1440, 205px at 1920, 468px at 2560.
+             This page already runs edge to edge, so the lane needs no bleed
+             of its own, and with none the card row measures 9% from the
+             same width the heading does — scrollbar or not. Five classes to
+             outrank the lane's own scoped rules. */
+          .ripe-page .ripe-page__flow .sw .lane .lane-bleed {
+            width: auto; margin-left: 0;
+          }
+          .ripe-page .ripe-page__flow .sw .lane-scroll .lane-track {
+            padding-left: calc(9% + 30px);
+          }
         }
 
         /* Phones. 36vh between sections is a chapter break on a monitor

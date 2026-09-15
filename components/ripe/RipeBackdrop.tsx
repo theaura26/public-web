@@ -38,12 +38,12 @@ const GROUNDS: {
   id: Ground; image?: string; imagePhone?: string; colour?: string
   video?: string; videoPhone?: string; dim?: number
 }[] = [
-  /* The horizon over Mudigere. Its sky is near-white haze, so it carries
-     more black than the dawn gradient it replaced. */
+  /* The estate from the air, held in its valley. Its sky is pale haze,
+     so it carries more black than the dawn gradient it replaced. */
   {
     id: 'dawn', dim: 0.5,
-    video: '/RIPE/aura-ripe-horizon.mp4', videoPhone: '/RIPE/aura-ripe-horizon-mobile.mp4',
-    image: '/RIPE/aura-ripe-horizon.jpg', imagePhone: '/RIPE/aura-ripe-horizon-mobile.jpg',
+    video: '/RIPE/aura-ripe-estate.mp4', videoPhone: '/RIPE/aura-ripe-estate-mobile.mp4',
+    image: '/RIPE/aura-ripe-estate.jpg', imagePhone: '/RIPE/aura-ripe-estate-mobile.jpg',
   },
   { id: 'indigo', image: '/RIPE/aura-indigo-1920.jpg', dim: 0.56 },
   { id: 'forest', colour: '#052B14' },

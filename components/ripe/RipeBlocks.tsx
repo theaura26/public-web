@@ -1,8 +1,11 @@
 'use client'
 
 import { useReveal } from './useReveal'
-import { useGround } from './RipeBackdrop'
-import { OPENING, OPENING_MARK, INTRO, ARCS, PREPARED, CLOSING, GRATITUDE, REGISTRY, HARVEST } from './copy'
+import { useGround, type Ground } from './RipeBackdrop'
+import { OPENING, OPENING_MARK, INTRO, ARCS, PREPARED, CLOSING, GRATITUDE, REGISTRY, HARVEST, READ_MORE } from './copy'
+import { RelatedLane } from '@/components/Swimlanes'
+import { ACTIVE_JOURNALS } from '@/lib/journals'
+import type { NoteEntry } from '@/lib/field-notes'
 import { RipeReveal } from './RipeReveal'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -31,12 +34,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
    across its own entry, so the movement belongs to the scroll instead
    of firing once at a threshold.
 ─────────────────────────────────────────────────────────────────────── */
-/* The intro is set as one paragraph. The copy keeps the design's line
-   breaks; here they become spaces, so it reads as a single passage rather
-   than five separate text boxes. */
-const flow = (text: string) => text.replace(/\n/g, ' ')
-const INTRO_FLOW = INTRO.map((r) => (typeof r === 'string' ? flow(r) : { ...r, g: flow(r.g) }))
-
 export function RipeOpening() {
   const root = useRef<HTMLElement>(null)
 
@@ -71,7 +68,9 @@ export function RipeOpening() {
         <RipeReveal runs={OPENING} className="open__say" as="h2" />
 
         <div className="open__row">
-          <RipeReveal runs={INTRO_FLOW} className="open__intro" />
+          {/* The line breaks carry the story: the estate, who arrives when,
+              the days together, then harvest. */}
+          <RipeReveal runs={INTRO} className="open__intro" />
           <figure className="open__mark">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={OPENING_MARK.src} alt={OPENING_MARK.alt}
@@ -121,17 +120,27 @@ export function RipeOpening() {
   )
 }
 
+/* Claims a page ground for a section. A component of its own so a
+   section can take a ground or not without calling a hook conditionally. */
+function ClaimGround({ ground, target, name }: { ground: Ground; target: React.RefObject<HTMLElement | null>; name: string }) {
+  useGround(ground, target, name)
+  return null
+}
+
 /* ── A display heading set as artwork ────────────────────────────── */
 export function RipeDisplay({
   id, src, alt, width, height, max = 1344,
-  bare = false,
+  bare = false, ground,
 }: { id?: string; src: string; alt: string; width: number; height: number; max?: number
      /** Rendered inside another section's ground, so it brings no padding
          or rail of its own. */
-     bare?: boolean }) {
+     bare?: boolean
+     /** The page ground to show while this heading is on screen. */
+     ground?: Ground }) {
   const ref = useReveal<HTMLElement>()
   return (
     <section ref={ref} id={id} className={`disp ${bare ? 'is-bare' : ''}`}>
+      {ground && <ClaimGround ground={ground} target={ref} name={`disp-${id ?? src}`} />}
       {/* The rail is kept in both modes — `bare` drops the section's own
           vertical padding, not its gutters. Without it this heading ran
           the full width of the viewport and off both edges. */}
@@ -193,12 +202,11 @@ export function RipeArcs() {
         </div>
         <div className="arcs__grid">
           {ARCS.columns.map((c) => (
-            <div key={c.title} className="arc">
+            <div key={c.title} className={`arc is-${c.id}`}>
+              <p className="label arc__l">{c.label}</p>
               <h3 className="arc__t">{c.title}</h3>
               <p className="arc__d">{c.dates}</p>
-              <ul className="arc__s">
-                {c.steps.map((x) => <li key={x}>{x}</li>)}
-              </ul>
+              {'members' in c && c.members && <p className="arc__m">{c.members}</p>}
             </div>
           ))}
         </div>
@@ -250,14 +258,22 @@ export function RipeArcs() {
           font-size: var(--t-cardhead-size); line-height: var(--t-cardhead-lh);
           letter-spacing: var(--t-track); color: #fff; margin: 0 0 8px;
         }
+        /* Dates share one style across the page: the days' bold grotesque
+           date line, here in the journey's own colour. */
         .arc__d {
-          font-size: var(--t-body-size); line-height: var(--t-body-lh);
-          letter-spacing: var(--t-track); color: var(--ripe-green); margin: 0 0 var(--space-4);
+          font-family: var(--font-grotesque), sans-serif;
+          font-weight: 800; font-size: var(--t-body-size);
+          line-height: var(--t-label-lh); letter-spacing: var(--t-track);
+          text-transform: uppercase;
+          color: var(--ripe-green); margin: 0 0 var(--space-4);
         }
-        .arc__s { list-style: none; margin: 0; padding: 0; }
-        .arc__s li {
+        /* Friends of Aura in the brand green, In Good Company in the
+           page's periwinkle. */
+        .arc__l { color: rgba(255, 255, 255, 0.62); margin: 0 0 10px; }
+        .arc.is-igc .arc__d { color: var(--ripe-indigo); }
+        .arc__m {
           font-size: var(--t-body-size); line-height: var(--t-body-lh);
-          letter-spacing: var(--t-track); color: #fff; margin: 0 0 6px;
+          letter-spacing: var(--t-track); color: #fff; margin: 0;
         }
       `}</style>
     </section>
@@ -282,14 +298,6 @@ export function RipePrepared() {
           ))}
         </div>
 
-        {/* Generated with Higgsfield from the cap and the calf as
-            references, so the kit is drawn in the same green engraving. */}
-        {/* Not lazy, like the cap below: a lazy image only started loading
-            as it reached the screen, so the scroll fade had already run by
-            the time it arrived and it appeared all at once. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="prep__kit" src="/RIPE/aura-bring.jpg" alt=""
-             aria-hidden decoding="async" />
         <h2 className="prep__h">{PREPARED.bring.title}</h2>
         <div className="prep__grid prep__grid--bring">
           {PREPARED.bring.cards.map((c) => (
@@ -297,24 +305,20 @@ export function RipePrepared() {
               key={c.title}
               className="card"
               /* The design's column, carried as a variable and applied only
-                 at the three-column width. Inline it pinned the card at every
-                 width, and on a narrower grid a pin to column 2 or 3 invents
-                 that column — the cards stopped flowing and one sat off to
-                 the side with its neighbour cut. */
+                 at the three-column width. */
               style={'column' in c && c.column
                 ? ({ ['--col' as string]: String(c.column) } as React.CSSProperties)
                 : undefined}
             >
               <h3 className="card__t">{c.title}</h3>
-              {/* The dress note leads this card in the later artwork. */}
               {/* The dress note and its clothing line read as one sentence:
                   the note in periwinkle, the rest in white. */}
-              {c.note ? (
+              {'note' in c && c.note ? (
                 <p className="card__b"><span className="card__n">{c.note}</span> {c.list?.join(' ')}.</p>
-              ) : c.list && (
+              ) : 'list' in c && c.list && (
                 <ul className="card__l">{c.list.map((l) => <li key={l}>{l}</li>)}</ul>
               )}
-              {c.body && <p className="card__b">{c.body}</p>}
+              {'body' in c && c.body && <p className="card__b">{c.body}</p>}
             </div>
           ))}
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -340,17 +344,7 @@ export function RipePrepared() {
         .prep__h:first-of-type { margin-top: 0; }
         /* What to bring is a new list, not the next row of How to show
            up, so it gets more air above it than a card gap. */
-        .prep__grid + .prep__kit { margin-top: calc(var(--sp-cluster) * 1.8); }
-        /* Boots, bottle and towel on the left, answering the cap on the
-           right at the end of the list. */
-        .prep__kit {
-          display: block; width: min(340px, 55%); height: auto;
-          margin-bottom: var(--sp-cluster);
-          /* A step down from the generated file's green, so it sits with
-             the cap and the calf rather than glowing brighter than both. */
-          filter: brightness(0.8);
-        }
-        .prep__kit + .prep__h { margin-top: 0; }
+        .prep__grid + .prep__h { margin-top: calc(var(--sp-cluster) * 1.8); }
         /* The cap closes the list on the right, on its own row. */
         .prep__mark {
           grid-column: 1 / -1; justify-self: end;
@@ -374,24 +368,17 @@ export function RipePrepared() {
         @media (min-width: 1040px) {
           .prep__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
           .prep__grid .card { grid-column: var(--col, auto); }
-          /* Field is the long list. Spanning it down two rows lets Making
-             sit straight under Evening instead of below the bottom of
-             Field, and the wider gutter keeps Evening's longer lines off
-             the Useful column. */
+          /* Field is the long list: spanning two rows lets Making sit
+             straight under Evening. */
           .prep__grid--bring { column-gap: clamp(56px, 7vw, 120px); }
           .prep__grid--bring .card:first-child { grid-row: span 2; }
         }
         /* Type follows the columns: P1 while How to show up is a single
-           column, P2 once it pairs up. What to bring is two columns at
-           every width, so it stays P2. */
+           column, P2 once it pairs up. */
         @media (max-width: 679px) {
           .prep__grid:not(.prep__grid--bring) .card__b {
             font-size: var(--t-p1-size); line-height: var(--t-p1-lh);
           }
-        }
-        /* What to bring is four short lists, so it pairs up on a phone. */
-        @media (max-width: 679px) {
-          .prep__grid--bring { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
 
         .card__t {
@@ -400,6 +387,11 @@ export function RipePrepared() {
           font-size: var(--t-cardhead-size); line-height: var(--t-cardhead-lh);
           letter-spacing: var(--t-track); color: #fff; margin: 0 0 10px;
         }
+        /* What to bring is four short lists, so it pairs up on a phone. */
+        @media (max-width: 679px) {
+          .prep__grid--bring { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        .card__l { list-style: none; margin: 0; padding: 0; }
         .card__l li {
           font-size: var(--t-body-size); line-height: var(--t-body-lh);
           letter-spacing: var(--t-track); color: #fff; margin: 0 0 6px;
@@ -411,7 +403,6 @@ export function RipePrepared() {
           margin: 0 0 clamp(40px, 6vh, 80px);
           text-wrap: pretty;
         }
-        .card__l { list-style: none; margin: 0; padding: 0; }
         /* The grid's row gap is what separates the rows. A trailing
            margin on the last thing in a card stacks on top of it, which
            is what pushed the second row of each block a hundred pixels
@@ -566,9 +557,10 @@ export function RipeClosing() {
           transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
         }
         .close.is-in .close__col { opacity: 1; transform: translateY(0); }
+        /* Not uppercased: the guest names are spelled exactly as the brands
+           write them, and capitals turned Besst into BESST. */
         .close__t {
           font-family: var(--font-grotesque), sans-serif; font-weight: 600;
-          text-transform: uppercase;
           font-size: var(--t-cardhead-size); line-height: var(--t-cardhead-lh);
           letter-spacing: var(--t-track); color: #fff; margin: 0 0 var(--space-5);
         }
@@ -699,39 +691,20 @@ export function RipeRegistry() {
   return (
     <section ref={ref} className="reg">
       <div className="section-w reg__in">
-        <div className="reg__col">
-        <h2 className="reg__h">{REGISTRY.title}</h2>
-        <p className="reg__b">
-          <span className="reg__lead">{REGISTRY.lead[0]}</span>{REGISTRY.lead[1]} {REGISTRY.body.join(' ')}
-        </p>
-        <dl className="reg__table">
-          {REGISTRY.rows.map(([k, v]) => (
-            <div key={k} className="reg__row">
-              <dt>{k}</dt>
-              <dd>{v}</dd>
-            </div>
-          ))}
-        </dl>
-        </div>
+        {/* The flowering coffee plant, above the page's last line. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img ref={tree} className="reg__mark" src={REGISTRY.mark.src} alt="" aria-hidden
              decoding="async" />
+        <h2 className="reg__h">{REGISTRY.title}</h2>
       </div>
       <style jsx>{`
         /* The deep green ground the artwork puts under this block, and
            the plant standing in the right-hand half of it. */
         .reg { padding: var(--ripe-section-gap) 0; }
-        .reg__in {
-          display: grid; grid-template-columns: minmax(0, 1fr);
-          gap: clamp(40px, 6vw, 90px); align-items: center;
-        }
-        /* Two columns from 1200: the heading is the large h2 now, and in the
-           left half of a 1024 screen it ran to four lines. */
-        @media (min-width: 1200px) { .reg__in { grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); } }
-        .reg__lead { color: var(--ripe-green); }
+        /* The ending, centred: the plant, then the last line under it. */
+        .reg__in { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-6); }
         .reg__mark {
-          display: block; width: 100%; max-width: 520px; height: auto;
-          justify-self: center;
+          display: block; width: min(420px, 80%); height: auto;
           opacity: 0; transform: translateY(20px);
           transition: opacity 1s var(--ease-out) .15s, transform 1s var(--ease-out) .15s;
           transform-origin: 50% 100%;
@@ -739,45 +712,8 @@ export function RipeRegistry() {
         .reg.is-in .reg__mark { opacity: 1; transform: translateY(0); }
         .reg__h {
           font-family: var(--font-grotesque), sans-serif; font-weight: 400;
-          letter-spacing: var(--t-track); color: #fff; margin: 0 0 var(--space-6);
-          max-width: 18ch;
-        }
-        .reg__b {
-          font-size: var(--t-p1-size); line-height: var(--t-p1-lh);
-          letter-spacing: var(--t-track); color: rgba(255,255,255,0.88);
-          margin: 0 0 0.8em; max-width: 46ch; text-wrap: pretty;
-        }
-        /* The site's table interface — SpecTable in components/article —
-           in this page's colours: a heavy rule over faint dotted rows, the
-           key as a DM Mono uppercase label, the value in the grotesque at
-           the p2 size, set on the same baseline. White on the forest ground
-           stands in for the theme tokens SpecTable reads, which follow day
-           and night where this page is dark in both. */
-        .reg__table {
-          margin: var(--sp-cluster) 0 0; padding: 0; max-width: 693px;
-          border-top: 1.5px solid rgba(255,255,255,0.55);
-          opacity: 0; transform: translateY(16px);
-          transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
-        }
-        .reg.is-in .reg__table { opacity: 1; transform: translateY(0); }
-        .reg__row {
-          display: flex; justify-content: space-between; align-items: baseline;
-          gap: clamp(16px, 4vw, 48px);
-          padding: 20px 0; margin: 0;
-          border-bottom: 1px dotted rgba(255,255,255,0.4);
-        }
-        .reg__row:last-child { border-bottom: 0; padding-bottom: 4px; }
-        .reg__row :global(dt) {
-          font-family: var(--font-mono); font-size: 11px; font-weight: 400;
-          letter-spacing: 1px; text-transform: uppercase; line-height: 1.45;
-          color: rgba(255,255,255,0.75); margin: 0;
-        }
-        .reg__row :global(dd) {
-          font-family: var(--font-sans); font-size: 14px; line-height: 1.6;
-          color: #fff; margin: 0; text-align: right; white-space: nowrap;
-        }
-        @media (max-width: 560px) {
-          .reg__row :global(dd) { white-space: normal; }
+          letter-spacing: var(--t-track); color: #fff; margin: 0 auto;
+          max-width: 20ch; text-wrap: balance;
         }
       `}</style>
     </section>
@@ -998,4 +934,15 @@ export function RipeHarvest() {
       `}</style>
     </section>
   )
+}
+
+/* ── Read more about Aura ────────────────────────────────────────── */
+/* RIPE ends; Aura opens up. Existing stories only, taken from the
+   journal index so titles, pictures and links stay true to the site. */
+export function RipeReadMore() {
+  const items: NoteEntry[] = READ_MORE.hrefs.flatMap((href) => {
+    const j = ACTIVE_JOURNALS.find((x) => x.href === href)
+    return j ? [{ href: j.href, title: j.title, description: j.description, img: j.img, status: 'live' as const }] : []
+  })
+  return <RelatedLane label={READ_MORE.title} items={items} />
 }

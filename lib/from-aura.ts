@@ -40,7 +40,7 @@ const COPY: Record<string, { title: string; description: string; img?: string }>
   '/from-aura/cow-pat-pit': { title: 'Cow Pat Pit', description: 'Ninety days in a numbered pit, hand-turned, and lab-tested before it leaves.' },
   '/from-aura/craft': { title: 'Craft', description: 'Six studios, and the disciplines they keep in use.', img: '/from-aura/objects/craft-1.webp' },
   '/from-aura/editions': { title: 'Limited Editions', description: 'Made once, numbered, and not made again.', img: '/from-aura/objects/limited.webp' },
-  '/from-aura/experiences': { title: 'Experiences', description: 'Days on the estate — the working ones, the harvest, and the festival.', img: '/from-aura/experiences/experiences.webp' },
+  '/from-aura/experiences': { title: 'Experiences', description: 'Days on the estate — the working ones, the harvest, and RIPE.', img: '/from-aura/experiences/experiences.webp' },
   '/from-aura/farm-tours': { title: 'Farm Tours', description: 'The estate mid-morning, with whatever the day was already doing.', img: '/from-aura/experiences/farm-tour.webp' },
   '/from-aura/fashion': { title: 'Fashion', description: 'Cloth and wear from the studios, in runs the material sets.', img: '/from-aura/objects/fashion.webp' },
   '/from-aura/funding': { title: 'Funding Partnerships', description: 'Capital for land meant to be worth more in a hundred years than it is now.' },
@@ -53,7 +53,7 @@ const COPY: Record<string, { title: string; description: string; img?: string }>
   '/from-aura/pepper-26-27': { title: 'Pepper 26/27', description: 'Reserved by the block, off the vines that climb the areca in it.', img: '/from-aura/pepper/blocks-and-zones.webp' },
   /* RIPE is the one experience that is not a /from-aura page. It is keyed
      by its own URL because the lane is built from the menu's hrefs. */
-  '/ripe': { title: 'RIPE Festival', description: 'A week at Mudigere as the estate turns towards harvest, in good company.', img: '/from-aura/experiences/ripe-festival.webp' },
+  '/ripe': { title: 'RIPE', description: 'A week at Mudigere as the estate turns towards harvest, in good company.', img: '/from-aura/experiences/ripe.webp' },
   '/from-aura/residencies': { title: 'Artist residencies', description: 'Invited, embedded, and run on the estate’s clock.', img: '/from-aura/objects/craft.webp' },
   '/from-aura/soapnut': { title: 'Soapnut', description: 'The nut the estate washes with, gathered from its own trees.', img: '/from-aura/farm-goods/soapnut.webp' },
   '/from-aura/stationery': { title: 'Stationery', description: 'Paper, ink and the things a residency runs on.', img: '/from-aura/objects/stationery.webp' },

@@ -206,6 +206,21 @@ export function RipeShell({ children }: { children: ReactNode }) {
           height: auto !important;
           min-height: 0 !important;
         }
+        /* Every scroll reveal on this page leaves the blocks it has not
+           reached yet at visibility: hidden, opacity 0 and a lift — inline,
+           so the global flattening does not reach them — and agent view
+           has no scroll to reach them. The journeys and every day's
+           programme were missing. Shown as they are, all at once. */
+        [data-view='agent'] main .ripe-page * {
+          visibility: visible !important;
+          opacity: 1 !important;
+          transform: none !important;
+          translate: none !important;
+          /* The full-bleed sections are 100vw wide. Agent view sets main as
+             a centred text column, so at 1440 they started 408px in and ran
+             408px off the right — a sideways scroll on this page alone. */
+          max-width: 100% !important;
+        }
         [data-view='agent'] main .ripe-page .hero__media,
         [data-view='agent'] main .ripe-page .hero__scrim,
         [data-view='agent'] main .ripe-page .days__spine,

@@ -29,11 +29,11 @@ const TARGETS = [
   '.open__say', '.open__intro',
   '.disp .section-w',
   '.arcs__h', '.arcs__note p', '.arc',
-  '.prep__lead', '.prep__h', '.prep__grid .card', '.prep__kit', '.prep__mark',
+  '.prep__lead', '.prep__h', '.prep__grid .card', '.prep__mark',
   '.close__mark', '.close__t', '.close__l li', '.close__art',
   '.grat__fig', '.grat__h', '.grat__b',
   '.rem__h', '.rem__b',
-  '.reg__h', '.reg__b', '.reg__row',
+  '.reg__h',
   '.harv__h', '.harv__from', '.harv__b', '.harv__months li', '.harv__act',
 ].join(', ')
 

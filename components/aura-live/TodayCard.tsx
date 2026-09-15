@@ -238,10 +238,10 @@ export default function TodayCard({ today }: { today: Today }) {
         .lead { width: 552px; }
         .cap {
           margin: 0;
-          /* The reading's name, and the one label left at a flat 11px
-             while the number under it ran from 24px to 32 and the note
-             beside it from 13 to 15. It moves with them. */
-          font-size: clamp(11px, 0.16vw + 10.4px, 13px);
+          /* The reading's name is a label: 11px at every width, the same
+             as every other .label on the site, however the number under
+             it scales. */
+          font-size: 11px;
           /* 0.45 measured 4.49:1 on this ground — a hundredth under AA,
              which is the kind of miss only measuring finds. */
           color: rgba(255, 255, 255, 0.52);

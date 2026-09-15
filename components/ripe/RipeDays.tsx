@@ -141,7 +141,9 @@ export function RipeDays() {
         })
         if (title) tl.fromTo(title, { autoAlpha: 0, y: 44 }, { autoAlpha: 1, y: 0, ease: 'none', duration: 1 }, 0)
         if (fig) tl.fromTo(fig, { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, ease: 'none', duration: 1 }, 0.9)
-        if (prog) tl.fromTo(prog, { autoAlpha: 0, y: 48 }, { autoAlpha: 1, y: 0, ease: 'none', duration: 1 }, 1.8)
+        /* 1.4, not 1.8: at 1.8 the programme was still faint with the card
+           already mid-screen. */
+        if (prog) tl.fromTo(prog, { autoAlpha: 0, y: 48 }, { autoAlpha: 1, y: 0, ease: 'none', duration: 1 }, 1.4)
         /* The hand writes itself on. A mask wipes left to right with a
            short feathered edge, so the letterforms arrive stroke by
            stroke the way a pen lays them down — rather than the whole
@@ -368,6 +370,7 @@ export function RipeDays() {
           line-height: var(--t-label-lh); letter-spacing: var(--t-track);
           color: #fff; margin: 0 0 1.1em;
         }
+
         /* Body/20 Light — the day's lead and its list are one block in
            the file, split into a Card/Date heading and a Light body. */
         .beat__lead {

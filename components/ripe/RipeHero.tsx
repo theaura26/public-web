@@ -20,6 +20,11 @@ import { BRAND } from './copy'
    artwork, in place of the earlier PNG keyed out of the banner.
 ─────────────────────────────────────────────────────────────────────── */
 
+/* Matches the opener's own stacking breakpoint below. */
+const PHONE = '(max-width: 899px)'
+const POSTER = '/RIPE/aura-ripe-banner.jpg'
+const POSTER_PHONE = '/RIPE/aura-ripe-banner-mobile.jpg'
+
 export function RipeHero() {
   const root = useRef<HTMLElement>(null)
   const video = useRef<HTMLVideoElement>(null)
@@ -41,6 +46,11 @@ export function RipeHero() {
   useEffect(() => {
     const v = video.current
     if (!v) return
+    /* The poster is chosen here rather than in the markup: an attribute
+       can't vary by screen, and the film stays hidden until it can play,
+       so a server-rendered poster was 680KB downloaded on every visit —
+       phones included — and rarely seen. */
+    v.poster = window.matchMedia(PHONE).matches ? POSTER_PHONE : POSTER
     const io = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause() }, { threshold: 0.1 })
     io.observe(v)
@@ -65,9 +75,12 @@ export function RipeHero() {
         <video
           ref={(el) => { video.current = el; revealWhenReady(el) }}
           muted loop playsInline preload="metadata"
-          poster="/RIPE/aura-ripe-banner-image.jpg"
-          aria-label="Coffee cherries ripening on the branch at Mudigere"
+          aria-label="The Aura estate from above, guests gathered in a clearing"
         >
+          {/* Phones get a portrait cut of the same film at native pixels:
+              half the weight, and none of it spent on edges a tall screen
+              crops away. The first source whose media matches wins. */}
+          <source media={PHONE} src="/RIPE/aura-ripe-banner-mobile.mp4" type="video/mp4" />
           <source src="/RIPE/aura-ripe-banner.mp4" type="video/mp4" />
         </video>
       </div>
@@ -96,10 +109,10 @@ export function RipeHero() {
         .hero__media { position: absolute; inset: 0; will-change: transform; }
         .hero__media video {
           width: 100%; height: 100%; object-fit: cover; display: block;
-          /* Ten per cent down. A brightness filter rather than a black
-             overlay: the cherries keep their colour, they just stop
-             competing with the white type over them. */
-          filter: brightness(0.9);
+          /* Twenty per cent down. A brightness filter rather than a black
+             overlay: the canopy keeps its colour, it just stops competing
+             with the green and white type over it. */
+          filter: brightness(0.8);
           opacity: 0; transition: opacity .9s var(--ease-out);
         }
         .hero__media video[data-ready='true'] { opacity: 1; }

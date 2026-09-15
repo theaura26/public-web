@@ -29,8 +29,22 @@ export type Ground = 'ink' | 'dawn' | 'indigo' | 'forest' | 'film'
    aura-indigo-1920.jpg) of the 2400px originals, which are not shipped. They
    sit behind a dimming layer and fill the viewport, so the extra width was
    3.9MB nobody could see — 2.9MB of it the indigo print alone. */
-const GROUNDS: { id: Ground; image?: string; colour?: string; video?: string; dim?: number }[] = [
-  { id: 'dawn', image: '/RIPE/aura-dawn-1920.jpg', dim: 0.42 },
+/* Phones take the portrait cuts: the film and its poster at native
+   pixels, cropped to the part of the frame a tall screen shows. */
+const PHONE = '(max-width: 899px)'
+const isPhone = () => window.matchMedia(PHONE).matches
+
+const GROUNDS: {
+  id: Ground; image?: string; imagePhone?: string; colour?: string
+  video?: string; videoPhone?: string; dim?: number
+}[] = [
+  /* The horizon over Mudigere. Its sky is near-white haze, so it carries
+     more black than the dawn gradient it replaced. */
+  {
+    id: 'dawn', dim: 0.5,
+    video: '/RIPE/aura-ripe-horizon.mp4', videoPhone: '/RIPE/aura-ripe-horizon-mobile.mp4',
+    image: '/RIPE/aura-ripe-horizon.jpg', imagePhone: '/RIPE/aura-ripe-horizon-mobile.jpg',
+  },
   { id: 'indigo', image: '/RIPE/aura-indigo-1920.jpg', dim: 0.56 },
   { id: 'forest', colour: '#052B14' },
   /* The harvest's own footage behind the page's last section, dimmed
@@ -94,12 +108,18 @@ export function RipeBackdrop() {
             /* Only decoded while it is the ground: a film running behind
                every other section would cost a decode a frame for the
                whole page. */
-            <video muted loop playsInline preload="none" poster={g.image}
+            /* The poster too: a poster attribute downloads at once even
+               on a hidden layer, so it is only set on the ground in use.
+               The server always renders the ink ground, so isPhone() is
+               never reached during hydration. */
+            <video muted loop playsInline preload="none"
+                   poster={active === g.id ? (g.imagePhone && isPhone() ? g.imagePhone : g.image) : undefined}
                    ref={(el) => {
                      if (!el) return
                      if (active === g.id) el.play().catch(() => {})
                      else el.pause()
                    }}>
+              {g.videoPhone && <source media={PHONE} src={g.videoPhone} type="video/mp4" />}
               <source src={g.video} type="video/mp4" />
             </video>
           ) : g.image ? (

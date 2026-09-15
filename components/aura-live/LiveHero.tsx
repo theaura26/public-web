@@ -287,12 +287,8 @@ export default function LiveHero({ freshness, children }: { freshness: FeedFresh
              even under the heavier veil it used to have — under AA, and
              the reason the veil had to be as dark as it was. */
           color: #fff;
-          /* The stamp is the only line of prose on a full-bleed frame and
-             it was a fixed 11px at every width — cramped under a 44px
-             title on a phone, and a hairline under a 128px one on a large
-             display. It moves with the title now, between the two. */
-          font-size: clamp(12px, 0.42vw + 10.4px, 15px);
-          letter-spacing: 0.07em;
+          /* Size and tracking come from .label, the same at every width,
+             so the stamp reads as the site's label rather than as prose. */
         }
         /* On the title rather than beside the timestamp. Six pixels next
            to a line of 11px mono was a detail nobody found; at the top of

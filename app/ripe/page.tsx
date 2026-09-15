@@ -5,7 +5,7 @@ import { RipeDays } from '@/components/ripe/RipeDays'
 import { RipeRemember } from '@/components/ripe/RipeRemember'
 import {
   RipeOpening, RipeDisplay, RipeArcs, RipePrepared, RipeClosing,
-  RipeGratitude, RipeRegistry, RipeHarvest,
+  RipeGratitude, RipeRegistry, RipeReadMore,
 } from '@/components/ripe/RipeBlocks'
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -28,14 +28,19 @@ export default function RipePage() {
       <RipeHero />
       <RipeOpening />
       <RipeNav />
+      {/* The two journeys, before the days, so a reader knows which
+          applies to them before the dates start. */}
+      <RipeArcs />
 
       <RipeDisplay id="rhythm" src="/RIPE/aura-the-rhythm.svg" alt="The rhythm"
                    width={1300} height={256} max={1344} />
       <RipeDays />
-      <RipeArcs />
 
+      {/* The dawn used to reach this heading from the journeys section,
+          which sat just above it; with the journeys moved up it claims
+          the dawn itself. */}
       <RipeDisplay id="prepared" src="/RIPE/aura-come-prepared.svg" alt="Come prepared"
-                   width={1519} height={124} max={1593} />
+                   width={1519} height={124} max={1593} ground="dawn" />
       <RipePrepared />
 
       <RipeClosing />
@@ -43,7 +48,8 @@ export default function RipePage() {
 
       <RipeRemember />
       <RipeRegistry />
-      <RipeHarvest />
+      {/* RipeHarvest is kept in RipeBlocks to switch on later. */}
+      <RipeReadMore />
     </RipeShell>
   )
 }

@@ -159,10 +159,20 @@ const CROSS_LISTED: CrossListed[] = [
   },
   {
     href: '/ripe',
-    title: 'RIPE Festival',
+    title: 'RIPE',
     description: 'A week at Mudigere as the estate turns towards harvest, in good company.',
     categories: ['art-culture'],
     from: 'Experiences',
+  },
+  {
+    /* The coffee microsite's front page. Coffee & Fermentation listed the
+       bean story and the fermentation note but not the section they both
+       feed into. */
+    href: '/regenerative-coffee',
+    title: 'Regenerative Coffee',
+    description: 'Coffee that leaves the land better than it found it. Biodynamic, transparent, flavourful — one estate, one harvest.',
+    categories: ['coffee-fermentation'],
+    from: 'Regenerative Coffee',
   },
   {
     /* The site's fullest account of fermentation, and it was missing from

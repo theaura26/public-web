@@ -137,8 +137,8 @@ export function MicroNav() {
           {/* The CTA sits above the scroller: links pass under it. */}
           <div className="ln-end">
             <Link href="/ripe" className="p2 ln-cta">
-              <span className="ln-cta-long">Attend the Festival</span>
-              <span className="ln-cta-short">Attend</span>
+              <span className="ln-cta-long">Discover RIPE</span>
+              <span className="ln-cta-short">RIPE</span>
             </Link>
           </div>
         </div>

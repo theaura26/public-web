@@ -275,7 +275,8 @@ export function RipeRemember() {
            column allows up to three times the old width. Still two
            prints on a table, still tilted, still overlapping. */
         @media (max-width: 1199px) {
-          .rem__shots { flex-direction: column; align-items: center; }
+          /* Stacked, the photographs come first and the question follows. */
+          .rem__shots { order: -1; flex-direction: column; align-items: center; }
           .shot { width: min(270px, 47%); }
           /* A loose pile in the middle: the second print only catches the
              bottom corner of the first, so the first photograph and its

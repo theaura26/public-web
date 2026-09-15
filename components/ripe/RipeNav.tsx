@@ -31,9 +31,8 @@ import { useEffect, useRef, useState } from 'react'
 const LINKS = [
   { id: 'rhythm',    label: 'The Rhythm' },
   { id: 'prepared',  label: 'Come Prepared' },
-  { id: 'gratitude', label: 'Gratitude' },
-  { id: 'remember',  label: 'Remember' },
-  { id: 'harvest',   label: 'The Harvest' },
+  { id: 'gratitude', label: 'Give Gratitude' },
+  { id: 'remember',  label: 'Make Memories' },
 ] as const
 
 export function RipeNav() {

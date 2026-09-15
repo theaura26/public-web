@@ -182,6 +182,20 @@ export const SITEMAP: SitemapEntry[] = [
     related: ['/fermentation', '/circular', '/mudigere'],
   },
   {
+    href: '/ripe',
+    label: 'RIPE',
+    topic: 'A week at Mudigere as the estate turns towards harvest, 20–27 September 2026',
+    summary: 'RIPE is a week on the working estate at Mudigere before the 2026 harvest. Friends of Aura arrive from 20 September; In Good Company — Boojee, Besst and Studio 6158 — joins from 24 September for three days of walking, tasting, making and eating together.',
+    facts: [
+      { label: 'Dates', value: '20–27 September 2026' },
+      { label: 'Friends of Aura', value: '20–27 September' },
+      { label: 'In Good Company', value: '24–27 September · Boojee, Besst, Studio 6158' },
+      { label: 'Place', value: 'Aura Estate, Mudigere, Karnataka' },
+      { label: 'Evening dress, 25 September', value: 'White, indigo, or both' },
+    ],
+    related: ['/coffee', '/living-systems', '/rta', '/herd'],
+  },
+  {
     href: '/rta',
     label: 'Rta',
     topic: 'Right time, right action — the Vedic order behind each decision',

@@ -148,9 +148,8 @@ export const BEATS: Beat[] = [
     quote: '24 September 2026', qx: 51.67, qy: 45.6,
     prose: [
       'Boojee, Besst and Studio 6158 arrive.',
-      'The full tribe comes together.',
-      'No big programme.',
-      'Arrive. Check in. High tea and a welcome to Aura. Then dinner by the fire.',
+      'The full tribe comes together for the first time.',
+      'Three days of walking, tasting, making and eating together begin here.',
     ],
   },
   {
@@ -186,7 +185,7 @@ export const BEATS: Beat[] = [
     bleed: true,
     date: '25 SEPTEMBER · EVENING',
     list: [
-      'Nothing more complicated than that. A simple visual thread for an evening when everyone is together.',
+      'A simple visual thread for the one evening everyone is together. Dress for it.',
       'Bonfire and dinner in front of the bungalow.',
       'Tonight, just good company.',
     ],
@@ -242,7 +241,7 @@ export const PREPARED = {
       { title: 'Come curious', body: 'Ask the obvious question.  It is often the useful one.' },
       { title: 'Participate', body: 'Touch. Taste. Make. Try. Discuss. Share.' },
       { title: 'Notice first', body: 'Look before photographing.  Observe before asking for the answer.' },
-      { title: 'Let the day move', body: 'Weather and the estate may change the rhythm, and we let the day move.' },
+      { title: 'Let the day move', body: 'Weather and the estate may change the plan. We go with it.' },
       { title: 'Respect the working farm', body: 'The people, animals and land are not here for our visit. We are entering something already alive.' },
       { title: 'Bring what you know', body: 'Coffee. Food. Technology. Plants. Design. Storytelling. People. Everyone coming knows something somebody else does not.' },
     ],

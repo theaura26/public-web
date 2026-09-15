@@ -1,15 +1,15 @@
 import type { Metadata } from 'next'
 
-const TITLE = 'RIPE Festival, Mudigere'
+const TITLE = 'RIPE, Mudigere'
 const DESCRIPTION =
-  'RIPE at Mudigere, 20–27 September 2026. A week on a working coffee estate in the Western Ghats as it turns towards harvest, in good company with Boojee and BESST.'
+  'RIPE at Mudigere, 20–27 September 2026. Friends of Aura from the 20th; In Good Company — Boojee, Besst and Studio 6158 — from the 24th. A working coffee estate in the Western Ghats as it turns towards harvest.'
 const IMAGE = { url: '/RIPE/aura-ripe-og.jpg', width: 1200, height: 630, alt: 'RIPE — Right time made visible. Coffee cherries ripening at Mudigere.' }
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: '/ripe' },
-  keywords: ['RIPE Festival', 'Mudigere', 'coffee harvest', 'regenerative coffee', 'Western Ghats', 'Boojee', 'BESST', 'Aura'],
+  keywords: ['RIPE', 'Friends of Aura', 'In Good Company', 'Mudigere', 'coffee harvest', 'regenerative coffee', 'Western Ghats', 'Boojee', 'Besst', 'Studio 6158', 'Aura'],
   /* A page's openGraph replaces the root one rather than merging into
      it, so the site name and locale are restated here. */
   openGraph: {
@@ -29,13 +29,13 @@ export const metadata: Metadata = {
   },
 }
 
-/* The festival as a schema.org Event, so search can show the dates and
+/* RIPE as a schema.org Event, so search can show the dates and
    the place rather than only the page title. Same pattern as the
    Organization block in app/layout.tsx. */
 const eventJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Event',
-  name: 'RIPE Festival',
+  name: 'RIPE',
   description: DESCRIPTION,
   startDate: '2026-09-20',
   endDate: '2026-09-27',

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Bricolage_Grotesque, Instrument_Serif, DM_Mono, Pixelify_Sans, Mynerve } from 'next/font/google'
 import './globals.css'
 import ClientLayout from './client-layout'
+import StyledJsxRegistry from './registry'
 
 const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
@@ -165,7 +166,9 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
-        <ClientLayout>{children}</ClientLayout>
+        <StyledJsxRegistry>
+          <ClientLayout>{children}</ClientLayout>
+        </StyledJsxRegistry>
       </body>
     </html>
   )

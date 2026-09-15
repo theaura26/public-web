@@ -2,7 +2,7 @@
    RIPE — the page's words.
 
    Every string here is taken verbatim from the design file:
-   AURA // Coffee Festival, page Web, node 857:42.
+   AURA // Coffee Festival (the Figma file's name), page Web, node 857:42.
    See design/coffee-festival/SPEC.md and nodes.json.
 
    Nothing in this file is drafted or invented. Where the design is
@@ -15,7 +15,7 @@ export const BRAND = {
      carries a U+2028 line separator after "Right Time" rather than
      letting the measure decide. */
   tagline: ['Right Time', 'made visible.'],
-  meta: 'Mudigere · Harvest 2026 IN GOOD COMPANY',
+  meta: 'Mudigere · Harvest 2026',
 } as const
 
 /* A run of copy. A bare string is white; { g } is the brand green.
@@ -36,10 +36,11 @@ export const OPENING: Run[] = [
 /* Node 857:212 — 22px, x179 y1718, 635 wide. */
 export const INTRO: Run[] = [
   { g: 'This September, ' },
-  'we come together at Aura just as the estate moves towards harvest.\n'
-  + 'Friends begin arriving from the 20th.\n'
-  + 'Boojee and BESST join us on the 24th.\n'
-  + 'And for a few days, we walk, taste, make, ask questions, get our hands dirty, eat ',
+  'we come together at Aura just as the estate moves towards harvest.\n',
+  { g: 'Friends of Aura' }, ' begin arriving on the 20th.\n',
+  { g: 'Boojee' }, ', ', { g: 'Besst' }, ' and ', { g: 'Studio 6158' },
+  ' join us on the 24th.\n'
+  + 'For a few days, we walk, taste, make, ask questions, get our hands dirty, eat ',
   { g: 'together ' },
   'and spend time in good ',
   { g: 'company.\n' },
@@ -57,9 +58,8 @@ export const OPENING_MARK = {
 export const NAV = [
   { id: 'rhythm',   label: 'THE RHYTHM' },
   { id: 'prepared', label: 'COME PREPARED' },
-  { id: 'gratitude',label: 'GRATITUDE' },
-  { id: 'remember', label: 'REMEMBER' },
-  { id: 'harvest',  label: 'THE HARVEST' },
+  { id: 'gratitude',label: 'GIVE GRATITUDE' },
+  { id: 'remember', label: 'MAKE MEMORIES' },
 ] as const
 
 /* ── The days ────────────────────────────────────────────────────
@@ -78,7 +78,7 @@ export type Beat = {
   /** Full-bleed rather than held in the centre column. */
   bleed?: boolean
   /** Title in the brand green. Two of the ten are, per the node fills:
-      Friends of Aura, and The company comes together. */
+      Friends of Aura, and In Good Company. */
   green?: boolean
   /** The handwritten line laid over the picture. */
   quote?: string
@@ -102,6 +102,7 @@ export const BEATS: Beat[] = [
     image: '/RIPE/aura-friends-of-aura.jpg',
     alt: 'The estate seen from above, buildings held inside the canopy',
     prose: [
+      'Welcome, friends.',
       'Before everyone comes together, Aura begins to fill slowly.',
       'Friends arrive from Singapore and different parts of India. There is no need to rush into a programme. These days are for finding the place.',
     ],
@@ -140,14 +141,14 @@ export const BEATS: Beat[] = [
     ],
   },
   {
-    title: 'The company comes together',
+    title: 'In Good Company',
     green: true,
     image: '/RIPE/aura-company-comes-closer.jpg',
     alt: 'A group sitting together on a ridge under a tree at dusk',
     quote: '24 September 2026', qx: 51.67, qy: 45.6,
     prose: [
-      'Boojee and BESST arrive.',
-      'The full company comes together.',
+      'Boojee, Besst and Studio 6158 arrive.',
+      'The full tribe comes together.',
       'No big programme.',
       'Arrive. Check in. High tea and a welcome to Aura. Then dinner by the fire.',
     ],
@@ -209,21 +210,21 @@ export const BEATS: Beat[] = [
     alt: 'Hands working together at the estate window',
     quote: 'I was part of Aura.', qx: 56.46, qy: 42.7,
     date: '27 SEPTEMBER',
-    lead: 'Plant something. Make something.  Leave something behind.  Take something with you.',
+    lead: 'Plant something. Make something. Leave something behind. Take something with you.',
     list: ['Plant Your Tree.', 'Coffee and breakfast.', 'Temple time.', 'Lunch and goodbyes.'],
   },
 ]
 
 /* ── Two arcs ────────────────────────────────────────────────────── */
 export const ARCS = {
-  title: 'The experience moves through two different arcs.',
+  title: 'RIPE moves through two journeys.',
   note: [
     'The days have structure. They also have room.',
     'Weather may move things. The estate may move things. Something unexpected may become more interesting than something we planned.',
   ],
   columns: [
-    { title: 'FRIENDS OF AURA', dates: '20-22 SEPTEMBER', steps: ['Come In', 'Find Your Rhythm', 'Get Closer'] },
-    { title: 'In Good Company', dates: '24-27 SEPTEMBER', steps: ['Feel', 'Understand', 'Belong'] },
+    { id: 'foa', label: 'Journey 01', title: 'FRIENDS OF AURA', dates: '20–27 SEPTEMBER' },
+    { id: 'igc', label: 'Journey 02', title: 'IN GOOD COMPANY', dates: '24–27 SEPTEMBER', members: 'Boojee · Besst · Studio 6158' },
   ],
 }
 
@@ -256,24 +257,20 @@ export const PREPARED = {
                'Cap or hat', 'Sunscreen', 'Insect repellent', 'Water bottle', 'Small towel', 'Rain protection'],
       },
       {
-        /* The later artwork puts the dress note first and folds the two
-           clothing lines into one. Its colour stays the periwinkle the
-           Figma node sets, #8CA7FE — the JPEG renders it white, and that
-           is the one place the two disagree. */
-        title: 'Evening',
+        title: 'An evening to remember',
         note: 'For 25 September: white, indigo, or both.',
-        list: ['Comfortable smart-casual clothes with light jacket or shawl'],
+        list: ['It is the one evening the whole tribe is together, around the fire in front of the bungalow, so dress for it. Something smart-casual you feel good in, with a light jacket or shawl for when the air cools'],
       },
-      { title: 'useful', list: ['Phone', 'Charger', 'Powerbank'] },
+      { title: 'Useful', list: ['Phone', 'Charger', 'Power bank'] },
       /* Sits under Evening in the second column, not under Field. */
-      { title: 'Making', body: 'One old outfit that can get dirty or stained', column: 2 },
+      { title: 'Be a creator', body: 'One old outfit that can get dirty or stained. And anything you would like to make with: photos, a journal, stationery, ideas.', column: 2 },
     ],
   },
 }
 
 /* ── Closing ─────────────────────────────────────────────────────── */
 export const CLOSING = {
-  title: 'with Boojee and BESST.',
+  title: 'With Boojee, Besst and Studio 6158.',
   pairs: [
     'Friends with friends.', 'Coffee with shade.', 'Roots with fungi.',
     'Cows with soil.', 'Food with season.', 'Knowledge with memory.',
@@ -326,27 +323,18 @@ export const REMEMBER = {
 
 /* ── Tree registry ───────────────────────────────────────────────── */
 export const REGISTRY = {
-  title: 'Some guests will leave another kind of memory.',
-  /* "A tree." is lifted into the green in the artwork. */
-  lead: ['A tree. ', 'Coffee, cacao, shade or another plant chosen according to what belongs in the land.'],
-  body: ['The relationship continues after the visit ends.'],
+  /* The page's last line. What followed it — the planting paragraph and
+     the registry table — was removed in the clean-up pass. */
+  title: 'The days end. The memories we make together stay.',
   mark: { src: '/RIPE/aura-tree.png', w: 900, h: 1100, alt: 'An illustration of a flowering coffee plant' },
-  rows: [
-    ['GUEST', '-'],
-    ['TREE ID', 'Assigned after planting'],
-    ['SPECIES', 'Chosen with the estate'],
-    ['BLOCK', '-'],
-    ['PLANTING DATE', '27 September 2026'],
-    ['FIRST PHOTOGRAPH', 'Added at planting'],
-    ['LATEST OBSERVATION', '-'],
-  ],
 }
 
 /* ── The harvest ─────────────────────────────────────────────────── */
+/* Not on the page. Kept, with RipeHarvest, to switch on later. */
 export const HARVEST = {
   title: 'The gathering finishes on 27 Sep 2026, but the harvest does not.',
   from: 'From here Aura moves through the entire remarkable circle.',
-  body: 'The festival continues with the harvest until February. What happened to the coffee. What became a lot. What tasted extraordinary. What failed. What changed. What we learned. What still needs another season.',
+  body: 'RIPE continues with the harvest until February. What happened to the coffee. What became a lot. What tasted extraordinary. What failed. What changed. What we learned. What still needs another season.',
   /* The two months a visit can be booked for, each with what the estate
      is doing then. The form offers the same two. */
   windows: [
@@ -354,4 +342,13 @@ export const HARVEST = {
     { month: 'JANUARY', line: 'The lots are cupped and chosen. What tasted extraordinary, and what the season taught.' },
   ],
   cta: 'Book your experience',
+}
+
+/* ── Read more about Aura ────────────────────────────────────────── */
+/* After RIPE ends. Six published stories that go further into what the
+   days touch: living systems, ṛta, the herd, circularity, biodynamics
+   and the coffee. Titles, pictures and links come from lib/journals. */
+export const READ_MORE = {
+  title: 'Discover Aura',
+  hrefs: ['/living-systems', '/rta', '/herd', '/circular', '/biodynamic', '/coffee'],
 }

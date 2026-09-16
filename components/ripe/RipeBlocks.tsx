@@ -166,9 +166,10 @@ export function RipeDisplay({
 /* ── Two arcs ────────────────────────────────────────────────────── */
 export function RipeArcs() {
   const root = useRef<HTMLElement>(null)
-  /* The page's ground becomes the dawn here rather than this section
-     carrying a picture of its own. */
-  useGround('dawn', root, 'arcs')
+  /* The page's ground becomes the horizon here rather than this section
+     carrying a picture of its own. Come Prepared takes the estate film
+     further down: one aerial for each half of the page. */
+  useGround('horizon', root, 'arcs')
 
   /* The dawn gradient arrives before the words and leaves after them.
      In the file it is the backdrop spanning this region (2432x2286 at

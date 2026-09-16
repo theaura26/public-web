@@ -283,13 +283,18 @@ export function RipeArcs() {
 /* ── Come prepared ───────────────────────────────────────────────── */
 export function RipePrepared() {
   const ref = useReveal<HTMLElement>()
+  /* The film carries on behind the lead and How to show up rather than
+     stopping at the heading, and lets go at What to bring: that is a
+     packing list, and it reads on the page's own black. */
+  const showUp = useRef<HTMLDivElement>(null)
+  useGround('dawn', showUp, 'prepared')
   return (
     <section ref={ref} className="prep">
       <div className="section-w">
         <RipeReveal runs={PREPARED.lead} className="prep__lead" as="h2" />
 
         <h2 className="prep__h">{PREPARED.showUp.title}</h2>
-        <div className="prep__grid">
+        <div className="prep__grid" ref={showUp}>
           {PREPARED.showUp.cards.map((c) => (
             <div key={c.title} className="card">
               <h3 className="card__t">{c.title}</h3>

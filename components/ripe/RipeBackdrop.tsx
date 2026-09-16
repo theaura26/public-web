@@ -17,7 +17,7 @@ import { useEffect, useSyncExternalStore, type RefObject } from 'react'
    claim a ground with useGround() while they are on screen.
 ─────────────────────────────────────────────────────────────────────── */
 
-export type Ground = 'ink' | 'dawn' | 'indigo' | 'forest' | 'film'
+export type Ground = 'ink' | 'horizon' | 'dawn' | 'indigo' | 'forest' | 'film'
 
 /* dim is how much black each ground carries over it. A photograph brings
    its own light, and white type over the dawn gradient or the indigo
@@ -38,8 +38,15 @@ const GROUNDS: {
   id: Ground; image?: string; imagePhone?: string; colour?: string
   video?: string; videoPhone?: string; dim?: number
 }[] = [
-  /* The estate from the air, held in its valley. Its sky is pale haze,
-     so it carries more black than the dawn gradient it replaced. */
+  /* Two aerials, one for each half of the page. The horizon looks out
+     over Mudigere behind the journeys; the estate looks down on the place
+     itself behind Come Prepared. Both skies are pale haze, so both carry
+     more black than the dawn gradient they replaced. */
+  {
+    id: 'horizon', dim: 0.5,
+    video: '/RIPE/aura-ripe-horizon.mp4', videoPhone: '/RIPE/aura-ripe-horizon-mobile.mp4',
+    image: '/RIPE/aura-ripe-horizon.jpg', imagePhone: '/RIPE/aura-ripe-horizon-mobile.jpg',
+  },
   {
     id: 'dawn', dim: 0.5,
     video: '/RIPE/aura-ripe-estate.mp4', videoPhone: '/RIPE/aura-ripe-estate-mobile.mp4',

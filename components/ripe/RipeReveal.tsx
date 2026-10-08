@@ -20,7 +20,9 @@ import type { Run } from './copy'
    it — which is most of what makes a reveal like this feel rough.
 ─────────────────────────────────────────────────────────────────────── */
 
-type Token = { text: string; green: boolean; br: boolean; space: boolean; idx: number }
+/* br: a break — a new paragraph for \n, or with line, just a new line
+   (\u2028, the line separator) inside the same paragraph. */
+type Token = { text: string; green: boolean; br: boolean; line?: boolean; space: boolean; idx: number; parts: { text: string; green: boolean }[] }
 
 /* Runs to words, without inventing spaces.
  *
@@ -50,8 +52,8 @@ function tokenise(runs: Run[]): Token[] {
   let i = 0
   while (i < text.length) {
     const ch = text[i]
-    if (ch === '\n') {
-      out.push({ text: '', green: false, br: true, space: false, idx: -1 })
+    if (ch === '\n' || ch === '\u2028') {
+      out.push({ text: '', green: false, br: true, line: ch === '\u2028', space: false, idx: -1, parts: [] })
       i++
       continue
     }
@@ -61,14 +63,26 @@ function tokenise(runs: Run[]): Token[] {
     /* A real space follows only if the next character is one, and it is
        not the newline that starts a new block. */
     const space = text[i] === ' ' || text[i] === '\t'
-    out.push({ text: text.slice(from, i), green: green[from], br: false, space, idx: idx++ })
+    /* The word's own colour runs, for the exact mode: "you." is a green
+       "you" and a plain "." */
+    const parts: { text: string; green: boolean }[] = []
+    for (let c = from; c < i; c++) {
+      const last = parts[parts.length - 1]
+      if (last && last.green === green[c]) last.text += text[c]
+      else parts.push({ text: text[c], green: green[c] })
+    }
+    out.push({ text: text.slice(from, i), green: green[from], br: false, space, idx: idx++, parts })
   }
   return out
 }
 
+/** exact: colour exactly the characters a run marks, not whole words.
+    By default a word straddling a colour change takes the colour it
+    starts in — /ripe's "hurried." is green to its full stop. A page
+    that wants only the marked word lifted passes exact. */
 export function RipeReveal({
-  runs, className, as: As = 'p',
-}: { runs: Run[]; className?: string; as?: 'p' | 'h2' }) {
+  runs, className, as: As = 'p', exact = false,
+}: { runs: Run[]; className?: string; as?: 'p' | 'h2'; exact?: boolean }) {
   const spans = useRef<(HTMLSpanElement | null)[]>([])
 
   useEffect(() => {
@@ -106,22 +120,37 @@ export function RipeReveal({
     <As className={className}>
       {tokens.map((t, k) =>
         t.br ? (
-          <span key={k} className="rv-br" aria-hidden />
+          <span key={k} className={t.line ? 'rv-br rv-br--line' : 'rv-br'} aria-hidden />
         ) : (
-          <span
-            key={k}
-            ref={(el) => { spans.current[t.idx] = el }}
-            className={t.green ? 'rv-w is-g' : 'rv-w'}
-          >
-            {t.space ? `${t.text} ` : t.text}
-          </span>
+          exact && t.parts.length > 1 ? (
+            <span
+              key={k}
+              ref={(el) => { spans.current[t.idx] = el }}
+              className="rv-w"
+            >
+              {t.parts.map((p, j) => (
+                <span key={j} className={p.green ? 'is-g' : undefined}>{p.text}</span>
+              ))}
+              {t.space ? ' ' : ''}
+            </span>
+          ) : (
+            <span
+              key={k}
+              ref={(el) => { spans.current[t.idx] = el }}
+              className={t.green ? 'rv-w is-g' : 'rv-w'}
+            >
+              {t.space ? `${t.text} ` : t.text}
+            </span>
+          )
         ))}
 
       <style jsx>{`
         .rv-w { opacity: 0.16; transition: opacity 90ms linear; }
-        .rv-w.is-g { color: var(--ripe-green); }
+        .rv-w.is-g,
+        .rv-w .is-g { color: var(--ripe-green); }
         /* A paragraph break inside one flowing block. */
         .rv-br { display: block; height: 0.85em; }
+        .rv-br--line { height: 0; }
       `}</style>
     </As>
   )

@@ -4,6 +4,7 @@ import { revealWhenReady } from '@/lib/film-reveal'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { RipeSiteToggle } from '@/components/ripe/RipeSiteToggle'
 import { TABS } from '@/lib/site-nav'
 import { useMode } from './ModeProvider'
 import { LogoEmblem } from './Logo'
@@ -646,6 +647,10 @@ export default function Navbar() {
             <span style={{ display: 'block', width: 22, height: 1.5, background: 'var(--text)', transition: 'transform var(--dur-base) var(--ease), opacity var(--dur-base) var(--ease)', transform: menuOpen ? 'translateY(-3.75px) rotate(-45deg)' : 'none' }} />
           </button>
         )}
+
+        {/* On RIPE and its sister page: the moon toggle between them,
+            beside the menu. */}
+        {(pathname === '/ripe' || pathname === '/ripe/10-days') && <RipeSiteToggle pathname={pathname} />}
       </nav>
 
       {/* Backdrop — page-coloured strip behind the contrast menu overlay.

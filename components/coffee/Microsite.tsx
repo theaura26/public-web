@@ -1472,19 +1472,34 @@ export function ReserveBanner() {
  * deep black, the green logotype and line, and the house arrow link in
  * its standard white. ReserveBanner above stays with the retired Aura
  * Festival page.
+ *
+ * The same banner closes /ripe too, pointing the other way — at its
+ * sister page, 10 Days of RIPE — in that page's coral, words and still.
+ * Everything defaults to the /ripe banner.
  */
-export function RipeBanner() {
+export function RipeBanner({
+  href = '/ripe',
+  name = 'RIPE',
+  mark = '/RIPE/aura-ripe.svg',
+  line = 'Right time made visible.',
+  action = 'Discover RIPE',
+  accent = '#23FF88',
+  image = '/RIPE/aura-ripe-banner-image.jpg',
+}: {
+  href?: string; name?: string; mark?: string; line?: string
+  action?: string; accent?: string; image?: string
+} = {}) {
   return (
-    <section className="rpb">
+    <section className="rpb" style={{ ['--rpb-accent' as string]: accent, ['--rpb-image' as string]: `url('${image}')` }}>
       <div className="section-w rpb-in">
         <h2 className="rpb-h">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="rpb-mark" src="/RIPE/aura-ripe.svg" alt="" aria-hidden width={466} height={256} />
-          <span className="rpb-name">RIPE</span>
+          <img className="rpb-mark" src={mark} alt="" aria-hidden width={466} height={256} />
+          <span className="rpb-name">{name}</span>
         </h2>
-        <p className="rpb-t">Right time made visible.</p>
+        <p className="rpb-t">{line}</p>
         <p className="rpb-act">
-          <ArrowLink href="/ripe">Discover RIPE</ArrowLink>
+          <ArrowLink href={href}>{action}</ArrowLink>
         </p>
       </div>
       <style jsx>{`
@@ -1492,7 +1507,7 @@ export function RipeBanner() {
           position: relative; z-index: 1; overflow: hidden;
           display: flex; align-items: center;
           padding: clamp(128px, 20vh, 240px) 0;
-          background: #000 url('/RIPE/aura-ripe-banner-image.jpg') center / cover no-repeat;
+          background: #000 var(--rpb-image) center / cover no-repeat;
           color: #fff; text-align: center;
         }
         /* The still stays a mood, not a picture: black over it, heaviest at
@@ -1514,7 +1529,7 @@ export function RipeBanner() {
           font-family: var(--font-grotesque), sans-serif; font-weight: 700;
           text-transform: uppercase; letter-spacing: -0.02em;
           font-size: clamp(16px, 1.6vw, 22px); line-height: 1.1;
-          color: #23FF88; margin: var(--space-5) auto 0;
+          color: var(--rpb-accent); margin: var(--space-5) auto 0;
         }
         .rpb-act { margin: var(--space-7) auto 0; display: flex; justify-content: center; }
       `}</style>

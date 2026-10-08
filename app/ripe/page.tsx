@@ -1,5 +1,7 @@
 import { RipeShell } from '@/components/ripe/RipeShell'
 import { RipeHero } from '@/components/ripe/RipeHero'
+import { CORAL, TAGLINE as SISTER_TAGLINE } from '@/components/ripe-10-days/copy'
+import { RipeBanner, ArrowLinkStyles } from '@/components/coffee/Microsite'
 import { RipeNav } from '@/components/ripe/RipeNav'
 import { RipeDays } from '@/components/ripe/RipeDays'
 import { RipeRemember } from '@/components/ripe/RipeRemember'
@@ -25,7 +27,16 @@ import {
 export default function RipePage() {
   return (
     <RipeShell>
-      <RipeHero />
+      {/* The mark and tagline lead through to the sister page: on hover
+          coral sweeps across them from the left, rewriting the tagline as
+          the sister page's own, and a click opens 10 Days of RIPE. */}
+      <RipeHero link={{
+        href: '/ripe/10-days',
+        hover: CORAL,
+        markHover: '/RIPE/10-days/aura-ripe-coral.svg',
+        taglineHover: SISTER_TAGLINE,
+        label: 'Right time made visible — open 10 Days of RIPE',
+      }} />
       <RipeOpening />
       <RipeNav />
       {/* The two journeys, before the days, so a reader knows which
@@ -50,6 +61,18 @@ export default function RipePage() {
       <RipeRegistry />
       {/* RipeHarvest is kept in RipeBlocks to switch on later. */}
       <RipeReadMore />
+      {/* The end: the banner that closes 10 Days of RIPE, pointing back
+          the other way — to the sister page, in its coral and words. */}
+      <RipeBanner
+        href="/ripe/10-days"
+        name="10 Days of RIPE"
+        mark="/RIPE/10-days/aura-ripe-coral.svg"
+        line={SISTER_TAGLINE.join(' ')}
+        action="Discover 10 Days of RIPE"
+        accent={CORAL}
+        image="/RIPE/10-days/banner/ripe-banner.jpg"
+      />
+      <ArrowLinkStyles />
     </RipeShell>
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { revealWhenReady } from '@/lib/film-reveal'
@@ -25,7 +26,33 @@ const PHONE = '(max-width: 899px)'
 const POSTER = '/RIPE/aura-ripe-banner.jpg'
 const POSTER_PHONE = '/RIPE/aura-ripe-banner-mobile.jpg'
 
-export function RipeHero() {
+/* The opener's film: a wide cut, a phone cut, and their posters. */
+type HeroFilm = { src: string; srcPhone: string; poster: string; posterPhone: string }
+const RIPE_FILM: HeroFilm = {
+  src: '/RIPE/aura-ripe-banner.mp4',
+  srcPhone: '/RIPE/aura-ripe-banner-mobile.mp4',
+  poster: POSTER,
+  posterPhone: POSTER_PHONE,
+}
+
+/** mark: the logotype to show. /ripe uses the supplied green artwork;
+    a sister page in another colour passes its own copy.
+    tagline: the line beside it, one string per line. /ripe uses the
+    design's own (BRAND.tagline); a sister page can pass its own.
+    link: makes the mark and the tagline a way through to another page.
+    On hover or focus of either, the hover colour sweeps across both from
+    the left — markHover is the mark's artwork in that colour — and the
+    tagline is rewritten as it goes, into taglineHover if one is given.
+    A click goes to href. /ripe uses it to lead to its sister page,
+    10 Days of RIPE, in that page's coral; the sister page leads back,
+    in /ripe's green.
+    from: the side the colour sweeps in from — 'left' (the default) or
+    'right', for the way back. */
+type HeroLink = { href: string; hover: string; markHover: string; taglineHover?: readonly string[]; label: string; from?: 'left' | 'right' }
+
+/** film: the opener's video. /ripe's own by default; a sister page can
+    pass its own. */
+export function RipeHero({ mark = '/RIPE/aura-ripe.svg', tagline = BRAND.tagline, link, film = RIPE_FILM }: { mark?: string; tagline?: readonly string[]; link?: HeroLink; film?: HeroFilm } = {}) {
   const root = useRef<HTMLElement>(null)
   const video = useRef<HTMLVideoElement>(null)
 
@@ -50,12 +77,12 @@ export function RipeHero() {
        can't vary by screen, and the film stays hidden until it can play,
        so a server-rendered poster was 680KB downloaded on every visit —
        phones included — and rarely seen. */
-    v.poster = window.matchMedia(PHONE).matches ? POSTER_PHONE : POSTER
+    v.poster = window.matchMedia(PHONE).matches ? film.posterPhone : film.poster
     const io = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause() }, { threshold: 0.1 })
     io.observe(v)
     return () => io.disconnect()
-  }, [])
+  }, [film.poster, film.posterPhone])
 
   /* The site bar is a solid plate in day mode and was cutting a band
      across the film. Transparent while the opener is on screen. */
@@ -80,19 +107,49 @@ export function RipeHero() {
           {/* Phones get a portrait cut of the same film at native pixels:
               half the weight, and none of it spent on edges a tall screen
               crops away. The first source whose media matches wins. */}
-          <source media={PHONE} src="/RIPE/aura-ripe-banner-mobile.mp4" type="video/mp4" />
-          <source src="/RIPE/aura-ripe-banner.mp4" type="video/mp4" />
+          <source media={PHONE} src={film.srcPhone} type="video/mp4" />
+          <source src={film.src} type="video/mp4" />
         </video>
       </div>
-      <div className="hero__in">
+      <div className="hero__in" style={link?.from === 'right' ? { ['--hero-sweep' as string]: 'to left' } : undefined}>
         <h1 className="hero__mark">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/RIPE/aura-ripe.svg" alt="" aria-hidden width={466} height={256} />
+          {link ? (
+            /* Pointer and touch only: the tagline's link, the same place,
+               carries the keyboard, so it isn't announced twice. */
+            <Link href={link.href} className="hero__go hero__go--mark" tabIndex={-1} aria-hidden>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={mark} alt="" width={466} height={256} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={link.markHover} alt="" width={466} height={256} className="hero__bloom" />
+            </Link>
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={mark} alt="" aria-hidden width={466} height={256} />
+          )}
           <span className="hero__name sr-only">RIPE</span>
         </h1>
         <div className="hero__say">
           <p className="hero__tag">
-            {BRAND.tagline.map((line) => <span key={line}>{line}</span>)}
+            {link ? (
+              <Link
+                href={link.href}
+                className="hero__go hero__go--tag"
+                aria-label={link.label}
+                style={{ ['--hero-hover' as string]: link.hover }}
+              >
+                <span className="hero__ink">
+                  {tagline.map((line) => <span key={line}>{line}</span>)}
+                </span>
+                {/* The other page's words — or these, if it has none — in
+                    the hover colour, stacked in the same place and swept
+                    in from the left as these are swept out. */}
+                <span className="hero__bloom" aria-hidden>
+                  {(link.taglineHover ?? tagline).map((line) => <span key={line}>{line}</span>)}
+                </span>
+              </Link>
+            ) : (
+              tagline.map((line) => <span key={line}>{line}</span>)
+            )}
           </p>
           <p className="hero__meta">{BRAND.meta}</p>
         </div>
@@ -150,6 +207,72 @@ export function RipeHero() {
           text-shadow: 0 2px 26px rgba(0, 0, 0, 0.35);
         }
         .hero__tag :global(span) { display: block; }
+        /* The mark and the tagline as links. Over each sits a copy in the
+           hover colour, masked to nothing. Hover or focus either one and
+           a soft edge sweeps across both copies from the left, so the green
+           turns coral the way the words read. Off again, it draws back to
+           the left. With from 'right' (--hero-sweep: to left) it all runs
+           the other way: in from the right, back to the right.
+
+           The sweep is a linear mask whose edge is a registered custom
+           property (@property --bloom, in the global block below), which
+           is what lets it transition. Where @property isn't supported the
+           edge still moves, so the colour still changes, just without the
+           sweep.
+
+           :global throughout: the classes sit on Link's own anchor and
+           inside it, out of reach of this block's scope. */
+        .hero__in :global(.hero__go) {
+          position: relative; display: inline-block;
+          color: inherit; text-decoration: none;
+        }
+        .hero__in :global(.hero__go--mark) { line-height: 0; }
+        .hero__in :global(.hero__bloom) {
+          position: absolute; inset: 0;
+          pointer-events: none;
+          color: var(--hero-hover);
+          --bloom: 0%;
+          -webkit-mask-image: linear-gradient(var(--hero-sweep, to right), #000 calc(var(--bloom) - 18%), transparent var(--bloom));
+          mask-image: linear-gradient(var(--hero-sweep, to right), #000 calc(var(--bloom) - 18%), transparent var(--bloom));
+          /* Closing: a little quicker than opening. */
+          transition: --bloom 650ms cubic-bezier(0.65, 0, 0.35, 1);
+        }
+        /* The mark's copy is the coral artwork, at the mark's own size. */
+        .hero__mark :global(img.hero__bloom) { width: 100%; height: 100%; }
+
+        /* The tagline's two versions share one grid cell, so the link is
+           as wide as the wider of them and the sweep runs across the same
+           box for both. The words already there are wiped out by the same
+           edge that brings the new ones in: their mask is the reverse. */
+        .hero__tag :global(.hero__go--tag) { display: inline-grid; }
+        .hero__tag :global(.hero__go--tag > .hero__ink),
+        .hero__tag :global(.hero__go--tag > .hero__bloom) { grid-area: 1 / 1; }
+        .hero__tag :global(.hero__go--tag > .hero__bloom) { position: static; }
+        .hero__tag :global(.hero__go--tag > .hero__ink) {
+          --bloom: 0%;
+          -webkit-mask-image: linear-gradient(var(--hero-sweep, to right), transparent calc(var(--bloom) - 18%), #000 var(--bloom));
+          mask-image: linear-gradient(var(--hero-sweep, to right), transparent calc(var(--bloom) - 18%), #000 var(--bloom));
+          transition: --bloom 650ms cubic-bezier(0.65, 0, 0.35, 1);
+        }
+        :global(.hero__in:has(.hero__go:hover) .hero__bloom),
+        :global(.hero__in:has(.hero__go:focus-visible) .hero__bloom),
+        :global(.hero__in:has(.hero__go:hover) .hero__go--tag > .hero__ink),
+        :global(.hero__in:has(.hero__go:focus-visible) .hero__go--tag > .hero__ink) {
+          /* Past the right edge by the width of the soft edge, so the last
+             letter is fully covered. */
+          --bloom: 118%;
+          /* Opening, on an even curve and slow enough to watch the coral
+             travel. The site's ease-out did most of it in the first tenth
+             of a second, which read as a switch, not a sweep. */
+          transition: --bloom 1100ms cubic-bezier(0.45, 0, 0.25, 1);
+        }
+        .hero__tag :global(.hero__go:focus-visible) {
+          outline: 1px solid var(--hero-hover); outline-offset: 6px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero__in :global(.hero__bloom),
+          .hero__in :global(.hero__ink) { transition: none !important; }
+        }
         .hero__meta {
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 800; text-transform: uppercase;
@@ -193,6 +316,15 @@ export function RipeHero() {
             text-align: left;
             width: max-content; max-width: 44%;
           }
+        }
+      `}</style>
+      {/* The bloom's radius, registered so it can transition. Global: a
+          registration can't be scoped, and is harmless to repeat. */}
+      <style jsx global>{`
+        @property --bloom {
+          syntax: '<percentage>';
+          inherits: false;
+          initial-value: 0%;
         }
       `}</style>
     </section>

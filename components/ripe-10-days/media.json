@@ -1,0 +1,534 @@
+{
+  "01": {
+    "ripe-familiar-new": {
+      "w": 720,
+      "h": 1280,
+      "video": true,
+      "v": "6dfba846",
+      "vf": "b00c99d7"
+    },
+    "ripe-dogs": {
+      "w": 1050,
+      "h": 1346,
+      "v": "4658a177"
+    },
+    "ripe-entrance": {
+      "w": 1050,
+      "h": 1400,
+      "v": "c2a38c65"
+    },
+    "ripe-estate": {
+      "w": 1050,
+      "h": 1400,
+      "v": "6509d558"
+    },
+    "ripe-sky": {
+      "w": 1350,
+      "h": 901,
+      "v": "84c58547"
+    },
+    "img-7450-2": {
+      "w": 853,
+      "h": 480,
+      "video": true,
+      "figma": true,
+      "v": "2c50c3bb",
+      "vf": "2097e3c7"
+    }
+  },
+  "02": {
+    "aura-coffee": {
+      "w": 1050,
+      "h": 1400,
+      "v": "2cea0c83"
+    },
+    "aura-cow": {
+      "w": 1050,
+      "h": 1400,
+      "v": "c3138ab6"
+    },
+    "aura-goodbyes-02": {
+      "w": 1064,
+      "h": 705,
+      "v": "d70028f0"
+    },
+    "aura-pillar": {
+      "w": 1050,
+      "h": 1400,
+      "v": "14ae957d"
+    },
+    "ripe-food": {
+      "w": 1400,
+      "h": 1050,
+      "v": "b4296b45"
+    },
+    "ripe-fungus": {
+      "w": 1050,
+      "h": 1400,
+      "v": "04902475"
+    },
+    "aura-temple": {
+      "w": 1024,
+      "h": 576,
+      "video": true,
+      "figma": true,
+      "v": "942edd8c",
+      "vf": "8fb8da64"
+    },
+    "bug-video": {
+      "w": 853,
+      "h": 480,
+      "video": true,
+      "figma": true,
+      "v": "fb1bf0c9",
+      "vf": "1ebb4b59"
+    }
+  },
+  "03": {
+    "aura-chefs": {
+      "w": 1050,
+      "h": 1400,
+      "v": "9e06cd31"
+    },
+    "aura-coffee-sip": {
+      "w": 1400,
+      "h": 846,
+      "v": "d6846aaa"
+    },
+    "aura-cook": {
+      "w": 1395,
+      "h": 1179,
+      "v": "5597e698"
+    },
+    "aura-ganpati": {
+      "w": 1400,
+      "h": 1050,
+      "v": "60cb00a2"
+    },
+    "aura-kids-ganpati": {
+      "w": 1400,
+      "h": 1050,
+      "v": "edaaedc8"
+    },
+    "aura-path": {
+      "w": 955,
+      "h": 1400,
+      "v": "77678f96"
+    },
+    "aura-pepper-path": {
+      "w": 1050,
+      "h": 1400,
+      "v": "70f1bf24"
+    },
+    "ripe-bug": {
+      "w": 1400,
+      "h": 1225,
+      "v": "a5c96f02"
+    },
+    "ripe-kids": {
+      "w": 1395,
+      "h": 1179,
+      "v": "aa57cbdb"
+    },
+    "ripe-natural-tattoo": {
+      "w": 788,
+      "h": 638,
+      "v": "253f45e6"
+    },
+    "ripe-quote": {
+      "w": 671,
+      "h": 846,
+      "v": "fe4d1332"
+    },
+    "ripe-small-wonders": {
+      "w": 1400,
+      "h": 846,
+      "v": "ee43a4d8"
+    },
+    "ripe-smiles": {
+      "w": 671,
+      "h": 846,
+      "v": "f59c7b8a"
+    },
+    "img-8217": {
+      "w": 853,
+      "h": 480,
+      "video": true,
+      "figma": true,
+      "v": "117d58ca",
+      "vf": "6391a38a"
+    },
+    "nayana-tree-tagging": {
+      "w": 853,
+      "h": 480,
+      "video": true,
+      "figma": true,
+      "v": "5e11948e",
+      "vf": "a0d4dab4"
+    }
+  },
+  "04": {
+    "aura-chicken-coop-painting": {
+      "w": 576,
+      "h": 1024,
+      "video": true,
+      "v": "613b5808",
+      "vf": "5ff709c6"
+    },
+    "aura-chicken-coop": {
+      "w": 1325,
+      "h": 1292,
+      "v": "8fba6577"
+    },
+    "aura-painting-artist": {
+      "w": 1050,
+      "h": 1400,
+      "v": "f3dcf32a"
+    },
+    "aura-painting-ripe": {
+      "w": 1400,
+      "h": 1050,
+      "v": "b925fd1f"
+    },
+    "aura-painting": {
+      "w": 1050,
+      "h": 1400,
+      "v": "242bcabe"
+    },
+    "aura-studio": {
+      "w": 1400,
+      "h": 1050,
+      "v": "35d61dd2"
+    },
+    "img-7819-3": {
+      "w": 324,
+      "h": 576,
+      "video": true,
+      "figma": true,
+      "v": "3237fe72",
+      "vf": "7ebdd791"
+    }
+  },
+  "05": {
+    "aura-kids": {
+      "w": 1050,
+      "h": 1400,
+      "v": "b1b3a074"
+    },
+    "aura-nayana-kids": {
+      "w": 1400,
+      "h": 1050,
+      "v": "d232dedb"
+    },
+    "aura-raghu-tea-estate": {
+      "w": 1400,
+      "h": 1050,
+      "v": "e850d98a"
+    },
+    "aura-team": {
+      "w": 1400,
+      "h": 927,
+      "v": "487e8451"
+    },
+    "aura-top": {
+      "w": 926,
+      "h": 927,
+      "v": "11c5bd1f"
+    },
+    "ripe-buddha-02": {
+      "w": 810,
+      "h": 969,
+      "v": "7064dfb1"
+    },
+    "ripe-buddha-03": {
+      "w": 818,
+      "h": 562,
+      "v": "a6117a6e"
+    },
+    "ripe-buddha": {
+      "w": 981,
+      "h": 961,
+      "v": "854d179f"
+    },
+    "ripe-more-people": {
+      "w": 1400,
+      "h": 927,
+      "v": "d5a6a93f"
+    },
+    "ripe-people-02": {
+      "w": 1400,
+      "h": 925,
+      "v": "58751f9a"
+    },
+    "ripe-people-colours": {
+      "w": 1400,
+      "h": 929,
+      "v": "45ad5361"
+    },
+    "ripe-wheelbarrow": {
+      "w": 814,
+      "h": 1225,
+      "v": "0a1d5c06"
+    },
+    "img-8218": {
+      "w": 853,
+      "h": 480,
+      "video": true,
+      "figma": true,
+      "v": "056013cd",
+      "vf": "78894d4f"
+    },
+    "aura-sadanand": {
+      "w": 1024,
+      "h": 576,
+      "video": true,
+      "figma": true,
+      "v": "482da1bd",
+      "vf": "b9a2357e"
+    }
+  },
+  "06": {
+    "aura-breakfast": {
+      "w": 1280,
+      "h": 960,
+      "v": "eff20e64"
+    },
+    "aura-dinner-setup": {
+      "w": 1050,
+      "h": 1400,
+      "v": "ae69be72"
+    },
+    "aura-ripe-dinner-02": {
+      "w": 1080,
+      "h": 1350,
+      "v": "c9aaab05"
+    },
+    "aura-ripe-dinner-03": {
+      "w": 1080,
+      "h": 1350,
+      "v": "7e1d093a"
+    },
+    "aura-ripe-dinner-04": {
+      "w": 1080,
+      "h": 1350,
+      "v": "d108318a"
+    },
+    "aura-ripe-dinner-05": {
+      "w": 1080,
+      "h": 1350,
+      "v": "708a0d1e"
+    },
+    "aura-tea-estate": {
+      "w": 1050,
+      "h": 1400,
+      "v": "9631af15"
+    },
+    "ripe-bracelet": {
+      "w": 1400,
+      "h": 1050,
+      "v": "85adaa64"
+    },
+    "img-7952": {
+      "w": 1024,
+      "h": 576,
+      "video": true,
+      "figma": true,
+      "v": "5c620944",
+      "vf": "ce204e4f"
+    },
+    "aura-biodiversity": {
+      "w": 270,
+      "h": 480,
+      "video": true,
+      "figma": true,
+      "v": "67dc3e67",
+      "vf": "06b6e07b"
+    }
+  },
+  "07": {
+    "aura-cow-to-compost": {
+      "w": 853,
+      "h": 480,
+      "video": true,
+      "v": "da78c257",
+      "vf": "03301492"
+    },
+    "aura-bd-magic-02": {
+      "w": 1080,
+      "h": 1350,
+      "v": "716bdec6"
+    },
+    "aura-bd-magic": {
+      "w": 1080,
+      "h": 1350,
+      "v": "3e80f565"
+    },
+    "aura-compost-hands": {
+      "w": 646,
+      "h": 805,
+      "v": "a73cd1f5"
+    },
+    "aura-cpp-03": {
+      "w": 1080,
+      "h": 1350,
+      "v": "f0c9710b"
+    },
+    "aura-cpp-06": {
+      "w": 1080,
+      "h": 1350,
+      "v": "cb5b759d"
+    },
+    "aura-cpp-07": {
+      "w": 796,
+      "h": 750,
+      "v": "797e24aa"
+    },
+    "aura-cpp-hands-dirty": {
+      "w": 1080,
+      "h": 1350,
+      "v": "ae0b1628"
+    },
+    "aura-human": {
+      "w": 646,
+      "h": 805,
+      "v": "f949b1e1"
+    },
+    "aura-tasting-estate": {
+      "w": 1022,
+      "h": 673,
+      "v": "fee974ec"
+    },
+    "aura-tasting": {
+      "w": 1015,
+      "h": 668,
+      "v": "3e60d314"
+    },
+    "ripe-jeevamrit": {
+      "w": 686,
+      "h": 576,
+      "v": "3fbee69d"
+    },
+    "ripe-tasting": {
+      "w": 1050,
+      "h": 1400,
+      "v": "e5e8e916"
+    },
+    "img-8104": {
+      "w": 709,
+      "h": 480,
+      "video": true,
+      "figma": true,
+      "v": "2d94634e",
+      "vf": "f22172c9"
+    },
+    "img-8141": {
+      "w": 270,
+      "h": 480,
+      "video": true,
+      "figma": true,
+      "v": "2f42ea82",
+      "vf": "858c246f"
+    }
+  },
+  "08": {
+    "ripe-planting": {
+      "w": 270,
+      "h": 480,
+      "video": true,
+      "v": "31fc2621",
+      "vf": "93d8d5da"
+    },
+    "aura-goodbyes": {
+      "w": 1064,
+      "h": 705,
+      "v": "2e82e9fe"
+    },
+    "ripe-energy-02": {
+      "w": 1080,
+      "h": 1350,
+      "v": "1282c49a"
+    },
+    "ripe-energy-03": {
+      "w": 1080,
+      "h": 1350,
+      "v": "b973ecf1"
+    },
+    "ripe-energy-04": {
+      "w": 1080,
+      "h": 1350,
+      "v": "8c2072ff"
+    },
+    "ripe-energy": {
+      "w": 1080,
+      "h": 1350,
+      "v": "e71c6a5e"
+    },
+    "ripe-planting-02": {
+      "w": 1080,
+      "h": 1350,
+      "v": "b4597803"
+    },
+    "ripe-planting-03": {
+      "w": 1080,
+      "h": 1350,
+      "v": "d28f4125"
+    }
+  },
+  "banner": {
+    "v": "29173d51",
+    "vp": "d129cb42",
+    "vposter": "3616cff3"
+  },
+  "backgrounds": {
+    "01": {
+      "w": 1920,
+      "h": 1072,
+      "v": "ec288001"
+    },
+    "02": {
+      "w": 1920,
+      "h": 1072,
+      "v": "5c05cc87"
+    },
+    "03": {
+      "w": 1920,
+      "h": 1072,
+      "v": "d4f218fa"
+    },
+    "04": {
+      "w": 1920,
+      "h": 1278,
+      "v": "d2d3c35f"
+    },
+    "05": {
+      "w": 1920,
+      "h": 1072,
+      "v": "587b0221"
+    },
+    "06-2": {
+      "w": 1920,
+      "h": 1072,
+      "v": "3bc5a1f0"
+    },
+    "06": {
+      "w": 1920,
+      "h": 1072,
+      "v": "59feec07"
+    },
+    "07": {
+      "w": 1920,
+      "h": 1072,
+      "v": "fa3b7f6c"
+    },
+    "07-2": {
+      "w": 1222,
+      "h": 673,
+      "v": "cb27169f"
+    },
+    "08": {
+      "w": 1920,
+      "h": 1072,
+      "v": "49de9c56"
+    }
+  }
+}

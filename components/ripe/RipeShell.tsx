@@ -17,10 +17,12 @@ import { useScrollAppear } from './useScrollAppear'
    banner photograph, where JPEG compression shifts it.
 ─────────────────────────────────────────────────────────────────────── */
 
-export function RipeShell({ children }: { children: ReactNode }) {
+/** className: added to the page, for a sister page that changes its
+    ground (10 Days of RIPE is white). /ripe passes none. */
+export function RipeShell({ children, className }: { children: ReactNode; className?: string }) {
   useScrollAppear()
   return (
-    <div className="ripe-page">
+    <div className={className ? `ripe-page ${className}` : 'ripe-page'}>
       <RipeBackdrop />
       <div className="ripe-page__flow">{children}</div>
 

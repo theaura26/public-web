@@ -279,6 +279,7 @@ export const DAYS: Day[] = [
       ['aura-tea-estate', 'Tea estate walks', 'Walking single file through the rows of tea'],
       ['aura-biodiversity', 'Biodiversity walk with Pulkit', 'Pulkit on the biodiversity walk, down the red earth track between the trees', { sound: true }],
       ['ripe-bracelet', 'Flower bracelet', 'Tying a bracelet of flowers around a wrist'],
+      ['ripe-temple', 'A moment at the temple', 'A man in a cap with his hands folded in namaste beside a small stone temple, its deity garlanded and lamps lit'],
       /* Further behind the biodiversity walk, which drifts slowly on the
          same side and was caught up. */
       ['aura-dinner-setup', 'Dinner kept a secret', 'A long table set with leaf plates, petals and candles among the trees', { gap: 0.8 }],

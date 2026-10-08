@@ -292,7 +292,7 @@ export const DAYS: Day[] = [
     /* After the tasting table: the track through the coffee. */
     /* The tasting ground, in as Coffee tasting comes into view. */
     bgThen: bgThen('07-2', 'aura-tasting-estate', { lead: 0.3 }),
-    line: ['From cow to compost to soil to coffee. Aura began to connect.'],
+    line: ['From cow to compost to soil to coffee.', 'Aura began to connect.'],
     shots: pictures('07', [
       ['img-8104', 'Cow pat pit by Rao sir and Arun sir', 'Rao sir and Arun sir, in Aura tops, explaining the cow pat pit under a shelter', { sound: true }],
       ['aura-cow-to-compost', 'From cow to compost', 'Cows walking across the yard, on their way to becoming compost'],

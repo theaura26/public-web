@@ -34,6 +34,12 @@ export function RipeShell({ children, className }: { children: ReactNode; classN
       <div className="ripe-timeline-fade ripe-timeline-fade--bottom" aria-hidden />
 
       <style jsx global>{`
+        /* No back/forward on a sideways trackpad swipe while a RIPE page
+           is open: a vertical scroll with a little drift in it was
+           flipping readers between /ripe and /ripe/after. Mounted with
+           the page, so the rest of the site keeps the gesture. */
+        html, body { overscroll-behavior-x: none; }
+
         /* The five values the design actually uses, read from the file:
            the frame's own fill, the brand green from the artwork, the one
            periwinkle on the 23 September line, and the grey of the form

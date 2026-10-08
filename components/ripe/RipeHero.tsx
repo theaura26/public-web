@@ -61,6 +61,7 @@ export function RipeHero({
   link,
   pair,
   dim = 0.8,
+  scrim = false,
 }: {
   mark?: string
   name?: string
@@ -71,6 +72,8 @@ export function RipeHero({
   pair?: { current: 'before' | 'after'; href: string; hover: string }
   /** How much of the film's own brightness to keep behind the words. */
   dim?: number
+  /** A shade under the words, for a film whose colours fight the line. */
+  scrim?: boolean
 } = {}) {
   const root = useRef<HTMLElement>(null)
   const video = useRef<HTMLVideoElement>(null)
@@ -116,7 +119,7 @@ export function RipeHero({
   }, [])
 
   return (
-    <section ref={root} className="hero" id="top"
+    <section ref={root} className={`hero${scrim ? ' has-scrim' : ''}`} id="top"
              style={{ ['--hero-dim' as string]: String(dim) } as React.CSSProperties}>
       <div className="hero__media">
         <video
@@ -131,6 +134,11 @@ export function RipeHero({
           <source src={film.src} type="video/mp4" />
         </video>
       </div>
+      {/* A shade under the words, rising from the bottom of the film.
+          The film is uneven — a frame of pink flowers sits right behind
+          a pink line — so the words carry their own ground instead of
+          the whole picture being darkened. */}
+      {scrim && <div className="hero__scrim" aria-hidden />}
       <div className="hero__in" style={link ? ({ ['--hero-sweep' as string]: link.from === 'right' ? 'to left' : 'to right' } as React.CSSProperties) : undefined}>
         <h1 className="hero__mark">
           {link ? (
@@ -204,6 +212,25 @@ export function RipeHero({
           overflow: hidden; background: var(--ripe-ink); color: #fff;
         }
         .hero__media { position: absolute; inset: 0; will-change: transform; }
+        .hero__scrim {
+          position: absolute; inset: 0; z-index: 0; pointer-events: none;
+          background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.36) 30%,
+            rgba(0, 0, 0, 0.1) 52%, transparent 66%);
+        }
+        /* And a firmer shadow on the line itself, tight enough to hold
+           the letter edges against a bright frame. */
+        .hero.has-scrim .hero__tag {
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45), 0 2px 26px rgba(0, 0, 0, 0.5);
+        }
+        /* A soft pool of shade behind the words only — the rest of the film
+           keeps its light. */
+        .hero.has-scrim .hero__say { position: relative; }
+        .hero.has-scrim .hero__say::before {
+          content: ''; position: absolute; z-index: -1; pointer-events: none;
+          inset: -28% -18%;
+          background: radial-gradient(closest-side, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.3) 58%, transparent);
+        }
         .hero__media video {
           width: 100%; height: 100%; object-fit: cover; display: block;
           /* Twenty per cent down. A brightness filter rather than a black

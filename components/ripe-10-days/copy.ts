@@ -22,13 +22,13 @@
 ═══════════════════════════════════════════════════════════════════ */
 
 import type { Run } from '@/components/ripe/copy'
+import { RIPE_PINK } from '@/components/ripe/colours'
 import media from './media.json'
 
 const D = '/RIPE/10-days'
 
-/* The sister page's accent, where /ripe's is green: a neon pink, as bright as that green.
-   Also in /RIPE/10-days/aura-ripe-coral.svg, whose colour is in the file. */
-export const CORAL = '#FF2D87'
+/* The sister page's accent, where /ripe's is green (components/ripe/colours.ts). */
+export const CORAL = RIPE_PINK
 
 /* The header's line, beside the RIPE mark, in place of /ripe's "Right
    Time / made visible." — two lines, as that is. */

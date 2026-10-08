@@ -27,7 +27,7 @@ const MANIFEST = 'components/ripe-10-days/titles.json'
 const SIZE = 200
 
 const copy = readFileSync('components/ripe-10-days/copy.ts', 'utf8')
-const fill = copy.match(/export const CORAL = '(#[0-9A-Fa-f]{6})'/)[1]
+const fill = readFileSync('components/ripe/colours.ts', 'utf8').match(/export const RIPE_PINK = '(#[0-9A-Fa-f]{6})'/)[1]
 const titles = [...new Set([...copy.matchAll(/\btitle: '([^']+)'/g)].map((m) => m[1]))]
 const slug = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 

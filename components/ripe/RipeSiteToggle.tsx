@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { RIPE_GREEN, RIPE_PINK } from './colours'
 
 /* ── The RIPE switch: the season, or its story ──────────────────────
    A small toggle in the site bar, beside the menu, on /ripe and on its
@@ -9,7 +10,7 @@ import { useRouter } from 'next/navigation'
    "Cosmic Solar Eclipse Toggle" (Dmitry Lepisov, Dribbble): a dark pill
    — here translucent glass — with a light catching its rim, and a body
    that slides across it while a shadow slides off it — an eclipse
-   opening out. Here the body is the moon, in white:
+   opening out. Here the body is the moon:
 
      /ripe            a crescent lit on the left (☾), at the left
      /ripe/10-days    the full moon, at the right
@@ -19,6 +20,11 @@ import { useRouter } from 'next/navigation'
    motion is the way from one to the other. The bar stays mounted across
    the change, so the toggle simply settles where the new page puts it.
    For readers who ask for less motion it changes at once.
+
+   It waits below the fold: over the hero, Before | After under the
+   tagline does this job, so the toggle shows only once the reader has
+   scrolled past the first screen. The crescent is RIPE's green and the
+   full moon the sister page's pink, the colour turning as it fills.
 ─────────────────────────────────────────────────────────────────────── */
 
 const MAIN = '/ripe'
@@ -26,6 +32,9 @@ const SISTER = '/ripe/10-days'
 /* How long the moon takes to cross, in ms — and so how long before the
    page changes. */
 const CROSS = 620
+/* It shows once the page has scrolled this far, in screens: just past
+   the hero. */
+const FOLD = 0.85
 
 export function RipeSiteToggle({ pathname }: { pathname: string }) {
   const router = useRouter()
@@ -50,6 +59,21 @@ export function RipeSiteToggle({ pathname }: { pathname: string }) {
   const here = useRef(pathname)
   useEffect(() => { here.current = pathname }, [pathname])
 
+  /* Below the fold only (see above). Read on scroll, and once on the next
+     frame for where the page opens (a reload part way down). */
+  const [below, setBelow] = useState(false)
+  useEffect(() => {
+    const check = () => setBelow(window.scrollY > window.innerHeight * FOLD)
+    const id = requestAnimationFrame(check)
+    window.addEventListener('scroll', check, { passive: true })
+    window.addEventListener('resize', check)
+    return () => {
+      cancelAnimationFrame(id)
+      window.removeEventListener('scroll', check)
+      window.removeEventListener('resize', check)
+    }
+  }, [pathname])
+
   /* Both pages fetched ahead, so the change is quick once the moon lands. */
   useEffect(() => {
     router.prefetch(MAIN)
@@ -68,7 +92,7 @@ export function RipeSiteToggle({ pathname }: { pathname: string }) {
   }
 
   return (
-    <div className="rst">
+    <div className={`rst ${below || crossing !== null ? 'is-shown' : ''}`}>
       <button
         type="button"
         role="switch"
@@ -103,8 +127,14 @@ export function RipeSiteToggle({ pathname }: { pathname: string }) {
         .rst {
           position: absolute; top: 50%;
           right: calc(5vw + 22px + 10px);
-          transform: translateY(-50%);
+          transform: translateY(calc(-50% - 6px));
           display: flex; align-items: center;
+          opacity: 0; visibility: hidden;
+          transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease), visibility 0s linear var(--dur-base);
+        }
+        .rst.is-shown {
+          opacity: 1; visibility: visible; transform: translateY(-50%);
+          transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease), visibility 0s;
         }
         @media (max-width: 768px) {
           .rst { right: calc(var(--gutter, 20px) + 44px + 6px); }
@@ -117,6 +147,9 @@ export function RipeSiteToggle({ pathname }: { pathname: string }) {
         .rst__pill {
           --w: 54px; --h: 28px; --pad: 4px; --d: 20px;
           --rst-phase: 0;
+          /* The moon's colour: green as a crescent, pink when full,
+             turning with the phase. */
+          --rst-moon: color-mix(in oklch, ${RIPE_PINK} calc(var(--rst-phase) * 100%), ${RIPE_GREEN});
           position: relative;
           width: var(--w); height: var(--h);
           padding: 0; margin: 0;
@@ -160,10 +193,11 @@ export function RipeSiteToggle({ pathname }: { pathname: string }) {
           content: '';
           position: absolute; inset: -55%;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0) 62%);
+          background: radial-gradient(circle, color-mix(in srgb, var(--rst-moon) 40%, transparent) 0%, transparent 62%);
           opacity: var(--rst-phase);
         }
-        /* The disc: white, with a little grey in its seas. Its dark side
+        /* The disc: the moon's colour, lit from the upper left, with a
+           little shade in its seas. Its dark side
            is cut away rather than painted, so the glass shows through:
            a round shadow the size of the moon, sitting over its right
            side — a crescent lit on the left (☾) — and sliding off to the
@@ -175,7 +209,7 @@ export function RipeSiteToggle({ pathname }: { pathname: string }) {
             radial-gradient(circle at 34% 38%, rgba(0, 0, 0, 0.10) 0 14%, transparent 16%),
             radial-gradient(circle at 62% 64%, rgba(0, 0, 0, 0.08) 0 11%, transparent 13%),
             radial-gradient(circle at 66% 30%, rgba(0, 0, 0, 0.06) 0 7%, transparent 9%),
-            radial-gradient(circle at 40% 35%, #fff 0%, #f1f1ee 60%, #dcdcd6 100%);
+            radial-gradient(circle at 40% 35%, color-mix(in oklch, var(--rst-moon) 75%, #fff) 0%, var(--rst-moon) 60%, color-mix(in oklch, var(--rst-moon) 85%, #000) 100%);
           --off: calc(var(--d) * (0.32 + 0.8 * var(--rst-phase)));
           -webkit-mask-image: radial-gradient(circle at calc(50% + var(--off)) 50%, transparent calc(var(--d) / 2 + 0.5px), #000 calc(var(--d) / 2 + 1.2px));
           mask-image: radial-gradient(circle at calc(50% + var(--off)) 50%, transparent calc(var(--d) / 2 + 0.5px), #000 calc(var(--d) / 2 + 1.2px));
@@ -183,6 +217,7 @@ export function RipeSiteToggle({ pathname }: { pathname: string }) {
 
         @media (prefers-reduced-motion: reduce) {
           .rst__pill { transition: none; }
+          .rst, .rst.is-shown { transition: none; transform: translateY(-50%); }
         }
       `}</style>
     </div>

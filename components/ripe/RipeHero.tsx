@@ -1,11 +1,21 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { revealWhenReady } from '@/lib/film-reveal'
 import { BRAND } from './copy'
+import { RIPE_GREEN, RIPE_PINK } from './colours'
+
+/* Under the tagline, the two pages as one story: RIPE itself, before the
+   season, and 10 Days of RIPE, after it. The page you are on stands in
+   white; the other is a link, lit in its own page's colour on hover. */
+const PAIR = [
+  { href: '/ripe', label: 'Before', accent: RIPE_GREEN },
+  { href: '/ripe/10-days', label: 'After', accent: RIPE_PINK },
+] as const
 
 /* ── RIPE opener ─────────────────────────────────────────────────────
    The design splits the opener: the mark sits at the lower left (x60,
@@ -55,6 +65,7 @@ type HeroLink = { href: string; hover: string; markHover: string; taglineHover?:
 export function RipeHero({ mark = '/RIPE/aura-ripe.svg', tagline = BRAND.tagline, link, film = RIPE_FILM }: { mark?: string; tagline?: readonly string[]; link?: HeroLink; film?: HeroFilm } = {}) {
   const root = useRef<HTMLElement>(null)
   const video = useRef<HTMLVideoElement>(null)
+  const pathname = usePathname()
 
   useEffect(() => {
     const el = root.current
@@ -151,7 +162,18 @@ export function RipeHero({ mark = '/RIPE/aura-ripe.svg', tagline = BRAND.tagline
               tagline.map((line) => <span key={line}>{line}</span>)
             )}
           </p>
-          <p className="hero__meta">{BRAND.meta}</p>
+          <nav className="hero__meta hero__pair" aria-label="RIPE, before and after">
+            {PAIR.map((p, i) => (
+              <Fragment key={p.href}>
+                {i > 0 && <span className="hero__bar" aria-hidden>|</span>}
+                {pathname === p.href ? (
+                  <span className="hero__now" aria-current="page">{p.label}</span>
+                ) : (
+                  <Link href={p.href} className="hero__other" style={{ ['--pair-hover' as string]: p.accent }}>{p.label}</Link>
+                )}
+              </Fragment>
+            ))}
+          </nav>
         </div>
       </div>
 
@@ -281,6 +303,15 @@ export function RipeHero({ mark = '/RIPE/aura-ripe.svg', tagline = BRAND.tagline
           margin: clamp(10px, 1.6vh, 20px) 0 0;
           text-shadow: 0 1px 18px rgba(0, 0, 0, 0.5);
         }
+        .hero__pair { display: flex; align-items: baseline; gap: 0.55em; }
+        .hero__bar { font-weight: 400; opacity: 0.6; }
+        .hero__pair :global(.hero__other) {
+          color: rgba(255, 255, 255, 0.75); text-decoration: none;
+          transition: color var(--dur-fast) var(--ease);
+        }
+        .hero__pair :global(.hero__other:hover),
+        .hero__pair :global(.hero__other:focus-visible) { color: var(--pair-hover); }
+        .hero__pair :global(.hero__other:focus-visible) { outline: 1px solid var(--pair-hover); outline-offset: 4px; }
 
         /* Phones and small tablets: centred. The desktop split — mark to
            the left edge, words to the right — has nowhere to go once the

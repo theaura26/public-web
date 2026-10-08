@@ -22,6 +22,10 @@
  * no grade: what Figma shows is what the page shows. Stills in a chapter
  * folder that are no longer in the export are removed.
  *
+ * An animated GIF in a chapter folder is published as it is — a JPEG
+ * would keep only its first frame — and stands in for a still of the
+ * same name (so "aura-cpp-feet.gif" replaces Figma's aura-cpp-feet.jpg).
+ *
  * Figma doesn't hold films, but a film dropped into a chapter folder here
  * (.mp4 / .mov) is brought in with it: copied as supplied, under a
  * web-safe name ("IMG_7819 3.mp4" → img-7819-3.mp4), with a poster frame
@@ -58,6 +62,7 @@ const LONG = 1400
 const BG_LONG = 1920
 
 const IMAGE = /\.(jpe?g|png|webp)$/i
+const GIF = /\.gif$/i
 const VIDEO = /\.(mp4|mov|m4v)$/i
 /* A web-safe name, as the grading script makes them. */
 const slug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
@@ -90,12 +95,15 @@ export async function applyFigmaExport(media) {
     const films = Object.fromEntries(Object.entries(was).filter(([, m]) => m.video))
     for (const f of readdirSync(outDir)) {
       const name = parse(f).name
-      if (/\.jpe?g$/i.test(f) && !films[name]) rmSync(join(outDir, f))
+      if ((/\.jpe?g$/i.test(f) && !films[name]) || GIF.test(f)) rmSync(join(outDir, f))
     }
     media[key] = { ...films }
     console.log(`— ${key}`)
+    const gifs = new Set(readdirSync(join(FIGMA, key)).filter((x) => GIF.test(x)).map((x) => parse(x).name))
     for (const f of readdirSync(join(FIGMA, key)).filter((x) => IMAGE.test(x)).sort()) {
       const name = parse(f).name
+      /* Its animated GIF stands in for it (below). */
+      if (gifs.has(name)) continue
       const out = join(outDir, `${name}.jpg`)
       /* A still named for one of the grading script's films is that
          film's poster — what shows before it plays, or if it can't.
@@ -110,6 +118,14 @@ export async function applyFigmaExport(media) {
       const info = await web(join(FIGMA, key, f), out, LONG, 78)
       media[key][name] = { w: info.width, h: info.height, v: print(out) }
       console.log(`  ${name.padEnd(26)} ${info.width}x${info.height}  ${(info.size / 1024).toFixed(0)}KB`)
+    }
+    for (const f of readdirSync(join(FIGMA, key)).filter((x) => GIF.test(x)).sort()) {
+      const name = parse(f).name
+      const out = join(outDir, `${name}.gif`)
+      copyFileSync(join(FIGMA, key, f), out)
+      const meta = await sharp(out, { animated: true }).metadata()
+      media[key][name] = { w: meta.width, h: meta.pageHeight ?? meta.height, ext: 'gif', v: print(out) }
+      console.log(`  ${name.padEnd(26)} animated, as supplied  ${meta.width}x${meta.pageHeight ?? meta.height}  ${(statSync(out).size / 1024).toFixed(0)}KB`)
     }
     for (const f of readdirSync(join(FIGMA, key)).filter((x) => VIDEO.test(x)).sort()) {
       const name = slug(parse(f).name)
@@ -171,7 +187,7 @@ function pruneUnused(media) {
   for (const key of Object.keys(media).filter((k) => /^\d+$/.test(k))) {
     for (const name of Object.keys(media[key])) {
       if (picks.has(name)) continue
-      for (const ext of ['jpg', 'mp4']) rmSync(join(OUT, key, `${name}.${ext}`), { force: true })
+      for (const ext of ['jpg', 'gif', 'mp4']) rmSync(join(OUT, key, `${name}.${ext}`), { force: true })
       delete media[key][name]
       gone.push(`${key}/${name}`)
     }

@@ -109,7 +109,7 @@ export type Day = {
 
 /* v / vf: the file's fingerprint (poster, film), added to its address so a
    replaced file is fetched fresh rather than shown from a browser's cache. */
-type Size = { w: number; h: number; video?: boolean; v?: string; vf?: string }
+type Size = { w: number; h: number; video?: boolean; v?: string; vf?: string; ext?: string }
 const q = (v?: string) => (v ? `?v=${v}` : '')
 const sizes = media as unknown as Record<string, Record<string, Size>>
 
@@ -129,7 +129,8 @@ function pictures(chapter: string, picks: Pick[]): Shot[] {
     if (!m) return []
     const at = `${D}/${folder}/${name}`
     return [{
-      name, src: `${at}.jpg${q(m.v)}`, w: m.w, h: m.h, caption, alt,
+      /* A still is a JPEG, unless it moves: an animated GIF keeps its own. */
+      name, src: `${at}.${m.ext ?? 'jpg'}${q(m.v)}`, w: m.w, h: m.h, caption, alt,
       ...(m.video ? { video: `${at}.mp4${q(m.vf)}`, ...(options?.sound ? { sound: true } : {}) } : {}),
       ...(options?.size ? { size: options.size } : {}),
       ...(options?.grade ? { grade: options.grade } : {}),

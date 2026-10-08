@@ -72,6 +72,14 @@
       "h": 1042,
       "v": "14c3cf52"
     },
+    "aura-hydrology": {
+      "w": 1280,
+      "h": 720,
+      "video": true,
+      "figma": true,
+      "v": "81f32f72",
+      "vf": "b1ac35c7"
+    },
     "aura-temple": {
       "w": 1024,
       "h": 576,

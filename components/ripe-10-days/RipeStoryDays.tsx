@@ -4,6 +4,7 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import Lenis from 'lenis'
 import type { Day } from './copy'
 import { RipeSoundToggle } from './RipeSoundToggle'
+import lettering from './titles.json'
 
 /* ── The days ───────────────────────────────────────────────────────
    One held place in the middle of the screen, and the story passing
@@ -195,6 +196,31 @@ function layout(days: Day[]) {
 /* A chapter's anchor, from its title: "Finding a way in" → finding-a-way-in.
    Shared with the chapter bar, which links to it. */
 export const anchor = (d: Day) => d.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+
+/* A title in Archie Brackett: the lettering, traced to an SVG by
+   scripts/ripe/title-svgs.mjs, so the page shows it without serving the
+   font — the one place this page steps outside the site's type, by
+   choice. The words stay in the heading for screen readers and search.
+   Sized from --title-size, as the type was: the box is h times it tall.
+   A title with no SVG yet (one added since the script last ran) is set
+   in the site's type instead. */
+const LETTERING = lettering as Record<string, { w: number; h: number; v: string }>
+function Title({ text }: { text: string }) {
+  const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+  const art = LETTERING[slug]
+  if (!art) return <>{text}</>
+  return (
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className="days__art" src={`/RIPE/10-days/titles/${slug}.svg?v=${art.v}`} alt=""
+        width={Math.round(art.w * 100)} height={Math.round(art.h * 100)}
+        style={{ height: `calc(var(--title-size) * ${art.h})` }}
+      />
+      <span className="sr-only">{text}</span>
+    </>
+  )
+}
 
 /** coda: what follows the last chapter's pictures, inside the stage, so
     the last chapter's background stays behind it with no seam. It scrolls
@@ -492,11 +518,11 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
                 /* Both titles in one place, the later taking over with the
                    second background; the heading is as wide as the wider. */
                 <h2 className="days__title days__title--two" id={anchor(d)}>
-                  <span className="days__title-now">{d.title}</span>
-                  <span className="days__title-then" aria-hidden>{d.bgThen.title}</span>
+                  <span className="days__title-now"><Title text={d.title} /></span>
+                  <span className="days__title-then" aria-hidden><Title text={d.bgThen.title} /></span>
                 </h2>
               ) : (
-                <h2 className="days__title" id={anchor(d)}>{d.title}</h2>
+                <h2 className="days__title" id={anchor(d)}><Title text={d.title} /></h2>
               )}
               {d.bgThen?.line ? (
                 /* The chapter's line, and the one its second background
@@ -672,14 +698,18 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
           text-align: center; max-width: 100%;
           opacity: 0; visibility: hidden;
         }
-        /* The site's h2, as /ripe's section headings are (globals.css):
-           Bricolage Grotesque 400 at the h2 size and tracking — only the
-           colour is this page's. Set as written. */
+        /* The site's h2 (globals.css) underneath, for a title with no
+           lettering yet; the lettering (Title, above) sits in it at
+           --title-size: on one line across the stage, coming down below
+           ~480px wide just enough that the longest ("Leaving something
+           behind", ~11.6 times the size) fits between the gutters. */
         .days__title {
+          --title-size: min(calc(var(--t-display-size) * 1.32), calc((100vw - 2 * var(--gutter, 20px)) / 12));
           margin: 0;
           text-transform: none;
           color: var(--ripe-green);
         }
+        .days__title :global(.days__art) { display: block; width: auto; max-width: none; }
         /* Straight under the title now the day's number is gone. */
         /* The subheading keeps its narrow column under the wide title. */
         .days__line {

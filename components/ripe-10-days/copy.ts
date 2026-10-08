@@ -253,6 +253,7 @@ export const DAYS: Day[] = [
       ['img-8218', 'Work, interrupted', 'A man at a laptop on an outdoor table, a small girl leaning in beside him', { grade: 'brightness(0.84) contrast(1.05) saturate(1.2) sepia(0.04)' }],
       ['ripe-people-02', 'Working hands', 'Women of the estate standing in a line, ready for the day'],
       ['ripe-people-colours', 'Colours of Aura', 'Women in bright headscarves and shawls gathered together'],
+      ['aura-raghu-tea-estate', 'With Raghu on the tea estate', 'Two men in Aura tops standing among the silver oaks, the tea estate and hills behind them'],
       ['aura-sadanand', 'With Sadanand', 'Sadanand at work by the compost beds under a shade net'],
       ['ripe-wheelbarrow', 'On the way', 'Three young men walking up a forest path, one pushing a wheelbarrow'],
       ['ripe-buddha-03', 'Finding his place', 'Hands easing the stone Buddha into place at the foot of a tree'],
@@ -260,8 +261,6 @@ export const DAYS: Day[] = [
       ['ripe-buddha', 'Peace in position', 'People garlanding the Buddha beneath the tree'],
       ['ripe-more-people', 'All together', 'A group photograph of guests and the people of the estate'],
       ['aura-team', 'Aura family', 'Five men of the Aura team in caps and Aura tops, arms folded'],
-      ['aura-raghu-tea-estate', 'With Raghu on the tea estate', 'Two men in Aura tops standing among the silver oaks, the tea estate and hills behind them'],
-      ['aura-top', 'The Aura life', 'The back of an Aura top printed Attention. Unhurried. Rooted. Awake.'],
     ]),
   },
   {

@@ -34,6 +34,7 @@ const TARGETS = [
   '.grat__fig', '.grat__h', '.grat__b',
   '.rem__h', '.rem__b',
   '.reg__h',
+  '.rpb-h', '.rpb-t', '.rpb-act',
   '.harv__h', '.harv__from', '.harv__b', '.harv__months li', '.harv__act',
 ].join(', ')
 

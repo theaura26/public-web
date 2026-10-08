@@ -70,14 +70,14 @@ export const SEASON_BANNER_ON_RIPE = {
   mark: '/RIPE/10-days/aura-ripe-coral.svg',
   line: 'A season to remember.',
   action: 'Discover A Season of RIPE',
-  accent: '#FF2D87',
+  accent: '#FF4796',
   image: '/RIPE/10-days/banner/ripe-banner-first.jpg',
 } as const
 
 /** RIPE's own hero gains the way through to this page. */
 export const RIPE_HERO_LINK = {
   href: '/ripe/after',
-  hover: '#FF2D87',
+  hover: '#FF4796',
   markHover: '/RIPE/10-days/aura-ripe-coral.svg',
   taglineHover: ['A season', 'to remember.'],
   label: 'Right time made visible — open A Season of RIPE',

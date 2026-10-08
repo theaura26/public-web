@@ -18,9 +18,11 @@ import { RipeSeasonToggle } from './RipeSeasonToggle'
 export const daySlug = (title: string) =>
   title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 
-/* Eight names did not fit a bar, so it carries every other day: the
-   ones between are reached by scrolling, and while the reader is in one
-   the name before it stays lit. */
+/* Eight names did not fit a bar, so it carries four: counted back from
+   the ending in steps of two, so the bar always closes on Leaving
+   something behind. The days between are reached by scrolling; while
+   the reader is in one, the name before it stays lit (and in the first
+   day, the first name). */
 const STRIDE = 2
 
 export function RipeDayNav({ days }: { days: Day[] }) {
@@ -28,9 +30,10 @@ export function RipeDayNav({ days }: { days: Day[] }) {
   const [hidden, setHidden] = useState(false)
   const [on, setOn] = useState(0)
   const scroller = useRef<HTMLDivElement>(null)
-  const shown = days.map((d, i) => ({ d, i })).filter(({ i }) => i % STRIDE === 0)
-  /* The kept name at or before the day the reader is in. */
-  const lit = on - (on % STRIDE)
+  const shown = days.map((d, i) => ({ d, i })).filter(({ i }) => (days.length - 1 - i) % STRIDE === 0)
+  /* The kept name at or before the day the reader is in, or the first
+     kept name before any has been reached. */
+  const lit = [...shown].reverse().find(({ i }) => i <= on)?.i ?? shown[0]?.i ?? 0
 
   /* Peekaboo, as RipeNav and MicroNav: past the fold the header hides
      on the way down and returns on the way up. */

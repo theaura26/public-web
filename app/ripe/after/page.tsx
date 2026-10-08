@@ -18,7 +18,7 @@ import { DAYS, SEASON_HERO, SEASON_INTRO, SEASON_BANNER } from '@/components/rip
 
 export default function SeasonPage() {
   return (
-    <RipeShell paper backdrop={false} accent="#FF2D87">
+    <RipeShell paper backdrop={false} accent="#FF4796">
       {/* A tenth darker than RIPE's own opener: the canopy film is brighter
           than the aerial, and the coral has to hold over it. */}
       <RipeHero

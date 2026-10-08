@@ -3,6 +3,7 @@ import { RipeHero } from '@/components/ripe/RipeHero'
 import { RipeDayNav } from '@/components/ripe/RipeDayNav'
 import { RipeSeason, RipeSeasonIntro } from '@/components/ripe/RipeSeason'
 import { RipePageBanner } from '@/components/ripe/RipePageBanner'
+import { RipeReadMore } from '@/components/ripe/RipeBlocks'
 import { DAYS, SEASON_HERO, SEASON_INTRO, SEASON_BANNER } from '@/components/ripe/after-copy'
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -32,6 +33,9 @@ export default function SeasonPage() {
       <RipeDayNav days={DAYS} />
       <RipeSeasonIntro lines={SEASON_INTRO} />
       <RipeSeason days={DAYS} />
+      {/* The same way on into the rest of Aura that RIPE ends with, in
+          the same place: after the last word, before the banner home. */}
+      <RipeReadMore />
       <RipePageBanner banner={SEASON_BANNER} />
     </RipeShell>
   )

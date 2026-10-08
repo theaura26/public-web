@@ -41,6 +41,10 @@ const FOCUS = 0.42
    day's name clear of it. */
 const TIP_GAP = 150
 
+/* The space the coda keeps between itself and the day's name as it
+   pushes the name off the screen. */
+const CODA_GAP = 72
+
 /* Same name, same placement, every render: the jitter that keeps the
    run from marching in a straight line is derived from the shot's own
    name rather than drawn at random. */
@@ -96,6 +100,8 @@ export function RipeSeason({ days = DAYS }: { days?: Day[] }) {
     const runs = Array.from(el.querySelectorAll<HTMLElement>('.days__day'))
     const shots = Array.from(el.querySelectorAll<HTMLElement>('.days__shot'))
     const spine = el.querySelector<HTMLElement>('.days__spine')
+    const stack = el.querySelector<HTMLElement>('.days__stack')
+    const coda = el.querySelector<HTMLElement>('.days__coda')
     const title = el.querySelector<HTMLElement>('.days__art')
 
     /* The pictures are placed either side of the day's name, so the run
@@ -146,6 +152,17 @@ export function RipeSeason({ days = DAYS }: { days?: Day[] }) {
         s.style.opacity = near ? '1' : '0'
         s.style.visibility = near ? 'visible' : 'hidden'
       })
+
+      /* The last day's name is held in the middle of the screen, and the
+         coda comes up from below into the same place. Once the coda
+         reaches the name it pushes it — one for one with the scroll —
+         so the name leaves the way any text does, up and off, rather
+         than sitting on top of the words that follow it. */
+      if (stack && coda) {
+        const bottom = mid + stack.offsetHeight / 2 + CODA_GAP
+        const push = Math.max(bottom - coda.getBoundingClientRect().top, 0)
+        stack.style.transform = push > 0 ? `translate3d(0, ${(-push).toFixed(1)}px, 0)` : ''
+      }
 
       /* The run's own progress, for the thread down the middle. */
       if (spine) {

@@ -301,6 +301,7 @@ export const DAYS: Day[] = [
       ['aura-cow-to-compost', 'From cow to compost', 'Cows walking across the yard, on their way to becoming compost'],
       ['aura-cpp-hands-dirty', 'Getting our hands dirty', 'Adults and a child mixing the compost by hand'],
       ['aura-cpp-03', 'Little hands in rhythm', 'A child reaching into the compost'],
+      ['aura-cpp-feet', 'Treading the mix', 'Bare feet working the cow pat pit mix together on the ground'],
       ['aura-bd-magic', 'Biodynamic magic', 'A wooden box of biodynamic preparations'],
       ['aura-bd-magic-02', 'BD 502 in the palm', 'A preparation held in a cupped hand'],
       ['aura-cpp-06', 'Cow pat pit balls', 'Balls of compost drying on a mesh'],
@@ -311,9 +312,10 @@ export const DAYS: Day[] = [
       ['aura-compost-hands', 'Into the earth', 'A man crouched barefoot, working the compost with his hands', { grade: 'saturate(1.45)' }],
       ['aura-tasting-estate', 'Coffee tasting', 'A tasting table set out under the trees'],
       /* A screen recording, flat and cool beside the retouched tasting
-         stills: given their contrast, colour and warmth — the colour
-         held back a little, so it doesn't outshine them. With its sound. */
-      ['aura-pour-over', 'The first pour', 'Hot water poured from a kettle into a paper dripper over a glass server', { grade: 'contrast(1.16) saturate(1.35) sepia(0.06) brightness(0.97)', sound: true }],
+         stills: given their contrast, colour and a good deal of warmth —
+         the colour held back a little, so it doesn't outshine them. With
+         its sound. */
+      ['aura-pour-over', 'The first pour', 'Hot water poured from a kettle into a paper dripper over a glass server', { grade: 'contrast(1.16) saturate(1.35) sepia(0.16) brightness(0.98)', sound: true }],
       ['aura-tasting', 'Slow pours', 'Two people pouring from kettles at the tasting'],
       ['img-8141', 'The coffee ritual', 'Pouring hot water over a pour-over dripper at the checked tasting table'],
       ['ripe-tasting', 'Brewed on stone', 'A pour-over dripper set on a standing stone'],

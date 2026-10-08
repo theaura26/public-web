@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useRef } from 'react'
 import { DAYS, SEASON_CODA, type Day, type Shot } from './after-copy'
 import { daySlug } from './RipeDayNav'
+import { RipeReveal } from './RipeReveal'
 
 /* ── Ten days, one scroll ────────────────────────────────────────────
    The page is a walk rather than a gallery. The day's name and its line
@@ -311,7 +312,8 @@ export function RipeSeason({ days = DAYS }: { days?: Day[] }) {
         {/* What the ten days came to. */}
         <div className="days__coda">
           <div className="section-w">
-            {SEASON_CODA.map((l) => <p className="statement statement--quiet" key={l}>{l}</p>)}
+            {/* Brightening word by word, as RIPE's own opening does. */}
+            <RipeReveal runs={[SEASON_CODA.join('\n')]} className="days__coda-t" />
           </div>
         </div>
       </div>
@@ -435,7 +437,13 @@ export function RipeSeason({ days = DAYS }: { days?: Day[] }) {
 
         /* ── the coda ───────────────────────────────────────────────── */
         .days__coda { position: relative; z-index: 20; padding: 0 0 45vh; }
-        .days__coda :global(.statement + .statement) { margin-top: 1.1em; }
+        .days__coda :global(.days__coda-t) {
+          margin: 0 auto; max-width: 24em; text-align: center;
+          font-family: var(--font-grotesque), sans-serif; font-weight: 400;
+          font-size: var(--t-p1-size); line-height: var(--t-p1-lh);
+          letter-spacing: var(--t-track); color: var(--story-ink); text-wrap: pretty;
+        }
+        .days__coda :global(.days__coda-t .rv-br) { height: 0.6em; }
 
         /* ── phones ─────────────────────────────────────────────────── */
         @media (max-width: 899px) {
@@ -495,22 +503,21 @@ export function RipeSeasonIntro({ lines }: { lines: string[] }) {
   return (
     <section className="intro">
       <div className="section-w">
-        <h2 className="statement">
-          {lines.map((l) => <span key={l}>{l}</span>)}
-        </h2>
+        {/* RIPE's opening statement, on paper: the same h2 role, the same
+            word-by-word brightening as it is read. */}
+        <RipeReveal runs={[lines.join('\n')]} className="statement" as="h2" />
       </div>
 
       <style jsx>{`
         /* The same space above and below as RIPE's own opening
            statement, so the two pages start their reading at one depth. */
         .intro { padding: var(--ripe-section-gap) 0 clamp(64px, 12vh, 170px); }
-        .statement {
+        .intro :global(.statement) {
           margin: 0; max-width: 760px; text-align: left;
           color: var(--story-ink, #fff); text-wrap: pretty;
-          display: flex; flex-direction: column; gap: 0.32em;
         }
         /* Six lines, each its own thought, so each gets its own air. */
-        .statement :global(span) { display: block; }
+        .intro :global(.statement .rv-br) { height: 0.32em; }
       `}</style>
     </section>
   )

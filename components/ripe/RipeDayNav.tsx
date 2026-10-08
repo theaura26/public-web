@@ -5,11 +5,14 @@ import type { Day } from './after-copy'
 import { RipeSeasonToggle } from './RipeSeasonToggle'
 
 /* ── The chapter bar ─────────────────────────────────────────────────
-   Eight days is a long scroll, so the names ride along under the site
-   bar once the opener is behind the reader: where they are, and a way
-   to jump. It hides itself again at the top of the page, and when the
-   reader scrolls up — the site's own bar comes back then, and two bars
-   stacked is one too many.
+   RIPE's own section bar, on the season: the same behaviour line for
+   line, so the two pages move the same way under the reader's hand.
+
+     below the fold    the bar arrives under the site header
+     scrolling down    the header peeks away; the bar takes the top edge
+     scrolling up      the header comes back; the bar returns under it
+     a name            smooth jump to that day, and the URL says where
+     a cold #day link  lands on that day once the page is its real size
 ─────────────────────────────────────────────────────────────────────── */
 
 export const daySlug = (title: string) =>
@@ -17,67 +20,132 @@ export const daySlug = (title: string) =>
 
 export function RipeDayNav({ days }: { days: Day[] }) {
   const [below, setBelow] = useState(false)
-  const [up, setUp] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const [on, setOn] = useState(0)
-  const row = useRef<HTMLDivElement>(null)
+  const scroller = useRef<HTMLDivElement>(null)
 
-  /* Below the opener, and which way the reader is going. The body
-     carries both, because the site bar's own rules read them. */
+  /* Peekaboo, as RipeNav and MicroNav: past the fold the header hides
+     on the way down and returns on the way up. */
   useEffect(() => {
     let last = window.scrollY
-    const update = () => {
+    let ticking = false
+    const read = () => {
       const y = window.scrollY
-      const isBelow = y > window.innerHeight * 0.9
-      const goingUp = y < last - 2
-      if (Math.abs(y - last) > 2) last = y
-      setBelow(isBelow)
-      setUp(goingUp)
-      document.body.classList.toggle('dn-below', isBelow)
-      document.body.classList.toggle('dn-up', isBelow && goingUp)
+      const fold = window.innerHeight * 0.85
+      setBelow(y > fold)
+      const dy = y - last
+      /* ignore rubber-banding and sub-pixel jitter */
+      if (y > 0 && Math.abs(dy) > 6) {
+        setHidden(dy > 0 && y > fold)
+        last = y
+      } else if (y <= 0) {
+        setHidden(false)
+        last = y
+      }
+      ticking = false
     }
-    update()
-    window.addEventListener('scroll', update, { passive: true })
+    read()
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(read) } }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    document.body.classList.toggle('dn-below', below)
+    document.body.classList.toggle('dn-up', hidden)
     return () => {
-      window.removeEventListener('scroll', update)
-      document.body.classList.remove('dn-below', 'dn-up')
+      document.body.classList.remove('dn-below')
+      document.body.classList.remove('dn-up')
+    }
+  }, [below, hidden])
+
+  /* The day whose turn it is: the last day whose run has reached the
+     middle of the screen, where its name is held. Read on the frame
+     rather than observed, so it never lags the ground behind it. */
+  useEffect(() => {
+    let ticking = false
+    const read = () => {
+      const mid = window.innerHeight * 0.5
+      let i = 0
+      days.forEach((d, k) => {
+        const m = document.getElementById(daySlug(d.title))
+        if (m && m.getBoundingClientRect().top <= mid) i = k
+      })
+      setOn(i)
+      ticking = false
+    }
+    read()
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(read) } }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [days])
+
+  /* Land a cold load on the right day, as RipeNav does: again once the
+     page is its real size, and not at all once the reader moves. */
+  useEffect(() => {
+    const id = decodeURIComponent(location.hash.slice(1))
+    if (!id) return
+    const target = document.getElementById(id)
+    if (!target) return
+    let cancelled = false
+    const settle = () => { if (!cancelled) target.scrollIntoView({ behavior: 'auto', block: 'start' }) }
+    const stop = () => { cancelled = true }
+    const evs = ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const
+    for (const ev of evs) window.addEventListener(ev, stop, { passive: true, once: true })
+    let raf = 0
+    const afterFonts = () => { raf = requestAnimationFrame(() => { raf = requestAnimationFrame(settle) }) }
+    if (document.fonts) document.fonts.ready.then(afterFonts).catch(afterFonts)
+    else afterFonts()
+    const late = window.setTimeout(settle, 700)
+    return () => {
+      cancelled = true
+      if (raf) cancelAnimationFrame(raf)
+      clearTimeout(late)
+      for (const ev of evs) window.removeEventListener(ev, stop)
     }
   }, [])
 
-  /* The day whose turn it is: the last anchor above the middle of the
-     screen. Read on scroll rather than observed, so it never lags the
-     ground behind it. */
+  /* Keep the current name in view inside the bar. scrollLeft directly,
+     not scrollIntoView — that is entitled to move the page vertically,
+     and the page's position is what chose this name. */
   useEffect(() => {
-    const update = () => {
-      const marks = days.map((d) => document.getElementById(daySlug(d.title)))
-      const mid = window.innerHeight * 0.5
-      let i = 0
-      marks.forEach((m, k) => { if (m && m.getBoundingClientRect().top <= mid) i = k })
-      setOn(i)
-    }
-    update()
-    window.addEventListener('scroll', update, { passive: true })
-    return () => window.removeEventListener('scroll', update)
-  }, [days])
-
-  /* Keep the current name in view in the bar's own scroller. */
-  useEffect(() => {
-    const el = row.current?.children[on] as HTMLElement | undefined
-    el?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' })
+    const sc = scroller.current
+    if (!sc) return
+    const el = sc.querySelector<HTMLElement>(`[data-i="${on}"]`)
+    if (!el) return
+    const pad = 20
+    const left = el.offsetLeft - pad
+    const right = el.offsetLeft + el.offsetWidth + pad
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? ('auto' as const) : ('smooth' as const)
+    if (left < sc.scrollLeft) sc.scrollTo({ left, behavior })
+    else if (right > sc.scrollLeft + sc.clientWidth) sc.scrollTo({ left: right - sc.clientWidth, behavior })
   }, [on])
+
+  const jump = (e: React.MouseEvent<HTMLAnchorElement>, i: number) => {
+    const id = daySlug(days[i].title)
+    const el = document.getElementById(id)
+    if (!el) return
+    e.preventDefault()
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
+    history.replaceState(null, '', `#${id}`)
+    setOn(i)
+  }
 
   return (
     <nav aria-label="A Season of RIPE, chapters"
          aria-hidden={!below}
-         className={`dn ${below ? 'is-below' : ''} ${below && up ? 'is-up' : ''}`}>
+         className={`dn ${below ? 'is-below' : ''} ${hidden ? 'is-up' : ''}`}>
       <div className="dn-in">
-      <div className="dn-scroll">
-        <div className="dn-row" ref={row}>
+      <div className="dn-scroll" ref={scroller}>
+        <div className="dn-row">
           {days.map((d, i) => (
             <a key={d.title} href={`#${daySlug(d.title)}`}
                data-i={i}
                aria-current={i === on ? 'true' : undefined}
                aria-label={`${d.title}, ${d.day}`}
                tabIndex={below ? 0 : -1}
+               onClick={(e) => jump(e, i)}
                className={`p2 dn-l ${i === on ? 'is-on' : ''}`}>{d.title}</a>
           ))}
           <span className="dn-runoff" aria-hidden />
@@ -87,6 +155,19 @@ export function RipeDayNav({ days }: { days: Day[] }) {
       <span className="dn-switch"><RipeSeasonToggle tone="dark" /></span>
       </div>
 
+      <style jsx global>{`
+        /* The site bar on the season. Over the film it is clear (RipeHero
+           marks that); below the fold it is the page's own white, and it
+           peeks away on the way down exactly as on RIPE. */
+        body:has(.ripe-page--paper) .aura-nav {
+          transition: transform var(--dur-base) var(--ease),
+                      background var(--dur-base) var(--ease) !important;
+        }
+        body:has(.ripe-page--paper).dn-below.dn-up .aura-nav {
+          transform: translateY(-100%) !important;
+          box-shadow: none !important;
+        }
+      `}</style>
       <style jsx>{`
         .dn {
           /* RIPE's own section bar, printed: the same 56px frame, z-index,
@@ -99,7 +180,7 @@ export function RipeDayNav({ days }: { days: Day[] }) {
           transition: transform var(--dur-base) var(--ease), opacity var(--dur-base) var(--ease);
         }
         .dn.is-below { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        /* Scrolling up hands the top of the screen back to the site bar. */
+        /* Header away — the bar takes the top edge itself. */
         .dn.is-below.is-up { transform: translateY(calc(-1 * var(--nav-h))); }
         .dn-in {
           display: flex; align-items: center; height: 100%;

@@ -335,6 +335,8 @@ export const DAYS: Day[] = [
       ['ripe-energy-03', 'Hand in hand', 'Two people planting a coffee sapling together'],
       ['ripe-planting-03', 'Something left', 'A hand settling a coffee sapling into the red earth'],
       ['ripe-energy-04', 'Shared memories', 'A smiling guest crouched beside a newly planted sapling'],
+      ['ripe-energy-05', 'Tagged and ready to grow', 'A smiling guest holding up a coffee sapling, its tag marked with a name and the date'],
+      ['ripe-energy-06', 'A sapling, proudly held', 'A smiling guest in a striped waistcoat holding a coffee sapling in its paper sleeve'],
       ['aura-goodbyes', 'Until next time', 'Everyone together in the studio for a last photograph'],
     ]),
   },

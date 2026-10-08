@@ -18,11 +18,19 @@ import { RipeSeasonToggle } from './RipeSeasonToggle'
 export const daySlug = (title: string) =>
   title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 
+/* Eight names did not fit a bar, so it carries every other day: the
+   ones between are reached by scrolling, and while the reader is in one
+   the name before it stays lit. */
+const STRIDE = 2
+
 export function RipeDayNav({ days }: { days: Day[] }) {
   const [below, setBelow] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [on, setOn] = useState(0)
   const scroller = useRef<HTMLDivElement>(null)
+  const shown = days.map((d, i) => ({ d, i })).filter(({ i }) => i % STRIDE === 0)
+  /* The kept name at or before the day the reader is in. */
+  const lit = on - (on % STRIDE)
 
   /* Peekaboo, as RipeNav and MicroNav: past the fold the header hides
      on the way down and returns on the way up. */
@@ -111,7 +119,7 @@ export function RipeDayNav({ days }: { days: Day[] }) {
   useEffect(() => {
     const sc = scroller.current
     if (!sc) return
-    const el = sc.querySelector<HTMLElement>(`[data-i="${on}"]`)
+    const el = sc.querySelector<HTMLElement>(`[data-i="${lit}"]`)
     if (!el) return
     const pad = 20
     const left = el.offsetLeft - pad
@@ -119,7 +127,7 @@ export function RipeDayNav({ days }: { days: Day[] }) {
     const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? ('auto' as const) : ('smooth' as const)
     if (left < sc.scrollLeft) sc.scrollTo({ left, behavior })
     else if (right > sc.scrollLeft + sc.clientWidth) sc.scrollTo({ left: right - sc.clientWidth, behavior })
-  }, [on])
+  }, [lit])
 
   const jump = (e: React.MouseEvent<HTMLAnchorElement>, i: number) => {
     const id = daySlug(days[i].title)
@@ -139,14 +147,14 @@ export function RipeDayNav({ days }: { days: Day[] }) {
       <div className="dn-in">
       <div className="dn-scroll" ref={scroller}>
         <div className="dn-row">
-          {days.map((d, i) => (
+          {shown.map(({ d, i }) => (
             <a key={d.title} href={`#${daySlug(d.title)}`}
                data-i={i}
-               aria-current={i === on ? 'true' : undefined}
+               aria-current={i === lit ? 'true' : undefined}
                aria-label={`${d.title}, ${d.day}`}
                tabIndex={below ? 0 : -1}
                onClick={(e) => jump(e, i)}
-               className={`p2 dn-l ${i === on ? 'is-on' : ''}`}>{d.title}</a>
+               className={`p2 dn-l ${i === lit ? 'is-on' : ''}`}>{d.title}</a>
           ))}
           <span className="dn-runoff" aria-hidden />
         </div>

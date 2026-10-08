@@ -307,8 +307,9 @@ export const DAYS: Day[] = [
       ['aura-compost-hands', 'Into the earth', 'A man crouched barefoot, working the compost with his hands', { grade: 'saturate(1.45)' }],
       ['aura-tasting-estate', 'Coffee tasting', 'A tasting table set out under the trees'],
       /* A screen recording, flat and cool beside the retouched tasting
-         stills: given their contrast, colour and warmth. */
-      ['aura-pour-over', 'The first pour', 'Hot water poured from a kettle into a paper dripper over a glass server', { grade: 'contrast(1.18) saturate(1.6) sepia(0.06) brightness(0.97)' }],
+         stills: given their contrast, colour and warmth — the colour
+         held back a little, so it doesn't outshine them. With its sound. */
+      ['aura-pour-over', 'The first pour', 'Hot water poured from a kettle into a paper dripper over a glass server', { grade: 'contrast(1.16) saturate(1.35) sepia(0.06) brightness(0.97)', sound: true }],
       ['aura-tasting', 'Slow pours', 'Two people pouring from kettles at the tasting'],
       ['img-8141', 'The coffee ritual', 'Pouring hot water over a pour-over dripper at the checked tasting table'],
       ['ripe-tasting', 'Brewed on stone', 'A pour-over dripper set on a standing stone'],

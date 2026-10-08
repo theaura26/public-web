@@ -17,11 +17,22 @@ import { useScrollAppear } from './useScrollAppear'
    banner photograph, where JPEG compression shifts it.
 ─────────────────────────────────────────────────────────────────────── */
 
-export function RipeShell({ children }: { children: ReactNode }) {
+export function RipeShell({
+  children, paper = false, backdrop = true, accent,
+}: {
+  children: ReactNode
+  /** White ground instead of black — A Season of RIPE is printed, not lit. */
+  paper?: boolean
+  /** The season carries its own grounds, one per day, so it takes none. */
+  backdrop?: boolean
+  /** The page's own accent, where it is not RIPE's green. */
+  accent?: string
+}) {
   useScrollAppear()
   return (
-    <div className="ripe-page">
-      <RipeBackdrop />
+    <div className={`ripe-page${paper ? ' ripe-page--paper' : ''}`}
+         style={accent ? ({ ['--ripe-green' as string]: accent } as React.CSSProperties) : undefined}>
+      {backdrop && <RipeBackdrop />}
       <div className="ripe-page__flow">{children}</div>
 
       {/* The timeline's depth-of-field. Fixed to the viewport, blurring
@@ -37,6 +48,10 @@ export function RipeShell({ children }: { children: ReactNode }) {
            periwinkle on the 23 September line, and the grey of the form
            fields. There is no paper ground in this design — it is black
            from the opener to the last line. */
+        /* The season is printed rather than lit: white ground, black ink,
+           and the one black film at the top of it. The values are named
+           the same, so every section below reads them without knowing
+           which of the two pages it is on. */
         .ripe-page {
           --ripe-ink: #000000;
           --ripe-green: #23FF88;
@@ -130,6 +145,19 @@ export function RipeShell({ children }: { children: ReactNode }) {
           position: relative;
         }
         /* Above the fixed ground. */
+        /* The season is printed rather than lit: white ground, black ink,
+           and the one black film at the top of it. Doubled, so it outranks
+           the black ground above whatever the order of the two blocks. */
+        .ripe-page.ripe-page--paper {
+          --ripe-ink: #ffffff;
+          --story-ink: #000000;
+          --story-muted: rgba(0, 0, 0, 0.62);
+          background: #fff; color: #000;
+        }
+        /* The opener is the one lit thing on it. */
+        .ripe-page.ripe-page--paper .hero { background: #000; }
+        .ripe-page.ripe-page--paper .hero__mark img { filter: none; }
+
         .ripe-page__flow { position: relative; z-index: 1; }
 
         /* One left edge for the whole page.

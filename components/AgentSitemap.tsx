@@ -196,6 +196,18 @@ export const SITEMAP: SitemapEntry[] = [
     related: ['/coffee', '/living-systems', '/rta', '/herd'],
   },
   {
+    href: '/ripe/after',
+    label: 'A Season of RIPE',
+    topic: 'The record of RIPE — ten days at Mudigere as they were lived',
+    summary: 'A photo essay of the ten days of RIPE in September 2026, in eight parts: arriving, looking closer, finding a way in, making a mark, becoming familiar, a world revealed, see feel and understand, and leaving something behind.',
+    facts: [
+      { label: 'Of', value: 'RIPE, 20–27 September 2026' },
+      { label: 'Parts', value: 'Eight' },
+      { label: 'Place', value: 'Aura Estate, Mudigere, Karnataka' },
+    ],
+    related: ['/ripe', '/mudigere', '/herd', '/coffee'],
+  },
+  {
     href: '/rta',
     label: 'Rta',
     topic: 'Right time, right action — the Vedic order behind each decision',

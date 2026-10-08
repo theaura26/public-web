@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { RipeSeasonToggle } from './RipeSeasonToggle'
 
 /* ── RIPE section bar ────────────────────────────────────────────────
    The Remarkable Coffee microsite's header, on this page's palette.
@@ -173,6 +174,8 @@ export function RipeNav() {
             ))}
             <span className="rn-runoff" aria-hidden />
           </div>
+          {/* The week and the season, one press apart. */}
+          <span className="rn-switch"><RipeSeasonToggle tone="light" /></span>
         </div>
       </nav>
 
@@ -247,6 +250,7 @@ export function RipeNav() {
         }
 
         .rn-in { position: relative; height: 100%; display: flex; align-items: center; }
+        .rn-switch { flex: 0 0 auto; display: flex; align-items: center; margin-left: var(--space-5); }
 
         .rn-scroll {
           flex: 1 1 auto; min-width: 0; height: 100%;

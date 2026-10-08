@@ -165,6 +165,13 @@ const CROSS_LISTED: CrossListed[] = [
     from: 'Experiences',
   },
   {
+    href: '/ripe/after',
+    title: 'A Season of RIPE',
+    description: 'Ten days at Mudigere as they were lived, in eight parts and ninety pictures.',
+    categories: ['art-culture'],
+    from: 'Experiences',
+  },
+  {
     /* The coffee microsite's front page. Coffee & Fermentation listed the
        bean story and the fermentation note but not the section they both
        feed into. */

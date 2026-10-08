@@ -53,10 +53,12 @@ export function RipeStoryIntro() {
         /* Tighter than a /ripe section break, so the story gets going
            sooner; the first chapter's pictures rise into the space below. */
         .intro { padding: clamp(110px, 22vh, 300px) 0 clamp(64px, 14vh, 200px); }
-        /* On a phone, /ripe's own opening spacing (RipeBlocks .open): the
-           section gap above, which RipeShell brings down for phones. */
+        /* On a phone, /ripe's own opening spacing above (RipeBlocks .open:
+           the section gap, which RipeShell brings down for phones), and
+           little below: Arriving's title is held half a screen into the
+           stage, which is gap enough on its own. */
         @media (max-width: 899px) {
-          .intro { padding: var(--ripe-section-gap) 0 clamp(64px, 12vh, 170px); }
+          .intro { padding: var(--ripe-section-gap) 0 clamp(16px, 3vh, 32px); }
         }
         /* Here the lifted words take the accent but keep the line's
            weight; the closing sets its own bold. */

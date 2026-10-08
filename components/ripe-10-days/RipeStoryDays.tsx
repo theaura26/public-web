@@ -624,7 +624,7 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
              float. */
           --day-step: 40vh;
         }
-        @media (max-width: 899px) { .days { --day-step: 65vh; } }
+        @media (max-width: 899px) { .days { --day-step: 46vh; } }
 
         /* The words hold in the middle of the screen for the whole run of
            days; the pictures are in the section's flow and pass over them. */

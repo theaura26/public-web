@@ -266,7 +266,7 @@ export const DAYS: Day[] = [
     day: 'Part 6', bg: bg('06'),
     /* The evening: the candlelit table takes over as the lights come on,
        and the chapter's words turn with it. */
-    bgThen: bgThen('06-2', 'aura-ripe-dinner-02', { title: 'Stay a little longer', line: 'Dine on the estate, among the trees and under the stars.' }),
+    bgThen: bgThen('06-2', 'aura-ripe-dinner-02', { title: 'Finding a shared rhythm', line: 'A long table. The forest around us. Conversations that carried into the night. And nowhere else to be.' }),
     line: ['The unfamiliar became a world of new discoveries.'],
     shots: pictures('06', [
       ['img-7952', 'Breakfast with a view', 'Breakfast laid on checked cloths in the open, the misty hills behind'],

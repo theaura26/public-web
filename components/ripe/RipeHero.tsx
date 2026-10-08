@@ -215,22 +215,16 @@ export function RipeHero({
         .hero__scrim {
           position: absolute; inset: 0; z-index: 0; pointer-events: none;
           background: linear-gradient(to top,
-            rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.36) 30%,
-            rgba(0, 0, 0, 0.1) 52%, transparent 66%);
+            rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.18) 30%,
+            rgba(0, 0, 0, 0.05) 52%, transparent 66%);
         }
-        /* And a firmer shadow on the line itself, tight enough to hold
-           the letter edges against a bright frame. */
-        .hero.has-scrim .hero__tag {
-          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45), 0 2px 26px rgba(0, 0, 0, 0.5);
-        }
-        /* A soft pool of shade behind the words only — the rest of the film
-           keeps its light. */
-        .hero.has-scrim .hero__say { position: relative; }
-        .hero.has-scrim .hero__say::before {
-          content: ''; position: absolute; z-index: -1; pointer-events: none;
-          inset: -28% -18%;
-          background: radial-gradient(closest-side, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.3) 58%, transparent);
-        }
+        /* No shadows on the season's opener — the mark and the words sit
+           flat on the film, as the design sets them; the gradient above
+           is the only shade. */
+        .hero.has-scrim .hero__tag,
+        .hero.has-scrim .hero__tag :global(span),
+        .hero.has-scrim .hero__meta { text-shadow: none; }
+        .hero.has-scrim .hero__mark :global(img) { filter: none; }
         .hero__media video {
           width: 100%; height: 100%; object-fit: cover; display: block;
           /* Twenty per cent down. A brightness filter rather than a black

@@ -29,7 +29,7 @@ export default function RipePage() {
     <RipeShell>
       {/* The mark and the line lead through to the season that followed:
           hovering either washes its coral and its words across them. */}
-      <RipeHero link={RIPE_HERO_LINK} pair={{ current: 'before', href: '/ripe/after', hover: '#FF4796' }} />
+      <RipeHero link={RIPE_HERO_LINK} pair={{ current: 'before', href: '/ripe/after', hover: '#FF60A5' }} />
       <RipeOpening />
       <RipeNav />
       {/* The two journeys, before the days, so a reader knows which

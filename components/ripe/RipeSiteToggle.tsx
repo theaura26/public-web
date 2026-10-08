@@ -6,14 +6,14 @@ import { RIPE_GREEN, RIPE_PINK } from './colours'
 
 /* ── The RIPE switch: the season, or its story ──────────────────────
    A small toggle in the site bar, beside the menu, on /ripe and on its
-   sister page /ripe/10-days, to move between the two. After the
+   sister page /ripe/after, to move between the two. After the
    "Cosmic Solar Eclipse Toggle" (Dmitry Lepisov, Dribbble): a dark pill
    — here translucent glass — with a light catching its rim, and a body
    that slides across it while a shadow slides off it — an eclipse
    opening out. Here the body is the moon:
 
      /ripe            a crescent lit on the left (☾), at the left
-     /ripe/10-days    the full moon, at the right
+     /ripe/after      the full moon, at the right
 
    Pressed, the moon slides over as the shadow clears (or back, as it
    closes to a crescent), and the other page opens once it has — so the
@@ -28,7 +28,7 @@ import { RIPE_GREEN, RIPE_PINK } from './colours'
 ─────────────────────────────────────────────────────────────────────── */
 
 const MAIN = '/ripe'
-const SISTER = '/ripe/10-days'
+const SISTER = '/ripe/after'
 /* How long the moon takes to cross, in ms — and so how long before the
    page changes. */
 const CROSS = 620

@@ -650,7 +650,7 @@ export default function Navbar() {
 
         {/* On RIPE and its sister page: the moon toggle between them,
             beside the menu. */}
-        {(pathname === '/ripe' || pathname === '/ripe/10-days') && <RipeSiteToggle pathname={pathname} />}
+        {(pathname === '/ripe' || pathname === '/ripe/after') && <RipeSiteToggle pathname={pathname} />}
       </nav>
 
       {/* Backdrop — page-coloured strip behind the contrast menu overlay.

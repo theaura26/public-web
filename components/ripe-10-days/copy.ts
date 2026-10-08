@@ -194,6 +194,7 @@ export const DAYS: Day[] = [
       ['aura-coffee', 'Patience in berry form', 'Clusters of green coffee cherries on the branch'],
       ['bug-video', 'Biodiversity in disguise', 'A pill millipede making its way through the grass on the red earth'],
       ['ripe-fungus', 'Wood with company', 'Bracket fungus growing along a fallen log'],
+      ['ripe-tree', 'Old roots run deep', 'An old tree on great buttress roots, moss and ferns on its trunk, sunlight through the canopy behind'],
       ['aura-goodbyes-02', 'Aura celebrity spotted', 'A macaque peering into a trail camera in the forest'],
     ]),
   },

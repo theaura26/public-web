@@ -14,7 +14,7 @@ import { RIPE_GREEN, RIPE_PINK } from './colours'
    white; the other is a link, lit in its own page's colour on hover. */
 const PAIR = [
   { href: '/ripe', label: 'Before', accent: RIPE_GREEN },
-  { href: '/ripe/10-days', label: 'After', accent: RIPE_PINK },
+  { href: '/ripe/after', label: 'After', accent: RIPE_PINK },
 ] as const
 
 /* ── RIPE opener ─────────────────────────────────────────────────────
@@ -322,6 +322,7 @@ export function RipeHero({ mark = '/RIPE/aura-ripe.svg', tagline = BRAND.tagline
           /* Even gutters: the desktop's 3.1% / 8.1% split put the centred
              stack visibly right of centre between 720 and 899px. */
           .hero__in { align-items: center; text-align: center; padding-left: var(--gutter, 20px); padding-right: var(--gutter, 20px); }
+          .hero__pair { justify-content: center; }
           /* Half as large again. At the 180px floor the mark was smaller
              than the two lines of tagline under it on a phone, and it is
              the name of the thing. */

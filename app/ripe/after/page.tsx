@@ -27,20 +27,20 @@ import { RipeBanner, ArrowLinkStyles } from '@/components/coffee/Microsite'
    (the festival's dates and line-up) from app/ripe/layout.tsx. */
 const DESCRIPTION =
   'A season to remember. Ten days of RIPE at Aura, Mudigere, told in eight chapters: the paths, the people and the work of a coffee estate in the Western Ghats.'
-const IMAGE = { url: '/RIPE/10-days/ripe-10-days-og.jpg', width: 1200, height: 630, alt: 'A stone Buddha garlanded with pink flowers among the ferns at Aura' }
+const IMAGE = { url: '/RIPE/10-days/ripe-10-days-og.jpg', width: 1200, height: 630, alt: 'The RIPE logotype in pink over the moss-covered roots of an old tree at Aura' }
 
 export const metadata: Metadata = {
   title: '10 Days of RIPE',
   description: DESCRIPTION,
   robots: { index: false, follow: false },
-  alternates: { canonical: '/ripe/10-days' },
+  alternates: { canonical: '/ripe/after' },
   /* As on /ripe: a page's openGraph replaces the root one rather than
      merging into it, so the site name and locale are restated. */
   openGraph: {
     type: 'website',
     siteName: 'Aura',
     locale: 'en_US',
-    url: '/ripe/10-days',
+    url: '/ripe/after',
     title: '10 Days of RIPE — Aura',
     description: DESCRIPTION,
     images: [IMAGE],

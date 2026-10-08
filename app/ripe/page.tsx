@@ -31,7 +31,7 @@ export default function RipePage() {
           coral sweeps across them from the left, rewriting the tagline as
           the sister page's own, and a click opens 10 Days of RIPE. */}
       <RipeHero link={{
-        href: '/ripe/10-days',
+        href: '/ripe/after',
         hover: CORAL,
         markHover: '/RIPE/10-days/aura-ripe-coral.svg',
         taglineHover: SISTER_TAGLINE,
@@ -64,7 +64,7 @@ export default function RipePage() {
           way — to the sister page, in its pink and words — before the
           stories that go further into Aura. */}
       <RipeBanner
-        href="/ripe/10-days"
+        href="/ripe/after"
         name="10 Days of RIPE"
         mark="/RIPE/10-days/aura-ripe-coral.svg"
         line={SISTER_TAGLINE.join(' ')}

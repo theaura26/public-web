@@ -18,9 +18,9 @@ import { DAYS, SEASON_HERO, SEASON_INTRO, SEASON_BANNER } from '@/components/rip
 
 export default function SeasonPage() {
   return (
-    <RipeShell paper backdrop={false} accent="#FF4796">
-      {/* RIPE's own brightness on the film; the shade under the words does
-          the work of keeping the coral legible over a bright frame. */}
+    <RipeShell paper backdrop={false} accent="#FF60A5">
+      {/* The canopy film kept light — lighter than RIPE's aerial — with a
+          faint shade at the foot of it under the words. */}
       <RipeHero
         mark={SEASON_HERO.mark}
         name="A Season of RIPE"
@@ -28,7 +28,7 @@ export default function SeasonPage() {
         film={SEASON_HERO.film}
         link={SEASON_HERO.link}
         pair={{ current: 'after', href: '/ripe', hover: '#23FF88' }}
-        dim={0.8}
+        dim={0.92}
         scrim
       />
       <RipeDayNav days={DAYS} />

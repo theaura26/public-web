@@ -162,6 +162,9 @@ export const SECTIONS: NavSection[] = [
         soon: true,
         children: [
           { label: 'RIPE', href: '/ripe' },
+          /* The week, and the record of it. Both are published, so both
+             are in the menu and in the sitemap after it. */
+          { label: 'A Season of RIPE', href: '/ripe/after' },
           { label: 'Artist residencies', href: '/from-aura/residencies', soon: true },
           { label: 'Farm tours', href: '/from-aura/farm-tours', soon: true },
           { label: 'Harvest tours', href: '/from-aura/harvest-tours', soon: true },

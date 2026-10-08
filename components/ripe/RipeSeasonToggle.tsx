@@ -68,7 +68,7 @@ export function RipeSeasonToggle({ tone = 'light' }: {
           transition: transform ${SLIDE}ms var(--ease), background-color ${SLIDE}ms var(--ease);
         }
         .rst.is-full .rst__dot {
-          background: #FF2D87;
+          background: #FF4796;
           transform: translate(calc(var(--w) - var(--d) - var(--pad) * 2 - 2px), -50%);
         }
         .rst:focus-visible { outline: 1px solid var(--rst-line); outline-offset: 4px; }

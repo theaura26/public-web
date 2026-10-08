@@ -45,14 +45,15 @@ export function RipeSoundToggle({ label }: { label: string }) {
       aria-label={on ? `Mute ${label}` : `Play ${label} with sound`}
       onClick={toggle}
     >
-      {on ? <SpeakerHigh size={14} weight="regular" aria-hidden /> : <SpeakerSlash size={14} weight="regular" aria-hidden />}
+      {on ? <SpeakerHigh size={12} weight="regular" aria-hidden /> : <SpeakerSlash size={12} weight="regular" aria-hidden />}
 
       <style jsx>{`
-        /* The house icon control (ArrowLink's ring, Microsite.tsx): a
-           Phosphor glyph in a thin white ring — here 30px, over the film. */
+        /* The house icon control (ArrowLink's 22px ring, Microsite.tsx):
+           a small Phosphor glyph in a thin white ring — 24px here, the
+           least a finger can reliably press, over the film. */
         .sound {
-          position: absolute; right: 10px; bottom: 10px; z-index: 1;
-          width: 30px; height: 30px; padding: 0;
+          position: absolute; right: 8px; bottom: 8px; z-index: 1;
+          width: 24px; height: 24px; padding: 0;
           border-radius: 50%;
           border: 1px solid rgba(255, 255, 255, 0.7);
           background: rgba(0, 0, 0, 0.4);

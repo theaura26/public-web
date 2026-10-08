@@ -9,12 +9,17 @@
  * A film the page plays with sound (sound: true in copy.ts) keeps it;
  * the rest play muted, so theirs is dropped.
  *
+ * Each result is kept in a cache beside the source media, under the
+ * fingerprint of the film it came from: figma-export.mjs copies its films
+ * in afresh every run, and an encode is never byte-for-byte the same
+ * twice, so without it every run would hand browsers "new" films.
+ *
  *   node scripts/ripe/optimise-films.mjs
  *
  * figma-export.mjs runs this after bringing films in.
  */
 
-import { readFileSync, writeFileSync, statSync, renameSync, rmSync, existsSync, mkdtempSync } from 'node:fs'
+import { readFileSync, writeFileSync, statSync, renameSync, rmSync, existsSync, mkdtempSync, mkdirSync, copyFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
@@ -25,6 +30,7 @@ const OUT = 'public/RIPE/10-days'
 const MANIFEST = 'components/ripe-10-days/media.json'
 const LONG = 1080
 const KEEP_IF_SAVES = 1 / 6
+const CACHE = '../RIPE source/.film-cache'
 
 const print = (file) => createHash('sha1').update(readFileSync(file)).digest('hex').slice(0, 8)
 
@@ -34,6 +40,7 @@ export function optimiseFilms(media) {
   /* A pick's options sit on its line, or on the lines just after it. */
   const withSound = new Set([...copy.matchAll(/\['([a-z0-9-]+)',[^\n]*(?:\n(?!\s*\[')[^\n]*)*?sound: true/g)].map((m) => m[1]))
   const tmp = mkdtempSync(join(tmpdir(), 'ripe-films-'))
+  mkdirSync(CACHE, { recursive: true })
   let before = 0, after = 0
   console.log('— Films')
   for (const key of Object.keys(media).filter((k) => /^\d+$/.test(k)).sort()) {
@@ -42,9 +49,15 @@ export function optimiseFilms(media) {
       const film = join(OUT, key, `${name}.mp4`)
       if (!existsSync(film)) continue
       const was = statSync(film).size
-      const out = join(tmp, `${name}.mp4`)
       const sound = withSound.has(name)
-      execFileSync('swift', [join('scripts', 'ripe', 'encode-film.swift'), film, out, String(LONG), 'auto', ...(sound ? ['sound'] : [])], { stdio: 'ignore' })
+      /* The same film, asked for the same way, comes from the cache. */
+      const cached = join(CACHE, `${print(film)}-${LONG}${sound ? '-sound' : ''}.mp4`)
+      const out = join(tmp, `${name}.mp4`)
+      if (existsSync(cached)) copyFileSync(cached, out)
+      else {
+        execFileSync('swift', [join('scripts', 'ripe', 'encode-film.swift'), film, out, String(LONG), 'auto', ...(sound ? ['sound'] : [])], { stdio: 'ignore' })
+        if (existsSync(out)) copyFileSync(out, cached)
+      }
       const now = existsSync(out) ? statSync(out).size : Infinity
       before += was
       if (now <= was * (1 - KEEP_IF_SAVES)) {

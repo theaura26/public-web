@@ -222,7 +222,9 @@ export const DAYS: Day[] = [
   },
   {
     title: 'Making a mark',
-    day: 'Part 4', bg: bg('04'),
+    /* Chapters 4 and 5 show each other's backgrounds (the hills here,
+       the courtyard under Becoming familiar); the files keep Figma's names. */
+    day: 'Part 4', bg: bg('05'),
     /* Mostly tall pictures and two upright films: further apart, so
        they don't bunch up. */
     spacing: 1.6,
@@ -241,7 +243,7 @@ export const DAYS: Day[] = [
   },
   {
     title: 'Becoming familiar',
-    day: 'Part 5', bg: bg('05'),
+    day: 'Part 5', bg: bg('04'),
     line: ['Each person carried a piece of Aura. Together, it felt alive.'],
     shots: pictures('05', [
       ['aura-kids', 'Young minds', 'Children playing in the courtyard of the workers’ quarters'],

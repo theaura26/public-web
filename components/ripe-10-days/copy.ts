@@ -256,6 +256,7 @@ export const DAYS: Day[] = [
       ['ripe-people-colours', 'Colours of Aura', 'Women in bright headscarves and shawls gathered together'],
       ['aura-raghu-tea-estate', 'With Raghu on the tea estate', 'Two men in Aura tops standing among the silver oaks, the tea estate and hills behind them'],
       ['aura-sadanand', 'With Sadanand', 'Sadanand at work by the compost beds under a shade net'],
+      ['aura-kitchen', 'Smiles from the kitchen', 'Two cooks in green aprons smiling through an archway into the kitchen'],
       ['ripe-wheelbarrow', 'On the way', 'Three young men walking up a forest path, one pushing a wheelbarrow'],
       ['ripe-buddha-03', 'Finding his place', 'Hands easing the stone Buddha into place at the foot of a tree'],
       ['ripe-buddha-02', 'A shared moment', 'Setting the garlanded Buddha down among the ferns'],

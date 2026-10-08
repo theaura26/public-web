@@ -137,18 +137,9 @@ const TIP_GAP = 22
 const FILM_GRADE = 'saturate(1.12) sepia(0.05) contrast(1.02)'
 
 /* The scroll itself, weighted and slow to settle (after jnprspirits.com):
-   Lenis, as on /the-reason, but timed and eased rather than lerped, so a
-   scroll eases in as well as out. Each wheel or trackpad tick sets a new
-   glide of GLIDE seconds along EASE: it leaves gently but never from a
-   standstill (a true ease-in would stall a trackpad, every tick
-   restarting it from rest), is quickest mid-way, and settles to a stop.
-   EASE is a cubic with slope EASE_START at the start and none at the end. */
-const GLIDE = 1.5
-const EASE_START = 0.6
-const EASE = (t: number) => EASE_START * t + (3 - 2 * EASE_START) * t * t + (EASE_START - 2) * t * t * t
-/* A jump (the chapter bar) is longer, so eases fully in and out. */
-const JUMP = 1.8
-const JUMP_EASE = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2)
+   Lenis, as on /the-reason, with a lower lerp so a flick glides on and
+   comes to rest rather than stopping dead. */
+const SMOOTH = 0.07
 /* Each picture comes up out of focus and sharpens as it rises: fully
    soft (FOCUS_BLUR px, a touch larger, faded) as it enters at the foot
    of the screen, sharp by the time its centre is FOCUS_AT screens below
@@ -172,7 +163,7 @@ const SPEED_BLUR_MAX = 3         // px
    scroll is held in place by it. */
 let smooth: Lenis | null = null
 export function scrollToY(y: number) {
-  if (smooth) smooth.scrollTo(y, { duration: JUMP, easing: JUMP_EASE })
+  if (smooth) smooth.scrollTo(y, { duration: 1.6 })
   else window.scrollTo({ top: y, behavior: 'smooth' })
 }
 
@@ -412,7 +403,7 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
     /* Lenis drives the scroll; one frame loop reads where it has got to,
        eases the speed, and redraws the stage only while something is
        moving — the scroll, or the lag still settling. */
-    const lenis = new Lenis({ duration: GLIDE, easing: EASE, smoothWheel: true })
+    const lenis = new Lenis({ lerp: SMOOTH, smoothWheel: true })
     smooth = lenis
     let last = window.scrollY
     let id = requestAnimationFrame(function frame(t: number) {

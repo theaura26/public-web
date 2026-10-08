@@ -60,9 +60,9 @@ export default function RipePage() {
       <RipeRemember />
       <RipeRegistry />
       {/* RipeHarvest is kept in RipeBlocks to switch on later. */}
-      <RipeReadMore />
-      {/* The end: the banner that closes 10 Days of RIPE, pointing back
-          the other way — to the sister page, in its coral and words. */}
+      {/* The banner that closes 10 Days of RIPE, pointing back the other
+          way — to the sister page, in its pink and words — before the
+          stories that go further into Aura. */}
       <RipeBanner
         href="/ripe/10-days"
         name="10 Days of RIPE"
@@ -73,6 +73,7 @@ export default function RipePage() {
         image="/RIPE/10-days/banner/ripe-banner.jpg"
       />
       <ArrowLinkStyles />
+      <RipeReadMore />
     </RipeShell>
   )
 }

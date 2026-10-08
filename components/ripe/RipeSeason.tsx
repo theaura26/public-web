@@ -31,9 +31,10 @@ const STEP = 0.3
    and can sit closer together. */
 const STEP_PHONE = 0.62
 
-/* A picture is in focus for this much of a screen either side of the
-   middle; beyond it the blur and the fade come in. */
-const BAND = 0.52
+/* Below the middle of the screen a picture is out of focus, sharpening
+   over this share of a screen as it rises: fully blurred at the bottom
+   edge, clear at the middle. */
+const FOCUS = 0.42
 
 /* How far above the middle of the screen the thread stops, leaving the
    day's name clear of it. */
@@ -116,8 +117,20 @@ export function RipeSeason({ days = DAYS }: { days?: Day[] }) {
       const running = band.top <= mid && band.bottom > mid
       let on = 0
       runs.forEach((r, i) => { if (r.getBoundingClientRect().top <= mid) on = i })
+      /* The day's ground is clear while its name has the screen to
+         itself, and softens as the day's first pictures come up over it,
+         so the pictures read as the subject and the ground as the place. */
+      const day = runs[on]?.getBoundingClientRect()
+      const into = day ? (mid - day.top) / vh : 0
+      const soft = Math.min(Math.max((into - 0.35) / 0.5, 0), 1)
       grounds.forEach((g, i) => {
         const near = running && i === on
+        if (near) {
+          g.style.filter = soft > 0.01 ? `brightness(0.82) blur(${(soft * 10).toFixed(1)}px)` : 'brightness(0.82)'
+          /* A blurred edge pulls in transparent pixels; a touch of scale
+             keeps the frame full. */
+          g.style.transform = soft > 0.01 ? `scale(${(1 + soft * 0.05).toFixed(3)})` : 'none'
+        }
         /* This day, the one before and the one after: enough that the
            next ground is ready before the reader reaches it. */
         if (Math.abs(i - on) <= 1 && !g.getAttribute('src')) {
@@ -148,9 +161,12 @@ export function RipeSeason({ days = DAYS }: { days?: Day[] }) {
         const box = seen[i]
         if (box.bottom < -vh || box.top > vh * 2) return
         const centre = box.top + box.height / 2
-        /* -1 below the screen, 0 in the reading band, 1 above it. */
+        /* Positive below the middle of the screen, negative above it. */
         const d = (centre - mid) / vh
-        const away = Math.max(Math.abs(d) - BAND, 0)
+        /* Focus comes up with the picture: fully blurred as it enters at
+           the bottom, clear by the time it reaches the middle, and clear
+           from there on as it leaves past the top. */
+        const away = Math.min(Math.max(d, 0) / FOCUS, 1)
         const depth = Number(s.dataset.depth || 4)
         const pull = Number(s.dataset.pull || 1)
 
@@ -163,10 +179,10 @@ export function RipeSeason({ days = DAYS }: { days?: Day[] }) {
         /* Depth: the further back a picture sits, the smaller it is and
            the slower it travels, so the run has air in it. */
         const lift = -d * vh * 0.12 * pull * (0.8 + depth * 0.05)
-        const scale = 1 + (depth - 4) * 0.012 - Math.min(away, 1) * 0.02
+        const scale = 1 + (depth - 4) * 0.012 - away * 0.02
         s.style.transform = `translate3d(0, ${lift.toFixed(1)}px, 0) scale(${scale.toFixed(4)})`
-        s.style.filter = away > 0.01 ? `blur(${Math.min(away * 26, 18).toFixed(1)}px)` : 'none'
-        s.style.opacity = (1 - Math.min(away * 1.5, 0.68)).toFixed(3)
+        s.style.filter = away > 0.01 ? `blur(${(away * 7).toFixed(1)}px)` : 'none'
+        s.style.opacity = (1 - away * 0.4).toFixed(3)
       })
     }
 
@@ -325,7 +341,9 @@ export function RipeSeason({ days = DAYS }: { days?: Day[] }) {
           position: absolute; inset: 0; width: 100%; height: 100%;
           object-fit: cover; filter: brightness(0.82);
           opacity: 0; visibility: hidden;
-          transition: opacity 700ms var(--ease-out), visibility 700ms var(--ease-out);
+          /* RipeBackdrop's timing: the leaving ground goes at once, the
+             arriving one waits, so a change passes through black. */
+          transition: opacity 620ms var(--ease-out), visibility 620ms var(--ease-out);
         }
 
         /* ── the day's name, held ───────────────────────────────────── */
@@ -364,12 +382,12 @@ export function RipeSeason({ days = DAYS }: { days?: Day[] }) {
         }
         .days__tip {
           display: block; position: sticky;
-          top: calc(50dvh - ${TIP_GAP}px); width: 32px; height: auto;
+          top: calc(50dvh - ${TIP_GAP}px); width: 32px; height: auto; max-width: none;
           margin-left: -14.5px;
         }
         .days__spine::before {
           content: ''; position: absolute; inset: 0;
-          background: radial-gradient(circle, rgba(255,255,255,0.75) .6px, transparent 1.1px) top / 3px 7px repeat-y;
+          background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0.55px, transparent 1px) top / 3px 7px repeat-y;
           clip-path: inset(0 0 calc(100% - var(--grow)) 0);
         }
 
@@ -483,11 +501,15 @@ export function RipeSeasonIntro({ lines }: { lines: string[] }) {
       </div>
 
       <style jsx>{`
-        .intro { padding: clamp(110px, 22vh, 300px) 0 clamp(64px, 14vh, 200px); }
+        /* The same space above and below as RIPE's own opening
+           statement, so the two pages start their reading at one depth. */
+        .intro { padding: var(--ripe-section-gap) 0 clamp(64px, 12vh, 170px); }
         .statement {
           margin: 0; max-width: 760px; text-align: left;
           color: var(--story-ink, #fff); text-wrap: pretty;
+          display: flex; flex-direction: column; gap: 0.32em;
         }
+        /* Six lines, each its own thought, so each gets its own air. */
         .statement :global(span) { display: block; }
       `}</style>
     </section>

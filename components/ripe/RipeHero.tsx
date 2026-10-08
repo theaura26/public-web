@@ -287,6 +287,9 @@ export function RipeHero({
         .hero__tag :global(.hero__go:focus-visible) {
           outline: 1px solid var(--hero-hover); outline-offset: 6px;
         }
+        /* Registered, so the sweep travels instead of jumping from one
+           state to the other. */
+        @property --bloom { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
 
         /* Before | After. */
         .hero__pair { display: flex; align-items: baseline; gap: .55em; }

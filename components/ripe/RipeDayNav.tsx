@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { Day } from './after-copy'
+import { RipeSeasonToggle } from './RipeSeasonToggle'
 
 /* ── The chapter bar ─────────────────────────────────────────────────
    Eight days is a long scroll, so the names ride along under the site
@@ -68,6 +69,7 @@ export function RipeDayNav({ days }: { days: Day[] }) {
     <nav aria-label="A Season of RIPE, chapters"
          aria-hidden={!below}
          className={`dn ${below ? 'is-below' : ''} ${below && up ? 'is-up' : ''}`}>
+      <div className="dn-in">
       <div className="dn-scroll">
         <div className="dn-row" ref={row}>
           {days.map((d, i) => (
@@ -81,11 +83,17 @@ export function RipeDayNav({ days }: { days: Day[] }) {
           <span className="dn-runoff" aria-hidden />
         </div>
       </div>
+      {/* The week and the season, one press apart. */}
+      <span className="dn-switch"><RipeSeasonToggle tone="dark" /></span>
+      </div>
 
       <style jsx>{`
         .dn {
+          /* RIPE's own section bar, printed: the same 56px frame, z-index,
+             hairline and motion, dark ink on white instead of light on
+             black. */
           position: fixed; left: 0; right: 0; top: var(--nav-h); z-index: 39;
-          height: 40px; background: #fff; border-bottom: 1px solid rgba(0,0,0,0.08);
+          height: 56px; background: #fff; border-bottom: 1px solid rgba(0, 0, 0, 0.14);
           opacity: 0; pointer-events: none;
           transform: translateY(calc(-1 * var(--nav-h)));
           transition: transform var(--dur-base) var(--ease), opacity var(--dur-base) var(--ease);
@@ -93,26 +101,35 @@ export function RipeDayNav({ days }: { days: Day[] }) {
         .dn.is-below { opacity: 1; pointer-events: auto; transform: translateY(0); }
         /* Scrolling up hands the top of the screen back to the site bar. */
         .dn.is-below.is-up { transform: translateY(calc(-1 * var(--nav-h))); }
+        .dn-in {
+          display: flex; align-items: center; height: 100%;
+          padding-right: calc(5vw - 44px / 2);
+        }
+        @media (max-width: 620px) { .dn-in { padding-right: var(--gutter, 20px); } }
+        .dn-switch { flex: 0 0 auto; display: flex; align-items: center; margin-left: var(--space-5); }
         .dn-scroll {
+          flex: 1 1 auto; min-width: 0;
           height: 100%; overflow-x: auto;
           -webkit-overflow-scrolling: touch; scrollbar-width: none;
           /* Clears the wordmark on the left and the menu button on the right. */
           --nav-mark: 32px; --nav-burger: 44px;
           padding-left: calc(5vw - var(--nav-mark) / 2);
-          padding-right: calc(5vw - var(--nav-burger) / 2);
-          -webkit-mask-image: linear-gradient(90deg, #000 0 calc(100% - 56px), transparent 100%);
-          mask-image: linear-gradient(90deg, #000 0 calc(100% - 56px), transparent 100%);
+          -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 56px), transparent 100%);
+          mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 56px), transparent 100%);
+        }
+        @media (max-width: 620px) {
+          .dn-scroll { padding-left: var(--gutter, 20px); }
         }
         .dn-scroll::-webkit-scrollbar { display: none; }
         .dn-row {
           display: flex; align-items: center; justify-content: flex-start;
-          gap: clamp(18px, 2.2vw, 32px); height: 100%; width: max-content;
+          gap: clamp(22px, 2.8vw, 40px); height: 100%; width: max-content;
         }
         .dn-runoff { flex: none; width: clamp(12px, 3vw, 40px); }
         .dn-l {
           display: inline-flex; align-items: center; height: 100%;
-          flex-shrink: 0; white-space: nowrap; font-size: 12px;
-          text-decoration: none; color: rgba(0,0,0,0.5);
+          flex-shrink: 0; white-space: nowrap; font-size: 13px;
+          text-decoration: none; color: rgba(0, 0, 0, 0.66);
           transition: color var(--dur-base) var(--ease);
         }
         .dn-l:hover, .dn-l.is-on { color: var(--ripe-green); }

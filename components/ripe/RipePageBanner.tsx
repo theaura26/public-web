@@ -71,7 +71,7 @@ export function RipePageBanner({ banner }: { banner: PageBanner }) {
         }
         .rpb::before {
           content: ''; position: absolute; inset: 0;
-          background: radial-gradient(70% 80%, rgba(0,0,0,0.62), rgba(0,0,0,0.88)), rgba(0,0,0,0.2);
+          background: radial-gradient(70% 80%, rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.6));
         }
         .rpb-in { position: relative; width: 100%; }
         .rpb-h { margin: 0; line-height: 0; }
@@ -87,8 +87,8 @@ export function RipePageBanner({ banner }: { banner: PageBanner }) {
         .rpb-t {
           margin: var(--space-5) auto 0;
           font-family: var(--font-grotesque), sans-serif;
-          font-weight: 700; font-size: clamp(16px, 1.6vw, 22px);
-          line-height: 1.1; letter-spacing: -0.02em;
+          font-weight: 600; font-size: var(--t-cardhead-size);
+          line-height: var(--t-cardhead-lh); letter-spacing: var(--t-track);
           text-transform: uppercase; color: var(--rpb-accent);
         }
         .rpb-act { margin: var(--space-7) auto 0; display: flex; justify-content: center; }

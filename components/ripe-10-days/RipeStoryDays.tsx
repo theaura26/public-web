@@ -176,21 +176,29 @@ const gapOf = (d: Day, s: Day['shots'][number]) =>
 
 /* A chapter's spacing (Day.spacing) stretches the step between its own
    pictures, and the chapter with them; a picture's gap (Shot.gap) adds
-   room before that one alone. */
+   room before that one alone. A chapter can space its pictures
+   differently on a phone (Day.spacingPhone), so every place is counted
+   twice — in steps on wide screens and on phones — and the stage's CSS
+   (--wide, --phone) picks one. */
+type Steps = { w: number; p: number }
+const stepCalc = (v: number, n: Steps) =>
+  `calc(${(v * 100).toFixed(1)}vh + (${n.w.toFixed(2)} * var(--wide, 1) + ${n.p.toFixed(2)} * var(--phone, 0)) * var(--day-step))`
 function layout(days: Day[]) {
-  let vh = 0, steps = 0
-  const calc = (v: number, n: number) => `calc(${(v * 100).toFixed(1)}vh + ${n.toFixed(2)} * var(--day-step))`
+  let vh = 0
+  const steps: Steps = { w: 0, p: 0 }
   return days.map((d, i) => {
     const lead = i === 0 ? LEAD_FIRST : LEAD
-    const spacing = d.spacing ?? 1
-    const start = calc(vh, steps)
+    const spacing = { w: d.spacing ?? 1, p: d.spacingPhone ?? d.spacing ?? 1 }
+    const start = stepCalc(vh, steps)
     const firstShot = vh + lead
     vh += lead + (i === days.length - 1 ? TAIL_LAST : TAIL)
-    const shotsFrom = steps
+    const shotsFrom = { ...steps }
     /* A picture's own gap (Shot.gap) adds that many steps before it. */
-    steps += d.shots.length * spacing + d.shots.reduce((a, s) => a + gapOf(d, s), 0)
+    const gaps = d.shots.reduce((a, s) => a + gapOf(d, s), 0)
+    steps.w += d.shots.length * spacing.w + gaps
+    steps.p += d.shots.length * spacing.p + gaps
     return { start, firstShot, shotsFrom, spacing }
-  }).concat([{ start: calc(vh, steps), firstShot: 0, shotsFrom: 0, spacing: 1 }])
+  }).concat([{ start: stepCalc(vh, steps), firstShot: 0, shotsFrom: { w: 0, p: 0 }, spacing: { w: 1, p: 1 } }])
 }
 
 /* A chapter's anchor, from its title: "Finding a way in" → finding-a-way-in.
@@ -571,7 +579,8 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
       ))}
 
       {days.flatMap((d, i) => d.shots.map((s, j) => {
-        const n = at[i].shotsFrom + j * at[i].spacing + d.shots.slice(0, j + 1).reduce((a, x) => a + gapOf(d, x), 0)
+        const gaps = d.shots.slice(0, j + 1).reduce((a, x) => a + gapOf(d, x), 0)
+        const n = { w: at[i].shotsFrom.w + j * at[i].spacing.w + gaps, p: at[i].shotsFrom.p + j * at[i].spacing.p + gaps }
         /* The places start over each day, so every day opens the same
            way — its first picture from the left, at the same drift — and
            the beat before it reaches the words is the same length. With an
@@ -596,7 +605,7 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
                  running off the screen. */
               [pl.side === 'left' ? 'right' : 'left']:
                 `calc(50% + min(var(--title-half, 11vw) - ${pl.overlap}px + ${d.spread ?? 0}vw, 50% - var(--w) * ${pl.depth} - var(--gutter, 20px)))`,
-              top: `calc(${(at[i].firstShot * 100).toFixed(1)}vh + ${n.toFixed(2)} * var(--day-step))`,
+              top: stepCalc(at[i].firstShot, n),
               ['--o' as string]: i * 100 + j + 1,
               ...(s.size ? { ['--size' as string]: s.size } : {}),
               /* Nearer pictures over farther ones; and the size change
@@ -653,8 +662,10 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
              each passes on its own, with only a little overlap as they
              float. */
           --day-step: 40vh;
+          /* Which count of steps places the pictures (see stepCalc). */
+          --wide: 1; --phone: 0;
         }
-        @media (max-width: 899px) { .days { --day-step: 34vh; } }
+        @media (max-width: 899px) { .days { --day-step: 34vh; --wide: 0; --phone: 1; } }
 
         /* The words hold in the middle of the screen for the whole run of
            days; the pictures are in the section's flow and pass over them. */

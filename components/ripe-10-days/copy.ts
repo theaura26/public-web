@@ -93,6 +93,8 @@ export type Day = {
   bgThen?: { src: string; from: string; hold?: number; lead?: number; title?: string; line?: string }
   /** How far apart its pictures come, against the usual step (1). */
   spacing?: number
+  /** The same on a phone, where it differs (otherwise spacing). */
+  spacingPhone?: number
   /** How much further out from the middle its pictures sit, in vw, on
       wide screens: a short title ("Arriving") otherwise draws them in
       close, since they sit at its edges. */
@@ -169,7 +171,7 @@ export const DAYS: Day[] = [
     day: 'Part 1', bg: bg('01'),
     /* The opening chapter, unhurried: its pictures further apart, and
        its background in its own light, untinted. */
-    spacing: 1.6, spread: 10, tint: false,
+    spacing: 1.6, spacingPhone: 0.9, spread: 10, tint: false,
     line: ['The first glimpse of a place that would slowly become familiar.'],
     shots: pictures('01', [
       ['ripe-entrance', 'Road to Aura', 'The red earth track up to the estate house, under a rain tree'],
@@ -228,7 +230,7 @@ export const DAYS: Day[] = [
     day: 'Part 4', bg: bg('05'),
     /* Mostly tall pictures and two upright films: further apart, so
        they don't bunch up. */
-    spacing: 1.6,
+    spacing: 1.6, spacingPhone: 0.9,
     line: ['The estate became the canvas.'],
     shots: pictures('04', [
       ['aura-painting', 'Painted moments', 'A watercolour of yellow and purple flowers beside a paint box'],

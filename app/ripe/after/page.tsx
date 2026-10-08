@@ -29,7 +29,14 @@ const DESCRIPTION =
   'A season to remember: RIPE at Aura, Mudigere, told in eight chapters — the paths, the people and the work of a coffee estate in the Western Ghats.'
 const IMAGE = { url: '/RIPE/10-days/ripe-10-days-og.jpg', width: 1200, height: 630, alt: 'The RIPE logotype in pink over the moss-covered roots of an old tree at Aura' }
 
+/* On a Vercel preview (a branch, or staging), share links point at the
+   preview's own address: the site's base is theaura.life, where this page
+   and its share picture don't exist until it is published, so a preview
+   link showed no thumbnail. The live build keeps theaura.life. */
+const PREVIEW_HOST = process.env.VERCEL_ENV === 'preview' ? (process.env.VERCEL_BRANCH_URL || process.env.VERCEL_URL) : undefined
+
 export const metadata: Metadata = {
+  ...(PREVIEW_HOST ? { metadataBase: new URL(`https://${PREVIEW_HOST}`) } : {}),
   /* In full: under /ripe's layout the site's "— Aura" template doesn't
      reach this page, and every other tab carries it. */
   title: { absolute: 'A Season of RIPE — Aura' },

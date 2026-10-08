@@ -1,6 +1,6 @@
 'use client'
 
-/* ── 10 Days of RIPE, on white ──────────────────────────────────────
+/* ── A Season of RIPE, on white ──────────────────────────────────────
    /ripe runs black from its opener to its last line. This page keeps
    the opener as it is — a film, with the name and tagline over it — and
    sets everything after it on white.

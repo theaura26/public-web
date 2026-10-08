@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Every title on 10 Days of RIPE, as an SVG in Archie Brackett.
+/* Every title on A Season of RIPE, as an SVG in Archie Brackett.
  *
  * The chapter titles, and any title a second background brings in, read
  * from components/ripe-10-days/copy.ts, set in Archie Brackett and traced

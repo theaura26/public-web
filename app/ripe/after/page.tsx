@@ -10,7 +10,7 @@ import { BANNER, CODA, CORAL, DAYS, TAGLINE } from '@/components/ripe-10-days/co
 import { RipeBanner, ArrowLinkStyles } from '@/components/coffee/Microsite'
 
 /* ═══════════════════════════════════════════════════════════════════
-   10 Days of RIPE. A sister page to /ripe, telling the festival back
+   A Season of RIPE. A sister page to /ripe, telling the festival back
    as it happened, in eight chapters.
 
    Built on /ripe itself: the same shell, the same header (RipeHero,
@@ -26,13 +26,13 @@ import { RipeBanner, ArrowLinkStyles } from '@/components/coffee/Microsite'
 /* Its own description and share picture: left out, the page took /ripe's
    (the festival's dates and line-up) from app/ripe/layout.tsx. */
 const DESCRIPTION =
-  'A season to remember. Ten days of RIPE at Aura, Mudigere, told in eight chapters: the paths, the people and the work of a coffee estate in the Western Ghats.'
+  'A season to remember: RIPE at Aura, Mudigere, told in eight chapters — the paths, the people and the work of a coffee estate in the Western Ghats.'
 const IMAGE = { url: '/RIPE/10-days/ripe-10-days-og.jpg', width: 1200, height: 630, alt: 'The RIPE logotype in pink over the moss-covered roots of an old tree at Aura' }
 
 export const metadata: Metadata = {
   /* In full: under /ripe's layout the site's "— Aura" template doesn't
      reach this page, and every other tab carries it. */
-  title: { absolute: '10 Days of RIPE — Aura' },
+  title: { absolute: 'A Season of RIPE — Aura' },
   description: DESCRIPTION,
   robots: { index: false, follow: false },
   alternates: { canonical: '/ripe/after' },
@@ -43,13 +43,13 @@ export const metadata: Metadata = {
     siteName: 'Aura',
     locale: 'en_US',
     url: '/ripe/after',
-    title: '10 Days of RIPE — Aura',
+    title: 'A Season of RIPE — Aura',
     description: DESCRIPTION,
     images: [IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
-    title: '10 Days of RIPE — Aura',
+    title: 'A Season of RIPE — Aura',
     description: DESCRIPTION,
     images: [IMAGE.url],
   },

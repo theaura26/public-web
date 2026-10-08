@@ -1,8 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════════
-   10 Days of RIPE — the page's words and pictures.
+   A Season of RIPE — the page's words and pictures.
 
    The story is the supplied document, verbatim:
-   public/RIPE/10 Days of RIPE/RIPE Story.pages. It runs in eight
+   RIPE source/10 Days of RIPE/RIPE Story.pages. It runs in eight
    chapters, each a title and the line under it, carried here exactly as
    written there.
 
@@ -15,7 +15,7 @@
    A picture whose file has gone simply drops out.
 
    Captions are taken from the caption ideas in
-   public/RIPE/10 Days of RIPE/RIPE 10 Days photo captions.docx where one
+   RIPE source/10 Days of RIPE/RIPE 10 Days photo captions.docx where one
    fits the picture; the rest are drafted here in the same short form.
    Chapters 1 and 2 keep the sentence captions approved before the
    document existed.

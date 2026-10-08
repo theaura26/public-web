@@ -1,5 +1,5 @@
 /* The two RIPE colours, in one place for everything that uses both: the
-   hero's Before | After, the moon toggle, and the 10 Days of RIPE
+   hero's Before | After, the moon toggle, and A Season of RIPE's
    lettering (scripts/ripe/title-svgs.mjs reads RIPE_PINK from here).
 
    RIPE_GREEN is /ripe's accent, read from the fill of the supplied

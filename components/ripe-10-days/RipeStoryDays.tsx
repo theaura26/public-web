@@ -498,7 +498,7 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
   }, [days])
 
   return (
-    <section ref={root} className="days" style={coda ? undefined : { height: total }} aria-label="The ten days">
+    <section ref={root} className="days" style={coda ? undefined : { height: total }} aria-label="A Season of RIPE">
       {/* The backgrounds, pinned in a layer of their own under the
           words', so a picture can pass between the two (Shot.layer). */}
       <div className="days__back" aria-hidden>

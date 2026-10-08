@@ -18,7 +18,7 @@ import { useScrollAppear } from './useScrollAppear'
 ─────────────────────────────────────────────────────────────────────── */
 
 /** className: added to the page, for a sister page that changes its
-    ground (10 Days of RIPE is white). /ripe passes none. */
+    ground (A Season of RIPE is white). /ripe passes none. */
 export function RipeShell({ children, className }: { children: ReactNode; className?: string }) {
   useScrollAppear()
   return (

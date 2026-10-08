@@ -127,7 +127,7 @@ export function RipeDayNav({ days }: { days: Day[] }) {
     <>
       <nav
         className={`dn ${below ? 'is-below' : ''} ${hidden ? 'is-up' : ''}`}
-        aria-label="The ten days"
+        aria-label="A Season of RIPE, chapters"
         aria-hidden={!below}
       >
         <div className="dn-scroll" ref={scroller}>

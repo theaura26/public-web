@@ -97,7 +97,7 @@ export function RipeSiteToggle({ pathname }: { pathname: string }) {
         type="button"
         role="switch"
         aria-checked={full}
-        aria-label={full ? '10 Days of RIPE — switch to RIPE' : 'RIPE — switch to 10 Days of RIPE'}
+        aria-label={full ? 'A Season of RIPE — switch to RIPE' : 'RIPE — switch to A Season of RIPE'}
         className={`rst__pill ${full ? 'is-full' : ''}`}
         onClick={toggle}
         /* Inline, as elsewhere on the site: styled-jsx drops

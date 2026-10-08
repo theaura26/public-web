@@ -10,7 +10,7 @@ import { BRAND } from './copy'
 import { RIPE_GREEN, RIPE_PINK } from './colours'
 
 /* Under the tagline, the two pages as one story: RIPE itself, before the
-   season, and 10 Days of RIPE, after it. The page you are on stands in
+   season, and A Season of RIPE, after it. The page you are on stands in
    white; the other is a link, lit in its own page's colour on hover. */
 const PAIR = [
   { href: '/ripe', label: 'Before', accent: RIPE_GREEN },
@@ -54,7 +54,7 @@ const RIPE_FILM: HeroFilm = {
     the left — markHover is the mark's artwork in that colour — and the
     tagline is rewritten as it goes, into taglineHover if one is given.
     A click goes to href. /ripe uses it to lead to its sister page,
-    10 Days of RIPE, in that page's coral; the sister page leads back,
+    A Season of RIPE, in that page's coral; the sister page leads back,
     in /ripe's green.
     from: the side the colour sweeps in from — 'left' (the default) or
     'right', for the way back. */

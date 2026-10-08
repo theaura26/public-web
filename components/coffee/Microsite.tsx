@@ -1474,7 +1474,7 @@ export function ReserveBanner() {
  * Festival page.
  *
  * The same banner closes /ripe too, pointing the other way — at its
- * sister page, 10 Days of RIPE — in that page's coral, words and still.
+ * sister page, A Season of RIPE — in that page's coral, words and still.
  * Everything defaults to the /ripe banner.
  */
 export function RipeBanner({

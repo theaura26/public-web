@@ -30,7 +30,9 @@ const DESCRIPTION =
 const IMAGE = { url: '/RIPE/10-days/ripe-10-days-og.jpg', width: 1200, height: 630, alt: 'The RIPE logotype in pink over the moss-covered roots of an old tree at Aura' }
 
 export const metadata: Metadata = {
-  title: '10 Days of RIPE',
+  /* In full: under /ripe's layout the site's "— Aura" template doesn't
+     reach this page, and every other tab carries it. */
+  title: { absolute: '10 Days of RIPE — Aura' },
   description: DESCRIPTION,
   robots: { index: false, follow: false },
   alternates: { canonical: '/ripe/after' },

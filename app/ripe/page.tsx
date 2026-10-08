@@ -1,6 +1,6 @@
 import { RipeShell } from '@/components/ripe/RipeShell'
 import { RipeHero } from '@/components/ripe/RipeHero'
-import { CORAL, TAGLINE as SISTER_TAGLINE } from '@/components/ripe-10-days/copy'
+import { BANNER as SISTER_BANNER, CORAL, TAGLINE as SISTER_TAGLINE } from '@/components/ripe-10-days/copy'
 import { RipeBanner, ArrowLinkStyles } from '@/components/coffee/Microsite'
 import { RipeNav } from '@/components/ripe/RipeNav'
 import { RipeDays } from '@/components/ripe/RipeDays'
@@ -70,7 +70,7 @@ export default function RipePage() {
         line={SISTER_TAGLINE.join(' ')}
         action="Discover 10 Days of RIPE"
         accent={CORAL}
-        image="/RIPE/10-days/banner/ripe-banner.jpg"
+        image={SISTER_BANNER?.first ?? '/RIPE/10-days/banner/ripe-banner.jpg'}
       />
       <ArrowLinkStyles />
       <RipeReadMore />

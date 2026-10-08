@@ -268,9 +268,19 @@ if (bannerSrc) {
     await sharp(thumb).jpeg({ quality: 76, mozjpeg: true, progressive: true }).toFile(poster)
   }
   rmSync(tmp, { recursive: true, force: true })
+  /* And the film's very first frame, for /ripe's banner to this page:
+     the picture the film itself opens on. */
+  const firstRaw = join(tmpdir(), `ripe-banner-first-${process.pid}.jpg`)
+  const first = join(BANNER_OUT, 'ripe-banner-first.jpg')
+  execFileSync('swift', [join('scripts', 'ripe', 'first-frame.swift'), wide, firstRaw], { stdio: 'ignore' })
+  if (existsSync(firstRaw)) {
+    await sharp(firstRaw).jpeg({ quality: 76, mozjpeg: true, progressive: true }).toFile(first)
+    rmSync(firstRaw, { force: true })
+  }
   media.banner = {
     v: print(wide), vp: print(phone),
     ...(existsSync(poster) ? { vposter: print(poster) } : {}),
+    ...(existsSync(first) ? { vfirst: print(first) } : {}),
   }
   console.log(`  ${bannerSrc}: ${(statSync(join(SRC, bannerSrc)).size / 1048576).toFixed(1)}MB → ${(statSync(wide).size / 1048576).toFixed(1)}MB wide, ${(statSync(phone).size / 1048576).toFixed(1)}MB phone + poster`)
 }

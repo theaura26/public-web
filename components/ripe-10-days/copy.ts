@@ -145,12 +145,14 @@ function pictures(chapter: string, picks: Pick[]): Shot[] {
    script into a wide cut and a phone cut. The phone cut is the same film,
    smaller — the header crops it to the tall screen itself. One frame of it
    is the poster on both. Absent until the script has made it. */
-const banner = (media as unknown as { banner?: { v: string; vp: string; vposter?: string } }).banner
+const banner = (media as unknown as { banner?: { v: string; vp: string; vposter?: string; vfirst?: string } }).banner
 export const BANNER = banner && {
   src: `${D}/banner/ripe-banner.mp4${q(banner.v)}`,
   srcPhone: `${D}/banner/ripe-banner-phone.mp4${q(banner.vp)}`,
   poster: `${D}/banner/ripe-banner.jpg${q(banner.vposter)}`,
   posterPhone: `${D}/banner/ripe-banner.jpg${q(banner.vposter)}`,
+  /* The film's first frame, for /ripe's banner leading here. */
+  first: banner.vfirst ? `${D}/banner/ripe-banner-first.jpg${q(banner.vfirst)}` : undefined,
 }
 
 /* The chapter backgrounds, graded with the photographs. */

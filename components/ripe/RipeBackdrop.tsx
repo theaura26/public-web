@@ -126,13 +126,37 @@ export function RipeBackdrop() {
                    poster={active === g.id ? (g.imagePhone && isPhone() ? g.imagePhone : g.image) : undefined}
                    ref={(el) => {
                      if (!el) return
-                     if (active === g.id) el.play().catch(() => {})
-                     else el.pause()
+                     /* A film that can't play — refused by a phone in Low
+                        Power Mode or data saver, or failing to load — gives
+                        way to its still (.is-still, below), so the ground
+                        never shows a play button. Back if it plays. */
+                     const layer = el.parentElement
+                     const still = (on: boolean) => {
+                       /* The still is only fetched now, when it is needed. */
+                       const img = layer?.querySelector<HTMLImageElement>('.ripe-bg__still')
+                       if (on && img && !img.getAttribute('src')) img.src = (g.imagePhone && isPhone()) ? g.imagePhone : g.image!
+                       layer?.classList.toggle('is-still', on)
+                     }
+                     el.onerror = () => still(true)
+                     el.onplaying = () => still(false)
+                     if (active === g.id) {
+                       el.play().catch((err: DOMException) => {
+                         if (err?.name === 'NotAllowedError' || err?.name === 'NotSupportedError') still(true)
+                       })
+                     } else el.pause()
                    }}>
               {g.videoPhone && <source media={PHONE} src={g.videoPhone} type="video/mp4" />}
               <source src={g.video} type="video/mp4" />
             </video>
-          ) : g.image ? (
+          ) : null}
+          {g.video && g.image ? (
+            /* The film's still, for when it can't play: no source until
+               then (a hidden image on a fixed full-screen layer is still
+               fetched), so it costs nothing unless it is used. */
+            // eslint-disable-next-line @next/next/no-img-element
+            <img className="ripe-bg__still" alt="" decoding="async" />
+          ) : null}
+          {!g.video && g.image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={g.image} alt="" loading="lazy" decoding="async" />
           ) : null}
@@ -165,6 +189,10 @@ export function RipeBackdrop() {
         .ripe-bg__layer video {
           width: 100%; height: 100%; object-fit: cover; display: block;
         }
+        /* The still behind a film, shown only if the film can't play. */
+        .ripe-bg__layer .ripe-bg__still { display: none; position: absolute; inset: 0; }
+        .ripe-bg__layer.is-still .ripe-bg__still { display: block; }
+        .ripe-bg__layer.is-still video { display: none; }
         @media (prefers-reduced-motion: reduce) {
           .ripe-bg__layer { transition: none; }
         }

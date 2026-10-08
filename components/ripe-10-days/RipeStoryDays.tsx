@@ -479,22 +479,48 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
 
   /* Films play while any of them is on screen and stop when it leaves.
      Left still for readers who have asked for less motion — the poster
-     stands in. */
+     stands in.
+
+     And where a film can't play — a phone in Low Power Mode or data
+     saver refuses to start it, or the file fails to load — its frame
+     falls back to the still (.is-still): the picture, with no player
+     and no play button stamped over it. If it plays after all, the film
+     comes back. */
   useEffect(() => {
     const el = root.current
     if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const films = Array.from(el.querySelectorAll<HTMLVideoElement>('.days__film'))
     if (!films.length) return
+    const still = (v: HTMLVideoElement, on: boolean) => v.closest('.days__frame')?.classList.toggle('is-still', on)
+    const failed = (e: Event) => still(e.currentTarget as HTMLVideoElement, true)
+    const playing = (e: Event) => still(e.currentTarget as HTMLVideoElement, false)
+    films.forEach((v) => {
+      v.addEventListener('error', failed)
+      v.addEventListener('playing', playing)
+    })
+    const detach = () => films.forEach((v) => {
+      v.removeEventListener('error', failed)
+      v.removeEventListener('playing', playing)
+    })
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return detach
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         const v = e.target as HTMLVideoElement
-        if (e.isIntersecting) v.play().catch(() => {})
-        else v.pause()
+        /* Refused (NotAllowedError) or unplayable (NotSupportedError):
+           the still. An AbortError is only a pause cutting a start
+           short, as the film scrolls away. */
+        if (e.isIntersecting) {
+          v.play().catch((err: DOMException) => {
+            if (err?.name === 'NotAllowedError' || err?.name === 'NotSupportedError') still(v, true)
+          })
+        } else v.pause()
       })
     }, { threshold: 0.15 })
     films.forEach((v) => io.observe(v))
-    return () => io.disconnect()
+    return () => {
+      io.disconnect()
+      detach()
+    }
   }, [days])
 
   return (
@@ -631,6 +657,14 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
                   style={{ aspectRatio: `${s.w} / ${s.h}`, ...(s.grade ? { filter: s.grade } : {}) }}
                   muted loop playsInline preload="none"
                   aria-label={s.alt}
+                />
+                {/* The fallback still (see above): hidden, and so not
+                    fetched, unless the film can't play. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  className="days__still" src={s.src} alt={s.alt} width={s.w} height={s.h}
+                  loading="lazy" decoding="async"
+                  style={{ aspectRatio: `${s.w} / ${s.h}`, ...(s.grade ? { filter: s.grade } : {}) }}
                 />
                 {s.sound ? <RipeSoundToggle label={s.caption} /> : null}
               </div>
@@ -805,6 +839,12 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
         /* cover: a poster of another shape (a still standing in for its
            film) fills the film's frame, cropped, rather than barred. */
         .days__film { filter: ${FILM_GRADE}; background: #000; object-fit: cover; }
+        /* A film that can't play shows its still instead (see the films'
+           effect), graded as the film is, with no sound to offer. */
+        .days__shot .days__still { display: none; filter: ${FILM_GRADE}; object-fit: cover; }
+        .days__frame.is-still .days__film { display: none; }
+        .days__shot .days__frame.is-still .days__still { display: block; }
+        .days__frame.is-still :global(.sound) { display: none; }
         /* The site's .label, as every caption on the site: 11px at every
            width (DESIGN-SYSTEM.md). */
         .days__cap {

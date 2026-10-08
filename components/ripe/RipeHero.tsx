@@ -88,11 +88,36 @@ export function RipeHero({ mark = '/RIPE/aura-ripe.svg', tagline = BRAND.tagline
        can't vary by screen, and the film stays hidden until it can play,
        so a server-rendered poster was 680KB downloaded on every visit —
        phones included — and rarely seen. */
-    v.poster = window.matchMedia(PHONE).matches ? film.posterPhone : film.poster
-    const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause() }, { threshold: 0.1 })
+    const poster = window.matchMedia(PHONE).matches ? film.posterPhone : film.poster
+    v.poster = poster
+    /* Where the film can't play — a phone in Low Power Mode or data saver
+       refuses to start it, or the file fails — the poster stands in as a
+       plain picture behind it, and the film steps aside, so no frozen
+       frame with a play button stamped on it is ever shown. If it plays
+       after all, it comes back. */
+    const media = v.parentElement
+    const still = (on: boolean) => {
+      if (!media) return
+      media.dataset.still = on ? 'true' : 'false'
+      media.style.backgroundImage = on ? `url("${poster}")` : ''
+    }
+    const failed = () => still(true)
+    const playing = () => still(false)
+    v.addEventListener('error', failed)
+    v.addEventListener('playing', playing)
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        v.play().catch((err: DOMException) => {
+          if (err?.name === 'NotAllowedError' || err?.name === 'NotSupportedError') still(true)
+        })
+      } else v.pause()
+    }, { threshold: 0.1 })
     io.observe(v)
-    return () => io.disconnect()
+    return () => {
+      io.disconnect()
+      v.removeEventListener('error', failed)
+      v.removeEventListener('playing', playing)
+    }
   }, [film.poster, film.posterPhone])
 
   /* The site bar is a solid plate in day mode and was cutting a band
@@ -195,6 +220,11 @@ export function RipeHero({ mark = '/RIPE/aura-ripe.svg', tagline = BRAND.tagline
           opacity: 0; transition: opacity .9s var(--ease-out);
         }
         .hero__media video[data-ready='true'] { opacity: 1; }
+        /* A film that can't play (see above): its poster, as a picture. */
+        .hero__media[data-still='true'] {
+          background: center / cover no-repeat; filter: brightness(0.8);
+        }
+        .hero__media[data-still='true'] video { visibility: hidden; }
         /* The mark sits almost flush left — x60 of 1920 in the file,
            which is 3.1% — rather than on the article rail, so the opener
            reads as a poster instead of a page. The words keep the right

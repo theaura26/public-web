@@ -86,10 +86,11 @@ export type Day = {
   /** A second background, crossing in over the first as the picture
       named in `from` comes up the screen, and staying to the chapter's end.
       hold: a clear beat before that picture, in steps between pictures, in
-      which the new background comes up sharp under the title; title and
-      line: a new title and subheading, taking over from the chapter's own
-      as it does. */
-  bgThen?: { src: string; from: string; hold?: number; title?: string; line?: string }
+      which the new background comes up sharp under the title; lead: how
+      many screens sooner the change starts, so it lands as the picture
+      comes into view; title and line: a new title and subheading, taking
+      over from the chapter's own as it does. */
+  bgThen?: { src: string; from: string; hold?: number; lead?: number; title?: string; line?: string }
   /** How far apart its pictures come, against the usual step (1). */
   spacing?: number
   /** How much further out from the middle its pictures sit, in vw, on
@@ -157,7 +158,7 @@ const bg = (chapter: string) => {
 
 /* A chapter's second background ("06-2" → ripe-06-2-bg.jpg), from the
    named picture on. Absent if the file is. */
-const bgThen = (key: string, from: string, more: { hold?: number; title?: string; line?: string } = {}) => {
+const bgThen = (key: string, from: string, more: { hold?: number; lead?: number; title?: string; line?: string } = {}) => {
   const m = sizes.backgrounds?.[key]
   return m ? { src: `${D}/backgrounds/ripe-${key}-bg.jpg${q(m.v)}`, from, ...more } : undefined
 }
@@ -289,8 +290,9 @@ export const DAYS: Day[] = [
     title: 'See, feel & understand',
     day: 'Part 7', bg: bg('07'),
     /* After the tasting table: the track through the coffee. */
-    bgThen: bgThen('07-2', 'aura-tasting'),
-    line: ['Things first encountered as separate parts of Aura began to connect, as one living system.'],
+    /* The tasting ground, in as Coffee tasting comes into view. */
+    bgThen: bgThen('07-2', 'aura-tasting-estate', { lead: 0.3 }),
+    line: ['From cow to compost to soil to coffee. Aura began to connect.'],
     shots: pictures('07', [
       ['img-8104', 'Cow pat pit by Rao sir and Arun sir', 'Rao sir and Arun sir, in Aura tops, explaining the cow pat pit under a shelter', { sound: true }],
       ['aura-cow-to-compost', 'From cow to compost', 'Cows walking across the yard, on their way to becoming compost'],

@@ -315,7 +315,11 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
           const from = thenFrom[k]
           if (!from) return
           const holdPx = (Number(t.dataset.hold) || 0) * step
-          handOver = clamp((VEIL_AT * vh - (r.top + from.offsetTop - holdPx * 0.6)) / (VEIL * vh))
+          /* lead: the change starts this many screens sooner, so the new
+             background is in as its picture comes into view rather than
+             as it reaches the words. */
+          const leadPx = (Number(t.dataset.lead) || 0) * vh
+          handOver = clamp((VEIL_AT * vh + leadPx - (r.top + from.offsetTop - holdPx * 0.6)) / (VEIL * vh))
           if (holdPx) vThen = clamp((VEIL_AT * vh - (r.top + from.offsetTop)) / (VEIL * vh))
         })
         const half = (1 + DIP_OVERLAP) / 2
@@ -506,7 +510,7 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
               indexes above still line up. */}
           {days.map((d, i) => d.bgThen ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={`then${d.day}`} className="days__then" data-day={i} data-from={d.bgThen.from} data-hold={d.bgThen.hold ?? 0} src={d.bgThen.src} alt="" decoding="async" />
+            <img key={`then${d.day}`} className="days__then" data-day={i} data-from={d.bgThen.from} data-hold={d.bgThen.hold ?? 0} data-lead={d.bgThen.lead ?? 0} src={d.bgThen.src} alt="" decoding="async" />
           ) : null)}
         </div>
       </div>

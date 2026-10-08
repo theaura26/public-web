@@ -175,6 +175,7 @@ export const DAYS: Day[] = [
     line: ['The first glimpse of a place that would slowly become familiar.'],
     shots: pictures('01', [
       ['ripe-entrance', 'Road to Aura', 'The red earth track up to the estate house, under a rain tree'],
+      ['ripe-food', 'Breakfast, shared', 'A table laid with oranges, pomegranate curd and a dish of roasted vegetables'],
       ['img-7450-2', 'The view from the temple', 'The valley and the hills beyond under a sky of moving cloud'],
       ['ripe-dogs', 'First to say hello', 'Three dogs resting on the red steps of the bungalow'],
       ['ripe-estate', 'A painted box on a silver oak', 'A painted tin box on the trunk of a silver oak among the coffee'],
@@ -187,7 +188,6 @@ export const DAYS: Day[] = [
     day: 'Part 2', bg: bg('02'),
     line: ['The estate began to open up and became a world to discover.'],
     shots: pictures('02', [
-      ['ripe-food', 'Breakfast, shared', 'A table laid with oranges, pomegranate curd and a dish of roasted vegetables'],
       ['aura-cow', 'Some moo time', 'A black cow looking through the wire of its shed'],
       ['aura-temple', 'Prayer flags in the green', 'Prayer flags strung between the trees, moving in the breeze'],
       ['aura-pillar', 'Attention, unhurried, rooted, awake', 'A rusted steel pillar engraved with the Aura mark and the words Attention, Unhurried, Rooted, Awake'],
@@ -209,6 +209,7 @@ export const DAYS: Day[] = [
       ['img-8217', 'Deepak, in demand', 'Deepak on the phone beside the Aura stone marker, deep in the trees'],
       ['ripe-kids', 'The next generation', 'Children and young people standing together outside the workers’ quarters'],
       ['ripe-quote', 'Never easy, always possible', 'A young man in gumboots leaning on a hoe, his T-shirt reading Change is never easy but always possible'],
+      ['aura-kids-running', 'Off and running', 'Children running across the grass towards the studio, palms behind them'],
       ['aura-cook', 'Dannes in action', 'Dannes in a striped shirt and green apron at work in the kitchen'],
       ['aura-ganpati', 'Sacred spaces', 'People gathered at night around a lit tent set up for Ganpati'],
       ['aura-kids-ganpati', 'Ganpati blessings', 'Children cheering in front of the Ganpati shrine, under marigold garlands'],
@@ -238,9 +239,6 @@ export const DAYS: Day[] = [
       ['aura-chicken-coop-painting', 'Freshly painted coop', 'Painting hens onto the doors of the chicken coop'],
       ['aura-chicken-coop', 'Feathered friends', 'The finished coop doors, painted with a hen and a rooster'],
       ['aura-painting-artist', 'Brush in hand', 'Painting yellow flowers in watercolour at an outdoor table'],
-      /* Mostly white paper, and over-bright: brought down. A little
-         smaller, to match the coop film on the other side. */
-      ['img-7819-3', 'Petal by petal', 'A hand painting yellow petals in watercolour, the paint box beside it', { grade: 'brightness(0.84) contrast(1.06) saturate(1.15) sepia(0.04)', size: 0.82 }],
       ['aura-studio', 'Studio days', 'The studio wall hung with small framed and pinned works'],
     ]),
   },

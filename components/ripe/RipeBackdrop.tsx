@@ -131,15 +131,22 @@ export function RipeBackdrop() {
                         way to its still (.is-still, below), so the ground
                         never shows a play button. Back if it plays. */
                      const layer = el.parentElement
+                     /* The still under the film, fetched once its ground is
+                        in use (the poster's own file, so already loading):
+                        what shows through while it loads, so a ground never
+                        opens on black. */
+                     const img = layer?.querySelector<HTMLImageElement>('.ripe-bg__still')
+                     const fetchStill = () => {
+                       if (img && !img.getAttribute('src')) img.src = (g.imagePhone && isPhone()) ? g.imagePhone : g.image!
+                     }
                      const still = (on: boolean) => {
-                       /* The still is only fetched now, when it is needed. */
-                       const img = layer?.querySelector<HTMLImageElement>('.ripe-bg__still')
-                       if (on && img && !img.getAttribute('src')) img.src = (g.imagePhone && isPhone()) ? g.imagePhone : g.image!
+                       if (on) fetchStill()
                        layer?.classList.toggle('is-still', on)
                      }
                      el.onerror = () => still(true)
                      el.onplaying = () => still(false)
                      if (active === g.id) {
+                       fetchStill()
                        el.play().catch((err: DOMException) => {
                          if (err?.name === 'NotAllowedError' || err?.name === 'NotSupportedError') still(true)
                        })
@@ -150,9 +157,9 @@ export function RipeBackdrop() {
             </video>
           ) : null}
           {g.video && g.image ? (
-            /* The film's still, for when it can't play: no source until
-               then (a hidden image on a fixed full-screen layer is still
-               fetched), so it costs nothing unless it is used. */
+            /* The film's still, under it: no source until its ground is
+               in use (an image on a fixed full-screen layer is fetched even
+               while the layer is hidden). */
             // eslint-disable-next-line @next/next/no-img-element
             <img className="ripe-bg__still" alt="" decoding="async" />
           ) : null}
@@ -184,14 +191,16 @@ export function RipeBackdrop() {
           opacity: 1;
           transition: opacity 900ms var(--ease-out) 420ms;
         }
-        .ripe-bg__dim { position: absolute; inset: 0; background: #000; }
+        .ripe-bg__dim { position: absolute; inset: 0; z-index: 2; background: #000; }
         .ripe-bg__layer img,
         .ripe-bg__layer video {
           width: 100%; height: 100%; object-fit: cover; display: block;
         }
         /* The still behind a film, shown only if the film can't play. */
-        .ripe-bg__layer .ripe-bg__still { display: none; position: absolute; inset: 0; }
-        .ripe-bg__layer.is-still .ripe-bg__still { display: block; }
+        .ripe-bg__layer .ripe-bg__still { position: absolute; inset: 0; }
+        /* Over its still, with no background: while it loads, the still
+           shows through rather than black. */
+        .ripe-bg__layer video { position: relative; z-index: 1; background: transparent; }
         .ripe-bg__layer.is-still video { display: none; }
         @media (prefers-reduced-motion: reduce) {
           .ripe-bg__layer { transition: none; }

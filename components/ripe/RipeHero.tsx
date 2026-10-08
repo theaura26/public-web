@@ -90,6 +90,9 @@ export function RipeHero({ mark = '/RIPE/aura-ripe.svg', tagline = BRAND.tagline
        phones included — and rarely seen. */
     const poster = window.matchMedia(PHONE).matches ? film.posterPhone : film.poster
     v.poster = poster
+    /* The poster also stands behind the film from the start: the film is
+       hidden until it can play, and the hero was black until then. */
+    if (v.parentElement) v.parentElement.style.backgroundImage = `url("${poster}")`
     /* Where the film can't play — a phone in Low Power Mode or data saver
        refuses to start it, or the file fails — the poster stands in as a
        plain picture behind it, and the film steps aside, so no frozen
@@ -99,7 +102,6 @@ export function RipeHero({ mark = '/RIPE/aura-ripe.svg', tagline = BRAND.tagline
     const still = (on: boolean) => {
       if (!media) return
       media.dataset.still = on ? 'true' : 'false'
-      media.style.backgroundImage = on ? `url("${poster}")` : ''
     }
     const failed = () => still(true)
     const playing = () => still(false)
@@ -210,8 +212,18 @@ export function RipeHero({ mark = '/RIPE/aura-ripe.svg', tagline = BRAND.tagline
           padding-bottom: clamp(40px, 9vh, 120px);
           overflow: hidden; background: var(--ripe-ink); color: #fff;
         }
-        .hero__media { position: absolute; inset: 0; will-change: transform; }
+        .hero__media {
+          position: absolute; inset: 0; will-change: transform;
+          /* The poster, set behind the film once the screen is known. */
+          background: center / cover no-repeat;
+        }
+        /* Under a film still loading, the poster is dimmed as the film is,
+           so nothing jumps when the film fades up over it. */
+        .hero__media::before {
+          content: ''; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.2); pointer-events: none;
+        }
         .hero__media video {
+          position: relative; z-index: 1;
           width: 100%; height: 100%; object-fit: cover; display: block;
           /* Twenty per cent down. A brightness filter rather than a black
              overlay: the canopy keeps its colour, it just stops competing
@@ -221,9 +233,6 @@ export function RipeHero({ mark = '/RIPE/aura-ripe.svg', tagline = BRAND.tagline
         }
         .hero__media video[data-ready='true'] { opacity: 1; }
         /* A film that can't play (see above): its poster, as a picture. */
-        .hero__media[data-still='true'] {
-          background: center / cover no-repeat; filter: brightness(0.8);
-        }
         .hero__media[data-still='true'] video { visibility: hidden; }
         /* The mark sits almost flush left — x60 of 1920 in the file,
            which is 3.1% — rather than on the article rail, so the opener

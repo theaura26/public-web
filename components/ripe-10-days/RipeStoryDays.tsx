@@ -658,8 +658,10 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
                   muted loop playsInline preload="none"
                   aria-label={s.alt}
                 />
-                {/* The fallback still (see above): hidden, and so not
-                    fetched, unless the film can't play. */}
+                {/* The film's still, under it (see the films' effect): what
+                    shows until the film is playing, and instead of it if it
+                    can't play. The same file as the poster, so no extra
+                    download. */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   className="days__still" src={s.src} alt={s.alt} width={s.w} height={s.h}
@@ -838,12 +840,19 @@ export function RipeStoryDays({ days, coda }: { days: Day[]; coda?: ReactNode })
         .days__shot--rounded img, .days__shot--rounded video { border-radius: clamp(14px, 1.6vw, 28px); }
         /* cover: a poster of another shape (a still standing in for its
            film) fills the film's frame, cropped, rather than barred. */
-        .days__film { filter: ${FILM_GRADE}; background: #000; object-fit: cover; }
-        /* A film that can't play shows its still instead (see the films'
-           effect), graded as the film is, with no sound to offer. */
-        .days__shot .days__still { display: none; filter: ${FILM_GRADE}; object-fit: cover; }
+        .days__film { filter: ${FILM_GRADE}; object-fit: cover; }
+        /* Each film over its still (see the films' effect), with no
+           background of its own: while it loads (a browser may drop the
+           poster the moment it starts) the still shows through, never
+           black. A film that can't play leaves the still, graded as the
+           film is, with no sound to offer. (Not hidden until it plays: a
+           browser won't start a film it can't see.) */
+        .days__shot .days__still {
+          position: absolute; inset: 0; width: 100%; height: 100%;
+          filter: ${FILM_GRADE}; object-fit: cover;
+        }
+        .days__shot .days__film { position: relative; z-index: 1; background: transparent; }
         .days__frame.is-still .days__film { display: none; }
-        .days__shot .days__frame.is-still .days__still { display: block; }
         .days__frame.is-still :global(.sound) { display: none; }
         /* The site's .label, as every caption on the site: 11px at every
            width (DESIGN-SYSTEM.md). */

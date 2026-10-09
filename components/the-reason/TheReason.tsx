@@ -3,9 +3,10 @@
 import { Fragment, useEffect, type ReactNode } from 'react'
 import Lenis from 'lenis'
 import Reveal from '@/components/RevealOnScroll'
+import { useMode } from '@/components/ModeProvider'
 import { RelatedLane } from '@/components/Swimlanes'
-import { ACTIVE_JOURNALS, linkImage } from '@/lib/journals'
-import { CHAPTERS } from '@/lib/chapters'
+import { linkImage } from '@/lib/journals'
+import { CHAPTERS, chapterHref } from '@/lib/chapters'
 import type { NoteEntry } from '@/lib/field-notes'
 import { Img, Film, PhotoHero, ReasonDark } from './ReasonKit'
 
@@ -43,54 +44,60 @@ const WA = '/the-reason/why-aura'
 
 /* Where the page sends a reader on: the same "Discover Aura" lane RIPE
    ends on (RelatedLane), with three pages. Titles, lines and pictures
-   come from the site's own indexes — the journal list for RTA, the
-   chapter list for Sanctuary & Stay, the onward-link pictures for RIPE —
+   come from the site's own indexes — the chapter list for RTA and
+   Sanctuary & Stay (the chapters under Regenerative Life, on their
+   banner pictures), the onward-link pictures for RIPE —
    so the cards stay true to the pages they open. */
 const DISCOVER: NoteEntry[] = (() => {
-  const rta = ACTIVE_JOURNALS.find((j) => j.href === '/rta')
-  const sanctuary = CHAPTERS.find((c) => c.id === 'sanctuary')
+  const chapterCard = (id: string): NoteEntry[] => {
+    const c = CHAPTERS.find((x) => x.id === id)
+    if (!c) return []
+    return [{
+      href: chapterHref(c), title: c.label, description: c.lede ?? '',
+      img: c.card ?? c.hero?.poster ?? linkImage(chapterHref(c)), status: 'live' as const,
+    }]
+  }
   return [
     {
       href: '/ripe', title: 'RIPE', status: 'live' as const,
       description: 'Right time made visible. Coffee cherries ripening at Mudigere.',
-      img: linkImage('/ripe'),
+      /* the updated RIPE page's own card, with its wordmark */
+      img: '/RIPE/aura-ripe-og.jpg',
     },
-    ...(rta ? [{ href: rta.href, title: rta.title, description: rta.description, img: rta.img, status: 'live' as const }] : []),
-    ...(sanctuary ? [{
-      href: sanctuary.href ?? '/regenerative-life/sanctuary-and-stay', title: sanctuary.label,
-      description: sanctuary.lede ?? '', img: sanctuary.card, status: 'live' as const,
-    }] : []),
+    ...chapterCard('rta'),
+    ...chapterCard('sanctuary'),
   ]
 })()
 
 /* One path per slot, in page order. Undefined leaves an empty slot. */
 const PHOTO: Record<
   | 'hero' | 'heroFilm' | 'heroFilmSmall' | 'father' | 'ferns' | 'see' | 'tending' | 'note' | 'education'
-  | 'india' | 'japan' | 'herd' | 'what' | 'whatFilm' | 'whatFilmPoster' | 'now' | 'nowInset'
+  | 'india' | 'japan' | 'herd' | 'what' | 'whatFilm' | 'whatFilmSmall' | 'whatFilmPoster' | 'now' | 'nowInset'
   | 'early' | 'established' | 'questions' | 'closing',
   string | undefined
 > = {
   hero: `${WA}/aura-banner.jpg`,          // the banner's first frame, its poster
   heroFilm: `${WA}/aura-banner.mp4`,      // father and son on the ridge, the film
   heroFilmSmall: `${WA}/aura-banner-small.mp4`, // the same at 960px, for phones
-  father: `${WA}/aura-father.png`,        // polaroid: two boys on a doorstep
+  father: `${WA}/aura-father.webp`,        // polaroid: two boys on a doorstep
   ferns: `${WA}/aura-ferns.jpg`,          // a child among the ferns
   see: `${WA}/aura-picking.jpg`,          // picking ripe cherries
   tending: `${WA}/aura-tending.jpg`,      // garlanding a stone shrine in the forest
   note: `${WA}/aura-universe.png`,        // handwritten: Universe will take care of everything
-  education: `${WA}/aura-education.png`,  // polaroid: the calves and the dog at Mudigere
+  education: `${WA}/aura-education.webp`,  // polaroid: the calves and the dog at Mudigere
   india: `${WA}/aura-india.jpg`,          // the herd at Mudigere
   japan: `${WA}/aura-japan.jpg`,          // a temple gate in Ohara
   herd: `${WA}/aura-grazing.jpg`,         // a cow grazing, an egret beside it (not in use)
   what: `${WA}/aura-seedling.jpg`,        // a seedling on the forest floor (not in use)
   whatFilm: `${WA}/aura-estate-walkthrough.mp4`,      // flying over the estate
+  whatFilmSmall: `${WA}/aura-estate-walkthrough-small.mp4`, // the same at 960px, for phones
   whatFilmPoster: `${WA}/aura-estate-walkthrough.jpg`, // its first frame
   now: `${WA}/aura-tree.jpg`,             // a buttressed tree in the morning light
   nowInset: `${WA}/aura-stump.jpg`,       // a termite-worked stump (not in use)
   early: `${WA}/aura-early.jpg`,          // cherries ripening unevenly
   established: `${WA}/aura-established.jpg`, // a handful of ripe cherries
   questions: `${WA}/aura-questions.jpg`,  // smelling the soil
-  closing: `${WA}/aura-closing.png`,      // polaroid: the team and their families, signed
+  closing: `${WA}/aura-closing.webp`,      // polaroid: the team and their families, signed
 }
 
 /** A polaroid. The board's export carries its own paper, tilt and
@@ -198,10 +205,15 @@ function HandLines({ lines, slow = false }: {
     native wheel — and the photographs' drift inside their frames, read
     off the same frame loop. Left off under reduced motion, and torn down
     on leave so the rest of the site keeps its own scroll. */
-function useSlowScroll() {
+function useSlowScroll(still: boolean) {
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const lenis = new Lenis({ lerp: 0.07, wheelMultiplier: 0.85, smoothWheel: true })
+    if (still || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const lenis = new Lenis({
+      lerp: 0.07, wheelMultiplier: 0.85, smoothWheel: true,
+      /* the open menu scrolls itself: Lenis would take its wheel and move
+         the page underneath instead */
+      prevent: (node) => !!node.closest('.menu-overlay'),
+    })
 
     /* Each picture's progress across the screen, 0 as its frame enters
        at the foot and 1 as it leaves at the top, carries it -10% → +10%.
@@ -314,7 +326,7 @@ function useSlowScroll() {
       const hw = heroWords(); if (hw) hw.style.transform = ''
       films().forEach((f) => { f.style.filter = '' })
     }
-  }, [])
+  }, [still])
 }
 
 /** Each polaroid is stuck onto the page as it comes into view, every
@@ -326,9 +338,9 @@ function useSlowScroll() {
     there. Under reduced motion they all are. Time, not scroll, drives
     it — a sticker is put down in one movement, however fast one
     scrolls. */
-function useStickOn() {
+function useStickOn(still: boolean) {
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (still || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const peels = [...document.querySelectorAll<HTMLElement>('.wa-page .wa-peel')]
     const set = (el: HTMLElement, p: number, s: number) => {
       el.style.setProperty('--p', p.toFixed(3))
@@ -391,16 +403,16 @@ function useStickOn() {
       frame.forEach((id) => cancelAnimationFrame(id))
       peels.forEach((el) => set(el, 1, 1))
     }
-  }, [])
+  }, [still])
 }
 
 /** Every picture on the page arrives soft and comes into focus: it is
     held blurred until it has loaded *and* is on screen — pictures load
     ahead of the scroll, so loading alone would clear them out of sight —
     then sharpens. Once only. Not under reduced motion. */
-function useBlurIn() {
+function useBlurIn(still: boolean) {
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (still || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const targets = [...document.querySelectorAll<HTMLElement>(
       '.wa-page .rk-img:not(.wa-film-bg), .wa-page .wa-peel, .wa-page .rk-hero-img')]
     const ready = (el: HTMLElement) => new Promise<void>((done) => {
@@ -435,20 +447,27 @@ function useBlurIn() {
       io.disconnect()
       targets.forEach((el) => el.classList.remove('wa-blur', 'is-clear', 'is-sharp'))
     }
-  }, [])
+  }, [still])
 }
 
 export default function TheReason() {
-  useSlowScroll()
-  useStickOn()
-  useBlurIn()
+  /* Agent mode is the site's plain reading of a page: no pictures, no
+     motion. Every effect here stands still in it, as under reduced
+     motion, and the page's held and full-screen spaces collapse. */
+  const { viewMode } = useMode()
+  const still = viewMode === 'agent'
+  useSlowScroll(still)
+  useStickOn(still)
+  useBlurIn(still)
   return (
     <ReasonDark className="wa-page">
       {/* The banner as the chapter banners have theirs (HeroBanner in
           components/article): held in view for a screen of scroll while
           the film blurs and eases back and the words rise away. */}
       <div className="wa-hero-pin">
-        <PhotoHero src={PHOTO.hero} video={PHOTO.heroFilm} videoSmall={PHOTO.heroFilmSmall} title="Why Aura?" lede="What kind of world are they inheriting?" />
+        <PhotoHero
+          alt="A father and his son sitting on a rock on a ridge in the Western Ghats, looking out over the valley"
+          src={PHOTO.hero} video={PHOTO.heroFilm} videoSmall={PHOTO.heroFilmSmall} title="Why Aura?" lede="What kind of world are they inheriting?" />
       </div>
 
       {/* ── Before Aura ── three short paragraphs, centred */}
@@ -486,7 +505,7 @@ export default function TheReason() {
 
       {/* ── The question ── set in hand over the foot of the picture */}
       <section className="wa-over">
-        <Img src={PHOTO.ferns} ratio="1920 / 1244" alt="A child among the ferns" className="wa-drift rk-full" />
+        <Img src={PHOTO.ferns} ratio="1920 / 1244" alt="A young girl smiling among tall ferns" className="wa-drift rk-full" />
         <div className="wa-over-copy">
           <Reveal>
             <HandLines lines={['What kind of world are they inheriting?', 'Aura began with that question.']} />
@@ -494,10 +513,16 @@ export default function TheReason() {
         </div>
       </section>
 
+      {/* On a phone the handwritten note follows the ferns picture; on a
+          wider screen it stays under the picture of the picking. */}
+      <div className="section-w wa-note-phone">
+        <Reveal><Img src={PHOTO.note} ratio="380 / 338" alt="Handwritten: Universe will take care of everything" className="wa-note" /></Reveal>
+      </div>
+
       {/* ── Learning to see again ── prose on the rail with the tall
           picture under it; the picture bleeding right with the handwritten
           note under it; then the rest of the thought, centred */}
-      <section className="rk-sec">
+      <section className="rk-sec wa-learn">
         <div className="rk-bleed rk-bleed-right">
           <div className="rk-bleed-copy">
             <Reveal>
@@ -508,10 +533,10 @@ export default function TheReason() {
                 <p className="p1">I loved&nbsp;that.</p>
               </div>
             </Reveal>
-            <Reveal delay={120}><Img src={PHOTO.tending} ratio="578 / 1002" alt="Garlanding a stone shrine in the forest" className="wa-drift wa-inset" /></Reveal>
+            <Reveal delay={120}><Img src={PHOTO.tending} ratio="578 / 1002" alt="A man garlanding a small stone shrine with pink flowers among the trees" className="wa-drift wa-inset" /></Reveal>
           </div>
           <div>
-            <Reveal delay={80}><Img src={PHOTO.see} ratio="880 / 915" alt="Picking ripe coffee cherries" className="wa-drift" /></Reveal>
+            <Reveal delay={80}><Img src={PHOTO.see} ratio="880 / 915" alt="A hand picking ripe red coffee cherries from the branch" className="wa-drift" /></Reveal>
             <Reveal delay={120}><Img src={PHOTO.note} ratio="380 / 338" alt="Handwritten: Universe will take care of everything" className="wa-note" /></Reveal>
           </div>
         </div>
@@ -574,11 +599,11 @@ export default function TheReason() {
           <Reveal delay={80}>
             <div className="rk-grid rk-grid-2 wa-pair">
               <figure className="wa-fig">
-                <Img src={PHOTO.india} ratio="690 / 644" alt="The herd at Mudigere" className="wa-drift" />
+                <Img src={PHOTO.india} ratio="690 / 644" alt="Cows of the herd grazing under the trees at Mudigere" className="wa-drift" />
                 <figcaption className="p2">India gave me the&nbsp;ground.</figcaption>
               </figure>
               <figure className="wa-fig">
-                <Img src={PHOTO.japan} ratio="690 / 644" alt="A temple gate in Ohara" className="wa-drift" />
+                <Img src={PHOTO.japan} ratio="690 / 644" alt="A wooden temple gate in Ohara, autumn maples beyond it" className="wa-drift" />
                 <figcaption className="p2">Japan gave me the&nbsp;stillness.</figcaption>
               </figure>
             </div>
@@ -606,7 +631,7 @@ export default function TheReason() {
           the section behind it */}
       <section className="wa-film-sec">
         <Film
-          src={PHOTO.whatFilm!} poster={PHOTO.whatFilmPoster!} ratio="1858 / 1046"
+          src={PHOTO.whatFilm!} srcSmall={PHOTO.whatFilmSmall} poster={PHOTO.whatFilmPoster!} ratio="1858 / 1046"
           alt="Flying over the estate: forest on the hills and the buildings in their clearing"
           className="wa-film-bg"
         />
@@ -631,7 +656,7 @@ export default function TheReason() {
       {/* ── Why this matters ── the picture bleeding left (on a gentle 5%
           drift, so little of its roots is lost), prose on the right, set
           level with the picture's middle */}
-      <section className="rk-sec">
+      <section className="rk-sec wa-why">
         <div className="rk-bleed rk-bleed-left rk-bleed-even wa-level">
           <Reveal><Img src={PHOTO.now} ratio="880 / 1027" alt="A great buttressed tree on the estate, morning light through the canopy behind it" className="wa-drift wa-drift-5" /></Reveal>
           <div className="rk-bleed-copy">
@@ -665,15 +690,15 @@ export default function TheReason() {
           <Reveal delay={80}>
             <div className="rk-grid rk-grid-3 wa-three">
               <figure className="wa-fig">
-                <Img src={PHOTO.early} ratio="441 / 584" alt="Coffee cherries ripening unevenly on the branch" />
+                <Img src={PHOTO.early} ratio="441 / 584" alt="Coffee cherries on the branch, some green, some yellow, some red" />
                 <figcaption className="p2">Some are&nbsp;early.</figcaption>
               </figure>
               <figure className="wa-fig">
-                <Img src={PHOTO.established} ratio="441 / 584" alt="A handful of ripe cherries" />
+                <Img src={PHOTO.established} ratio="441 / 584" alt="Two hands holding a heap of ripe red coffee cherries" />
                 <figcaption className="p2">Some parts are&nbsp;established.</figcaption>
               </figure>
               <figure className="wa-fig">
-                <Img src={PHOTO.questions} ratio="441 / 584" alt="Smelling a handful of soil" />
+                <Img src={PHOTO.questions} ratio="441 / 584" alt="A man on the estate smelling a handful of soil" />
                 <figcaption className="p2">Some are still only&nbsp;questions.</figcaption>
               </figure>
             </div>
@@ -697,8 +722,7 @@ export default function TheReason() {
         </div>
       </section>
 
-      {/* ── Close ── the line and the signed polaroid. The row of links on to
-          the other Reason pages joins them when those pages are published. */}
+      {/* ── Close ── the line and the signed polaroid; Discover Aura follows */}
       <section className="rk-sec rk-close wa-sec-near">
         <div className="section-w">
           <Reveal>
@@ -744,6 +768,34 @@ export default function TheReason() {
         .wa-page { --wa-sage: #939b8f; --wa-moss: #434f4a; }
         .wa-page .rk-hero h1 { color: var(--wa-sage); font-weight: 700; }
         .wa-page .rk-hero .rk-hero-lede { color: var(--wa-moss); }
+
+        /* ── agent mode ── the page as plain reading: pictures and films
+           gone (the site hides every image in agent mode; the frames that
+           held them go too), no holds, no full-screen sections, no blur,
+           the handwriting white, the words over the ferns in the flow */
+        [data-view="agent"] .wa-page .rk-img,
+        [data-view="agent"] .wa-page .wa-peel,
+        [data-view="agent"] .wa-page .rk-hero-img,
+        [data-view="agent"] .wa-page .wa-note-phone { display: none !important; }
+        [data-view="agent"] .wa-page .wa-hero-pin { height: auto !important; }
+        [data-view="agent"] .wa-page .rk-hero {
+          position: static !important; height: auto !important; min-height: 0 !important;
+          padding: var(--space-8) 0 var(--space-6) !important; text-align: left !important;
+        }
+        [data-view="agent"] .wa-page .rk-hero::after,
+        [data-view="agent"] .wa-page .wa-over::after,
+        [data-view="agent"] .wa-page .wa-film-sec::after { display: none !important; }
+        [data-view="agent"] .wa-page .rk-hero { display: block !important; place-items: normal !important; }
+        [data-view="agent"] .wa-page .rk-hero-in { transform: none !important; text-align: left; }
+        [data-view="agent"] .wa-page .rk-hero-lede { margin-left: 0 !important; max-width: none !important; }
+        [data-view="agent"] .wa-page .wa-pin-run { display: none !important; }
+        [data-view="agent"] .wa-page .wa-pin-in { position: static !important; }
+        [data-view="agent"] .wa-page .wa-ink-c { opacity: 1 !important; }
+        [data-view="agent"] .wa-page .wa-blur { filter: none !important; }
+        [data-view="agent"] .wa-page .wa-film-sec {
+          display: block !important; min-height: 0 !important; padding: 0 !important; margin: 0 !important;
+        }
+        [data-view="agent"] .wa-page .wa-over-copy { position: static !important; padding: 0 !important; }
 
         /* ── blur-in ── useBlurIn: soft until loaded and on screen, then
            into focus; the filter is dropped once it has finished, so
@@ -872,6 +924,7 @@ export default function TheReason() {
         /* ── the handwritten note under the bleeding picture ── */
         .wa-note { width: min(380px, 44%); margin: var(--wa-beat) 0 0 21%; border-radius: 0 !important; }
         .wa-note:not(.rk-slot) { background: none; }
+        .wa-note-phone { display: none; }
 
         /* ── captioned frames ── */
         .wa-fig { margin: 0; }
@@ -971,6 +1024,16 @@ export default function TheReason() {
           .wa-polaroid, .wa-peel { width: 72%; }
           .wa-peel-wide { width: 86%; }
           .wa-note { margin: var(--space-7) auto 0; width: 60%; }
+          /* the note moves up to sit under the ferns picture */
+          .rk-bleed .wa-note { display: none; }
+          .wa-note-phone { display: block; margin-bottom: 0; }
+          /* and the picking picture follows the note closely */
+          .wa-page .rk-sec.wa-learn { padding-top: var(--space-7); }
+          /* Why this matters sits one gap below the film above it, not two */
+          .wa-page .rk-sec.wa-why { padding-top: 0; }
+          .wa-page .wa-over { margin-bottom: 0; }
+          /* Why this matters: on a phone the words come before the tree */
+          .wa-page .wa-level .rk-bleed-copy { order: -1; }
         }
       `}</style>
     </ReasonDark>

@@ -18,7 +18,7 @@ import { DAYS, SEASON_HERO, SEASON_INTRO, SEASON_BANNER } from '@/components/rip
 
 export default function SeasonPage() {
   return (
-    <RipeShell paper backdrop={false} accent="#FF60A5">
+    <RipeShell paper backdrop={false} accent="#FF60A5" bar={<RipeDayNav days={DAYS} />}>
       {/* The canopy film kept light — lighter than RIPE's aerial — with a
           faint shade at the foot of it under the words. */}
       <RipeHero
@@ -31,7 +31,6 @@ export default function SeasonPage() {
         dim={0.92}
         scrim
       />
-      <RipeDayNav days={DAYS} />
       <RipeSeasonIntro lines={SEASON_INTRO} />
       <RipeSeason days={DAYS} />
       {/* The same way on into the rest of Aura that RIPE ends with, in

@@ -161,7 +161,7 @@ function inkWords(text: string) {
     break between them; a reader of the page hears the plain text. */
 function Ink({ text, className = '' }: { text: string; className?: string }) {
   return (
-    <p className={`rk-hand wa-ink ${className}`}>
+    <p className={`rk-hand wa-ink ${text.includes('\n') ? '' : 'wa-ink-even'} ${className}`}>
       <span className="sr-only">{text.replace(/\n/g, ' ')}</span>
       <span aria-hidden>
         {/* The space sits between the word spans, not inside them: a
@@ -853,6 +853,10 @@ export default function TheReason() {
            pretty wrapping evens the rag where the browser offers it */
         .wa-page p, .wa-page figcaption { text-wrap: pretty; }
         .wa-page .rk-hero-lede { text-wrap: balance; }
+        /* on a phone, handwriting reads as a few lines of near-equal
+           length, not full lines and a short tail — unless its breaks are
+           set by hand. Wider screens already break it evenly. */
+        @media (max-width: 767px) { .wa-page .wa-ink-even { text-wrap: balance; } }
 
         /* ── handwriting size ── 80% of the kit's (30–52px → 24–41.6px)
            on this page only; the other Reason pages keep the kit's */

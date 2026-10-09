@@ -45,6 +45,9 @@ const ARTICLES: Article[] = [
   // components/coffee/RemarkableCircle.tsx. White among photographs on
   // purpose: it is a diagram, and it should not pretend to be a place.
   { href: '/regenerative-coffee', title: 'Regenerative Coffee',          size: 'lg', img: '/coffee/aura-remarkable-circle-card.svg' },
+  // RIPE and its sister page, on their own banners.
+  { href: '/ripe',           title: 'RIPE',                               size: 'lg', img: '/RIPE/aura-ripe-og.jpg' },
+  { href: '/ripe/after',     title: 'A Season of RIPE',                   size: 'sm', img: '/RIPE/10-days/ripe-10-days-og.jpg' },
   { href: '/mudigere',       title: 'Guests of the Mountain',             size: 'lg', img: '/aura-mudigere.jpg', video: '/aura-mudigere.mp4' },
   { href: '/herd',           title: 'Ecosystem Engineers',                size: 'sm', img: '/herd/images/aura-relationship2.jpg', video: '/herd/videos/aura-relationship2.mp4' },
   { href: '/circular',       title: 'Circular Intelligence',              size: 'sm', img: '/circular/images/aura-shed.jpg', video: '/circular/videos/aura-shed.mp4' },

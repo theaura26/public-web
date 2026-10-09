@@ -11,9 +11,9 @@ export const metadata: Metadata = {
     type: 'article',
     title: 'Why Aura? — The Reason — Aura',
     description: 'What kind of world are they inheriting? Aura began with that question.',
-    images: [{ url: '/the-reason/why-aura/aura-banner.jpg', width: 1920, height: 1080, alt: 'A father and son on a ridge above the Western Ghats, looking out over the valley' }],
+    images: [{ url: '/the-reason/why-aura/aura-reason-og.jpg', width: 1200, height: 630, alt: 'A father and son on a ridge above the Western Ghats, looking out over the valley' }],
   },
-  twitter: { card: 'summary_large_image', images: ['/the-reason/why-aura/aura-banner.jpg'] },
+  twitter: { card: 'summary_large_image', images: ['/the-reason/why-aura/aura-reason-og.jpg'] },
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

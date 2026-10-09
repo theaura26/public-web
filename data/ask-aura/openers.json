@@ -198,12 +198,12 @@
     ]
   },
   "/field-notes/art-culture": {
-    "hash": "bb674a2d06ac4b41",
-    "line": "This is where our art and culture come alive — ask me anything.",
+    "hash": "76a9edc2dfdb44e2",
+    "line": "This is where art and culture grow alongside coffee — ask me anything.",
     "prompts": [
-      "What is the Gau Angan lamp ritual?",
-      "Who are the Monastic Polymaths?",
-      "What art comes from the six studios?"
+      "What is the Monastic Polymaths residency?",
+      "How many studios are on the estate?",
+      "What is the Gau Angan lamp ritual?"
     ]
   },
   "/field-notes/biodiversity": {
@@ -252,12 +252,12 @@
     ]
   },
   "/field-notes": {
-    "hash": "cfa747ca13c9ae31",
-    "line": "Here’s what we’ve learned about our land and coffee — ask me anything.",
+    "hash": "7652ec602f932626",
+    "line": "Here’s what we’ve learned across the estate — what do you want to know?",
     "prompts": [
       "What is biodynamic farming here?",
-      "How does Aura support biodiversity?",
-      "What role do animals play?"
+      "How do labs improve coffee quality?",
+      "Which animals live on the estate?"
     ]
   },
   "/forest-islands": {
@@ -288,12 +288,12 @@
     ]
   },
   "/now": {
-    "hash": "261c41e4a745ec2d",
-    "line": "Here’s the latest from the estate — what would you like to ask?",
+    "hash": "b4abfdcef5b45cce",
+    "line": "Here’s the latest estate conditions — what would you like to know?",
     "prompts": [
-      "How is rainfall measured here?",
-      "What does CPP batch mean?",
-      "Why track moon phases now?"
+      "How much rain fell this monsoon?",
+      "What’s the current soil temperature?",
+      "How is ground water measured here?"
     ]
   },
   "/pollinators": {
@@ -423,12 +423,21 @@
     ]
   },
   "/ripe": {
-    "hash": "a7bc3b30abb6d38a",
-    "line": "This is where coffee ripens perfectly — what do you want to know?",
+    "hash": "7a7ee8037d328a65",
+    "line": "This is the moment everything comes together — ask me anything.",
     "prompts": [
-      "What does RIPE represent here?",
-      "Who are Friends of Aura?",
-      "What happens at In Good Company?"
+      "What makes coffee ripe here?",
+      "How does RIPE show timing?",
+      "Who are Friends of Aura?"
+    ]
+  },
+  "/ripe/after": {
+    "hash": "7ebbd9b6207f761d",
+    "line": "This is the season that shapes our coffee — what do you want to know?",
+    "prompts": [
+      "What makes this season special?",
+      "How does RIPE affect the coffee?",
+      "What does 'Right Time' mean here?"
     ]
   }
 }

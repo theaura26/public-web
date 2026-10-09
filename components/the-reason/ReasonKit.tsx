@@ -118,7 +118,13 @@ export function ContinueTo({ from, links }: { from: ReasonSectionId; links?: { h
     lede at the h3 size. The tint is the words' contrast floor over any
     picture. A film is muted and loops; the photograph is its poster, and
     under reduced motion the poster is all that shows. */
-export function PhotoHero({ src, video, title, lede }: { src?: string; video?: string; title: string; lede: string }) {
+export function PhotoHero({ src, video, videoSmall, title, lede }: {
+  src?: string; video?: string
+  /** A lighter cut of the film for phones (≤767px wide), so a phone does
+      not download the full-size film on opening the page. */
+  videoSmall?: string
+  title: string; lede: string
+}) {
   const ref = useRef<HTMLVideoElement>(null)
   useEffect(() => {
     const v = ref.current
@@ -129,6 +135,7 @@ export function PhotoHero({ src, video, title, lede }: { src?: string; video?: s
     <header className="rk-hero">
       {video ? (
         <video ref={ref} className="rk-hero-img" muted loop playsInline preload="auto" poster={src} aria-hidden>
+          {videoSmall && <source src={videoSmall} type="video/mp4" media="(max-width: 767px)" />}
           <source src={video} type="video/mp4" />
         </video>
       ) : src ? (

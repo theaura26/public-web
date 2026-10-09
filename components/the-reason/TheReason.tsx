@@ -3,6 +3,10 @@
 import { Fragment, useEffect, type ReactNode } from 'react'
 import Lenis from 'lenis'
 import Reveal from '@/components/RevealOnScroll'
+import { RelatedLane } from '@/components/Swimlanes'
+import { ACTIVE_JOURNALS, linkImage } from '@/lib/journals'
+import { CHAPTERS } from '@/lib/chapters'
+import type { NoteEntry } from '@/lib/field-notes'
 import { Img, Film, PhotoHero, ReasonDark } from './ReasonKit'
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -37,15 +41,38 @@ import { Img, Film, PhotoHero, ReasonDark } from './ReasonKit'
 
 const WA = '/the-reason/why-aura'
 
+/* Where the page sends a reader on: the same "Discover Aura" lane RIPE
+   ends on (RelatedLane), with three pages. Titles, lines and pictures
+   come from the site's own indexes — the journal list for RTA, the
+   chapter list for Sanctuary & Stay, the onward-link pictures for RIPE —
+   so the cards stay true to the pages they open. */
+const DISCOVER: NoteEntry[] = (() => {
+  const rta = ACTIVE_JOURNALS.find((j) => j.href === '/rta')
+  const sanctuary = CHAPTERS.find((c) => c.id === 'sanctuary')
+  return [
+    {
+      href: '/ripe', title: 'RIPE', status: 'live' as const,
+      description: 'Right time made visible. Coffee cherries ripening at Mudigere.',
+      img: linkImage('/ripe'),
+    },
+    ...(rta ? [{ href: rta.href, title: rta.title, description: rta.description, img: rta.img, status: 'live' as const }] : []),
+    ...(sanctuary ? [{
+      href: sanctuary.href ?? '/regenerative-life/sanctuary-and-stay', title: sanctuary.label,
+      description: sanctuary.lede ?? '', img: sanctuary.card, status: 'live' as const,
+    }] : []),
+  ]
+})()
+
 /* One path per slot, in page order. Undefined leaves an empty slot. */
 const PHOTO: Record<
-  | 'hero' | 'heroFilm' | 'father' | 'ferns' | 'see' | 'tending' | 'note' | 'education'
+  | 'hero' | 'heroFilm' | 'heroFilmSmall' | 'father' | 'ferns' | 'see' | 'tending' | 'note' | 'education'
   | 'india' | 'japan' | 'herd' | 'what' | 'whatFilm' | 'whatFilmPoster' | 'now' | 'nowInset'
   | 'early' | 'established' | 'questions' | 'closing',
   string | undefined
 > = {
   hero: `${WA}/aura-banner.jpg`,          // the banner's first frame, its poster
   heroFilm: `${WA}/aura-banner.mp4`,      // father and son on the ridge, the film
+  heroFilmSmall: `${WA}/aura-banner-small.mp4`, // the same at 960px, for phones
   father: `${WA}/aura-father.png`,        // polaroid: two boys on a doorstep
   ferns: `${WA}/aura-ferns.jpg`,          // a child among the ferns
   see: `${WA}/aura-picking.jpg`,          // picking ripe cherries
@@ -421,7 +448,7 @@ export default function TheReason() {
           components/article): held in view for a screen of scroll while
           the film blurs and eases back and the words rise away. */}
       <div className="wa-hero-pin">
-        <PhotoHero src={PHOTO.hero} video={PHOTO.heroFilm} title="Why Aura?" lede="What kind of world are they inheriting?" />
+        <PhotoHero src={PHOTO.hero} video={PHOTO.heroFilm} videoSmall={PHOTO.heroFilmSmall} title="Why Aura?" lede="What kind of world are they inheriting?" />
       </div>
 
       {/* ── Before Aura ── three short paragraphs, centred */}
@@ -689,6 +716,8 @@ export default function TheReason() {
         </div>
       </section>
 
+      <RelatedLane label="Discover Aura" items={DISCOVER} />
+
       {/* This page's own pieces. Global, as the kit's are. */}
       <style jsx global>{`
         /* ── ground ── pure black, as RIPE's (--ripe-ink), not the night
@@ -938,8 +967,9 @@ export default function TheReason() {
 
         @media (max-width: 767px) {
           .wa-page { --section-gap: clamp(96px, 16vh, 150px); --wa-beat: clamp(64px, 10vh, 100px); }
-          .wa-polaroid, .wa-peel { width: 53%; }
-          .wa-peel-wide { width: 64%; }
+          /* on a phone the polaroids are set large enough to read */
+          .wa-polaroid, .wa-peel { width: 72%; }
+          .wa-peel-wide { width: 86%; }
           .wa-note { margin: var(--space-7) auto 0; width: 60%; }
         }
       `}</style>

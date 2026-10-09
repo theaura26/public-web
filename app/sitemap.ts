@@ -43,6 +43,19 @@ const OFF_MENU = [
  * URL is worth indexing — listing a placeholder would make that claim
  * falsely and spend crawl budget on nothing.
  */
+/* A page's principal pictures, listed with its URL so they can be found
+   in image search. Only where a page is built around its photographs. */
+const PAGE_IMAGES: Record<string, string[]> = {
+  '/regenerative-life/the-reason': [
+    '/the-reason/why-aura/aura-banner.jpg',
+    '/the-reason/why-aura/aura-father.webp',
+    '/the-reason/why-aura/aura-education.webp',
+    '/the-reason/why-aura/aura-estate-walkthrough.jpg',
+    '/the-reason/why-aura/aura-tree.jpg',
+    '/the-reason/why-aura/aura-closing.webp',
+  ],
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = 'https://theaura.life'
   const now = new Date()
@@ -54,6 +67,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
        live feed, which the scheduled job rewrites. */
     changeFrequency: (href === '/now' ? 'daily' : 'monthly') as 'daily' | 'monthly',
     priority,
+    ...(PAGE_IMAGES[href] && { images: PAGE_IMAGES[href].map((src) => `${base}${src}`) }),
   })
 
   /* Section landing pages — the five destinations the menu is built on. */

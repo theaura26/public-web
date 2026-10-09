@@ -46,7 +46,12 @@ export function Img({ src, ratio, alt = '', className = '' }: { src?: string; ra
     own; it plays only while on screen, and not at all under reduced
     motion, where the poster stands in — the homepage pillar films behave
     the same way. */
-export function Film({ src, poster, ratio, alt, className = '' }: { src: string; poster: string; ratio: string; alt: string; className?: string }) {
+export function Film({ src, srcSmall, poster, ratio, alt, className = '' }: {
+  src: string
+  /** A lighter cut for phones (≤767px wide). */
+  srcSmall?: string
+  poster: string; ratio: string; alt: string; className?: string
+}) {
   const ref = useRef<HTMLVideoElement>(null)
   useEffect(() => {
     const v = ref.current
@@ -61,6 +66,7 @@ export function Film({ src, poster, ratio, alt, className = '' }: { src: string;
   return (
     <div className={`rk-img ${className}`} style={{ aspectRatio: ratio }}>
       <video ref={ref} muted loop playsInline preload="none" poster={poster} aria-label={alt}>
+        {srcSmall && <source src={srcSmall} type="video/mp4" media="(max-width: 767px)" />}
         <source src={src} type="video/mp4" />
       </video>
     </div>
@@ -118,7 +124,15 @@ export function ContinueTo({ from, links }: { from: ReasonSectionId; links?: { h
     lede at the h3 size. The tint is the words' contrast floor over any
     picture. A film is muted and loops; the photograph is its poster, and
     under reduced motion the poster is all that shows. */
-export function PhotoHero({ src, video, title, lede }: { src?: string; video?: string; title: string; lede: string }) {
+export function PhotoHero({ src, video, videoSmall, title, lede, alt }: {
+  src?: string; video?: string
+  /** What the picture or film shows. Left out, it is decorative. */
+  alt?: string
+  /** A lighter cut of the film for phones (≤767px wide), so a phone does
+      not download the full-size film on opening the page. */
+  videoSmall?: string
+  title: string; lede: string
+}) {
   const ref = useRef<HTMLVideoElement>(null)
   useEffect(() => {
     const v = ref.current
@@ -128,12 +142,16 @@ export function PhotoHero({ src, video, title, lede }: { src?: string; video?: s
   return (
     <header className="rk-hero">
       {video ? (
-        <video ref={ref} className="rk-hero-img" muted loop playsInline preload="auto" poster={src} aria-hidden>
+        <video
+          ref={ref} className="rk-hero-img" muted loop playsInline preload="auto" poster={src}
+          {...(alt ? { 'aria-label': alt } : { 'aria-hidden': true })}
+        >
+          {videoSmall && <source src={videoSmall} type="video/mp4" media="(max-width: 767px)" />}
           <source src={video} type="video/mp4" />
         </video>
       ) : src ? (
         /* eslint-disable-next-line @next/next/no-img-element */
-        <img className="rk-hero-img" src={src} alt="" decoding="async" fetchPriority="high" />
+        <img className="rk-hero-img" src={src} alt={alt ?? ''} decoding="async" fetchPriority="high" />
       ) : (
         /* No picture yet: the card ground stands in, as Img's slot does. */
         <div className="rk-hero-img rk-slot" aria-hidden />

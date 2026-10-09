@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { revealWhenReady } from '@/lib/film-reveal'
@@ -22,10 +23,58 @@ import { BRAND } from './copy'
 
 /* Matches the opener's own stacking breakpoint below. */
 const PHONE = '(max-width: 899px)'
-const POSTER = '/RIPE/aura-ripe-banner.jpg'
-const POSTER_PHONE = '/RIPE/aura-ripe-banner-mobile.jpg'
 
-export function RipeHero() {
+/** The film behind the opener, with its phone cut and posters. */
+export type HeroFilm = {
+  src: string
+  srcPhone?: string
+  poster: string
+  posterPhone?: string
+  label: string
+}
+
+/** The other page, reached through the mark and the line themselves:
+    hovering either washes that page's colour and words through this one. */
+export type HeroLink = {
+  href: string
+  hover: string
+  markHover: string
+  taglineHover: readonly string[]
+  label: string
+  /** Which side the wash comes from. The season sweeps back leftwards. */
+  from?: 'left' | 'right'
+}
+
+const RIPE_FILM: HeroFilm = {
+  src: '/RIPE/aura-ripe-banner.mp4',
+  srcPhone: '/RIPE/aura-ripe-banner-mobile.mp4',
+  poster: '/RIPE/aura-ripe-banner.jpg',
+  posterPhone: '/RIPE/aura-ripe-banner-mobile.jpg',
+  label: 'The Aura estate from above, guests gathered in a clearing',
+}
+
+export function RipeHero({
+  mark = '/RIPE/aura-ripe.svg',
+  name = 'RIPE',
+  tagline = BRAND.tagline,
+  film = RIPE_FILM,
+  link,
+  pair,
+  dim = 0.8,
+  scrim = false,
+}: {
+  mark?: string
+  name?: string
+  tagline?: readonly string[]
+  film?: HeroFilm
+  link?: HeroLink
+  /** Before | After, with this page's own side marked as current. */
+  pair?: { current: 'before' | 'after'; href: string; hover: string }
+  /** How much of the film's own brightness to keep behind the words. */
+  dim?: number
+  /** A shade under the words, for a film whose colours fight the line. */
+  scrim?: boolean
+} = {}) {
   const root = useRef<HTMLElement>(null)
   const video = useRef<HTMLVideoElement>(null)
 
@@ -50,12 +99,12 @@ export function RipeHero() {
        can't vary by screen, and the film stays hidden until it can play,
        so a server-rendered poster was 680KB downloaded on every visit —
        phones included — and rarely seen. */
-    v.poster = window.matchMedia(PHONE).matches ? POSTER_PHONE : POSTER
+    v.poster = window.matchMedia(PHONE).matches ? (film.posterPhone ?? film.poster) : film.poster
     const io = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause() }, { threshold: 0.1 })
     io.observe(v)
     return () => io.disconnect()
-  }, [])
+  }, [film])
 
   /* The site bar is a solid plate in day mode and was cutting a band
      across the film. Transparent while the opener is on screen. */
@@ -70,31 +119,87 @@ export function RipeHero() {
   }, [])
 
   return (
-    <section ref={root} className="hero" id="top">
+    <section ref={root} className={`hero${scrim ? ' has-scrim' : ''}`} id="top"
+             style={{ ['--hero-dim' as string]: String(dim) } as React.CSSProperties}>
       <div className="hero__media">
         <video
           ref={(el) => { video.current = el; revealWhenReady(el) }}
           muted loop playsInline preload="metadata"
-          aria-label="The Aura estate from above, guests gathered in a clearing"
+          aria-label={film.label}
         >
           {/* Phones get a portrait cut of the same film at native pixels:
               half the weight, and none of it spent on edges a tall screen
               crops away. The first source whose media matches wins. */}
-          <source media={PHONE} src="/RIPE/aura-ripe-banner-mobile.mp4" type="video/mp4" />
-          <source src="/RIPE/aura-ripe-banner.mp4" type="video/mp4" />
+          {film.srcPhone && <source media={PHONE} src={film.srcPhone} type="video/mp4" />}
+          <source src={film.src} type="video/mp4" />
         </video>
       </div>
-      <div className="hero__in">
+      {/* A shade under the words, rising from the bottom of the film.
+          The film is uneven — a frame of pink flowers sits right behind
+          a pink line — so the words carry their own ground instead of
+          the whole picture being darkened. */}
+      {scrim && <div className="hero__scrim" aria-hidden />}
+      <div className="hero__in" style={link ? ({ ['--hero-sweep' as string]: link.from === 'right' ? 'to left' : 'to right' } as React.CSSProperties) : undefined}>
         <h1 className="hero__mark">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/RIPE/aura-ripe.svg" alt="" aria-hidden width={466} height={256} />
-          <span className="hero__name sr-only">RIPE</span>
+          {link ? (
+            /* The mark is the door to the other page. The other page's own
+               mark lies over it, masked away until a hover sweeps it
+               across — one object becoming the other rather than two
+               images swapping. */
+            <Link href={link.href} className="hero__go hero__go--mark"
+                  aria-label={link.label} style={{ ['--hero-hover' as string]: link.hover } as React.CSSProperties}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={mark} alt="" aria-hidden width={466} height={256} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="hero__bloom" src={link.markHover} alt="" aria-hidden
+                   width={466} height={256} />
+              <span className="hero__name sr-only">{name}</span>
+            </Link>
+          ) : (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={mark} alt="" aria-hidden width={466} height={256} />
+              <span className="hero__name sr-only">{name}</span>
+            </>
+          )}
         </h1>
         <div className="hero__say">
           <p className="hero__tag">
-            {BRAND.tagline.map((line) => <span key={line}>{line}</span>)}
+            {link ? (
+              <Link href={link.href} className="hero__go hero__go--tag"
+                    aria-label={link.label} style={{ ['--hero-hover' as string]: link.hover } as React.CSSProperties}>
+                <span className="hero__ink">
+                  {tagline.map((line) => <span key={line}>{line}</span>)}
+                </span>
+                <span className="hero__bloom" aria-hidden>
+                  {link.taglineHover.map((line) => <span key={line}>{line}</span>)}
+                </span>
+              </Link>
+            ) : (
+              tagline.map((line) => <span key={line}>{line}</span>)
+            )}
           </p>
-          <p className="hero__meta">{BRAND.meta}</p>
+          {pair ? (
+            /* The two halves of RIPE, named: the week itself, and the
+               season it became. The one you are on is not a link. */
+            <nav aria-label="RIPE, before and after" className="hero__meta hero__pair">
+              {pair.current === 'before' ? (
+                <span className="hero__now" aria-current="page">Before</span>
+              ) : (
+                <Link className="hero__other" href={pair.href}
+                      style={{ ['--pair-hover' as string]: pair.hover } as React.CSSProperties}>Before</Link>
+              )}
+              <span className="hero__bar" aria-hidden>|</span>
+              {pair.current === 'after' ? (
+                <span className="hero__now" aria-current="page">After</span>
+              ) : (
+                <Link className="hero__other" href={pair.href}
+                      style={{ ['--pair-hover' as string]: pair.hover } as React.CSSProperties}>After</Link>
+              )}
+            </nav>
+          ) : (
+            <p className="hero__meta">{BRAND.meta}</p>
+          )}
         </div>
       </div>
 
@@ -107,12 +212,25 @@ export function RipeHero() {
           overflow: hidden; background: var(--ripe-ink); color: #fff;
         }
         .hero__media { position: absolute; inset: 0; will-change: transform; }
+        .hero__scrim {
+          position: absolute; inset: 0; z-index: 0; pointer-events: none;
+          background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.18) 30%,
+            rgba(0, 0, 0, 0.05) 52%, transparent 66%);
+        }
+        /* No shadows on the season's opener — the mark and the words sit
+           flat on the film, as the design sets them; the gradient above
+           is the only shade. */
+        .hero.has-scrim .hero__tag,
+        .hero.has-scrim .hero__tag :global(span),
+        .hero.has-scrim .hero__meta { text-shadow: none; }
+        .hero.has-scrim .hero__mark :global(img) { filter: none; }
         .hero__media video {
           width: 100%; height: 100%; object-fit: cover; display: block;
           /* Twenty per cent down. A brightness filter rather than a black
              overlay: the canopy keeps its colour, it just stops competing
              with the green and white type over it. */
-          filter: brightness(0.8);
+          filter: brightness(var(--hero-dim, 0.8));
           opacity: 0; transition: opacity .9s var(--ease-out);
         }
         .hero__media video[data-ready='true'] { opacity: 1; }
@@ -150,6 +268,62 @@ export function RipeHero() {
           text-shadow: 0 2px 26px rgba(0, 0, 0, 0.35);
         }
         .hero__tag :global(span) { display: block; }
+
+        /* The wash. Both states are drawn at once and a mask decides how
+           much of each shows: the other page's mark and words are hidden
+           behind a gradient that slides across on hover, so the swap is
+           one sweep rather than a crossfade of two pictures.
+           --bloom is animated, so the sweep has a direction and a speed. */
+        .hero__in :global(.hero__go) {
+          position: relative; display: inline-block;
+          color: inherit; text-decoration: none;
+        }
+        .hero__in :global(.hero__go--mark) { line-height: 0; }
+        .hero__in :global(.hero__bloom) {
+          position: absolute; inset: 0; pointer-events: none;
+          color: var(--hero-hover);
+          --bloom: 0%;
+          mask-image: linear-gradient(var(--hero-sweep, to right), #000 calc(var(--bloom) - 18%), transparent var(--bloom));
+          -webkit-mask-image: linear-gradient(var(--hero-sweep, to right), #000 calc(var(--bloom) - 18%), transparent var(--bloom));
+          transition: --bloom .65s cubic-bezier(.65, 0, .35, 1);
+        }
+        .hero__mark :global(img.hero__bloom) { width: 100%; height: 100%; }
+        .hero__tag :global(.hero__go--tag) { display: inline-grid; }
+        .hero__tag :global(.hero__go--tag) > :global(.hero__ink),
+        .hero__tag :global(.hero__go--tag) > :global(.hero__bloom) { grid-area: 1 / 1; }
+        .hero__tag :global(.hero__go--tag) > :global(.hero__bloom) { position: static; }
+        .hero__tag :global(.hero__go--tag) > :global(.hero__ink) {
+          --bloom: 0%;
+          mask-image: linear-gradient(var(--hero-sweep, to right), transparent calc(var(--bloom) - 18%), #000 var(--bloom));
+          -webkit-mask-image: linear-gradient(var(--hero-sweep, to right), transparent calc(var(--bloom) - 18%), #000 var(--bloom));
+          transition: --bloom .65s cubic-bezier(.65, 0, .35, 1);
+        }
+        .hero__in:has(:global(.hero__go:hover)) :global(.hero__bloom),
+        .hero__in:has(:global(.hero__go:focus-visible)) :global(.hero__bloom),
+        .hero__in:has(:global(.hero__go:hover)) :global(.hero__go--tag) > :global(.hero__ink),
+        .hero__in:has(:global(.hero__go:focus-visible)) :global(.hero__go--tag) > :global(.hero__ink) {
+          --bloom: 118%;
+          transition: --bloom 1.1s cubic-bezier(.45, 0, .25, 1);
+        }
+        .hero__tag :global(.hero__go:focus-visible) {
+          outline: 1px solid var(--hero-hover); outline-offset: 6px;
+        }
+        /* Registered, so the sweep travels instead of jumping from one
+           state to the other. */
+        @property --bloom { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+
+        /* Before | After. */
+        .hero__pair { display: flex; align-items: baseline; gap: .55em; }
+        .hero__bar { opacity: .6; font-weight: 400; }
+        .hero__pair :global(.hero__other) {
+          color: rgba(255, 255, 255, 0.75); text-decoration: none;
+          transition: color var(--dur-fast) var(--ease);
+        }
+        .hero__pair :global(.hero__other:hover),
+        .hero__pair :global(.hero__other:focus-visible) { color: var(--pair-hover); }
+        .hero__pair :global(.hero__other:focus-visible) {
+          outline: 1px solid var(--pair-hover); outline-offset: 4px;
+        }
         .hero__meta {
           font-family: var(--font-grotesque), sans-serif;
           font-weight: 800; text-transform: uppercase;
@@ -172,6 +346,9 @@ export function RipeHero() {
              than the two lines of tagline under it on a phone, and it is
              the name of the thing. */
           .hero__mark img { width: min(270px, 80vw); }
+          /* The opener is centred on a phone, so Before | After sits on
+             the same axis as the mark and the line above it. */
+          .hero__pair { justify-content: center; }
         }
 
         /* The design puts the mark at the lower left and the words against

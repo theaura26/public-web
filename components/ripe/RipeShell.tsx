@@ -18,9 +18,14 @@ import { useScrollAppear } from './useScrollAppear'
 ─────────────────────────────────────────────────────────────────────── */
 
 export function RipeShell({
-  children, paper = false, backdrop = true, accent,
+  children, paper = false, backdrop = true, accent, bar,
 }: {
   children: ReactNode
+  /** The page's fixed section bar. Rendered outside the flow on purpose:
+      the flow is its own stacking layer (z-index 1, over the backdrop), so
+      a bar inside it could only ever outrank the page's own content — the
+      footer, which comes after the page, painted straight over it. */
+  bar?: ReactNode
   /** White ground instead of black — A Season of RIPE is printed, not lit. */
   paper?: boolean
   /** The season carries its own grounds, one per day, so it takes none. */
@@ -33,6 +38,7 @@ export function RipeShell({
     <div className={`ripe-page${paper ? ' ripe-page--paper' : ''}`}
          style={accent ? ({ ['--ripe-green' as string]: accent } as React.CSSProperties) : undefined}>
       {backdrop && <RipeBackdrop />}
+      {bar}
       <div className="ripe-page__flow">{children}</div>
 
       {/* The timeline's depth-of-field. Fixed to the viewport, blurring

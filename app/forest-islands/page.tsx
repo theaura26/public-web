@@ -16,16 +16,13 @@ import {
 export default function ForestIslandsPage() {
   return (
     <>
-      {/* The film, with its own still as the poster. The two were separate
-          visuals — the page opened on the frame and then played it again
-          two beats later. */}
+      {/* A still: the island as it stands, finished and left. How one is
+          built is the film further down. */}
       <HeroBanner
         title="Forest Islands"
-        src="/forest-islands/videos/aura-forest-islands-01.mp4"
-        mediaType="video"
-        poster="/forest-islands/images/aura-forest-islands-01.webp"
-        caption="Four metres by one, built of dung and green cuttings, then left alone — Aura Estate, Mudigere"
-        alt="An estate worker laying green cuttings over a forest island between cut poles"
+        src="/forest-islands/images/aura-forest-islands-01.webp"
+        caption="Thatched in dry fronds and left to the weather — Aura Estate, Mudigere"
+        alt="A low mound thatched in dried palm fronds, standing among the coffee"
       />
 
       <TwoCol id="premise" heading="Restoration usually means fencing something off.">
@@ -60,9 +57,9 @@ export default function ForestIslandsPage() {
       </TwoCol>
 
       <Placeholder
-        src="/forest-islands/images/aura-forest-islands-04.webp"
-        alt="Leaf litter, sticks and green cuttings part-rotted into each other"
-        caption="A year on, the courses have stopped being courses"
+        src="/forest-islands/images/aura-forest-islands-05.webp"
+        alt="A hand-lettered 'Forest island' sign on a slab of wood nailed to a tree, a staked, frond-covered island behind it among young trees"
+        caption="The forest, introduced in pieces, at a scale a working estate can absorb"
       />
 
       <TwoCol id="chain" heading="Organic matter, decomposition, habitat.">
@@ -83,11 +80,14 @@ export default function ForestIslandsPage() {
         </p>
       </TwoCol>
 
+      {/* The making of one: the film is vertical, so it takes the tall
+          slot, set to its own shape. */}
       <Portrait
-        src="/forest-islands/images/aura-forest-islands-03.webp"
-        ratio="4 / 5"
-        alt="White bracket fungi stepping up the trunk of a tree beside ferns"
-        caption="Left alone long enough, the decomposers arrive on their own"
+        video="/forest-islands/videos/aura-forest-islands-making.mp4"
+        poster="/forest-islands/images/aura-forest-islands-making.webp"
+        ratio="478 / 660"
+        alt="Two estate workers spreading armfuls of fresh green cuttings over a bed of dark compost"
+        caption="The herd's compost first, then green cuttings cut that day, course over course"
       />
 
       <PullQuote>
@@ -129,9 +129,9 @@ export default function ForestIslandsPage() {
       </TwoCol>
 
       <Placeholder
-        src="/forest-islands/images/aura-forest-islands-02.webp"
-        alt="Two estate workers cutting back invasive growth in dense understorey"
-        caption="Cleared by hand, block by block, because there is no other way to do it"
+        src="/forest-islands/images/aura-forest-islands-06.webp"
+        alt="Split logs stacked between two posts in the understorey, ferns and coffee growing in around them"
+        caption="Staked, stacked and left, while the understorey closes in around it"
       />
 
       <TwoCol id="scale" heading="A hundred and fifty acres cannot be restored at once.">

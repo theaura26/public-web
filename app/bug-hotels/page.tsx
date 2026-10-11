@@ -19,8 +19,8 @@ export default function BugHotelsPage() {
       <HeroBanner
         title="Bug Hotels"
         src="/bug-hotels/images/aura-bug-hotels-01.webp"
-        caption="Occupied — Aura Estate, Mudigere"
-        alt="Bees crowding the entrance slot of a hive box in the block"
+        caption="Stacked at the foot of a shade tree, in among the coffee — Aura Estate, Mudigere"
+        alt="A heap of gnarled logs stacked at the foot of a shade tree, ferns and coffee all around"
       />
 
       <TwoCol id="premise" heading="A plantation can be full of plants and short of homes.">
@@ -29,21 +29,24 @@ export default function BugHotelsPage() {
           green in every direction, more standing biomass than most farmland will ever carry.
         </p>
         <p className="p2">
-          What a managed landscape tends to lack is the small stuff: dead wood left where it
-          fell, cavities, hollow stems, the accumulated damage that a forest produces simply by
-          being old. A great many insects need exactly that, and abundant vegetation does not
-          supply it.
+          What a managed landscape tends to lack is the small stuff. Branches are cleared,
+          prunings are burned, a fallen tree is hauled away. The wood leaves the block, and the
+          carbon it was holding leaves with it, instead of going back into the ground it grew
+          from.
         </p>
         <p className="p2">
-          A Bug Hotel is a deliberate answer to that shortage. It supplies the holes.
+          A Bug Hotel offers some of what a managed landscape can lose: places for insects to
+          shelter and nest.
         </p>
       </TwoCol>
 
-      <OneCol heading="What one is">
+      <OneCol heading="Inside a Bug Hotel.">
         <p className="p1">
           At Aura a Bug Hotel is made of wooden logs, drilled with holes of several different
           sizes. The variation is the design: different bores suit different bodies, so one
-          structure offers a range of microhabitats rather than a single kind of room.
+          structure offers a range of microhabitats rather than a single kind of room. The logs
+          are not meant to last: the insects that shelter in them slowly break them down, and the
+          wood goes back to the soil as nutrient.
         </p>
         <p className="p2">
           Nothing is introduced. No insects are bought, bred or released. The structure is put up
@@ -54,8 +57,8 @@ export default function BugHotelsPage() {
 
       <Placeholder
         src="/bug-hotels/images/aura-bug-hotels-03.webp"
-        alt="Bees packed along a bamboo tube inside the hotel"
-        caption="Different bore sizes suit different bodies — the variation is the design"
+        alt="Branches piled over a large moss-covered log in the understorey, a fern in front"
+        caption="Branch over log, and every gap a different size of room"
       />
 
       <PullQuote>
@@ -81,10 +84,10 @@ export default function BugHotelsPage() {
       </TwoCol>
 
       <Portrait
-        src="/bug-hotels/images/aura-bug-hotel-02.webp"
+        src="/bug-hotels/images/aura-bug-hotels-05.webp"
         ratio="4 / 5"
-        alt="A bug hotel on a stake in the undergrowth, wrapped against the rain and labelled in chalk"
-        caption="Wrapped against the monsoon, labelled by hand, and then left alone"
+        alt="Bees crowded along a bamboo tube, seen between out-of-focus lengths of bamboo"
+        caption="Nothing here was bought, bred or released"
       />
 
       <TwoCol id="record" heading="Four things worth writing down.">
@@ -114,7 +117,9 @@ export default function BugHotelsPage() {
         </p>
       </TwoCol>
 
-      <ScrollHighlight>
+      {/* Wider than the default 760: at full size the second line needs
+          about 806px, and at 760 it broke into a third line. */}
+      <ScrollHighlight maxWidth={840}>
         {`Make room for the small lives\n   that keep the large system alive.`}
       </ScrollHighlight>
 
@@ -128,10 +133,9 @@ export default function BugHotelsPage() {
           Each of those adds a kind of structural complexity that a working coffee landscape
           loses by being worked. Together they are an attempt to build a plantation that
           supports the crop and also supports the organisms the crop quietly depends on —
-          predators that keep pests in proportion, decomposers that keep the ground fed.
-        </p>
-        <p className="p2">
-          The aim is simple: make room for the small lives that keep the large system running.
+          predators that keep pests in proportion, decomposers that keep the ground fed. The
+          hotels end up in the same place, worked through by their tenants until the logs are
+          soil, and the soil is richer for it.
         </p>
       </TwoCol>
 

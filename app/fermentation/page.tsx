@@ -16,7 +16,7 @@ export default function FermentationPage() {
     <>
       <HeroBanner
         currentHref="/fermentation"
-        title="Fermentation"
+        title="A Matter of Time"
         type="Detail · fine foam on cherry ferment"
         caption="Foam lifting and collapsing on a coffee cherry ferment"
       />
@@ -121,8 +121,8 @@ export default function FermentationPage() {
           next as the months pass.
         </p>
         <p className="p1">
-          <Term tip="Horn manure. Cow dung packed in a cow horn, buried over the cool months, then stirred into water and applied to soil.">BD 500</Term> begins as fresh dung from the estate&rsquo;s
-          About fifty <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term>, packed into a horn and buried. What we
+          <Term tip="Horn manure. Cow dung packed in a cow horn, buried over the cool months, then stirred into water and applied to soil.">BD 500</Term>{' '}begins as fresh dung from the estate&rsquo;s
+          herd of about fifty <Term tip="Indigenous Karnataka cattle breed adapted to the Western Ghats over centuries.">Malnad Gidda</Term>, packed into a horn and buried. What we
           claim for it is the microbiology: a decomposition shaped by the breed, the
           season, and the soil it lies in. The cosmology around it — the lunar
           timing, the talk of the earth breathing — is poetry a century old, and

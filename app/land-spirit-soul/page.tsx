@@ -2,7 +2,6 @@
 
 import {
   HeroBanner,
-  OneCol,
   TwoCol,
   PullQuote,
   Placeholder,
@@ -33,7 +32,7 @@ export default function LandSpiritSoulPage() {
         </p>
       </TwoCol>
 
-      <OneCol heading="Gaumata">
+      <TwoCol heading="Gaumata">
         <p className="p1">
           In Indian tradition the cow is Gaumata — a figure of nourishment, abundance, purity and
           selfless giving. She has held that place in the rural economy for as long as there has
@@ -44,7 +43,7 @@ export default function LandSpiritSoulPage() {
           On this estate it is also a plain statement of fact about the fertility system: about fifty
           animals are the reason there is anything to spread on 150 acres.
         </p>
-      </OneCol>
+      </TwoCol>
 
       <PullQuote>
         The lamp is lit with ghee from the cows it is lit for.

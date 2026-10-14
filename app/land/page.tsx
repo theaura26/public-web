@@ -1,5 +1,5 @@
 import {
-  JournalHero,
+  HeroBanner,
   OneCol,
   TwoCol,
   Placeholder,
@@ -14,7 +14,7 @@ import {
 export default function LandPage() {
   return (
     <>
-      <JournalHero
+      <HeroBanner
         currentHref="/land"
         title="The Land"
         caption="Land sets the brief. We answer."

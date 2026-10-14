@@ -85,7 +85,7 @@ export const ACTIVE_JOURNALS: Journal[] = [
   },
   {
     href: '/fermentation',
-    title: 'Controlled Decay',
+    title: 'A Matter of Time',
     description: 'Desired microbial activity, held to a number. Coffee, pepper and cow dung, stopped when the reading says so.',
     img: '/journals/fermentation/aura-fermentation.jpg',
   },

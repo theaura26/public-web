@@ -60,7 +60,7 @@ const ARTICLES: Article[] = [
   { href: '/living-systems', title: 'Living Systems',                     size: 'sm', img: '/journals/living-systems/aura-living-systems.jpg' },
   { href: '/coffee',         title: 'Our Bean Story',                      size: 'sm', img: '/journals/coffee/aura-our-coffee-story.jpg' },
   { href: '/rta',            title: 'Rta',                                size: 'lg', img: '/journals/rta/aura-rta.jpg' },
-  { href: '/fermentation',   title: 'Fermentation',                       size: 'sm', img: '/journals/fermentation/aura-fermentation.jpg' },
+  { href: '/fermentation',   title: 'A Matter of Time',                       size: 'sm', img: '/journals/fermentation/aura-fermentation.jpg' },
   { href: '/land',           title: 'The Land',                           size: 'lg', img: '/journals/land/aura-the-land.jpg' },
   { href: '/biodynamic',     title: 'A Living Organism',                    size: 'sm', img: '/journals/biodynamic/aura-biodynamic.jpg', video: '/journals/biodynamic/aura-biodynamic.mp4' },
   { href: '/residency',      title: 'Monastic Polymaths',                 size: 'sm', img: '/journals/residency/aura-monastic-polymath.jpg' },

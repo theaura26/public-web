@@ -220,7 +220,7 @@ export const DAYS: Day[] = [
       /* The film from RIPE source/…/Figma export/sections/hammerhead-source.mov, re-encoded
          with scripts/ripe/encode-film.swift (1280 long edge, 1.2Mbps, no
          sound). */
-      { name: 'hammerhead-flatworm', src: `${S}hammerhead-flatworm.jpg`, w: 1280, h: 720, alt: 'A bright orange hammerhead flatworm with a dark, half-moon head, gliding over bare brown earth', video: `${S}hammerhead-flatworm.mp4`, note: 'And the winner of Aura’s biodiversity hunt\nis the hammerhead flatworm' },
+      { name: 'hammerhead-flatworm', src: `${S}hammerhead-flatworm.jpg`, w: 1280, h: 720, alt: 'A bright orange hammerhead flatworm with a dark, half-moon head, gliding over bare brown earth', video: `${S}hammerhead-flatworm.mp4`, note: 'And the winner of Aura’s biodiversity hunt\nis the hammerhead flatworm.' },
       { name: 'aura-pour-over', src: '/RIPE/10-days/sections/aura-pour-over.jpg', w: 1102, h: 720, alt: 'Hot water poured from a kettle into a paper dripper over a glass server', video: '/RIPE/10-days/sections/aura-pour-over.mp4', zoom: { scale: 1.14, at: '50% 15%' } },
     ],
   },
@@ -279,7 +279,7 @@ export const DAYS: Day[] = [
     shots: [
       { name: 'finding-our-rhythm-1', src: `${S}finding-our-rhythm-1.webp`, small: `${S}finding-our-rhythm-1-1290.webp`, w: 1920, h: 1300, alt: 'An Aura banner hung among strings of lights over the dinner' },
       { name: 'finding-our-rhythm-4', src: `${S}finding-our-rhythm-4.webp`, small: `${S}finding-our-rhythm-4-1290.webp`, w: 1920, h: 1300, alt: 'Guests smiling at the dinner table under string lights' },
-      { name: 'finding-our-rhythm-2', src: `${S}finding-our-rhythm-2.webp`, small: `${S}finding-our-rhythm-2-1290.webp`, w: 1920, h: 1300, alt: 'Guests at the long candlelit table beneath the trees', note: 'There was a long dinner table | in the middle of the estate.' },
+      { name: 'finding-our-rhythm-2', src: `${S}finding-our-rhythm-2.webp`, small: `${S}finding-our-rhythm-2-1290.webp`, w: 1920, h: 1300, alt: 'Guests at the long candlelit table beneath the trees', note: 'There was a long table | in the middle of the estate.' },
       { name: 'finding-our-rhythm-3', src: `${S}finding-our-rhythm-3.webp`, small: `${S}finding-our-rhythm-3-1290.webp`, w: 1920, h: 1300, alt: 'A candle on a stone painted RIPE26 among the leaves' },
     ],
   },

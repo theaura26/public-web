@@ -6,6 +6,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { revealWhenReady } from '@/lib/film-reveal'
 import { BRAND } from './copy'
+import { useMode } from '@/components/ModeProvider'
 
 /* ── RIPE opener ─────────────────────────────────────────────────────
    The design splits the opener: the mark sits at the lower left (x60,
@@ -23,6 +24,9 @@ import { BRAND } from './copy'
 
 /* Matches the opener's own stacking breakpoint below. */
 const PHONE = '(max-width: 899px)'
+/* The stills' tall phone crops are for a phone held upright; on its side
+   a phone takes the landscape stills. */
+const UPRIGHT = '(max-width: 899px) and (orientation: portrait)'
 
 /** The film behind the opener, with its phone cut and posters. */
 export type HeroFilm = {
@@ -31,6 +35,17 @@ export type HeroFilm = {
   poster: string
   posterPhone?: string
   label: string
+}
+
+/** Stills behind the opener instead of a film: each fades in over the
+    last and holds, in turn, on a loop. Phones get their own tall crops. */
+export type HeroSlides = {
+  label: string
+  images: readonly { src: string; srcSet?: string; phone?: string }[]
+  /** From one picture starting to come in to the next, in ms. */
+  every?: number
+  /** How long each takes to fade in over the last, in ms. */
+  fade?: number
 }
 
 /** The other page, reached through the mark and the line themselves:
@@ -58,6 +73,7 @@ export function RipeHero({
   name = 'RIPE',
   tagline = BRAND.tagline,
   film = RIPE_FILM,
+  slides,
   link,
   pair,
   dim = 0.8,
@@ -67,6 +83,8 @@ export function RipeHero({
   name?: string
   tagline?: readonly string[]
   film?: HeroFilm
+  /** Stills in place of the film, when given. */
+  slides?: HeroSlides
   link?: HeroLink
   /** Before | After, with this page's own side marked as current. */
   pair?: { current: 'before' | 'after'; href: string; hover: string }
@@ -77,6 +95,9 @@ export function RipeHero({
 } = {}) {
   const root = useRef<HTMLElement>(null)
   const video = useRef<HTMLVideoElement>(null)
+  const deck = useRef<HTMLDivElement>(null)
+  /* Agent mode hides the stills, so the deck neither fetches nor turns. */
+  const reading = useMode().viewMode === 'agent'
 
   useEffect(() => {
     const el = root.current
@@ -106,6 +127,68 @@ export function RipeHero({
     return () => io.disconnect()
   }, [film])
 
+  /* The stills: the first shows as soon as it has loaded; then every few
+     seconds the next fades in over it, once it has loaded too. They rest
+     while the opener is off the screen or the tab is hidden, and stay on
+     the first for anyone who has asked for less motion. */
+  useEffect(() => {
+    const box = deck.current
+    if (!box || !slides || reading) return
+    const imgs = Array.from(box.querySelectorAll<HTMLImageElement>('.hero__slide'))
+    const ready = (img: HTMLImageElement) => img.complete && img.naturalWidth > 0
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    /* The rest of the stills, asked for once the first is showing. */
+    const fetchRest = () => {
+      if (calm) return
+      for (const img of imgs.slice(1)) {
+        const source = img.previousElementSibling as HTMLSourceElement | null
+        if (source?.dataset.srcset) { source.srcset = source.dataset.srcset; delete source.dataset.srcset }
+        if (img.dataset.srcset) { img.srcset = img.dataset.srcset; delete img.dataset.srcset }
+        if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src }
+      }
+    }
+    /* Shown when the first has loaded — or failed to, so the deck still
+       comes up and moves on to the next rather than standing black. */
+    const show = () => { box.dataset.ready = 'true'; fetchRest() }
+    const first = imgs[0]
+    if (!first || first.complete) show()
+    else {
+      first.addEventListener('load', show, { once: true })
+      first.addEventListener('error', show, { once: true })
+    }
+    if (imgs.length < 2 || calm) return
+
+    const every = slides.every ?? 2000
+    let cur = 0
+    let timer = 0
+    let seen = true
+    const step = () => {
+      const next = (cur + 1) % imgs.length
+      if (!ready(imgs[next])) { timer = window.setTimeout(step, 250); return }
+      imgs.forEach((img, k) => {
+        img.classList.toggle('is-on', k === next)
+        img.classList.toggle('was-on', k === cur)
+      })
+      cur = next
+      timer = window.setTimeout(step, every)
+    }
+    const run = () => {
+      window.clearTimeout(timer)
+      timer = 0
+      if (seen && !document.hidden) timer = window.setTimeout(step, every)
+    }
+    const io = new IntersectionObserver(([e]) => { seen = e.isIntersecting; run() }, { threshold: 0.1 })
+    io.observe(box)
+    document.addEventListener('visibilitychange', run)
+    return () => {
+      window.clearTimeout(timer)
+      io.disconnect()
+      document.removeEventListener('visibilitychange', run)
+      first?.removeEventListener('load', show)
+      first?.removeEventListener('error', show)
+    }
+  }, [slides, reading])
+
   /* The site bar is a solid plate in day mode and was cutting a band
      across the film. Transparent while the opener is on screen. */
   useEffect(() => {
@@ -122,6 +205,29 @@ export function RipeHero({
     <section ref={root} className={`hero${scrim ? ' has-scrim' : ''}`} id="top"
              style={{ ['--hero-dim' as string]: String(dim) } as React.CSSProperties}>
       <div className="hero__media">
+        {slides ? (
+          <div ref={deck} className="hero__slides" role="img" aria-label={slides.label}
+               style={{ ['--hero-fade' as string]: `${slides.fade ?? 800}ms` } as React.CSSProperties}>
+            {slides.images.map((im, k) => (
+              /* Phones get a tall crop of each still, at native pixels. The
+                 first loads at once; the rest wait, unrequested (their
+                 sources held in data-), until it is showing, so nothing
+                 competes with it — and never load for anyone who has asked
+                 for less motion, who only ever see the first. */
+              <picture key={im.src}>
+                {im.phone && (k === 0
+                  ? <source media={UPRIGHT} srcSet={im.phone} />
+                  : <source media={UPRIGHT} data-srcset={im.phone} />)}
+                <img className={`hero__slide${k === 0 ? ' is-on' : ''}`} alt=""
+                     {...(k === 0
+                       ? { src: im.src, srcSet: im.srcSet }
+                       : { 'data-src': im.src, 'data-srcset': im.srcSet })}
+                     sizes={im.srcSet ? '100vw' : undefined}
+                     decoding="async" fetchPriority={k === 0 ? 'high' : 'low'} />
+              </picture>
+            ))}
+          </div>
+        ) : (
         <video
           ref={(el) => { video.current = el; revealWhenReady(el) }}
           muted loop playsInline preload="metadata"
@@ -133,6 +239,7 @@ export function RipeHero({
           {film.srcPhone && <source media={PHONE} src={film.srcPhone} type="video/mp4" />}
           <source src={film.src} type="video/mp4" />
         </video>
+        )}
       </div>
       {/* A shade under the words, rising from the bottom of the film.
           The film is uneven — a frame of pink flowers sits right behind
@@ -212,11 +319,14 @@ export function RipeHero({
           overflow: hidden; background: var(--ripe-ink); color: #fff;
         }
         .hero__media { position: absolute; inset: 0; will-change: transform; }
+        /* Deep enough for the season's banner, a run of bright, busy
+           stills — a white studio wall, a painted stone — under pink
+           words. */
         .hero__scrim {
           position: absolute; inset: 0; z-index: 0; pointer-events: none;
           background: linear-gradient(to top,
-            rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.18) 30%,
-            rgba(0, 0, 0, 0.05) 52%, transparent 66%);
+            rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.44) 26%,
+            rgba(0, 0, 0, 0.18) 48%, transparent 68%);
         }
         /* No shadows on the season's opener — the mark and the words sit
            flat on the film, as the design sets them; the gradient above
@@ -234,6 +344,26 @@ export function RipeHero({
           opacity: 0; transition: opacity .9s var(--ease-out);
         }
         .hero__media video[data-ready='true'] { opacity: 1; }
+        /* The stills: stacked, the one coming in on top of the one it
+           replaces, which stays whole beneath until it is covered — so the
+           change never dips through to black. */
+        .hero__slides {
+          position: absolute; inset: 0;
+          opacity: 0; transition: opacity .9s var(--ease-out);
+        }
+        .hero__slides[data-ready='true'] { opacity: 1; }
+        .hero__slides picture { display: contents; }
+        .hero__slide {
+          position: absolute; inset: 0; display: block;
+          width: 100%; height: 100%; object-fit: cover;
+          filter: brightness(var(--hero-dim, 0.8));
+          opacity: 0; z-index: 0;
+        }
+        .hero__slide.was-on { opacity: 1; z-index: 1; }
+        .hero__slide.is-on {
+          opacity: 1; z-index: 2;
+          transition: opacity var(--hero-fade, 800ms) cubic-bezier(.4, 0, .2, 1);
+        }
         /* The mark sits almost flush left — x60 of 1920 in the file,
            which is 3.1% — rather than on the article rail, so the opener
            reads as a poster instead of a page. The words keep the right

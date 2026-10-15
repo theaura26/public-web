@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 import { ACTIVE_JOURNALS } from '@/lib/journals'
 import { SECTIONS, ALL_LEAVES } from '@/lib/site-nav'
 import { CATEGORIES } from '@/lib/field-notes'
+import { DAYS, SEASON_CODA_PHOTO, SEASON_HERO, SEASON_SHARE_IMAGE } from '@/components/ripe/after-copy'
 
 /* Public pages the navigation does not carry. Contact lives in the
    menu’s corner rather than in a section list; the coffee microsite has
@@ -53,6 +54,15 @@ const PAGE_IMAGES: Record<string, string[]> = {
     '/the-reason/why-aura/aura-estate-walkthrough.jpg',
     '/the-reason/why-aura/aura-tree.jpg',
     '/the-reason/why-aura/aura-closing.webp',
+  ],
+  /* A Season of RIPE is a photo essay: its shared picture, the banner's
+     stills, every part's pictures in order and the closing photograph.
+     Read from the page's own copy, so the list follows the page. */
+  '/ripe/after': [
+    SEASON_SHARE_IMAGE,
+    ...SEASON_HERO.slides.images.map((i) => i.src),
+    ...DAYS.flatMap((d) => d.shots.map((s) => s.src)),
+    SEASON_CODA_PHOTO.src,
   ],
 }
 

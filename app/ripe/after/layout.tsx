@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
+import { SEASON_SHARE_IMAGE } from '@/components/ripe/after-copy'
 
 const TITLE = 'A Season of RIPE'
 const DESCRIPTION =
-  'Ten days at Mudigere, 20–27 September 2026, as they were lived: arriving, looking closer, finding a way in, making a mark, and what was left behind to grow. The record of RIPE, in pictures.'
+  'Ten days at Mudigere, 20–27 September 2026, as they were lived: stepping into Aura, a world revealed, making a mark, finding a rhythm, and what was left behind to grow. The record of RIPE, in pictures.'
 const IMAGE = {
-  url: '/RIPE/10-days/banner/ripe-banner-first.jpg',
-  width: 1920,
-  height: 1080,
-  alt: 'A Season of RIPE — the canopy over the estate at Mudigere',
+  url: SEASON_SHARE_IMAGE,
+  width: 1200,
+  height: 630,
+  alt: 'A Season of RIPE — the pink RIPE wordmark over the roots of an old tree at Mudigere',
 }
 
 export const metadata: Metadata = {
@@ -38,7 +39,7 @@ const jsonLd = {
   headline: 'A Season of RIPE',
   description: DESCRIPTION,
   url: 'https://theaura.life/ripe/after',
-  image: ['https://theaura.life/RIPE/10-days/banner/ripe-banner-first.jpg'],
+  image: [`https://theaura.life${SEASON_SHARE_IMAGE}`],
   datePublished: '2026-10-08',
   about: { '@type': 'Event', name: 'RIPE', url: 'https://theaura.life/ripe' },
   publisher: { '@type': 'Organization', name: 'Aura', url: 'https://theaura.life' },

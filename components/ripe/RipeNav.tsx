@@ -216,6 +216,9 @@ export function RipeNav() {
       `}</style>
 
       <style jsx>{`
+        /* Agent mode reads the sections' own headings; the bar of their
+           names, a row wider than the column, is only in the way. */
+        :global([data-view='agent']) .rn { display: none !important; }
         .rn {
           /* 39, deliberately: the hamburger backdrop is z-40 and the site
              bar and menu panel are z-50. At 40 this tied with the backdrop,

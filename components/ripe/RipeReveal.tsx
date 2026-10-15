@@ -67,8 +67,13 @@ function tokenise(runs: Run[]): Token[] {
 }
 
 export function RipeReveal({
-  runs, className, as: As = 'p',
-}: { runs: Run[]; className?: string; as?: 'p' | 'h2' }) {
+  runs, className, as: As = 'p', from = 0.86, to = 0.42,
+}: {
+  runs: Run[]; className?: string; as?: 'p' | 'h2'
+  /** Where on the screen, as a share of its height, a word starts to
+      brighten and where it is fully lit. A narrower band reveals faster. */
+  from?: number; to?: number
+}) {
   const spans = useRef<(HTMLSpanElement | null)[]>([])
 
   useEffect(() => {
@@ -81,8 +86,8 @@ export function RipeReveal({
       cancelAnimationFrame(raf)
       raf = requestAnimationFrame(() => {
         const vh = window.innerHeight
-        const startY = vh * 0.86
-        const endY = vh * 0.42
+        const startY = vh * from
+        const endY = vh * to
         const tops = spans.current.map((s) => (s ? s.getBoundingClientRect().top : null))
         spans.current.forEach((s, i) => {
           const y = tops[i]
@@ -95,7 +100,7 @@ export function RipeReveal({
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
     return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf) }
-  }, [runs])
+  }, [runs, from, to])
 
   /* Indices are assigned while tokenising rather than counted during
      render: incrementing a closure variable inside map reassigns it

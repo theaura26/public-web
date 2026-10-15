@@ -18,12 +18,11 @@ import { RipeSeasonToggle } from './RipeSeasonToggle'
 export const daySlug = (title: string) =>
   title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 
-/* Eight names did not fit a bar, so it carries four: counted back from
-   the ending in steps of two, so the bar always closes on Leaving
-   something behind. The days between are reached by scrolling; while
-   the reader is in one, the name before it stays lit (and in the first
-   day, the first name). */
-const STRIDE = 2
+/* Five parts fit the bar, so it carries every name. With more, raise
+   this: the bar keeps every STRIDE-th name counted back from the ending,
+   and while the reader is in a part between them, the name before it
+   stays lit (and in the first part, the first name). */
+const STRIDE = 1
 
 export function RipeDayNav({ days }: { days: Day[] }) {
   const [below, setBelow] = useState(false)
@@ -163,29 +162,42 @@ export function RipeDayNav({ days }: { days: Day[] }) {
         </div>
       </div>
       {/* The week and the season, one press apart. */}
-      <span className="dn-switch"><RipeSeasonToggle tone="dark" /></span>
+      <span className="dn-switch"><RipeSeasonToggle /></span>
       </div>
 
       <style jsx global>{`
-        /* The site bar on the season. Over the film it is clear (RipeHero
-           marks that); below the fold it is the page's own white, and it
-           peeks away on the way down exactly as on RIPE. */
-        body:has(.ripe-page--paper) .aura-nav {
+        /* The site bar on the season, as RipeNav sets it on RIPE: clear
+           over the film, solid black past the fold — the page is black
+           throughout — and peeking away on the way down. The custom
+           properties are re-declared rather than the painted colours
+           overridden, so the bar's marks, the hamburger included, keep
+           drawing from them. */
+        body:has(.ripe-page) .aura-nav {
           transition: transform var(--dur-base) var(--ease),
                       background var(--dur-base) var(--ease) !important;
+          --text: #fff;
+          --text-body: rgba(255, 255, 255, 0.8);
+          --text-muted: rgba(255, 255, 255, 0.6);
+          --border: rgba(255, 255, 255, 0.16);
+          background: transparent !important;
+          box-shadow: none !important;
         }
-        body:has(.ripe-page--paper).dn-below.dn-up .aura-nav {
+        body:has(.ripe-page).dn-below .aura-nav { background: #000 !important; }
+        body:has(.ripe-page) .aura-nav .invert-on-light { filter: none !important; }
+        body:has(.ripe-page).dn-below.dn-up .aura-nav {
           transform: translateY(-100%) !important;
           box-shadow: none !important;
         }
       `}</style>
       <style jsx>{`
+        /* Agent mode reads the parts' own headings; a bar of the same
+           five names above the title is only in the way. */
+        :global([data-view='agent']) .dn { display: none !important; }
         .dn {
-          /* RIPE's own section bar, printed: the same 56px frame, z-index,
-             hairline and motion, dark ink on white instead of light on
-             black. */
+          /* RIPE's own section bar: the same 56px frame, z-index,
+             hairline and motion, light on black. */
           position: fixed; left: 0; right: 0; top: var(--nav-h); z-index: 39;
-          height: 56px; background: #fff; border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+          height: 56px; background: #000; border-bottom: 1px solid rgba(255, 255, 255, 0.14);
           opacity: 0; pointer-events: none;
           transform: translateY(calc(-1 * var(--nav-h)));
           transition: transform var(--dur-base) var(--ease), opacity var(--dur-base) var(--ease);
@@ -221,7 +233,7 @@ export function RipeDayNav({ days }: { days: Day[] }) {
         .dn-l {
           display: inline-flex; align-items: center; height: 100%;
           flex-shrink: 0; white-space: nowrap; font-size: 13px;
-          text-decoration: none; color: rgba(0, 0, 0, 0.66);
+          text-decoration: none; color: rgba(255, 255, 255, 0.66);
           transition: color var(--dur-base) var(--ease);
         }
         .dn-l:hover, .dn-l.is-on { color: var(--ripe-green); }

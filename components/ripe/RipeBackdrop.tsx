@@ -25,10 +25,9 @@ export type Ground = 'ink' | 'horizon' | 'dawn' | 'indigo' | 'forest' | 'film'
    indigo is the strongest of the three because it is a cream ground with
    dark ink on it, so the type has no help from the picture at all. The
    flat forest green needs none. */
-/* The two photographic grounds are 1920px exports (aura-dawn-1920.jpg,
-   aura-indigo-1920.jpg) of the 2400px originals, which are not shipped. They
-   sit behind a dimming layer and fill the viewport, so the extra width was
-   3.9MB nobody could see — 2.9MB of it the indigo print alone. */
+/* The indigo print is a 1920px export (aura-indigo-1920.jpg) of a 2400px
+   original, which is not shipped: it sits behind a dimming layer and
+   fills the viewport, so the extra width was 2.9MB nobody could see. */
 /* Phones take the portrait cuts: the film and its poster at native
    pixels, cropped to the part of the frame a tall screen shows. */
 const PHONE = '(max-width: 899px)'

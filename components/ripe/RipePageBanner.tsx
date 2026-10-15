@@ -98,6 +98,19 @@ export function RipePageBanner({ banner }: { banner: PageBanner }) {
         .rpb-act :global(.arrow-cta) { color: #fff; }
         .rpb-act :global(.arrow-cta:hover),
         .rpb-act :global(.arrow-cta:focus-visible) { color: var(--rpb-accent); }
+
+        /* Agent mode: no picture and no lettering, so the name is the
+           heading, then the line and the link, without the banner's room. */
+        :global([data-view='agent']) .rpb { display: block !important; padding: 0 !important; }
+        /* The shade over the picture: with the banner no longer its
+           frame, it spread over the top of the page and dimmed it. */
+        :global([data-view='agent']) .rpb::before { display: none !important; }
+        :global([data-view='agent']) .rpb-name {
+          width: auto !important; height: auto !important; overflow: visible !important;
+          clip: auto !important; white-space: normal !important;
+        }
+        :global([data-view='agent']) .rpb-t { margin: 0 0 8px !important; }
+        :global([data-view='agent']) .rpb-act { display: block !important; margin: 0 !important; }
       `}</style>
     </section>
   )

@@ -262,12 +262,16 @@ export function RipeShell({
           visibility: visible !important;
           opacity: 1 !important;
           transform: none !important;
-          translate: none !important;
           /* The full-bleed sections are 100vw wide. Agent view sets main as
              a centred text column, so at 1440 they started 408px in and ran
              408px off the right — a sideways scroll on this page alone. */
           max-width: 100% !important;
         }
+        /* Its own rule, under a selector of its own: beside transform the
+           CSS minifier folds the pair into one transform and drops
+           translate: none, and it merges rules that share a selector — the
+           nudges set with translate (a note centred on its picture) stayed. */
+        [data-view='agent'] .ripe-page__flow * { translate: none !important; }
         [data-view='agent'] main .ripe-page .hero__media,
         [data-view='agent'] main .ripe-page .hero__scrim,
         [data-view='agent'] main .ripe-page .days__spine,
@@ -280,8 +284,47 @@ export function RipeShell({
         [data-view='agent'] main .ripe-page .hero__name {
           width: auto !important; height: auto !important;
           margin: 0 !important; overflow: visible !important;
-          clip: auto !important; white-space: normal !important;
+          clip: auto !important; clip-path: none !important;
+          white-space: normal !important;
         }
+        /* The opener is a centred row over the picture; as text it is a
+           heading, the tagline and Before | After, flush left. The hover
+           tagline lies over the real one and is not read. */
+        [data-view='agent'] main .ripe-page .hero,
+        [data-view='agent'] main .ripe-page .hero__in,
+        [data-view='agent'] main .ripe-page .hero__say {
+          display: block !important; padding: 0 !important; margin: 0 !important;
+        }
+        /* One column, top to bottom, in the site's markdown rhythm: every
+           grid and flex row on these pages stacks, flush left, and the
+           room each kept for its pictures goes — gaps, a day's padding,
+           a full-screen day's min-height. Headings and paragraphs keep
+           the spacing the global agent rules give them. The pen and
+           wipe masks that write lines on as they are reached have no
+           scroll to finish them, so the lines show whole. */
+        [data-view='agent'] .ripe-page__flow * {
+          grid-template: none !important;
+          grid-area: auto !important;
+          flex-direction: column !important;
+          place-content: start !important;
+          place-items: start !important;
+          place-self: start !important;
+          gap: 0 !important;
+          min-height: 0 !important;
+          padding-top: 0 !important;
+          padding-bottom: 0 !important;
+          mask: none !important;
+          -webkit-mask: none !important;
+        }
+        /* Wrappers, and frames whose pictures are gone, carry no space of
+           their own: the rhythm is the headings', paragraphs' and lists'. */
+        [data-view='agent'] .ripe-page__flow :is(div, figure) {
+          margin-top: 0 !important; margin-bottom: 0 !important;
+        }
+        [data-view='agent'] main .ripe-page .hero__bloom { display: none !important; }
+        /* Before | After stays one row: the stacking above is for blocks. */
+        [data-view='agent'] main .ripe-page .hero__pair { flex-direction: row !important; gap: .55em !important; }
+        [data-view='agent'] main .ripe-page .hero__tag { margin: 0 0 8px !important; }
       `}</style>
     </div>
   )

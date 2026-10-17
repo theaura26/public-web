@@ -877,13 +877,9 @@ export default function Navbar() {
           >
             Contact Us
           </Link>
-          {/* Announced, not visitable — there is no page behind it yet.
-              A span rather than a Link, so it cannot be clicked or
-              focused, matching how the soon leaves behave. */}
-          <span className="mn-corner-link is-soon" aria-disabled>
+          <Link href="/living-index" className="mn-corner-link" onClick={() => setMenuOpen(false)} data-attr="menu-link:/living-index">
             Living Index
-            <span className="mn-soon-pill">Coming soon</span>
-          </span>
+          </Link>
         </div>
 
         {/* Bottom-left utilities: theme toggle + view-mode toggle + Instagram */}

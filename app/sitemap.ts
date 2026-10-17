@@ -13,6 +13,8 @@ import { DAYS, SEASON_CODA_PHOTO, SEASON_HERO, SEASON_SHARE_IMAGE } from '@/comp
    /mudigere-estate is deliberately absent: it is noindex. */
 const OFF_MENU = [
   '/contact',
+  '/living-index',
+  '/living-index/cows',
   /* The four valleys on one page: what a sanctuary is for, which two are
      open and why the other two are closed. A different page from the
      Sanctuary & Stay chapter under /regenerative-life, which the menu

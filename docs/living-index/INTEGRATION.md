@@ -82,8 +82,10 @@ This feature lives in `app/living-index`, `components/living-index` and
 `lib/living-index`; shared navigation has only a link. Future compost learning,
 spray or other public subjects can have sibling feature folders and their own
 allowlisted API projection. Keep API/database changes in the backend repository.
-Use additive API fields or a new contract version for breaking changes, and
-coordinate backend deployment before frontend promotion. Long-lived branches
+The public contract is validated strictly: coordinate approved schema changes in
+both repositories, or introduce a new version before changing its fields. Frontend
+layout changes using existing fields require no API change. Deploy compatible
+backend changes before frontend promotion. Long-lived branches
 per feature will drift and do not provide data privacy or runtime isolation.
 
 Deploy a preview, run the smoke check and browser interactions, then merge the

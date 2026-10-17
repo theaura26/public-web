@@ -17,7 +17,9 @@
     "ask-aura:smoke": "tsx scripts/ask-aura/smoke/safety.mts && tsx scripts/ask-aura/smoke/privacy.mts && tsx scripts/ask-aura/smoke/affinity.mts && tsx scripts/ask-aura/smoke/retrieval.mts && tsx scripts/ask-aura/smoke/mcp.mts",
     "ask-aura:mcp": "tsx mcp/aura-knowledge/server.mts",
     "aura-live:run": "tsx scripts/aura-live/run.mts",
-    "aura-live:test": "tsx --test tests/aura-live/*.test.mts"
+    "aura-live:test": "tsx --test tests/aura-live/*.test.mts",
+    "living-index:smoke": "tsx scripts/living-index-smoke.mts",
+    "living-index:test": "tsx --test tests/living-index/*.test.mts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
